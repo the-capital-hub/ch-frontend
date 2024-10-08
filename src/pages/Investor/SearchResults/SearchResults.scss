@@ -1,0 +1,12 @@
+.search__results__wrapper {
+  .results__container {
+    .result__bar {
+      cursor: pointer;
+      border-top: 1px solid rgba(207, 207, 207, 1);
+    }
+  }
+
+  // .result__bar + .result__bar {
+  //   border-top: 1px solid rgba(207, 207, 207, 1);
+  // }
+}

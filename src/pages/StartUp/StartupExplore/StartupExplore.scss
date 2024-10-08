@@ -1,0 +1,106 @@
+.startup_explore_wrapper {
+  .filter_container{
+    background: var(--white-to-grey);
+    h5{
+      color: black;
+    }
+  }
+
+    .search-filter-input{
+      width: 100%;
+      font-size: 16px;
+      border: 1px solid grey;
+      // background-color: #ebebeb;
+      background:var(--bs-light);
+
+      border-radius: 10px;
+      padding: 1em 0.5em;
+      outline: none;
+    }
+  
+  .startup_filters_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 1em;
+  }
+
+  .btn_base {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: rgba(154, 154, 154);
+
+    text-align: center;
+    font-size: 1rem;
+    line-height: 0.75rem;
+
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+
+    &.active {
+      //   text-decoration: underline;
+      //   text-decoration-color: rgba(253, 89, 1, 1);
+      //   text-decoration-thickness: 2px;
+      //   text-underline-offset: 0.25em;
+      color: rgba(253, 89, 1, 1);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-bottom: 0;
+      background:var(--bs-light);
+      // box-shadow: 0 -5px 5px -5px rgb(222, 226, 230),
+      //   5px 0px 5px -5px rgb(222, 226, 230),
+      //   -5px 0px 5px -5px rgb(222, 226, 230);
+    }
+  }
+
+  .btn-capital {
+    width: 25%;
+    background-color: rgba(253, 89, 1, 1);
+    border: 1px solid rgba(253, 89, 1, 1);
+    border-radius: 5px;
+    outline: none;
+
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    line-height: 1rem;
+
+    font-weight: 400;
+    padding: 0.75em 1em;
+    @media (max-width: 450px) {
+      width: 100%;      }
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+      transform: scale(0.97);
+    }
+  }
+
+  .btn-capital-small {
+    width: fit-content;
+    height: fit-content;
+
+    background-color: rgba(253, 89, 1, 1);
+    border: 1px solid rgba(253, 89, 1, 1);
+    border-radius: 5px;
+    outline: none;
+
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.75rem;
+    line-height: 0.5rem;
+
+    font-weight: 500;
+    padding: 0.3em 0.5em;
+
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+      transform: scale(0.98);
+    }
+  }
+  .spinner_loader{
+    background-color: var(--white-to-grey);
+  }
+}

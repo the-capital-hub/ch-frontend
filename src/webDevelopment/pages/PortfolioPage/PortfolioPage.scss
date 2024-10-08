@@ -1,0 +1,161 @@
+.PortfolioPage_page_container {
+  .container {
+    max-width: 100%;
+  }
+}
+
+.PortfolioPage_page {
+  .top_section {
+    display: grid;
+    grid-template-columns: auto auto auto;
+
+    .box {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin: 10px;
+      height: 580px;
+      // width: 420px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: white;
+      overflow: hidden;
+      transition: transform 0.3s;
+
+      img {
+        width: 150px;
+        height: 50px;
+        padding: 10px;
+        transition: transform 0.3s;
+      }
+
+      p {
+        padding: 10px;
+        padding-bottom: 20px;
+        text-shadow: 1px 1px lightgray;
+      }
+    }
+
+    .box_one {
+      background-image: url("../../../Images/Portfolio/PortfolioPage/books.png");
+    }
+
+    .box_two {
+      background-image: url("../../../Images/Portfolio/PortfolioPage/startup.png");
+    }
+
+    .box_three {
+      background-image: url("../../../Images/Portfolio/PortfolioPage/bus.png");
+
+      img {
+        width: 47px;
+        height: 64px;
+      }
+    }
+
+    .box_four {
+      background-image: url("../../../Images/Portfolio/PortfolioPage/men.png");
+
+      img {
+        width: 63px;
+        height: 67px;
+      }
+    }
+
+    .box_five {
+      background-image: url("../../../Images/Portfolio/PortfolioPage/uipe.jpg");
+
+      img {
+        width: 80px;
+        height: 80px;
+        padding: 10px;
+      }
+    }
+
+    .box_six {
+      background-image: url("../../../Images/Portfolio/PortfolioPage/tiffinbuddy.jpg");
+
+      img {
+        width: 80px;
+        height: 80px;
+        padding: 10px;
+      }
+    }
+  }
+
+  .box:hover {
+    transform: scale(1.05);
+  }
+
+  .box img:hover {
+    transform: scale(1.1);
+  }
+
+  .botton_section {
+    gap: 5px;
+    padding: 40px;
+    margin: 8px;
+    background-color: #ff6969;
+    color: white;
+
+    button {
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      width: 10%;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .PortfolioPage_page_container {
+    .PortfolioPage_page {
+      .top_section {
+        display: grid;
+        grid-template-columns: auto;
+
+        .box {
+          height: 318px;
+        }
+      }
+
+      .botton_section {
+        text-align: center;
+
+        h1 {
+          font-size: 28px;
+        }
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 912px) {
+  .PortfolioPage_page_container {
+    .PortfolioPage_page {
+      .top_section {
+        .box {
+          height: 580px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  .PortfolioPage_page_container {
+    .PortfolioPage_page {
+      .top_section {
+        .box {
+          height: 424px;
+        }
+      }
+    }
+  }
+}

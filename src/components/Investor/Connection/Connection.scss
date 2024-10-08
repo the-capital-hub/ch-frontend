@@ -1,0 +1,186 @@
+.connection_main_container {
+  display: flex;
+  flex-direction: column;
+  min-height: 90vh;
+  .box {
+    // background-color: #fff;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    // background: #fff;
+    background-color: var(--white-to-grey);
+
+    box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.05);
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
+
+    h4 {
+      font-size: 26px;
+      color: var(--d-l-grey);
+    }
+  }
+
+  .content_section {
+    hr {
+      color: var(--d-l-grey);
+    }
+
+    .active {
+      color: #fd5901;
+      font-family: Poppins;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 160%; /* 32px */
+      letter-spacing: 0.8px;
+    }
+
+    .connection_nav {
+      button {
+        margin-right: 20px;
+        text-decoration: none;
+        // color: #000;
+        color: var(--d-l-grey);
+        font-family: Poppins;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 160%; /* 32px */
+        letter-spacing: 0.8px;
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+
+        &:active {
+          box-shadow: none;
+        }
+      }
+      .active {
+        color: #fd5901;
+        font-family: Poppins;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 160%; /* 32px */
+        letter-spacing: 0.8px;
+      }
+    }
+
+    .all_button {
+      border-radius: 10px;
+      background: #fd5901;
+      color: #fff;
+      font-family: Poppins;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      border: none;
+      // width: 4%;
+      padding: 5px 10px;
+      width: fit-content;
+    }
+    .connection_list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .connection_item:last-child {
+        border: none;
+      }
+      .connection_item {
+        padding-bottom: 7px;
+        border-bottom: 1px solid #b5b5b5;
+        // display: flex;
+        // justify-content: space-between;
+        .connection_left {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          gap: 10px;
+
+          img {
+            height: 70px;
+            width: 70px;
+            border-radius: 50%;
+          }
+
+          .body_container {
+            .h6 {
+              font-weight: 600;
+            }
+            p {
+              margin: 0;
+              padding: 0;
+              color: var(--d-l-grey);
+              a {
+                color: var(--d-l-grey);
+              }
+            }
+            .connection_time {
+              font-size: 12px;
+            }
+          }
+          .connection_btn {
+            button {
+              border: none;
+            }
+            .ignore_button {
+              border-radius: 140px;
+              background: #eaeef2;
+              width: 73px;
+              height: 29px;
+              flex-shrink: 0;
+            }
+
+            .accept_button {
+              border-radius: 140px;
+              background: #fd5901;
+              width: 73px;
+              height: 29px;
+              flex-shrink: 0;
+              color: #fff;
+              font-family: Poppins;
+              font-style: normal;
+              font-weight: 400;
+              line-height: normal;
+            }
+          }
+        }
+
+        .connection_right {
+          display: flex;
+          gap: 10px;
+          button {
+            border: none;
+          }
+          .ignore_button {
+            border-radius: 140px;
+            background: #eaeef2;
+            width: 120px;
+            height: 45px;
+            flex-shrink: 0;
+          }
+
+          .accept_button {
+            border-radius: 140px;
+            background: #fd5901;
+            width: 120px;
+            height: 45px;
+            flex-shrink: 0;
+            color: #fff;
+            font-family: Poppins;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+          }
+          img {
+            width: 30px;
+            height: 30px;
+            border-radius: 0%;
+          }
+        }
+      }
+    }
+  }
+}

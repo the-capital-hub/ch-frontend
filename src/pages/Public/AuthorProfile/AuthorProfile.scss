@@ -1,0 +1,47 @@
+.author-profile-wrapper {
+  min-height: 100dvh;
+  background-color: #eaeef2;
+
+  .profile-container {
+    max-width: 900px;
+    margin-inline: auto;
+    padding-block: 2rem;
+
+    .professional_info_section {
+      p {
+        color: #717171;
+      }
+
+      .text_field {
+        h6 {
+          flex: 0 0 10ch;
+          font-weight: 600;
+
+          @media (min-width: 768px) {
+            flex: 0 0 15ch;
+          }
+
+          //   border: 1px solid;
+        }
+      }
+    }
+
+    .card_holder {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      > * {
+        margin-inline: auto;
+      }
+    }
+
+    // increase font size of card card text
+    .title {
+      font-size: 1rem !important;
+
+      & + span {
+        font-size: 1rem !important;
+      }
+    }
+  }
+}

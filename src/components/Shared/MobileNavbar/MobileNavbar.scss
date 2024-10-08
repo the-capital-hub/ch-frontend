@@ -1,0 +1,26 @@
+.mobile-bottom-toolbar {
+  position: fixed;
+  bottom: 0;
+  right: 50%;
+  transform: translateX(50%);
+  box-sizing: border-box;
+  // width: max-content;
+  // background-color: white;
+  background: var(--white-to-dgrey);
+
+  .nav-link-text {
+    font-size: 9px;
+    font-weight: 600;
+  }
+
+  svg {
+    flex-grow: 1;
+  }
+
+  a {
+    color: rgb(113, 113, 113);
+  }
+  .active {
+    color: var(--d-l-grey);
+  }
+}

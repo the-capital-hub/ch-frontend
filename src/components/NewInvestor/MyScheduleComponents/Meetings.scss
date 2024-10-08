@@ -1,0 +1,24 @@
+details summary {
+  transition: margin 0.15s ease-out;
+}
+
+details[open] summary {
+  margin-bottom: 10px;
+}
+
+.meeting__header {
+  list-style-type: none;
+}
+
+.meeting__list__item {
+  width: 85%;
+  font-size: 0.9rem;
+  //   border: 1px solid yellow;
+}
+
+.checkbox {
+  appearance: none;
+  margin: 0;
+  width: 15px;
+  height: 15px;
+}

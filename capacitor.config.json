@@ -1,0 +1,15 @@
+{
+  "appId": "com.thecapitalhub.app",
+  "appName": "The Capital Hub",
+  "webDir": "build",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "GoogleAuth": {
+      "scopes": ["profile", "email"],
+      "serverClientId": "556993160670-mb0ek9ukp41t6402t61vkktpmek415qe.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.TeamsCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex: 0 0 400px;
+  padding: 20px 10px;
+  border: 1px solid lightgray;
+  border-radius: var(--border-radius);
+  .pfp {
+    width: 40%;
+    padding: 10px;
+    border-radius: 25px;
+  }
+  .details {
+    width: 50%;
+    p {
+      font-size: 13px;
+      color: gray;
+    }
+  }
+}

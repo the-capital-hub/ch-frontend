@@ -1,0 +1,216 @@
+.container {
+  .investor_view_navbar {
+    height: 80px;
+    left: 60px;
+    top: 39px;
+    padding: 0 1rem;
+    background: var(--white-to-grey);
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 0px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+
+    @media (min-width: 768px) {
+      border-radius: var(--border-radius);
+    }
+
+    .close-button {
+      color: var(--d-l-grey);
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1.125rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bar_logo_container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      .logo_container {
+        width: auto;
+
+        img {
+          height: 45px;
+        }
+      }
+
+      .mobile-home-hamberger {
+        display: none;
+      }
+    }
+
+    /* right container */
+    .navbar_right_container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .searchbar-container {
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-right: 10px;
+
+        .searchbar-input {
+          width: 100%;
+          height: 49px;
+          border-top-left-radius: 20px;
+          border-bottom-left-radius: 20px;
+          border: none;
+          padding-right: 48px;
+          /* Added padding for button */
+
+          &:focus {
+            outline: none;
+          }
+        }
+
+        .searchbar-button {
+          position: absolute;
+          right: -5px;
+          top: 0;
+          width: 48px;
+          height: 49px;
+          border: none;
+          border-top-right-radius: 20px;
+          border-bottom-right-radius: 20px;
+          cursor: pointer;
+        }
+      }
+
+      .icons-container {
+        display: flex;
+        align-items: center;
+
+        .mobile-icon-wrapper {
+          display: none;
+        }
+
+        .icon-wrapper {
+          margin-left: 1.5rem;
+          width: 49px;
+          height: 49px;
+          left: 1397px;
+          top: 49px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .notification-icon,
+          .message-icon {
+            font-weight: bold;
+            font-size: 20px;
+          }
+
+          .profile-pic {
+            width: 49px;
+            height: 49px;
+            border-radius: 50%;
+          }
+
+          .me {
+            position: absolute;
+            width: 23px;
+            height: 23px;
+            /* left: 1589px; */
+            top: 65px;
+
+            font-family: "Poppins";
+            font-style: normal;
+            font-weight: 500;
+            font-size: 15px;
+            line-height: 22px;
+            /* identical to box height */
+            color: #8f8f8f;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 820px) {
+  .container {
+    .investor_view_navbar {
+      // width: 100%;
+      height: 4.5rem;
+      .bar_logo_container {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+
+        .logo_container {
+          // display: none;
+          padding-right: 0px;
+          padding-left: 0px;
+
+          img {
+            width: 6rem;
+            height: 1.5rem;
+          }
+        }
+
+        .mobile-home-hamberger {
+          display: flex;
+          width: fit-content;
+          color: var(--d-l-grey);
+
+          h1 {
+            color: #000;
+            font-family: Poppins;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            margin: 0;
+            margin-left: 2px;
+          }
+        }
+      }
+
+      /* right container */
+      .navbar_right_container {
+        .searchbar-container {
+          display: none;
+        }
+
+        .icons-container {
+          .mobile-icon-wrapper {
+            display: flex;
+            margin-left: 1.5rem;
+            width: 49px;
+            height: 49px;
+            left: 1397px;
+            top: 49px;
+            background: #eaeef2;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .icon-wrapper {
+            .notification-icon,
+            .message-icon {
+            }
+
+            .profile-pic {
+            }
+
+            .me {
+            }
+          }
+        }
+      }
+    }
+  }
+}

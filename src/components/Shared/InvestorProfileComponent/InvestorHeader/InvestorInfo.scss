@@ -1,0 +1,43 @@
+.investor-profile-img {
+    border-radius: 50%;
+  }
+  
+  .person__profile__name {
+    font-size: 25px;
+  }
+  
+  /* Media queries for responsiveness */
+  @media (max-width: 1024px) {
+    .person__profile__name {
+      font-size: 20px;
+    }
+  
+    .investor-profile-img {
+      width: 80px;
+      height: 80px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .person__profile__name {
+      font-size: 28px;
+    }
+  
+    .investor-profile-img {
+      width: 70px;
+      height: 70px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .person__profile__name {
+      font-size: 25px;
+    }
+  
+    .investor-profile-img {
+      width: 60px;
+      height: 60px;
+      margin-right: 200px;
+    }
+  }
+  

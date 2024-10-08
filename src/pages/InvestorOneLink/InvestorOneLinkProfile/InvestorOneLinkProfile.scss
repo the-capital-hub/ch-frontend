@@ -1,0 +1,87 @@
+.investor_one_link_profile_page {
+  // margin-top: 21px;
+  h1 {
+    font-weight: 600;
+  }
+  .main_inner-section {
+    background-color: var(--white-to-grey);
+    color: var(--d-l-grey);
+    // padding: 15px;
+    border-radius: var(--border-radius);
+    .user_data_section {
+      img {
+        width: 75px;
+        height: 75px;
+      }
+      .user_data {
+        h1 {
+          color: var(--d-l-grey);
+          font-family: Poppins;
+          font-size: 25px;
+          margin: 0;
+        }
+        p {
+          color: var(--d-l-grey);
+          font-family: Poppins;
+          font-size: 16px;
+          font-weight: 400;
+          margin: 0;
+        }
+      }
+    }
+    .bio_section {
+      position: relative;
+      width: 100%;
+      //height: 206px;
+      //background-color: var(--white-to-dgrey);
+      //border: 0.5px solid #e2e2e2;
+      //border-radius: var(--border-radius);
+      h1 {
+        position: absolute;
+        background-color: var(--white-to-dgrey);
+        top: -10px;
+        left: 23px;
+        font-size: 15px;
+      }
+    }
+    .experience_section {
+      position: relative;
+      width: 100%;
+      height: 206px;
+      background-color: var(--white-to-dgrey);
+      border: 0.5px solid #e2e2e2;
+      border-radius: var(--border-radius);
+      h1 {
+        position: absolute;
+        background-color: var(--white-to-dgrey);
+        top: -10px;
+        left: 23px;
+        font-size: 15px;
+      }
+    }
+    .social_media_section {
+      color: var(--d-l-grey);
+
+      font-family: Poppins;
+      font-size: 20px;
+      font-weight: 600;
+      .link_icons {
+        img {
+          width: 20px;
+          height: 20px;
+        }
+        span {
+          font-size: 15px;
+        }
+      }
+    }
+  }
+
+  .page_heading {
+    color: var(--d-l-grey);
+    font-size: 28px;
+    @media (min-width: 1200px) {
+      font-size: 32px;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+.our_collabration_container {
+
+    .collab_brand_icon {
+        img {
+            height: 30px;
+        }
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 68px;
+        margin-bottom: 68px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .our_collabration_container {
+        .collab_brand_icon {
+            img {
+                height: 30px;
+            }
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 28px;
+            margin-bottom: 38px;
+        }
+    }
+
+}

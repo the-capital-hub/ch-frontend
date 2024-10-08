@@ -1,0 +1,349 @@
+.transport-landing-page {
+  --color-primary: #5a3deb;
+  --color-primary-light: #583cea11;
+  --color-primary-text: #fff;
+  --color-form-primary: #583cea;
+  --color-form-btn-text: white;
+  --color-helpCard-dark: #0d224e;
+  --color-ripple: 90, 61, 235;
+
+  &.container-fluid {
+    padding: 0;
+  }
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: -20px;
+
+  .text-blue {
+    color: #0d224e;
+  }
+
+  .LinkBtn {
+    background: #583cea;
+    border-radius: 40px;
+    padding: 10px 20px;
+    color: white;
+    outline: none;
+    width: max-content;
+    border: none;
+    text-decoration: none;
+    &-blue {
+      background-color: #152e64;
+      color: white;
+    }
+    &-white {
+      background-color: white;
+      color: #7158f1;
+    }
+    &:hover {
+      background-color: #7158f1;
+      color: white;
+    }
+  }
+  .first-section {
+    gap: 10px;
+    .inner-section {
+      gap: 10px;
+      .left-section {
+        @media (min-width: 820px) {
+          width: 50%;
+        }
+        h6 {
+          color: #583cea;
+        }
+      }
+      .right-section {
+        display: flex;
+        justify-content: center;
+        img {
+          width: 70%;
+          margin: auto;
+        }
+        @media (min-width: 820px) {
+          img {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  .second-section {
+    background-color: #121212;
+    border-radius: var(--border-radius);
+    color: white;
+    h1,
+    p {
+      text-align: start;
+    }
+
+    .left-section {
+      img {
+        width: 350px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+    }
+    .right-section {
+      gap: 20px;
+      .number-div {
+        h3 {
+          color: white;
+        }
+        p {
+          font-size: 10px;
+        }
+      }
+    }
+  }
+  .thired-section {
+    .left-section {
+      gap: 25px;
+      .buttons {
+        @media (max-width: 420px) {
+          .arrow {
+            transform: rotateZ(90deg);
+          }
+        }
+        button {
+          background: #3e3e3e;
+          border-radius: 40px;
+          padding: 10px 20px;
+          color: white;
+          outline: none;
+          width: max-content;
+          border: none;
+
+          &:hover {
+            background-color: #535353;
+            color: white;
+          }
+        }
+      }
+    }
+    .right-section {
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .feature-cards {
+    display: flex;
+    gap: 40px;
+    margin: 40px auto;
+    justify-content: center;
+    align-items: center;
+    .feature-card {
+      height: 200px;
+      width: 220px;
+      border-radius: var(--border-radius);
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      padding: 20px;
+      text-align: center;
+
+      img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 20px;
+      }
+      h6 {
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        font-size: 16px;
+      }
+      p {
+        text-align: center;
+        color: #767676;
+        font-size: 12px;
+      }
+    }
+  }
+  .fourth-section {
+    .left-section {
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      img {
+        width: 85%;
+        padding: 10px;
+        max-width: 350px;
+      }
+    }
+    .right-section {
+      h1 {
+        font-weight: 600;
+        font-size: 48px;
+      }
+      padding: 10px;
+    }
+  }
+
+  .help-cards {
+    display: flex;
+    gap: 40px;
+    // flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    .help-card:nth-child(2) {
+      background-color: #0d224e;
+      color: white;
+    }
+    .help-card:nth-child(4) {
+      background-color: #0d224e;
+      color: white;
+    }
+    .help-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      border-radius: var(--border-radius);
+      width: 300px;
+      // height: 330px;
+      min-height: 280px;
+      padding: 20px 30px 40px 30px;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      background-color: white;
+
+      p.count {
+        font-size: 18px;
+        font-weight: 600;
+        align-self: start;
+      }
+
+      h6.title {
+        font-weight: 600;
+        text-align: center;
+        height: 40px;
+        width: 80%;
+        font-size: 22px;
+        line-height: 1.3;
+      }
+
+      p {
+        text-align: center;
+        font-size: 14px;
+      }
+
+      .LinkBtn {
+        margin-top: auto;
+        border-radius: 50px;
+        background-color: white;
+        color: #0d224e;
+        padding: 5px 20px;
+        font-size: 14px;
+        text-decoration: none;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        &-blue {
+          background-color: #152e64;
+          color: white;
+        }
+        &:hover {
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+        &:active {
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px inset;
+        }
+      }
+    }
+  }
+
+  .fifth-section {
+    background-color: transparent;
+    color: black;
+    // padding-bottom: 30px;
+
+    .right-section {
+      width: 100%;
+      height: 420px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      img {
+        width: 80%;
+        padding: 10px;
+        max-width: 350px;
+      }
+    }
+    .left-section {
+      padding: 10px;
+      text-align: start;
+      .capital-hub-logo {
+        max-width: 100px;
+        margin: -20px 0;
+      }
+      .LinkBtn {
+        background: #583cea;
+        border-radius: 40px;
+        padding: 10px 20px;
+        color: white;
+        outline: none;
+        width: max-content;
+        border: none;
+        text-decoration: none;
+        &-blue {
+          background-color: #152e64;
+          color: white;
+        }
+        &-white {
+          background-color: white;
+          color: #7158f1;
+        }
+        &:hover {
+          background-color: #7158f1;
+          color: white;
+        }
+      }
+    }
+  }
+
+  .card_bg {
+    border-radius: 15px;
+    padding: 20px;
+    background-color: #5c6ff6;
+    .join-us-card {
+      height: auto;
+      max-width: 350px;
+      object-fit: contain;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      // margin-left: 50%;
+      align-items: center;
+      img {
+        align-self: center;
+        width: 100%;
+      }
+      & > div {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        flex-grow: 1;
+        h5 {
+          font-weight: 600;
+          color: #5c59c1;
+        }
+
+        .LinkBtn {
+          background: #583cea;
+          margin-top: auto;
+          align-self: end;
+          position: relative;
+          right: 10px;
+        }
+      }
+    }
+  }
+}

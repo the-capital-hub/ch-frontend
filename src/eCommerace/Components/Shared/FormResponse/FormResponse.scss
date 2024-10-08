@@ -1,0 +1,47 @@
+.response_wrapper {
+  .response_container {
+    .color-currentTheme {
+      color: #fd5901;
+    }
+  }
+
+  .action_links {
+    button {
+      width: fit-content;
+
+      background-color: transparent;
+      border: 1px solid #fd5901;
+      color: #fd5901;
+      padding: 0.75em 1.5em;
+      border-radius: 10rem;
+
+      font-size: 1rem;
+      line-height: 0.75rem;
+      font-weight: 500;
+
+      @media (min-width: 768px) {
+        font-size: 1.25rem;
+      }
+
+      &:hover {
+        background-color: #fd5901;
+        color: #fff;
+      }
+    }
+  }
+
+  .grow_in {
+    animation: growIn 0.25s linear forwards;
+  }
+
+  // Grow in animation
+  @keyframes growIn {
+    from {
+      transform: scale(0);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
+}

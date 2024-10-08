@@ -1,0 +1,76 @@
+.fund_asking_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  // overflow: scroll;
+
+  .card {
+    position: relative;
+    // height: 138px;
+    margin-top: 20px;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 4px 4px 30px 0px rgba(234, 238, 242, 0.5);
+
+    .card-body {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: center;
+      align-items: flex-start;
+
+      .card-title {
+        background-color: #fff;
+        position: absolute;
+        top: -10px;
+        left: 35%;
+        transform: translateX(-50%);
+        border-radius: 5px;
+        color: #ff772f;
+        text-align: center;
+        font-family: Poppins;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+
+        @media (min-width: 768px) {
+          left: 25%;
+        }
+      }
+
+      hr {
+        border: 1px solid#C2C2C2;
+        background: #c2c2c2;
+        width: 100%;
+      }
+
+      .amount_text {
+        h6 {
+          color: #bdbdbd;
+          font-family: Poppins;
+          font-size: 32px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+        }
+      }
+
+      .card-text {
+        color: rgba(0, 0, 0, 0.63);
+        font-family: Poppins;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+  }
+
+  .fundAsk_input {
+    border: 1px solid white;
+    &:focus {
+      border-bottom: 1px solid rgba(253, 89, 1, 0.8);
+    }
+  }
+}

@@ -1,0 +1,42 @@
+header.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  // background: #E6E8DD
+  nav {
+    .nav {
+      display: flex;
+      gap: 20px;
+      a.active {
+        color: #ff7a00;
+      }
+      a {
+        color: black;
+        text-decoration: none;
+        &:hover {
+          color: #ff7a00;
+        }
+      }
+    }
+
+    .mobile-nav {
+      h1 {
+        letter-spacing: 4px;
+        margin: 0;
+      }
+    }
+  }
+
+  .login-btn {
+    background: #ff7a00;
+    border-radius: 40px;
+    padding: 1px 10px;
+    color: white;
+    outline: none;
+    &:hover {
+      background-color: #f19f52;
+      color: white;
+    }
+  }
+}

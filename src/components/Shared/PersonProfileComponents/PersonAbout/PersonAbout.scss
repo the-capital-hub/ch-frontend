@@ -1,0 +1,67 @@
+.person__about {
+  h6 {
+    flex: 0 0 1ch;
+
+    @media (min-width: 992px) {
+      flex: 0 0 18ch;
+    }
+  }
+}
+
+.name_number {
+  width: 100%;
+  .personal_info_grid {
+    p {
+      font-weight: 400;
+      color: var(--bs-gray-400);
+    }
+
+    .field-text {
+      color: var(--d-l-grey);
+    }
+
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+
+    .fname {
+      order: 1;
+    }
+
+    .lname {
+      order: 2;
+    }
+
+    .email {
+      order: 3;
+    }
+
+    .number {
+      order: 4;
+    }
+
+    @media (min-width: 768px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      .lname {
+        order: 3;
+      }
+
+      .email {
+        order: 2;
+      }
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  .name_number {
+    width: 100%;
+    .personal_info_grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+}

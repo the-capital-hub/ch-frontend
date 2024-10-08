@@ -1,0 +1,97 @@
+.service_stats_wrapper {
+  background-color: var(--color-primary);
+
+  .stats_container {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    .stats_div {
+      flex: 0 0 11.5rem;
+      color: var(--color-primary-text);
+      text-align: center;
+      //   border: 1px solid white;
+      //   min-height: 150px;
+
+      h4 {
+        font-size: 2.5rem;
+        font-weight: 600;
+      }
+
+      p {
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+@property --num {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+.animate_count {
+  counter-set: num var(--num);
+  &::after {
+    content: counter(num);
+  }
+}
+
+// Count down
+.animate_count_down-1 {
+  // transition: --num 5s ease-in-out;
+  animation: countDown-1 2s ease-out 0.25s 1 forwards;
+}
+@keyframes countDown-1 {
+  from {
+    --num: 40;
+  }
+  to {
+    --num: 1;
+  }
+}
+
+// Count up
+.animate_count_up-10 {
+  // transition: --num 5s ease-in-out;
+  animation: countUp-10 2s ease-out 0.25s 1 forwards;
+}
+@keyframes countUp-10 {
+  from {
+    --num: 0;
+  }
+  to {
+    --num: 10;
+  }
+}
+
+.animate_count_up-20 {
+  // transition: --num 5s ease-in-out;
+  animation: countUp-20 2s ease-out 0.25s 1 forwards;
+}
+@keyframes countUp-20 {
+  from {
+    --num: 0;
+  }
+  to {
+    --num: 20;
+  }
+}
+
+.animate_count_up-40 {
+  // transition: --num 5s ease-in-out;
+  animation: countUp-40 2s ease-out 0.25s 1 forwards;
+}
+@keyframes countUp-40 {
+  from {
+    --num: 0;
+  }
+
+  to {
+    --num: 40;
+  }
+}

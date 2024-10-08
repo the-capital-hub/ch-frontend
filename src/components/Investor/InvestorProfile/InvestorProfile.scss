@@ -1,0 +1,106 @@
+.professional_info_section {
+    background-color: var(--white-to-grey);
+    .professional_info_display {
+      h5 {
+        color: var(--d-l-grey);
+      }
+    }
+    p {
+      color: var(--d-l-grey);
+    }
+  
+    .text_field {
+      h6 {
+        flex: 0 0 10ch;
+        font-weight: 600;
+  
+        @media (min-width: 768px) {
+          flex: 0 0 15ch;
+        }
+        color: var(--d-l-grey);
+  
+        //   border: 1px solid;
+      }
+    }
+  
+    .edit_btn {
+      button {
+        //border-radius: 131px;
+        //border: 1px solid #c6c6c6;
+        border: none;
+        background-color: transparent !important;
+        width: fit-content;
+        height: 35px;
+        flex-shrink: 0;
+        color: var(--startup);
+        font-size: 18px;
+        font-family: "Poppins";
+        cursor: pointer;
+      }
+    }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+  
+      fieldset,
+      legend {
+        all: revert;
+        margin: 0;
+      }
+  
+      fieldset {
+        border: 1px solid var(--bs-border-color);
+        border-radius: 10px;
+        background-color: transparent;
+        padding: 0;
+        position: relative;
+        width: 100%;
+        @media (min-width: 1400px) {
+          width: 80%;
+        }
+  
+        &:focus-within.startup {
+          transition: border 0.15s ease-in-out;
+          border: 1px solid #fd5901;
+        }
+  
+        &:focus-within.investor {
+          transition: border 0.15s ease-in-out;
+          border: 1px solid rgba(178, 204, 93, 1);
+        }
+  
+        .professional_form_input {
+          border: none;
+          outline: none;
+          width: 100%;
+          background-color: var(--white-to-grey);
+          color: var(--d-l-grey);
+          border-radius: var(--border-radius);
+  
+          padding: 0.5em 0.75em;
+          font-size: 1rem;
+          font-weight: 500;
+          line-height: normal;
+        }
+  
+        .visually-hiden {
+          position: absolute !important;
+          height: 1px;
+          width: 1px;
+          overflow: hidden;
+          clip: rect(1px, 1px, 1px, 1px);
+        }
+      }
+  
+      legend {
+        margin-left: 2em;
+        padding-inline: 1em;
+        color: var(--d-l-grey);
+        font-size: 12px;
+        font-weight: 500;
+      }
+    }
+  }
+  

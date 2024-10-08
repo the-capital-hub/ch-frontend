@@ -1,0 +1,21 @@
+.Input {
+  input {
+    padding: 15px 20px;
+    outline: none;
+    border: none;
+    background: var(--bs-light);
+    color: var(--d-l-grey);
+    width: 300px;
+    font-size: 16px;
+    // font-weight: 200;
+    border-radius: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .Input {
+    input {
+      width: 250px;
+    }
+  }
+}

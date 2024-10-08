@@ -1,0 +1,10 @@
+.filter__list {
+  @media (min-width: 1200px) {
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+  }
+}
+
+.filter-btn {
+  padding-block: 1.75em;
+  padding-inline: 2em;
+}

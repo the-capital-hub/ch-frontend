@@ -1,0 +1,336 @@
+// .company_main_container {
+//   .typography {
+//     color: #000;
+//     font-family: Poppins;
+//     font-size: 24px;
+//     font-style: normal;
+//     font-weight: 500;
+//     line-height: normal;
+//   }
+
+//   .smallest_typo {
+//     color: #545454;
+//     font-family: Poppins;
+//     font-size: 13px;
+//     font-style: normal;
+//     font-weight: 400;
+//     line-height: normal;
+//   }
+
+//   .small_typo {
+//     color: #717171;
+//     font-size: 16px;
+//     font-family: Poppins;
+//   }
+
+//   .small_typo_location {
+//     color: #555;
+//     font-family: Poppins;
+//     font-size: 11px;
+//     font-style: normal;
+//     font-weight: 300;
+//     line-height: normal;
+//   }
+
+//   .box {
+//     background-color: #fff;
+//     padding: 10px;
+//     border-radius: 40px;
+//     background: #fff;
+//     box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.05);
+
+//     .image_name_section {
+//       display: flex;
+//       justify-content: flex-start;
+//       align-items: center;
+//     }
+
+//     .right_buttons {
+//       display: flex;
+//       justify-content: center;
+//       align-items: end;
+//       flex-direction: column;
+
+//       img {
+//         margin-right: 25px;
+//       }
+
+//       .connect_btn {
+
+//         .connect_founder,
+//         .invest_now {
+//           padding: 10px 20px;
+//           border-radius: 3.439px;
+//           border: 1.376px solid #d3f36b;
+//           color: #000;
+//           font-family: Poppins;
+//           font-size: 12.317px;
+//           font-style: normal;
+//           font-weight: 500;
+//           line-height: normal;
+//         }
+
+//         .invest_now {
+//           margin-left: 10px;
+//           border-radius: 3.439px;
+//           background: #d3f36b;
+//         }
+//       }
+//     }
+
+//     .about_company_section {
+//       margin-top: 5%;
+
+//       h1 {
+//         color: #000;
+//         font-family: Poppins;
+//         font-size: 18px;
+//         font-style: normal;
+//         font-weight: 500;
+//         line-height: normal;
+//       }
+
+//       p {
+//         color: #373737;
+//         font-family: Poppins;
+//         font-size: 15px;
+//         font-style: normal;
+//         font-weight: 300;
+//         line-height: 160%;
+//         /* 24px */
+//         letter-spacing: 0.3px;
+//       }
+//     }
+
+//     .card_section {
+//       margin-top: 3%;
+//       margin-bottom: 3%;
+//       display: flex;
+//       justify-content: space-around;
+//     }
+
+//     .revenue_section {
+//       h2 {
+//         color: #000;
+//         font-family: Poppins;
+//         font-size: 18px;
+//         font-style: normal;
+//         font-weight: 500;
+//         line-height: normal;
+//         margin-left: 20px;
+
+//         &::after {
+//           content: "";
+//           display: block;
+//           width: 18%;
+//           height: 1px;
+//           background-color: #d3f36b; // Adjust the color as needed
+//           margin-top: 3px;
+//         }
+//       }
+//     }
+
+//     .public_link_section {
+//       display: flex;
+//       flex-direction: column;
+//       justify-content: space-between;
+
+//       h2 {
+//         color: #000;
+//         font-family: Poppins;
+//         font-size: 18px;
+//         font-style: normal;
+//         font-weight: 500;
+//         line-height: normal;
+//         margin-left: 20px;
+
+//         &::after {
+//           content: "";
+//           display: block;
+//           width: 9%;
+//           height: 1px;
+//           background-color: #d3f36b; // Adjust the color as needed
+//           margin-top: 3px;
+//         }
+//       }
+
+//       .public_link {
+//         display: flex;
+//         justify-content: flex-start;
+
+//         .social_icons {
+//           margin-left: 10px;
+//           width: 150px;
+//           padding: 10px 10px;
+//           border-radius: 20px;
+//           background: rgba(206, 206, 206, 0.46);
+
+//           a {
+//             text-decoration: none;
+//             color: inherit;
+//           }
+//         }
+//       }
+//     }
+
+//     .feedback_section {
+//       display: flex;
+//       flex-direction: column;
+//       margin-top: 3%;
+
+//       .feedbackcard {
+//         display: flex;
+//         overflow-x: scroll;
+//       }
+
+//       h2 {
+//         color: #000;
+//         font-family: Poppins;
+//         font-size: 18px;
+//         font-style: normal;
+//         font-weight: 500;
+//         line-height: normal;
+//         margin-left: 20px;
+
+//         &::after {
+//           content: "";
+//           display: block;
+//           width: 8%;
+//           height: 1px;
+//           background-color: #d3f36b; // Adjust the color as needed
+//           margin-top: 3px;
+//         }
+//       }
+//     }
+
+//     .fundingteam_section {
+//       display: flex;
+//       // flex-direction: column;
+//       margin-top: 3%;
+//       width: 100%;
+//       max-width: 100%;
+
+//       .fundingteamcard {
+//         display: flex;
+//         overflow-x: scroll;
+//       }
+
+//       h2 {
+//         color: #000;
+//         font-family: Poppins;
+//         font-size: 18px;
+//         font-style: normal;
+//         font-weight: 500;
+//         line-height: normal;
+//         margin-left: 20px;
+
+//         &::after {
+//           content: "";
+//           display: block;
+//           width: 8%;
+//           height: 1px;
+//           background-color: #d3f36b; // Adjust the color as needed
+//           margin-top: 3px;
+//         }
+//       }
+//     }
+
+//     .key_focus_section {
+//       margin-top: 3%;
+//       margin-bottom: 2%;
+//       display: flex;
+//       flex-direction: column;
+//       justify-content: space-between;
+
+//       h2 {
+//         color: #000;
+//         font-family: Poppins;
+//         font-size: 18px;
+//         font-style: normal;
+//         font-weight: 500;
+//         line-height: normal;
+//         margin-left: 20px;
+
+//         &::after {
+//           content: "";
+//           display: block;
+//           width: 14%;
+//           height: 1px;
+//           background-color: #d3f36b; // Adjust the color as needed
+//           margin-top: 3px;
+//         }
+//       }
+
+//       .focus_things {
+//         display: flex;
+//         flex-wrap: wrap;
+//         justify-content: flex-start;
+
+//         .focusItem {
+//           display: flex;
+//           justify-content: center;
+//           margin-left: 10px;
+//           width: 130px;
+//           align-items: center;
+//           text-align: center;
+//           margin: 10px;
+//           padding: 10px 20px;
+//           border-radius: 20px;
+//           background: rgba(206, 206, 206, 0.46);
+//         }
+//       }
+//     }
+//   }
+// }
+
+// @media (max-width: 768px) {
+
+//   .seventy,
+//   .thirty {
+//     margin: 0;
+//     padding: 0;
+//   }
+
+//   .company_main_container {
+//     .mobile_display {
+//       display: flex;
+//     }
+
+//     .mobile_display_none {
+//       display: none !important;
+//     }
+//   }
+// }
+
+// @media (max-width: 700px) {
+//   .company_main_container {
+//     .image_name_section {
+//       flex-direction: column;
+//       text-align: center;
+//     }
+
+//     .box {
+//       .public_link_section {
+//         overflow-x: scroll;
+//       }
+//     }
+//   }
+// }
+
+.border_left {
+  border: 0;
+  @media (min-width: 1000px) {
+    border-left: 1px solid rgba(230, 230, 230, 1);
+  }
+}
+
+.company__profile__container {
+  background-color: transparent;
+
+  // CSS to reduce gap when action buttons are hidden
+  .company__actions {
+    .action__buttons:empty {
+      display: none !important;
+    }
+  }
+}

@@ -1,0 +1,112 @@
+.my_message_main {
+  margin-left: auto;
+  max-width: 90%;
+
+  @media (min-width: 768px) {
+    max-width: 60%;
+  }
+
+  .image_profile {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+  }
+
+  .my_messages {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-inline-end: 0.5rem;
+
+    .msg-time {
+      font-size: 10px;
+      color: var(--currentTheme-text);
+      text-align: end;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      justify-content: flex-end;
+      width: 100%;
+    }
+
+    .time_name_image {
+      display: flex;
+    }
+
+    .mymessage_container {
+      background-color: var(--currentTheme);
+      color: var(--currentTheme-text);
+      padding: 5px 10px;
+      border-top-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      margin-bottom: 5px;
+      // margin-right: 50px;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      // align-items: center;
+
+      // This selects only text messages
+      &:not(:has(.image-message, .video-message, .document-message)) {
+        width: fit-content;
+      }
+
+      @media (min-width: 768px) {
+        max-width: 60%;
+      }
+
+      .chatDropDownMenu {
+        display: none;
+        overflow: visible;
+      }
+
+      &:hover,
+      &:active {
+        .chatDropDownMenu {
+          display: block;
+        }
+      }
+
+      p {
+        font-size: 14px;
+        margin-inline-end: 1rem;
+      }
+
+      a {
+        color: var(--currentTheme-text);
+      }
+
+      .video-message {
+        max-width: 100%;
+        max-height: 250px;
+        border-radius: 10px;
+        margin-top: 10px;
+        background-color: #000;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+        video {
+          width: 100%;
+          height: auto;
+          max-height: 250px;
+        }
+      }
+
+      .image-message {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: 10px;
+        margin-top: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+        img {
+          width: 100%;
+          height: auto;
+          max-height: 200px;
+          object-fit: contain;
+        }
+      }
+    }
+  }
+}

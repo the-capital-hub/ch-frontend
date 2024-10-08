@@ -1,0 +1,240 @@
+.investor_oneLink_sidebar_container {
+  height: 100%;
+
+  .sidebar_container {
+    width: 100%;
+    // max-width: 10%;
+    margin-right: 0;
+    padding: 0;
+  }
+
+  .sidebar-main {
+    width: 20%;
+    height: 100vh;
+    position: absolute;
+    border-radius: 8px 8px 8px 0px;
+    border: 2px solid red;
+  }
+
+  .pro-sidebar {
+    width: 100%;
+    min-width: 100%;
+    overflow-y: auto;
+    // max-height: 80vh;
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(
+        211,
+        211,
+        211,
+        0.555
+      ); /* Set the background color for the thumb (the draggable part) */
+    }
+  }
+
+  .pro-sidebar .pro-menu a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #20315f;
+  }
+
+  .hr-above-support {
+    color: rgba(173, 173, 173, 0.2);
+    border: 1px solid rgba(173, 173, 173, 0.2);
+  }
+
+  .pro-item-content {
+    display: contents;
+    justify-content: center;
+    align-items: center;
+  }
+  .pro-item-content a img {
+    height: 20px;
+  }
+  .pro-item-content span {
+    margin-left: 24px;
+    font-weight: 400;
+  }
+
+  #header {
+    position: relative;
+    width: 220px;
+    // margin: 10px 92px;
+    overflow: hidden;
+    // border: 1px solid red;
+  }
+
+  .investor_onelink_view_sidebar {
+    height: 100%;
+    #header {
+      height: 100%;
+    }
+  }
+
+  .closemenu {
+    position: absolute;
+    right: 0px;
+    z-index: 11111;
+    top: 4.7rem;
+  }
+  .closemenu-Left {
+    margin-top: 0 !important;
+  }
+
+  #header .pro-sidebar {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  #header .pro-sidebar.collapsed {
+    width: 65px;
+    min-width: 40px;
+  }
+
+  #header .pro-sidebar-inner {
+    border-radius: 20px;
+    box-shadow: 0.5px 0.866px 2px 0px rgba(0, 0, 0, 0.15);
+  }
+
+  #header .pro-sidebar-inner .pro-sidebar-layout {
+    overflow-y: hidden;
+  }
+
+  #header .pro-sidebar-inner .pro-sidebar-layout .logotext p {
+    font-size: 20px;
+    padding: 0 20px;
+    color: #000;
+    font-weight: bold;
+  }
+
+  .logotext {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+  .logotext h3 {
+    height: 23px;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    /* identical to box height */
+
+    color: var(--d-l-grey);
+  }
+
+  .logotext h4 {
+    margin: 0;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .logotext img {
+    width: 50px;
+  }
+  .create_post {
+    height: 40px;
+    border: none;
+    background: #fd5901;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+  }
+  .create_post img {
+    height: 15px !important;
+    margin-left: 5px;
+  }
+  .plus_btn {
+    width: 40px;
+    height: 40px;
+    left: 90px;
+    top: 329px;
+    border: none;
+    background: #fd5901;
+    border-radius: 10px;
+    margin-left: -7px;
+  }
+  #header .pro-sidebar-inner .pro-sidebar-layout ul {
+    /* padding: 0 5px; */
+    margin: auto;
+  }
+
+  #header .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item {
+    color: #000;
+    margin: 10px 0px;
+    font-weight: bold;
+    justify-content: flex-start;
+  }
+
+  #header
+    .pro-sidebar-inner
+    .pro-sidebar-layout
+    ul
+    .pro-inner-item
+    .pro-icon-wrapper {
+    // background-color: #fbf4cd;
+    color: #000;
+    border-radius: 3px;
+  }
+
+  #header
+    .pro-sidebar-inner
+    .pro-sidebar-layout
+    ul
+    .pro-inner-item
+    .pro-icon-wrapper
+    .pro-item-content {
+    color: #000;
+  }
+
+  #header .pro-sidebar-inner .pro-sidebar-layout .active {
+    background-image: linear-gradient(0deg, #eef2f3 0%, #eef2f3 100%);
+    * {
+      color: #000 !important;
+      // color: var(--d-l-grey) !important;
+    }
+  }
+
+  #header .pro-sidebar-inner .pro-sidebar-layout .active-item {
+    /* height: 48px; */
+    /* width: 48px; */
+    /* border-radius: 50%; */
+    /* display: flex;
+          justify-content: center;
+          align-items: center; */
+    padding: 1px;
+  }
+
+  #header .logo {
+    padding: 20px;
+  }
+
+  @media only screen and (max-width: 720px) {
+  }
+
+  .investor_onelink_view_sidebar {
+    #header .pro-sidebar-inner .pro-sidebar-layout .active {
+      background: #bfdd5b;
+    }
+    a {
+      color: var(--bs-gray-500) !important;
+    }
+    a:hover {
+      color: var(--d-l-grey) !important;
+    }
+    .invest_now {
+      background: #d3f36b;
+      // border-radius: 20px;
+    }
+  }
+}

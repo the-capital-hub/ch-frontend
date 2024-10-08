@@ -1,0 +1,19 @@
+.settings-bar {
+  p {
+    font-size: 1.125rem;
+  }
+
+  .setting-btn {
+    opacity: 0.6;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &:active {
+      box-shadow: none;
+      transition: transform 0.25s ease;
+      transform: translateX(5px);
+    }
+  }
+}

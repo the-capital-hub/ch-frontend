@@ -1,0 +1,73 @@
+.card-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  // padding-bottom: 1rem;
+  white-space: nowrap;
+  overflow: scroll;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.card-container::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.card-container:hover {
+  overflow-x: auto;
+}
+
+.card_layout {
+  border-radius: var(--border-radius);
+  background: #f0f0f0;
+  flex: 0 0 23%;
+  margin-left: 2rem;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 258px;
+  height: 200px;
+  flex-shrink: 0;
+}
+.post_container_div {
+  max-width: 100%;
+  // display: flex;
+  margin: auto;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10rem;
+    background-color: rgba(253, 89, 1, 0.2);
+
+    &:hover {
+      background-color: rgba(253, 89, 1, 0.8);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10rem;
+    background-color: transparent;
+    margin-inline: 10dvw;
+  }
+}
+
+.see-more-button {
+  background-color: #4c8bf5;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.see-more-button:hover {
+  background-color: #366fd8;
+}
+// @media (max-width: 768px) {
+//   .post_container_div {
+//     max-width: 100%;
+//     display: flex;
+//     flex-direction: column;
+//   }
+// }

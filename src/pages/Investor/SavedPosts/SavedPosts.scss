@@ -1,0 +1,46 @@
+.savedPosts__wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 1em;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+
+  .aside__content {
+    flex: 0 0 24rem;
+  }
+
+  .main__content {
+    flex-grow: 1;
+  }
+}
+
+.savedPosts__container {
+  // colors
+  $color-capital: rgba(211, 243, 107, 1);
+  $color-capital-dark: rgb(96, 110, 48);
+  // Modify NavigatedCardViewer here.
+
+  .navigated_box_container {
+    border-radius: 0;
+  }
+
+  .navigation-header {
+    .nav-item {
+      color: #8f8f8f;
+      padding: 0.25em;
+
+      &.active {
+        color: black !important;
+        background-color: $color-capital;
+        border-radius: 0.25rem;
+
+        &::before {
+          content: "";
+          display: none !important;
+        }
+      }
+    }
+  }
+}

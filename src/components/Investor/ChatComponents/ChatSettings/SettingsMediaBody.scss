@@ -1,0 +1,19 @@
+.media-body {
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--currentTheme-light);
+    border-radius: 10rem;
+
+    &:hover {
+      background-color: var(--currentTheme);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10rem;
+  }
+}

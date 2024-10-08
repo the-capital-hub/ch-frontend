@@ -1,0 +1,58 @@
+.funding_form_field {
+  .funding_textarea {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--bs-border-color);
+    outline: 0;
+    transition: 0.25s;
+
+    padding: 0.5em;
+
+    &:focus {
+      border: 1px solid #fd5901;
+    }
+  }
+
+  // Show edit button on hover
+  // .edit-field-btn {
+  //   visibility: visible;
+  //   pointer-events: all;
+
+  //   @media (min-width: 1200px) {
+  //     visibility: hidden;
+  //     pointer-events: none;
+  //   }
+  // }
+  // &:hover {
+  //   .edit-field-btn {
+  //     visibility: visible;
+  //     pointer-events: all;
+  //   }
+  // }
+
+  // .orange-button {
+  //   border-radius: 10px;
+  //   background: #fd5901;
+  //   border: 1px solid #fd5901;
+
+  //   padding: 8px 25px;
+  //   font-size: 16px;
+  //   color: white;
+  //   transition: 0.25s;
+
+  //   &:hover {
+  //     background-color: #fd590133;
+  //     color: #fd5901;
+  //   }
+
+  //   &:active {
+  //     background-color: #fd5901;
+  //     border: 1px solid #fd5901;
+  //     color: white;
+  //   }
+  // }
+
+  // .orange {
+  //   color: #fd5901;
+  // }
+}

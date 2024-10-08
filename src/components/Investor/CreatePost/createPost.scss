@@ -1,0 +1,281 @@
+.container-fluid.createpost_container {
+  .content-70 {
+    .colSize {
+      width: 98%;
+      height: 700px;
+      flex-shrink: 0;
+      margin-left: 12px;
+      // margin-top: 12px;
+      border-radius: var(--border-radius);
+      background: #fff;
+      box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.05);
+
+      .box {
+        background-color: #fff;
+        padding: 10px;
+        border-radius: var(--border-radius);
+        background: #fff;
+      }
+
+      .bio_container {
+        width: 750px;
+        height: 411px;
+      }
+    }
+  }
+
+  .ceatepost_img_name {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px 25px 20px 20px;
+
+    img {
+      // Define styles for the profile picture here
+    }
+
+    span {
+      margin-left: 10px;
+
+      h2 {
+        color: #000;
+        font-size: 22.611px;
+        font-family: Poppins;
+        font-weight: 500;
+        line-height: 160%;
+        letter-spacing: 1.144px;
+        margin: 0;
+      }
+
+      h6 {
+        color: #a1a1a1;
+        font-size: 10.306px;
+        font-family: Poppins;
+        line-height: 160%;
+        letter-spacing: 0.572px;
+      }
+    }
+  }
+
+  .createpost_text_area {
+    height: 289px;
+    background-color: #fbfbfb;
+    border: 1px solid #e0e0e0;
+  }
+
+  .createpost_header {
+    height: 50px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+
+    h4 {
+      color: #000;
+      font-size: 25.611px;
+      font-family: Poppins;
+      line-height: 160%;
+      letter-spacing: 1.144px;
+      margin: 0;
+    }
+  }
+
+  .createpost_footer {
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+
+    .createpost_footer_links {
+      a {
+        text-decoration: none;
+        list-style: none;
+        margin-right: 20px;
+        color: #999999;
+      }
+    }
+  }
+
+  textarea.custom-textarea {
+    width: 100%;
+    border: none;
+    resize: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    background: none;
+    font-family: inherit;
+    font-size: inherit;
+    height: 100%;
+  }
+
+  .createpost_buttons_input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .createpost_input {
+      background-color: #f5f5f5;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      label {
+        flex-shrink: 0;
+      }
+
+      input {
+        flex-grow: 1;
+        border: none;
+        background-color: #f5f5f5;
+        outline: none;
+
+        &::placeholder {
+          color: #b0b0b0;
+          font-size: 10px;
+          font-family: Poppins;
+          line-height: 160%;
+          letter-spacing: 0.8px;
+        }
+      }
+    }
+  }
+
+  .createpost_buttons {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0px;
+
+    button {
+      width: 206px;
+      height: 50px;
+      flex-shrink: 0;
+      border-radius: 5px;
+      margin-right: 20px;
+      border: none;
+      color: #bababa;
+      font-size: 15px;
+      font-family: Poppins;
+      font-weight: 500;
+      line-height: 160%;
+      letter-spacing: 0.96px;
+
+      &:nth-child(1) {
+        background: #fd5901;
+        color: #fff;
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  .createpost_container {
+    .content-70 {
+      .colSize {
+        width: 100% !important;
+        height: 700px;
+        flex-shrink: 0;
+        margin-left: 0px !important;
+        margin-top: 12px;
+        border-radius: var(--border-radius);
+        background: #fff;
+        box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.05);
+
+        .box {
+          background-color: #fff;
+          padding: 0px;
+          border-radius: var(--border-radius);
+          background: #fff;
+        }
+
+        .bio_container {
+          width: 100% !important;
+          height: 411px;
+        }
+      }
+    }
+
+    .ceatepost_img_name {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 20px 25px 20px 20px;
+
+      img {
+        // Define styles for the profile picture here
+      }
+
+      span {
+        margin-left: 10px;
+
+        h2 {
+          color: #000;
+          font-size: 22.611px;
+          font-family: Poppins;
+          font-weight: 500;
+          line-height: 160%;
+          letter-spacing: 1.144px;
+          margin: 0;
+        }
+
+        h6 {
+          color: #a1a1a1;
+          font-size: 10.306px;
+          font-family: Poppins;
+          line-height: 160%;
+          letter-spacing: 0.572px;
+        }
+      }
+    }
+
+    .createpost_text_area {
+      height: 289px;
+      background-color: #fbfbfb;
+      border: 1px solid #e0e0e0;
+    }
+
+    .createpost_header {
+      height: 50px;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      background-color: #f5f5f5;
+
+      h4 {
+        color: #000;
+        font-size: 25.611px;
+        font-family: Poppins;
+        line-height: 160%;
+        letter-spacing: 1.144px;
+        margin: 0;
+      }
+    }
+    .createpost_buttons {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0px;
+
+      button {
+        width: 40% !important;
+        height: 50px;
+        flex-shrink: 0;
+        border-radius: 5px;
+        margin-right: 20px;
+        border: none;
+        color: #bababa;
+        font-size: 15px;
+        font-family: Poppins;
+        font-weight: 500;
+        line-height: 160%;
+        letter-spacing: 0.96px;
+
+        &:nth-child(1) {
+          background: #fd5901;
+          color: #fff;
+        }
+      }
+    }
+  }
+}

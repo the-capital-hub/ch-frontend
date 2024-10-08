@@ -1,0 +1,64 @@
+.ConnectionCard_container {
+  gap: 5px;
+  overflow-x: auto;
+  //   width: 100%;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10rem;
+    background-color: white;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10rem;
+    background-color: black;
+    margin-inline: 10dvw;
+  }
+
+  .single-card {
+    // background-color: #242427;
+    background: var(--bs-light);
+    gap: 5px;
+    flex: 0 0 12rem;
+    padding: 20px;
+    border-radius: 0.37rem;
+    text-align: center;
+    color: var(--d-l-grey);
+
+    img {
+      border:2px solid #ffb27d;
+      height: 50px;
+      width: 50px;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 20px;
+    }
+
+    button {
+      flex-shrink: 0;
+      border-radius: 10px;
+      background: #fd5901;
+      color: #fff;
+      font-size: 13px;
+      font-family: Poppins;
+      font-weight: 500;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      // position: absolute;
+      // bottom: 9px;
+    }
+  }
+
+  .single-card:hover {
+    cursor: pointer;
+  }
+
+}

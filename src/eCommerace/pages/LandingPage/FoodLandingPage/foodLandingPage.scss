@@ -1,0 +1,448 @@
+.food_landing-page_Container {
+  --color-primary: #ff7b00;
+  --color-primary-text: #fff;
+  --color-form-primary: #ff7a00;
+  --color-form-btn-text: #fff;
+  --color-helpCard-dark: #383838;
+  --color-ripple: 255, 123, 0;
+
+  &.container-fluid {
+    padding: 0;
+  }
+
+  h1 {
+    font-size: 36px !important;
+    font-weight: 800;
+
+    @media (min-width: 768px) {
+      font-size: 40px !important;
+    }
+
+    @media (min-width: 992px) {
+      font-size: 50px !important;
+    }
+  }
+
+  .LinkBtn {
+    background: #ff7a00;
+    border: none;
+    &:hover {
+      background-color: #f19f52;
+      color: white;
+    }
+
+    @media (min-width: 992px) {
+      width: 75%;
+    }
+
+    @media (min-width: 1200px) {
+      width: 50%;
+    }
+  }
+  .frist-section {
+    background-color: #e6e8dd;
+    border-radius: 30px;
+    margin: 20px;
+    margin-bottom: 0;
+    padding: 15px;
+    position: relative;
+
+    .left-section {
+      // width: fit-content;
+      flex: 0 0 60%;
+      @media (min-width: 992px) {
+        flex: auto;
+      }
+      // flex-wrap: wrap;
+      .text-orange {
+        color: #ff7a00;
+      }
+
+      .LinkBtn {
+        background: #ff7a00;
+        border-radius: 40px;
+        padding: 10px 30px;
+        color: white;
+        outline: none;
+        width: max-content;
+        border: none;
+        text-decoration: none;
+
+        &:hover {
+          background-color: #f19f52;
+          color: white;
+        }
+      }
+    }
+
+    .right-section {
+      img {
+        width: 70%;
+        flex: 0 0 300px;
+        height: auto;
+      }
+    }
+    .down-arrow {
+      width: 45px;
+      height: 60px;
+      position: absolute;
+      bottom: -30px;
+      left: 42%;
+      margin: 10px;
+    }
+  }
+
+  .feature-cards {
+    display: flex;
+    gap: 40px;
+    margin: 40px auto;
+    justify-content: center;
+    align-items: center;
+    .feature-card {
+      height: 200px;
+      width: 220px;
+      border-radius: var(--border-radius);
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      padding: 20px;
+      text-align: center;
+
+      img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 20px;
+      }
+      h6 {
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        font-size: 16px;
+      }
+      p {
+        text-align: center;
+        color: #767676;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .second-section {
+    gap: 20px;
+    margin-bottom: 50px;
+
+    h3 {
+      color: #ff7a00;
+    }
+
+    h1 {
+      font-size: 50px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    p {
+      text-align: center;
+    }
+
+    .main-box {
+      width: 85%;
+      gap: 25px;
+
+      .inner-box {
+        background-color: #d8d8d8;
+        display: flex;
+        flex-direction: column;
+        text-align: start;
+        border-radius: var(--border-radius);
+        padding: 10px;
+
+        h5 {
+          font-weight: 800;
+        }
+
+        img {
+          width: 120px;
+          height: 100px;
+          margin: auto;
+        }
+
+        p {
+          text-align: start;
+        }
+      }
+    }
+  }
+
+  .third-section {
+    background-color: #383838;
+    align-items: center;
+
+    .left-section {
+      margin: 15px;
+
+      h6 {
+        color: #ff7a00;
+      }
+
+      h1 {
+        color: white;
+      }
+
+      span {
+        color: #ff7a00;
+      }
+
+      p {
+        color: white;
+      }
+
+      .LinkBtn {
+        background: #ff7a00;
+        border-radius: 40px;
+        padding: 10px 30px;
+        color: white;
+        outline: none;
+        width: max-content;
+        border: none;
+        text-decoration: none;
+
+        &:hover {
+          background-color: #f19f52;
+          color: white;
+        }
+      }
+    }
+
+    .right-section {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .forth-section {
+    h4 {
+      color: #ff7a00;
+    }
+
+    .inner {
+      .right-section {
+        h1 {
+          font-size: 50px;
+          font-weight: 600;
+        }
+
+        .LinkBtn {
+          background: #ff7a00;
+          border-radius: 40px;
+          padding: 10px 30px;
+          color: white;
+          outline: none;
+          width: max-content;
+          border: none;
+          text-decoration: none;
+
+          &:hover {
+            background-color: #f19f52;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  .two-scroll-section {
+    h1 {
+      margin-left: 20px;
+      font-weight: 600;
+      font-size: 48px;
+    }
+    .LinkBtn {
+      background: #ff7a00;
+      border-radius: 40px;
+      padding: 10px 30px;
+      color: white;
+      outline: none;
+      width: max-content;
+      border: none;
+      text-decoration: none;
+
+      &:hover {
+        background-color: #f19f52;
+        color: white;
+      }
+    }
+  }
+
+  .help-cards {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    .help-card:nth-child(2) {
+      background-color: #383838;
+      color: white;
+    }
+    .help-card:nth-child(4) {
+      background-color: #383838;
+      color: white;
+    }
+    .help-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      border-radius: var(--border-radius);
+      width: 300px;
+      height: 330px;
+      padding: 20px 30px 40px 30px;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      background-color: white;
+
+      p.count {
+        font-size: 18px;
+        font-weight: 600;
+        align-self: start;
+      }
+
+      h6.title {
+        font-weight: 600;
+        text-align: center;
+        height: 40px;
+        width: 80%;
+        font-size: 22px;
+        line-height: 1.3;
+      }
+
+      p {
+        text-align: center;
+        font-size: 14px;
+      }
+
+      .LinkBtn {
+        margin-top: auto;
+        border-radius: 50px;
+        background-color: #ff7a00;
+        color: white;
+
+        padding: 5px 20px;
+        font-size: 14px;
+        text-decoration: none;
+        &:hover {
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+        &:active {
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px inset;
+        }
+      }
+    }
+  }
+
+  .card_bg {
+    border-radius: 15px;
+    // padding: 20px;
+    background-color: #5c6ff6;
+    .join-us-card {
+      height: 400px;
+      width: 351px;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      // margin-left: 50%;
+      align-items: center;
+      img {
+        align-self: center;
+      }
+      & > div {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        flex-grow: 1;
+        h6 {
+          font-weight: 600;
+          color: #5c59c1;
+        }
+
+        .LinkBtn {
+          background: #ff7a00;
+          margin-top: auto;
+          align-self: end;
+          position: relative;
+          right: 10px;
+        }
+      }
+    }
+  }
+
+  .fifth-section {
+    background-color: #383838;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: white;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding: 20px;
+    h1 {
+      font-weight: 600;
+      font-size: 48px;
+    }
+    span {
+      color: #ff7a00;
+    }
+  }
+
+  .last {
+    .input-div {
+      width: 100%;
+      input {
+        border: none;
+        outline: none;
+      }
+      button {
+        background: #ff7a00;
+        border-radius: 40px;
+        padding: 10px 30px;
+        color: white;
+        outline: none;
+        width: max-content;
+        border: none;
+        text-decoration: none;
+
+        &:hover {
+          background-color: #f19f52;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .food_landing-page_Container {
+    .frist-section {
+      .down-arrow {
+        width: 45px;
+        height: 60px;
+        position: absolute;
+        bottom: -30px;
+        left: 48.5%;
+        margin: 10px;
+      }
+    }
+    .two-scroll-section {
+      h1 {
+        margin: 30px;
+      }
+    }
+    .last {
+      .input-div {
+        width: 25%;
+      }
+    }
+  }
+}

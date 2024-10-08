@@ -1,0 +1,129 @@
+.uploadModal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  z-index: 500;
+  .blackbg {
+    background: #000;
+    height: 100vh;
+    width: 100%;
+    opacity: 0.2;
+    top: 0;
+  }
+  .modalcontainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .modalwrapper {
+      // background-color: #fff;
+      background-color: var(--white-to-grey);
+      border-radius: var(--border-radius);
+      padding: 30px 60px;
+      position: absolute;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      // justify-content: center;
+      right: 0;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      height: 55%;
+      width: 35%;
+      margin: auto;
+      gap: 30px;
+      h1{
+        color: var(--d-l-grey);
+      }
+      .foldernames {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      input {
+        width: 250px;
+      }
+      select {
+        padding: 10px 20px;
+        border-radius: 25px;
+        outline: none;
+      }
+      .name_input {
+        border: 1px solid black;
+      }
+      .name_input:focus {
+        outline: none;
+      }
+
+      .upload_button {
+        color: white;
+        background-color: #fd5901;
+        padding: 10px 30px;
+        border-radius: 25px;
+        border: none;
+        outline: none;
+      }
+
+      .visually-hiden {
+        position: absolute !important;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+        clip: rect(1px, 1px, 1px, 1px);
+      }
+
+      .doc_upload_label {
+        color: #000;
+        border-radius: 10px;
+        border: 0.125em dashed #fd5901;
+        background-color: #fd590144;
+        padding: 1em 2.5em;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .file_list_button {
+        svg {
+          color: #fd5901;
+        }
+        // &:hover {
+        //   svg {
+        //     color: #fd5901;
+        //   }
+        // }
+      }
+    }
+  }
+
+  .uploaded_file_name {
+    width: 15ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .progress {
+    width: 200px;
+    flex: 0 0 20px;
+  }
+
+  .bg_orange {
+    background-color: #fd5901;
+  }
+}
+
+@media (max-width: 768px) {
+  .uploadModal {
+    .modalcontainer {
+      .modalwrapper {
+        width: 80%;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}

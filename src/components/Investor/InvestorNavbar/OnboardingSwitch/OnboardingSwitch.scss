@@ -1,0 +1,51 @@
+.onboarding_switch_wrapper {
+  .form-check-input {
+    cursor: pointer;
+
+    height: 30px;
+    width: 50px;
+
+    border-color: #c2c2c2;
+    border-width: 2px;
+    // background-image: url("../../../../Images/StartUp/Navbar/OrangeCircle.svg");
+
+    &:focus {
+      box-shadow: 0 0 0 0.25rem var(--currentTheme-light); //#fd590133;
+      border-color: var(--currentTheme);
+      background-image: url("../../../../Images/StartUp/Navbar/OrangeCircle.svg");
+
+      &:checked {
+        background-color: var(--currentTheme);
+        border-color: var(--currentTheme);
+        background-image: url("../../../../Images/StartUp/Navbar/WhiteCircle.svg");
+      }
+    }
+
+    &:checked {
+      background-color: var(--currentTheme);
+      border-color: var(--currentTheme);
+      background-image: url("../../../../Images/StartUp/Navbar/WhiteCircle.svg");
+    }
+
+    // Investor theme
+    &.investor {
+      &:focus {
+        box-shadow: 0 0 0 0.25rem var(--currentTheme-dark); //#fd590133;
+        border-color: var(--currentTheme-dark);
+        background-image: url("../../../../Images/StartUp/Navbar/GreenCircle.svg");
+
+        &:checked {
+          background-color: var(--currentTheme);
+          border-color: var(--currentTheme-dark);
+          background-image: url("../../../../Images/StartUp/Navbar/WhiteCircle.svg");
+        }
+      }
+
+      &:checked {
+        background-color: var(--currentTheme);
+        border-color: var(--currentTheme-dark);
+        background-image: url("../../../../Images/StartUp/Navbar/WhiteCircle.svg");
+      }
+    }
+  }
+}

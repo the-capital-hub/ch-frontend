@@ -1,0 +1,158 @@
+.view_profile_container {
+  flex-shrink: 0;
+  // border: 1px solid #afafaf;
+  border-radius: var(--border-radius);
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+
+  .view_profile_name_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+
+    .profile-image {
+      border: 2px solid #fd5901;
+    }
+
+    .manage_acount_btn {
+      background: #fd5901;
+      color: #fff;
+    }
+
+    .right_view_profile_card {
+      border-radius: var(--border-radius);
+
+      .card-header {
+        background-color: #000;
+        color: #fff;
+        font-size: 18px;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 1rem 1rem 0px 0px;
+
+        .loop_title {
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+
+      .card-body {
+        h5 {
+          color: #000;
+          font-size: 13px;
+          font-family: Poppins;
+          font-weight: 500;
+        }
+
+        .input-group {
+          position: relative;
+        }
+
+        .input-group input {
+          height: 2rem;
+        }
+
+        .input-group input::placeholder {
+          font-size: 0.8rem;
+        }
+
+        .send-button {
+          position: absolute;
+          right: 0;
+          top: 0;
+          z-index: 1;
+          background-color: #000;
+          color: #fff;
+        }
+      }
+    }
+
+    .right_loop_card {
+      width: 90%;
+    }
+
+    .loop_container {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      background: #eaeef2;
+    }
+  }
+
+  .right_profile_text {
+    align-items: center;
+
+    .typography {
+      // color: #000;
+      color: var(--d-l-grey);
+      font-size: 20px;
+      font-family: Poppins;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .smallest_typo {
+      color: #686868;
+      font-size: 12px;
+      font-family: Poppins;
+    }
+
+    h2 {
+      color: #000;
+      font-size: 15px;
+      font-family: Poppins;
+      font-weight: 500;
+      display: flex;
+    }
+  }
+
+  .flex_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .profile_btn {
+    width: 90%;
+    height: 45px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #fd5901;
+    color: #fff;
+    font-size: 13px;
+    font-family: Poppins;
+    font-weight: 500;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .view_profile_container {
+    margin-top: 1rem;
+
+    .view_profile_name_section {
+      .right_view_profile_card {
+        .card-body {
+          .send-button {
+            z-index: 0 !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .view_profile_container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}

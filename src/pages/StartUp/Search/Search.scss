@@ -1,0 +1,77 @@
+.serach_main_container {
+  display: flex;
+  flex-direction: column;
+  min-height: 90vh;
+  // margin-top: 2rem;
+  .box {
+    // background-color: #fff;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    // background: #fff;
+    background: var(--white-to-grey);
+    box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.05);
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
+
+    h4 {
+      font-size: 26px;
+      color: var(--d-l-grey);
+
+    }
+  }
+
+  .content_section {
+    span{
+      background: var(--white-to-grey);
+      p{
+        color: var(--d-l-grey);
+
+      }
+    }
+    .people_container:last-child {
+      border-bottom: none;
+    }
+    .people_container {
+      padding: 15px 0;
+      border-bottom: 1px solid #b5b5b5;
+
+      // &:hover {
+      //   background-color: var(--hover-bg-grey);
+      // }
+
+      .short_desc {
+        display: flex;
+        gap: 15px;
+        p{
+          color: var(--d-l-grey);
+
+        }
+        img {
+          //   border-radius: 50% !important;
+          width: 80px;
+          height: 80px;
+          //   object-fit: contain;
+        }
+
+        .people_name_link {
+          text-decoration: none;
+          color: var(--d-l-grey);
+
+          &:hover {
+            color: #fd5901;
+          }
+        }
+      }
+    }
+  }
+
+  .explore_link {
+    text-decoration: none;
+    color: #fd5901;
+  }
+
+  .result_company_link {
+    width: fit-content;
+  }
+}

@@ -1,0 +1,91 @@
+.edit_settings_container {
+  fieldset,
+  legend {
+    all: revert;
+  }
+
+  fieldset {
+    border: 1px solid #e7e7e7;
+    &:focus-within {
+      border: 1px solid rgba(253, 89, 1, 1);
+    }
+  }
+
+  .edit_chat_input {
+    width: 100%;
+    border: none;
+    outline: none;
+
+    background-color: transparent;
+    color: #000;
+  }
+
+  .btn-base {
+    border: none;
+    border-radius: 8px;
+
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    padding: 0.75em 2.5em;
+
+    &:active {
+      transition: transform 0.15s ease-in-out;
+      transform: scale(0.95);
+    }
+
+    &.startup {
+      background-color: #fd5901;
+      color: white;
+    }
+
+    &.investor {
+      background-color: #d3f36b;
+      color: black;
+    }
+  }
+
+  .single-member {
+    background-color: var(--white-to-grey);
+    img {
+      object-fit: cover;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
+
+.orange_button {
+  border-radius: 5px;
+  background: #fd5901;
+  border: 1px solid #fd5901;
+  padding: 8px 25px;
+  width: auto;
+  font-size: 14px;
+  color: white;
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.investor {
+    background: #d3f36b;
+    border: 1px solid #d3f36b;
+    color: black;
+  }
+}
+
+.cancel_button {
+  border-radius: 5px;
+  background: red;
+  border: none;
+  // border: 1px solid #e9e9e9;
+  padding: 8px 25px;
+  width: auto;
+  font-size: 14px;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}

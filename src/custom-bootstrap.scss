@@ -1,0 +1,212 @@
+// @import "bootstrap/scss/_functions.scss";
+// @import "bootstrap/scss/_variables.scss";
+// @import "bootstrap/scss/_variables-dark.scss";
+
+// Include functions first
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+
+// Change bootstrap defaults
+// $danger: yellow;
+$primary: #0d6efd;
+$secondary: #6c757d;
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #212529;
+$startup: #fd5901;
+$investor: #d3f36b;
+
+// Custom colors
+$custom-colors: (
+  startup: $startup,
+  investor: $investor,
+);
+
+// theme colors
+$theme-colors: (
+  primary: $primary,
+  secondary: $secondary,
+  success: $success,
+  info: $info,
+  warning: $warning,
+  danger: $danger,
+  light: $light,
+  dark: $dark,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+
+$utilities-colors: map-merge($utilities-colors, $theme-colors-rgb);
+$utilities-text: map-merge($utilities-text, $utilities-colors);
+$utilities-text-colors: map-loop($utilities-text, rgba-css-var, "$key", "text");
+$utilities-bg: map-merge($utilities-bg, $utilities-colors);
+$utilities-bg-colors: map-loop($utilities-bg, rgba-css-var, "$key", "bg");
+
+// @import "bootstrap/scss/_mixins.scss";
+// @import "bootstrap/scss/_maps.scss";
+// @import "bootstrap/scss/_utilities.scss";
+// // Light mode
+// $custom-colors-text: (
+//   startup: $startup,
+// );
+// $custom-colors-bg-subtle: (
+//   startup: tint-color($startup, 20%),
+// );
+// $custom-colors-border-subtle: (
+//   startup: tint-color($startup, 20%),
+// );
+
+// $theme-colors-text: map-merge($theme-colors-text, $custom-colors-text);
+// $theme-colors-bg-subtle: map-merge(
+//   $theme-colors-bg-subtle,
+//   $custom-colors-bg-subtle
+// );
+// $theme-colors-border-subtle: map-merge(
+//   $theme-colors-border-subtle,
+//   $custom-colors-border-subtle
+// );
+
+// // Dark mode
+// $custom-colors-text-dark: (
+//   startup: $startup,
+// );
+// $custom-colors-bg-subtle-dark: (
+//   startup: shade-color($startup, 40%),
+// );
+// $custom-colors-border-subtle-dark: (
+//   startup: shade-color($startup, 40%),
+// );
+
+// $theme-colors-text-dark: map-merge(
+//   $theme-colors-text-dark,
+//   $custom-colors-text-dark
+// );
+// $theme-colors-bg-subtle-dark: map-merge(
+//   $theme-colors-bg-subtle-dark,
+//   $custom-colors-bg-subtle-dark
+// );
+// $theme-colors-border-subtle-dark: map-merge(
+//   $theme-colors-border-subtle-dark,
+//   $custom-colors-border-subtle-dark
+// );
+
+// Generate colors for color-modes
+// Light mode
+$custom-colors-text: (
+  "startup": $startup,
+  "investor": $investor,
+);
+$custom-colors-bg-subtle: (
+  "startup": $startup,
+  "investor": $investor,
+);
+$custom-colors-border-subtle: (
+  "startup": $startup,
+  "investor": $investor,
+);
+
+$theme-colors-text: map-merge($theme-colors-text, $custom-colors-text);
+$theme-colors-bg-subtle: map-merge(
+  $theme-colors-bg-subtle,
+  $custom-colors-bg-subtle
+);
+$theme-colors-border-subtle: map-merge(
+  $theme-colors-border-subtle,
+  $custom-colors-border-subtle
+);
+
+// Dark mode
+$custom-colors-text-dark: (
+  "startup": shade-color($startup, 50%),
+  "investor": shade-color($investor, 50%),
+);
+$custom-colors-bg-subtle-dark: (
+  "startup": shade-color($startup, 30%),
+  "investor": shade-color($investor, 30%),
+);
+$custom-colors-border-subtle-dark: (
+  "startup": shade-color($startup, 50%),
+  "investor": shade-color($investor, 50%),
+);
+
+$theme-colors-text-dark: map-merge(
+  $theme-colors-text-dark,
+  $custom-colors-text-dark
+);
+$theme-colors-bg-subtle-dark: map-merge(
+  $theme-colors-bg-subtle-dark,
+  $custom-colors-bg-subtle-dark
+);
+$theme-colors-border-subtle-dark: map-merge(
+  $theme-colors-border-subtle-dark,
+  $custom-colors-border-subtle-dark
+);
+
+// Bootstrap Classes
+.container-fluid {
+  margin: 0;
+  padding: 0;
+}
+
+.btn {
+  &:active {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px inset;
+  }
+}
+
+// // Import must in the bottom
+// @import "bootstrap/scss/bootstrap.scss";
+
+// These imports go last
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+// @import "bootstrap/scss/images";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+// @import "bootstrap/scss/tables";
+// @import "bootstrap/scss/forms";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/transitions";
+@import "bootstrap/scss/dropdown";
+// @import "bootstrap/scss/button-group";
+// @import "bootstrap/scss/nav";
+// @import "bootstrap/scss/navbar"; // Requires nav
+// @import "bootstrap/scss/card";
+// @import "bootstrap/scss/breadcrumb";
+// @import "bootstrap/scss/accordion";
+// @import "bootstrap/scss/pagination";
+// @import "bootstrap/scss/badge";
+// @import "bootstrap/scss/alert";
+// @import "bootstrap/scss/progress";
+// @import "bootstrap/scss/list-group";
+@import "bootstrap/scss/close";
+// @import "bootstrap/scss/toasts";
+@import "bootstrap/scss/modal"; // Requires transitions
+// @import "bootstrap/scss/tooltip";
+@import "bootstrap/scss/popover";
+// @import "bootstrap/scss/carousel";
+// @import "bootstrap/scss/spinners";
+@import "bootstrap/scss/offcanvas"; // Requires transitions
+// @import "bootstrap/scss/placeholders";
+
+// Helpers
+// @import "bootstrap/scss/helpers";
+
+// Utilities
+@import "bootstrap/scss/utilities/api";
+
+// Import custom styles of bs components after bootstrap.scss import
+@import "./custom-bs-components.scss";
+
+// customize dark mode
+@import "./custom-theme.scss";

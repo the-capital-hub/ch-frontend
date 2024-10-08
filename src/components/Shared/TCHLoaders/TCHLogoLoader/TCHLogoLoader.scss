@@ -1,0 +1,170 @@
+.logo-spinner-container {
+  .tch_svg {
+    // Color Spinner
+    &[data-type="colorSpinner"] {
+      svg {
+        // animation: growSpin-clock 1s linear infinite;
+
+        #path1 {
+          animation: colorChange-3 2s linear infinite;
+        }
+
+        #path2 {
+          animation: colorChange-1 2s linear infinite;
+        }
+
+        #path4 {
+          animation: colorChange-2 2s linear infinite;
+        }
+      }
+    }
+
+    // Clock Spinner
+    &[data-type="clockSpinner"] {
+      svg {
+        animation: growSpin-clock 1s linear infinite;
+
+        #path1 {
+          animation: colorChange-3 2s linear infinite;
+        }
+
+        #path2 {
+          animation: colorChange-1 2s linear infinite;
+        }
+
+        #path4 {
+          animation: colorChange-2 2s linear infinite;
+        }
+      }
+    }
+
+    // Growing Alternating Spinner
+    &[data-type="growAltSpinner"] {
+      svg {
+        animation: growAltSpin 5s linear infinite;
+
+        #path1 {
+          animation: colorChange-3 2s linear infinite;
+        }
+
+        #path2 {
+          animation: colorChange-1 2s linear infinite;
+        }
+
+        #path4 {
+          animation: colorChange-2 2s linear infinite;
+        }
+      }
+    }
+  }
+}
+
+// KeyFrames
+@keyframes growSpin-clock {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes growAltSpin {
+  0% {
+    transform: scale(0.75) rotate(0deg);
+  }
+
+  20% {
+    transform: scale(1.25) rotate(360deg);
+  }
+
+  40% {
+    transform: scale(0.75) rotate(0deg);
+  }
+
+  60% {
+    transform: scale(1.25) rotate(360deg);
+  }
+
+  80% {
+    transform: scale(0.75) rotate(0deg);
+  }
+  100% {
+    transform: scale(1.25) rotate(360deg);
+  }
+}
+
+@keyframes colorChange-1 {
+  0% {
+    fill: #e8635e;
+  }
+
+  20% {
+    fill: #f5bc52;
+  }
+
+  40% {
+    fill: #a15974;
+  }
+
+  60% {
+    fill: #8d6880;
+  }
+
+  80% {
+    fill: #abdde3;
+  }
+  100% {
+    fill: #5eb9c5;
+  }
+}
+
+@keyframes colorChange-2 {
+  80% {
+    fill: #e8635e;
+  }
+
+  100% {
+    fill: #f5bc52;
+  }
+
+  0% {
+    fill: #a15974;
+  }
+
+  20% {
+    fill: #8d6880;
+  }
+
+  40% {
+    fill: #abdde3;
+  }
+  60% {
+    fill: #5eb9c5;
+  }
+}
+
+@keyframes colorChange-3 {
+  40% {
+    fill: #e8635e;
+  }
+
+  60% {
+    fill: #f5bc52;
+  }
+
+  80% {
+    fill: #a15974;
+  }
+
+  100% {
+    fill: #8d6880;
+  }
+
+  0% {
+    fill: #abdde3;
+  }
+  20% {
+    fill: #5eb9c5;
+  }
+}

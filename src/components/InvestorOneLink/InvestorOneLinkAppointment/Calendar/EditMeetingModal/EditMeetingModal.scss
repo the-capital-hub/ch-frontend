@@ -1,0 +1,88 @@
+.edit_meeting_modal_wrapper {
+  .edit_meeting_form {
+    fieldset,
+    legend {
+      all: revert;
+    }
+
+    fieldset {
+      border: 1px solid #e7e7e7;
+      border-radius: 10px;
+      box-shadow: 0 0 30px 2px rgb(211, 243, 107, 0.1);
+
+      &:focus-within {
+        border: 1px solid rgb(211, 243, 107);
+      }
+
+      legend {
+        background-color: var(--white-to-grey);
+        padding: 0.25em 0.5em;
+        border-radius: 10rem;
+        color: var(--d-l-grey);
+      }
+
+      .meeting_input {
+        border: none;
+        outline: none;
+        width: 100%;
+      }
+
+      .view-more {
+        float: right;
+        color: #007bff; // Adjust the color as needed
+        cursor: pointer;
+        text-decoration: underline;
+        margin-right: 10px; // Adjust the spacing as needed
+      }
+    }
+  }
+
+  .create_button {
+    border: 1px solid rgb(211, 243, 107);
+    border-radius: 10px;
+
+    background-color: rgb(211, 243, 107);
+    color: black;
+
+    font-size: 1rem;
+    line-height: 0.75rem;
+    text-align: center;
+
+    padding: 1em 1.5em;
+  }
+
+  .modal {
+    margin-top: 20%;
+
+    @media (min-width: 500px) {
+      margin-top: 15%;
+    }
+
+    @media (min-width: 575px) {
+      margin-top: 13.5%;
+    }
+
+    @media (min-width: 768px) {
+      margin-top: 10%;
+    }
+
+    @media (min-width: 769px) {
+      margin-top: 0;
+    }
+  }
+
+  .grow_in {
+    animation: growIn 0.25s linear forwards;
+  }
+
+  // Grow in animation
+  @keyframes growIn {
+    from {
+      transform: scale(0);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
+}

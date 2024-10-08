@@ -1,0 +1,326 @@
+.process-container {
+  background-color: #050505;
+  width: 100vw;
+  color: #ffffff;
+  padding: 50px 0;
+  text-align: center;
+
+  .title {
+    font-size: 36px;
+    font-weight: 500;
+    margin-bottom: 30px;
+  }
+
+  .steps-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 50px;
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 10px;
+
+      .step-icon {
+        height: 90px;
+        width: 90px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        &.step1 {
+          background: #FFFFFF6E;
+        }
+
+        &.step2 {
+          background: #FF5900;
+        }
+
+        &.step3 {
+          background: #5A48C5;
+        }
+
+        &.step4 {
+          background: #FF5252;
+        }
+
+        &.step5 {
+          background: #BB950D;
+        }
+
+        &.step6 {
+          background: #393A3A;
+        }
+
+        &.step7 {
+          background: #8E3E8F;
+        }
+
+        &.active {
+          background-color: #ff5900;
+        }
+
+        .icon {
+          height: 45px;
+          width: 45px;
+        }
+      }
+
+      .step-text {
+        font-size: 12px;
+        font-weight: 600;
+        margin-top: 10px;
+      }
+    }
+
+    .arrow {
+      height: 20px;
+    }
+  }
+
+  .content-container {
+    width: 80%;
+    margin: 0 auto;
+
+    .content-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 50px;
+      position: relative;
+
+      &.reverse {
+        flex-direction: row-reverse;
+      }
+
+      .number,
+      .number-right {
+        img {
+          width: 60px;
+          height: 80px;
+          margin-right: 20px;
+        }
+
+        background: -webkit-linear-gradient(#ff5900, #000000);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .number {
+        top: -30px;
+        left: -30px;
+      }
+
+      .number-right {
+        top: 0px;
+      }
+
+      .text-content {
+        width: 45%;
+        text-align: left;
+        @media (max-width: 480px){
+          width: 100%;
+        }
+
+        .headProNumber {
+          display: flex;
+          height: 5rem;
+          align-items: center;
+
+          h1 {
+            font-size: 28px;
+            font-weight: 600;
+            @media (max-width: 480px){
+              font-size: 20px;
+              position: relative;
+              top: -50px;
+            }
+          }
+        }
+
+        p {
+          font-size: 16px;
+          font-weight: 400;
+          margin: 20px 0;
+          color: #ffffff;
+          @media (max-width: 480px){
+            position: relative;
+            top: -10px;
+            text-align: center;
+          }
+        }
+
+        .learn-more {
+          background-color: #ff5900;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 20px;
+          font-size: 16px;
+          font-weight: 500;
+          color: #fff;
+          cursor: pointer; 
+          @media (max-width: 480px){
+            top: 2px;
+          }
+        }
+      }
+
+      .image-content {
+        width: 45%;
+        img {
+          width: 100%;
+          border-radius: 20px;
+        }
+        @media (max-width: 480px){
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .steps-container {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 0 10px;
+
+    .step {
+      flex: 0 0 auto;
+    }
+
+    .arrow {
+      display: none;
+    }
+  }
+
+  .content-container {
+    width: 90%;
+
+    .content-section,
+    .content-section.reverse {
+      flex-direction: column;
+      align-items: center;
+
+      .number,
+      .number-right {
+        top: -10px;
+        left: 10px;
+        right: auto;
+        transform: translateX(0);
+        font-size: 40px;
+      }
+
+      .text-content,
+      .image-content {
+        width: 100%;
+        text-align: center;
+        margin: 0; // Remove default margins
+      }
+
+      .text-content {
+        h1 {
+          font-size: 24px;
+          margin: 10px 0; // Adjust margin
+        }
+
+        p {
+          font-size: 14px;
+          margin: 10px 0; // Adjust margin
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 28px;
+  }
+
+  .steps-container .step .step-icon {
+    height: 70px;
+    width: 70px;
+
+    .icon {
+      height: 35px;
+      width: 35px;
+    }
+  }
+
+  .content-container {
+    width: 100%;
+
+    .content-section,
+    .content-section.reverse {
+      display: block;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 30px;
+
+      .number,
+      .number-right {
+        font-size: 30px;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .text-content {
+        width: 100%;
+        text-align: center;
+
+        .headProNumber {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          text-align: center;
+          margin-bottom: 10px;
+
+          h1 {
+            position: relative;
+            top: -60px;
+            font-size: 20px;
+            margin-bottom: 10px;
+          }
+        }
+
+        p {
+          font-size: 14px;
+          margin-top: 50px;
+          position: relative;
+          top: -60px;
+        }
+
+        .learn-more {
+          font-size: 14px;
+          position: relative;
+          top: -50px;
+          padding: 8px 16px;
+          width: 100%;
+          text-align: center;
+          margin-bottom: 50px;
+        }
+      }
+
+      .image-content {
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: center;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

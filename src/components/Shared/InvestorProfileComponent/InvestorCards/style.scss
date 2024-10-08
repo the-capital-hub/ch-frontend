@@ -1,0 +1,135 @@
+.profile-section {
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.investment-area, .companies-invest, .joint-investments {
+  margin-bottom: 20px;
+  max-width: 800px;
+
+  h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+
+  .areas, .companies, .partners {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .area, .company, .partner {
+      background-color: #2a2a2a;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      height: 40px;
+      gap: 10px;
+      max-width: auto;
+
+      img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+      }
+
+      span {
+        font-size: 1em;
+        color: #ddd;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+.investment-area, .companies-invest, .joint-investments {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1024px) {
+  .investment-area, .companies-invest, .joint-investments {
+    max-width: 100%;
+    padding: 0 20px;
+
+    h2 {
+      font-size: 1.4em;
+    }
+
+    .areas, .companies, .partners {
+      gap: 8px;
+
+      .area, .company, .partner {
+        height: 35px;
+
+        img {
+          width: 25px;
+          height: 25px;
+        }
+
+        span {
+          font-size: 0.9em;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .investment-area, .companies-invest, .joint-investments {
+    padding: 0 15px;
+
+    h2 {
+      font-size: 1.3em;
+    }
+
+    .areas, .companies, .partners {
+      gap: 6px;
+
+      .area, .company, .partner {
+        height: 30px;
+
+        img {
+          width: 20px;
+          height: 20px;
+        }
+
+        span {
+          font-size: 0.8em;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .investment-area, .companies-invest, .joint-investments {
+    padding: 0 10px;
+
+    h2 {
+      font-size: 1.2em;
+    }
+
+    .areas, .companies, .partners {
+      flex-direction: column;
+      gap: 5px;
+
+      .area, .company, .partner {
+        width: 100%;
+        height: auto;
+
+        img {
+          width: 20px;
+          height: 20px;
+        }
+
+        span {
+          font-size: 0.8em;
+        }
+      }
+    }
+  }
+}

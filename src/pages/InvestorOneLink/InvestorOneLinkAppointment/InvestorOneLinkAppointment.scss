@@ -1,0 +1,159 @@
+.appointment_wrapper {
+  // &.leftBorder {
+  //   @media (min-width: 1200px) {
+  //     border-left: 1px solid #e7e7e7;
+  //   }
+  // }
+
+  .appointment_section {
+    background-color: var(--white-to-grey);
+    color: var(--d-l-grey);
+  }
+
+  .two_col_container {
+    display: grid;
+    // grid-template-columns: 67.5% 30%;
+    grid-template-columns: 100%;
+    justify-content: space-between;
+  }
+
+  //   Utilities
+  .div__heading {
+    text-decoration: underline;
+    text-decoration-color: rgba(211, 243, 107, 1);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.25em;
+  }
+  // .time_input {
+  //   padding: 1em 0.75em;
+  //   border: 1px solid rgba(154, 154, 154, 1);
+  //   border-radius: 10px;
+  //   background-color: rgba(242, 242, 242, 1);
+  // }
+
+  .btn-capital {
+    width: fit-content;
+    background-color: rgba(211, 243, 107, 1);
+    border: 1px solid rgba(211, 243, 107, 1);
+    border-radius: 5px;
+    outline: none;
+
+    color: black;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 0.75rem;
+    padding: 0.75em 1em;
+
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+      transform: scale(0.95) !important;
+    }
+  }
+
+  .view__btn {
+    font-size: 1.25rem;
+    outline: none;
+    background-color: transparent;
+    color: rgba(128, 128, 128, 0.75);
+    //   transition: all 150ms ease-in;
+  }
+
+  .active__view {
+    //   transition: all 150ms ease-in;
+    background-color: white;
+    color: black;
+    box-shadow: 0 0 10px rgba(188, 188, 188, 0.75);
+  }
+
+  .upload_input {
+    border: 0.1rem dashed rgba(140, 90, 201, 1);
+    background-color: rgba(140, 90, 201, 0.08);
+    border-radius: 10px;
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block: 0.75em;
+    cursor: pointer;
+  }
+
+  .agenda_input {
+    outline: none;
+    resize: none;
+    overflow-y: hidden;
+  }
+
+  .clip__text {
+    width: 15ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .page_heading {
+    font-size: 28px;
+    color: var(--d-l-grey);
+    @media (min-width: 1200px) {
+      font-size: 32px;
+    }
+  }
+}
+
+.custom-calendar {
+  width: 100%;
+   background-color: transparent !important;
+  .p-inputtext {
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background-color: transparent;
+  }
+  
+  .p-datepicker {
+      border: none;
+      border-radius: 8px;
+      //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: transparent;
+  }
+
+  .p-datepicker-header {
+      color: white;
+      border-radius: 8px 8px 0 0;
+      background-color: transparent;
+  }
+
+  .p-datepicker-title {
+      font-weight: bold;
+  }
+
+  .p-datepicker-today {
+      //background-color: #007bff;
+      color: white;
+  }
+
+  .p-datepicker-calendar {
+      // Targeting the week names for border styling
+      th {
+        margin: 0 10px; // Margin around each day name
+        padding: 0 5px; // Padding inside each day name
+        text-align: center;
+        background-color: rgba(211, 243, 107, 1); // Optional: Add background color
+        color: #000; // Optional: Change text color to match the border
+        border-radius: 5px;
+        width: 20px;
+      }
+  }
+
+  .p-datepicker-cell {
+      &.p-datepicker-current-day a {
+          //background-color: #007bff;
+          //color: white;
+          border-radius: 50%;
+      }
+  }
+}

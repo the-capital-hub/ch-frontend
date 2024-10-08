@@ -1,0 +1,116 @@
+// Variables for responsiveness
+$card-width: 13rem;
+$logo-size: 100px;
+
+.meetourteam_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    // margin-bottom: 10%;
+
+
+    .card {
+        border-radius: var(--border-radius);
+        background: #DBDBDB;
+        width: $card-width;
+        // margin-bottom: 20px;
+        display: flex;
+        flex-direction: column; // Add this to arrange name and designation vertically
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        max-height: 250px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 29.965px;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+            position: absolute;
+            // bottom: -88%;
+            top:112%;
+            width: 100%;
+
+            .name {
+                color: #000;
+                font-family: Poppins;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+
+            .designation {
+                color: #000;
+                font-family: Poppins;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+
+            }
+
+            .hovering_para {
+                color: #000;
+                font-family: Poppins;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 300;
+                line-height: 20px;
+                margin-top: 10px;
+                // width: 20rem;
+                text-align: center;
+            }
+        }
+
+        .social_icon_list {
+            display: flex;
+            position: absolute;
+            top: -18%;
+            margin-right:0px !important;
+
+            img {
+                cursor: pointer;
+                height: 35px;
+                width: 35px;
+                fill: aliceblue;
+            }
+
+        }
+
+
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .meetourteam_container {
+        justify-content: center;
+
+        .card {
+            width: 18rem;
+            margin-bottom: 14rem;
+
+            .info{
+                bottom: -75%;
+            }
+            .social_icon_list{
+                top: -22%;
+            }
+        }
+    }
+
+
+}

@@ -1,0 +1,115 @@
+.error_popup {
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+  }
+
+  .popup-content {
+    background-color: #fff;
+    padding: 40px;
+    text-align: center;
+    border-radius: var(--border-radius);
+    position: relative;
+    max-width: 95%;
+
+    @media (min-width: 820px) {
+      max-width: 40%;
+    }
+
+    .image_text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;  
+
+      @media (min-width: 768px) {
+        align-items: flex-start;
+        flex-direction: row;
+      }
+
+      h1 {
+        color: #000;
+        font-family: Poppins;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        margin: auto;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .after_register_popup {
+    position: relative;
+
+    .popup-content {
+      background-color: #fff;
+      padding: 40px;
+      text-align: center;
+      border-radius: var(--border-radius);
+      position: relative;
+      width: 80%;
+
+      h1 {
+        color: #000;
+        font-family: Poppins;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+
+      p {
+        color: #373737;
+        // text-align: justify;
+        font-family: Poppins;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+
+    button {
+      margin: 10px;
+    }
+
+    /* Style the close button */
+    .close-button {
+      width: 20px;
+      position: absolute;
+      top: 0px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .ok_button {
+      width: 20%;
+      height: 30px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      background: #fd5901;
+      color: #fff;
+      text-align: center;
+      font-family: Poppins;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      border: none;
+    }
+  }
+}

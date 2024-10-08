@@ -1,0 +1,112 @@
+.communities__wrapper {
+  width: 100%;
+  // border: 1px solid #cfcfcf;
+  margin-bottom: 1em;
+  background-color: var(--white-to-grey);
+
+  .communities__header {
+    color: var(--d-l-grey);
+  }
+
+  &[open] {
+    & .communities__header {
+      color: var(--currentTheme-dark);
+      border-bottom: 1px solid var(--chat-sidebar-chat-border);
+    }
+  }
+
+  .new__community {
+    cursor: pointer;
+  }
+
+  .my__communities {
+    flex: 0 0 14rem;
+    overflow-y: auto;
+
+    &:empty {
+      &::before {
+        content: "Create a Community";
+        color: var(--currentTheme-dark);
+        font-size: 1.125rem;
+        height: 100%;
+        display: grid;
+        place-items: center;
+      }
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(253, 89, 1, 0.2);
+      border-radius: 10rem;
+
+      &:hover {
+        background-color: rgba(253, 89, 1, 0.8);
+      }
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+      border-radius: 10rem;
+    }
+  }
+
+  .modal-header {
+    border-color: black;
+    border-width: 1px;
+  }
+}
+
+.orange__heading {
+  color: var(--currentTheme-dark);
+}
+
+.text__clip {
+  width: 20ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text__clip--15 {
+  // width: 15ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.community__card {
+  // background-color: rgba(234, 238, 242, 1);
+  cursor: pointer;
+  color: var(--d-l-grey);
+
+  & + .community__card {
+    border-top: 1px solid var(--chat-sidebar-chat-border);
+  }
+
+  // &:first-of-type {
+  //   border-top: 1px solid #b4b4b4aa;
+  // }
+
+  h5 {
+    font-size: 1.125rem;
+  }
+
+  .time__stamp {
+    font-size: 0.8rem;
+  }
+
+  .notification {
+    background: red;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    color: #fff;
+  }
+}

@@ -1,0 +1,123 @@
+.company__card {
+  margin-inline: auto;
+  scroll-snap-align: start;
+  flex: 0 0 100%;
+
+  box-shadow: 4px 4px 30px 0px rgba(211, 243, 107, 0.1);
+
+  @media (min-width: 500px) {
+    flex: 0 0 20rem;
+  }
+
+  @media (min-width: 900px) {
+    flex: 0 0 35rem;
+  }
+}
+
+.card-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.card__subtitle {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #545454;
+}
+
+.font--10 {
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: #000;
+  font-family: "Poppins";
+}
+
+// .overview__container {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1em;
+// }
+
+.link__container {
+  width: fit-content;
+  p {
+    // font-size: 0.75rem;
+    font-weight: 400;
+    width: fit-content;
+  }
+}
+
+.overview__link {
+  font-size: 0.75rem;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  background-color: #efefef;
+
+  img {
+    height: 15px;
+    width: 15px;
+  }
+}
+
+.people__container {
+  flex-direction: column;
+
+  @media (min-width: 900px) {
+    flex-direction: row;
+    align-items: center;
+
+    .join--btn {
+      margin-left: auto;
+    }
+  }
+}
+
+.user {
+  width: fit-content;
+}
+
+.user__padding {
+  padding: 0.35em;
+}
+
+.user__image {
+  width: 25px;
+  height: 25px;
+}
+
+.user__name {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.user__connections {
+  color: #6c6c6c;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.user__details {
+  gap: 0.25em;
+}
+
+.w-ellipses {
+  @media (min-width: 900px) {
+    width: 10ch;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+// .join--btn {
+//   button {
+//     font-size: 12px;
+//     font-weight: 500;
+//     padding-inline: 2em;
+//     padding-block: 0.75em;
+//   }
+// }

@@ -1,0 +1,67 @@
+.experience_modal_wrapper {
+  color: var(--d-l-grey);
+
+  .experience_modal_body {
+    .current_experience {
+      @media (min-width: 992px) {
+        flex: 0 0 48%;
+      }
+    }
+
+    .experience_form {
+      @media (min-width: 992px) {
+        flex: 0 0 48%;
+      }
+
+      legend {
+        font-size: 1rem;
+      }
+
+      .visually-hidden {
+        position: absolute !important;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+        clip: rect(1px, 1px, 1px, 1px);
+      }
+
+      input.visually-hidden:is(:focus, :focus-within) + label {
+        color: rgba(140, 90, 201, 1);
+      }
+      .upload__label {
+        width: 150px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 0.25em dotted rgba(140, 90, 201, 1);
+        border-radius: 15px;
+        background-color: rgba(140, 90, 201, 0.2);
+        cursor: pointer;
+
+        label {
+          font-size: 0.75rem;
+          cursor: pointer;
+        }
+      }
+      .modal__input {
+        outline: none;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        transition: border-color 0.3s ease-in-out;
+
+        &:focus {
+          border-color: rgba(140, 90, 201, 1);
+        }
+      }
+    }
+
+    .green_button {
+      &:active {
+        background-color: #d3f36b !important;
+        border: 1px solid #d3f36b !important;
+        transform: scale(0.95);
+      }
+    }
+  }
+}

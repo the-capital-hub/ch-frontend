@@ -1,0 +1,110 @@
+.milestone_modal_container {
+  .current_milestone {
+    background: var(--white-to-grey);
+  }
+  .add_milestone{
+    background: var(--white-to-grey);
+h5{
+  color: var(--d-l-grey);
+}
+  }
+  .badges__container {
+    // Scrollbars
+    &::-webkit-scrollbar {
+      height: 8px;
+
+      &-track {
+        border-radius: 10rem;
+        background-color: rgb(253, 89, 1, 0.2);
+        margin-inline: 10dvw;
+      }
+
+      &-thumb {
+        border-radius: 10rem;
+        background-color: rgb(253, 89, 1, 0.8);
+      }
+    }
+
+    &.investor {
+      &::-webkit-scrollbar {
+        height: 8px;
+
+        &-track {
+          border-radius: 10rem;
+          background-color: rgba(178, 204, 93, 0.2);
+          margin-inline: 10dvw;
+        }
+
+        &-thumb {
+          border-radius: 10rem;
+          background-color: rgba(178, 204, 93, 0.8);
+        }
+      }
+    }
+  }
+
+  .modal__input {
+    background-color: #fafafa;
+    outline: 0;
+    border: 1px solid #e7e7e7;
+    transition: border 0.3s ease-in-out;
+    &:focus {
+      border: 1px solid #fd5901;
+    }
+
+    &.investor {
+      &:focus {
+        border: 1px solid #d3f36b;
+      }
+    }
+  }
+
+  .modal_edit_btn {
+    outline: none;
+    border: none;
+    background-color: #fd5901;
+    padding: 0.5em;
+    border-radius: 10px;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.2);
+
+    &:active {
+      box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.2) inset;
+    }
+
+    svg {
+      fill: #fd5901;
+      stroke: #fafafa;
+      height: 1.5rem;
+      width: 2rem;
+    }
+
+    &.investor {
+      background-color: rgba(211, 243, 107, 1);
+
+      svg {
+        fill: rgba(211, 243, 107, 1);
+        stroke: black;
+      }
+    }
+  }
+
+  .modal_delete_btn {
+    outline: none;
+    border: none;
+    background-color: #555;
+    padding: 0.5em;
+    border-radius: 10px;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.2);
+
+    &:active {
+      box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.2) inset;
+    }
+
+    svg {
+      fill: white;
+      // stroke: #fafafa;
+      height: 1.5rem;
+      width: 2rem;
+    }
+  }
+}

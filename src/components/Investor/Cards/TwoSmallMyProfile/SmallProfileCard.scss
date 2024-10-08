@@ -1,0 +1,48 @@
+.small_card_container {
+  .small_card_row {
+    width: 100%;
+    // @media (min-width: 820px) {
+    //   padding-top: 15px;
+    // }
+
+    .flex_content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .typography {
+        color: #000;
+        font-size: 20px;
+        font-family: Poppins;
+        font-weight: 600;
+        margin: 0;
+      }
+    }
+    .box {
+      background-color: #fff;
+      padding: 10px;
+      border-radius: var(--border-radius);
+      background: #fff;
+      box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.05);
+    }
+
+    .boxOne {
+      width: 16rem;
+      height: 6rem;
+      padding: 30px;
+    }
+
+    .boxTwo {
+      width: 16rem;
+      height: 6rem;
+      padding: 30px;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .boxTwo img {
+      width: 70.118px;
+      height: 10.118px;
+    }
+  }
+}

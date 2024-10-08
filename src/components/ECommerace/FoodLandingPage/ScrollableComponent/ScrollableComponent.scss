@@ -1,0 +1,86 @@
+.scrollsection {
+  .left-section {
+    overflow-y: auto;
+    height: 500px;
+    // width: 30%;
+
+    &::-webkit-scrollbar {
+      width: 12px; /* Width of the scrollbar track */
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: orange; /* Color of the scrollbar thumb */
+      border-radius: 6px; /* Round the corners of the thumb */
+    }
+    .items-data {
+      img {
+        width: 100px;
+        height: 100px;
+      }
+      h6 {
+        font-size: 20px;
+        margin-left: 5px;
+        margin-top: 40px;
+      }
+    }
+  }
+
+  .right-section {
+    // width: 70%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 10px;
+
+    /* Hide the scrollbar for Webkit (Chrome, Safari, etc.) */
+    &::-webkit-scrollbar {
+      width: 0px;
+      background: transparent; /* Optional: Make the scrollbar area transparent */
+    }
+
+    /* Hide the scrollbar for Firefox */
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar-thumb {
+      background-color: transparent; /* Optional: Make the thumb transparent */
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    .right-items-data {
+      border-radius: 20px;
+      display: flex;
+      gap: 10px;
+      height: 500px;
+      position: relative;
+      padding: 10px;
+    }
+    h6 {
+      position: absolute;
+      color: white;
+      font-size: 40px;
+      font-weight: 700;
+      bottom: 40px;
+    }
+    h5 {
+      position: absolute;
+      color: white;
+      font-size: 40px;
+      font-weight: 700;
+      bottom: 1px;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+
+    .scrollsection {
+        .left-section {
+width: 30%;
+    }
+    .right-section{
+        width: 70%;
+    }
+}
+}

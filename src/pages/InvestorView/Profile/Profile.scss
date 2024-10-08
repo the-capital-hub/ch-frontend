@@ -1,0 +1,297 @@
+.profile_main_container {
+  // border: 0;
+  // @media (min-width: 1000px) {
+  //   border-left: 1px solid rgba(230, 230, 230, 1);
+  // }
+
+  .typography {
+    color: var(--d-l-grey);
+    font-size: 20px;
+    font-family: Poppins;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .smallest_typo {
+    color: #686868;
+    font-size: 12px;
+    font-family: Poppins;
+  }
+
+  .small_typo {
+    color: #717171;
+    font-size: 16px;
+    font-family: Poppins;
+  }
+
+  .main_container {
+    border: 2px solid red;
+    /* margin: 1rem; */
+    flex: 0 0 95%;
+    max-width: 95%;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .box {
+    background-color: var(--white-to-grey);
+    color: var(--d-l-grey);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    // background: #fff;
+    box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.05);
+  }
+
+  .bio_container {
+    width: 750px;
+    height: 411px;
+  }
+
+  .personal_information {
+    width: 750px;
+    flex-shrink: 0;
+  }
+
+  .bio_information {
+    width: 750px;
+    flex-shrink: 0;
+    height: 340px;
+  }
+
+  .image_name_section {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .image_name_section img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .connect_btn {
+    display: flex;
+    justify-content: end;
+  }
+
+  .connect_btn button {
+    width: 9rem;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 131px;
+    background: #505050;
+    color: #fff;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #fff;
+    font-size: 16px;
+    font-family: Poppins;
+    font-weight: 500;
+  }
+
+  .edit_btn {
+    button {
+      border-radius: 131px;
+      border: 1px solid #c6c6c6;
+      width: 107px;
+      height: 35px;
+      flex-shrink: 0;
+      color: #717171;
+      font-size: 18px;
+      font-family: Poppins;
+      cursor: pointer;
+    }
+  }
+
+  .divider_hr {
+    color: #000000;
+    height: 2px;
+    flex-shrink: 0;
+    border: 1px solid rgba(80, 80, 80, 0.2);
+    width: 90%;
+    opacity: 0.5;
+    margin: auto;
+    margin-top: 2rem;
+  }
+
+  .designation_list {
+    color: var(--d-l-grey);
+    font-size: 16px;
+    font-family: Poppins;
+    font-weight: 500;
+    padding-right: 25px;
+
+    @media (min-width: 768px) {
+      font-size: 20px;
+      padding-right: 50px;
+    }
+  }
+
+  table tr td {
+    padding-bottom: 0.5rem;
+  }
+
+  table {
+    tr {
+      td {
+        // text-align: start;
+        vertical-align: top;
+      }
+    }
+  }
+
+  .personal_information_header {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem;
+  }
+
+  .personal_information_header button {
+    border-radius: 131px;
+    border: 1px solid #c6c6c6;
+    width: 107px;
+    height: 35px;
+    flex-shrink: 0;
+    color: #717171;
+    font-size: 18px;
+    font-family: Poppins;
+    cursor: pointer;
+  }
+
+  .designation_info {
+    margin-left: 1rem;
+    textarea {
+      width: 98%;
+    }
+  }
+
+  .designation_see_more {
+    display: flex;
+    justify-content: end;
+    padding: 1rem;
+  }
+
+  .designation_see_more a {
+    color: #717171;
+    font-size: 16px;
+    font-family: Poppins;
+    list-style: none;
+    text-decoration: none;
+  }
+
+  .milestone_see_more a {
+    color: #717171;
+    font-size: 16px;
+    font-family: Poppins;
+    list-style: none;
+    text-decoration: none;
+  }
+  .card_holder {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .seventy,
+  .thirty {
+    margin: 0;
+    padding: 0;
+  }
+  .profile_main_container {
+    .bio_container,
+    .personal_information,
+    .bio_information {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+
+      .designation_list {
+        color: #000;
+        font-size: 16px;
+        font-family: Poppins;
+        font-weight: 500;
+        padding-right: 50px;
+      }
+    }
+  }
+
+  .bio_container {
+    .col-seven {
+      padding: 0;
+      .image_name_section {
+        img {
+          height: 20%;
+        }
+        .left_profile_text {
+          .typography {
+            color: #000;
+            font-size: 17px;
+            font-family: Poppins;
+            font-weight: 600;
+            margin: 0;
+          }
+
+          .smallest_typo {
+            color: #686868;
+            font-size: 10px;
+            font-family: Poppins;
+          }
+
+          .small_typo {
+            color: #717171;
+            font-size: 14px;
+            font-family: Poppins;
+          }
+        }
+      }
+    }
+
+    .col-five {
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      .connect_btn button {
+        width: 8rem;
+      }
+    }
+    .designation {
+      .designation_list {
+        color: #000;
+        font-size: 16px;
+        font-family: Poppins;
+        font-weight: 500;
+        padding-right: 50px;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 542px) {
+  .profile_main_container {
+    .row {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      .col-5 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .connect_btn {
+          margin: 0px;
+          padding: 0px;
+        }
+      }
+    }
+
+    .width_hundred {
+      width: 98%;
+    }
+  }
+}

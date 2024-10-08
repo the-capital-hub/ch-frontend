@@ -1,0 +1,48 @@
+.custom-joyride-beacon {
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    55% {
+      // background-color: rgba(255, 100, 100, 0.9);
+      background-color: #d3f36b;
+
+      transform: scale(1.6);
+    }
+  }
+  position: relative;
+  animation: pulse 1s ease-in-out infinite;
+  background-color: rgba(255, 27, 14, 0.6);
+  border-radius: 50%;
+  display: inline-block;
+  height: 1rem;
+  width: 1rem;
+  z-index: 0 !important;
+}
+.custom-joyride-button {
+  background-color: #d3f36b;
+  border: none;
+  border-radius: 10px;
+}
+
+[x-placement="bottom"] {
+  z-index: 0 !important;
+}
+[x-placement="bottom"].__floater__open {
+  z-index: 200 !important;
+}
+.__floater__open {
+  z-index: 200 !important;
+}
+
+// Next button styles
+button[data-test-id="button-primary"] {
+  color: var(--currentTheme-text) !important;
+  border-radius: 5px !important;
+}
+
+// Back button styles
+button[data-test-id="button-back"] {
+  color: #333 !important;
+  border-radius: 5px !important;
+}

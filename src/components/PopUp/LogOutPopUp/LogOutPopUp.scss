@@ -1,0 +1,189 @@
+// .logout-popup {
+//     position: fixed;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     background-color: #fff;
+//     border-radius: 4px;
+//     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+//     padding: 20px;
+//     z-index: 1000;
+//     text-align: center;
+//     width: 300px;
+
+//     h3 {
+//         font-size: 18px;
+//         margin-bottom: 15px;
+//     }
+
+//     button {
+//         cursor: pointer;
+//         padding: 8px 16px;
+//         margin: 0 5px;
+//         border-radius: 4px;
+//         font-size: 14px;
+//         font-weight: bold;
+//         transition: background-color 0.2s;
+
+//         &:hover {
+//             background-color: #f5f5f5;
+//         }
+//     }
+// }
+
+/* afterregisterpopup.scss */
+.logout_popup {
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 99999999999;
+  }
+
+  .popup-content {
+    background-color: var(--white-to-grey);
+    padding: 40px;
+    text-align: center;
+    border-radius: var(--border-radius);
+    position: relative;
+    max-width: 95%;
+
+    @media (min-width: 821px) {
+      max-width: 40%;
+    }
+
+    h1 {
+      color: var(--d-l-grey);
+      font-family: Poppins;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: #373737;
+      // text-align: justify;
+      font-family: Poppins;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+    img {
+      height: 40px;
+      width: 50px;
+    }
+  }
+
+  /* Center the buttons */
+  button {
+    // margin: 10px;
+    padding: 10px 30px;
+  }
+
+  /* Style the close button */
+  .cancel_button {
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background: #efefef;
+    color: #000000;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border: none;
+  }
+
+  .ok_button {
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background: #fd5901;
+    color: #fff;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .after_register_popup {
+    position: relative;
+
+    .popup-content {
+      background-color: #fff;
+      padding: 40px;
+      text-align: center;
+      border-radius: var(--border-radius);
+      position: relative;
+      width: 80%;
+
+      h1 {
+        color: #000;
+        font-family: Poppins;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+
+      p {
+        color: #373737;
+        // text-align: justify;
+        font-family: Poppins;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+
+    button {
+      margin: 10px;
+    }
+
+    /* Style the close button */
+    .close-button {
+      width: 20px;
+      position: absolute;
+      top: 0px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .ok_button {
+      width: 20%;
+      height: 30px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      background: #fd5901;
+      color: #fff;
+      text-align: center;
+      font-family: Poppins;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      border: none;
+    }
+  }
+}

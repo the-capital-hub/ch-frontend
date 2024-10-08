@@ -1,0 +1,87 @@
+// Styling for the modal content
+.ReactModal__Content {
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+    width: 35%;
+    height: auto;
+    min-height: 35%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #616161;
+    overflow: auto;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    .ReactModal__Content {
+      width: 80%;
+      padding: 15px;
+    }
+  
+    .DeleteBTN {
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .ReactModal__Content {
+      width: 90%;
+      padding: 10px;
+    }
+  
+    .DeleteBTN {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+  }
+  
+  // Styling for the modal overlay
+  .ReactModal__Overlay {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  // Styling for the input field
+  .passDeleteCompany[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  // Styling for buttons
+  
+    .DeleteBTN{
+        padding: 8px 16px;
+        margin: 5px 5px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+  
+  
+  .DeleteBTN {
+    opacity: 0.8;
+  }
+  
+  // Confirm button specific styling
+  .DeleteBTN:first-of-type {
+    background-color: #ae0000; // Green
+    color: white;
+  }
+  
+  // Cancel button specific styling
+  .DeleteBTN:last-of-type {
+    background-color: #fdfdfd; // Red
+    color: black;
+  }
+  

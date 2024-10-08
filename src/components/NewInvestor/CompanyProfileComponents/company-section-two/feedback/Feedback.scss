@@ -1,0 +1,23 @@
+.cards__container {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.cards__container::-webkit-scrollbar {
+  height: 10px;
+}
+.cards__container::-webkit-scrollbar-thumb,
+.cards__container::-webkit-scrollbar-track {
+  border-radius: 10rem;
+}
+.cards__container::-webkit-scrollbar-thumb {
+  background: var(--color-btn-01);
+}
+
+.cards__container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cards__container::-webkit-scrollbar-thumb:hover {
+  background: var(--color-btn-08);
+}

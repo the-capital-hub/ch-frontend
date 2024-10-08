@@ -1,0 +1,327 @@
+.investor_main_container {
+  .container {
+    a {
+      color: #000;
+      font-family: Poppins;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      position: absolute;
+      text-decoration: none;
+
+      img {
+        width: 8.495px;
+        height: 15.109px;
+        flex-shrink: 0;
+        margin-right: 5px;
+      }
+    }
+
+    .heading_section_investor {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+
+      h1 {
+        color: #000;
+        font-family: Poppins;
+        font-size: 44px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+
+      .title_and_image {
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-bottom: 20px;
+
+        img {
+          margin-right: 10px;
+          width: 32px;
+          height: 32.36px;
+        }
+
+        h2 {
+          position: relative;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: -3px;
+          left: 0;
+          width: 100%;
+          height: 3px;
+          background-color: #fd5901;
+        }
+      }
+    }
+
+    .image_and_text {
+      margin-top: 20px;
+
+      .image_section {
+        border-radius: 20px;
+        border: 1px solid #eee;
+        background: #fff;
+        box-shadow: 4px 4px 30px 0px rgba(0, 0, 0, 0.1);
+        // width: 405px;
+        // height: 250px;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+
+        img {
+          width: 80%;
+          margin: 10px;
+        }
+      }
+
+      .text_section {
+        position: relative;
+
+        h1 {
+          color: #000;
+          font-family: Poppins;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+
+          &::after {
+            content: "";
+            position: absolute;
+            top: 28px;
+            left: 0;
+            width: 40%;
+            height: 3px;
+            background-color: #fd5901;
+          }
+        }
+
+        p {
+          color: #000;
+          font-family: Poppins;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
+      }
+    }
+
+    .benifits_container {
+      margin-top: 30px;
+      position: relative;
+
+      h1 {
+        color: #000;
+        font-family: Poppins;
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        text-align: center;
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 4%;
+          left: 15%;
+          width: 70%;
+          height: 3px;
+          background-color: #fd5901;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 820px) {
+  .investor_main_container {
+    .container {
+      .image_and_text {
+        margin-top: 20px;
+
+        .image_section {
+          width: 100%;
+          margin-bottom: 2rem;
+        }
+
+        .text_section {
+          h1 {
+            &::after {
+              content: "";
+              position: absolute;
+              top: 26px;
+              left: 0;
+              width: 50%;
+              height: 3px;
+              background-color: #fd5901;
+            }
+          }
+        }
+      }
+
+      .benifits_container {
+        h1 {
+          &::after {
+            content: "";
+            position: absolute;
+            top: 4%;
+            left: 15%;
+            width: 70%;
+            height: 3px;
+            background-color: #fd5901;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .investor_main_container {
+    .container {
+      a {
+        color: #000;
+        font-family: Poppins;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        position: absolute;
+        text-decoration: none;
+
+        img {
+          width: 8.495px;
+          height: 15.109px;
+          flex-shrink: 0;
+          margin-right: 5px;
+        }
+      }
+
+      .heading_section_investor {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        h1 {
+          color: #000;
+          font-family: Poppins;
+          font-size: 44px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        }
+
+        .title_and_image {
+          display: flex;
+          align-items: center;
+          position: relative;
+          margin-bottom: 20px;
+
+          img {
+            margin-right: 10px;
+            width: 32px;
+            height: 32.36px;
+          }
+
+          h2 {
+            position: relative;
+          }
+
+          &::after {
+            content: "";
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #fd5901;
+          }
+        }
+      }
+
+      .image_and_text {
+        margin-top: 20px;
+
+        .image_section {
+          border-radius: 20px;
+          border: 1px solid #eee;
+          background: #fff;
+          box-shadow: 4px 4px 30px 0px rgba(0, 0, 0, 0.1);
+          width: 100%;
+          height: 250px;
+          flex-shrink: 0;
+        }
+
+        .text_section {
+          position: relative;
+          // margin-top: 30px;
+          // margin-left: 20px;
+
+          h1 {
+            color: #000;
+            font-family: Poppins;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+
+            &::after {
+              content: "";
+              position: absolute;
+              top: 60px;
+              left: 0;
+              width: 75%;
+              height: 3px;
+              background-color: #fd5901;
+            }
+          }
+
+          p {
+            color: #000;
+            font-family: Poppins;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+          }
+        }
+      }
+
+      .benifits_container {
+        margin-top: 30px;
+        position: relative;
+
+        h1 {
+          color: #000;
+          font-family: Poppins;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+          text-align: center;
+
+          &::after {
+            content: "";
+            position: absolute;
+            top: 90px;
+            left: 15%;
+            width: 70%;
+            height: 3px;
+            background-color: #fd5901;
+          }
+        }
+      }
+    }
+  }
+}

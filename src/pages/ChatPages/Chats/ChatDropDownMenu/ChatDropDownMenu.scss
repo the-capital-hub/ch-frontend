@@ -1,0 +1,41 @@
+.chatDropDownMenu {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 10;
+
+  button {
+    position: absolute;
+    right: -6px;
+    top: -11px;
+    padding: 0;
+    margin: 0;
+    .down-arrow {
+      width: 15px;
+      height: 15px;
+    }
+  }
+  .delete-message {
+    position: absolute;
+    top: 15px;
+    right: -15px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    color: var(--currentTheme-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+    width: max-content;
+    h1 {
+      font-size: 15px;
+      padding-right: 5px;
+      padding-left: 5px;
+      padding-top: 5px;
+    }
+  }
+  h1 {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,142 @@
+.investor_view_container {
+  display: flex;
+  background-color: var(--startup-bg);
+  margin: 0;
+  position: relative;
+
+  &.container-fluid {
+    padding: 0;
+  }
+
+  .sidebar {
+    // width: 300px;
+    // background-color: var(--startup-bg);
+    position: fixed;
+    top: calc(80px + -1%);
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    transition: width 0.3s ease;
+    overflow: scroll;
+    // border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+
+    // Add class for sidebar in fixed position
+    &.fixed {
+      position: absolute;
+      top: auto;
+      bottom: 0;
+    }
+  }
+
+  .sidebar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .sidebar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  .content {
+    flex: 1;
+    margin-left: 230px;
+    transition: margin-left 0.3s ease;
+    margin-top: min(100px, 10%);
+    overflow: hidden;
+  }
+
+  // Add a class to handle the sidebar collapsed state
+  &.sidebar-collapsed {
+    .sidebar {
+      width: 65px;
+    }
+
+    .content {
+      margin-left: 65px;
+    }
+  }
+}
+
+@media (max-width: 820px) {
+  .investor_view_container {
+    .sidebar {
+      left: 0;
+      bottom: 0;
+      // Add class for sidebar in fixed position
+      &.fixed {
+      }
+    }
+
+    .sidebar::-webkit-scrollbar {
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+
+    .content {
+      // flex: 1;
+      margin-left: 0px;
+      transition: margin-left 0.3s ease;
+      margin-top: 15%;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    // Add a class to handle the sidebar collapsed state
+    &.sidebar-collapsed {
+      .sidebar {
+        width: 0;
+        opacity: 0;
+        transition: width 0.3s ease, opacity 0.3s ease;
+      }
+
+      .content {
+        margin-left: 0px;
+      }
+    }
+  }
+}
+
+@media (max-width: 468px) {
+  .investor_view_container {
+    background-color: var(--startup-bg);
+    .sidebar {
+      left: 0;
+      bottom: 0;
+      // Add class for sidebar in fixed position
+      &.fixed {
+      }
+    }
+
+    .sidebar::-webkit-scrollbar {
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+
+    .content {
+      // flex: 1;
+      margin-left: 0px;
+      transition: margin-left 0.3s ease;
+      margin-top: 25%;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    // Add a class to handle the sidebar collapsed state
+    &.sidebar-collapsed {
+      .sidebar {
+        width: 0;
+        opacity: 0;
+        transition: width 0.3s ease, opacity 0.3s ease;
+      }
+
+      .content {
+        margin-left: 0px;
+      }
+    }
+  }
+}

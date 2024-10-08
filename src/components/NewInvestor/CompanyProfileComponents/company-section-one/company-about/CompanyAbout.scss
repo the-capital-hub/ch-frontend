@@ -1,0 +1,15 @@
+.company__about {
+  color: var(--d-l-grey);
+  h6 {
+    flex: 0 0 1ch;
+
+    @media (min-width: 992px) {
+      flex: 0 0 18ch;
+    }
+  }
+
+  p {
+    font-weight: 400;
+    // color: #373737;
+  }
+}

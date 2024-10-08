@@ -1,0 +1,382 @@
+/* InvestorManageAccount.scss */
+.manage_account_container {
+  height: 100%;
+  min-height: 90vh;
+  // margin-block: 1rem;
+
+  @media (min-width: 1600px) {
+    margin-top: 0;
+  }
+
+  .box_container {
+    height: fit-content;
+    background-color: var(--white-to-grey);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.05);
+
+    // display: flex;
+    // flex-direction: column;
+    @media (min-width: 1000px) {
+      flex-direction: row;
+    }
+
+    .change_password {
+      background-color: var(--bs-light);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      @media (max-width: 768px) {
+        margin: 5px;
+      }
+
+      form {
+        display: flex;
+        gap: 7px;
+
+        .form-input {
+          display: flex;
+          flex-direction: column;
+
+          label {
+            font-family: Poppins;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+          }
+
+          input,
+          select,
+          textarea {
+            font-size: 13px;
+            width: 100%;
+            padding: 5px;
+            border-radius: 5.861px;
+            border: 0.586px solid #e4e4e4;
+            background: #fff;
+            color: #000;
+            outline: none;
+          }
+        }
+
+        button {
+          border-radius: 10px;
+          background: #fd5901;
+          color: #fff;
+          font-family: Poppins;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+          border: none;
+          width: 100px;
+          height: 37px;
+          margin: auto;
+        }
+      }
+    }
+
+    .present_account {
+      background-color: var(--bs-light);
+      padding: 20px;
+      border-radius: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      @media (max-width: 768px) {
+        padding: 7px;
+        margin: 0px;
+      }
+
+      .btn-delete {
+        color: #fff;
+        background-color: red;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 16px;
+        cursor: pointer;
+        margin-top: 2rem;
+        min-width: 45% !important;
+      }
+
+      .header_text {
+        color: var(--d-l-grey);
+        font-family: Poppins;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        margin-left: 10px;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        .logo {
+          /* Styles for the logo */
+          img {
+            /* Add your logo styles here */
+            width: 40px;
+            /* Adjust as needed */
+            height: 40px;
+            /* Adjust as needed */
+          }
+        }
+
+        .header_text {
+          /* Styles for the header text */
+          /* Add your header text styles here */
+          font-weight: bold;
+          margin-left: 10px;
+        }
+      }
+
+      .profile_image {
+        /* Styles for the profile image */
+        img {
+          /* Add your profile image styles here */
+          width: 60px;
+          /* Adjust as needed */
+          height: 60px;
+          /* Adjust as needed */
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+
+      .name_email {
+        /* Styles for the name and email */
+        /* Add your name and email styles here */
+        margin-left: 10px;
+        color: var(--d-l-grey);
+
+        h4 {
+          margin: 0;
+          font-family: Poppins;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        }
+
+        h6 {
+          color: #8d8d8d;
+          font-family: Poppins;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+
+          @media (max-width: 768px) {
+            font-size: 12px;
+          }
+        }
+      }
+
+      .footer {
+        display: flex;
+        justify-content: center;
+        // justify-content: space-between;
+
+        .btn-delete {
+          /* Styles for the delete button */
+          color: #fff;
+          background-color: red;
+          border: none;
+          border-radius: 5px;
+          padding: 8px 16px;
+          cursor: pointer;
+          margin-top: 2rem;
+          min-width: 45%;
+        }
+      }
+    }
+
+    .empty_box {
+      // margin: 20px;
+      display: flex;
+      height: fit-content;
+      background-color: var(--bs-light);
+      border-radius: 20px;
+      padding: 20px;
+
+      @media (max-width: 768px) {
+        margin: 5px;
+      }
+
+      .logout-btn {
+        /* Styles for the delete button */
+        color: #fff;
+        background-color: red;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 16px;
+        cursor: pointer;
+      }
+
+      .header_text {
+        color: #3d3c3c;
+        font-family: Poppins;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        margin-left: 10px;
+      }
+    }
+
+    .existing_accounts {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      .small_card {
+        /* Styles for the small horizontal card */
+        display: flex;
+        align-items: center;
+        // border: 1px solid #ccc;
+        // border-radius: 10px;
+        // padding: 10px;
+        // margin-bottom: 10px;
+
+        .left_section {
+          /* Styles for the left section of the card */
+          flex: 1;
+          display: flex;
+          align-items: center;
+          .checkbox_container {
+            /* Styles for the rounded checkbox (assuming you have an input checkbox styled as a rounded checkbox) */
+            position: relative;
+            width: 20px;
+            height: 20px;
+
+            input[type="checkbox"] {
+              /* Hide the default checkbox */
+              position: absolute;
+              opacity: 0;
+              cursor: pointer;
+            }
+
+            .checkmark {
+              /* Styles for the checkbox icon */
+              position: absolute;
+              top: 0;
+              left: 0;
+              height: 20px;
+              width: 20px;
+              background-color: #fff;
+              border: 1px solid #ccc;
+              border-radius: 50%;
+
+              /* Custom checkbox icon (a dot) */
+              &::before {
+                content: "";
+                position: absolute;
+                display: none;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: red;
+                /* Adjust as needed */
+              }
+            }
+
+            /* Show the custom checkbox icon when checked */
+            input[type="checkbox"]:checked + .checkmark::before {
+              display: block;
+            }
+          }
+          .profile_image {
+            /* Styles for the profile image in the left section */
+            img {
+              /* Add your profile image styles here */
+              width: 40px;
+              /* Adjust as needed */
+              height: 40px;
+              /* Adjust as needed */
+              border-radius: 50%;
+              @media (max-width: 768px) {
+                width: 35px;
+                height: 35px;
+                margin-right: 6px;
+              }
+            }
+          }
+
+          .name_email {
+            /* Styles for the name and email */
+            /* Add your name and email styles here */
+            color: var(--d-l-grey);
+
+            margin-left: 10px;
+            @media (max-width: 768px) {
+              margin-left: 0px;
+            }
+
+            h4 {
+              margin: 0;
+              color: #000;
+              font-family: Poppins;
+              font-size: 20px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: normal;
+              @media (max-width: 768px) {
+                font-size: 16px;
+                width: 170px;
+              }
+            }
+
+            h6 {
+              color: #8d8d8d;
+              font-family: Poppins;
+              font-size: 16px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: normal;
+
+              @media (max-width: 768px) {
+                font-size: 10px;
+              }
+            }
+          }
+        }
+
+        .right_section {
+          /* Styles for the right section of the card */
+
+          .img-btn {
+            border: none;
+            background: none;
+            margin-left: -8px;
+            .deleteIcon {
+              width: 22px;
+              @media (max-width: 768px) {
+                width: 18px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .content-70 {
+    height: 100%;
+    margin-bottom: 20%;
+  }
+
+  // // CSS for logout section
+  // .logout_section {
+  //   order: 3;
+  // }
+}

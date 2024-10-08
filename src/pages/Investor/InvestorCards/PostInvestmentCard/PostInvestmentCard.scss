@@ -1,0 +1,29 @@
+.postinvestment-card-container {
+  // width: 30%;
+  max-width: 280px;
+  margin: 5px;
+  border-radius: 10px;
+  border: 1px solid var(--bs-boder-color);
+  background: var(--white-to-grey);
+  box-shadow: 4px 4px 30px 0px rgba(32, 35, 23, 0.1);
+  padding: 10px;
+  overflow: auto;
+  height: 200px;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  .left {
+    display: flex;
+    align-items: center;
+
+    .logo{
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .text {
+      margin-left: 10px;
+    }
+  }
+}

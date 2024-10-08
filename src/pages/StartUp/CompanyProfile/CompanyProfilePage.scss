@@ -1,0 +1,147 @@
+.companyProfilePage__wrapper {
+  display: grid;
+  grid-template-columns: 100%;
+  justify-content: space-between;
+
+  @media (min-width: 1360px) {
+    grid-template-columns: calc(100% - 22rem) 21rem;
+  }
+
+  @media (min-width: 1360px) {
+    grid-template-columns: calc(100% - 26rem) 24rem;
+  }
+
+  @media (min-width: 820px) {
+    flex-direction: row;
+    margin-inline: 1.5em;
+    // margin-block: 2em;
+  }
+
+  .main__content {
+    max-width: 100%;
+
+    // border: 1px solid red;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .right__content {
+    display: none;
+
+    @media (min-width: 1360px) {
+      display: block;
+    }
+  }
+}
+
+.orange {
+  color: #fd5901;
+}
+
+.edit-container {
+  .edit_company_text {
+    background-color: var(--white-to-grey);
+    a {
+      color: var(--d-l-grey);
+    }
+  }
+  .search-company-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    background-color: var(--bs-light);
+  }
+
+  .suggestion {
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+  }
+
+  .suggestion-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .suggestion-logo {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+
+  .suggestion-item:hover {
+    background-color: transparent;
+    transform: translateX(2px);
+  }
+
+  .suggestion-item.active {
+    background-color: #f0f0f0;
+  }
+
+  .suggestion button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .suggestion button:hover {
+    background-color: #0056b3;
+  }
+
+  .suggestion button {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .or-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .btn-base {
+    // margin-top: 30px;
+    border: none;
+    border-radius: 8px;
+
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    padding: 0.75em 2.5em;
+
+    &:active {
+      transition: transform 0.15s ease-in-out;
+      transform: scale(0.95);
+    }
+
+    &.startup {
+      background-color: #fd5901;
+      color: white;
+    }
+
+    &.investor {
+      background-color: #d3f36b;
+      color: black;
+    }
+  }
+  .add_company_data {
+    background: var(--white-to-grey);
+  }
+}

@@ -1,0 +1,61 @@
+.AchievementsComponent {
+  border-radius: var(--border-radius);
+  background: var(--white-to-grey);
+  // padding: 20px;
+  // margin: 0 20px 20px 20px;
+  overflow: hidden;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    // padding-bottom: 5px;
+    // border-bottom: solid 1px #dfdfdf;
+    align-items: center;
+  }
+
+  .achievements_cards {
+    display: flex;
+    width: 100%;
+    gap: 3em;
+    overflow-x: auto;
+
+    .single-card {
+      background-color: var(--investor-bg);
+      gap: 5px;
+      flex: 0 0 14rem;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      .image_text {
+        position: relative;
+        text-align: center;
+        // color:
+        .text {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+  }
+
+  // Scrollbar
+  .achievements_cards::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  .achievements_cards::-webkit-scrollbar-thumb {
+    background-color: rgba(211, 243, 107, 0.2);
+    border-radius: 10rem;
+
+    &:hover {
+      background-color: rgba(211, 243, 107, 1);
+    }
+  }
+
+  .achievements_cards::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10rem;
+  }
+}

@@ -1,0 +1,202 @@
+.vc-card {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  color: #fff;
+  margin-top: 2%;
+  background: var(--white-to-grey);
+
+  .header {
+      width: 100%;
+      height: 50%;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      padding: 10px;
+      border-bottom: 2px solid #686666;
+
+      .vc-logo {
+          height: 7rem !important;
+          max-width: 20%;
+          margin-right: 10px;
+          border-radius: 10%;
+      }
+
+      .vc-info {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+
+          h4 {
+              margin-top: 5%;
+          }
+
+          h5 {
+              margin: 0 !important;
+              width: 100%;
+          }
+
+          p {
+              margin: 2px 0;
+          }
+      }
+  }
+
+  .stage-focus {
+      display: flex;
+      flex-wrap: wrap;
+      width: 50%;
+      height: 100%;
+      padding: 10px;
+      overflow: hidden;
+
+      h5 {
+          width: 100%;
+          margin: 10px 0;
+      }
+
+      .bubble {
+          background-color: #632AA9;
+          color: #fff;
+          border-radius: 12px;
+          padding: 5px 10px;
+          margin: 5px;
+          font-size: 1.2em;
+      }
+  }
+
+  .stage-sector-info {
+      display: flex;
+      flex-direction: row;
+      height: calc(50% - 50px);
+
+  }
+
+  .sector-focus {
+      display: flex;
+      flex-wrap: wrap;
+      width: 50%;
+      height: auto;
+      overflow: hidden;
+      padding: 10px;
+      border-left: 2px solid #686666 ;
+
+
+      h5 {
+          width: 100%;
+          margin: 10px 0;
+      }
+
+      .bubble {
+          background-color: #632AA9;
+          color: #fff;
+          border-radius: 12px;
+          padding: 5px 10px;
+          margin: 5px;
+          font-size: 1.2em;
+      }
+  }
+}
+
+.ticket-size {
+  font-weight: bold;
+  margin-right: 10%;
+  font-size: larger;
+}
+
+.info {
+  color: #686666;
+}
+
+/* Media Queries for responsiveness */
+
+/* For tablets and small screens */
+@media (max-width: 1024px) {
+  .vc-card {
+      height: auto; /* Make the card height dynamic */
+  }
+
+  .stage-focus, .sector-focus {
+      width: 100%; /* Make both sections take full width */
+      border-right: none; /* Remove border for smaller screens */
+      border-bottom: 2px solid #686666; /* Add bottom border */
+  }
+
+  .stage-sector-info {
+      flex-direction: column; /* Stack the sections vertically */
+  }
+
+  .header .vc-logo {
+      max-width: 15%; /* Slightly smaller logo for tablets */
+  }
+
+  .header .vc-info h4, .header .vc-info h5 {
+      font-size: 1em; /* Adjust heading size */
+  }
+}
+
+/* For mobile phones */
+@media (max-width: 768px) {
+  .vc-card {
+      height: auto; /* Allow dynamic height for mobile */
+      flex-direction: column; /* Stack everything vertically */
+  }
+
+  .header {
+      flex-direction: column; /* Stack logo and info vertically */
+      align-items: flex-start;
+  }
+
+  .header .vc-logo {
+      height: 50%; /* Adjust logo size */
+      max-width: 25%; /* Reduce width on mobile */
+      margin-bottom: 10px;
+  }
+
+  .header .vc-info h4, .header .vc-info h5 {
+      font-size: 0.9em; /* Adjust heading size for mobile */
+  }
+
+  .stage-focus, .sector-focus {
+      width: 100%; /* Full width for both sections */
+      border: none; /* Remove borders */
+  }
+
+  .bubble {
+      font-size: 1em; /* Reduce bubble font size for smaller screens */
+  }
+}
+
+/* For very small mobile screens */
+@media (max-width: 480px) {
+  .vc-card {
+      height: auto; /* Dynamic height */
+  }
+
+  .header {
+      padding: 5px; /* Reduce padding */
+  }
+
+  .header .vc-logo {
+      height: 40%; /* Adjust logo size for small screens */
+      max-width: 30%;
+  }
+
+  .header .vc-info h4, .header .vc-info h5 {
+      font-size: 0.8em; /* Further reduce font size */
+  }
+
+  .stage-focus, .sector-focus {
+      width: 100%; /* Full width for both sections */
+      padding: 5px; /* Reduce padding */
+  }
+
+  .bubble {
+      font-size: 0.9em; /* Smaller bubble font */
+      padding: 3px 8px; /* Adjust padding */
+  }
+}

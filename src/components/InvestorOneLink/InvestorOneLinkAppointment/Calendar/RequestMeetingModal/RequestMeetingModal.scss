@@ -1,0 +1,122 @@
+.request_meeting_modal_wrapper {
+  .request_meeting_form {
+    fieldset,
+    legend {
+      all: revert;
+    }
+
+    fieldset {
+      padding-block: 0;
+      border: 1px solid #e7e7e7;
+      border-radius: 10px;
+      box-shadow: 0 0 10px 2px rgb(211, 243, 107, 0.1);
+
+      &:focus-within {
+        border: 1px solid rgb(211, 243, 107);
+      }
+
+      legend {
+        background-color: white;
+        padding: 0em 0.5em;
+        border-radius: 10rem;
+        box-shadow: 0 0 10px 2px rgb(0, 0, 0, 0.05);
+        font-size: 0.85rem;
+      }
+
+      .meeting_input {
+        border: none;
+        outline: none;
+        width: 100%;
+        padding: 0.5em 0.75em;
+      }
+    }
+  }
+
+  .upload_input {
+    border: 0.1rem dashed rgba(140, 90, 201, 1);
+    background-color: rgba(140, 90, 201, 0.08);
+    border-radius: 10px;
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block: 0.75em;
+    cursor: pointer;
+  }
+
+  .agenda_input {
+    outline: none;
+    resize: none;
+    overflow-y: hidden;
+  }
+
+  .clip__text {
+    width: 15ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .modal {
+    margin-top: 20%;
+
+    @media (min-width: 500px) {
+      margin-top: 15%;
+    }
+
+    @media (min-width: 575px) {
+      margin-top: 13.5%;
+    }
+
+    @media (min-width: 768px) {
+      margin-top: 10%;
+    }
+
+    @media (min-width: 769px) {
+      margin-top: 0;
+    }
+
+    .modal-dialog .modal_tall {
+      position: relative;
+      max-height: 80dvh !important;
+    }
+  }
+
+  .btn-capital {
+    width: fit-content;
+    background-color: rgba(211, 243, 107, 1);
+    border: 1px solid rgba(211, 243, 107, 1);
+    border-radius: 5px;
+    outline: none;
+
+    color: black;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 0.75rem;
+    padding: 0.75em 1em;
+
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+      transform: scale(0.95) !important;
+    }
+  }
+
+  .grow_in {
+    animation: growIn 0.25s linear forwards;
+  }
+
+  // Grow in animation
+  @keyframes growIn {
+    from {
+      transform: scale(0);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
+}

@@ -1,0 +1,172 @@
+.mystartup_main_container {
+  .startup_container {
+    border-radius: var(--border-radius);
+    // background: var(--white-to-grey);
+    // width: 99%;
+    // padding: 20px;
+
+    .title_h4 {
+      color: var(--d-l-grey);
+      font-family: Poppins;
+      font-size: 18px;
+    }
+
+    // .card_container {
+    //   display: flex;
+    //   justify-content: space-between;
+    // }
+  }
+
+  .big_card_container {
+    margin-bottom: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+
+    .left_container,
+    .right_container {
+      border-radius: var(--border-radius);
+      border: 1px solid var(--bs-border-color);
+      background: var(--dark-btn-investor);
+      color: var(--d-l-grey);
+      width: 49%;
+      padding: 15px;
+      height: max-content;
+      max-height: 30rem;
+    }
+
+    .left_container {
+      .chart_container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .right_container {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .two_by_two_card_container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+          height: 8px;
+          cursor: pointer;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: rgba(211, 243, 107, 0.2);
+          border-radius: 10rem;
+
+          &:hover {
+            background-color: rgba(211, 243, 107, 1);
+          }
+        }
+
+        &::-webkit-scrollbar-track {
+          background-color: transparent;
+          border-radius: 10rem;
+        }
+
+        @media (min-width: 821px) {
+          overflow-y: visible;
+          overflow-x: auto;
+          flex-wrap: wrap;
+
+          .postinvestment-card-container {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .green_button {
+    border-radius: 5px;
+    background: #d3f36b;
+    border: 1px solid #d3f36b;
+    padding: 8px 25px;
+    width: auto;
+    font-size: 14px;
+
+    &:active {
+      // background-color: transparent;
+      transform: scale(0.95);
+    }
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+  }
+
+  .green_underline {
+    text-decoration: underline solid #d3f36b;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 5px;
+  }
+
+  .card_container::-webkit-scrollbar {
+    height: 8px;
+    cursor: pointer;
+  }
+
+  .card_container::-webkit-scrollbar-thumb {
+    background-color: rgba(211, 243, 107, 0.2);
+    border-radius: 10rem;
+
+    &:hover {
+      background-color: rgba(211, 243, 107, 1);
+    }
+  }
+
+  .card_container::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10rem;
+  }
+}
+
+// .modal {
+//   margin-top: 20%;
+
+//   @media (min-width: 500px) {
+//     margin-top: 15%;
+//   }
+
+//   @media (min-width: 575px) {
+//     margin-top: 13.5%;
+//   }
+
+//   @media (min-width: 768px) {
+//     margin-top: 10%;
+//   }
+
+//   @media (min-width: 769px) {
+//     margin-top: 0;
+//   }
+// }
+
+@media (max-width: 769px) {
+  .mystartup_main_container {
+    .big_card_container {
+      width: 100%;
+
+      .left_container,
+      .right_container {
+        width: 100%;
+        height: auto;
+      }
+
+      // .chart_container {
+      //   // width: 75%;
+      // }
+    }
+  }
+}

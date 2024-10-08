@@ -1,0 +1,99 @@
+.language-settings {
+  background-color: var(--white-to-grey);
+  color: var(--d-l-grey);
+  border-radius: 0;
+
+  @media (min-width: 821px) {
+    border-radius: var(--border-radius);
+    min-width: 40vw;
+  }
+
+  .back-button {
+    background-color: transparent !important;
+    outline: none;
+    border: none;
+    color: var(--d-l-grey);
+  }
+  #dropdown-basic {
+    background: var(--bs-light);
+    border: none;
+  }
+  .dropdown-menu {
+    background: var(--bs-light);
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .dropdown-item {
+    &:hover {
+      color: var(--darkMode-currentTheme) !important;
+    }
+
+    &:focus {
+      color: var(--darkMode-currentTheme) !important;
+    }
+  }
+
+  #google_translate_element {
+    margin-top: 10px !important;
+
+    select {
+      border: none;
+      outline: none;
+      padding: 12px;
+      font-size: 16px;
+      color: #333;
+      border-radius: 8px;
+      background-color: var(--white-to-grey);
+      border: 1px solid var(--bs-border-color);
+      cursor: pointer;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .goog-te-combo {
+      font-size: 15px !important;
+      color: var(--d-l-grey);
+    }
+  }
+
+  .goog-te-banner-frame {
+    display: none;
+    margin-top: -20px;
+  }
+
+  .goog-logo-link {
+    display: none !important;
+  }
+
+  //   .goog-te-gadget {
+  //     color: transparent !important;
+  //   }
+
+  //   .VIpgJd-ZVi9od-l4eHX-hSRGPd {
+  //     display: none !important;
+  //   }
+
+  .VIpgJd-ZVi9od-ORHb-OEVmcd {
+    top: -40px !important;
+  }
+
+  //   .translated-ltr {
+  //     margin-top: -40px !important;
+  //   }
+
+  .VIpgJd-ZVi9od-aZ2wEe-wOHMyf {
+    display: none;
+  }
+
+  //   #goog-gt-tt {
+  //     display: none !important;
+  //   }
+  .skiptranslate {
+    // display: none !important;
+  }
+  .VIpgJd-ZVi9od-ORHb {
+    display: none !important;
+    table {
+      display: none !important;
+    }
+  }
+}

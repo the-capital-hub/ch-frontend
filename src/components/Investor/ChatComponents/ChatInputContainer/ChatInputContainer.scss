@@ -1,0 +1,120 @@
+.chat_input_section {
+  // padding-bottom: 20px;
+  // position: absolute;
+  // flex-grow: 1;
+  margin-block-start: 1rem;
+  bottom: 0px;
+  width: 100%;
+
+  .chat_input_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid #eaeef2;
+    background-color: #eaeef2;
+    border-radius: 8px;
+    // margin: 5% 2% 0% 2%;
+
+    .image-preview,
+    .video-preview,
+    .document-preview {
+      position: relative;
+      // display: inline-block;
+      margin-right: 10px;
+
+      img,
+      video {
+        max-width: 200px;
+        max-height: 150px;
+      }
+
+      .remove-preview {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        padding: 4px;
+        cursor: pointer;
+      }
+    }
+
+    .message {
+      flex-grow: 1;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      padding: 8px;
+      border-radius: 6px;
+      background-color: #eaeef2;
+      color: #000;
+
+      &::placeholder {
+        color: #555 !important;
+      }
+
+      @media (max-width: 420px) {
+        max-width: 70%;
+      }
+    }
+
+    .right_icons {
+      display: flex;
+      gap: 10px;
+      padding: 0 5px;
+
+      .attactment-container {
+        position: relative;
+
+        .attachment-options {
+          position: absolute;
+          bottom: 40px;
+          right: 10px;
+          border-radius: 10px;
+          background: #a7a7a7;
+          max-width: 50vw;
+          width: max-content;
+
+          display: flex;
+          justify-content: space-around;
+          gap: 10px;
+          padding: 10px;
+          flex-wrap: wrap;
+
+          cursor: default;
+
+          .attachment-option {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            align-items: center;
+            cursor: pointer;
+
+            img {
+              background-color: rgba(255, 255, 255, 0.6);
+            }
+
+            p {
+              margin: 0;
+              font-size: 14px;
+              color: rgb(233, 233, 233);
+            }
+          }
+        }
+      }
+
+      .send-btn {
+        color: #989898;
+        &:hover {
+          color: var(--currentTheme);
+        }
+        &:active {
+          box-shadow: none;
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,102 @@
+.otherInvestorProfile_wrapper {
+  .otherInvestor_header {
+    .profile {
+      background-color: var(--white-to-grey);
+      color: var(--d-l-grey);
+      padding: 20px;
+      .short_details {
+        width: 100%;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--bs-border-color);
+        .buttons {
+          margin: 10px 0;
+          font-size: 14px;
+          .message {
+            background-color: #d3f36b;
+            color: black;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid #d3f36b;
+            border: none;
+            outline: none;
+          }
+          .connection-status {
+            background-color: #d3f36b;
+            color: black;
+          }
+          .more {
+            color: white;
+            background-color: #949494;
+            border: 1px solid #949494;
+            border: none;
+            outline: none;
+          }
+        }
+      }
+      .details {
+        margin: 15px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+
+    .profile_container {
+      padding: 20px;
+      background-color: var(--white-to-grey);
+    }
+
+    @media (max-width: 420px) {
+      .other_user_profile {
+        .profile {
+          .short_details {
+            .buttons {
+              font-size: 12px;
+            }
+          }
+          //   .details {
+          //   }
+        }
+      }
+    }
+  }
+
+  .two_column_wrapper {
+    // display: flex;
+    // flex-direction: column;
+
+    display: grid;
+    grid-template-columns: 100%;
+
+    @media (min-width: 1200px) {
+      grid-template-columns: calc(100% - 26rem) 24rem;
+    }
+    justify-content: space-between;
+
+    // @media (min-width: 768px) {
+    //   flex-direction: row;
+    // }
+
+    .main_section {
+      max-width: 100%;
+
+      display: flex;
+      flex-direction: column;
+      gap: 3em;
+
+      .company_details.box {
+        border-radius: 10px !important;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .right_section {
+      display: none;
+
+      @media (min-width: 1200px) {
+        display: block;
+      }
+    }
+  }
+}

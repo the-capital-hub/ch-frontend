@@ -1,0 +1,9 @@
+.account-access-wrapper {
+  background-color: var(--white-to-grey);
+  color: var(--d-l-grey);
+  border-radius: 0;
+
+  @media (min-width: 821px) {
+    border-radius: var(--border-radius);
+  }
+}

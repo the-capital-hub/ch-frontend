@@ -1,0 +1,27 @@
+.brand_icon_container {
+    .brand_icon {
+        img {
+            height: 120px;
+        }
+    }
+    .mt-80 {
+        margin-top: 80px;
+      }
+      
+
+}
+
+@media (max-width: 768px) {
+
+    .brand_icon_container {
+        .brand_icon {
+            img {
+                height: 50px;
+            }
+        }
+        .mt-80 {
+            margin-top: 40px
+          }
+    
+    }
+}

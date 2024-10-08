@@ -1,0 +1,104 @@
+.apply__wrapper {
+  // Brand colors
+  --color-primary: rgba(253, 89, 1, 1);
+  --color-gray: rgba(235, 235, 235, 0.5);
+  --color-border-gray: rgba(198, 198, 198, 1);
+
+  // Brand font family
+  --font-primary: "Poppins", sans-serif;
+
+  // Border-radius
+  --border-radius: 1rem;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin-top: 0;
+    font-family: "Poppins", sans-serif;
+  }
+
+  input,
+  button,
+  textarea {
+    font-family: "Poppins", sans-serif;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  input,
+  form,
+  ul {
+    font-family: "Poppins", sans-serif;
+  }
+
+  select,
+  option {
+    font-family: "Poppins", sans-serif;
+  }
+
+  // Utilities Start
+  .container-xxl {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .primary-btn {
+    background-color: var(--color-primary);
+    color: white;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.75rem;
+    text-align: center;
+    padding: 0.75em 2em;
+
+    border: 1px solid var(--color-primary);
+    outline: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+
+    &:focus,
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
+  .primary-btn[data-pill="true"] {
+    border-radius: 10rem;
+  }
+
+  .text__center {
+    text-align: center;
+  }
+
+  .my {
+    margin-block: 2em;
+  }
+
+  .px {
+    padding-inline: 1em;
+  }
+
+  .article__para {
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+  // Utilities End
+
+  .page__container {
+    padding-block: 4em;
+    padding-inline: 1em;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+  }
+}

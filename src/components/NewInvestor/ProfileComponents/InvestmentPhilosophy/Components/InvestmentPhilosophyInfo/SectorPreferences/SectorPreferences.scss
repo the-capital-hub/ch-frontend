@@ -1,0 +1,21 @@
+.investor-check-wrapper {
+  input + label {
+    color: var(--d-l-grey);
+    border: 1px solid #94c100;
+  }
+
+  .btn-check + .btn:hover {
+    color: #94c100;
+    border: 1px solid #94c100;
+  }
+
+  .btn-check:checked + .btn,
+  :not(.btn-check) + .btn:active,
+  .btn:first-child:active,
+  .btn.active,
+  .btn.show {
+    color: #000;
+    background-color: #d3f36b;
+    border: 1px solid #94c100;
+  }
+}

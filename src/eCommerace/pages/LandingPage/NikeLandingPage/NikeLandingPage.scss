@@ -1,0 +1,192 @@
+.nilke-landing-page {
+  background-color: black;
+  .first-section {
+    img {
+      width: 100%;
+      
+      overflow: hidden;
+    }
+  }
+  .second-section {
+    background-color: #f9613327;
+    .left-section {
+      color: white;
+      h1 {
+        font-weight: 600;
+      }
+      button {
+        background: #f96233;
+        border-radius: 4px;
+        padding: 10px 70px;
+        color: white;
+        outline: none;
+        width: max-content;
+        border: none;
+        &:hover {
+          background-color: #f87851;
+          color: white;
+        }
+      }
+    }
+    .right-section {
+      margin: auto;
+      img {
+        width: 85%;
+        padding-top: 30px;
+      }
+    }
+  }
+  .third-section {
+    color: white;
+    span {
+      color: #f96233;
+    }
+    .box {
+      background-color: transparent;
+      margin: 10px;
+      .shoe-img {
+        margin-bottom: 10px;
+        border-radius: 20px;
+        justify-content: center;
+        background: linear-gradient(
+          114deg,
+          rgba(106, 45, 27, 1) 29%,
+          rgba(102, 102, 102, 1) 69%
+        );
+        .imgshoe {
+          width: 340px;
+          height: 250px;
+        }
+      }
+      h3 {
+        margin-right: 15px;
+      }
+      h4 {
+        color: #f87851;
+        text-align: end;
+      }
+    }
+    .changer {
+      gap: 10px;
+      hr {
+        width: 5%;
+        cursor: pointer;
+        color: white;
+        &:hover {
+          color: #f87851;
+        }
+      }
+    }
+  }
+  .fourth-section {
+    color: white;
+    span {
+      color: #f96233;
+    }
+    button {
+      background: #f96233;
+      border-radius: 4px;
+      padding: 10px 70px;
+      color: white;
+      outline: none;
+      width: max-content;
+      border: none;
+      &:hover {
+        background-color: #f87851;
+        color: white;
+      }
+    }
+  }
+  .fifth-section {
+    color: white;
+    gap: 15px;
+    background: radial-gradient(
+      circle,
+      rgba(36, 11, 4, 0.6839110644257703) 48%,
+      rgba(0, 0, 0, 0.6979166666666667) 100%
+    );
+    .innersection {
+      .right-section {
+        img {
+          width: 100%;
+          height: 50%;
+        }
+      }
+    }
+    button {
+      background: #f96233;
+      border-radius: 4px;
+      padding: 10px 70px;
+      color: white;
+      outline: none;
+      width: max-content;
+      border: none;
+
+      &:hover {
+        background-color: #f87851;
+        color: white;
+      }
+    }
+  }
+  .sixth-section {
+    background: radial-gradient(
+      circle,
+      rgba(36, 11, 4, 0.7231267507002801) 77%,
+      rgba(0, 0, 0, 0.8211659663865546) 100%
+    );
+    color: white;
+    padding: 5%;
+    h6 {
+      color: #f96233;
+    }
+  }
+  .last {
+    color: white;
+    .input-div {
+      background-color: white;
+      width: 30%;
+      input {
+        border: none;
+        outline: none;
+        background-color: transparent;
+      }
+      button {
+        background: #f96233;
+        border-radius: 40px;
+        padding: 10px 30px;
+        color: white;
+        outline: none;
+        border: none;
+        width: 35%;
+        &:hover {
+          background-color: #f19f52;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .nilke-landing-page {
+    .first-section {
+      height: 225px;
+      img {
+        height: 270px;
+      object-fit: cover;
+      width: 100%;
+      clip-path: inset(30px 20px 35px 20px);
+
+      overflow: hidden;
+      }
+    }
+    .last {
+      .input-div {
+        width: 100%;
+        button {
+          width: 35%;
+        }
+      }
+    }
+  }
+}

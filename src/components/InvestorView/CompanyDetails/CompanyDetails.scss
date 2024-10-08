@@ -1,0 +1,35 @@
+.companyDetailsContainer {
+  display: flex;
+  background: black;
+  //   height: 200px;
+  align-items: center;
+  gap: 2em;
+  width: 100%;
+  padding: 20px;
+  color: white;
+
+  .details {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .companyDetailsContainer {
+    // width: 300px;
+    flex-direction: column;
+    padding: 10px;
+    .details {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      p {
+        font-size: 14px;
+        letter-spacing: 1px;
+        margin: 0;
+      }
+      hr {
+        margin: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,153 @@
+
+.person__about {
+    h6 {
+      flex: 0 0 1ch;
+  
+      @media (min-width: 992px) {
+        flex: 0 0 18ch;
+      }
+    }
+    
+  }
+
+  .profile-links a {
+    color: #fff;
+    text-decoration: none;
+}
+.profile-investments, .profile-companies, .profile-joint-investors {
+    margin: 20px 0;
+}
+.investment-areas, .companies-invested, .joint-investors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.investment-areas div, .companies-invested div, .joint-investors div {
+    background-color: #444;
+    padding: 10px;
+    border-radius: 5px;
+}
+  
+  .name_number {
+    width: 100%;
+
+    .social-links{
+      .social-buttons{
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+        .button-social{
+          
+          .button{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+          }
+          .facebook {
+            background-color: #3b5998;
+          }
+          
+          .twitter {
+              background-color: #1da1f2;
+          }
+          
+          .linkedin {
+              background-color: #0077b5;
+          }
+          }
+      }
+    }
+
+    .profile-investments{
+      width: 100%;
+
+      .investment-areas{
+        width: 100%;
+
+        .card-recent-investments{
+          min-width: 276px;
+          height: 94px;
+          margin-right: 20px;
+          border-radius: 10px;
+          padding-left: 20px;
+
+          .card-recent-value{
+            
+            background-color: var(--bs-investor);
+            color: #000000;
+            font-weight: bold;
+            width: 92.05px;
+            height: 34.98px;
+            border-radius: 20px;
+            margin-top: 10px;
+            text-align: center;
+            height: fit-content;
+          }
+        }
+      }
+    }
+
+
+
+
+    .personal_info_grid {
+      p {
+        font-weight: 400;
+        color: var(--bs-gray-400);
+      }
+  
+      .field-text {
+        color: var(--d-l-grey);
+      }
+  
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+  
+      .fname {
+        order: 1;
+      }
+  
+      .lname {
+        order: 2;
+      }
+  
+      .email {
+        order: 3;
+      }
+  
+      .number {
+        order: 4;
+      }
+  
+      @media (min-width: 768px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+  
+        .lname {
+          order: 3;
+        }
+  
+        .email {
+          order: 2;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 450px) {
+    .name_number {
+      width: 100%;
+      .personal_info_grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+  }
+  

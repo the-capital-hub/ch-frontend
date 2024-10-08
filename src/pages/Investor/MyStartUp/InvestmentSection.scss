@@ -1,0 +1,15 @@
+.btn-myinvestor{
+    background-color: #DDFF71;
+    color: black;              /* Black text */
+    border: none;              /* Remove default border */
+    font-size: 16px;           /* Font size */
+    border-radius: 14px;       /* Rounded corners */
+    cursor: pointer;           /* Pointer cursor on hover */
+    text-align: center;        /* Center the text horizontally */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+
+    &:hover {
+        background-color: #3a491a; /* Lighter green background on hover */
+        color: #DDFF71;              /* Black text */
+      }
+}

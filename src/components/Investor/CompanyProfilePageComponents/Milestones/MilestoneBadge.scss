@@ -1,0 +1,50 @@
+.badge_container {
+  border: 2px solid transparent;
+  outline: none;
+  transition: all 0.2s ease-in;
+
+  &.selected {
+    border: 2px solid #fd5901;
+  }
+
+  &.investor {
+    &.selected {
+      border: 2px solid #d3f36b;
+    }
+  }
+
+  .action_badge {
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: -5%;
+    right: -5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #fd5901;
+    svg {
+      fill: white;
+      path {
+        stroke: white;
+      }
+    }
+
+    &.investor {
+      background-color: #d3f36b;
+      svg {
+        fill: black;
+        path {
+          stroke: black;
+        }
+      }
+    }
+  }
+
+  .alert_text {
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+}

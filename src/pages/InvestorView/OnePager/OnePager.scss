@@ -1,0 +1,407 @@
+.border_left {
+  border: 0;
+
+  @media (min-width: 1200px) {
+    border-left: 1px solid rgba(230, 230, 230, 1);
+  }
+}
+
+// .onePager {
+//   display: flex;
+//   flex-direction: column;
+//   margin-left: 20px;
+//   margin-top: 15px;
+//   overflow-x: hidden;
+//   border-radius: 25px;
+//   gap: 30px;
+//   align-items: start;
+//   background-color: #fff;
+//   // padding: 10px 30px;
+//   .currency {
+//     display: flex;
+//     gap: 10px;
+//     span {
+//       padding: 5px 15px;
+//       font-size: 20px;
+//       background: #eaeef2;
+//       &:hover {
+//         cursor: pointer;
+//       }
+//     }
+//     .highlighted {
+//       background-color: #d3f36b;
+//     }
+//   }
+
+//   .companyDetails {
+//     width: 100%;
+//     margin-top: 30px;
+//   }
+
+//   .simple_cards_container {
+//     overflow-x: auto;
+//     padding-bottom: 0.5em;
+//     &::-webkit-scrollbar {
+//       height: 8px;
+//       margin-inline: 10dvw;
+
+//       &-track {
+//         border-radius: 10rem;
+//         background-color: rgba(211, 243, 107, 0.2);
+//         margin-inline: 10dvw;
+//       }
+
+//       &-thumb {
+//         border-radius: 10rem;
+//         background-color: rgba(211, 243, 107, 1);
+//         margin-inline: 10dvw;
+//       }
+//     }
+//     .simple_cards {
+//       display: flex;
+//       gap: 1em;
+//     }
+//   }
+
+//   .market_cards {
+//     display: flex;
+//     align-items: center;
+//     gap: 0.25em;
+//     flex-wrap: wrap;
+//   }
+
+//   .projections {
+//     margin-top: 30px;
+//     max-width: 100%;
+//     overflow-x: auto;
+//     &::-webkit-scrollbar {
+//       height: 8px;
+//       margin-inline: 10dvw;
+
+//       &-track {
+//         border-radius: 10rem;
+//         background-color: rgba(211, 243, 107, 0.2);
+//         margin-inline: 10dvw;
+//       }
+
+//       &-thumb {
+//         border-radius: 10rem;
+//         background-color: rgba(211, 243, 107, 1);
+//         margin-inline: 10dvw;
+//       }
+//     }
+//   }
+
+//   .team {
+//     max-width: 100%;
+//     overflow-x: auto;
+//     padding-bottom: 1em;
+//     &::-webkit-scrollbar {
+//       height: 8px;
+//       margin-inline: 10dvw;
+
+//       &-track {
+//         border-radius: 10rem;
+//         background-color: rgba(211, 243, 107, 0.2);
+//         margin-inline: 10dvw;
+//       }
+
+//       &-thumb {
+//         border-radius: 10rem;
+//         background-color: rgba(211, 243, 107, 1);
+//         margin-inline: 10dvw;
+//       }
+//     }
+//     .team_cards {
+//       display: flex;
+//       gap: 2em;
+//     }
+//   }
+
+//   .fundingAndContact {
+//     display: flex;
+//     align-items: start;
+//     justify-content: space-evenly;
+//     width: 100%;
+//     flex-wrap: wrap;
+//     .left {
+//       display: flex;
+//       flex-direction: column;
+//       gap: 20px;
+//       text-align: center;
+//       padding: 50px;
+//       .pfp {
+//         width: 40%;
+//         padding: 10px;
+//         border-radius: 25px;
+//       }
+//       .box {
+//         border: 1px solid lightgray;
+//         padding: 50px;
+//         display: flex;
+//         flex-direction: column;
+//         align-items: center;
+//         hr {
+//           width: 300px;
+//         }
+//         h1 {
+//           font-size: 20px;
+//         }
+//       }
+//     }
+//     .right {
+//       .investNow {
+//         width: 400px;
+//         margin-left: 0px;
+//         margin-top: -100px;
+//         .inputs {
+//           padding: 50px 10px;
+//           min-width: 300px;
+//           border: 1px solid lightgray;
+//           button {
+//             display: none;
+//           }
+//         }
+//       }
+//     }
+//   }
+//   .buttons {
+//     display: flex;
+//     gap: 10px;
+//     align-items: center;
+//     justify-content: center;
+//     width: 100%;
+//     button {
+//       background: #d3f36b;
+//       border: none;
+//       border-radius: 25px;
+//       padding: 10px 20px;
+//     }
+//     button:nth-child(1) {
+//       background-color: white;
+//       border: 1px solid lightgray;
+//     }
+//   }
+
+//   .download-button {
+//     background: #d3f36b;
+//     border: none;
+//     border-radius: 25px;
+//     padding: 10px 20px;
+//   }
+// }
+
+// @media (max-width: 820px) {
+//   .onePager {
+//     align-items: center;
+//     .companyDetails {
+//       display: flex;
+//       justify-content: center;
+//     }
+//     .cards {
+//       display: flex;
+//       align-items: center;
+//       // justify-content: center;
+//     }
+//     .projections {
+//       width: 100%;
+//       overflow-x: scroll;
+//     }
+//   }
+// }
+
+// @media (max-width: 426px) {
+//   .onePager {
+//     margin-left: -10px;
+//     margin-top: 60px;
+//   }
+// }
+
+// @media (max-width: 1024px) {
+//   .onePager {
+//     margin-top: 60px;
+//   }
+// }
+
+.onePager_wrapper {
+  --color-main: rgba(253, 89, 1, 1);
+  --color-main-light: rgba(253, 89, 1, 0.2);
+  --color-link-button: rgba(253, 89, 1, 1);
+  --color-button-text: white;
+  --color-market-border: rgba(231, 231, 231, 1);
+}
+
+.onePager_wrapper[theme="investor"] {
+  --color-link-button: rgba(211, 243, 107, 1);
+  --color-main: rgba(148, 193, 0, 1);
+  --color-main-light: rgba(148, 193, 0, 0.2);
+  --color-button-text: black;
+  --color-market-border: rgba(148, 193, 0, 1);
+}
+
+.onePager_wrapper {
+  legend {
+    font-size: 1rem;
+    color: var(--color-main);
+  }
+
+  .onePager_input {
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-light);
+    border-radius: 10px;
+    outline: none;
+    font-size: 1.25rem;
+    color: var(--d-l-grey);
+    padding: 1em 0.5em;
+    width: 100%;
+
+    input {
+      background-color: var(--bs-light);
+    }
+  }
+
+  .date_input {
+    outline: none;
+  }
+
+  .date_input::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+  }
+
+  .tag {
+    // background-color: #eaeef2;
+    background-color: var(--tag-box);
+  }
+
+  .link__text__clip {
+    // width: 5ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .btn-capital {
+    width: fit-content;
+    background-color: var(--color-link-button);
+    border: 1px solid var(--color-link-button);
+    border-radius: 5px;
+    outline: none;
+
+    color: var(--color-button-text);
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 0.75rem;
+    padding: 0.75em 1em;
+
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+      transform: scale(0.95) !important;
+    }
+  }
+
+  .visit_link {
+    font-size: 1rem;
+
+    @media (min-width: 1200px) {
+      flex: 1 0 23rem;
+    }
+  }
+
+  .visit_btn {
+    flex: 0 0 2rem;
+  }
+
+  .onePager_company_info {
+    background-color: var(--white-to-grey);
+  }
+
+  // onePager_company_about
+  .onePager_company_about {
+    background-color: var(--white-to-grey);
+
+    display: grid;
+    grid-template-columns: 100%;
+
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(2, minmax(23rem, 1fr));
+    }
+
+    .span_full {
+      grid-column: 1/-1;
+    }
+
+    .about_input {
+      border-radius: 5px;
+      border: 1px solid var(--bs-border-color);
+      min-height: 220px;
+      resize: none;
+    }
+  }
+
+  // Market Info
+  .main_color {
+    color: var(--color-main);
+  }
+
+  .main_border {
+    border: 2px solid var(--bs-border-color);
+    box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.05);
+  }
+
+  .three_col_grid {
+    display: grid;
+    grid-template-columns: 100%;
+
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(3, minmax(23rem, 1fr));
+    }
+  }
+
+  .two_col_grid {
+    display: grid;
+    grid-template-columns: 100%;
+
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(2, minmax(23rem, 1fr));
+    }
+  }
+
+  // Action buttons
+  .onePager_action_save {
+    width: 210px;
+    border: 1px solid rgba(223, 223, 223, 1);
+    background-color: rgba(223, 223, 223, 1);
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 0.75rem;
+
+    padding-block: 1em;
+  }
+
+  .onePager_action_publish {
+    width: 210px;
+    border: 1px solid var(--color-main);
+    background-color: var(--color-main);
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 0.75rem;
+
+    padding-block: 1em;
+  }
+}
+
+@media (max-width: 768px) {
+  .onePager_action_buttons {
+    .action_buttons_container {
+      .preview_button {
+        display: none;
+      }
+    }
+  }
+}

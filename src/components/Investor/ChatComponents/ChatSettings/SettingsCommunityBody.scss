@@ -1,0 +1,6 @@
+.text-clip--25 {
+  width: 25ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

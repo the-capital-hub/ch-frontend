@@ -1,0 +1,64 @@
+.notificaitons_container {
+  .message_section {
+    background: var(--white-to-grey);
+    min-height: 90vh;
+    a {
+      text-decoration: none;
+      color: var(--d-l-grey);
+    }
+    .data_selector {
+      button {
+        text-decoration: none;
+        color: #000;
+        font-family: Poppins;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 160%; /* 32px */
+        letter-spacing: 0.8px;
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+        background: white;
+
+        &:active {
+          box-shadow: none;
+        }
+      }
+      .activestartup {
+        // color: #fd5901;
+        background: #fd5901;
+        font-family: Poppins;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 160%; /* 32px */
+        letter-spacing: 0.8px;
+        color: #ffffff;
+      }
+      .activeinvestors {
+        // color: #fd5901;
+        background: #d3f36b;
+        font-family: Poppins;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 160%; /* 32px */
+        letter-spacing: 0.8px;
+        color: black;
+      }
+    }
+
+    .notif-link {
+      a {
+        color: var(--darkMode-currentTheme);
+      }
+    }
+  }
+
+  .people_container {
+    & + .people_container {
+      border-top: 1px solid var(--bs-border-color);
+    }
+  }
+}

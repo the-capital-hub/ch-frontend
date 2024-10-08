@@ -1,0 +1,54 @@
+// Custom boot starp buttons
+.btn-startup {
+  --bs-btn-color: #ffffff;
+  --bs-btn-bg: #{$startup};
+  --bs-btn-border-color: #{$startup};
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-hover-bg: #{tint-color($startup, 15%)};
+  --bs-btn-hover-border-color: #{tint-color($startup, 15%)};
+  --bs-btn-focus-shadow-rgb: 253, 114, 39;
+  --bs-btn-active-color: #ffffff;
+  --bs-btn-active-bg: #{tint-color($startup, 20%)};
+  --bs-btn-active-border-color: #{$startup};
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #ffffff;
+  --bs-btn-disabled-bg: #{tint-color($startup, 50%)};
+  --bs-btn-disabled-border-color: #{tint-color($startup, 50%)};
+}
+
+.btn-outline-startup {
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-hover-bg: #{tint-color($startup, 15%)};
+  --bs-btn-hover-border-color: #{tint-color($startup, 15%)};
+  --bs-btn-focus-shadow-rgb: 253, 114, 39;
+  --bs-btn-active-color: #ffffff;
+  --bs-btn-active-bg: #{tint-color($startup, 20%)};
+  --bs-btn-active-border-color: #{$startup};
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #ffffff;
+  --bs-btn-disabled-bg: #{tint-color($startup, 50%)};
+  --bs-btn-disabled-border-color: #{tint-color($startup, 50%)};
+}
+
+.btn-investor {
+  --bs-btn-color: #000;
+  --bs-btn-bg: #{$investor};
+  --bs-btn-border-color: #{$investor};
+  --bs-btn-hover-color: #000;
+  --bs-btn-hover-bg: #{tint-color($investor, 15%)};
+  --bs-btn-hover-border-color: #{tint-color($investor, 15%)};
+  --bs-btn-focus-shadow-rgb: 253, 114, 39;
+  --bs-btn-active-color: #000;
+  --bs-btn-active-bg: #{tint-color($investor, 20%)};
+  --bs-btn-active-border-color: #{$investor};
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #000;
+  --bs-btn-disabled-bg: #{tint-color($investor, 50%)};
+  --bs-btn-disabled-border-color: #{tint-color($investor, 50%)};
+}
+
+.btn-gray {
+  --bs-btn-bg:gray;
+  --bs-btn-hover-bg: #{tint-color(gray, 15%)};
+  --bs-btn-hover-border-color: #{tint-color(gray, 15%)};
+}

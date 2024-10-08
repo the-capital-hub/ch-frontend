@@ -1,0 +1,36 @@
+.onePager_table_wrapper {
+  color: var(--d-l-grey);
+  table {
+    background-color: var(--bs-light);
+    border-collapse: separate;
+  }
+  td {
+    min-width: 14rem;
+    height: 120px;
+  }
+
+  td + td {
+    border-left: 1px solid var(--bs-border-color);
+  }
+
+  .table_container {
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--color-main-light);
+      border-radius: 10rem;
+
+      &:hover {
+        background-color: var(--color-main);
+      }
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+      border-radius: 10rem;
+      //   margin-inline: 20dvw;
+    }
+  }
+}

@@ -1,0 +1,107 @@
+.other_sender {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  max-width: 90%;
+
+  @media (min-width: 768px) {
+    max-width: 60%;
+  }
+
+  .image_profile {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+  }
+
+  .name_title {
+    color: var(--d-l-grey);
+    font-family: Poppins;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  .other_messages {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    .msg-time {
+      font-size: 10px;
+      color: rgb(112, 112, 112);
+      text-align: end;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      justify-content: flex-end;
+      width: 100%;
+    }
+
+    .message_container {
+      background-color: #eaeef2;
+      padding: 5px 10px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      margin-bottom: 5px;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      //   align-items: center;
+
+      // max-width: 80%;
+
+      // This selects only text messages
+      &:not(:has(.image-message, .video-message, .document-message)) {
+        width: fit-content;
+      }
+
+      @media (min-width: 768px) {
+        max-width: 60%;
+      }
+
+      p {
+        font-size: 14px;
+      }
+
+      a {
+        // color: rgb(93, 93, 93);
+        color: #212529;
+      }
+
+      .video-message {
+        max-width: 100%;
+        max-height: 250px;
+        border-radius: 10px;
+        margin-top: 10px;
+        background-color: #000;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+        video {
+          width: 100%;
+          height: auto;
+          max-height: 250px;
+        }
+      }
+
+      .image-message {
+        max-width: 100%;
+        max-height: 200px;
+
+        border-radius: 10px;
+        margin-top: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+        img {
+          width: 100%;
+          height: auto;
+          max-height: 200px;
+          object-fit: contain;
+        }
+      }
+    }
+  }
+}

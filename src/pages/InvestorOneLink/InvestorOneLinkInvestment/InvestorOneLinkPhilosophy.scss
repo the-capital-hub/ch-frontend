@@ -1,0 +1,85 @@
+.investment_philosophy_wrapper {
+  .investment_philosophy_section {
+    background-color: var(--white-to-grey);
+
+    .investor-details {
+      color: var(--d-l-grey);
+      // p {
+      // }
+    }
+
+    fieldset,
+    legend {
+      all: revert;
+      background-color: var(--white-to-dgrey) !important;
+      color: var(--d-l-grey);
+    }
+
+    .fieldbox {
+      background-color: var(--white-to-dgrey);
+      flex: 0 0 18rem;
+      min-height: 70px;
+
+      @media (min-width: 1200px) {
+        flex: 0 0 22.5rem;
+      }
+    }
+
+    .revenue_table {
+      td {
+        min-width: 14rem;
+        height: 120px;
+        vertical-align: middle;
+      }
+
+      td + td {
+        border-left: 1px solid var(--bs-border-color);
+      }
+
+      .table_container {
+        &::-webkit-scrollbar {
+          height: 8px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: #d3f36b33;
+          border-radius: 10rem;
+
+          &:hover {
+            background-color: #d3f36b;
+          }
+        }
+
+        &::-webkit-scrollbar-track {
+          background-color: transparent;
+          border-radius: 10rem;
+          //   margin-inline: 20dvw;
+        }
+      }
+    }
+
+    .minus-mt {
+      margin-top: -45px;
+    }
+
+    // Sectors
+    .sector_tag {
+      background-color: #d3f36b;
+      color: #222;
+      font-size: 1.125rem;
+      line-height: 0.75rem;
+      // font-weight: 500;
+      padding: 0.75em 1.5em;
+      border-radius: 8px;
+      border: 1px solid #94c100;
+    }
+  }
+
+  .page_heading {
+    color: var(--d-l-grey);
+    font-size: 28px;
+    @media (min-width: 1200px) {
+      font-size: 32px;
+    }
+  }
+}

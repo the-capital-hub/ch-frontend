@@ -1,0 +1,107 @@
+.feedpostcard_main_container {
+  .feedpostcard_container {
+    .para_container {
+      display: flex;
+      margin: auto;
+
+      .para_container_text {
+        p {
+          height: 258px;
+          flex-shrink: 0;
+          border-radius: var(--border-radius);
+          border: 1px solid #dadada;
+          background: #eaeef2;
+          color: #373737;
+          font-size: 18px;
+          font-family: Poppins;
+          font-weight: 500;
+          line-height: 160%;
+          letter-spacing: 0.42px;
+          padding: 20px 15px;
+        }
+      }
+    }
+
+    .feed_header_container {
+      display: flex;
+      justify-content: space-between;
+
+      .feedpostcard_content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .feedpostcart_text_header {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          margin-left: 10px;
+
+          img {
+            width: 15.954px;
+            height: 26.346px;
+            margin-right: 5px;
+          }
+
+          span {
+            margin-right: 5px;
+          }
+
+        }
+
+      }
+
+      .feedpostcard_footer {
+        img {
+          width: 15.954px;
+          height: 26.346px;
+          margin-right: 5px;
+        }
+
+        .feedpostcard_footer_like_comment {
+          span {
+            margin-right: 5px;
+          }
+
+        }
+      }
+
+
+
+      .three_dot {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 20px;
+      }
+
+      .feedpostcard_footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .feedpostcard_footer_like_comment {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+    }
+
+
+
+
+
+
+
+  }
+
+  .box {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    background: #fff;
+    box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.05);
+  }
+}

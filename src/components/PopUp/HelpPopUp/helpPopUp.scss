@@ -1,0 +1,210 @@
+$card-width: 30%;
+.after_register_popup {
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+  }
+  .popup-content {
+    background-color: #fff;
+    padding: 40px;
+    text-align: center;
+    border-radius: var(--border-radius);
+    position: relative;
+    width: 40%;
+    flex-direction: column;
+    .contact_us_container {
+      background-color: var(--startup-bg);
+  
+      .contactus_container {
+        a {
+          cursor: pointer;
+        }
+        overflow: auto;
+        .title_section {
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+  
+          h2 {
+            color: var(--d-l-grey);
+            font-family: Poppins;
+            font-size: 38px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          }
+  
+          span {
+            color: var(--d-l-grey);
+            font-family: Poppins;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+          }
+  
+          .followus_image_section {
+            display: flex;
+            justify-content: space-around;
+            width: 30%;
+  
+            img {
+              width: 70px;
+              height: 70px;
+            }
+          }
+        }
+  
+        .container {
+          form {
+            border-radius: var(--border-radius);
+            border: 1px solid var(--bs-border-color);
+            background-color: var(--white-to-grey);
+            padding: 20px;
+  
+            .form-input {
+              display: flex;
+              flex-direction: column;
+              label {
+                color: #666;
+                font-family: Poppins;
+                font-size: 10px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+              }
+  
+              input,
+              select,
+              textarea {
+                font-size: 13px;
+                width: 100%;
+                padding: 5px;
+                border-radius: 5.861px;
+                border: 1px solid var(--bs-border-color);
+                background-color: var(--bs-light);
+              }
+            }
+  
+            button {
+              border-radius: 10px;
+              background: #fd5901;
+              color: #fff;
+              font-family: Poppins;
+              font-size: 12px;
+              font-style: normal;
+              font-weight: 500;
+              line-height: normal;
+              border: none;
+              width: 100px;
+              height: 37px;
+              margin: auto;
+            }
+          }
+          .card-container_contact {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+          }
+  
+          .card {
+            flex: 1;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--bs-border-color);
+            background-color: var(--white-to-grey);
+            width: $card-width;
+            padding: 20px;
+            margin-bottom: 20px;
+  
+            img {
+              width: 70px;
+              height: 70px;
+              cursor: pointer;
+            }
+  
+            .text_content {
+              h2 {
+                @media (max-width: 1200px) {
+                  font-size: 24px;
+                }
+              }
+              p {
+                width: 100%;
+                color: #797979;
+                font-family: Poppins;
+                font-size: 15px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                word-wrap: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: normal;
+                margin-top: 10px;
+              }
+            }
+  
+            button {
+              width: 141px;
+              height: 50px;
+              flex-shrink: 0;
+              border-radius: 40px;
+              background-color: var(--bs-gray-300);
+              color: #000;
+              font-family: Poppins;
+              font-size: 15px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: normal;
+              border: none;
+            }
+          }
+  
+          // Media query for responsiveness
+          @media (max-width: 768px) {
+            .card-container {
+              flex-direction: column;
+              align-items: center;
+            }
+  
+            .card {
+              width: 100%;
+            }
+          }
+          @media (max-width: 820px) {
+            .card-container {
+              flex-direction: column;
+              align-items: center;
+            }
+  
+            .card {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  
+    @media (max-width: 820px) {
+      .contactus_container {
+        .title_section {
+          .followus_image_section {
+            img {
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

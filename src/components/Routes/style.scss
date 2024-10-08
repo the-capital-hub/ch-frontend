@@ -1,0 +1,169 @@
+.investor-private-routes {
+  background-color: var(--startup-bg);
+  .investor_home_container {
+    display: flex;
+    // background-color: #eaeef2;
+    margin: 0;
+    position: relative;
+
+    .sidebar {
+      // width: 300px;
+      // background-color: #eaeef2;
+      position: fixed;
+      top: calc(80px + 0%);
+      left: 0;
+      bottom: 0;
+      z-index: 10;
+      transition: width 0.3s ease;
+      overflow: scroll;
+
+      @media (min-width: 821px) {
+        // top: calc(80px + 5%);
+      }
+
+      // Add class for sidebar in fixed position
+      &.fixed {
+        position: absolute;
+        top: auto;
+        bottom: 0;
+      }
+    }
+
+    .sidebar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .sidebar {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+
+    .content {
+      flex: 1;
+      margin-left: 210px;
+      transition: margin-left 0.3s ease;
+      margin-top: 80px + 10px;
+      overflow: hidden;
+      min-height: calc(
+        100dvh - 90px
+      ); // Added when main content was too short and white space filled screen
+    }
+
+    // Add a class to handle the sidebar collapsed state
+    &.sidebar-collapsed {
+      .sidebar {
+        width: 65px;
+      }
+
+      .content {
+        margin-left: 65px;
+      }
+    }
+  }
+
+  @media (max-width: 820px) {
+    .investor_home_container {
+      .sidebar {
+        top: 8.5%;
+        left: 0;
+        bottom: 0;
+        z-index: 12;
+        // Add class for sidebar in fixed position
+        &.fixed {
+        }
+      }
+
+      .sidebar::-webkit-scrollbar {
+      }
+
+      /* Hide scrollbar for IE, Edge and Firefox */
+
+      .content {
+        // flex: 1;
+        margin-left: 0px;
+        transition: margin-left 0.3s ease;
+        margin-top: 80px + 10px;
+        max-width: 100%;
+        overflow: hidden;
+      }
+
+      // Add a class to handle the sidebar collapsed state
+      &.sidebar-collapsed {
+        .sidebar {
+          width: 0;
+          opacity: 0;
+          transition: width 0.3s ease, opacity 0.3s ease;
+        }
+
+        .content {
+          margin-left: 0px;
+        }
+      }
+    }
+  }
+
+  .mobile-bottom-toolbar {
+    position: fixed;
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+    box-sizing: border-box;
+    // width: max-content;
+    // background-color: white;
+    background-color: var(--white-to-grey);
+
+    a {
+      color: rgb(113, 113, 113);
+    }
+    .active {
+      // color: black;
+      color: var(--d-l-grey);
+    }
+  }
+
+  @media (max-width: 468px) {
+    .investor_home_container {
+      background-color: var(--startup-bg);
+      .sidebar {
+        top: 70px;
+        left: 0;
+        bottom: 0;
+        // Add class for sidebar in fixed position
+        &.fixed {
+        }
+      }
+
+      .sidebar::-webkit-scrollbar {
+      }
+
+      /* Hide scrollbar for IE, Edge and Firefox */
+
+      .content {
+        // flex: 1;
+        margin-left: 0px;
+        transition: margin-left 0.3s ease;
+        margin-top: 80px + 10px;
+        max-width: 100%;
+        overflow: hidden;
+        // background-color: #eaeef2;
+        background-color: var(--startup-bg);
+      }
+
+      // Add a class to handle the sidebar collapsed state
+      &.sidebar-collapsed {
+        .sidebar {
+          width: 0;
+          opacity: 0;
+          transition: width 0.3s ease, opacity 0.3s ease;
+        }
+
+        .content {
+          margin-left: 0px;
+        }
+      }
+    }
+  }
+}

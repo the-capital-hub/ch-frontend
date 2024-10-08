@@ -1,0 +1,56 @@
+.portfolio_header {
+  .right_section {
+    span{
+      h1 {
+        font-size: 40px;
+        font-weight: 600;
+        font-family: Poppins;
+        margin: 0px;
+      }
+img{
+  width: 42px;
+  height: 42px;
+}
+    }
+ hr{
+  width: 33%;
+ }
+    h6{
+      font-size: 20px;
+    }
+  }
+  .left_section {
+    img {
+      width: 22px;
+      height: 23px;
+    }
+  }
+}
+@media (max-width: 426px) {
+  .portfolio_header {
+    .right_section {
+      span{
+        h1 {
+          font-size: 25px;
+          font-weight: 400;
+        }
+        img{
+          width: 30px;
+          height: 30px;
+        }
+      }
+      hr{
+        width: 55%;
+       }
+      h6{
+        font-size: 15px;
+      }
+    }
+    .left_section {
+      img {
+        width: 15px;
+        height: 16px;
+      }
+    }
+  }
+}

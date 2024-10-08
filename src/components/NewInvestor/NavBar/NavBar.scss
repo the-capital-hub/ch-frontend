@@ -1,0 +1,629 @@
+.container {
+  .my-investor_navbar {
+    height: 80px;
+    left: 60px;
+    top: 39px;
+    background: var(--white-to-grey);
+    padding: 0 1rem;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+
+    @media (min-width: 768px) {
+      border-radius: 20px;
+    }
+
+    .bar_logo_container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      .logo_container {
+        width: auto;
+        
+        img {
+          height: 45px;
+     
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .mobile-home-hamberger {
+        display: none;
+      }
+    }
+
+    /* right container */
+    .navbar_right_container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .search_container {
+        .searchbar-container {
+          display: flex;
+          align-items: center;
+          position: relative;
+          margin-right: 10px;
+
+          .searchbar-input {
+            height: 49px;
+            background: var(--bs-light);
+            border-radius: 20px;
+            border: none;
+            transition: width 0.4s ease;
+            padding: 0 15px;
+            outline: none;
+          }
+
+          .investor-searchbar-button {
+            position: absolute;
+            right: -5px;
+            top: 0;
+            width: 48px;
+            height: 49px;
+            background: #d3f36b;
+            border: none;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            cursor: pointer;
+          }
+        }
+
+        .search_results {
+          display: flex;
+          width: 100%;
+          flex-direction: column;
+          gap: 5px;
+
+          .single_result:nth-child(6),
+          .single_result:nth-child(13) {
+            border-bottom: none;
+          }
+
+          .search-heading {
+            color: var(--d-l-grey);
+          }
+
+          a {
+            text-decoration: none;
+            color: #6c757d;
+
+            &:hover {
+              color: #d3f36b;
+            }
+          }
+
+          .single_result {
+            color: #6c757d;
+            border-bottom: 1px solid lightgrey;
+            padding: 2px 0;
+            transition: padding-left ease 0.2s;
+
+            &:hover {
+              border-radius: 5px;
+              padding-left: 10px;
+              color: #d3f36b;
+            }
+          }
+        }
+      }
+
+      .icons-container {
+        display: flex;
+        align-items: center;
+
+        .notification-container {
+          position: relative;
+          cursor: pointer;
+
+          .notification-count {
+            position: absolute;
+            background: red;
+            bottom: 0;
+            right: 0;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 13px;
+            color: #fff;
+          }
+        }
+
+        @media (min-width: 821px) {
+          gap: 15px;
+          margin: 0 15px;
+        }
+
+        .mobile-icon-wrapper {
+          display: none;
+
+          @media (min-width: 768px) {
+            background: var(--bs-light);
+          }
+        }
+
+        .icon-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 49px;
+          height: 49px;
+          background-color: var(--light-background-color);
+          border-radius: 50%;
+          transition: background-color 0.3s;
+
+          @media (min-width: 768px) {
+            background: var(--bs-light);
+          }
+
+          .notification-icon,
+          .message-icon {
+            font-weight: bold;
+            font-size: 20px;
+            position: relative;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+          }
+
+          .message-icon-svg {
+            fill: var(--d-l-grey);
+            transition: fill 0.3s;
+          }
+
+          &:hover .message-icon-svg {
+            fill: #9bc11e;
+          }
+
+          &:hover {
+            background-color: var(--hover-background-color);
+          }
+
+          .messagee-count {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #d3f36b;
+            color: black;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: black;
+            border: 1px solid #d3f36b;
+            transform: translate(25%, -25%);
+            animation: radial-wave 1.5s infinite;
+          }
+
+          .profile-pic {
+            width: 49px;
+            height: 49px;
+            border-radius: 50%;
+
+            @media (max-width: 768px) {
+              width: 35px;
+              height: 35px;
+            }
+          }
+
+          .me {
+            position: absolute;
+            width: 23px;
+            height: 23px;
+            top: 65px;
+            font-family: "Poppins";
+            font-style: normal;
+            font-weight: 500;
+            font-size: 15px;
+            line-height: 22px;
+            color: #8f8f8f;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes radial-wave {
+  0% {
+    box-shadow: 0 0 0 0 #d3f36b, 0 0 0 2.5px rgba(255, 0, 0, 0), 0 0 0 5px rgba(255, 0, 0, 0);
+  }
+  40% {
+    box-shadow: 0 0 0 2.5px rgba(255, 0, 0, 0), 0 0 0 5px #485322, 0 0 0 10px rgba(255, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0), 0 0 0 2.5px rgba(255, 0, 0, 0), 0 0 0 5px rgba(255, 0, 0, 0);
+  }
+}
+
+@media (max-width: 820px) {
+  .container {
+    .my-investor_navbar {
+      .bar_logo_container {
+        .logo_container {
+          display: none;
+        }
+
+        .mobile-home-hamberger {
+          display: flex;
+          margin-left: 15px;
+
+          h1 {
+            color: var(--d-l-grey);
+            font-family: Poppins;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            margin: 0;
+            margin-left: 2px;
+            text-transform: uppercase;
+          }
+        }
+
+        img {
+          height: 20px;
+          width: 20px;
+        }
+      }
+
+      .navbar_right_container {
+        .search_container {
+          .searchbar-container {
+            display: none;
+          }
+        }
+
+        .icons-container {
+          .mobile-icon-wrapper {
+            display: flex;
+            width: 49px;
+            height: 49px;
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            .search_container {
+              left: -300px;
+              top: 60px;
+              background-color: white;
+              width: 350px;
+              min-height: 80px;
+
+              .searchbar-container {
+                display: flex;
+                align-items: center;
+                position: relative;
+                margin-right: 10px;
+
+                .searchbar-input {
+                  height: 49px;
+                  width: 310px;
+                  background: #eaeef2;
+                  border-radius: 20px;
+                  border: none;
+                  transition: width 0.4s ease;
+                  padding: 0 15px;
+                  outline: none;
+                }
+
+                .investor-searchbar-button {
+                  position: absolute;
+                  right: -5px;
+                  top: 0;
+                  width: 48px;
+                  height: 49px;
+                  background: #d3f36b;
+                  border: none;
+                  border-top-right-radius: 20px;
+                  border-bottom-right-radius: 20px;
+                  cursor: pointer;
+                }
+              }
+
+              .search_results {
+                display: flex;
+                width: 100%;
+                flex-direction: column;
+                gap: 5px;
+
+                .single_result:nth-child(6),
+                .single_result:nth-child(13) {
+                  border-bottom: none;
+                }
+
+                a {
+                  text-decoration: none;
+                  color: #6c757d;
+
+                  &:hover {
+                    color: #d3f36b;
+                  }
+                }
+
+                .single_result {
+                  color: #6c757d;
+                  border-bottom: 1px solid lightgrey;
+                  padding: 2px 0;
+                  transition: padding-left ease 0.2s;
+
+                  &:hover {
+                    border-radius: 5px;
+                    padding-left: 10px;
+                    color: #d3f36b;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .search_container_mobile {
+        left: auto;
+        top: 70px;
+        width: 60%;
+        right: 100px;
+        min-height: 80px;
+        background-color: var(--white-to-grey);
+
+        .searchbar-container {
+          display: flex;
+          align-items: center;
+          position: relative;
+          margin-right: 10px;
+
+          .searchbar-input {
+            height: 49px;
+            flex-grow: 1;
+            background: var(--bs-light);
+            border-radius: 20px;
+            border: none;
+            transition: width 0.4s ease;
+            padding: 0 15px;
+            outline: none;
+          }
+
+          .searchbar-button {
+            position: absolute;
+            right: -5px;
+            top: 0;
+            width: 48px;
+            height: 49px;
+            background: #d3f36b;
+            border: none;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            cursor: pointer;
+          }
+        }
+
+        .search_results {
+          display: flex;
+          width: 100%;
+          flex-direction: column;
+          gap: 5px;
+
+          .search-heading {
+            color: var(--d-l-grey);
+          }
+
+          .single_result:nth-child(6),
+          .single_result:nth-child(13) {
+            border-bottom: none;
+          }
+          a {
+            text-decoration: none;
+            color: #6c757d;
+            &:hover {
+              color: #d3f36b;
+            }
+          }
+          .single_result {
+            color: #6c757d;
+            border-bottom: 1px solid lightgrey;
+            padding: 2px 0;
+            transition: padding-left ease 0.2s;
+            &:hover {
+              border-radius: 5px;
+              padding-left: 10px;
+              color: #d3f36b;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .container {
+    .my-investor_navbar {
+      .bar_logo_container {
+        .mobile-home-hamberger {
+          display: flex;
+          margin-left: 15px;
+
+          h1 {
+            color: var(--d-l-grey);
+            font-family: Poppins;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            margin: 0;
+            margin-left: 2px;
+            text-transform: uppercase;
+          }
+        }
+
+        img {
+          height: 20px;
+          width: 20px;
+        }
+      }
+
+      .navbar_right_container {
+        .icons-container {
+          .mobile-icon-wrapper {
+            .search_container {
+              left: auto;
+              margin-right: 20px;
+              top: 60px;
+              background-color: white;
+              width: 350px;
+              min-height: 80px;
+
+              .searchbar-container {
+                display: flex;
+                align-items: center;
+                position: relative;
+                margin-right: 10px;
+
+                .searchbar-input {
+                  height: 49px;
+                  width: 310px;
+                  background: #eaeef2;
+                  border-radius: 20px;
+                  border: none;
+                  transition: width 0.4s ease;
+                  padding: 0 15px;
+                  outline: none;
+                }
+
+                .investor-searchbar-button {
+                  position: absolute;
+                  right: -5px;
+                  top: 0;
+                  width: 48px;
+                  height: 49px;
+                  background: #d3f36b;
+                  border: none;
+                  border-top-right-radius: 20px;
+                  border-bottom-right-radius: 20px;
+                  cursor: pointer;
+                }
+              }
+
+              .search_results {
+                display: flex;
+                width: 100%;
+                flex-direction: column;
+                gap: 5px;
+
+                .single_result:nth-child(6),
+                .single_result:nth-child(13) {
+                  border-bottom: none;
+                }
+
+                a {
+                  text-decoration: none;
+                  color: #6c757d;
+
+                  &:hover {
+                    color: #d3f36b;
+                  }
+                }
+
+                .single_result {
+                  color: #6c757d;
+                  border-bottom: 1px solid lightgrey;
+                  padding: 2px 0;
+                  transition: padding-left ease 0.2s;
+
+                  &:hover {
+                    border-radius: 5px;
+                    padding-left: 10px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .search_container_mobile {
+        left: auto;
+        top: 70px;
+        width: 100%;
+        min-height: 80px;
+        right: 0;
+
+        .searchbar-container {
+          display: flex;
+          align-items: center;
+          position: relative;
+          margin-right: 10px;
+
+          .searchbar-input {
+            height: 49px;
+            flex-grow: 1;
+            background: var(--bs-light);
+            border-radius: 20px;
+            border: none;
+            transition: width 0.4s ease;
+            padding: 0 15px;
+            outline: none;
+          }
+
+          .searchbar-button {
+            position: absolute;
+            right: -5px;
+            top: 0;
+            width: 48px;
+            height: 49px;
+            background: #d3f36b;
+            border: none;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            cursor: pointer;
+          }
+        }
+
+        .search_results {
+          display: flex;
+          width: 100%;
+          flex-direction: column;
+          gap: 5px;
+
+          .single_result:nth-child(6),
+          .single_result:nth-child(13) {
+            border-bottom: none;
+          }
+          a {
+            text-decoration: none;
+            color: #6c757d;
+            &:hover {
+              color: #d3f36b;
+            }
+          }
+          .single_result {
+            border-bottom: 1px solid lightgrey;
+            padding: 2px 0;
+            transition: padding-left ease 0.2s;
+            color: #6c757d;
+            &:hover {
+              border-radius: 5px;
+              padding-left: 10px;
+              color: #d3f36b;
+            }
+          }
+        }
+      }
+    }
+  }
+}

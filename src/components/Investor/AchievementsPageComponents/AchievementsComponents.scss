@@ -1,0 +1,39 @@
+.achievements_components{
+    overflow-x: auto;
+    &::-webkit-scrollbar {
+        height: 8px;
+      }
+    
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10rem;
+        background-color: rgba(253, 89, 1, 0.8);
+      }
+    
+      &::-webkit-scrollbar-track {
+        border-radius: 10rem;
+        background-color: rgba(253, 89, 1, 0.2);
+        margin-inline: 10dvw;
+      }
+    .single-card {
+        // background-color: #eaeef2;
+        background:var(--bs-light);
+        gap: 5px;
+        flex: 0 0 14rem;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        color: var(--d-l-grey);
+        .image_text{
+            position: relative;
+            text-align: center;
+            // color: 
+            .text{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+
+}

@@ -1,0 +1,32 @@
+// .companyCard__container {
+//   display: grid;
+//   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+//   row-gap: 2rem;
+
+//   @media (min-width: 900px) {
+//     grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr));
+//   }
+// }
+
+.company__row {
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+}
+
+.company__row::-webkit-scrollbar {
+  height: 10px;
+  width: auto;
+}
+
+.company__row::-webkit-scrollbar-thumb {
+  background: rgba(211, 243, 107, 0.2);
+  border-radius: 10rem;
+}
+
+.company__row::-webkit-scrollbar-thumb:hover {
+  background: rgba(211, 243, 107, 0.8);
+}
+
+.company__row::-webkit-scrollbar-track {
+  background: white;
+}

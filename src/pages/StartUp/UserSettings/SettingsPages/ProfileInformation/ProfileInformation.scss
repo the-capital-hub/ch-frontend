@@ -1,0 +1,90 @@
+.personal_information_section {
+  background-color: var(--white-to-grey);
+  border-radius: var(--border-radius);
+
+  .back_btn {
+    background: none;
+    outline: none;
+    border: none;
+    color: var(--d-l-grey);
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    fieldset,
+    legend {
+      all: revert;
+      margin: 0;
+    }
+
+    fieldset {
+      border: 1px solid var(--bs-border-color);
+      border-radius: 10px;
+      background-color: transparent;
+      padding: 0;
+      position: relative;
+
+      &:focus-within {
+        transition: border 0.15s ease-in-out;
+        border: 1px solid #fd5901;
+      }
+
+      //   &:focus-within {
+      //     transition: border 0.15s ease-in-out;
+      //     border: 1px solid rgba(178, 204, 93, 1);
+      //   }
+
+      .professional_form_input {
+        border: none;
+        outline: none;
+        width: 100%;
+        background-color: transparent;
+
+        padding: 0.5em 0.75em;
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: normal;
+      }
+
+      .visually-hiden {
+        position: absolute !important;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+        clip: rect(1px, 1px, 1px, 1px);
+      }
+    }
+
+    legend {
+      margin-left: 2em;
+      padding-inline: 1em;
+      color: var(--d-l-grey);
+      font-size: 12px;
+      font-weight: 500;
+    }
+    button {
+      border-radius: 131px;
+      border: 1px solid var(--bs-border-color);
+      width: 107px;
+      height: 35px;
+      flex-shrink: 0;
+      color: #717171;
+      font-size: 18px;
+      font-family: Poppins;
+      cursor: pointer;
+    }
+    option {
+      margin: 40px;
+      background-color: var(--d-l-grey);
+
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+      color: var(--darkMode-currentTheme);
+      &:not(:checked) {
+        color: var(--d-l-grey);
+        background-color: var(--bs-light);
+      }
+    }
+  }
+}

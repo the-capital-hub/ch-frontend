@@ -1,0 +1,57 @@
+@import 'react-quill/dist/quill.snow.css';
+
+.ql-toolbar {
+    background-color: #f5f5f5; /* Light gray background */
+    //border-radius: 5px;
+    //margin-bottom: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    .ql-picker-label, .ql-picker-item, button {
+      color: #333; /* Dark text color for buttons */
+    }
+    .ql-active {
+      color: #007bff; /* Active button color */
+    }
+  }
+  
+  // Customize the editor area
+  .ql-container {
+    border: 1px solid #ddd; /* Light border */
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    min-height: 300px;
+    .ql-editor {
+      padding: 15px;
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      // color: #333; /* Dark text color */
+      line-height: 1.5;
+  
+      // Styling for links
+      a {
+        color: #007bff;
+        text-decoration: underline;
+      }
+  
+      // Custom styling for blockquotes
+      blockquote {
+        border-left: 5px solid #ccc;
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #f9f9f9;
+        font-style: italic;
+      }
+    }
+  }
+  
+  // Customize the placeholder text
+  .ql-editor.ql-blank::before {
+    color: #999;
+    font-style: italic;
+  }
+  
+  // Styling for disabled state
+  .ql-container.ql-disabled .ql-editor {
+    background-color: #f0f0f0;
+    color: #ccc;
+  }

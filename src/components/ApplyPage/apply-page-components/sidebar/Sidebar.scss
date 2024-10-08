@@ -1,0 +1,22 @@
+.aside {
+  background-color: var(--color-gray);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border-gray);
+
+  padding-block: 1em;
+  padding-inline-end: 3em;
+  padding-inline-start: 1em;
+  margin-bottom: 1em;
+
+  &__list {
+    &__item {
+      font-weight: 600;
+      line-height: 2;
+    }
+  }
+
+  @media (min-width: 900px) {
+    float: right;
+    margin-bottom: 0;
+  }
+}

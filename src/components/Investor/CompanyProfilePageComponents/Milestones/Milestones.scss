@@ -1,0 +1,77 @@
+.milestone__cards__container {
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+
+    &-track {
+      border-radius: 10rem;
+      background-color: rgb(253, 89, 1, 0.2);
+      margin-inline: 10dvw;
+    }
+
+    &-thumb {
+      border-radius: 10rem;
+      background-color: rgb(253, 89, 1, 0.8);
+    }
+  }
+
+  &.investor {
+    &::-webkit-scrollbar {
+      height: 8px;
+
+      &-track {
+        border-radius: 10rem;
+        background-color: rgba(178, 204, 93, 0.2);
+        margin-inline: 10dvw;
+      }
+
+      &-thumb {
+        border-radius: 10rem;
+        background-color: rgba(178, 204, 93, 0.8);
+      }
+    }
+  }
+
+  .badge_container {
+    flex: 0 0 18rem;
+  }
+}
+
+.orange_button {
+  border-radius: 5px;
+  background: #fd5901;
+  border: 1px solid #fd5901;
+  padding: 8px 25px;
+  width: auto;
+  font-size: 14px;
+  color: white;
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.investor {
+    background-color: #d3f36b;
+    color: black;
+    border: 1px solid #d3f36b;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px inset;
+  }
+}
+
+.orange__heading {
+  color: #fd5901;
+}
+
+.see__more {
+  color: #fd5901;
+  text-decoration: none;
+
+  &.investor {
+    color: #717171;
+  }
+}

@@ -1,0 +1,311 @@
+.vc-profile {
+    text-align: center;
+    padding: 20px;
+    color: white !important;
+    background: #16161B;
+    width: 80%;
+    padding: 50px;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .vc-logo {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        margin: 20px auto;
+    }
+
+    .vc-name {
+        font-size: 2rem;
+        font-weight: bold;
+        margin: 10px 0;
+        color: white;
+    }
+
+    .vc-description {
+        margin-bottom: 20px;
+        font-size: 1rem;
+        color: white;
+    }
+
+    .vc-social-links {
+        margin: 15px 0;
+
+        a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: white;
+            border-radius: 10px;
+            padding: 0 10px 0 10px;
+
+            &.linkedIn {
+                background-color: #007BFF;
+            }
+
+            &.fundingApply {
+                font-size: medium;
+                background-color: #612AA5;
+                padding: 10px;
+                border-radius: 30px;
+            }
+
+            &:hover {
+                background-color: #000000;
+            }
+        }
+    }
+
+    .vc-funding {
+        a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: white;
+            border-radius: 10px;
+            padding: 0 10px 0 10px;
+
+            &.fundingApply {
+                font-size: medium;
+                background-color: #612AA5;
+                padding: 10px 30px;
+                border-radius: 30px;
+            }
+
+            &:hover {
+                background-color: #000000;
+            }
+        }
+    }
+
+    .divider {
+        border: 1px solid grey;
+        margin: 25px 10px 10px 10px;
+    }
+
+    .vc-contact-section {
+        border: 2px solid #632AA9;
+        border-radius: 20px;
+        padding: 20px;
+        margin-top: 20px;
+
+        .vc-contact-header {
+            font-family: Outfit;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 25.2px;
+            text-align: left;
+        }
+
+        .contact-button {
+            display: block;
+            background-color: #CECECE1A;
+            border: none;
+            border-radius: 20px;
+            padding: 5px 30px;
+            text-align: start;
+            cursor: pointer;
+            margin-bottom: 10px;
+            margin-top: 15px;
+
+            &:hover {
+                background-color: darkgrey;
+            }
+        }
+
+        .divider {
+            border: 1px solid grey;
+            margin: 25px 0;
+        }
+
+        .vc-focus {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+
+            .vc-stage-focus, .vc-sector-focus {
+                width: 48%;
+                font-family: Outfit;
+                font-size: 20px;
+                line-height: 25.2px;
+                text-align: left;
+            }
+
+            h3 {
+                margin-bottom: 10px;
+            }
+
+            .vc-bubbles {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: flex-start;
+
+                .bubble {
+                    display: block;
+                    background-color: #632AA9;
+                    text-align: left;
+                    color: white;
+                    border-radius: 20px;
+                    padding: 7px 25px;
+                    font-family: Outfit;
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 20.16px;
+                    text-align: left;
+                }
+            }
+        }
+
+        .vc-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+
+            .vc-detail-item {
+                text-align: center;
+                flex: 1;
+                padding: 0 10px;
+
+                h4 {
+                    font-size: 16px;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                    color: white;
+                }
+
+                .bubble {
+                    background-color: #3a3a3a;
+                    color: white;
+                    border-radius: 20px;
+                    padding: 10px 20px;
+                    font-size: 1rem;
+                    min-width: 120px;
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 45%;
+    padding: 10px 20px;
+    border: 2px solid #632AA9;
+    border-radius: 20px;
+    text-decoration: none;
+    color: white;
+    background-color: black !important;
+
+    &:hover {
+        background-color: darkpurple;
+    }
+}
+
+.vc-social-links {
+    margin: 15px 0;
+
+    a {
+        margin: 0 10px;
+        text-decoration: none;
+        font-size: 24px;
+
+        &:hover {
+            color: #0056b3;
+        }
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) { /* Tablet */
+    .vc-profile {
+        width: 90%;
+        padding: 30px;
+    }
+
+    .vc-logo {
+        width: 120px;
+        height: 120px;
+    }
+
+    .vc-name {
+        font-size: 1.8rem;
+    }
+
+    .vc-description {
+        font-size: 0.95rem;
+    }
+
+    .vc-contact-section .vc-focus {
+        flex-direction: column;
+
+        .vc-stage-focus, .vc-sector-focus {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+
+    .vc-details {
+        flex-direction: column;
+
+        .vc-detail-item {
+            margin-bottom: 20px;
+            padding: 0;
+        }
+    }
+}
+
+@media (max-width: 768px) { /* Mobile */
+    .vc-profile {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .vc-logo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .vc-name {
+        font-size: 1.6rem;
+    }
+
+    .vc-description {
+        font-size: 0.9rem;
+    }
+
+    .vc-contact-section {
+        padding: 15px;
+
+        .vc-contact-header {
+            font-size: 18px;
+        }
+
+        .vc-focus {
+            flex-direction: column;
+
+            .vc-stage-focus, .vc-sector-focus {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+
+        .vc-details {
+            flex-direction: column;
+
+            .vc-detail-item {
+                margin-bottom: 15px;
+                padding: 0;
+            }
+        }
+    }
+
+    .back-button {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+}

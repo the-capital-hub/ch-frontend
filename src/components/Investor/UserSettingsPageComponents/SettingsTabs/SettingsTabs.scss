@@ -1,0 +1,25 @@
+.settings-tabs {
+  border-radius: 0;
+
+  @media (min-width: 821px) {
+    border-radius: var(--border-radius);
+  }
+
+  --bs-list-group-color: var(--bs-body-color);
+  --bs-list-group-bg: var(--white-to-grey);
+  --bs-list-group-border-color: var(--bs-border-color);
+  --bs-list-group-border-width: var(--bs-border-width);
+  --bs-list-group-border-radius: var(--bs-border-radius);
+  --bs-list-group-item-padding-x: 2rem;
+  --bs-list-group-item-padding-y: 1rem;
+  --bs-list-group-action-color: var(--d-l-grey);
+  --bs-list-group-action-hover-color: var(--d-l-grey);
+  --bs-list-group-action-hover-bg: var(--currentTheme-light);
+  --bs-list-group-action-active-color: var(--currentTheme-text);
+  --bs-list-group-action-active-bg: var(--currentTheme);
+  --bs-list-group-disabled-color: var(--bs-secondary-color);
+  --bs-list-group-disabled-bg: var(--bs-body-bg);
+  --bs-list-group-active-color: var(--currentTheme-text);
+  --bs-list-group-active-bg: var(--currentTheme);
+  --bs-list-group-active-border-color: transparent;
+}

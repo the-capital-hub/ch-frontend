@@ -1,0 +1,17 @@
+.dark-mode-settings {
+  background-color: var(--white-to-grey);
+  color: var(--d-l-grey);
+  border-radius: 0;
+
+  @media (min-width: 821px) {
+    border-radius: var(--border-radius);
+    min-width: 40vw;
+  }
+
+  .back-button {
+    background-color: transparent !important;
+    outline: none;
+    border: none;
+    color: var(--d-l-grey);
+  }
+}

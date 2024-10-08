@@ -1,0 +1,135 @@
+.investor_achievements_section {
+    overflow-x: auto;
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10rem;
+    background-color: rgba(253, 89, 1, 0.8);
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10rem;
+    background-color: rgba(253, 89, 1, 0.2);
+    margin-inline: 10dvw;
+  }
+  .hr {
+    width: 100% !important;
+    @media (max-width: 400px) {
+      width: 250% !important;
+    }
+  }
+
+  .single-card {
+    // background-color: #eaeef2;
+
+    gap: 5px;
+    flex: 0 0 14rem;.startup_achievements_section {
+
+    
+      overflow-x: auto;
+      max-width: 100%;
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10rem;
+      background-color: rgba(253, 89, 1, 0.8);
+    }
+  
+    &::-webkit-scrollbar-track {
+      border-radius: 10rem;
+      background-color: rgba(253, 89, 1, 0.2);
+      margin-inline: 10dvw;
+    }
+    .hr {
+      width: 100% !important;
+      @media (max-width: 400px) {
+        width: 250% !important;
+      }
+    }
+  
+    .single-card {
+      // background-color: #eaeef2;
+  
+      gap: 5px;
+      // flex: 0 0 14rem;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      .image_text {
+        position: relative;
+        text-align: center;
+        // color:
+        .text {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+    
+    .achievements_users {
+  
+      .single-card {
+        h5 {
+          color: #fd5901;
+        }
+      }
+    }
+    .Achievements {
+      .single-card {
+        .text {
+          h6 {
+            margin: 0;
+          }
+          p {
+            font-size: 10px;
+          }
+        }
+      }
+    }
+  
+  }
+  
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    .image_text {
+      position: relative;
+      text-align: center;
+      // color:
+      .text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+  
+  .Achievements_users {
+
+    .single-card {
+      h5 {
+        color: #fd5901;
+      }
+    }
+  }
+  .Achievements {
+
+    .single-card {
+      .text {
+        h6 {
+          margin: 0;
+        }
+        p {
+          font-size: 10px;
+        }
+      }
+    }
+  }
+}

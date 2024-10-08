@@ -1,0 +1,122 @@
+.other_user_profile {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  // padding: 0 15px;
+
+  .font_12 {
+    font-size: 12px;
+  }
+  .font_14 {
+    font-size: 14px;
+  }
+  .font-light {
+    font-weight: 100;
+  }
+
+  .profile {
+    // background-color: white;
+    background: var(--white-to-grey);
+    padding: 20px;
+    color: var(--d-l-grey);
+    @media (max-width: 767px) {
+      margin: 0;
+    }
+
+    .short_details {
+      width: 100%;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--bs-border-color);
+      .buttons {
+        margin: 10px 0;
+        font-size: 14px;
+        .message {
+          background-color: #fd5901;
+          color: white;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+        .connection-status {
+          background-color: #fd5901;
+          color: white;
+        }
+      }
+      .left_profile_text {
+        .typography {
+          color: var(--d-l-grey);
+        }
+      }
+    }
+    .details {
+      margin: 15px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+
+  .profile_container {
+    padding: 20px;
+    // background-color: white;
+    background: var(--white-to-grey);
+    color: var(--d-l-grey);
+  }
+
+  .two_column_wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .left_container {
+      flex: 0 0 100%;
+
+      @media (min-width: 1200px) {
+        flex: 0 0 calc(100% - 26rem);
+      }
+
+      .company_details_container {
+        .box {
+          box-shadow: none;
+        }
+      }
+    }
+
+    .right_container {
+      display: none;
+      @media (min-width: 1200px) {
+        display: block;
+        flex: 0 0 24rem;
+
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+      }
+    }
+  }
+
+  .coloured_cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .featured_post {
+    background: var(--white-to-grey);
+    h4 {
+      color: var(--d-l-grey);
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .other_user_profile {
+    .profile {
+      .short_details {
+        .buttons {
+          font-size: 12px;
+        }
+      }
+      // .details {
+      // }
+    }
+  }
+}

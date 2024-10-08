@@ -1,0 +1,16 @@
+.alert_modal_wrapper {
+  .grow_in {
+    animation: growIn 0.25s linear forwards;
+  }
+
+  // Grow in animation
+  @keyframes growIn {
+    from {
+      transform: scale(0);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
+}

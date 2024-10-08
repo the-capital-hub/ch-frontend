@@ -1,0 +1,48 @@
+.profile-information-form {
+  .form-group {
+    // margin-bottom: 1rem;
+
+    &:focus-within {
+      .form-label {
+        color: var(--darkMode-currentTheme);
+      }
+    }
+  }
+
+  .input-group {
+    & > * {
+      flex-grow: 1;
+    }
+  }
+
+  .form-label {
+    font-size: 1.25rem;
+    padding-inline-start: 0.25rem;
+
+    &.picture-label {
+      border: 0.125rem dashed var(--currentTheme);
+      background-color: var(--currentTheme-light);
+      width: 150px;
+      height: 150px;
+      border-radius: 10rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .form-control {
+    &:focus {
+      color: var(--bs-body-color);
+      background-color: var(--bs-body-bg);
+      border-color: var(--currentTheme);
+      outline: 0;
+      box-shadow: none;
+    }
+
+    // @media (min-width: 1400px) {
+    //   width: 60%;
+    // }
+  }
+}

@@ -1,0 +1,141 @@
+.privacy_container {
+  .title_section {
+    .term_title {
+      color: #000;
+      font-family: Poppins;
+      font-size: 40px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      text-align: center;
+    }
+  }
+  .accept_the_term_section {
+    margin-top: 2rem;
+    p {
+      color: #343434;
+      font-family: Poppins;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+    position: relative;
+    .heading_with_line_one {
+      color: #000;
+      font-family: Poppins;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      position: relative; /* Add this line to establish positioning context */
+    }
+    .heading_with_line_two {
+      color: #000;
+      font-family: Poppins;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      position: relative; /* Add this line to establish positioning context */
+
+  
+    }
+
+    .heading_with_line_three {
+      color: #000;
+      font-family: Poppins;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      position: relative; /* Add this line to establish positioning context */
+    }
+    .heading_with_line_four {
+      color: #000;
+      font-family: Poppins;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      position: relative; /* Add this line to establish positioning context */
+    }
+  }
+
+  .button_section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    button {
+      border-radius: 50px;
+      display: flex;
+      width: 155px;
+      padding: 10px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      border: none;
+      color: #fff;
+    }
+    .understood_btn {
+      background: #fd5901;
+      margin-left: 10px;
+    }
+  }
+}
+
+@media (max-width: 1080px) {
+  .privacy_container {
+    .title_section {
+      .term_title {
+        font-size: 36px;
+      }
+    }
+    .accept_the_term_section {
+      p {
+        font-size: 16px;
+      }
+      .heading_with_line_one {
+        font-size: 18px;
+      }
+      .heading_with_line_two,
+      .heading_with_line_three,
+      .heading_with_line_four {
+        font-size: 18px;
+      }
+    }
+    .button_section {
+      button {
+        width: 130px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+@media (max-width: 460px) {
+  .privacy_container {
+    .title_section {
+      .term_title {
+        font-size: 36px;
+      }
+    }
+    .accept_the_term_section {
+      p {
+        font-size: 16px;
+      }
+      .heading_with_line_one,
+      .heading_with_line_two {
+        font-size: 18px;
+      }
+    }
+    .button_section {
+      button {
+        width: 130px;
+        font-size: 14px;
+      }
+    }
+  }
+}

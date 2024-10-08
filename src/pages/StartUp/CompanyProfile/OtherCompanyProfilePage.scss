@@ -1,0 +1,38 @@
+.otherCompanyProfilePage_wrapper {
+  // margin-block: 2rem;
+  display: grid;
+  grid-template-columns: 100%;
+  justify-content: space-between;
+
+  // @media (min-width: 1200px) {
+  //   grid-template-columns: calc(100% - 22rem) 21rem;
+  // }
+
+  @media (min-width: 1360px) {
+    grid-template-columns: calc(100% - 26rem) 24rem;
+  }
+
+  @media (min-width: 820px) {
+    flex-direction: row;
+    margin-inline: 1.5em;
+    // margin-block: 2em;
+  }
+
+  .right_content {
+    display: none;
+    @media (min-width: 1360px) {
+      display: block;
+    }
+  }
+
+  //   CSS for company profile
+  .company__profile {
+    .action__buttons:empty {
+      display: none !important;
+    }
+  }
+
+  .theme_primary {
+    color: var(--currentTheme);
+  }
+}

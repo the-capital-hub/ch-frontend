@@ -1,0 +1,62 @@
+.team_card_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 96%;
+    overflow: scroll;
+
+
+    .card {
+        position: relative;
+        // height: 138px;
+        margin-top: 20px;
+        border-radius: 4px;
+        background: #FFF;
+        box-shadow: 4px 4px 30px 0px rgba(234, 238, 242, 0.50);
+
+        .card-body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .card-title {
+                background-color: #fff;
+                position: absolute;
+                top: -10px;
+                left: 25%;
+                transform: translateX(-50%);
+                border-radius: 5px;
+                color: #FF772F;
+                text-align: center;
+                font-family: Poppins;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+
+
+            }
+
+            .company_text {
+                h6 {
+                    color: #626262;
+                    font-family: Poppins;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                }
+            }
+
+            .card-text {
+                color: rgba(0, 0, 0, 0.63);
+                font-family: Poppins;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+
+            }
+        }
+    }
+}

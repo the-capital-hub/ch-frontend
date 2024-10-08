@@ -1,0 +1,57 @@
+.funding_wrapper {
+  .two_col_wrapper {
+    display: grid;
+    grid-template-columns: 100%;
+    justify-content: space-between;
+
+    @media (min-width: 1200px) {
+      grid-template-columns: calc(100% - 26rem) 24rem;
+    }
+
+    .funding_form_container {
+      background-color: var(--white-to-grey);
+      color: var(--d-l-grey);
+    }
+  }
+
+  // component classes
+
+  .orange-button {
+    border-radius: 8px;
+    background: #fd5901;
+    border: 1px solid #fd5901;
+
+    padding: 8px 25px;
+    font-size: 16px;
+    color: white;
+    transition: 0.25s;
+
+    &:hover {
+      background-color: #fd590133;
+      color: #fd5901;
+    }
+
+    &:active {
+      background-color: #fd5901;
+      border: 1px solid #fd5901;
+      color: white;
+    }
+  }
+
+  .orange {
+    color: #fd5901;
+  }
+
+  .back-btn {
+    .back-icon {
+      width: 0px;
+      transition: 0.25s ease-out;
+    }
+
+    &:hover {
+      .back-icon {
+        width: 16px;
+      }
+    }
+  }
+}
