@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MaxWidthWrapper from "../../../components/Shared/MaxWidthWrapper/MaxWidthWrapper";
 import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
 import "./StartupExplore.scss";
@@ -45,7 +45,8 @@ export default function StartupExplore() {
   const [filteredData, setFilteredData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
-  const userVisitCount = localStorage.getItem("userVisit")
+  const userVisitCount = localStorage.getItem("userVisit");
+  const abortControllerRef = useRef(null);
 
   useEffect(()=>{
     if(Number(userVisitCount)<=1){
@@ -110,11 +111,23 @@ export default function StartupExplore() {
   const onSubmitFilters = async (e) => {
     e?.preventDefault();
     setLoading(true);
+
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    // Create a new AbortController
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     try {
+      console.log("Calling on submit filters");
       const { data } = await fetchExploreFilteredResultsAPI({
         type: activeTab,
         ...filters,
       });
+      if (controller.signal.aborted) return;
+
       setFilteredData(data);
     } catch (error) {
       console.log("Error fetching filtered results: ", error);
@@ -219,7 +232,7 @@ export default function StartupExplore() {
             </button>
             <button
               className={`btn_base py-3 px-3 ${activeTab === "VC" ? "active" : ""}`}
-              onClick={() => setActiveTab("VC")}
+              onClick={() => handleTabChange("VC")}
             >
               VC
             </button>
@@ -290,13 +303,6 @@ export default function StartupExplore() {
                     label="Gender"
                     name="gender"
                   />
-                  {/*<FilterBySelect
-                    value={filters?.sectorPreference}
-                    onChange={handleOnChange}
-                    options={filterOptions?.sectors || sectorOptions}
-                    label="Sector Preference"
-                    name="sectorPreference"
-                  />*/}
                   <FilterBySelect
                     value={filters?.investmentSize}
                     onChange={handleOnChange}
@@ -395,15 +401,6 @@ export default function StartupExplore() {
                     label="Gender"
                     name="gender"
                   />
-                  {/*<FilterBySelect
-                    value={filters?.previousExits}
-                    onChange={handleOnChange}
-                    options={
-                      filterOptions?.previousExits || previousExitsOptions
-                    }
-                    label="Previous Exits"
-                    name="previousExits"
-                  />}*/}
                   <FilterBySelect
                     value={filters?.yearsOfExperience}
                     onChange={handleOnChange}
@@ -414,15 +411,6 @@ export default function StartupExplore() {
                     label="Years of Experience"
                     name="yearsOfExperience"
                   />
-                  {/*<FilterBySelect
-                    value={filters?.diversityMetrics}
-                    onChange={handleOnChange}
-                    options={
-                      filterOptions?.diversityMetrics || diversityMetricsOptions
-                    }
-                    label="Diversity Metrics"
-                    name="diversityMetrics"
-                  />*/}
                 </>
               )}
             </div>
@@ -464,11 +452,6 @@ export default function StartupExplore() {
           )}
         </div>
       </section>
-      {/* {showOnboarding ? (
-        <OnBoardUser steps={startupOnboardingSteps.explorePage} />
-      ) : (
-        ""
-      )} */}
     </MaxWidthWrapper>
   );
 }

@@ -4,7 +4,7 @@ import VcCard from "../../../components/Shared/VcCard/VcCard";
 
 export default function VcProfileList({data}) {
     const navigate = useNavigate();  
-
+    console.log("VCPROFILE",data[1]);
     const handleVcClick = (vcId) => {
         navigate(`/vc-profile/${vcId}`); 
     };
