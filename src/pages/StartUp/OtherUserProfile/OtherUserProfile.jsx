@@ -179,12 +179,12 @@ function OtherUserProfile() {
 
 	(function () {
 		if (loggedInUser.isSubscribed) {
-			fetchEmailfromServer(loggedInUser?._id).then((emailData) => {
-				setEmail(emailData.email);
+			fetchEmailfromServer(userData?._id).then((emailData) => {
+				setEmail(emailData?.email);
 			});
 		} else if (loggedInUser?.investorIdCount?.includes(userData?._id)) {
 			fetchEmailfromServer(userData?._id).then((emailData) => {
-				setEmail(emailData.email);
+				setEmail(emailData?.email);
 			});
 		}
 	})();
