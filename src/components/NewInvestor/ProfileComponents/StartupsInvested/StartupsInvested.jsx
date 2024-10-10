@@ -15,14 +15,13 @@ import {
 } from "../../../../Store/features/user/userSlice";
 import { getInvestorById } from "../../../../Service/user";
 
-export default function StartupsInvested() {
+export default function StartupsInvested({ cannotAdd = false }) {
   // Fetch loggedInUser from global state
   const userStartupsInvested = useSelector(selectUserStartupsInvested);
   const userInvestor = useSelector(selectUserInvestor);
 
   // States for Invested Startups
-  const [investedStartups, setInvestedStartups] =
-    useState(userStartupsInvested);
+  const [investedStartups, setInvestedStartups] = useState(userStartupsInvested);
 
   useEffect(() => {
     if (!userStartupsInvested) {
@@ -42,21 +41,21 @@ export default function StartupsInvested() {
         <div className="header border-bottom p-4 ">
           <h2 className="green_underline typography">Startups Invested</h2>
           <div className="">
-            {/* {investor?.founderId === loggedInUser._id && ( */}
-            <ModalBsLauncher
-              id="startupsModal"
-              className={"btn btn-investor px-2 px-sm-3 "}
-            >
-              Add New
-            </ModalBsLauncher>
-            {/* )} */}
+            {!cannotAdd && (
+              <ModalBsLauncher
+                id="startupsModal"
+                className={"btn btn-investor px-2 px-sm-3 "}
+              >
+                Add New
+              </ModalBsLauncher>
+            )}
           </div>
         </div>
         {/* Loop cards here */}
         <div className="invested_cards px-3 py-4">
-          {investedStartups?.map((startUp, index) => {
-            return <InvestedCard startUp={startUp} key={startUp._id} />;
-          })}
+          {investedStartups?.map((startUp) => (
+            <InvestedCard startUp={startUp} key={startUp._id} />
+          ))}
         </div>
         
         {/* Startups Modal */}

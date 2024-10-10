@@ -47,9 +47,9 @@ const CompanyDetailsCard = ({
     // console.log('userDetails:', userDetails);
     // console.log('theme:', theme);
 
-    if (theme === "investor") {
-      // console.log('Calling getInvestorById');
-      getInvestorById(userDetails)
+    if (userDetails.isInvestor) {
+       console.log('Calling getInvestorById');
+      getInvestorById(userDetails._id)
         .then(({ data }) => {
           console.log('Investor data:', data);
           setOnePager(data);
