@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import MaxWidthWrapper from "../../../components/Shared/MaxWidthWrapper/MaxWidthWrapper";
 import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
 import "./StartupExplore.scss";
-// import SmallProfileCard from "../../../components/Investor/InvestorGlobalCards/TwoSmallMyProfile/SmallProfileCard";
 import FilterBySelect from "../../../components/NewInvestor/FilterBySelect/FilterBySelect";
 import VcProfileList from "../../../components/NewInvestor/CompanyProfileComponents/Vcprofile";
 import CompanyProfileList from "../../../components/NewInvestor/CompanyProfileComponents/CompanyProfileList";
@@ -16,18 +15,14 @@ import {
 	fetchExploreFiltersAPI,
 } from "../../../Service/user";
 import PersonProfileList from "../../../components/Shared/PersonProfileComponents/PersonProfileList";
-// import OnBoardUser from "../../../components/OnBoardUser/OnBoardUser";
 import { startupOnboardingSteps } from "../../../components/OnBoardUser/steps/startup";
 import {
 	sectorOptions,
 	ageOptions,
-	// diversityMetricsOptions,
-	// educationOptions,
 	fundingRaisedOptions,
 	genderOptions,
 	investmentSizeOptions,
 	investmentStageOptions,
-	//previousExitsOptions,
 	productStageOptions,
 	sizeOptions,
 	stageOptions,
@@ -35,7 +30,6 @@ import {
 } from "../../../constants/Startups/ExplorePage";
 import TutorialTrigger from "../../../components/Shared/TutorialTrigger/TutorialTrigger";
 import InvestorProfileList from "../../../components/Shared/InvestorProfileComponent/InvestorProfileList";
-import { BiSolidShow, BiHide } from "react-icons/bi";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 
 export default function StartupExplore() {
@@ -44,17 +38,15 @@ export default function StartupExplore() {
 	const [activeTab, setActiveTab] = useState(
 		localStorage.getItem("activeTab") || "Startup"
 	);
-	const [filterOptions, setFilterOptions] = useState([]);
+	const [filterOptions, setFilterOptions] = useState({});
 	const [filters, setFilters] = useState(
 		JSON.parse(localStorage.getItem("filters")) || {}
 	);
-	const [filteredData, setFilteredData] = useState(null);
-	const [loading, setLoading] = useState(false);
+	const [filteredData, setFilteredData] = useState(undefined); // Initialize as undefined
+	const [loading, setLoading] = useState(true); // Initially set to true
 	const [showFilters, setShowFilters] = useState(false);
 	const userVisitCount = localStorage.getItem("userVisit");
 	const abortControllerRef = useRef(null);
-	//const [page, setPage] = useState(1);
-	//const [hasMoreData, setHasMoreData] = useState(true);
 
 	useEffect(() => {
 		if (Number(userVisitCount) <= 1) {
@@ -110,7 +102,7 @@ export default function StartupExplore() {
 	const fetchFilters = async () => {
 		try {
 			const { data } = await fetchExploreFiltersAPI(activeTab);
-			setFilterOptions(data);
+			setFilterOptions(data); // Correctly set the filter options for the current tab
 		} catch (error) {
 			console.log("Error fetching filters: ", error);
 		}
@@ -124,54 +116,23 @@ export default function StartupExplore() {
 			abortControllerRef.current.abort();
 		}
 
-		// Create a new AbortController
 		const controller = new AbortController();
 		abortControllerRef.current = controller;
 
 		try {
-			console.log("Calling on submit filters");
 			const { data } = await fetchExploreFilteredResultsAPI({
 				type: activeTab,
 				...filters,
-				//page,
 			});
 			if (controller.signal.aborted) return;
 
-			// if (data.length > 0) {
-			//   setFilteredData((prev) => (prev ? [...prev, ...data] : data)); // Append new data
-			// } else {
-			//   setHasMoreData(false); // No more data to load
-			// }
-
-			setFilteredData(data);
+			setFilteredData(data); // Only update filteredData after fetching is complete
 		} catch (error) {
 			console.log("Error fetching filtered results: ", error);
 		} finally {
-			setLoading(false);
+			setLoading(false); // Data fetching is complete
 		}
 	};
-	// const handleScroll = () => {
-	//   if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200 && hasMoreData) {
-	//     setPage((prev) => prev + 1); // Increment page to load more data
-	//   }
-	// };
-
-	// useEffect(() => {
-	//   // Add scroll event listener
-	//   window.addEventListener("scroll", handleScroll);
-
-	//   return () => {
-	//     // Clean up the event listener
-	//     window.removeEventListener("scroll", handleScroll);
-	//   };
-	// }, [hasMoreData]); // Depend on hasMoreData to avoid unnecessary calls
-
-	// useEffect(() => {
-	//   // Call onSubmitFilters when page or filters change
-	//   if (page > 1) {
-	//     onSubmitFilters();
-	//   }
-	// }, [page]);
 
 	const fetchInitialData = async () => {
 		setFilters({});
@@ -233,15 +194,12 @@ export default function StartupExplore() {
 	return (
 		<MaxWidthWrapper>
 			<section className="startup_explore_wrapper d-flex flex-column gap-3 mb-4">
-				{/* <SmallProfileCard/> */}
-
-				{/* Onboarding popup */}
 				<TutorialTrigger steps={startupOnboardingSteps.explorePage} />
 
 				{/* Header */}
-				<div className="filter_container  rounded-4 shadow-sm d-flex flex-column gap-4 px-4 py-4">
+				<div className="filter_container rounded-4 shadow-sm d-flex flex-column gap-4 px-4 py-4">
 					{/* Heading */}
-					<h5 className="m-0 " style={{ color: "var(--d-l-grey)" }}>
+					<h5 className="m-0" style={{ color: "var(--d-l-grey)" }}>
 						Find {activeTab} by
 					</h5>
 
@@ -281,7 +239,7 @@ export default function StartupExplore() {
 						</button>
 						{filters && (
 							<button
-								className={`btn-capital-small p-2 p-md-3 ms-auto`}
+								className="btn-capital-small p-2 p-md-3 ms-auto"
 								onClick={fetchInitialData}
 							>
 								<span className="d-none d-md-block">Show All</span>
@@ -307,7 +265,6 @@ export default function StartupExplore() {
 								style={{
 									fontSize: "2rem",
 									marginLeft: "10px",
-									// border: "1px solid rgba(253, 89, 1, 1)",
 									filter: "drop-shadow(0px 4px 4px rgba(253, 89, 1, 1))",
 								}}
 							/>
@@ -337,9 +294,7 @@ export default function StartupExplore() {
 										<FilterBySelect
 											value={filters?.ticket_size}
 											onChange={handleOnChange}
-											options={
-												filterOptions?.investmentSize || investmentSizeOptions
-											}
+											options={filterOptions?.investmentSize || investmentSizeOptions}
 											label="Ticket Size"
 											name="ticket_size"
 										/>
@@ -372,23 +327,20 @@ export default function StartupExplore() {
 										<FilterBySelect
 											value={filters?.investmentSize}
 											onChange={handleOnChange}
-											options={
-												filterOptions?.investmentSize || investmentSizeOptions
-											}
+											options={filterOptions?.investmentSize || investmentSizeOptions}
 											label="Investment Size"
 											name="investmentSize"
 										/>
 										<FilterBySelect
 											value={filters?.investmentStage}
 											onChange={handleOnChange}
-											options={
-												filterOptions?.investmentStage || investmentStageOptions
-											}
+											options={filterOptions?.investmentStage || investmentStageOptions}
 											label="Investment Stage"
 											name="investmentStage"
 										/>
 									</>
 								)}
+
 								{activeTab === "Startup" && (
 									<>
 										<FilterBySelect
@@ -415,18 +367,14 @@ export default function StartupExplore() {
 										<FilterBySelect
 											value={filters?.fundingRaised}
 											onChange={handleOnChange}
-											options={
-												filterOptions?.fundingRaised || fundingRaisedOptions
-											}
+											options={filterOptions?.fundingRaised || fundingRaisedOptions}
 											label="Funding Raised"
 											name="fundingRaised"
 										/>
 										<FilterBySelect
 											value={filters?.productStage}
 											onChange={handleOnChange}
-											options={
-												filterOptions?.productStage || productStageOptions
-											}
+											options={filterOptions?.productStage || productStageOptions}
 											label="Startup Stage"
 											name="productStage"
 										/>
@@ -446,6 +394,7 @@ export default function StartupExplore() {
 										/>
 									</>
 								)}
+
 								{activeTab === "Founder" && (
 									<>
 										<FilterBySelect
@@ -472,10 +421,7 @@ export default function StartupExplore() {
 										<FilterBySelect
 											value={filters?.yearsOfExperience}
 											onChange={handleOnChange}
-											options={
-												filterOptions?.yearsOfExperience ||
-												yearsOfExperienceOptions
-											}
+											options={filterOptions?.yearsOfExperience || yearsOfExperienceOptions}
 											label="Years of Experience"
 											name="yearsOfExperience"
 										/>
@@ -490,7 +436,7 @@ export default function StartupExplore() {
 									name="searchQuery"
 									onChange={handleOnChange}
 								/>
-								<button className="filter_button btn-capital " type="submit">
+								<button className="filter_button btn-capital" type="submit">
 									Filter {activeTab}
 								</button>
 							</div>
@@ -498,32 +444,20 @@ export default function StartupExplore() {
 					)}
 				</div>
 
-				{/* Companies List - pass filter props*/}
-
+				{/* Companies List */}
 				<div className="filtered-results">
 					{loading ? (
 						<SpinnerBS
-							className="container spinner_loader  d-flex justify-content-center align-items-center p-5 rounded-4 shadow-sm"
+							className="container spinner_loader d-flex justify-content-center align-items-center p-5 rounded-4 shadow-sm"
 							colorClass="text-secondary"
 							spinnerSizeClass="xl"
 						/>
-					) : (
-						<>
-							{!filteredData?.length ? (
-								<div className="container bg-white d-flex justify-content-center align-items-center p-5 rounded-4 shadow-sm">
-									No {activeTab} found
-								</div>
-							) : (
-								renderTabContent()
-							)}
-							{/* {loading && page > 1 && (
-                <SpinnerBS
-                  className="container spinner_loader  d-flex justify-content-center align-items-center p-3"
-                  colorClass="text-secondary"
-                  spinnerSizeClass="lg"
-                />
-              )} */}
-						</>
+					) : filteredData?.length > 0 ? (
+						renderTabContent()
+					) : filteredData === undefined ? null : (
+						<div className="container bg-white d-flex justify-content-center align-items-center p-5 rounded-4 shadow-sm">
+							No {activeTab} found
+						</div>
 					)}
 				</div>
 			</section>

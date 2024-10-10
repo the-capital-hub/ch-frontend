@@ -7,6 +7,9 @@ import Achievements from "../pages/StartUp/Achievements/Achievements";
 const InvestorConnection = lazy(() =>
   import("../components/NewInvestor/InvestorConnection/InvestorConnection")
 );
+const VcProfilePage = lazy(()=>
+  import("../pages/VCprofile/VcProfile")
+  );
 const OtherInvestorProfile = lazy(() =>
   import("../pages/Investor/OtherInvestorProfile/OtherInvestorProfile")
 );
@@ -282,6 +285,14 @@ function InvestorRoutes() {
         element={
           <Suspense fallback={<SuspenseLoader />}>
             <SinglePost />
+          </Suspense>
+        }
+      />
+       <Route
+        path="/investor/vc-profile/:vcId"
+        element={
+          <Suspense fallback={<SuspenseLoader />}>
+            <VcProfilePage />
           </Suspense>
         }
       />
