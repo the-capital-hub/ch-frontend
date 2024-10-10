@@ -1,5 +1,5 @@
 import "./Explore.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import SmallProfileCard from "../../../components/Investor/InvestorGlobalCards/TwoSmallMyProfile/SmallProfileCard";
 // import Company from "../../../components/NewInvestor/Company/Company";
 import FilterBySelect from "../../../components/NewInvestor/FilterBySelect/FilterBySelect";
@@ -170,7 +170,9 @@ function Explore() {
   const [filteredData, setFilteredData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
-  const userVisitCount = localStorage.getItem("userVisit")
+  const userVisitCount = localStorage.getItem("userVisit");
+  const abortControllerRef = useRef(null);
+
 
   useEffect(()=>{
     if(Number(userVisitCount)<=1){
@@ -208,11 +210,22 @@ function Explore() {
   const onSubmitFilters = async (e) => {
     e?.preventDefault();
     setLoading(true);
+
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    // Create a new AbortController
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     try {
       const { data } = await fetchExploreFilteredResultsAPI({
         type: activeTab,
         ...filters,
       });
+      if (controller.signal.aborted) return;
+
       setFilteredData(data);
     } catch (error) {
       console.log("Error fetching filtered results: ", error);
@@ -260,12 +273,20 @@ function Explore() {
         case "VC":
         return (
           <VcProfileList
+          theme={'investor'}
             data={filteredData}
           />
         );
       default:
         return null;
     }
+  };
+
+  const handleTabChange = (tab) => {
+    setFilters({});
+    setActiveTab(tab);
+    localStorage.setItem("activeTab", tab);
+    localStorage.removeItem("filters");
   };
 
   return (
@@ -281,34 +302,25 @@ function Explore() {
           <div className="filter_by">
             <button
               className={activeTab === "Startup" ? "active" : "s_f_i_button "}
-              onClick={() => {
-                setFilters(null);
-                setActiveTab("Startup");
-              }}
+              onClick={() => handleTabChange("Startup")}
             >
               Startup
             </button>
             <button
               className={activeTab === "Founder" ? "active" : "s_f_i_button "}
-              onClick={() => {
-                setFilters(null);
-                setActiveTab("Founder");
-              }}
+              onClick={() => handleTabChange("Founder")}
             >
               Founder
             </button>
             <button
               className={activeTab === "Investor" ? "active" : "s_f_i_button "}
-              onClick={() => {
-                setFilters(null);
-                setActiveTab("Investor");
-              }}
+              onClick={() => handleTabChange("Investor")}
             >
               Investor
             </button>
             <button
               className={`btn_base py-3 px-3 ${activeTab === "VC" ? "active" : ""}`}
-              onClick={() => setActiveTab("VC")}
+              onClick={() => handleTabChange("VC")}
             >
               VC
             </button>

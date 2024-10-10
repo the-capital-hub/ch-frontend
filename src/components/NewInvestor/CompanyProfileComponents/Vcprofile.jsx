@@ -2,10 +2,15 @@ import React from "react";
 import { useNavigate } from "react-router-dom";  
 import VcCard from "../../../components/Shared/VcCard/VcCard";
 
-export default function VcProfileList({data}) {
+export default function VcProfileList({data, theme}) {
     const navigate = useNavigate();  
     console.log("VCPROFILE",data[1]);
     const handleVcClick = (vcId) => {
+        if (theme === "investor") {
+            console.log("Investor clicked");
+            navigate(`/investor/vc-profile/${vcId}`);
+            return; 
+        }
         navigate(`/vc-profile/${vcId}`); 
     };
 
