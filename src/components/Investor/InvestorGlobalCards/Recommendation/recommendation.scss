@@ -62,15 +62,15 @@
         .connect_button {
           border-radius: 50px;
           // border: 1px solid #acacac;
-          color: #000;
+          color: var(--d-l-grey);
           font-size: 13px;
+          border: 1px var(--d-l-grey) solid;
           font-family: Poppins;
           padding: 5px 10px;
           display: flex;
           gap: 8px;
           margin: auto 0;
           align-items: center;
-          background-color: var(--bs-gray-300);
           height: 40px;
           img {
             width: 18px;
@@ -84,7 +84,7 @@
         align-items: flex-start;
 
         &:hover {
-          background-color: #acacaca1;
+          background-color: #4f4f4fa1;
         }
 
         img {

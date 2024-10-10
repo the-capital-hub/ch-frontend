@@ -11,6 +11,8 @@ import {
 } from "../../../../Service/user";
 import { Link, useLocation } from "react-router-dom";
 import { setRecommendations } from "../../../../Store/features/user/userSlice";
+import { FaUserPlus , FaUserCircle } from "react-icons/fa";
+
 
 const RecommendationCard = ({ maxCount = 5 }) => {
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -57,6 +59,7 @@ const RecommendationCard = ({ maxCount = 5 }) => {
       .catch((error) => console.log(error));
   };
 
+ 
   return (
     <>
       <div className="recommendation_main_container">
@@ -82,6 +85,8 @@ const RecommendationCard = ({ maxCount = 5 }) => {
                       ? `/investor/user/${user?.firstName.toLowerCase()}-${user?.lastName.toLowerCase()}/${user.oneLinkId}`
                       : `/user/${user?.firstName.toLowerCase()}-${user?.lastName.toLowerCase()}/${user.oneLinkId}`;
 
+                      console.log("reco", recommendations);
+
                     return (
                       <Link
                         to={userLink}
@@ -91,17 +96,21 @@ const RecommendationCard = ({ maxCount = 5 }) => {
                       >
                         <div className="card-body recommendation_card_body">
                           <img
-                            src={user.profilePicture}
+                            src={
+                              user.profilePicture && user.profilePicture.trim() !== ""
+                                ? user.profilePicture
+                                : <FaUserCircle /> // External fallback image URL
+                            }
                             alt="img"
                             className="rounded-circle"
                             style={{ objectFit: "cover" }}
                           />
                           <div className="recommendation_card_text">
-                            <h3>
+                            <h3 style={{color: "var(--d-l-grey)"}}>
                               {user.firstName} {user.lastName}
                             </h3>
                             {user.designation && (
-                              <h4 className="smallest_typo">
+                              <h4 style={{color: "var(--d-l-grey)"}} className="smallest_typo">
                                 {user.designation}
                               </h4>
                             )}
@@ -113,11 +122,12 @@ const RecommendationCard = ({ maxCount = 5 }) => {
                               handleConnect(user._id);
                             }}
                           >
-                            <img src={AddUserIconBlack} alt="add user" />
+                            <FaUserPlus />
                             <span>Connect</span>
                           </button>
                         </div>
                       </Link>
+
                     );
                   })
                 ) : (
