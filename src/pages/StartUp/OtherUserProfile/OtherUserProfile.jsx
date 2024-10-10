@@ -175,8 +175,8 @@ function OtherUserProfile() {
 
 	const handleShowEmail = async () => {
 		const data = await fetchEmailfromServer(loggedInUser?._id);
-		console.log("data", data.investorIdCount);
-		// console.log("data", data.investorIdCount?.length);
+		console.log("investorArray", data.investorIdCount);
+		console.log("Count", data.investorIdCount?.length);
 
 		if (data?.investorIdCount?.includes(userData?._id)) {
 			fetchEmailfromServer(userData?._id).then((emailData) => {

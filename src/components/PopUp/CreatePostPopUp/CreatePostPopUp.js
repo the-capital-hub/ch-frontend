@@ -531,7 +531,7 @@ const CreatePostPopUp = ({
                     <span className="tooltip-text top2">doc</span>
                   </button>
 
-                  <button
+                  {/* <button
                     className="white_button hover-text"
                     onClick={handleOneLinkClick}
                   >
@@ -542,7 +542,7 @@ const CreatePostPopUp = ({
                       style={{ color: "var(--d-l-grey)" }}
                     />
                     <span className="tooltip-text top3">link</span>
-                  </button>
+                  </button> */}
                 </div>
                 <div className="post_button_container">
                   {posting ? (
