@@ -47,8 +47,8 @@ export default function StartupExplore() {
   const [showFilters, setShowFilters] = useState(false);
   const userVisitCount = localStorage.getItem("userVisit");
   const abortControllerRef = useRef(null);
-  const [page, setPage] = useState(1); 
-  const [hasMoreData, setHasMoreData] = useState(true); 
+  //const [page, setPage] = useState(1); 
+  //const [hasMoreData, setHasMoreData] = useState(true); 
 
   useEffect(()=>{
     if(Number(userVisitCount)<=1){
@@ -127,15 +127,15 @@ export default function StartupExplore() {
       const { data } = await fetchExploreFilteredResultsAPI({
         type: activeTab,
         ...filters,
-        page,
+        //page,
       });
       if (controller.signal.aborted) return;
 
-      if (data.length > 0) {
-        setFilteredData((prev) => (prev ? [...prev, ...data] : data)); // Append new data
-      } else {
-        setHasMoreData(false); // No more data to load
-      }
+      // if (data.length > 0) {
+      //   setFilteredData((prev) => (prev ? [...prev, ...data] : data)); // Append new data
+      // } else {
+      //   setHasMoreData(false); // No more data to load
+      // }
 
       setFilteredData(data);
     } catch (error) {
@@ -144,29 +144,29 @@ export default function StartupExplore() {
       setLoading(false);
     }
   };
-  const handleScroll = () => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200 && hasMoreData) {
-      setPage((prev) => prev + 1); // Increment page to load more data
-    }
-  };
+  // const handleScroll = () => {
+  //   if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200 && hasMoreData) {
+  //     setPage((prev) => prev + 1); // Increment page to load more data
+  //   }
+  // };
 
 
-  useEffect(() => {
-    // Add scroll event listener
-    window.addEventListener("scroll", handleScroll);
+  // useEffect(() => {
+  //   // Add scroll event listener
+  //   window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      // Clean up the event listener
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [hasMoreData]); // Depend on hasMoreData to avoid unnecessary calls
+  //   return () => {
+  //     // Clean up the event listener
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, [hasMoreData]); // Depend on hasMoreData to avoid unnecessary calls
 
-  useEffect(() => {
-    // Call onSubmitFilters when page or filters change
-    if (page > 1) {
-      onSubmitFilters();
-    }
-  }, [page]); 
+  // useEffect(() => {
+  //   // Call onSubmitFilters when page or filters change
+  //   if (page > 1) {
+  //     onSubmitFilters();
+  //   }
+  // }, [page]); 
 
 
   const fetchInitialData = async () => {
@@ -466,7 +466,7 @@ export default function StartupExplore() {
         {/* Companies List - pass filter props*/}
 
         <div className="filtered-results">
-          {loading && page === 1 ? (
+          {loading ? (
             <SpinnerBS
               className="container spinner_loader  d-flex justify-content-center align-items-center p-5 rounded-4 shadow-sm"
               colorClass="text-secondary"
@@ -481,13 +481,13 @@ export default function StartupExplore() {
               ) : (
                 renderTabContent()
               )}
-                {loading && page > 1 && (
+                {/* {loading && page > 1 && (
                 <SpinnerBS
                   className="container spinner_loader  d-flex justify-content-center align-items-center p-3"
                   colorClass="text-secondary"
                   spinnerSizeClass="lg"
                 />
-              )}
+              )} */}
             </>
           )}
         </div>
