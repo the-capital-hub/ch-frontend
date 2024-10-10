@@ -62,7 +62,7 @@ const EditModalContent = ({ dataArray, isInterests, setInvestedStartups, setMyIn
   return (
     <div className="edit__modal__body">
       <div className="current_list d-flex flex-column gap-4 border rounded-4 p-3">
-        <h5 className="m-0 green_underline">My Investments</h5>
+        <h5 className="m-0">My Investments</h5>
         <div className="d-flex flex-column gap-3">
           {companies.map((company, idx) => (
             <div
@@ -76,7 +76,7 @@ const EditModalContent = ({ dataArray, isInterests, setInvestedStartups, setMyIn
                 onClick={() => handleEditClick(company, idx)}
               />
               <h6
-                className="green_underline"
+                className=""
                 style={{ cursor: "pointer" }}
                 onClick={() => handleEditClick(company, idx)}
               >
