@@ -24,11 +24,15 @@ import {
 import SubcriptionPop from "../../../components/PopUp/SubscriptionPopUp/SubcriptionPop";
 import BatchImag from "../../../Images/tick-mark.png";
 
+import { selectUserCompanyData } from "../../../Store/features/user/userSlice";
+import StartupsInvested from "../../../components/NewInvestor/ProfileComponents/StartupsInvested/StartupsInvested";
+
 const token = localStorage.getItem("accessToken");
 
 function OtherUserProfile() {
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 	const dispatch = useDispatch();
+	const userCompanyData = useSelector(selectUserCompanyData);
 	const [userData, setUserData] = useState(null);
 	const [popPayOpen, setPopPayOpen] = useState(false);
 	const [connectionSent, setConnectionSent] = useState(false);
@@ -51,6 +55,18 @@ function OtherUserProfile() {
 			.then(({ data }) => setUserData(data))
 			.catch((error) => console.error(error.message));
 	}, [userId, connectionSent]);
+
+	function formatNumber(value) {
+		if (typeof value !== "number") return "NA";
+		if (value >= 10000000) {
+		  return (value / 10000000).toFixed(2) + " Crore";
+		} else if (value >= 100000) {
+		  return (value / 100000).toFixed(2) + " Lakh";
+		} else if (value >= 1000) {
+		  return (value / 1000).toFixed(2) + " K";
+		}
+		return value.toString();
+	  }
 
 	const handleConnect = (userId) => {
 		if (canSendRequest()) {
@@ -198,6 +214,11 @@ function OtherUserProfile() {
 		}
 	};
 
+	const recentInvestmentAmount =
+    userCompanyData.revenue.length > 0
+      ? userCompanyData.revenue[userCompanyData.revenue.length - 1].amount
+      : "5";
+
 	return (
 		<>
 			<MaxWidthWrapper>
@@ -277,14 +298,14 @@ function OtherUserProfile() {
 								<div className="details">
 									<div className="single_details row row-cols-1 row-cols-md-2 ">
 										{userData?.startUp?.company ||
-										userData?.investor?.companyName ? (
+										userCompanyData?.companyName ? (
 											<>
 												<span className="col-md-3 label fw-bold">
 													Current Company
 												</span>
 												<span className="col-md-9 value">
 													{userData?.startUp?.company ||
-														userData?.investor?.companyName}
+														userCompanyData.companyName}
 												</span>
 											</>
 										) : null}
@@ -369,6 +390,147 @@ function OtherUserProfile() {
 									</>
 								</div>
 							)}
+							<div
+  style={{
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  }}
+>
+  <div
+    style={{
+      background: theme === "dark" ? "#22262c" : "#f5f5f5",
+      padding: "10px",
+      borderRadius: "0.37rem",
+      maxWidth: "25rem",
+      width: "100%",
+    }}
+  >
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        borderBottom: "2px solid rgba(211, 243, 107, 1)",
+        marginBottom: "5px",
+      }}
+    >
+      <p
+        className="typography"
+        style={{
+          fontWeight: "bold",
+          fontSize: "12px",
+          marginBottom: "5px",
+          color: theme === "dark" ? "#fff" : "#000",
+        }}
+      >
+        Recent Investment
+      </p>
+    </div>
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <p
+        style={{
+          color: theme === "dark" ? "#fff" : "#000",
+          marginBottom: "0",
+        }}
+      >
+        {recentInvestmentAmount !== "NA"
+          ? formatNumber(recentInvestmentAmount)
+          : "NA"}
+      </p>
+    </div>
+  </div>
+  
+  <div
+    style={{
+      background: theme === "dark" ? "#22262c" : "#f5f5f5",
+      padding: "10px",
+      borderRadius: "0.37rem",
+      maxWidth: "25rem",
+      width: "100%",
+      margin: "0 5px",
+    }}
+  >
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        borderBottom: "2px solid rgba(211, 243, 107, 1)",
+        marginBottom: "5px",
+      }}
+    >
+      <p
+        className="typography"
+        style={{
+          fontWeight: "bold",
+          fontSize: "12px",
+          marginBottom: "5px",
+          color: theme === "dark" ? "#fff" : "#000",
+        }}
+      >
+        Average Recent Investments
+      </p>
+    </div>
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <p
+        style={{
+          color: theme === "dark" ? "#fff" : "#000",
+          marginBottom: "0",
+        }}
+      >
+        {userCompanyData.investmentRange || "10 lakhs"}
+      </p>
+    </div>
+  </div>
+
+  <div
+    style={{
+      background: theme === "dark" ? "#22262c" : "#f5f5f5",
+      padding: "10px",
+      borderRadius: "0.37rem",
+      maxWidth: "25rem",
+      width: "100%",
+    }}
+  >
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        borderBottom: "2px solid rgba(211, 243, 107, 1)",
+        marginBottom: "5px",
+      }}
+    >
+      <p
+        className="typography"
+        style={{
+          fontWeight: "bold",
+          fontSize: "12px",
+          marginBottom: "5px",
+          color: theme === "dark" ? "#fff" : "#000",
+        }}
+      >
+        Avg Age of Startup
+      </p>
+    </div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
+      <p
+        style={{
+          color: theme === "dark" ? "#fff" : "#000",
+          marginBottom: "0",
+        }}
+      >
+        {userCompanyData.age ? `Age ${userCompanyData.age}` : "5"}
+      </p>
+    </div>
+  </div>
+</div>
+
 							<div className="row row-cols-auto row-cols-lg-2 g-0 gx-md-4 two_column_wrapper mb-4">
 								<div className="left_container p-0 pe-md-auto d-flex flex-column gap-3 col-12 col-lg-8">
 									{userData?.bio ? (
@@ -376,6 +538,16 @@ function OtherUserProfile() {
 											<h4 className="h4">Bio</h4>
 											<div className="single_education">
 												<h6 className="h6">{userData?.bio}</h6>
+											</div>
+										</div>
+									) : (
+										""
+									)}
+											{userData?.investmentPhilosophy ? (
+										<div className="bio rounded-4 border shadow-sm profile_container">
+											<h4 className="h4">Investment Philosophy</h4>
+											<div className="single_education">
+												<h6 className="h6">{userData?.investmentPhilosophy}</h6>
 											</div>
 										</div>
 									) : (
@@ -393,6 +565,8 @@ function OtherUserProfile() {
 											userDetails={userData}
 											theme="startup"
 										/>
+										<br></br>
+										<StartupsInvested cannotAdd={true} />
 									</div>
 								</div>
 								<div className="right_container p-0">

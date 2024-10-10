@@ -92,15 +92,14 @@ export default function InvestorAbout({
             <p className="about__text field-text">{experience}</p>
           </div>
         </div> */}
-        <div class="profile-investments">
-          {/* <h3>Prominent Investment Areas</h3> */}
+        {/* <div class="profile-investments">
           <div class="investment-areas">
             <div
               className="card-recent-investments"
               style={{ background: theme === "dark" ? "#292B33" : "#f5f5f5" }}
             >
               Recent Investment
-              <div className="card-recent-value">50 Lakhs</div>
+              <div className="card-recent-value">{start}</div>
             </div>
             <div
               className="card-recent-investments"
@@ -117,7 +116,7 @@ export default function InvestorAbout({
               <div className="card-recent-value">2-5</div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="social-links">
           <h5>Public Link</h5>
