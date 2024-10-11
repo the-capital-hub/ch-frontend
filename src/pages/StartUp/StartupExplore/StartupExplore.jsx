@@ -47,6 +47,8 @@ export default function StartupExplore() {
 	const [showFilters, setShowFilters] = useState(false);
 	const userVisitCount = localStorage.getItem("userVisit");
 	const abortControllerRef = useRef(null);
+  const [itemsPerPage, setItemsPerPage] = useState(10); 
+const [currentPage, setCurrentPage] = useState(1); 
 
 	useEffect(() => {
 		if (Number(userVisitCount) <= 1) {
@@ -87,7 +89,7 @@ export default function StartupExplore() {
 	useEffect(() => {
 		fetchFilters();
 		onSubmitFilters();
-	}, [activeTab]);
+	}, [activeTab, currentPage]);
 
 	const handleOnChange = (e) => {
 		const { name, value } = e.target;
@@ -123,6 +125,8 @@ export default function StartupExplore() {
 			const { data } = await fetchExploreFilteredResultsAPI({
 				type: activeTab,
 				...filters,
+        page: currentPage, 
+        limit: itemsPerPage, 
 			});
 			if (controller.signal.aborted) return;
 
@@ -139,7 +143,7 @@ export default function StartupExplore() {
 		setLoading(true);
 		try {
 			const { data } = await fetchExploreFilteredResultsAPI({
-				type: activeTab,
+				type: activeTab, 
 			});
 			setFilteredData(data);
 		} catch (error) {
@@ -187,9 +191,17 @@ export default function StartupExplore() {
 	const handleTabChange = (tab) => {
 		setFilters({});
 		setActiveTab(tab);
+    setCurrentPage(1);
 		localStorage.setItem("activeTab", tab);
 		localStorage.removeItem("filters");
 	};
+
+  const handleLoadMore = () => {
+    setCurrentPage(prevPage => prevPage + 1)
+};
+const handleLoadPrevious = () => {
+  setCurrentPage(prevPage => prevPage - 1);
+};
 
 	return (
 		<MaxWidthWrapper>
@@ -453,7 +465,31 @@ export default function StartupExplore() {
 							spinnerSizeClass="xl"
 						/>
 					) : filteredData?.length > 0 ? (
-						renderTabContent()
+<>
+    {renderTabContent()}
+    <div className="d-flex justify-content-between align-items-center">
+        {currentPage > 1 && (
+            <button 
+                className="btn" 
+                onClick={handleLoadPrevious}
+                style={{ backgroundColor: 'rgba(253, 89, 1, 1)', color: '#fff' }}
+                aria-label="Load previous content"
+            >
+                Previous
+            </button>
+        )}
+        <div className="d-flex justify-content-end flex-grow-1">
+            <button 
+                className="btn" 
+                onClick={handleLoadMore}
+                style={{ backgroundColor: 'rgba(253, 89, 1, 1)', color: '#fff' }}
+                aria-label="Load more content"
+            >
+                Next
+            </button>
+        </div>
+    </div>
+</>
 					) : filteredData === undefined ? null : (
 						<div className="container bg-white d-flex justify-content-center align-items-center p-5 rounded-4 shadow-sm">
 							No {activeTab} found
