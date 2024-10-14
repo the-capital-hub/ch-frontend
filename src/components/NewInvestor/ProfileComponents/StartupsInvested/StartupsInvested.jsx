@@ -15,7 +15,7 @@ import {
 } from "../../../../Store/features/user/userSlice";
 import { getInvestorById } from "../../../../Service/user";
 
-export default function StartupsInvested({ cannotAdd = false }) {
+export default function StartupsInvested({investorId, cannotAdd = false }) {
   // Fetch loggedInUser from global state
   const userStartupsInvested = useSelector(selectUserStartupsInvested);
   const userInvestor = useSelector(selectUserInvestor);
@@ -24,13 +24,23 @@ export default function StartupsInvested({ cannotAdd = false }) {
   const [investedStartups, setInvestedStartups] = useState(userStartupsInvested);
 
   useEffect(() => {
-    if (!userStartupsInvested) {
+    if (!userStartupsInvested && !investorId) {
+      console.log("1")
       getInvestorById(userInvestor)
         .then(({ data }) => {
           setInvestedStartups(data.startupsInvested);
         })
         .catch(() => setInvestedStartups([]));
-    } else {
+    } 
+    else if(investorId){
+      console.log("2")
+      getInvestorById(investorId)
+      .then(({ data }) => {
+        setInvestedStartups(data.startupsInvested);
+      })
+      .catch(() => setInvestedStartups([]));
+    }else {
+      console.log("3")
       setInvestedStartups(userStartupsInvested);
     }
   }, [userInvestor, userStartupsInvested]);

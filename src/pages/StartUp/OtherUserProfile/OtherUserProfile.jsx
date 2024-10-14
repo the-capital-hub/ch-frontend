@@ -26,6 +26,9 @@ import BatchImag from "../../../Images/tick-mark.png";
 
 import { selectUserCompanyData } from "../../../Store/features/user/userSlice";
 import StartupsInvested from "../../../components/NewInvestor/ProfileComponents/StartupsInvested/StartupsInvested";
+import { getInvestorById } from "../../../Service/user";
+import { FaLinkedin } from "react-icons/fa";
+
 
 const token = localStorage.getItem("accessToken");
 
@@ -34,6 +37,8 @@ function OtherUserProfile() {
 	const dispatch = useDispatch();
 	const userCompanyData = useSelector(selectUserCompanyData);
 	const [userData, setUserData] = useState(null);
+	const [companyData, setCompanyData] = useState(null);
+
 	const [popPayOpen, setPopPayOpen] = useState(false);
 	const [connectionSent, setConnectionSent] = useState(false);
 	const [showEmail, setShowEmail] = useState(false);
@@ -55,6 +60,26 @@ function OtherUserProfile() {
 			.then(({ data }) => setUserData(data))
 			.catch((error) => console.error(error.message));
 	}, [userId, connectionSent]);
+
+	useEffect(() => {
+		const fetchCompanyData = async () => {
+			if (!userData || !userData._id) {
+				return; 
+			}
+			try {
+				const data = await getInvestorById(userData._id);
+				setCompanyData(data.data);
+			} catch (error) {
+				console.error("Error fetching company data:", error);
+			}
+		};
+	
+		fetchCompanyData();
+	}, [userData]);
+
+	useEffect(() => {
+    console.log("COMPANY", companyData);
+}, [companyData]);
 
 	function formatNumber(value) {
 		if (typeof value !== "number") return "NA";
@@ -215,9 +240,9 @@ function OtherUserProfile() {
 	};
 
 	const recentInvestmentAmount =
-    userCompanyData.revenue.length > 0
-      ? userCompanyData.revenue[userCompanyData.revenue.length - 1].amount
-      : "5";
+    companyData?.revenue.length > 0
+      ? companyData.revenue[companyData.revenue.length - 1].amount
+      : "NA";
 
 	return (
 		<>
@@ -251,7 +276,11 @@ function OtherUserProfile() {
 														alt="Batch Icon"
 													/>
 												)}
+												<a href={userData?.linkedin} className="button linkedin">
+                <FaLinkedin size={"20px"} style={{ marginRight: "10px" }} />
+              </a>
 											</h3>
+											
 											<span className="small_typo">
 												{userData?.designation ||
 													"Founder & CEO of The Capital Hub"}
@@ -298,14 +327,14 @@ function OtherUserProfile() {
 								<div className="details">
 									<div className="single_details row row-cols-1 row-cols-md-2 ">
 										{userData?.startUp?.company ||
-										userCompanyData?.companyName ? (
+										companyData?.companyName ? (
 											<>
 												<span className="col-md-3 label fw-bold">
 													Current Company
 												</span>
 												<span className="col-md-9 value">
 													{userData?.startUp?.company ||
-														userCompanyData.companyName}
+														companyData.companyName}
 												</span>
 											</>
 										) : null}
@@ -436,7 +465,7 @@ function OtherUserProfile() {
       >
         {recentInvestmentAmount !== "NA"
           ? formatNumber(recentInvestmentAmount)
-          : "NA"}
+          : "5"}
       </p>
     </div>
   </div>
@@ -478,7 +507,7 @@ function OtherUserProfile() {
           marginBottom: "0",
         }}
       >
-        {userCompanyData.investmentRange || "10 lakhs"}
+        {companyData?.investmentRange || "10 lakhs"}
       </p>
     </div>
   </div>
@@ -525,7 +554,7 @@ function OtherUserProfile() {
           marginBottom: "0",
         }}
       >
-        {userCompanyData.age ? `Age ${userCompanyData.age}` : "5"}
+        { `Age ${companyData?.age}` || "5"}
       </p>
     </div>
   </div>
@@ -566,7 +595,7 @@ function OtherUserProfile() {
 											theme="startup"
 										/>
 										<br></br>
-										<StartupsInvested cannotAdd={true} />
+										{companyData?.startupsInvested.length>0 && (<StartupsInvested investorId={userData._id} cannotAdd={true} />)}
 									</div>
 								</div>
 								<div className="right_container p-0">
