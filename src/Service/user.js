@@ -164,7 +164,7 @@ export const addArticle = async (content) => {
 async function getAllPostsAPI(page) {
   try {
     const response = await axiosInstance.get(`${API.getAllPosts}?page=${page}`);
-    console.log(response);
+    // console.log(response);
     return response.data;
   } catch (error) {
     console.error("Error:", error);
@@ -432,6 +432,7 @@ export const getUserConnections = async (userId) => {
 
 // getpost by collection name
 export const getSavedPostCollections = async (userId) => {
+  // console.log("userId", userId);
   try {
     const response = await axiosInstance.get(
       `${API.getSavedPostCollections}/${userId}`

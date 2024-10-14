@@ -27,7 +27,7 @@ function OnBoardUser({
       disableBodyScroll(document.body);
     }
   }, [run, noBodyRoll]);
-  console.log(setRun)
+  // console.log(setRun)
   const handleTourClose = () => {
     enableBodyScroll(document.body);
     

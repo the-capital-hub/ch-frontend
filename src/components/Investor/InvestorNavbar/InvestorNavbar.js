@@ -51,7 +51,7 @@ const InvestorNavbar = (props) => {
   useEffect(() => {
     getNotificationCount()
       .then(({ data }) => {
-        console.log(data.unreadCount);
+        // console.log(data.unreadCount);
         dispatch(setUnreadNotifications(data.unreadCount));
       })
       .catch((error) => console.error(error));

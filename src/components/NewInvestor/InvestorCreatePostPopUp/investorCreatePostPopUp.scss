@@ -1,233 +1,316 @@
-.modal-content{
-  background: var(--white-to-grey);
-  }
-  .ceatepost_img_name {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 15px;
-  
-  
-    span {
-      margin-left: 10px;
-  
-      h2 {
-  color: var(--d-l-grey);
-        font-size: 1rem;
-        font-family: Poppins;
-        font-weight: 500;
-        line-height: 160%;
-        letter-spacing: 1.144px;
-        margin: 0;
-      }
-  
-      h6 {
-        color: #a1a1a1;
-        font-size: 10.306px;
-        font-family: Poppins;
-        line-height: 160%;
-        letter-spacing: 0.572px;
-      }
-    }
-  }
-  
-  .createpost_modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 10px;
-  }
-  
-  .modal-body {
-    .createpost_text_area {
-      textarea {
-        width: 100%;
-        background: var(--bs-light);
-        border: 1px solid #e0e0e0;
-        border-radius: var(--border-radius);
-        outline: none;
-  
-        &:focus {
-          border-color: var(--currentTheme-dark);
-        }
-      }
-    }
-  }
-  
-  .createpost_modal_footer {
-    display: flex;
-    margin: auto;
-  
-    .modal_footer_container {
-      width: 480px;
-      height: 65px;
-      flex-shrink: 0;
-      border-radius: var(--border-radius);
-      border: 1px solid #e0e0e0;
-      background: var(--bs-light);
-  
-      /* footer */
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-  
-      .left_buttons {
-        display: flex;
-        gap: 10px;
-        padding: 10px;
-  
-        .white_button {
-          border: none;
-          padding: 0;
-          width: 48.114px;
-          height: 48.114px;
-          border-radius: 50%;
-  
-          img {
-            width: 38px;
-            height: 38px;
-          }
-        }
-      }
-    }
-  }
-  
-  .post_button_container {
-    padding: 10px;
-  
-    .investor-post_button {
-      color: #1d1d1d;
-      padding: 10px 20px;
-      /* Adjust the padding as needed */
-      border: none;
-      border-radius: 26.823px;
-      background: #d3f36b;
-      width: 116.467px;
-      height: 40.799px;
-      flex-shrink: 0;
-    }
-  }
-  
-  .image-cropper-container {
-    position: relative;
-    display: inline-block;
-    margin-top: 20px;
-  }
-  
-  .image-cropper {
-    position: relative;
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-  }
-  
-  .image-cropper img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-  }
-  
-  .image-cropper-container {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  @keyframes slideFromTop {
-    from {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-  
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  
-  .background-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
-    /* Adjust the overlay color and transparency */
-    backdrop-filter: blur(5px);
-    /* Adjust the blur strength as needed */
-    z-index: 9999;
-  }
-  
-  .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Adjust the background color of the popup */
-    z-index: 10000;
-  }
-  
-  @media (max-width: 768px) {
-    .modal {
-      position: fixed;
-      // top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(0, 0, 0, 0.5);
-      /* Adjust the background color of the popup */
-      z-index: 10000;
-    }
-  
-    .createpost_modal_footer {
-      display: flex;
-      margin: auto;
-  
-      .modal_footer_container {
-        width: 100%;
-        min-height: 65px;
-        height: auto;
-        flex-shrink: 0;
-        border-radius: var(--border-radius);
-        border: 1px solid #e0e0e0;
-        
-  
-        /* footer */
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-  
-        .left_buttons {
-          display: flex;
-          gap: 10px;
-          padding: 10px;
-  
-          .white_button {
-            border: none;
-            padding: 0;
-            width: 42.114px;
-            height: 42.114px;
-            border-radius: 50%;
-  
-            img {
-              width: 38px;
-              height: 38px;
-            }
-          }
-        }
-      }
-    }
-  }
-  
-  @media (max-width: 575px) {
-    .investor_create_post_modal.modal {
-      .modal-dialog {
-        margin-inline: 0;
-      }
-  
-      .modal-body {
-        padding-inline: 0;
-      }
-    }
-  }
-  
+.modal-content {
+	background: var(--white-to-grey);
+}
+.ceatepost_img_name {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 15px;
+
+	span {
+		margin-left: 10px;
+
+		h2 {
+			color: var(--d-l-grey);
+			font-size: 1rem;
+			font-family: Poppins;
+			font-weight: 500;
+			line-height: 160%;
+			letter-spacing: 1.144px;
+			margin: 0;
+		}
+
+		h6 {
+			color: #a1a1a1;
+			font-size: 10.306px;
+			font-family: Poppins;
+			line-height: 160%;
+			letter-spacing: 0.572px;
+		}
+	}
+}
+
+.createpost_modal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding: 10px;
+}
+
+.custom-quill .ql-editor::before {
+	color: white;
+	// opacity: 0.6;
+}
+
+.modal-body {
+	.createpost_text_area {
+		textarea {
+			width: 100%;
+			background: var(--bs-light);
+			border: 1px solid #e0e0e0;
+			border-radius: var(--border-radius);
+			outline: none;
+
+			&:focus {
+				border-color: var(--currentTheme-dark);
+			}
+		}
+		.custom-quill .ql-editor::before {
+			color: white;
+			// opacity: 0.6;
+		}
+	}
+	.main-image {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		margin-top: 10px;
+		.image-header {
+			color: white;
+			font-size: 1rem;
+			font-family: Poppins;
+			font-weight: 500;
+			line-height: 160%;
+			// letter-spacing: 1.1px;
+			margin: 0;
+		}
+		.upload__image {
+			display: flex;
+			gap: 20px;
+			// justify-content: space-between;
+			.upload__label {
+				width: 130px;
+				height: 130px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				border: 0.25em dotted #d3f36b;
+				border-radius: 15px;
+				background-color: #d3f36b63;
+				cursor: pointer;
+				color: var(--d-l-grey);
+
+				label {
+					font-size: 0.75rem;
+					cursor: pointer;
+				}
+			}
+
+			.image-preview-header {
+				position: relative;
+				display: flex;
+				justify-content: flex-end;
+			}
+
+			.close-button {
+				position: absolute;
+				top: -12px;
+				right: -4px;
+				background-color: transparent;
+				border: none;
+				font-size: 24px;
+				font-weight: 700;
+				cursor: pointer;
+				color: #a1a1a1;
+				z-index: 100;
+			}
+
+			.close-button:hover {
+				// color: #d3f36b;
+				color: red;
+				transform: scale(1.2);
+			}
+		}
+	}
+}
+
+.createpost_modal_footer {
+	display: flex;
+	margin: auto;
+
+	.modal_footer_container {
+		width: 480px;
+		height: 65px;
+		flex-shrink: 0;
+		border-radius: var(--border-radius);
+		border: 1px solid #e0e0e0;
+		background: var(--bs-light);
+
+		/* footer */
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+
+		.left_buttons {
+			display: flex;
+			gap: 10px;
+			padding: 10px;
+
+			.white_button {
+				border: none;
+				padding: 0;
+				width: 48.114px;
+				height: 48.114px;
+				border-radius: 50%;
+				background-color: var(--bs-light);
+
+				img {
+					width: 38px;
+					height: 38px;
+				}
+			}
+		}
+	}
+}
+
+.post_button_container {
+	padding: 10px;
+
+	.investor-post_button {
+		color: #1d1d1d;
+		padding: 10px 20px;
+		/* Adjust the padding as needed */
+		border: none;
+		border-radius: 26.823px;
+		background: #d3f36b;
+		width: 116.467px;
+		height: 40.799px;
+		flex-shrink: 0;
+	}
+}
+
+.image-cropper-container {
+	position: relative;
+	display: inline-block;
+	margin-top: 20px;
+}
+
+.image-cropper {
+	// position: relative;
+	width: 130px;
+	height: 130px;
+	// overflow: hidden;
+	.reactEasyCrop_CropArea,
+	.reactEasyCrop_CropAreaGrid {
+		border: none;
+		box-shadow: none;
+	}
+}
+
+.image-cropper img {
+	// max-width: 100%;
+	// height: auto;
+	width: 130px;
+	height: 130px;
+	display: block;
+}
+
+.image-cropper-container {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+@keyframes slideFromTop {
+	from {
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+.background-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.1);
+	/* Adjust the overlay color and transparency */
+	backdrop-filter: blur(5px);
+	/* Adjust the blur strength as needed */
+	z-index: 9999;
+}
+
+.modal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: rgba(0, 0, 0, 0.5);
+	/* Adjust the background color of the popup */
+	z-index: 10000;
+}
+
+@media (max-width: 768px) {
+	.modal {
+		position: fixed;
+		// top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background-color: rgba(0, 0, 0, 0.5);
+		/* Adjust the background color of the popup */
+		z-index: 10000;
+	}
+
+	.createpost_modal_footer {
+		display: flex;
+		margin: auto;
+
+		.modal_footer_container {
+			width: 100%;
+			min-height: 65px;
+			height: auto;
+			flex-shrink: 0;
+			border-radius: var(--border-radius);
+			border: 1px solid #e0e0e0;
+
+			/* footer */
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			.left_buttons {
+				display: flex;
+				gap: 10px;
+				padding: 10px;
+
+				.white_button {
+					border: none;
+					padding: 0;
+					width: 42.114px;
+					height: 42.114px;
+					border-radius: 50%;
+					background-color: var(--bs-light);
+
+					img {
+						width: 38px;
+						height: 38px;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 575px) {
+	.investor_create_post_modal.modal {
+		.modal-dialog {
+			margin-inline: 0;
+		}
+
+		.modal-body {
+			padding-inline: 0;
+		}
+	}
+}
+
+.custom-quill .ql-editor::before {
+	color: white;
+	// opacity: 0.6;
+}
