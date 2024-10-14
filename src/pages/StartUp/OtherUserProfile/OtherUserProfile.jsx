@@ -277,7 +277,7 @@ function OtherUserProfile() {
 													/>
 												)}
 												<a href={userData?.linkedin} className="button linkedin">
-                <FaLinkedin size={"20px"} style={{ marginRight: "10px" }} />
+                <FaLinkedin size={"2rem"} style={{ marginLeft: "0.1rem" }} />
               </a>
 											</h3>
 											
