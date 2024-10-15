@@ -88,7 +88,7 @@ const Feed = () => {
   };
 
   const appendDataToAllPosts = (data) => {
-    setAllPosts([data, ...allPosts]);
+    setAllPosts(prevPosts => [data, ...prevPosts]);
   };
 
   const deletePostFilterData = (postId) => {

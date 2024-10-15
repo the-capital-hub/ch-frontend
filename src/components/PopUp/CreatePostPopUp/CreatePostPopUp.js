@@ -227,9 +227,8 @@ const CreatePostPopUp = ({
 
     try {
       const response = await postUserPost(postData);
-      console.log("pdfThumbnail",response.data);
       const newPosts = Array.isArray(response.data) ? response.data : [response.data];
-      appendDataToAllPosts(newPosts);
+      appendDataToAllPosts(response.data);
       setPostText("");
       setSelectedImage(null);
       setSelectedVideo(null);
@@ -238,7 +237,8 @@ const CreatePostPopUp = ({
      //  setPdfThumbnail(null);
       setNewPost(Math.random());
       handleClose();
-      dispatch(toggleCreatePostModal());
+      //dispatch(toggleCreatePostModal());
+      console.log("New Post", newPosts)
    
 
       if (!loggedInUser.achievements.includes("6564684649186bca517cd0c9")) {
@@ -550,7 +550,7 @@ const CreatePostPopUp = ({
                       Posting...
                     </button>
                   ) : (
-                    <button className="post_button" onClick={handleSubmit}>
+                    <button className="post_button" onClick={handleSubmit} disabled={posting}>
                       Post
                     </button>
                   )}
