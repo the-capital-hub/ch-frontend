@@ -82,6 +82,9 @@ const CompanyDetailsCard = ({
           setLocationData("");
         });
     }
+
+    console.log("OnePager", onePager);
+    console.log("UserDetails", userDetails?.startUp?.socialLinks?.website);
   }, [userDetails, theme]);
 
   const submitDescriptionHandler = async () => {
@@ -181,23 +184,43 @@ const CompanyDetailsCard = ({
               </div>
             </div>
             <div className="small_typo social_icon mt-3">
-              {socialLinks.website && (
-                <a href={socialLinks.website} target="_blank" rel="noopener noreferrer">
+              {userDetails.startUp?.socialLinks?.website && (
+                <a href={userDetails.startUp?.socialLinks?.website} target="_blank" rel="noopener noreferrer">
                   <img src={WebIcon} alt="Website" style={{ width: "25px", height: "25px" }} />
                 </a>
               )}
-              {socialLinks.linkedin && (
-                <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer">
+              {userDetails.startUp?.socialLinks?.linkedin && (
+                <a href={userDetails.startUp?.socialLinks?.linkedin} target="_blank" rel="noopener noreferrer">
                   <img src={LinkedinIcon} alt="LinkedIn" style={{ width: "25px", height: "25px" }} />
                 </a>
               )}
-              {socialLinks.twitter && (
-                <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
+              {userDetails.startUp?.socialLinks?.twitter && (
+                <a href={userDetails.startUp?.socialLinks?.twitter} target="_blank" rel="noopener noreferrer">
                   <img src={TweeterIcon} alt="Twitter" style={{ width: "25px", height: "25px" }} />
                 </a>
               )}
-              {socialLinks.instagram && (
-                <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer">
+              {userDetails.startUp?.socialLinks?.instagram && (
+                <a href={userDetails.startUp?.socialLinks?.instagram} target="_blank" rel="noopener noreferrer">
+                  <img src={IntagramIcon} alt="Instagram" style={{ width: "25px", height: "25px" }} />
+                </a>
+              )}
+               {userDetails.investor?.socialLinks?.website && (
+                <a href={userDetails.investor?.socialLinks?.website} target="_blank" rel="noopener noreferrer">
+                  <img src={WebIcon} alt="Website" style={{ width: "25px", height: "25px" }} />
+                </a>
+              )}
+              {userDetails.investor?.socialLinks?.linkedin && (
+                <a href={userDetails.investor?.socialLinks?.linkedin} target="_blank" rel="noopener noreferrer">
+                  <img src={LinkedinIcon} alt="LinkedIn" style={{ width: "25px", height: "25px" }} />
+                </a>
+              )}
+              {userDetails.investor?.socialLinks?.twitter && (
+                <a href={userDetails.investor?.socialLinks?.twitter} target="_blank" rel="noopener noreferrer">
+                  <img src={TweeterIcon} alt="Twitter" style={{ width: "25px", height: "25px" }} />
+                </a>
+              )}
+              {userDetails.investor?.socialLinks?.instagram && (
+                <a href={userDetails.investor?.socialLinks?.instagram} target="_blank" rel="noopener noreferrer">
                   <img src={IntagramIcon} alt="Instagram" style={{ width: "25px", height: "25px" }} />
                 </a>
               )}

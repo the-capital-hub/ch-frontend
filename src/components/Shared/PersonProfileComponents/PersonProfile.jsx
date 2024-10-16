@@ -39,6 +39,7 @@ export default function PersonProfile({ theme, short, personData }) {
   let startedAtDate;
   let companyName;
   let socialLinks;
+  let linkedin;
   let colorCard;
   let investor;
   let startUp;
@@ -56,6 +57,7 @@ export default function PersonProfile({ theme, short, personData }) {
     email = personData?.email;
     phoneNumber = personData?.phoneNumber;
     bio = personData?.bio;
+    linkedin = personData?.linkedin;
     isInvestor = personData?.isInvestor === "true" ? true : false;
     companyName = personData?.startUp.company;
     location = personData?.startUp.location;
@@ -76,6 +78,7 @@ export default function PersonProfile({ theme, short, personData }) {
     email = personData?.email;
     phoneNumber = personData?.phoneNumber;
     bio = personData?.bio;
+    linkedin = personData?.linkedin;
     isInvestor = personData?.isInvestor === "true" ? true : false;
     companyName = personData?.investor?.companyName;
     location = personData?.investor?.location;
@@ -107,6 +110,7 @@ export default function PersonProfile({ theme, short, personData }) {
             lastFunding={lastFunding || PERSON.lastFunding}
             industry = {industry|| "Nun"}
             isSubscribed={isSubscribed}
+            linkedin={linkedin}
           />
           <PersonActions
             person={`${isInvestor ? "Investor" : "Founder"}`}

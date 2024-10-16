@@ -7,7 +7,7 @@ import {
 import DefaultAvatar from "../../../../Images/Chat/default-user-avatar.webp";
 import IconCard from "../../../NewInvestor/CompanyProfileComponents/shared-components/icon-card/IconCard";
 import BatchImag from "../../../../Images/tick-mark.png"
-
+import { FaLinkedin } from "react-icons/fa";
 export default function PersonInfo({
   fullName,
   designation,
@@ -17,7 +17,8 @@ export default function PersonInfo({
   lastFunding,
   foundedYear,
   industry,
-  isSubscribed
+  isSubscribed,
+  linkedin
 }) {
   return (
     <div className="person_info">
@@ -53,11 +54,15 @@ export default function PersonInfo({
               <p className="person__profile__type" style={{ marginBottom: 0 }}>
                 {designation|| "NA"}
               </p>
- {/*             <p className="person__profile__type" style={{ marginBottom: 0 }}>
-                {industry||"NA"}
-              </p>*/}
               <p className="person__profile__type" style={{ marginBottom: 0 }}>
                 {companyName||"NA"}
+              </p>
+              <p className="person__profile__type" style={{ marginBottom: 0 }}>
+                {linkedin && (
+              <a href={linkedin} target="_blank" rel="noopener noreferrer">
+              <FaLinkedin size={"1.5rem"} />
+               </a>
+                )}
               </p>
             </div>
           </div>
@@ -80,6 +85,7 @@ export default function PersonInfo({
               text={`Last Funding in ${lastFunding || "May, 2023"}`}
               key="funding"
             />
+
           </div>
         </div>
       </div>
