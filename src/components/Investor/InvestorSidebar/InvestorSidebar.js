@@ -9,7 +9,7 @@ import {
 } from "react-pro-sidebar";
 import ArrowLeft from "../../../Images/investorsidebar/ArrowLeft.svg";
 import ArrowRight from "../../../Images/investorsidebar/ArrowRight.svg";
-import { IoSettingsOutline } from "react-icons/io5";
+import { IoSettingsOutline, IoNewspaper } from "react-icons/io5";
 import { GoHome } from "react-icons/go";
 import { PiSparkleLight, PiFloppyDiskBackLight } from "react-icons/pi";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
@@ -278,6 +278,16 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
                 >
                   <IoCompassOutline size={25} />
                   {!sidebarCollapsed && <span>Explore</span>}
+                </Link>
+              </MenuItem>
+
+              <MenuItem
+                active={location.pathname.includes("/news")}
+                className="active-item"
+              >
+                <Link to="/news" onClick={handleLinkClick}>
+                  <IoNewspaper size={25} />
+                  {!sidebarCollapsed && <span>News</span>}
                 </Link>
               </MenuItem>
 
