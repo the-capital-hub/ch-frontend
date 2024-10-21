@@ -19,6 +19,8 @@ const Feed = lazy(() => import("../components/Investor/Feed/Feed"));
 const CreatePost = lazy(() =>
   import("../components/Investor/CreatePost/CreatePost")
 );
+
+const News = lazy(() => import("../components/Investor/News/news"))
 const WriteBlog = lazy(() => import("../pages/StartUp/WriteBlog/WriteBlog"));
 const Documentation = lazy(() =>
   import("../components/Investor/Documentation/Documentation")
@@ -179,6 +181,14 @@ function StartUpRoutes() {
         element={
           <Suspense fallback={<SuspenseLoader />}>
             <Feed />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/news"
+        element={
+          <Suspense fallback={<SuspenseLoader />}>
+            <News />
           </Suspense>
         }
       />

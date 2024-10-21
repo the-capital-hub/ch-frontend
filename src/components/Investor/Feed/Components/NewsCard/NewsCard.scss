@@ -1,0 +1,47 @@
+.news-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 16px 0;
+    background-color: #fff;
+    transition: box-shadow 0.2s;
+
+    &:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    &__image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    &__title {
+        font-size: 1.25rem;
+        margin: 16px;
+        color: #333;
+    }
+
+    &__description {
+        margin: 0 16px 16px;
+        color: #666;
+    }
+
+    &__link {
+        display: block;
+        margin: 0 16px 16px;
+        color: #007bff;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__date {
+        display: block;
+        margin: 0 16px 16px;
+        font-size: 0.875rem;
+        color: #999;
+    }
+}

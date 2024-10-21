@@ -26,13 +26,13 @@ import {
 import { startupOnboardingSteps } from "../../OnBoardUser/steps/startup";
 import TutorialTrigger from "../../Shared/TutorialTrigger/TutorialTrigger";
 import LookingForFund from "./Components/LookingForFund/LookingForFund";
-//import IconFile from "../SvgIcons/IconFile";
-// import { GrArticle } from "react-icons/gr";
-// import { BsFileText } from "react-icons/bs";
-// import { CiImageOn, CiVideoOn } from "react-icons/ci";
+import { environment } from "../../../environments/environment";
 import { useParams } from "react-router-dom";
 import PostDetail from "../Cards/FeedPost/PostDetail";
 import ArticlePopup from "../../PopUp/ArticlePopup/ArticlePopup";
+import NewsCard from "./Components/NewsCard/NewsCard";
+
+const baseUrl = environment.baseUrl;
 
 const Feed = () => {
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -62,6 +62,7 @@ const Feed = () => {
     isSubscribed:false,
     location: ""
   });
+  const [newsData, setNewsData] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
   const [allPosts, setAllPosts] = useState([]);
   const [newPost, setNewPost] = useState(false);
@@ -80,6 +81,28 @@ const Feed = () => {
   useEffect(() => {
     setPopupOpen(isCreatePostModalOpen);
   }, [isCreatePostModalOpen]);
+
+  //Fetching NEWS
+  useEffect(() => {
+    const fetchNews = async () => {
+        try {
+          const response = await fetch(`${baseUrl}/news/getNewsByDate`);
+          const data = await response.json();
+          const filteredArticles = data.articles?.filter(article => 
+            article.title && 
+            article.description && 
+            article.url && 
+            article.urlToImage && 
+            article.publishedAt
+          ) || [];
+          setNewsData(filteredArticles);
+        } catch (error) {
+            console.error("Error fetching news:", error);
+        }
+    };
+
+    fetchNews();
+}, []);
 
   // Methods
   const openPopup = () => {
@@ -232,7 +255,7 @@ const Feed = () => {
               <div className="posts__container d-flex flex-column gap-3">
                 <InfiniteScroll
                   className="m-0 p-0"
-                  dataLength={allPosts.length}
+                  dataLength={allPosts.length + newsData.length}
                   next={fetchMorePosts}
                   hasMore={hasMore}
                   loader={
@@ -253,7 +276,7 @@ const Feed = () => {
                       likes,
                       _id,
                       resharedPostId,
-                    }) => {
+                    },index) => {
                       if (!user) return null;
 
                       const {
@@ -271,9 +294,7 @@ const Feed = () => {
 
                       return (
                         <>
-                          {!firstName ? (
-                            <></>
-                          ) : (
+                            <React.Fragment key={_id}>
                             <FeedPostCard
                               key={_id}
                               userId={userId}
@@ -306,7 +327,16 @@ const Feed = () => {
                               setPostData={setPostData}
                               isSubscribed={isSubscribed}
                             />
-                          )}
+                               {(index + 1) % 3 === 0 && (
+              <NewsCard 
+              title={newsData[Math.floor(index)].title} 
+              description={newsData[Math.floor(index)].description} 
+              url={newsData[Math.floor(index)].url} 
+              urlToImage={newsData[Math.floor(index)].urlToImage} 
+              publishedAt={newsData[Math.floor(index)].publishedAt} 
+            />
+            )}
+                            </React.Fragment>
                         </>
                       );
                     }
