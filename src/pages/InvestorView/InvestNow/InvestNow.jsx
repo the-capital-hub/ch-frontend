@@ -44,7 +44,7 @@ const InvestNow = ({ page }) => {
       commitment_amount: commitmentAmount,
     };
 
-    emailjs.send('service_muef642', 'template_diknlz3', templateParams, 'dGUx-9NH42p_jnnBx')
+    emailjs.send('service_0jwzlw5', 'template_diknlz3', templateParams, 'dGUx-9NH42p_jnnBx')
       .then((response) => {
         console.log('Email sent successfully:', response.status, response.text);
         setShowModal(true);
@@ -86,7 +86,7 @@ const InvestNow = ({ page }) => {
                   value={commitmentAmount}
                   onChange={(e) => setCommitmentAmount(e.target.value)}
                 >
-                  <option value="">Select Commitment Amount</option>
+                  <option value="">Commitment Amount</option>
                   <option value="₹1L - ₹2.5L">₹1L - ₹2.5L</option>
                   <option value="₹2.5L - ₹5L">₹2.5L - ₹5L</option>
                   <option value="₹5L - ₹10L ">₹5L - ₹10L </option>
@@ -122,7 +122,7 @@ const InvestNow = ({ page }) => {
                   value={commitmentAmount}
                   onChange={(e) => setCommitmentAmount(e.target.value)}
                 >
-                  <option value="">Select Commitment Amount</option>
+                  <option value="">Commitment Amount</option>
                   <option value="₹1L - ₹2.5L">₹1L - ₹2.5L</option>
                   <option value="₹2.5L - ₹5L">₹2.5L - ₹5L</option>
                   <option value="₹5L - ₹10L ">₹5L - ₹10L </option>
