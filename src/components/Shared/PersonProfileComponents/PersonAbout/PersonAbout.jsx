@@ -26,7 +26,7 @@ export default function PersonAbout({
         className="name_number d-flex flex-column gap-4 mt-2"
         style={{ color: "var(--d-l-grey)" }}
       >
-        <h6 className="div__heading">Personal Information:</h6>
+        {/* <h6 className="div__heading">Personal Information:</h6> */}
 
         <div className="personal_info_grid">
           <>
@@ -48,7 +48,7 @@ export default function PersonAbout({
               <p className="fw-lighter fs-5">Mobile Number</p>
               <p className="fw-medium fs-5 field-text">{mobileNumber}</p>
             </div> */}
-            <div className="" style={{ display: "flex" }}>
+            {/* <div className="" style={{ display: "flex" }}>
               <p
                 className="div__heading field-text"
                 style={{ paddingRight: "10px" }}
@@ -91,7 +91,7 @@ export default function PersonAbout({
                 Experience:
               </p>
               <p className="about__text field-text">{experience}</p>
-            </div>
+            </div> */}
           </>
         </div>
       </article>
