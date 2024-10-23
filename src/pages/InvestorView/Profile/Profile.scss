@@ -6,22 +6,45 @@
 
   .typography {
     color: var(--d-l-grey);
-    font-size: 20px;
-    font-family: Poppins;
-    font-weight: 600;
     margin: 0;
+
+    font-family: Outfit;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 50.4px;
+    text-align: left;
+
+    text-decoration: underline;
+    text-decoration-color: var(--bs-orange);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.25em;
   }
 
   .smallest_typo {
-    color: #686868;
+    color: var(--d-l-grey);
     font-size: 12px;
     font-family: Poppins;
   }
 
   .small_typo {
-    color: #717171;
-    font-size: 16px;
-    font-family: Poppins;
+    color: var(--w-t-n);
+    font-size: 17px;
+    font-family: Outfit;
+    font-weight: 400;
+    line-height: 27.28px;
+    text-align: left;
+
+    
+  }
+
+  .small_typo_bio {
+    color: var(--w-t-b);
+    font-size: 17px;
+    font-family: Outfit;
+    line-height: 27.28px;
+    text-align: left;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 
   .main_container {
@@ -34,7 +57,7 @@
   }
 
   .box {
-    background-color: var(--white-to-grey);
+    background-color: var(--white-to-grey-container);
     color: var(--d-l-grey);
     padding: 10px;
     border-radius: var(--border-radius);
@@ -66,8 +89,8 @@
   }
 
   .image_name_section img {
-    width: 90px;
-    height: 90px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -125,6 +148,11 @@
     font-weight: 500;
     padding-right: 25px;
 
+    text-decoration: underline;
+    text-decoration-color: var(--bs-orange);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.25em;
+    
     @media (min-width: 768px) {
       font-size: 20px;
       padding-right: 50px;
@@ -235,6 +263,8 @@
             font-family: Poppins;
             font-weight: 600;
             margin: 0;
+
+            
           }
 
           .smallest_typo {

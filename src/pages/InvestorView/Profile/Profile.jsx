@@ -53,24 +53,25 @@ function Profile() {
             <div className="mb-5 d-flex flex-column gap-3">
               {/* Profile Header */}
 
-              <div className="border box px-4 py-3">
-                <div className="image_name_section border-bottom pb-4">
+              <div className=" box px-4 py-3">
+                <div className="image_name_section ">
                   <img
                     className="rounded-cirlce"
                     src={user?.profilePicture}
                     alt="profileimage"
                   />
                   <div className="left_profile_text flex_content ms-3">
-                    <h2 className="typography">
+                    <h2 className="typography" style={{textDecoration:"none"}}>
                       {user?.firstName} {user?.lastName}
                     </h2>
                     <span className="small_typo">
-                      {user?.designation || `Founder & CEO of capital Hub`}
+                      {user?.designation || ` `}, {user.company}
                     </span>
                     <span className="small_typo" style={{ display: "block" }}>
                       {" "}
-                      {user?.location}
+                      {user?.location} | {user?.experience} of Experience
                     </span>
+                    
                   </div>
                 </div>
 
@@ -85,7 +86,7 @@ function Profile() {
 
                 {/* Profile details */}
 
-                <div className="designation mt-2">
+                {/* <div className="designation mt-2">
                   <table>
                     <tbody>
                       <tr>
@@ -142,7 +143,7 @@ function Profile() {
                       </tr>
                     </tbody>
                   </table>
-                </div>
+                </div> */}
               </div>
 
               {/* <div className="row">
@@ -214,13 +215,13 @@ function Profile() {
               </div> */}
 
               {/* Bio */}
-              <div className="border box">
-                <div className="personal_information_header">
+              <div className="box">
+                {/* <div className="personal_information_header">
                   <h2 className="typography">Bio</h2>
-                </div>
+                </div> */}
                 <div className="col-12 mt-2">
                   <div className="designation_info">
-                    <p className="small_typo">{user?.bio}</p>
+                    <p className="small_typo_bio">{user?.bio}</p>
                   </div>
                 </div>
                 {/* <div className="col-12 mt-2 designation_see_more">

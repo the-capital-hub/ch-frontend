@@ -1,0 +1,93 @@
+#process-1nd {
+	@media (max-width: 820px) {
+		display: none;
+	}
+}
+.mainVideo-container {
+	background-color: #050505;
+	color: #ffffff;
+	width: 100vw;
+	padding: 50px 0;
+	text-align: center;
+
+	.content-container {
+		width: 90%;
+		margin: 0 auto;
+
+		.content-section {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-bottom: 30px;
+			flex-direction: column;
+
+			.image-content {
+				width: 100%;
+				position: relative; // Ensures play button is over the image
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				.main-image {
+					width: 70%; // Make the image smaller for better layout
+					border-radius: 20px;
+				}
+
+				.play-button-container {
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					display: flex;
+					justify-content: center;
+					align-items: center;
+
+					.play-button {
+						width: 180px; // Smaller play button
+						height: 180px;
+						animation: pulse 1.5s infinite; // Apply the animation
+						cursor: pointer;
+					}
+				}
+			}
+		}
+	}
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(1);
+		opacity: 1;
+	}
+	50% {
+		transform: scale(1.2); // Slight zoom-in effect
+		opacity: 0.8;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+// Media queries for responsiveness
+
+@media (max-width: 768px) {
+	.content-container {
+		width: 95%;
+
+		.content-section {
+			.image-content {
+				.main-image {
+					width: 90%; // Adjust for smaller screens
+				}
+
+				.play-button-container {
+					.play-button {
+						width: 40px; // Smaller button on mobile
+						height: 40px;
+					}
+				}
+			}
+		}
+	}
+}

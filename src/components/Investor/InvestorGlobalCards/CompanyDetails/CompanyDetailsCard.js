@@ -7,6 +7,7 @@ import WebIcon from "../../../../Images/investorIcon/WebIcon.svg";
 import LogoX from "../../../../Images/investorIcon/LogoX.png";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import "./companyDetails.scss";
+import { FaGlobeAmericas } from "react-icons/fa";
 import { CiEdit, CiSaveUp2 } from "react-icons/ci";
 import {
   getInvestorById,
@@ -106,8 +107,8 @@ const CompanyDetailsCard = ({
 
   return (
     <div className={`${className} company_details_container`}>
-      <div className={`px-2 px-md-4 py-4 company_details box ${isOnelink ? "border" : ""} ${theme === "investor" ? "border" : ""} rounded-2`}>
-        <h4 className="typography" style={{ marginBottom: "0.5rem", color: colorTheme === "dark" ? "#fff" : "#000" }}>
+      <div className={`px-2 px-md-4 company_details box ${isOnelink ? "" : ""} ${theme === "investor" ? "border" : ""}`}>
+        <h4 className="typography-company" style={{ marginBottom: "0.5rem", color: colorTheme === "dark" ? "#fff" : "#000" }}>
           Company Details
         </h4>
         <div className="image_name_section d-flex flex-column flex-md-row align-items-start align-items-md-center px-2 px-md-0">
@@ -136,7 +137,7 @@ const CompanyDetailsCard = ({
             )}
           </div>
           <div className="left_profile_text flex_content">
-            <h3 className="typography ms-0" style={{ fontSize: "18px" }}>
+            <h3 className="typography-company-name ms-0" style={{ fontSize: "30px", fontFamily: "Outfit"}}>
               {onePager.companyName || onePager.company || userDetails?.startUp?.company || userDetails?.investor?.companyName || "No company found"}
             </h3>
             <div className="company__header d-flex flex-column flex-lg-row gap-2 ">
@@ -186,7 +187,8 @@ const CompanyDetailsCard = ({
             <div className="small_typo social_icon mt-3">
               {userDetails.startUp?.socialLinks?.website && (
                 <a href={userDetails.startUp?.socialLinks?.website} target="_blank" rel="noopener noreferrer">
-                  <img src={WebIcon} alt="Website" style={{ width: "25px", height: "25px" }} />
+                  <FaGlobeAmericas size={25} color={colorTheme === "dark" ? "#fff" : "#000"}/>
+                  {/* <img src={WebIcon} alt="Website" style={{ width: "25px", height: "25px" }} /> */}
                 </a>
               )}
               {userDetails.startUp?.socialLinks?.linkedin && (
@@ -206,7 +208,9 @@ const CompanyDetailsCard = ({
               )}
                {userDetails.investor?.socialLinks?.website && (
                 <a href={userDetails.investor?.socialLinks?.website} target="_blank" rel="noopener noreferrer">
-                  <img src={WebIcon} alt="Website" style={{ width: "25px", height: "25px" }} />
+                  <FaGlobeAmericas size={50} color={colorTheme === "dark" ? "#fff" : "#000"}/>
+
+                  {/* <img src={WebIcon} alt="Website" style={{ width: "25px", height: "25px" }} /> */}
                 </a>
               )}
               {userDetails.investor?.socialLinks?.linkedin && (
@@ -324,7 +328,7 @@ const CompanyDetailsCard = ({
               </div>
             </>
           ) : (
-            <p style={{ color: colorTheme === "dark" ? "#fff" : "#000", fontSize: "12px", fontWeight: "100" }}>
+            <p style={{ color: colorTheme === "dark" ? "#fff" : "#000", fontSize: "16px", fontFamily: "Outfit"}}>
               {descriptionContent || userDetails?.startUp?.description || userDetails?.investor?.description || "No description"}
             </p>
           )}

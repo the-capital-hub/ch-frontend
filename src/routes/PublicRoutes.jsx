@@ -54,6 +54,11 @@ const SecuritySafeGuard = lazy(() =>
 const StartUpLendingPage = lazy(() =>
   import("../pages/StartUp/StartUpLendingPage/StartUpLendingPage")
 );
+
+const SalesLandingPage = lazy(() =>
+  import("../pages/StartUp/SalesLandingPage/SalesLandingPage")
+);
+
 const PortfolioPage = lazy(() =>
   import("../webDevelopment/pages/PortfolioPage/PortfolioPage")
 );
@@ -268,6 +273,17 @@ function PublicRoutes() {
           </Suspense>
         }
       />
+      <Route
+        path="/know-startup"
+        element={
+          <Suspense fallback={<SuspenseLoader />}>
+            <Navbar />
+            <SalesLandingPage />
+            <Footer />
+          </Suspense>
+        }
+      />
+
       <Route
         path="/author-profile/:username/:userId"
         element={

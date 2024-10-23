@@ -1,0 +1,193 @@
+.aboutus-container {
+	background-color: #050505;
+	width: 100%;
+	height: 100%;
+	color: white;
+	padding: 3rem 2rem;
+	font-family: "Roboto", sans-serif;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: relative;
+	.aboutus-title {
+		text-align: center;
+		h1 {
+			font-family: Gerbil;
+			font-size: 40px;
+			font-weight: 400;
+			line-height: 49px;
+			letter-spacing: -2.5%;
+			color: white;
+			span {
+				background-color: #8484843f;
+				padding: 0 8px;
+				border-radius: 20px;
+			}
+		}
+	}
+	.aboutus-content {
+		width: 50%;
+
+		@media (max-width: 1024px) {
+			width: 80%;
+		}
+
+		@media (max-width: 770px) {
+			width: 90%;
+		}
+		// height: 40%;
+		background: rgba(215, 238, 221, 0.3);
+
+		margin: 3rem auto;
+		// text-align: center;
+		display: flex;
+		// flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		border-radius: 44px;
+		p {
+			img {
+				width: 50px;
+				height: 36px;
+				display: inline;
+				margin: 0 5px;
+				line-height: 36px;
+			}
+			text-align: center;
+			font-family: "Satoshi", sans-serif;
+			font-size: 22.38px;
+			font-weight: 400;
+			line-height: 31.33px;
+			letter-spacing: 0.02em;
+			color: #fff;
+			padding: 0 2rem;
+		}
+	}
+	form {
+		.email-input {
+			::placeholder {
+				color: white;
+			}
+		}
+	}
+
+	.aboutus-images {
+		img {
+			position: absolute;
+		}
+
+		@media screen and (min-width: 1025px) {
+			.pic1 {
+				left: 200px;
+				top: 0;
+				width: 90px;
+				height: 90px;
+			}
+			.pic8 {
+				right: 100px;
+				top: 0;
+				width: 90px;
+				height: 90px;
+			}
+			.pic2 {
+				left: 200px;
+				top: 200px;
+				width: 160px;
+				height: 160px;
+			}
+			.pic7 {
+				right: 200px;
+				top: 100px;
+				width: 50px;
+				height: 50px;
+			}
+			.pic3 {
+				left: 100px;
+				top: 200px;
+				width: 50px;
+				height: 50px;
+			}
+			.pic6 {
+				right: 100px;
+				top: 200px;
+				width: 160px;
+				height: 160px;
+			}
+			.pic4 {
+				left: 100px;
+				top: 400px;
+				width: 90px;
+				height: 90px;
+			}
+			.pic5 {
+				right: 250px;
+				top: 350px;
+				width: 90px;
+				height: 90px;
+			}
+		}
+
+		@media screen and (max-width: 1024px) {
+			.pic1,
+			.pic2,
+			.pic3,
+			.pic4,
+			.pic5,
+			.pic6,
+			.pic7,
+			.pic8 {
+				display: none;
+			}
+		}
+	}
+	.aboutus-images1 {
+		display: none;
+
+		@media screen and (max-width: 1024px) {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: 20px 20px 40px 20px;
+			.pic {
+				width: 80px;
+				height: 80px;
+				margin-right: -20px;
+			}
+		}
+		@media (max-width: 480px) {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: -10px 10px 20px 20px;
+			.pic {
+				width: 40px;
+				height: 40px;
+				margin-right: -10px;
+			}
+		}
+	}
+
+	.subscribe-container {
+		form {
+			#email-input {
+				border-radius: 20px 0 0 20px;
+			}
+			#subscribe-btn {
+				border-radius: 0 20px 20px 0;
+			}
+
+			@media (max-width: 639px) {
+				display: flex;
+				flex-direction: column;
+				gap: 20px;
+
+				#email-input {
+					border-radius: 20px;
+				}
+				#subscribe-btn {
+					border-radius: 20px;
+				}
+			}
+		}
+	}
+}

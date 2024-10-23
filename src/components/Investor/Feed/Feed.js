@@ -86,14 +86,14 @@ const Feed = () => {
   useEffect(() => {
     const fetchNews = async () => {
         try {
-          const response = await fetch(`${baseUrl}/news/getNewsByDate`);
+          const response = await fetch(`${baseUrl}/news/getTodaysNews`);
           const data = await response.json();
-          const filteredArticles = data.articles?.filter(article => 
-            article.title && 
-            article.description && 
-            article.url && 
-            article.urlToImage && 
-            article.publishedAt
+          const filteredArticles = data?.articles?.filter(article => 
+            article?.title && 
+            article?.description && 
+            article?.url && 
+            article?.urlToImage && 
+            article?.publishedAt
           ) || [];
           setNewsData(filteredArticles);
         } catch (error) {
@@ -329,11 +329,11 @@ const Feed = () => {
                             />
                                {(index + 1) % 3 === 0 && (
               <NewsCard 
-              title={newsData[Math.floor(index)].title} 
-              description={newsData[Math.floor(index)].description} 
-              url={newsData[Math.floor(index)].url} 
-              urlToImage={newsData[Math.floor(index)].urlToImage} 
-              publishedAt={newsData[Math.floor(index)].publishedAt} 
+              title={newsData[Math.floor(index)]?.title} 
+              description={newsData[Math.floor(index)]?.description} 
+              url={newsData[Math.floor(index)]?.url} 
+              urlToImage={newsData[Math.floor(index)]?.urlToImage} 
+              publishedAt={newsData[Math.floor(index)]?.publishedAt} 
             />
             )}
                             </React.Fragment>

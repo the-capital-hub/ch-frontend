@@ -10,7 +10,7 @@ const NewsCard = ({ title, description, url, urlToImage, publishedAt }) => {
             <a href={url} target="_blank" rel="noopener noreferrer" className="news-card__link">
                 Read more
             </a>
-            <span className="news-card__date">{new Date(publishedAt).toLocaleDateString()}</span>
+            {/* <span className="news-card__date">{new Date(publishedAt).toLocaleDateString()}</span> */}
         </div>
     );
 };
