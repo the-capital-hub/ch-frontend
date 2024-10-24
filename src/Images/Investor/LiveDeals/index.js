@@ -4,7 +4,6 @@ import WiproNiceImage from "./WiproNiceImage.svg";
 import Marketing from "./Marketing.svg";
 import Product from "./Product.svg";
 import Sales from "./Sales.svg";
-import Team from "./Team.svg";
 import userPic1 from "./userPic-1.svg";
 import userPic2 from "./userPic-2.svg";
 import userPic3 from "./userPic-3.svg";
@@ -13,6 +12,9 @@ import userPic5 from "./userPic-5.svg";
 import userPic6 from "./userPic-6.svg";
 import userPic7 from "./userPic-7.svg";
 import userPic8 from "./userPic-8.svg";
+
+const Team = "https://thecapitalhub.s3.ap-south-1.amazonaws.com/Images/Investor/LiveDeals/Team.svg";
+
 
 export {
   InfosysNiceImage,
