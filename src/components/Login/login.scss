@@ -1,473 +1,558 @@
 .register_container {
+	display: flex;
+	flex-direction: column;
+	height: 100dvh;
+	padding-bottom: 2rem;
+	@media (min-width: 1280px) {
+		flex-direction: row;
+	}
+	.register_container_left {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		background-color: rgb(253 242 248);
+		height: 100dvh;
+		padding: 1.25rem;
+		@media (min-width: 1280px) {
+			width: 50%;
+		}
 
-  .social-login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-  }
+		.create_account_btn {
+			color: white;
+			padding: 4px 32px;
+			border-radius: 40px;
+			font-size: 1.125rem /* 18px */;
+			font-weight: 600;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text-decoration: none;
+			background-color: #fd5901;
+			width: 225px;
+			height: 41.6;
+			// line-height: 1.75rem /* 28px */;
+			:hover {
+				background-color: #fd590194;
+				opacity: 0.8;
+			}
+			border: 1px solid transparent;
+			box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+			// background-color: transparent;
+			transition: all 0.15s ease-in-out;
 
-  .google_signin {
+			&:active {
+				box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25) inset;
+			}
 
-    cursor: pointer;
-  }
+			&.startup {
+				border: 1px solid #fd5901;
+				background-color: #fd5901;
+				color: white;
+			}
 
-  .google_signin img {
-    margin-right: 8px;
-  }
+			&.investor {
+				border: 1px solid #d3f36b;
+				background-color: #d3f36b;
+				color: black;
+			}
+		}
+	}
 
-  .login_buttons_row {
-    // margin-top: 20px;
-    // display: flex;
-    // flex-direction: row;
-    // justify-content: center;
-    // align-items: center;
-    // width: 70%;
-    // gap: 10px;
-  }
+	.register_container_right {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 1.25rem;
+		height: 100dvh;
+		@media (min-width: 1280px) {
+			width: 50%;
+		}
+	}
 
-  .login_btn {
-    min-width: 150px;
-    height: 50px;
-    padding: 10px 20px;
-    font-weight: 500;
-    font-size: 18px;
+	.social-login-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		margin-top: 20px;
+	}
 
-    border: 1px solid transparent;
-    border-radius: 10rem;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-    background-color: transparent;
+	.google_signin {
+		cursor: pointer;
+	}
 
-    transition: all 0.15s ease-in-out;
+	.google_signin img {
+		margin-right: 8px;
+	}
 
-    &:active {
-      box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25) inset;
-    }
+	.login_buttons_row {
+		// margin-top: 20px;
+		// display: flex;
+		// flex-direction: row;
+		// justify-content: center;
+		// align-items: center;
+		// width: 70%;
+		// gap: 10px;
+	}
 
-    &.startup {
-      border: 1px solid #fd5901;
-      background-color: #fd5901;
-      color: white;
-    }
+	.login_btn {
+		min-width: 150px;
+		height: 50px;
+		padding: 10px 20px;
+		font-weight: 500;
+		font-size: 18px;
 
-    &.investor {
-      border: 1px solid #d3f36b;
-      background-color: #d3f36b;
-      color: black;
-    }
+		border-radius: 10rem;
+		border: 1px solid transparent;
+		box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+		background-color: transparent;
+		transition: all 0.15s ease-in-out;
 
-    @media (max-width: 500px) {
-      max-width: 100px;
-      height: auto;
-      font-size: 14px;
-      padding: 10px;
-    }
-  }
+		&:active {
+			box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25) inset;
+		}
 
-  .register_heading {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    flex-direction: column;
+		&.startup {
+			border: 1px solid #fd5901;
+			background-color: #fd5901;
+			color: white;
+		}
 
-    .backArrow {
-      position: absolute;
-      top: 16%;
-      left: 16%;
-      height: 40px;
-      width: 40px;
-      cursor: pointer;
-    }
+		&.investor {
+			border: 1px solid #d3f36b;
+			background-color: #d3f36b;
+			color: black;
+		}
 
-    h3 {
-      font-family: "Poppins";
-      font-style: normal;
-      font-weight: 700;
-      font-size: 48px;
-      line-height: 80px;
-      margin-top: 150px;
-      color: #000000;
-    }
+		@media (max-width: 500px) {
+			max-width: 100px;
+			height: auto;
+			font-size: 14px;
+			padding: 10px;
+		}
+	}
 
-    img {
-      margin-top: -50px;
-      height: 400px;
-    }
-  }
+	.register_heading {
+		display: flex;
+		// justify-content: flex-end;
+		align-items: center;
+		flex-direction: column;
 
-  .register_heading_right {
-    //display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding-top: 1%;
-    gap: 2em;
+		.backArrow {
+			position: absolute;
+			top: 10%;
+			left: 10%;
+			height: 40px;
+			width: 40px;
+			cursor: pointer;
+			@media (min-width: 768px) {
+				top: 16%;
+				left: 10%;
+			}
+		}
 
-    .backArrow {
-      height: 25px;
-      width: 25px;
-      cursor: pointer;
-    }
+		h3 {
+			font-family: "Poppins";
+			font-style: normal;
+			font-weight: 700;
+			font-size: 48px;
+			line-height: 80px;
+			margin-top: 150px;
+			color: #000000;
+		}
 
-    h1 {
-      font-family: "Poppins";
-      font-style: normal;
-      font-weight: 600;
-      font-size: 48px;
-      color: #000000;
-    }
+		img {
+			margin-top: -50px;
+			height: 400px;
+		}
+	}
 
-    h3 {
-      margin-left: 10px;
-      font-family: "Poppins";
-      font-style: normal;
-      font-weight: 400;
-      font-size: 20px;
-      line-height: 33px;
-      color: #000000;
-    }
+	.register_heading_right {
+		//display: flex;
+		justify-content: center;
+		flex-direction: column;
+		padding-top: 1%;
+		gap: 1em;
 
-    .welcome {
-      display: none;
-    }
+		.backArrow {
+			position: absolute;
+			top: 2%;
+			left: 5%;
+			height: 25px;
+			width: 25px;
+			cursor: pointer;
+			@media (min-width: 768px) {
+				top: 16%;
+				left: 16%;
+			}
+		}
 
-    .already_have_account_mobile {
-      display: none;
-    }
-  }
+		h1 {
+			font-family: "Poppins";
+			font-style: normal;
+			font-weight: 600;
+			font-size: 48px;
+			color: #000000;
+		}
 
-  label {
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 18px;
-    text-align: center;
-    color: #000000;
-  }
+		h3 {
+			margin-left: 10px;
+			font-family: "Poppins";
+			font-style: normal;
+			font-weight: 400;
+			font-size: 20px;
+			line-height: 33px;
+			color: #000000;
+		}
 
-  input[type="text"],
-  input[type="password"] {
-    width: 100%;
-    //padding: 15px;
-    border-radius: 3px;
-    background-color: #fff;
-    //padding: 18px 17px;
-    gap: 10px;
-    //height: 54px;
-    border-radius: 10px;
+		.welcome {
+			display: none;
+		}
 
-    &.first_name {
-      width: 46%;
-    }
-  }
+		.already_have_account_mobile {
+			display: none;
+		}
+	}
 
-  input[type="tel"] {
-    width: 100%;
-    //padding: 15px;
-    border-radius: 3px;
-    background-color: #fff;
-    //padding: 18px 17px;
-    gap: 10px;
-    //height: 50px;
-    border: none;
-    border-radius: 10px;
-    outline: none;
+	label {
+		font-family: "Poppins";
+		font-style: normal;
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 18px;
+		text-align: center;
+		color: #000000;
+	}
 
-    &:focus {
-      border: none;
-    }
-  }
+	input[type="text"],
+	input[type="password"] {
+		width: 100%;
+		//padding: 15px;
+		border-radius: 3px;
+		background-color: #fff;
+		//padding: 18px 17px;
+		gap: 10px;
+		//height: 54px;
+		border-radius: 10px;
 
-  .form-check {
-    margin: 20px;
+		&.first_name {
+			width: 46%;
+		}
+	}
 
-    .form-check-label {
-      font-family: "Poppins";
-      font-style: normal;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 18px;
-      text-align: center;
-      color: #000000;
-    }
-  }
+	input[type="tel"] {
+		width: 100%;
+		//padding: 15px;
+		border-radius: 3px;
+		background-color: #fff;
+		//padding: 18px 17px;
+		gap: 10px;
+		//height: 50px;
+		border: none;
+		border-radius: 10px;
+		outline: none;
 
-  button[type="submit"] {
-    width: 437px;
-    height: 50px;
-    left: 832px;
-    top: 745px;
-    background: #fd5901;
-    border-radius: 10px;
-    border: none;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+		&:focus {
+			border: none;
+		}
+	}
 
-    &:active {
-      box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25) inset;
-    }
+	.staySignedIn-fp {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		// gap: 10px;
+	}
 
-    &.startup {
-      border: 1px solid #fd5901;
-      background-color: #fd5901;
-      color: white;
-    }
+	.form-check {
+		margin: 20px;
 
-    &.investor {
-      border: 1px solid #d3f36b;
-      background-color: #d3f36b;
-      color: black;
-    }
-  }
+		.form-check-label {
+			font-family: "Poppins";
+			font-style: normal;
+			font-weight: 500;
+			font-size: 12px;
+			line-height: 18px;
+			text-align: center;
+			color: #000000;
+		}
+	}
 
-  .submit_btn {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    width: 90%;
-    justify-content: center;
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 18px;
-    text-align: center;
-    color: #ffffff;
-  }
+	button[type="submit"] {
+		width: 437px;
+		height: 50px;
+		left: 832px;
+		top: 745px;
+		background: #fd5901;
+		border-radius: 10px;
+		border: none;
+		box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 
-  .line-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+		&:active {
+			box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25) inset;
+		}
 
-    .line {
-      flex-grow: 1;
-      height: 1px;
-      background-color: black;
-    }
-  }
+		&.startup {
+			border: 1px solid #fd5901;
+			background-color: #fd5901;
+			color: white;
+		}
 
-  .text {
-    font-size: 18px;
-  }
+		&.investor {
+			border: 1px solid #d3f36b;
+			background-color: #d3f36b;
+			color: black;
+		}
+	}
 
-  .login_icons {
-    margin-left: -36px;
+	.submit_btn {
+		display: flex;
+		justify-content: start;
+		align-items: center;
+		width: 90%;
+		justify-content: center;
+		font-family: "Poppins";
+		font-style: normal;
+		font-weight: 600;
+		font-size: 18px;
+		line-height: 18px;
+		text-align: center;
+		color: #ffffff;
+	}
 
-    img {
-      height: 30px;
-      margin: 10px;
-    }
-  }
+	.line-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
-  .orange {
-    color: #fd5901;
-  }
+		.line {
+			flex-grow: 1;
+			height: 1px;
+			background-color: black;
+		}
+	}
 
-  .green {
-    color: #d3f36b;
-  }
+	.text {
+		font-size: 18px;
+	}
 
+	.login_icons {
+		margin-left: -36px;
+
+		img {
+			height: 30px;
+			margin: 10px;
+		}
+	}
+
+	.orange {
+		color: #fd5901;
+	}
+
+	.green {
+		color: #d3f36b;
+	}
 }
 
-
 @media screen and (max-width: 768px) {
-  .register_container {
-    .register_heading {
-      display: none;
-    }
+	.register_container {
+		.register_heading {
+			display: none;
+		}
 
-    .register_heading_right {
-      h1 {
-        font-size: 24px;
-      }
+		.register_heading_right {
+			h1 {
+				font-size: 24px;
+			}
 
-      label {
-        color: #000;
-        font-family: Poppins;
-        font-size: 15px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-      }
+			label {
+				color: #000;
+				font-family: Poppins;
+				font-size: 15px;
+				font-style: normal;
+				font-weight: 400;
+				line-height: normal;
+			}
 
-      input[type="text"],
-      input[type="password"] {
-        width: 100%;
-        //padding: 15px;
-        border-radius: 3px;
-        background-color: #fff;
-        //padding: 18px 17px;
-        gap: 10px;
-        //height: 54px;
-        border: 2px solid #000000;
-        border-radius: 10px;
+			input[type="text"],
+			input[type="password"] {
+				width: 100%;
+				//padding: 15px;
+				border-radius: 3px;
+				background-color: #fff;
+				//padding: 18px 17px;
+				gap: 10px;
+				//height: 54px;
+				border: 2px solid #000000;
+				border-radius: 10px;
 
-        &.first_name {
-          width: 100%;
-        }
+				&.first_name {
+					width: 100%;
+				}
 
-        &::placeholder {
-          color: #b4b4b4;
-          font-family: Poppins;
-          font-size: 15px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: normal;
-        }
-      }
+				&::placeholder {
+					color: #b4b4b4;
+					font-family: Poppins;
+					font-size: 15px;
+					font-style: normal;
+					font-weight: 400;
+					line-height: normal;
+				}
+			}
 
-      input[type="tel"] {
-        width: 100%;
-        //padding: 15px;
-        border-radius: 3px;
-        background-color: #fff;
-        //padding: 18px 17px;
-        gap: 10px;
-        //height: 50px;
-        border: none;
-        border-radius: 10px;
-        outline: none;
+			input[type="tel"] {
+				width: 100%;
+				//padding: 15px;
+				border-radius: 3px;
+				background-color: #fff;
+				//padding: 18px 17px;
+				gap: 10px;
+				//height: 50px;
+				border: none;
+				border-radius: 10px;
+				outline: none;
 
-        &:focus {
-          border: none;
-        }
-      }
+				&:focus {
+					border: none;
+				}
+			}
 
-      .welcome {
-        display: block;
-        color: #000;
-        font-family: Poppins;
-        font-size: 18px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: normal;
-      }
+			.welcome {
+				display: block;
+				color: #000;
+				font-family: Poppins;
+				font-size: 18px;
+				font-style: normal;
+				font-weight: 500;
+				line-height: normal;
+			}
 
-      .already_have_account {
-        display: none;
-      }
+			.already_have_account {
+				display: none;
+			}
 
-      .already_have_account_mobile {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-        color: #b4b4b4;
-        font-family: Poppins;
-        font-size: 15px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-      }
-    }
+			.already_have_account_mobile {
+				display: flex;
+				justify-content: center;
+				margin-top: 20px;
+				color: #b4b4b4;
+				font-family: Poppins;
+				font-size: 15px;
+				font-style: normal;
+				font-weight: 400;
+				line-height: normal;
+			}
+		}
 
-    .submit_btn {
-      display: flex;
-      justify-content: start;
-      align-items: center;
-      width: 100%;
-      justify-content: center;
-      font-family: "Poppins";
-      font-style: normal;
-      font-weight: 600;
-      font-size: 18px;
-      line-height: 18px;
-      text-align: center;
-      color: #ffffff;
+		.submit_btn {
+			display: flex;
+			justify-content: start;
+			align-items: center;
+			width: 100%;
+			justify-content: center;
+			font-family: "Poppins";
+			font-style: normal;
+			font-weight: 600;
+			font-size: 18px;
+			line-height: 18px;
+			text-align: center;
+			color: #ffffff;
 
-      button {
-        width: 80%;
-      }
-    }
+			button {
+				width: 80%;
+			}
+		}
 
-    .line-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 70%;
-      margin: 20px 0px 20px 85px;
+		.line-container {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 70%;
+			margin: 20px 0px 20px 85px;
 
-      .line {
-        flex-grow: 1;
-        height: 1px;
-        background-color: black;
-      }
-    }
+			.line {
+				flex-grow: 1;
+				height: 1px;
+				background-color: black;
+			}
+		}
 
-    .login_icons {
-      margin-left: 0px;
+		.login_icons {
+			margin-left: 0px;
 
-      img {
-        height: 30px;
-        margin: 10px;
-      }
-    }
-  }
+			img {
+				height: 30px;
+				margin: 10px;
+			}
+		}
+	}
 }
 
 .plato_form_control {
-  width: 100%;
-  background-color: #fff;
-  gap: 10px;
+	width: 100%;
+	background-color: #fff;
+	gap: 10px;
 
-  &.first_name {
-    width: 100%;
-  }
+	&.first_name {
+		width: 100%;
+	}
 
-  &::placeholder {
-    color: #b4b4b4;
-    font-family: Poppins;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
+	&::placeholder {
+		color: #b4b4b4;
+		font-family: Poppins;
+		font-size: 15px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
+	}
 
-  .PhoneInputInput {
-    border: none;
-  }
+	.PhoneInputInput {
+		border: none;
+	}
 
-  .PhoneInputCountry {
-    display: flex;
-    flex-direction: row-reverse;
+	.PhoneInputCountry {
+		display: flex;
+		flex-direction: row-reverse;
 
-    .PhoneInputCountryIcon {
-      display: flex;
+		.PhoneInputCountryIcon {
+			display: flex;
 
-      img {
-        height: 15px;
-        width: 24px;
-        border-radius: 50%;
-      }
-    }
+			img {
+				height: 15px;
+				width: 24px;
+				border-radius: 50%;
+			}
+		}
 
-    .PhoneInputCountrySelect {
-      height: 18px;
-      width: 20px;
-      margin-left: 2px;
-      background-color: transparent;
-      border: none;
-    }
-  }
+		.PhoneInputCountrySelect {
+			height: 18px;
+			width: 20px;
+			margin-left: 2px;
+			background-color: transparent;
+			border: none;
+		}
+	}
 
-  /* Add your custom styling here */
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+	/* Add your custom styling here */
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 10px;
 
-  /* Position the select to the left of the input */
-  .react-phone-number-input__country {
-    order: -1;
-    /* Move the country select to the left */
-    margin-right: 5px;
-    /* Add a small gap between select and input */
-  }
+	/* Position the select to the left of the input */
+	.react-phone-number-input__country {
+		order: -1;
+		/* Move the country select to the left */
+		margin-right: 5px;
+		/* Add a small gap between select and input */
+	}
 
-  /* Adjust the size of the flag/logo */
-  .react-phone-number-input__icon {
-    /* You can adjust the height and width to your desired size */
-    height: 24px;
-    width: auto;
-  }
+	/* Adjust the size of the flag/logo */
+	.react-phone-number-input__icon {
+		/* You can adjust the height and width to your desired size */
+		height: 24px;
+		width: auto;
+	}
 }

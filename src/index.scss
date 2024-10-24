@@ -1,93 +1,94 @@
 
-
 :root {
-  --scrollbarBG: #eee;
-  --thumbBG: #7e7e7e;
+	--scrollbarBG: #eee;
+	--thumbBG: #7e7e7e;
 
-  --startup: #fd5901;
-  --startup-light: #fd590133;
-  --startup-dark: #e95100;
-  --startup-text: #ffffff;
+	--startup: #fd5901;
+	--startup-light: #fd590133;
+	--startup-dark: #e95100;
+	--startup-text: #ffffff;
 
-  --investor: rgb(211, 243, 107);
-  --investor-dark: rgb(165, 190, 82);
-  --investor-light: rgba(211, 243, 107, 0.5);
-  --investor-text: rgb(2, 2, 2);
+	--investor: rgb(211, 243, 107);
+	--investor-dark: rgb(165, 190, 82);
+	--investor-light: rgba(211, 243, 107, 0.5);
+	--investor-text: rgb(2, 2, 2);
 
-  --currentTheme: var(--startup);
-  --currentTheme-dark: var(--startup-dark);
-  --currentTheme-light: var(--startup-light);
-  --currentTheme-text: var(--startup-text);
+	--currentTheme: var(--startup);
+	--currentTheme-dark: var(--startup-dark);
+	--currentTheme-light: var(--startup-light);
+	--currentTheme-text: var(--startup-text);
 
-  --border-radius: 1rem;
+	--border-radius: 1rem;
 
-  --hover-bg-grey: rgb(243, 243, 243);
+	--hover-bg-grey: rgb(243, 243, 243);
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-family: "Poppins", sans-serif;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-family: "Poppins", sans-serif;
 
-  padding-top: env(safe-area-inset-top);
-  overflow-y: auto;
+	padding-top: env(safe-area-inset-top);
+	overflow-y: auto;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+		monospace;
 }
 
 .goog-te-banner-frame {
-  display: none !important;
-  visibility: hidden !important;    
-  margin-top: -20px !important;
+	display: none !important;
+	visibility: hidden !important;
+	margin-top: -20px !important;
 }
 
 .goog-logo-link {
-  display: none !important;
-  visibility: hidden !important;  }
+	display: none !important;
+	visibility: hidden !important;
+}
 
-  .goog-te-gadget {
-    color: transparent !important;
-  }
+.goog-te-gadget {
+	color: transparent !important;
+}
 
 .VIpgJd-ZVi9od-l4eHX-hSRGPd {
-  display: none !important;
-  visibility: hidden !important;  }
+	display: none !important;
+	visibility: hidden !important;
+}
 
 .VIpgJd-ZVi9od-ORHb-OEVmcd {
-  top: -40px !important;
-  display: none !important;
-  visibility: hidden !important;
+	top: -40px !important;
+	display: none !important;
+	visibility: hidden !important;
 }
-.VIpgJd-ZVi9od-xl07Ob-OEVmcd{
-  display: none !important;
-  visibility: hidden !important;
+.VIpgJd-ZVi9od-xl07Ob-OEVmcd {
+	display: none !important;
+	visibility: hidden !important;
 }
-  .translated-ltr {
-    margin-top: -40px !important;
-  }
+.translated-ltr {
+	margin-top: -40px !important;
+}
 
 .VIpgJd-ZVi9od-aZ2wEe-wOHMyf {
-  display: none !important;
-  visibility: hidden !important;  }
+	display: none !important;
+	visibility: hidden !important;
+}
 
 #goog-gt-tt {
-  display: none !important;
+	display: none !important;
 }
 
-.VIpgJd-ZVi9od-ORHb{
-  display: none !important;
-  visibility: hidden !important;
+.VIpgJd-ZVi9od-ORHb {
+	display: none !important;
+	visibility: hidden !important;
 
-table{
-  display: none !important;
-  visibility: hidden !important;
-}
-
+	table {
+		display: none !important;
+		visibility: hidden !important;
+	}
 }
