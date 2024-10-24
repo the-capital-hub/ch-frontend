@@ -10,7 +10,7 @@
 
 .name_number {
   width: 100%;
-  .personal_info_grid {
+  .personal_info_grid_3 {
     p {
       font-weight: 400;
       color: var(--bs-gray-400);
@@ -22,7 +22,7 @@
 
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
+    // gap: 1rem;
 
     .fname {
       order: 1;
@@ -42,7 +42,7 @@
 
     @media (min-width: 768px) {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
 
       .lname {
         order: 3;
@@ -58,7 +58,7 @@
 @media (max-width: 450px) {
   .name_number {
     width: 100%;
-    .personal_info_grid {
+    .personal_info_grid_3 {
       display: grid;
       grid-template-columns: 1fr;
       gap: 2rem;
