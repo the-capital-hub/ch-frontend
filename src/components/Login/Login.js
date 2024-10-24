@@ -91,51 +91,57 @@ function OtpVerificationModal({
 	};
 
 	return (
-		<div className="fixed inset-0 bg-black bg-opacity-50 flex  items-center justify-center p-4 z-50">
+		<div className="OtpVerificationModal_container">
 			<div
-				className="bg-white rounded-lg shadow-xl p-6  relative flex md:flex-row flex-col"
+				className="OtpVerificationModal_main_container bg-white rounded-lg shadow-xl p-6  relative flex md:flex-row flex-col"
 				style={{ width: "700px" }}
 			>
 				<div style={{ width: "90%" }}>
-					<button
-						onClick={onClose}
-						className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-					>
-						<X size={24} />
+					<button onClick={onClose} className="Modal_Close_btn">
+						<X size={30} />
 					</button>
-					<h2 className="text-2xl font-bold mb-4">Enter verification code</h2>
-					<p className="text-gray-600 mb-6">
+					<h2 className="enter_verification_code">Enter verification code</h2>
+					<p className="Otp_Sent_Msg">
 						We have just sent a verification code to your mobile number.
 					</p>
-					<div className="flex justify-between mb-6">
+					<div
+						// className="flex justify-between mb-6"
+						style={{
+							display: "flex",
+							justifyContent: "space-between",
+							marginBottom: "1.5rem",
+						}}
+					>
 						{otp.map((digit, index) => (
 							<input
 								key={index}
 								ref={(el) => (inputRefs.current[index] = el)}
 								type="text"
 								maxLength="1"
-								className="w-12 h-12 text-center text-2xl border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+								className="OTP_Input"
 								value={digit}
 								onChange={(e) => handleChange(index, e.target.value)}
 								onKeyDown={(e) => handleKeyDown(index, e)}
 							/>
 						))}
 					</div>
-					<div className="flex justify-between text-sm mb-6">
-						<button
-							onClick={handleOtpChange}
-							className="text-green-500 hover:underline"
-						>
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "space-between",
+							marginBottom: "1.5rem",
+							fontSize: "14px",
+							lineHeight: "20px",
+						}}
+					>
+						<button onClick={handleOtpChange} className="Send_OTP_btn">
 							Send the code again
 						</button>
-						<button onClick={onClose} className="text-blue-500 hover:underline">
+						<button onClick={onClose} className="Change_Number_btn">
 							Change phone number
 						</button>
 					</div>
-					<button
-						onClick={handleVerify}
-						className="bg-orange-500 text-white py-1 rounded-full text-lg font-semibold hover:bg-orange-600 transition duration-300 mx-auto md:w-56 w-full"
-					>
+					<button onClick={handleVerify} className="Modal_Verify_btn active">
 						Verify
 					</button>
 				</div>
