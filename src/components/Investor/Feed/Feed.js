@@ -126,8 +126,11 @@ const Feed = () => {
           setHasMore(false);
         } else {
           const totalPost = data.filter((item) => item.postType !== "company");
-          setAllPosts([...allPosts, ...totalPost]);
-          setPage(page + 1);
+          if(totalPost.length === 0){
+            setHasMore(false);
+          }
+          setAllPosts(prevPosts => [...prevPosts, ...totalPost]);
+          setPage(prevPage => prevPage + 1);
         }
       })
       .catch((err) => {
@@ -255,7 +258,7 @@ const Feed = () => {
               <div className="posts__container d-flex flex-column gap-3">
                 <InfiniteScroll
                   className="m-0 p-0"
-                  dataLength={allPosts.length + newsData.length}
+                  dataLength={allPosts.length}
                   next={fetchMorePosts}
                   hasMore={hasMore}
                   loader={
