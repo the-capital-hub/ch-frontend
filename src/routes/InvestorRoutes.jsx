@@ -21,6 +21,7 @@ const EditInvestorCompanyProfilePage = lazy(() =>
     "../pages/Investor/InvestorCompanyProfilePage/EditInvestorCompanyProfilePage"
   )
 );
+const News = lazy(() => import("../components/Investor/News/news"))
 const InvestorHomeFeed = lazy(() => import("../pages/Investor/Home/Home"));
 const NewInvestorManageAccount = lazy(() =>
   import(
@@ -186,6 +187,14 @@ function InvestorRoutes() {
         element={
           <Suspense fallback={<SuspenseLoader />}>
             <LiveDeals />
+          </Suspense>
+        }
+      />
+      <Route
+        path="news"
+        element={
+          <Suspense fallback={<SuspenseLoader />}>
+            <News />
           </Suspense>
         }
       />

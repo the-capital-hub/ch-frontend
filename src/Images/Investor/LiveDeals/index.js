@@ -4,7 +4,7 @@ import WiproNiceImage from "./WiproNiceImage.svg";
 import Marketing from "./Marketing.svg";
 import Product from "./Product.svg";
 import Sales from "./Sales.svg";
-// import Team from "./Team.svg";
+
 import userPic1 from "./userPic-1.svg";
 import userPic2 from "./userPic-2.svg";
 import userPic3 from "./userPic-3.svg";

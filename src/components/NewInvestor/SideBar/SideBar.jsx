@@ -22,6 +22,7 @@ import {
 // import InvestorIcon from "../../../Images/investorIcon/Pot.svg";
 // import PlusIcon from "../../../Images/investorIcon/Plus.svg";
 import "react-pro-sidebar/dist/css/styles.css";
+import { IoNewspaper } from "react-icons/io5";
 import "./SideBar.scss";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LogOutPopUp from "../../PopUp/LogOutPopUp/LogOutPopUp";
@@ -392,6 +393,15 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
                   /> */}
                   <IoCompassOutline size={25} />
                   {!sidebarCollapsed && <span className="">Explore</span>}
+                </Link>
+              </MenuItem>
+              <MenuItem
+                active={location.pathname.includes("/news")}
+                className="active-item"
+              >
+                <Link to="/investor/news" id="sidebar_news">
+                  <IoNewspaper size={25} />
+                  {!sidebarCollapsed && <span>News</span>}
                 </Link>
               </MenuItem>
               <MenuItem

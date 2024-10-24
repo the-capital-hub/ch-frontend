@@ -24,7 +24,8 @@ import {
   selectInvestorCreatePostModal,
   setShowOnboarding,
 } from "../../../Store/features/design/designSlice";
-
+import NewsCard from "./Components/NewsCard/NewsCard";
+import {environment} from "../../../environments/environment"
 import { investorOnboardingSteps } from "../../../components/OnBoardUser/steps/investor";
 import {
   selectCompanyDataId,
@@ -36,6 +37,8 @@ import {
 } from "../../../Store/features/user/userSlice";
 import TutorialTrigger from "../../../components/Shared/TutorialTrigger/TutorialTrigger";
 import PostDetail from "../../../components/Investor/Cards/FeedPost/PostDetail";
+
+const baseUrl = environment.baseUrl;
 
 
 function Home() {
@@ -54,6 +57,7 @@ function Home() {
   const [getSavedPostData, setgetSavedPostData] = useState("");
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+  const [newsData, setNewsData] = useState([]);
   const [postData, setPostData] = useState({
     userId: "",
     postId: "",
@@ -176,6 +180,28 @@ function Home() {
     }
   }, [location]);
 
+  //Fetching NEWS
+  useEffect(() => {
+    const fetchNews = async () => {
+        try {
+          const response = await fetch(`${baseUrl}/news/getTodaysNews`);
+          const data = await response.json();
+          const filteredArticles = data?.articles?.filter(article => 
+            article?.title && 
+            article?.description && 
+            article?.url && 
+            article?.urlToImage && 
+            article?.publishedAt
+          ) || [];
+          setNewsData(filteredArticles);
+        } catch (error) {
+            console.error("Error fetching news:", error);
+        }
+    };
+
+    fetchNews();
+}, []);
+
   return (
     <MaxWidthWrapper>
       <div className="investor_feed_container">
@@ -249,7 +275,7 @@ function Home() {
                     </p>
                   }
                 >
-                  {allPosts?.map((post) => {
+                  {allPosts?.map((post, index) => {
                     if (!post || !post.user) {
                       return null;
                     }
@@ -276,6 +302,8 @@ function Home() {
                       resharedPostId,
                     } = post;
                     return (
+                      <>
+                            <React.Fragment key={_id}>
                       <InvestorFeedPostCard
                         key={_id} // Ensure this is a unique key
                         userId={userId}
@@ -307,8 +335,21 @@ function Home() {
                         setPostData={setPostData}
                         isSubscribed={isSubscribed||false}
                       />
-                    );
-                  })}
+                                      {(index + 1) % 3 === 0 && (
+              <NewsCard 
+              title={newsData[Math.floor(index)]?.title} 
+              description={newsData[Math.floor(index)]?.description} 
+              url={newsData[Math.floor(index)]?.url} 
+              urlToImage={newsData[Math.floor(index)]?.urlToImage} 
+              publishedAt={newsData[Math.floor(index)]?.publishedAt} 
+            />
+            )}
+                            </React.Fragment>
+                        </>
+                      );
+                    }
+                  )}
+                  
                 </InfiniteScroll>
 
             </div>
