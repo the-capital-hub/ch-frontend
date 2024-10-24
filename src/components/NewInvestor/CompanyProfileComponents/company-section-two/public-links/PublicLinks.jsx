@@ -29,7 +29,7 @@ export default function PublicLinks({ socialLinks }) {
       style={{ color: "var(--d-l-grey)" }}
     >
       {!pathname.includes("/investor/onelink/") && (
-        <h6 className="div__heading">Public Links</h6>
+        <h6 className="div__heading" style={{ textDecoration: "none" }}>Public Links</h6>
       )}
       <div className="d-flex gap-3 flex-wrap">
         {socialLinks
