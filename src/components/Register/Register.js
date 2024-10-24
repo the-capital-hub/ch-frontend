@@ -430,11 +430,11 @@ const Register = () => {
 
 	return (
 		<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_OAUTH_ID}>
-			<div className="flex xl:flex-row flex-col register_container h-dvh">
+			<div className="register_container">
 				{/* <div className="register_container row d-flex m-0"> */}
 				{/* Left section */}
 				{/* <div className="col-lg-6 col-md-12 register_heading bg-pink-50"> */}
-				<div className="xl:w-1/2 bg-pink-50 flex flex-col items-center justify-center p-5 register_heading h-dvh">
+				<div className="register_container_left register_heading">
 					<img
 						className="backArrow"
 						src={backArrow}
@@ -446,14 +446,10 @@ const Register = () => {
 					<h2 className="text-4xl font-bold mb-4">Already have an account ?</h2>
 					<p className="text-xl mb-8">Login to your account</p>
 					<Link
-						className=" text-white py-1 px-8 rounded-full text-lg font-semibold hover:bg-orange-600 transition duration-300 mx-auto flex justify-center items-center"
+						className={`register_login_btn ${
+							!isInvestorSelected ? "startup" : "investor"
+						} `}
 						to={"/login"}
-						style={{
-							width: 225,
-							height: 41.6,
-							textDecoration: "none",
-							backgroundColor: "#fd5901",
-						}}
 					>
 						Login
 					</Link>
@@ -461,7 +457,7 @@ const Register = () => {
 				{/* Right section */}
 				{/* <div className="col-lg-6 col-md-12 register_heading_right"> */}
 				<div
-					className="xl:w-1/2 bg-white flex flex-col p-5 register_heading_right h-dvh"
+					className="register_container_right register_heading_right"
 					style={{ padding: "1rem" }}
 				>
 					{!isMobileApp && (
@@ -472,7 +468,9 @@ const Register = () => {
 							onClick={handleBack}
 						/>
 					)}
-					<span className="welcome mt-4 ml-auto mr-auto text-2xl">Welcome </span>
+					<span className="welcome mt-4 ml-auto mr-auto text-2xl">
+						Welcome{" "}
+					</span>
 					<h1>Create your account</h1>
 					{/* <h3 className="already_have_account">
           Already have an account? &nbsp;

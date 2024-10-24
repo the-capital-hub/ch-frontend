@@ -538,12 +538,9 @@ const Login = () => {
 
 	return (
 		<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_OAUTH_ID}>
-			<div className="flex xl:flex-row flex-col register_container h-dvh">
+			<div className="register_container">
 				{/* Left side colomn */}
-				<div
-					className="xl:w-1/2 bg-pink-50 flex flex-col items-center justify-center p-5 register_heading h-dvh"
-					style={{ padding: "1rem" }}
-				>
+				<div className="register_container_left register_heading">
 					<Link to="/">
 						<img
 							className="backArrow"
@@ -561,24 +558,18 @@ const Login = () => {
 					<h2 className="text-4xl font-bold mb-4">New Here ?</h2>
 					<p className="text-xl mb-8">Create a account here</p>
 					<Link
-						className=" text-white py-1 px-8 rounded-full text-lg font-semibold hover:bg-orange-600 transition duration-300 flex justify-center items-center"
+						// className="create_account_btn"
+						className={`create_account_btn ${
+							!isInvestorSelected ? "startup" : "investor"
+						} `}
 						to={"/signup"}
-						style={{
-							width: 225,
-							height: 41.6,
-							textDecoration: "none",
-							backgroundColor: "#fd5901",
-						}}
 					>
 						Create account
 					</Link>
 				</div>
 
 				{/* Right side colomn */}
-				<div
-					className="xl:w-1/2 bg-white flex flex-col p-5 register_heading_right h-dvh"
-					style={{ padding: "1rem" }}
-				>
+				<div className="register_container_right register_heading_right">
 					{!isMobileApp && (
 						<Link className="d-md-none" to="/">
 							<img className="backArrow" src={backArrow} alt="arrow_back" />
@@ -655,6 +646,7 @@ const Login = () => {
 						<form
 							onSubmit={handleFormSubmit}
 							className="d-flex flex-column gap-2"
+							style={{ width: "60%" }}
 						>
 							{isMobileLogin ? (
 								<div className="row">
@@ -805,7 +797,7 @@ const Login = () => {
 								</>
 							)}
 
-							<div className="row mt-2">
+							<div className="row mt-2 staySignedIn-fp">
 								<div className="d-flex gap-2 p-2">
 									<input
 										type="checkbox"
