@@ -1,3 +1,10 @@
+// Global styles and variables
+$sidebar-width: 220px;
+$collapsed-sidebar-width: 65px;
+$icon-size: 25px;
+$mobile-breakpoint: 768px; // Mobile view breakpoint
+$primary-color: #fd5901; // Primary brand color for active elements
+
 .sidebar_container {
   width: 100%;
   margin-right: 0;
@@ -188,11 +195,54 @@
   }
 
   .items-active {
-    color: white !important;
+    color: #fd5901 !important;
   }
 
   .invest-now {
     background: #fd5901 !important;
     color: white !important;
+  }
+}
+
+// Mobile Bottom Navigation Styles
+@media (max-width: $mobile-breakpoint) {
+  .bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: var(--white-to-grey);
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      color: var(--d-l-grey);
+      font-size: 12px;
+
+      .items-active {
+        color: $primary-color;
+        font-weight: bold;
+      }
+
+      svg {
+        margin-bottom: 5px;
+      }
+    }
+
+    .invest-now {
+      background: $primary-color;
+      color: white !important;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
   }
 }
