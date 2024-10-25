@@ -11,6 +11,8 @@ import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { getUserById } from "../../../Service/user";
 import "../../Investor/InvestorSidebar/investorsidebar.scss";
 import "./SideBar.scss";
+import MobileNavbar from "../../Shared/MobileNavbar/MobileNavbar";
+import MobileOneLinkNavbar from "../../Shared/MobileOnelinkNavbar/MobileOneLinkNavbar";
 
 const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
   const isMobileView = useSelector((state) => state.design.isMobileView);
@@ -107,19 +109,7 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
         </div>
       ) : (
         // Mobile Bottom Navigation
-        <div className="bottom-nav">
-          {menuItems.map((item) => (
-            <Link
-              key={item.tab}
-              to={item.path}
-              className={`nav-item ${currentTab === item.tab ? "items-active" : ""}`}
-              onClick={() => setCurrentTab(item.tab)}
-            >
-              {item.icon}
-              <span>{item.label}</span>
-            </Link>
-          ))}
-        </div>
+        <MobileOneLinkNavbar/>
       )}
     </div>
   );
