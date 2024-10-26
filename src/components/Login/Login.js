@@ -37,6 +37,7 @@ import { fetchAllChats } from "../../Store/features/chat/chatThunks";
 // imports fro implementing login with google
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 // import { jwtDecode } from "jwt-decode";
+import LinkedInLogin from "./LinkedinLogin/LinkedInLogin";
 
 function OtpVerificationModal({
 	isOpen,
@@ -535,7 +536,7 @@ const Login = () => {
 		console.error("Google Sign-In failed");
 		setError("Google Sign-In failed. Please try again.");
 	};
-	// const clientId = process.env.REACT_APP_GOOGLE_OAUTH_ID;
+	// const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 	// if (!clientId) {
 	// 	console.error("Google OAuth Client ID is not set.");
 	// } else {
@@ -543,7 +544,7 @@ const Login = () => {
 	// }
 
 	return (
-		<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_OAUTH_ID}>
+		<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
 			<div className="register_container">
 				{/* Left side colomn */}
 				<div className="register_container_left register_heading">
@@ -622,11 +623,20 @@ const Login = () => {
 					</h3> */}
 					<p className="text-center">Login using social networks</p>
 
-					<div className="flex justify-center space-x-4">
+					<div
+						className="flex justify-center space-x-4"
+						style={{ display: "flex", gap: 10 }}
+					>
 						<GoogleLogin
 							onSuccess={handleGoogleLoginSuccess}
 							onError={handleGoogleLoginError}
 							useOneTap
+						/>
+						<LinkedInLogin
+							isInvestorSelected={isInvestorSelected}
+							setIsLoginSuccessfull={setIsLoginSuccessfull}
+							setIsInvestorSelected={setIsInvestorSelected}
+							setError={setError}
 						/>
 						{/* <button className="p-2 bg-white border border-gray-300 rounded-full">
 							<img src={GIcon} alt="Google" width={24} height={24} />
