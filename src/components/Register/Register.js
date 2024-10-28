@@ -421,7 +421,7 @@ const Register = () => {
 		console.error("Google Sign-In failed");
 		setError("Google Sign-In failed. Please try again.");
 	};
-	// const clientId = process.env.REACT_APP_GOOGLE_OAUTH_ID;
+	// const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 	// if (!clientId) {
 	// 	console.error("Google OAuth Client ID is not set.");
 	// } else {
@@ -429,7 +429,7 @@ const Register = () => {
 	// }
 
 	return (
-		<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_OAUTH_ID}>
+		<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
 			<div className="register_container">
 				{/* <div className="register_container row d-flex m-0"> */}
 				{/* Left section */}
@@ -805,10 +805,22 @@ const Register = () => {
 				)}
 				{isModalOpen && (
 					<div
-						className="fixed inset-0 bg-gray-600 bg-opacity-80 overflow-y-auto h-full w-full"
+						className="Modal_Container"
 						id="my-modal"
+						style={{
+							backgroundColor: "#4b5563cc",
+							// opacity: "0.8",
+						}}
 					>
-						<div className="relative top-40  mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+						<div
+							className="relative top-40  mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+							style={{
+								position: "fixed",
+								top: "10%",
+								left: "30%",
+								width: "40%",
+							}}
+						>
 							<div className="mt-3 text-center">
 								<h3 className="text-lg leading-6 font-medium text-gray-900">
 									Create Account
