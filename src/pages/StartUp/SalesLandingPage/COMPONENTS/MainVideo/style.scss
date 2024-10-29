@@ -1,14 +1,24 @@
 #process-1nd {
-	@media (max-width: 820px) {
-		display: none;
+	// @media (max-width: 820px) {
+	// 	display: none;
+	// }
+
+	@media (max-width: 460px) {
+		display: block;
 	}
 }
 .mainVideo-container {
 	background-color: #050505;
 	color: #ffffff;
 	width: 100vw;
-	padding: 50px 0;
+	// padding: 50px 0;
+	padding-bottom: 50px;
 	text-align: center;
+	margin-bottom: -200px;
+
+	@media (max-width: 460px) {
+		margin-bottom: -100px;
+	}
 
 	.content-container {
 		width: 90%;
@@ -28,9 +38,20 @@
 				justify-content: center;
 				align-items: center;
 
+				@media (max-width: 768px) {
+					width: 130%;
+				}
+
+				@media (max-width: 460px) {
+					width: 80%;
+				}
+
 				.main-image {
 					width: 70%; // Make the image smaller for better layout
 					border-radius: 20px;
+					@media (max-width: 460px) {
+						width: 100%;
+					}
 				}
 
 				.play-button-container {
@@ -47,6 +68,12 @@
 						height: 180px;
 						animation: pulse 1.5s infinite; // Apply the animation
 						cursor: pointer;
+					}
+					@media (max-width: 460px) {
+						.play-button {
+							width: 120px; // Smaller button on mobile
+							height: 120px;
+						}
 					}
 				}
 			}

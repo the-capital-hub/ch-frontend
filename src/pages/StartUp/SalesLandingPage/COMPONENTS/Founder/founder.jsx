@@ -97,11 +97,13 @@ const Founder = () => {
 			</div>
 
 			<div className="pricing">
-				<h3>Unlock Premium Resources</h3>
-				<h4>
-					INR <span>1,999</span>
-				</h4>
-				<button>Get Premium</button>
+				<div className="pricing-details">
+					<h3>Unlock Premium Resources</h3>
+					<h4>
+						INR <span>1,999</span>
+					</h4>
+					<button>Get Premium</button>
+				</div>
 			</div>
 		</div>
 	);
