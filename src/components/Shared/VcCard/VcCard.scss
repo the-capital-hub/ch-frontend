@@ -21,9 +21,11 @@
 
       .vc-logo {
           height: 7rem !important;
-          max-width: 20%;
+          max-width: 7rem;
           margin-right: 10px;
           border-radius: 10%;
+          object-fit: contain;
+          background-color: #ececec;
       }
 
       .vc-info {
@@ -106,6 +108,14 @@
   font-weight: bold;
   margin-right: 10%;
   font-size: larger;
+}
+
+.know-more{
+    background-color: #632AA9;
+    color: white;
+    border-radius: 20px;
+    padding: 10px;
+    margin-right: 1%;
 }
 
 .info {

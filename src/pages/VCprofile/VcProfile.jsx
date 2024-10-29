@@ -49,7 +49,7 @@ const VcProfile = () => {
     return (
         <>
         <div className="vc-profile">
-            <img src={vcData.logo} alt={`${vcData.name} logo`} className="vc-logo" />
+            {vcData.logo ? <img src={vcData.logo} alt={`${vcData.name} logo`} className="vc-logo" /> : <img src="https://thecapitalhub.s3.ap-south-1.amazonaws.com/company-dummy.png" alt={`${vcData.name} logo`} className="vc-logo" />}
             <h1 className="vc-name">{vcData.name}</h1>
             <p className="vc-description">{vcData.description}</p>
 
