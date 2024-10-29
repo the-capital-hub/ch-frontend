@@ -108,7 +108,7 @@ const CompanyProfileDetailsCard = ({
           Company Details
         </h4>
         <div className="image_name_section d-flex flex-column flex-md-row align-items-start align-items-md-center px-2 px-md-0">
-          <span className="company_details_logo_container d-none d-md-block">
+          <span className="company_details_logo_container d-none d-md-block rounded">
             <img src={onePager.logo || LogoX} alt="profileimage" />
           </span>
           <div className="d-flex justify-content-between w-100 d-md-none d-flex">

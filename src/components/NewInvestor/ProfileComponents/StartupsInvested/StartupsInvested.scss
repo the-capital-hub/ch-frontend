@@ -2,6 +2,7 @@
   border-radius: var(--border-radius);
   background: var(--white-to-grey);
   overflow: hidden;
+  color: var(--d-l-grey);
   // padding: 20px;
   // margin: 0 20px 20px 20px;
 
@@ -11,6 +12,11 @@
     // padding-bottom: 5px;
     // border-bottom: solid 1px #dfdfdf;
     align-items: center;
+  }
+
+  .green_underline{
+    color: var(--d-l-grey);
+
   }
 
   .invested_cards {
@@ -34,6 +40,11 @@
       .card_title {
         display: flex;
         align-items: center;
+        
+        img{
+          border-radius: 50%;
+          object-fit: fill;
+        }
 
         h5 {
           padding-bottom: 5px;

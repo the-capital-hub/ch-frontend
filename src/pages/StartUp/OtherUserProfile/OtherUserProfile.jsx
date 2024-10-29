@@ -383,7 +383,7 @@ function OtherUserProfile() {
 							{loggedInUser?.isSubscribed ||
 							loggedInUser?.investorIdCount?.includes(userData?._id) ? (
 								<div
-									className="email rounded-4 border shadow-sm flex flex-col gap-2 w-full"
+									className="email rounded-4 border shadow-sm flex flex-col gap-2"
 									style={{ background: "var(--white-to-grey)" }}
 								>
 									<>
@@ -419,7 +419,7 @@ function OtherUserProfile() {
 									</>
 								</div>
 							)}
-							<div
+							{/* <div
   style={{
     width: "100%",
     display: "flex",
@@ -558,7 +558,7 @@ function OtherUserProfile() {
       </p>
     </div>
   </div>
-</div>
+</div> */}
 
 							<div className="row row-cols-auto row-cols-lg-2 g-0 gx-md-4 two_column_wrapper mb-4">
 								<div className="left_container p-0 pe-md-auto d-flex flex-column gap-3 col-12 col-lg-8">

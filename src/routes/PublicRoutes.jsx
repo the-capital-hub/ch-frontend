@@ -16,9 +16,10 @@ const Home = lazy(() => import("../components/Home/Home"));
 const AboutUs = lazy(() => import("../components/AboutUs/AboutUs"));
 const ContactUs = lazy(() => import("../components/ContactUs/ContactUs"));
 const Service = lazy(() => import("../components/Service/Service"));
-const LinkedInCallback = lazy(() =>
-	import("../components/Login/LinkedInCallback")
-);
+
+// const LinkedInCallback = lazy(() =>
+//   import("../components/Login/LinkedInCallback")
+// );
 const Fundraising = lazy(() =>
 	import("../components/Service/Fundraising/Fundraising")
 );
@@ -262,29 +263,30 @@ function PublicRoutes() {
 				}
 			/>
 
-			<Route path="/signup" element={<Register />} />
-			<Route path="/login" element={<Login />} />
-			<Route path="/linkedin" element={<LinkedInCallback />} />
-			<Route
-				path="/start-up"
-				element={
-					<Suspense fallback={<SuspenseLoader />}>
-						<Navbar />
-						<StartUpLendingPage />
-						<Footer />
-					</Suspense>
-				}
-			/>
-			<Route
-				path="/know-startup"
-				element={
-					<Suspense fallback={<SuspenseLoader />}>
-						<Navbar2 />
-						<SalesLandingPage />
-						<Footer />
-					</Suspense>
-				}
-			/>
+
+      <Route path="/signup" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      {/* <Route path="/linkedin" element={<LinkedInCallback />} /> */}
+      <Route
+        path="/start-up"
+        element={
+          <Suspense fallback={<SuspenseLoader />}>
+            <Navbar />
+            <StartUpLendingPage />
+            <Footer />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/know-startup"
+        element={
+          <Suspense fallback={<SuspenseLoader />}>
+            <Navbar />
+            <SalesLandingPage />
+            <Footer />
+          </Suspense>
+        }
+      />
 
 			<Route
 				path="/author-profile/:username/:userId"

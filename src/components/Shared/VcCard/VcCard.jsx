@@ -5,12 +5,13 @@ const VcCard = ({ vc }) => {
   return (
     <div className="vc-card">
       <div className="header">
-        {vc.logo && <img src={vc.logo} alt={`${vc.name} logo`} className="vc-logo" />}
+        {vc.logo ? <img src={vc.logo} alt={`${vc.name} logo`} className="vc-logo" /> : <img src="https://thecapitalhub.s3.ap-south-1.amazonaws.com/company-dummy.png" alt={`${vc.name} logo`} className="vc-logo" />}
         <div className="vc-info">
           <h5>{vc.name}</h5>
           <p className="info">{vc.location}, {vc.age} years</p>
         </div>
-        <p className="ticket-size"><h6>Ticket Size</h6> {vc.ticket_size}</p>
+        <p className="ticket-size"><h6>Ticket Size</h6> {vc.ticket_size ? vc.ticket_size : "N/A"} </p>
+        <button className="know-more">Know more</button>
       </div>
       <div className="stage-sector-info">
         <div className="stage-focus">
