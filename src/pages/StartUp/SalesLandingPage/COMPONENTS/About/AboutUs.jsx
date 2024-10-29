@@ -75,7 +75,7 @@ const AboutUs = () => {
 						placeholder="Enter Your Email"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
-						className="px-4 py-2 bg-gray-700 text-white  flex-grow"
+						className="px-4 py-2 text-white  flex-grow"
 						id="email-input"
 						required
 						// style={{ borderRadius: "20px 0 0 20px" }}
