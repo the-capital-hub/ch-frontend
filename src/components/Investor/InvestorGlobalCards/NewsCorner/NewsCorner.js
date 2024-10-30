@@ -12,7 +12,7 @@ const NewsCorner = ({ title, btnlink }) => {
 	const theme = useSelector(selectTheme);
 	const [newsData, setNewsData] = useState([]);
 	const [currentIndex, setCurrentIndex] = useState(0); // State to track the current index
-	console.log(newsData);
+	// console.log(newsData);
 
 	// Function to fetch news
 	const fetchNews = async () => {
