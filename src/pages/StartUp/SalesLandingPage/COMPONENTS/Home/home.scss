@@ -1,11 +1,15 @@
 .home {
-	// height: 100%;
 	width: 100vw;
 	background-color: #000000;
 	position: relative;
+	height: 110vh;
 
 	@media (max-width: 768px) {
 		width: 100%;
+		height: 65vh;
+	}
+	@media (max-width: 460px) {
+		height: 52vh;
 	}
 }
 
@@ -17,17 +21,21 @@
 .banner-bg {
 	background-image: url("../images/main-img.png"); /* Replace with the correct path */
 	background-size: 90%;
-	background-position: center;
+	background-position: 50% 40%;
 	background-repeat: no-repeat;
 	height: 100vh; /* Adjust height as necessary */
 	position: relative;
 
 	@media (max-width: 820px) {
 		background-size: 110%;
-		background-position: 50% 5%;
+		background-position: 50% 18%;
 	}
 	@media (max-width: 460px) {
+		background-size: 110%;
+		background-position: 50% 18%;
+		background-size: 150%;
 		height: 80vh;
+		padding-top: 50px;
 	}
 }
 
@@ -42,6 +50,10 @@
 	margin-top: 6px;
 	position: relative;
 	z-index: 2; /* This ensures the text is above the background */
+
+	@media (max-width: 460px) {
+		padding-top: 20px;
+	}
 
 	.smallline {
 		height: 1px;
@@ -62,7 +74,7 @@
 		font-size: 20px;
 		font-weight: 400;
 		color: white;
-		margin-top: 1.5rem;
+		margin-top: 4rem;
 		display: flex;
 
 		@media (max-width: 480px) {
@@ -95,13 +107,11 @@
 			margin-top: 1rem;
 		}
 	}
-
-	
 }
 
 .main-heading {
 	font-family: Nunito;
-	font-size: 96px;
+	font-size: 5rem;
 	font-weight: 800;
 	line-height: 103px;
 	letter-spacing: -0.03em;
@@ -109,7 +119,7 @@
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	text-align: center;
-	margin-top: 15rem;
+	margin-top: 11rem;
 	position: relative;
 	z-index: 2; /* Ensures text is above the background */
 
@@ -119,9 +129,9 @@
 	}
 
 	@media (max-width: 460px) {
-		font-size: 40px;
+		font-size: 2rem;
 		margin-top: 5rem;
-		line-height: 60px;
+		line-height: 2.25rem;
 	}
 
 	span {
@@ -142,8 +152,11 @@
 	z-index: 2; /* Text above background */
 
 	@media (max-width: 460px) {
-		font-size: 15px;
-		width: 80%;
+		// font-size: 15px;
+		width: 95%;
+		margin-top: 0.5rem;
+		font-size: 0.8rem;
+		line-height: 1.5rem;
 	}
 }
 
@@ -154,6 +167,9 @@
 	width: 45%;
 	margin: 0 auto;
 	margin-top: 2rem;
+	@media (max-width: 460px) {
+		width: 80%;
+	}
 }
 
 .join-button,
@@ -193,9 +209,9 @@
 /* Arrow container and green arrow styling */
 .arrow-container {
 	position: absolute;
-	left: 20%;
-	top: 85%;
-	z-index: 1000;
+	left: 28%;
+	top: 97%;
+	z-index: 100;
 
 	@media (max-width: 820px) {
 		left: 15%;
@@ -203,24 +219,29 @@
 	}
 	@media (max-width: 768px) {
 		left: 14%;
-		top: 52%;
+		top: 56%;
 	}
 
 	@media (max-width: 460px) {
 		left: 6%;
-		top: 57%;
+		top: 56%;
 	}
 }
 
 .green-arrow {
-	height: 160px;
+	height: 100px;
 	width: auto;
-	transform: rotate(45deg); /* Adjust the rotation if needed */
+	transform: rotate(60deg); /* Adjust the rotation if needed */
 	z-index: 1000;
 	animation: bounce 1s infinite;
 
+	@media (max-width: 768px) {
+		height: 80px;
+		transform: rotate(150deg);
+	}
 	@media (max-width: 460px) {
 		height: 50px;
+		transform: rotate(150deg);
 	}
 }
 
@@ -228,14 +249,23 @@
 @keyframes bounce {
 	0%,
 	100% {
-		transform: translateY(0);
+		transform: rotate(-20deg) translateY(0px);
 	}
 	50% {
-		transform: translateY(-10px);
+		transform: rotate(-20deg) translateY(-10px);
 	}
 }
-
-
+@media (max-width: 460px) {
+	@keyframes bounce {
+		0%,
+		100% {
+			transform: rotate(-40deg) translateY(0px);
+		}
+		50% {
+			transform: rotate(-40deg) translateY(-10px);
+		}
+	}
+}
 
 @keyframes pulse {
 	0% {
