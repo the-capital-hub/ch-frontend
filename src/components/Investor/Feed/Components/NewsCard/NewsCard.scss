@@ -1,46 +1,54 @@
 .news-card {
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 16px 0;
-    background-color: var(--white-to-grey);
-    transition: box-shadow 0.2s;
+	border-radius: 8px;
+	overflow: hidden;
+	margin: 16px 0;
+	background-color: var(--white-to-grey);
+	transition: box-shadow 0.2s;
+    position: relative;
 
-    &:hover {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+	.news-card-tag {
+		position: absolute;
+		top: 0;
+		left: 15px;
+		color: red;
+	}
 
-    &__image {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-    }
+	&:hover {
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
 
-    &__title {
-        font-size: 1.25rem;
-        margin: 16px;
-        color: var(--d-l-grey);
-    }
+	&__image {
+		width: 100%;
+		height: auto;
+		object-fit: cover;
+	}
 
-    &__description {
-        margin: 0 16px 16px;
-        color: var(--d-l-grey);
-    }
+	&__title {
+		font-size: 1.25rem;
+		margin: 16px;
+		color: var(--d-l-grey);
+	}
 
-    &__link {
-        display: block;
-        margin: 0 16px 16px;
-        color: #007bff;
-        text-decoration: none;
+	&__description {
+		margin: 0 16px 16px;
+		color: var(--d-l-grey);
+	}
 
-        &:hover {
-            text-decoration: underline;
-        }
-    }
+	&__link {
+		display: block;
+		margin: 0 16px 16px;
+		color: #007bff;
+		text-decoration: none;
 
-    &__date {
-        display: block;
-        margin: 0 16px 16px;
-        font-size: 0.875rem;
-        color: #999;
-    }
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	&__date {
+		display: block;
+		margin: 0 16px 16px;
+		font-size: 0.875rem;
+		color: #999;
+	}
 }

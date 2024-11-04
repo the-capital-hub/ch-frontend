@@ -85,7 +85,7 @@ const RecommendationCard = ({ maxCount = 5 }) => {
                       ? `/investor/user/${user?.firstName.toLowerCase()}-${user?.lastName.toLowerCase()}/${user.oneLinkId}`
                       : `/user/${user?.firstName.toLowerCase()}-${user?.lastName.toLowerCase()}/${user.oneLinkId}`;
 
-                      console.log("reco", recommendations);
+                      // console.log("reco", recommendations);
 
                     return (
                       <Link

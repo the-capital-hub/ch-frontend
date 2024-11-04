@@ -173,7 +173,7 @@ export const addArticle = async (content) => {
 async function getAllPostsAPI(page) {
 	try {
 		const response = await axiosInstance.get(`${API.getAllPosts}?page=${page}`);
-		console.log(response);
+		// console.log(response);
 		return response.data;
 	} catch (error) {
 		console.error("Error:", error);

@@ -29,6 +29,7 @@ const CreatePostPopUp = ({
   respostingPostId,
   appendDataToAllPosts,
 }) => {
+     
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
   const [postText, setPostText] = useState("");
   const [category, setCategory] = useState("");
@@ -51,98 +52,121 @@ const CreatePostPopUp = ({
     dispatch(toggleCreatePostModal());
   };
 
-  const galleryInputRef = useRef(null);
-  const documentInputRef = useRef(null);
-  const cameraInputRef = useRef(null);
+  
+  
+	const galleryInputRef = useRef(null);
+	const documentInputRef = useRef(null);
+	const cameraInputRef = useRef(null);
 
-  const handleGalleryButtonClick = () => {
-    galleryInputRef.current.click();
-  };
+	const handleGalleryButtonClick = () => {
+		galleryInputRef.current.click();
+	};
 
-  const handleDocumentButtonClick = () => {
-    documentInputRef.current.click();
-  };
+	const handleDocumentButtonClick = () => {
+		documentInputRef.current.click();
+	};
 
-  const handleCameraButtonClick = () => {
-    cameraInputRef.current.click();
-  };
+	const handleCameraButtonClick = () => {
+		cameraInputRef.current.click();
+	};
 
-  const [cropComplete, setCropComplete] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
-  const [previewVideo, setPreviewVideo] = useState("");
-  const [previewVideoType, setPreviewVideoType] = useState("");
+	const [cropComplete, setCropComplete] = useState(false);
+	const [previewImage, setPreviewImage] = useState("");
+	const [previewVideo, setPreviewVideo] = useState("");
+	const [previewVideoType, setPreviewVideoType] = useState("");
 
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    const objectUrl = URL.createObjectURL(file);
+	const handleFileChange = async (event) => {
+		const file = event.target.files[0];
+		const objectUrl = URL.createObjectURL(file);
 
-    if (event.target.name === "image" && file.type.includes("image")) {
-      setPreviewImage(objectUrl);
-      setSelectedImage(file);
-      setSelectedVideo(null);
-      setCroppedImage(null);
-      // setPdfThumbnail(null);
-    } else if (event.target.name === "video" && file.type.includes("video")) {
-      setPreviewVideoType(file.type);
-      setPreviewVideo(objectUrl);
-      setSelectedVideo(file);
-      setSelectedImage(null);
-      // setPdfThumbnail(null); 
-    } else if (event.target.name === "document") {
-      setSelectedDocument(file);
-      setSelectedImage(null);
-      setSelectedVideo(null);
-      // await renderPdfThumbnail(file);
-    }
-  };
+		// Check file size and type
+		const fileSizeInMB = file.size / (1024 * 1024); // Convert to MB
 
-  const handleQuillChange = (value) => {
-    setPostText(value);
-  };
+		if (event.target.name === "image" && file.type.includes("image")) {
+			if (fileSizeInMB > IMAGE_MAX_SIZE_MB) {
+				alert(
+					`Image size exceeds the maximum allowed size of ${IMAGE_MAX_SIZE_MB}MB.`
+				);
+				return;
+			}
+			setPreviewImage(objectUrl);
+			setSelectedImage(file);
+			setSelectedVideo(null);
+			setCroppedImage(null);
+			// setPdfThumbnail(null);
+		} else if (event.target.name === "video" && file.type.includes("video")) {
+			if (fileSizeInMB > VIDEO_MAX_SIZE_MB) {
+				alert(
+					`Video size exceeds the maximum allowed size of ${VIDEO_MAX_SIZE_MB}MB.`
+				);
+				return;
+			}
+			setPreviewVideoType(file.type);
+			setPreviewVideo(objectUrl);
+			setSelectedVideo(file);
+			setSelectedImage(null);
+			// setPdfThumbnail(null);
+		} else if (event.target.name === "document") {
+			if (fileSizeInMB > DOCUMENT_MAX_SIZE_MB) {
+				alert(
+					`Document size exceeds the maximum allowed size of ${DOCUMENT_MAX_SIZE_MB}MB.`
+				);
+				return;
+			}
+			setSelectedDocument(file);
+			setSelectedImage(null);
+			setSelectedVideo(null);
+			// await renderPdfThumbnail(file);
+		}
+	};
 
-  const getCroppedImg = async (imageSrc, crop) => {
-    const image = new Image();
-    image.src = imageSrc;
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    canvas.width = crop.width;
-    canvas.height = crop.height;
-    ctx.drawImage(
-      image,
-      crop.x,
-      crop.y,
-      crop.width,
-      crop.height,
-      0,
-      0,
-      crop.width,
-      crop.height
-    );
+	const handleQuillChange = (value) => {
+		setPostText(value);
+	};
 
-    return new Promise((resolve, reject) => {
-      canvas.toBlob(
-        (blob) => {
-          if (!blob) {
-            reject(new Error("Failed to crop image"));
-            return;
-          }
+	const getCroppedImg = async (imageSrc, crop) => {
+		const image = new Image();
+		image.src = imageSrc;
+		const canvas = document.createElement("canvas");
+		const ctx = canvas.getContext("2d");
+		canvas.width = crop.width;
+		canvas.height = crop.height;
+		ctx.drawImage(
+			image,
+			crop.x,
+			crop.y,
+			crop.width,
+			crop.height,
+			0,
+			0,
+			crop.width,
+			crop.height
+		);
 
-          const reader = new FileReader();
-          reader.readAsDataURL(blob);
-          reader.onloadend = () => {
-            resolve(reader.result);
-          };
-        },
-        "image/jpeg",
-        1
-      );
-    });
-  };
+		return new Promise((resolve, reject) => {
+			canvas.toBlob(
+				(blob) => {
+					if (!blob) {
+						reject(new Error("Failed to crop image"));
+						return;
+					}
 
-  const onCropComplete = async (croppedArea, croppedAreaPixels) => {
-    const croppedImg = await getCroppedImg(previewImage, croppedAreaPixels);
-    setCroppedImage(croppedImg);
-  };
+					const reader = new FileReader();
+					reader.readAsDataURL(blob);
+					reader.onloadend = () => {
+						resolve(reader.result);
+					};
+				},
+				"image/jpeg",
+				1
+			);
+		});
+	};
+
+	const onCropComplete = async (croppedArea, croppedAreaPixels) => {
+		const croppedImg = await getCroppedImg(previewImage, croppedAreaPixels);
+		setCroppedImage(croppedImg);
+	};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -400,9 +424,7 @@ const CreatePostPopUp = ({
                     />
                   ))}
               </div>
-
-              
-            </div>
+              </div>
 
             {previewImage && !cropComplete && (
                 <div className="d-flex flex-column justify-content-center gap-2">

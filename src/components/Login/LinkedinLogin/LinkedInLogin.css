@@ -30,6 +30,10 @@
 	font-weight: 500;
 	cursor: pointer;
 	transition: background-color 0.2s;
+	@media (max-width: 460px) {
+		font-size: 0.75rem;
+		padding: 11px 10px;
+	}
 }
 
 .linkedin-button:hover {

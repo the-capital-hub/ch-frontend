@@ -661,8 +661,8 @@ const Login = () => {
 					{!show && (
 						<form
 							onSubmit={handleFormSubmit}
-							className="d-flex flex-column gap-2"
-							style={{ width: "60%" }}
+							className="d-flex flex-column gap-2 login-form-mobile"
+							// style={{ width: "60%" }}
 						>
 							{isMobileLogin ? (
 								<div className="row">
