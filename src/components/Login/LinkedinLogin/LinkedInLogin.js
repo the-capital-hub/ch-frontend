@@ -24,9 +24,9 @@ const LinkedInLogin = ({
 
 	// Replace with your configuration
 	const CLIENT_ID = process.env.REACT_APP_LINKEDIN_CLIENT_ID;
-	const REDIRECT_URI = "http://localhost:3000/login";
+	const REDIRECT_URI = "https://thecapitalhub.in/login";
 	const BACKEND_URL = environment.baseUrl;
-	const SCOPE = "email openid profile";
+	const SCOPE = "email openid profile w_member_social";
 
 	const generateState = () => {
 		const array = new Uint32Array(1);
@@ -57,12 +57,14 @@ const LinkedInLogin = ({
 					if (data.success === true) {
 						const user = data.user;
 						const token = data.token;
+						const linkedinToken = data.linkedinToken;
 						if (!userVisitCount) {
 							localStorage.setItem("userVisit", 1);
 						} else {
 							localStorage.setItem("userVisit", 2);
 						}
 						localStorage.setItem("accessToken", token);
+						localStorage.setItem("linkedinToken", linkedinToken);
 						localStorage.setItem("isLoggedIn", "true");
 						if (data) {
 							// console.log("data", data);

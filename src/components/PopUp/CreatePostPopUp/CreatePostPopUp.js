@@ -20,11 +20,7 @@ import { toggleCreatePostModal, selectTheme } from "../../../Store/features/desi
 import toast from "react-hot-toast";
 import { loginSuccess } from "../../../Store/features/user/userSlice";
 import IconFile from "../../Investor/SvgIcons/IconFile";
-
-//pdfjs
-// import { getDocument, GlobalWorkerOptions, version } from 'pdfjs-dist';
-// GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${version}/build/pdf.worker.min.js`;
-
+import { sharePostLinkedin } from "../../../Service/user";
 
 const CreatePostPopUp = ({
   setPopupOpen,
@@ -36,6 +32,7 @@ const CreatePostPopUp = ({
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
   const [postText, setPostText] = useState("");
   const [category, setCategory] = useState("");
+  const [shareOnLinkedIn, setShareOnLinkedIn] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [selectedDocument, setSelectedDocument] = useState(null);
@@ -47,7 +44,8 @@ const CreatePostPopUp = ({
   const [pdfThumbnail, setPdfThumbnail] = useState(null);
   const dispatch = useDispatch();
   const theme = useSelector(selectTheme);
-
+  const linkedinToken = localStorage.getItem('linkedinToken');
+  const token = localStorage.getItem('accessToken');
   const handleClose = () => {
     setPopupOpen(false);
     dispatch(toggleCreatePostModal());
@@ -96,40 +94,6 @@ const CreatePostPopUp = ({
       setSelectedVideo(null);
       // await renderPdfThumbnail(file);
     }
-  };
-
-  //  const renderPdfThumbnail = async (file) => {
-  //   const fileUrl = URL.createObjectURL(file);
-  //   const loadingTask = getDocument(fileUrl);
-  //   const pdf = await loadingTask.promise;
-  //   const page = await pdf.getPage(1);
-  //   const viewport = page.getViewport({ scale: 1 });
-  //   const canvas = document.createElement('canvas');
-  //   const context = canvas.getContext('2d');
-  //   canvas.width = viewport.width;
-  //   canvas.height = viewport.height;
-
-  //   const renderContext = {
-  //     canvasContext: context,
-  //     viewport: viewport,
-  //   };
-  //   await page.render(renderContext).promise;
-
-  //   const dataUrl = canvas.toDataURL();
-  //   setPdfThumbnail(dataUrl);
-  //   URL.revokeObjectURL(fileUrl); // Clean up
-  // };
-
-  const handleOneLinkClick = () => {
-    getStartupByFounderId(loggedInUser._id)
-      .then(({ data }) => {
-        setPostText(
-          (prevPostText) =>
-            prevPostText +
-            ` https://thecapitalhub.in/onelink/${data.oneLink}/${loggedInUser.oneLinkId}`
-        );
-      })
-      .catch((error) => console.log(error));
   };
 
   const handleQuillChange = (value) => {
@@ -215,13 +179,7 @@ const CreatePostPopUp = ({
       const res = await s3.upload(params).promise();
       postData.append("documentUrl", res.Location);
       postData.append("documentName", selectedDocument.name);
-      // setPostText(
-      //   (prevPostText) =>
-      //     prevPostText +
-      //     res.Location
-      // );
       postData.append("image",res.Location);
-      // postData.append("images", pdfThumbnail)
     }
     postData.append("postType", postType);
 
@@ -229,6 +187,30 @@ const CreatePostPopUp = ({
       const response = await postUserPost(postData);
       const newPosts = Array.isArray(response.data) ? response.data : [response.data];
       appendDataToAllPosts(response.data);
+      const s3ImageUrl = response.data.image;
+
+       // Check if sharing on LinkedIn
+    if (shareOnLinkedIn) {
+      const linkedInApiData = {
+        owner: `urn:li:person:${loggedInUser.linkedinId}`, 
+        text: {
+          text: postText, 
+        },
+        s3ImageUrl: s3ImageUrl,
+        linkedInPostData: {
+          owner: `urn:li:person:${loggedInUser.linkedinId}`, 
+          text: {
+            text: postText, 
+          },
+        },
+        token: linkedinToken
+      };
+
+      // LinkedIn API call
+      const postResponse = await sharePostLinkedin(linkedInApiData);
+
+    }
+
       setPostText("");
       setSelectedImage(null);
       setSelectedVideo(null);
@@ -382,6 +364,17 @@ const CreatePostPopUp = ({
                 }}
                 className="custom-scrollbar"
               />
+
+{loggedInUser.linkedinId && <div className="share-linkedin">
+      <input
+        type="checkbox"
+        id="shareLinkedIn"
+        checked={shareOnLinkedIn}
+        onChange={() => setShareOnLinkedIn(prev => !prev)}
+      />
+      <label htmlFor="shareLinkedIn">Share on LinkedIn</label>
+    </div>}
+
                 {respostingPostId &&
                   (loadingRepostData ? (
                     <div className="d-flex justify-content-center my-4">
@@ -530,19 +523,6 @@ const CreatePostPopUp = ({
                     />
                     <span className="tooltip-text top2">doc</span>
                   </button>
-
-                  {/* <button
-                    className="white_button hover-text"
-                    onClick={handleOneLinkClick}
-                  >
-                    <BsLink45Deg
-                      height={"59px"}
-                      width={"59px"}
-                      size={"20px"}
-                      style={{ color: "var(--d-l-grey)" }}
-                    />
-                    <span className="tooltip-text top3">link</span>
-                  </button> */}
                 </div>
                 <div className="post_button_container">
                   {posting ? (

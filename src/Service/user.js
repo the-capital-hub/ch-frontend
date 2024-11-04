@@ -150,6 +150,17 @@ async function postUserPost(postData) {
 	}
 }
 
+async function sharePostLinkedin(linkedInPostData, token, s3ImageUrl) {
+	try {
+		const response = await axiosInstance.post(API.sharePostOnLinkedin, linkedInPostData, token, s3ImageUrl);
+		return response.data;
+	} catch (error) {
+		console.error("Error:", error);
+		throw error;
+	}
+}
+
+
 export const addArticle = async (content) => {
 	try {
 		const response = await axiosInstance.post(API.addArticle, { content });
@@ -510,6 +521,7 @@ export {
 	blockUser,
 	unblockUser,
 	getUserByIdBody,
+	sharePostLinkedin
 };
 export const deletePostAPI = async (postId) => {
 	try {
