@@ -14,6 +14,7 @@ const API = Object.freeze({
 	linkdinLogin: `${baseUrl}/users/linkdin_login`,
 	getLinkedInProfile: `${baseUrl}/users/getLinkedInProfile`,
 	postUserPost: `${baseUrl}/api/posts/newPost`,
+	sharePostOnLinkedin : `${baseUrl}/api/posts/shareOnLinkedin`,
 	uploadDocument: `${baseUrl}/upload`,
 	getDocument: `${baseUrl}/documentation/getDocumentsByUser`,
 	getAllPosts: `${baseUrl}/api/posts/getposts`,
