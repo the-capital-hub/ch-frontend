@@ -22,6 +22,10 @@ import { loginSuccess } from "../../../Store/features/user/userSlice";
 import IconFile from "../../Investor/SvgIcons/IconFile";
 import { sharePostLinkedin } from "../../../Service/user";
 
+const IMAGE_MAX_SIZE_MB = 10; // 10MB
+const DOCUMENT_MAX_SIZE_MB = 50; // 50MB
+const VIDEO_MAX_SIZE_MB = 100; // 100MB
+
 const CreatePostPopUp = ({
   setPopupOpen,
   popupOpen,
