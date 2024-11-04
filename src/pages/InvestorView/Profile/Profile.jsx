@@ -11,71 +11,88 @@ import { useState, useEffect } from "react";
 import ColorCard from "../../../components/Investor/InvestorGlobalCards/ColoredCards/ColorCard";
 // import CoinIcon from "../../../Images/investorView/Rectangle.png";
 import {
-  About1,
-  About2,
-  About3,
-  About4,
-  Revenue1,
-  Revenue2,
-  // Revenue3,
+	About1,
+	About2,
+	About3,
+	About4,
+	Revenue1,
+	Revenue2,
+	// Revenue3,
 } from "../../../Images/Investor/CompanyProfile";
 // import Milestones from "../../../components/Investor/CompanyProfilePageComponents/Milestones/Milestones";
 import MaxWidthWrapper from "../../../components/Shared/MaxWidthWrapper/MaxWidthWrapper";
 import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
+import BatchImag from "../../../Images/tick-mark.png";
 
 function Profile() {
-  const { username } = useParams();
-  const { userId } = useParams();
-  const [user, setUser] = useState([]);
-  const [colorCard, setColorCard] = useState([]);
+	const { username } = useParams();
+	const { userId } = useParams();
+	const [user, setUser] = useState([]);
+	const [colorCard, setColorCard] = useState([]);
+	console.log("User", user);
 
-  useEffect(() => {
-    document.title = "Profile - OneLink | The Capital Hub";
-    getUserById(username, userId)
-      .then(({ data }) => {
-        setUser(data);
-        //console.log("userss", data);
-        getStartupByFounderId(data._id)
-          .then(({ data }) => {
-            setColorCard(data.colorCard);
-          })
-          .catch(() => setColorCard([]));
-      })
-      .catch(() => setUser([]));
-  }, [userId, username]);
-  console.log(user);
-  return (
-    <div className="my-4">
-      <MaxWidthWrapper>
-        {user.length !== 0 ? (
-          <div className="profile_main_container">
-            {/* Added d-flex flex-column gap-3 here. Easy to manipulate - Srihari */}
-            <div className="mb-5 d-flex flex-column gap-3">
-              {/* Profile Header */}
+	useEffect(() => {
+		document.title = "Profile - OneLink | The Capital Hub";
+		getUserById(username, userId)
+			.then(({ data }) => {
+				setUser(data);
+				//console.log("userss", data);
+				getStartupByFounderId(data._id)
+					.then(({ data }) => {
+						setColorCard(data.colorCard);
+					})
+					.catch(() => setColorCard([]));
+			})
+			.catch(() => setUser([]));
+	}, [userId, username]);
+	console.log(user);
+	return (
+		<div className="my-4">
+			<MaxWidthWrapper>
+				{user.length !== 0 ? (
+					<div className="profile_main_container">
+						{/* Added d-flex flex-column gap-3 here. Easy to manipulate - Srihari */}
+						<div className="mb-5 d-flex flex-column gap-3">
+							{/* Profile Header */}
 
-              <div className=" box px-4 py-3">
-                <div className="image_name_section ">
-                  <img
-                    className="rounded-cirlce"
-                    src={user?.profilePicture}
-                    alt="profileimage"
-                  />
-                  <div className="left_profile_text flex_content ms-3">
-                    <h2 className="typography" style={{textDecoration:"none"}}>
-                      {user?.firstName} {user?.lastName}
-                    </h2>
-                    <span className="small_typo">
-                      {user?.designation || ` `}, {user.company}
-                    </span>
-                    <span className="small_typo" style={{ display: "block" }}>
-                      {" "}
-                      {user?.location} | {user?.experience} of Experience
-                    </span>
-                    
-                  </div>
-                </div>
+							<div className=" box px-4 py-3">
+								<div className="image_name_section ">
+									<img
+										className="rounded-cirlce"
+										src={user?.profilePicture}
+										alt="profileimage"
+									/>
+									<div className="left_profile_text flex_content ms-3">
+										<h2
+											className="typography"
+											style={{ textDecoration: "none" }}
+										>
+											{user?.firstName} {user?.lastName}{" "}
+											{user?.isSubscribed && (
+												<img
+													src={BatchImag}
+													style={{
+														width: "1.4rem",
+														height: "1.4rem",
+														objectFit: "contain",
+														marginLeft: "4px",
+														marginBottom: "4px",
+													}}
+													alt="Batch Icon"
+												/>
+											)}
+										</h2>
+										<span className="small_typo">
+											{user?.designation || ` `}, {user.company}
+										</span>
+										<span className="small_typo" style={{ display: "block" }}>
+											{" "}
+											{user?.location} | {user?.experience} of Experience
+										</span>
+									</div>
+								</div>
 
-                {/* <div className="col-5">
+								{/* <div className="col-5">
                         <div className="connect_btn m-4">
                           <button>
                             <img src={AddUserIcon} />
@@ -84,9 +101,9 @@ function Profile() {
                         </div>
                       </div> */}
 
-                {/* Profile details */}
+								{/* Profile details */}
 
-                {/* <div className="designation mt-2">
+								{/* <div className="designation mt-2">
                   <table>
                     <tbody>
                       <tr>
@@ -144,9 +161,9 @@ function Profile() {
                     </tbody>
                   </table>
                 </div> */}
-              </div>
+							</div>
 
-              {/* <div className="row">
+							{/* <div className="row">
                 <div className="col-12 mt-2">
                   <div className=" box ">
                     <div className="personal_information_header">
@@ -214,32 +231,32 @@ function Profile() {
                 </div>
               </div> */}
 
-              {/* Bio */}
-              <div className="box">
-                {/* <div className="personal_information_header">
+							{/* Bio */}
+							<div className="box">
+								{/* <div className="personal_information_header">
                   <h2 className="typography">Bio</h2>
                 </div> */}
-                <div className="col-12 mt-2">
-                  <div className="designation_info">
-                    <p className="small_typo_bio">{user?.bio}</p>
-                  </div>
-                </div>
-                {/* <div className="col-12 mt-2 designation_see_more">
+								<div className="col-12 mt-2">
+									<div className="designation_info">
+										<p className="small_typo_bio">{user?.bio}</p>
+									</div>
+								</div>
+								{/* <div className="col-12 mt-2 designation_see_more">
                   <Link to={"/"}>See more</Link>
                 </div> */}
-              </div>
-              {/* Bio End */}
+							</div>
+							{/* Bio End */}
 
-              {/* Milestones */}
+							{/* Milestones */}
 
-              {/* <div className="border box">
+							{/* <div className="border box">
                 <Milestones
                   headingClass={"typography"}
                   containerClass={"p-3"}
                   theme="startup"
                   oneLink={userId}
                 /> */}
-              {/* <div className="personal_information_header">
+							{/* <div className="personal_information_header">
                       <h2 className="typography">Milestones</h2>
                       <div className="milestone_see_more">
                         <Link to={"/"}>See more</Link>
@@ -248,19 +265,19 @@ function Profile() {
                     <div className="col-12 mt-2">
                       <MileStoneCard userId={user._id} />
                     </div> */}
-              {/* </div> */}
+							{/* </div> */}
 
-              {/* Company Details */}
+							{/* Company Details */}
 
-              <CompanyDetailsCard
-                userDetails={user}
-                className={"mt-2"}
-                isOnelink={true}
-                theme="startup"
-              />
+							<CompanyDetailsCard
+								userDetails={user}
+								className={"mt-2"}
+								isOnelink={true}
+								theme="startup"
+							/>
 
-              {/* Color Cards */}
-              {/* <h6 className="div__heading">Current Funding</h6>
+							{/* Color Cards */}
+							{/* <h6 className="div__heading">Current Funding</h6>
               <div className="card_holder">
                 <ColorCard
                   color="white"
@@ -312,16 +329,16 @@ function Profile() {
                   isOneLink={true}
                 />
               </div> */}
-            </div>
-          </div>
-        ) : (
-          <div className="d-flex w-100 min-vh-100 justify-content-center white-to-grey border shadow-sm rounded-4 pt-5 ">
-            <SpinnerBS colorClass={"d-l-grey"} />
-          </div>
-        )}
-      </MaxWidthWrapper>
-    </div>
-  );
+						</div>
+					</div>
+				) : (
+					<div className="d-flex w-100 min-vh-100 justify-content-center white-to-grey border shadow-sm rounded-4 pt-5 ">
+						<SpinnerBS colorClass={"d-l-grey"} />
+					</div>
+				)}
+			</MaxWidthWrapper>
+		</div>
+	);
 }
 
 export default Profile;
