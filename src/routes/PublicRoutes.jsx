@@ -68,6 +68,9 @@ const PortfolioPage = lazy(() =>
 const AuthorProfile = lazy(() =>
 	import("../pages/Public/AuthorProfile/AuthorProfile")
 );
+const FounderProfile = lazy(() =>
+	import("../components/Shared/FoundersProfile/FoundersProfile")
+);
 
 function PublicRoutes() {
 	return (
@@ -263,30 +266,29 @@ function PublicRoutes() {
 				}
 			/>
 
-
-      <Route path="/signup" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-      {/* <Route path="/linkedin" element={<LinkedInCallback />} /> */}
-      <Route
-        path="/start-up"
-        element={
-          <Suspense fallback={<SuspenseLoader />}>
-            <Navbar />
-            <StartUpLendingPage />
-            <Footer />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/know-startup"
-        element={
-          <Suspense fallback={<SuspenseLoader />}>
-            <Navbar />
-            <SalesLandingPage />
-            <Footer />
-          </Suspense>
-        }
-      />
+			<Route path="/signup" element={<Register />} />
+			<Route path="/login" element={<Login />} />
+			{/* <Route path="/linkedin" element={<LinkedInCallback />} /> */}
+			<Route
+				path="/start-up"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<Navbar />
+						<StartUpLendingPage />
+						<Footer />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="/know-startup"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<Navbar />
+						<SalesLandingPage />
+						<Footer />
+					</Suspense>
+				}
+			/>
 
 			<Route
 				path="/author-profile/:username/:userId"
@@ -301,6 +303,14 @@ function PublicRoutes() {
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
 						<SubscriptionSuccess />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="/founder/:username"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<FounderProfile />
 					</Suspense>
 				}
 			/>
