@@ -32,7 +32,9 @@ export default function PersonActions({
 					</Link>
 				)}
 
-				<button className="btn-capital actions-btn">Message</button>
+				<Link to={`/chats`}>
+					<button className="btn-capital actions-btn">Message</button>
+				</Link>
 				{/* <button className="btn-capital actions-btn">Invest Now</button> */}
 			</div>
 		</div>
