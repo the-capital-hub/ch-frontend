@@ -69,6 +69,12 @@
 		@media (min-width: 1280px) {
 			width: 50%;
 		}
+		.login-form-mobile {
+			width: 60%;
+			@media (max-width: 460px) {
+				width: 90%;
+			}
+		}
 	}
 
 	.social-login-container {
@@ -443,6 +449,7 @@
 				font-style: normal;
 				font-weight: 400;
 				line-height: normal;
+				flex-direction: column;
 			}
 		}
 
