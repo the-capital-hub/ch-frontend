@@ -26,6 +26,15 @@ const IMAGE_MAX_SIZE_MB = 10; // 10MB
 const DOCUMENT_MAX_SIZE_MB = 50; // 50MB
 const VIDEO_MAX_SIZE_MB = 100; // 100MB
 
+const stripHtmlTags = (html) => {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const textContent = doc.body.textContent || "";
+  return `${textContent}
+  
+          ---posted through TheCapitalHub(TheCapitalHub.in)`;
+};
+
+
 const CreatePostPopUp = ({
   setPopupOpen,
   popupOpen,
@@ -217,18 +226,20 @@ const CreatePostPopUp = ({
       appendDataToAllPosts(response.data);
       const s3ImageUrl = response.data.image;
 
+      const linkedinText = stripHtmlTags(postText);
+      
        // Check if sharing on LinkedIn
     if (shareOnLinkedIn) {
       const linkedInApiData = {
         owner: `urn:li:person:${loggedInUser.linkedinId}`, 
         text: {
-          text: postText, 
+          text: linkedinText, 
         },
         s3ImageUrl: s3ImageUrl,
         linkedInPostData: {
           owner: `urn:li:person:${loggedInUser.linkedinId}`, 
           text: {
-            text: postText, 
+            text: linkedinText, 
           },
         },
         token: linkedinToken
