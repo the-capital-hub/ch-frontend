@@ -577,3 +577,22 @@
 .comment-container-wrapper.show {
 	max-height: 500px; /* Set a maximum height when shown */
 }
+
+.connect_button_feed {
+	margin-left: 13rem !important;
+	border-radius: 50px;
+	// border: 1px solid #acacac;
+	color: var(--d-l-grey);
+	font-size: 13px;
+	border: 1px var(--d-l-grey) solid;
+	font-family: Poppins;
+	padding: 5px 10px;
+	display: flex;
+	gap: 8px;
+	margin: auto 0;
+	align-items: center;
+	height: 40px;
+	img {
+	  width: 18px;
+	}
+  }
