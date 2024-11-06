@@ -71,6 +71,7 @@ function Home() {
     oneLinkId: "",
     video: "",
     image: "",
+    images: "",
     documentName: "",
     documentUrl: "",
     createdAt: "",

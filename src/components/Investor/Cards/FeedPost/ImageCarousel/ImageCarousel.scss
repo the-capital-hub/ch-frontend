@@ -1,0 +1,172 @@
+// .carousel-container {
+// 	position: relative; // Positioning for buttons and dots
+// 	width: 100%; // Full width for the carousel
+// 	overflow: hidden; // Hide overflow to prevent showing images outside the container
+// }
+
+// .image-scroll-container {
+// 	display: flex;
+// 	transition: transform 0.5s ease; // Smooth transition for sliding effect
+// 	scroll-snap-type: x mandatory; // Enable snap scrolling
+// 	-webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+
+// 	&::-webkit-scrollbar {
+// 		display: none; // Hide scrollbar in WebKit browsers
+// 	}
+
+// 	scrollbar-width: none; // Hide scrollbar in Firefox
+// 	-ms-overflow-style: none; // Hide scrollbar in IE and Edge
+// }
+
+// .image-item {
+// 	flex: none; // Prevent flex items from stretching
+// 	width: 100%; // Set width to 100% of the container
+// 	max-height: 30rem; // Set maximum height
+// 	object-fit: cover; // Maintain aspect ratio and cover the area
+// 	scroll-snap-align: start; // Align images to the start on scroll
+// 	margin-right: 10px; // Add some space between images
+// 	border-radius: 10px; // Optional: Add a border radius for rounded corners
+// }
+
+// .carousel-button {
+// 	position: absolute; // Position buttons absolutely
+// 	top: 50%; // Center vertically
+// 	transform: translateY(-50%); // Adjust for perfect centering
+// 	background-color: rgba(255, 180, 89, 0.8); // Semi-transparent background
+// 	border: none; // No border
+// 	border-radius: 50%; // Circular buttons
+// 	width: 40px; // Width of the buttons
+// 	height: 40px; // Height of the buttons
+// 	cursor: pointer; // Change cursor to pointer
+// 	z-index: 10; // Ensure buttons are above images
+
+// 	&.left {
+// 		left: 10px; // Position left button
+// 	}
+
+// 	&.right {
+// 		right: 10px; // Position right button
+// 	}
+
+// 	&:hover {
+// 		background-color: rgb(253, 89, 1); // Change background on hover
+// 	}
+// }
+
+// .carousel-dots {
+// 	display: flex; // Align dots horizontally
+// 	justify-content: center; // Center dots
+// 	margin-top: 10px; // Space between dots and images
+// }
+
+// .dot {
+// 	height: 10px; // Height of the dot
+// 	width: 10px; // Width of the dot
+// 	margin: 0 5px; // Space between dots
+// 	background-color: #bbb; // Default dot color
+// 	border-radius: 50%; // Make dots circular
+// 	cursor: pointer; // Change cursor to pointer
+// 	transition: background-color 0.3s; // Smooth transition for hover effect
+
+// 	&.active {
+// 		background-color: rgb(253, 89, 1); // Color for the active dot
+// 	}
+
+// 	&:hover {
+// 		background-color: #555; // Darker color on hover
+// 	}
+// }
+
+.carousel-container {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+}
+
+.image-scroll-container {
+	display: flex;
+	transition: transform 0.5s ease;
+	scroll-snap-type: x mandatory;
+	-webkit-overflow-scrolling: touch;
+	overflow-x: auto;
+	scroll-behavior: smooth;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+.image-item {
+	flex: none;
+	width: 100%;
+	max-height: 30rem;
+	object-fit: cover;
+	scroll-snap-align: start;
+	margin-right: 10px;
+	border-radius: 10px;
+	user-select: none;
+	-webkit-user-drag: none;
+	cursor: pointer;
+
+	&:last-child {
+		margin-right: 0;
+	}
+}
+
+.carousel-dots {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+	position: absolute;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+	background-color: rgba(0, 0, 0, 0.3);
+	padding: 5px 10px;
+	border-radius: 15px;
+}
+
+.dot {
+	height: 10px;
+	width: 10px;
+	margin: 0 5px;
+	background-color: #bbb;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.2s;
+
+	&.active {
+		background-color: rgb(253, 89, 1);
+		transform: scale(1.2);
+	}
+
+	&:hover {
+		background-color: #555;
+	}
+}
+
+// Optional: Add these styles for better touch/mouse interaction
+.image-scroll-container {
+	cursor: grab;
+
+	&:active {
+		cursor: grabbing;
+	}
+}
+
+// Enhanced smooth scrolling for different browsers
+@supports (-webkit-touch-callout: none) {
+	.image-scroll-container {
+		-webkit-overflow-scrolling: touch;
+	}
+}
+
+@supports not (-webkit-touch-callout: none) {
+	.image-scroll-container {
+		scroll-behavior: smooth;
+	}
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoLocationOutline } from "react-icons/io5";
-import { FaUserPlus , FaUserCircle } from "react-icons/fa";
+import { FaUserPlus, FaUserCircle } from "react-icons/fa";
 import { GoHome } from "react-icons/go";
 import { PiDotsThreeBold } from "react-icons/pi";
 import "./feedPostCard.scss";
@@ -35,7 +35,7 @@ import {
 	unsavePost,
 	getLikeCount,
 	addToCompanyUpdate,
-	sentConnectionRequest
+	sentConnectionRequest,
 } from "../../../../Service/user";
 import { Link } from "react-router-dom";
 import SavePostPopUP from "../../../../components/PopUp/SavePostPopUP/SavePostPopUP";
@@ -50,6 +50,7 @@ import {
 } from "../../../../Store/features/design/designSlice";
 import { selectIsInvestor } from "../../../../Store/features/user/userSlice";
 import { color } from "framer-motion";
+import ImageCarousel from "./ImageCarousel/ImageCarousel";
 
 const FeedPostCard = ({
 	postId,
@@ -60,6 +61,7 @@ const FeedPostCard = ({
 	oneLinkId,
 	video,
 	image,
+	images,
 	documentUrl,
 	documentName,
 	createdAt,
@@ -99,29 +101,28 @@ const FeedPostCard = ({
 	const [activeHeader, setActiveHeader] = useState(true);
 	const [connectionSent, setConnectionSent] = useState(false);
 	const theme = useSelector(selectTheme);
-
 	const handleShow = () => setLikeModal(true);
 	const handleClose = () => setLikeModal(false);
 
 	const handleConnect = (userId) => {
 		sentConnectionRequest(loggedInUser._id, userId)
-		  .then(({ data }) => {
-			setConnectionSent(true);	
-			setLoading(true);
-		  })
-		  .catch((error) => console.log(error));
-	  };
+			.then(({ data }) => {
+				setConnectionSent(true);
+				setLoading(true);
+			})
+			.catch((error) => console.log(error));
+	};
 
-	  useEffect(() => {
+	useEffect(() => {
 		if (
-		  loggedInUser.connections.includes(userId) ||
-		  loggedInUser.connectionsSent.includes(userId)
+			loggedInUser.connections.includes(userId) ||
+			loggedInUser.connectionsSent.includes(userId)
 		) {
-		  setConnectionSent(true);
+			setConnectionSent(true);
 		} else {
-		  setConnectionSent(false);
+			setConnectionSent(false);
 		}
-	  }, [loggedInUser, userId]);
+	}, [loggedInUser, userId]);
 
 	const toggleDescription = () => {
 		setExpanded(!expanded);
@@ -600,82 +601,85 @@ const FeedPostCard = ({
 							</div>
 						</div>
 
-						{!repostPreview && (<>
-							{!connectionSent &&(<button
-							  className="btn connect_button_feed"
-							  onClick={(e) => {
-								e.preventDefault(); 
-								handleConnect(userId);
-							  }}
-							>
-							  <FaUserPlus />
-							  <span>Connect</span>
-							</button>)}
-							<div className="three_dot pe-2 px-md-4">
-								<div
-									className="kebab_menu_container"
-									ref={kebabMenuContainerRef}
-								>
-									<PiDotsThreeBold
-										size={35}
-										style={{ fill: "var(--d-l-grey)" }}
-										onClick={() => {
-											setKebabMenuVisible(!kebabMenuVisible);
+						{!repostPreview && (
+							<>
+								{!connectionSent && (
+									<button
+										className="btn connect_button_feed"
+										onClick={(e) => {
+											e.preventDefault();
+											handleConnect(userId);
 										}}
-										onBlurCapture={() => {
-											setTimeout(() => {
-												setKebabMenuVisible(false);
-											}, 100);
-										}}
-									/>
+									>
+										<FaUserPlus />
+										<span>Connect</span>
+									</button>
+								)}
+								<div className="three_dot pe-2 px-md-4">
+									<div
+										className="kebab_menu_container"
+										ref={kebabMenuContainerRef}
+									>
+										<PiDotsThreeBold
+											size={35}
+											style={{ fill: "var(--d-l-grey)" }}
+											onClick={() => {
+												setKebabMenuVisible(!kebabMenuVisible);
+											}}
+											onBlurCapture={() => {
+												setTimeout(() => {
+													setKebabMenuVisible(false);
+												}, 100);
+											}}
+										/>
 
-									{kebabMenuVisible && (
-										<ul className="kebab_menu border rounded shadow-sm p-3">
-											{userId === loggedInUser?._id && (
+										{kebabMenuVisible && (
+											<ul className="kebab_menu border rounded shadow-sm p-3">
+												{userId === loggedInUser?._id && (
+													<li
+														onClick={() => handleAddToFeatured(postId)}
+														className="d-flex align-items-center gap-1"
+														style={{ color: "var(--d-l-grey)" }}
+													>
+														<IconComponentAdd />
+														<span>Featured</span>
+													</li>
+												)}
+												{userId === loggedInUser?._id && (
+													<li
+														onClick={() => deletePost(postId)}
+														className="d-flex align-items-center gap-1"
+														style={{ color: "var(--d-l-grey)" }}
+													>
+														<IconDelete />
+														<span>Delete</span>
+													</li>
+												)}
 												<li
-													onClick={() => handleAddToFeatured(postId)}
+													data-bs-toggle="modal"
+													data-bs-target="#reportPostModal"
 													className="d-flex align-items-center gap-1"
 													style={{ color: "var(--d-l-grey)" }}
 												>
-													<IconComponentAdd />
-													<span>Featured</span>
+													<IconReportPost />
+													<span>Report</span>
 												</li>
-											)}
-											{userId === loggedInUser?._id && (
-												<li
-													onClick={() => deletePost(postId)}
-													className="d-flex align-items-center gap-1"
-													style={{ color: "var(--d-l-grey)" }}
-												>
-													<IconDelete />
-													<span>Delete</span>
-												</li>
-											)}
-											<li
-												data-bs-toggle="modal"
-												data-bs-target="#reportPostModal"
-												className="d-flex align-items-center gap-1"
-												style={{ color: "var(--d-l-grey)" }}
-											>
-												<IconReportPost />
-												<span>Report</span>
-											</li>
-											{userId === loggedInUser?._id && (
-												<li
-													onClick={() => handleAddToCompanyPost(postId)}
-													className="d-flex align-items-center gap-1"
-													style={{ color: "var(--d-l-grey)" }}
-												>
-													<CiCirclePlus />
-													<span>Company</span>
-												</li>
-											)}
-										</ul>
-									)}
+												{userId === loggedInUser?._id && (
+													<li
+														onClick={() => handleAddToCompanyPost(postId)}
+														className="d-flex align-items-center gap-1"
+														style={{ color: "var(--d-l-grey)" }}
+													>
+														<CiCirclePlus />
+														<span>Company</span>
+													</li>
+												)}
+											</ul>
+										)}
+									</div>
 								</div>
-							</div>
-						</>)
-						}
+							</>
+						)}
 					</div>
 
 					<div className="para_container w-100" onClick={handleImageOnClick}>
@@ -696,6 +700,32 @@ const FeedPostCard = ({
 								/>
 							</span>
 						)}
+						{images && (
+							<ImageCarousel
+								images={images}
+								repostPreview={repostPreview}
+								handleImageOnClick={handleImageOnClick}
+							/>
+						)}
+
+						{/* {images && (
+							<span className="image-scroll-container">
+								{images.map((image) => (
+									<img
+										className="image-item"
+										// style={{
+										// 	objectFit: "cover",
+										// 	maxHeight: "30rem",
+										// 	overflow: "scroll",
+										// }}
+										width={!repostPreview ? "100%" : "50%"}
+										src={image}
+										alt="Post media"
+									/>
+								))}
+							</span>
+						)} */}
+
 						{video && (
 							<span className="d-flex">
 								<video
