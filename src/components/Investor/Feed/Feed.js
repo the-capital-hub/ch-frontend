@@ -52,6 +52,7 @@ const Feed = () => {
 		oneLinkId: "",
 		video: "",
 		image: "",
+		images: [],
 		documentName: "",
 		documentUrl: "",
 		createdAt: "",
@@ -198,6 +199,7 @@ const Feed = () => {
 						oneLinkId={postData.oneLinkId}
 						video={postData.video}
 						image={postData.image}
+						images={postData.images}
 						documentName={postData.documentName}
 						documentUrl={postData.documentUrl}
 						createdAt={postData.createdAt}
@@ -275,6 +277,7 @@ const Feed = () => {
 												user,
 												video,
 												image,
+												images,
 												documentUrl,
 												documentName,
 												createdAt,
@@ -315,6 +318,7 @@ const Feed = () => {
 														oneLinkId={oneLinkId}
 														video={video}
 														image={image}
+														images={images}
 														location={location}
 														documentName={documentName}
 														documentUrl={documentUrl}
