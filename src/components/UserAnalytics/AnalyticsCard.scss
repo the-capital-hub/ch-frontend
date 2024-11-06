@@ -1,0 +1,146 @@
+:root {
+	--bg-color: #ffffff;
+	--text-color: #333333;
+	--accent-color: #fd5901;
+	--background-color: #f5f5f5;
+}
+
+.dark-theme {
+	--bg-color: var(--white-to-grey);
+	--text-color: #ffffff;
+	--accent-color: #fd5901;
+	--background-color: var(--bs-light);
+}
+
+.analytics-card {
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	border-radius: 8px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	padding: 1.5rem;
+	margin: 0 1rem;
+
+	.analytics-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1.5rem;
+
+		h2 {
+			font-size: 1.25rem;
+			font-weight: 600;
+		}
+
+		.filter-options {
+			button {
+				background-color: var(--background-color);
+				border: none;
+				border-radius: 4px;
+				color: var(--text-color);
+				font-size: 0.875rem;
+				padding: 0.5rem 1rem;
+				margin-right: 0.5rem;
+				cursor: pointer;
+
+				&.active {
+					background-color: #fd5901;
+					color: #ffffff;
+				}
+			}
+		}
+	}
+
+	.analytics-content {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		grid-gap: 1rem;
+
+		.analytics-item {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			background-color: var(--background-color);
+			border-radius: 4px;
+			padding: 1rem;
+
+			.icon {
+				font-size: 1.5rem;
+				margin-bottom: 0.5rem;
+			}
+
+			.value {
+				font-size: 1.25rem;
+				font-weight: 600;
+				margin-bottom: 0.25rem;
+			}
+
+			.label {
+				font-size: 0.875rem;
+				color: #666666;
+			}
+		}
+	}
+}
+
+.loader-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 300px;
+	width: 100%;
+}
+
+.loader {
+	width: 50px;
+	height: 50px;
+	border: 4px solid #f3f3f3;
+	border-top: 4px solid #fd5901;
+	border-radius: 50%;
+	animation: spin 1s linear infinite;
+	position: relative;
+
+	&-inner {
+		position: absolute;
+		width: 70%;
+		height: 70%;
+		border: 4px solid transparent;
+		border-right: 4px solid #fd5901;
+		border-left: 4px solid #fd5901;
+		border-radius: 50%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		animation: spin-reverse 1s linear infinite;
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes spin-reverse {
+	0% {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+	100% {
+		transform: translate(-50%, -50%) rotate(-360deg);
+	}
+}
+
+// Dark theme support
+.dark-theme {
+	.loader {
+		border-color: #2a2a2a;
+		border-top-color: #fd5901;
+
+		&-inner {
+			border-right-color: #fd5901;
+			border-left-color: #fd5901;
+		}
+	}
+}

@@ -24,6 +24,7 @@ import achievement from "../../../Images/Investor/Achievements/img_1.png";
 const Connection = () => {
   const [selectedTab, setSelectedTab] = useState("received"); // Default to "received"
   const [receivedConnections, setReceivedConnections] = useState([]);
+  const [sentConnections, setSentConnections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [getAllConnection, setGetAllConnection] = useState([]); // State for accepted connections
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -63,7 +64,7 @@ const Connection = () => {
   const getSentConnection = () => {
     setLoading(true);
     getSentConnectionsAPI()
-      .then(({ data }) => setReceivedConnections(data))
+      .then(({ data }) => setSentConnections(data))
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
   };
@@ -256,8 +257,8 @@ const Connection = () => {
                   )
                 ) : selectedTab === "sent" ? (
                   <div className="sent_placeholder">
-                    {receivedConnections.length ? (
-                      receivedConnections.map(
+                    {sentConnections.length ? (
+                      sentConnections.map(
                         ({ receiver, updatedAt, _id }, index) => (
                           <div
                             key={index}
