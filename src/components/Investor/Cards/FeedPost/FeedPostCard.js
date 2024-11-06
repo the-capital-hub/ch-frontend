@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoLocationOutline } from "react-icons/io5";
+import { FaUserPlus , FaUserCircle } from "react-icons/fa";
 import { GoHome } from "react-icons/go";
 import { PiDotsThreeBold } from "react-icons/pi";
 import "./feedPostCard.scss";
@@ -34,6 +35,7 @@ import {
 	unsavePost,
 	getLikeCount,
 	addToCompanyUpdate,
+	sentConnectionRequest
 } from "../../../../Service/user";
 import { Link } from "react-router-dom";
 import SavePostPopUP from "../../../../components/PopUp/SavePostPopUP/SavePostPopUP";
@@ -95,11 +97,31 @@ const FeedPostCard = ({
 	const isInvestor = useSelector(selectIsInvestor);
 	const [likeModal, setLikeModal] = useState(false);
 	const [activeHeader, setActiveHeader] = useState(true);
-
+	const [connectionSent, setConnectionSent] = useState(false);
 	const theme = useSelector(selectTheme);
 
 	const handleShow = () => setLikeModal(true);
 	const handleClose = () => setLikeModal(false);
+
+	const handleConnect = (userId) => {
+		sentConnectionRequest(loggedInUser._id, userId)
+		  .then(({ data }) => {
+			setConnectionSent(true);	
+			setLoading(true);
+		  })
+		  .catch((error) => console.log(error));
+	  };
+
+	  useEffect(() => {
+		if (
+		  loggedInUser.connections.includes(userId) ||
+		  loggedInUser.connectionsSent.includes(userId)
+		) {
+		  setConnectionSent(true);
+		} else {
+		  setConnectionSent(false);
+		}
+	  }, [loggedInUser, userId]);
 
 	const toggleDescription = () => {
 		setExpanded(!expanded);
@@ -578,7 +600,17 @@ const FeedPostCard = ({
 							</div>
 						</div>
 
-						{!repostPreview && (
+						{!repostPreview && (<>
+							{!connectionSent &&(<button
+							  className="btn connect_button_feed"
+							  onClick={(e) => {
+								e.preventDefault(); 
+								handleConnect(userId);
+							  }}
+							>
+							  <FaUserPlus />
+							  <span>Connect</span>
+							</button>)}
 							<div className="three_dot pe-2 px-md-4">
 								<div
 									className="kebab_menu_container"
@@ -642,7 +674,8 @@ const FeedPostCard = ({
 									)}
 								</div>
 							</div>
-						)}
+						</>)
+						}
 					</div>
 
 					<div className="para_container w-100" onClick={handleImageOnClick}>

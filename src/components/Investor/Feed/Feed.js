@@ -377,8 +377,8 @@ const Feed = () => {
 				)}
 				<div className="right_content">
 					<RightProfileCard />
-					<RecommendationCard />
 					<NewsCorner />
+					<RecommendationCard />
 				</div>
 			</div>
 		</MaxWidthWrapper>
