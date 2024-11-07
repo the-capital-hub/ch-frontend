@@ -23,7 +23,9 @@ import ModalBSContainer from "../../../PopUp/ModalBS/ModalBSContainer/ModalBSCon
 import TimeAgo from "timeago-react";
 import IconReportPost from "../../SvgIcons/IconReportPost";
 import { CiCirclePlus } from "react-icons/ci";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+// import AfterSuccessPopup from "../../../PopUp/AfterSuccessPopUp/AfterSuccessPopUp";
+// import InvestorAfterSuccessPopUp from "../../../PopUp/InvestorAfterSuccessPopUp/InvestorAfterSuccessPopUp";
 import {
 	deletePostAPI,
 	getPostComment,
@@ -36,8 +38,9 @@ import {
 	getLikeCount,
 	addToCompanyUpdate,
 	sentConnectionRequest,
+	getRecommendations,
 } from "../../../../Service/user";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SavePostPopUP from "../../../../components/PopUp/SavePostPopUP/SavePostPopUP";
 import AfterSuccessPopUp from "../../../../components/PopUp/AfterSuccessPopUp/AfterSuccessPopUp";
 import { Modal } from "react-bootstrap";
@@ -49,8 +52,9 @@ import {
 	selectVideoAutoplay,
 } from "../../../../Store/features/design/designSlice";
 import { selectIsInvestor } from "../../../../Store/features/user/userSlice";
-import { color } from "framer-motion";
+// import { color } from "framer-motion";
 import ImageCarousel from "./ImageCarousel/ImageCarousel";
+import { setRecommendations } from "../../../../Store/features/user/userSlice";
 
 const FeedPostCard = ({
 	postId,
@@ -95,6 +99,7 @@ const FeedPostCard = ({
 	const [loading, setLoading] = useState(false);
 	const [expanded, setExpanded] = useState(false);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const isMobileView = useSelector(selectIsMobileView);
 	const isInvestor = useSelector(selectIsInvestor);
 	const [likeModal, setLikeModal] = useState(false);
@@ -103,12 +108,24 @@ const FeedPostCard = ({
 	const theme = useSelector(selectTheme);
 	const handleShow = () => setLikeModal(true);
 	const handleClose = () => setLikeModal(false);
+	// const { pathname } = useLocation();
+	// const isInvestorAccount = pathname.includes("/investor");
 
 	const handleConnect = (userId) => {
 		sentConnectionRequest(loggedInUser._id, userId)
 			.then(({ data }) => {
 				setConnectionSent(true);
+				setTimeout(() => setConnectionSent(false), 2500);
 				setLoading(true);
+				getRecommendations(loggedInUser._id)
+					.then(({ data }) => {
+						dispatch(setRecommendations(data.slice(0, 5)));
+						setLoading(false);
+					})
+					.catch(() => {
+						dispatch(setRecommendations({}));
+						setLoading(false);
+					});
 			})
 			.catch((error) => console.log(error));
 	};
@@ -1185,6 +1202,20 @@ const FeedPostCard = ({
 						successText="The post has been added as a company updates."
 					/>
 				)}
+				{/* {connectionSent && !isInvestorAccount && (
+					<AfterSuccessPopup
+						withoutOkButton
+						onClose={() => setConnectionSent(false)}
+						successText="Connection Sent Successfully"
+					/>
+				)}
+				{connectionSent && isInvestorAccount && (
+					<InvestorAfterSuccessPopUp
+						withoutOkButton
+						onClose={() => setConnectionSent(false)}
+						successText="Connection Sent Successfully"
+					/>
+				)} */}
 			</div>
 
 			<Modal
