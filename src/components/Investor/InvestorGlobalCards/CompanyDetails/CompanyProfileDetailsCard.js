@@ -133,7 +133,7 @@ const CompanyProfileDetailsCard = ({
             )}
           </div>
           <div className="left_profile_text flex_content">
-            <h3 className="typography ms-0" style={{ fontSize: "18px" }}>
+            <h3 className="typography ms-0" style={{ fontSize: "18px" , margin:"0.5rem"  }}>
               {onePager.companyName || onePager.company || userDetails?.startUp?.company || userDetails?.investor?.companyName || "No company found"}
             </h3>
             <div className="company__header d-flex flex-column flex-lg-row gap-2 ">
