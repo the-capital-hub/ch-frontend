@@ -39,8 +39,8 @@ const AnalyticsCard = () => {
 					}
 				);
 				const data = await response.json();
-				setUserData(data.data.userData);
-				setPostsData(data.data.allPosts);
+				setUserData(data.data?.userData);
+				setPostsData(data.data?.allPosts);
 				setLoading(false);
 			} catch (error) {
 				console.error("Error fetching user data:", error);
@@ -52,6 +52,7 @@ const AnalyticsCard = () => {
 
 	useEffect(() => {
 		const data = async () => {
+			setLoading(true);
 			const response = await fetch(
 				`${environment.baseUrl}/users/getUserProfileViews/${loggedInUser._id}`,
 				{
@@ -63,8 +64,14 @@ const AnalyticsCard = () => {
 				}
 			);
 			const data = await response.json();
-			// console.log("getUserProfileViews", data);
-			setUserPublicProfileViews(data.data.publicProfileViews);
+			console.log("getUserProfileViews", data);
+			if (data.status === 404) {
+				setUserPublicProfileViews(0);
+				setLoading(false);
+			} else {
+				setUserPublicProfileViews(data?.data?.publicProfileViews);
+				setLoading(false);
+			}
 		};
 		data();
 	}, []);
@@ -87,7 +94,7 @@ const AnalyticsCard = () => {
 	// 	data();
 	// }, []);
 
-	if (loading || !userData || !postsData || !userPublicProfileViews) {
+	if (loading || !userData || !postsData) {
 		return <Spinner />;
 	}
 
@@ -120,25 +127,37 @@ const AnalyticsCard = () => {
 			"7days": {
 				comments: getFilteredPostsComments(postsData, 7),
 				posts: getFilteredPostsCount(postsData, 7),
-				profileViews: userPublicProfileViews || 0,
+				profileViews:
+					userPublicProfileViews && userPublicProfileViews
+						? userPublicProfileViews
+						: 0,
 				followers: connections.length,
 			},
 			"17days": {
 				comments: getFilteredPostsComments(postsData, 17),
 				posts: getFilteredPostsCount(postsData, 17),
-				profileViews: userPublicProfileViews || 0,
+				profileViews:
+					userPublicProfileViews && userPublicProfileViews
+						? userPublicProfileViews
+						: 0,
 				followers: connections.length,
 			},
 			"1month": {
 				comments: getFilteredPostsComments(postsData, 30),
 				posts: getFilteredPostsCount(postsData, 30),
-				profileViews: userPublicProfileViews || 0,
+				profileViews:
+					userPublicProfileViews && userPublicProfileViews
+						? userPublicProfileViews
+						: 0,
 				followers: connections.length,
 			},
 			"1year": {
 				comments: getFilteredPostsComments(postsData, 365),
 				posts: getFilteredPostsCount(postsData, 365),
-				profileViews: userPublicProfileViews || 0,
+				profileViews:
+					userPublicProfileViews && userPublicProfileViews
+						? userPublicProfileViews
+						: 0,
 				followers: connections.length,
 			},
 		};
