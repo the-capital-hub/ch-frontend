@@ -58,6 +58,8 @@ const CreatePostPopUp = ({
 	// const [croppedImage, setCroppedImage] = useState(null);
 	const [pdfThumbnail, setPdfThumbnail] = useState(null);
 
+	const [pollOptions, setPollOptions] = useState([]);
+
 	// for multiple images
 	const [selectedImages, setSelectedImages] = useState([]);
 	const [previewImages, setPreviewImages] = useState([]);
@@ -88,6 +90,11 @@ const CreatePostPopUp = ({
 	const handleCameraButtonClick = () => {
 		cameraInputRef.current.click();
 	};
+
+	const handleAddPollOption = () => {
+		setPollOptions((prevOptions) => [...prevOptions, ""]);
+		console.log("Poll", pollOptions);
+	  };
 
 	const [cropComplete, setCropComplete] = useState(false);
 	const [previewVideo, setPreviewVideo] = useState("");
@@ -273,7 +280,6 @@ const CreatePostPopUp = ({
 			}
 			postData.append("description", postText);
 			postData.append("category", category);
-
 			if (croppedImages.length === 1) {
 				postData.append("image", croppedImages[0]);
 			}
@@ -302,6 +308,12 @@ const CreatePostPopUp = ({
 				postData.append("documentUrl", res.Location);
 				postData.append("documentName", selectedDocument.name);
 				postData.append("image", res.Location);
+			}
+			if (pollOptions.length > 0) {
+				const validOptions = pollOptions.filter(option => option.trim() !== '');
+				validOptions.forEach((option, index) => {
+					postData.append(`pollOptions[${index}]`, option);
+				});
 			}
 
 			postData.append("postType", postType);
@@ -660,7 +672,37 @@ const CreatePostPopUp = ({
 											style={{ color: "var(--d-l-grey)" }}
 										/>
 										<span className="tooltip-text top2">doc</span>
-									</button>
+									</button><div className="poll-section">
+  <h4>Poll</h4>
+  {Array.isArray(pollOptions) && pollOptions.length>0 && pollOptions.map((option, index) => (
+ <div key={index} className="poll-option">
+ <input
+   type="text"
+   value={option}
+   onChange={(e) => {
+	 const newOptions = [...pollOptions];
+	 newOptions[index] = e.target.value;
+	 setPollOptions(newOptions); 
+   }}
+   placeholder={`Option ${index + 1}`}
+ />
+ <button
+   className="remove-poll-option"
+   onClick={() => {
+	 const newOptions = [...pollOptions];
+	 newOptions.splice(index, 1);
+	 setPollOptions(newOptions);  
+   }}
+ >
+   Remove
+ </button>
+</div>
+))}
+
+  <button className="add-poll-option" onClick={handleAddPollOption}>
+    Add Poll Option
+  </button>
+</div>
 								</div>
 								<div className="post_button_container">
 									{posting ? (

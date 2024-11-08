@@ -61,6 +61,7 @@ const Feed = () => {
 		repostLoading: "",
 		resharedPostId: "",
 		isSubscribed: false,
+		pollOptions: "",
 		location: "",
 	});
 	const [newsData, setNewsData] = useState([]);
@@ -73,6 +74,7 @@ const Feed = () => {
 	const [getSavedPostData, setgetSavedPostData] = useState("");
 	const [hasMore, setHasMore] = useState(true);
 	const [page, setPage] = useState(1);
+	const [pollOptions, setPollOptions] = useState("")
 
 	useEffect(() => {
 		if (Number(userVisitCount) <= 1) {
@@ -141,6 +143,49 @@ const Feed = () => {
 				console.log(err);
 			});
 	};
+	const handlePollVote = async (postId, optionId) => {
+		try {
+			const token = localStorage.getItem('accessToken');
+			const response = await fetch(`${baseUrl}/api/posts/vote`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${token}`,
+				},
+				body: JSON.stringify({ 
+					postId, 
+					optionId,
+					userId: loggedInUser._id
+				}),
+			});
+
+			const result = await response.json();
+			
+			if (!response.ok) {
+				throw new Error(result.message || 'Error voting for poll');
+			}
+
+			// Update the posts state while preserving all post data
+			setAllPosts(prevPosts => 
+				prevPosts.map(post => {
+					if (post._id === postId) {
+						return {
+							...post,                    // Keep all existing post data
+							pollOptions: result.data    // Update only the poll options
+						};
+					}
+					return post;
+				})
+			);
+
+			// Return the updated poll options for the FeedPostCard component
+			return result.data;
+
+		} catch (error) {
+			console.error('Error voting for poll:', error);
+			throw error;
+		}
+	};
 
 	const location = useLocation();
 	const queryParams = new URLSearchParams(location.search);
@@ -204,6 +249,8 @@ const Feed = () => {
 						documentUrl={postData.documentUrl}
 						createdAt={postData.createdAt}
 						likes={postData.likes}
+						pollOptions = {postData.pollOptions}
+						handlePollVote={handlePollVote}
 						location={postData.location}
 						resharedPostId={postData.resharedPostId}
 						fetchAllPosts={fetchMorePosts}
@@ -284,6 +331,7 @@ const Feed = () => {
 												likes,
 												_id,
 												resharedPostId,
+												pollOptions,
 											},
 											index
 										) => {
@@ -316,6 +364,9 @@ const Feed = () => {
 														firstName={firstName}
 														lastName={lastName}
 														oneLinkId={oneLinkId}
+														pollOptions={pollOptions}
+														
+														handlePollVote={handlePollVote}
 														video={video}
 														image={image}
 														images={images}
