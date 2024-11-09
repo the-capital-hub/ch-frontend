@@ -32,7 +32,7 @@ const FounderProfile = () => {
 	const [founder, setFounder] = useState(null);
 	const { username } = useParams();
 	console.log("userName", username);
-	console.log("founder", founder);
+	// console.log("founder", founder);
 
 	const toggleTheme = () => {
 		const newTheme = theme === "light" ? "dark" : "light";
@@ -252,7 +252,7 @@ const FounderProfile = () => {
 		  }
 		: dummyData;
 
-	console.log("founderData", founderData);
+	// console.log("founderData", founderData);
 
 	const renderActivityContent = () => {
 		if (activeTab === "posts") {
