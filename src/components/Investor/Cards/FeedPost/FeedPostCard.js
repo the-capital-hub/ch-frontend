@@ -1012,15 +1012,15 @@ const FeedPostCard = ({
 								>
 									<div className="mt-1">
 										<div className="comment_container mb-1  border-top border-bottom">
-											<div className="logo">
-												<img
-													src={loggedInUser.profilePicture}
-													alt="Logo"
-													className="border border-light"
-												/>
-											</div>
+											{/* <div className="logo"> */}
+											<img
+												src={loggedInUser.profilePicture}
+												alt="Logo"
+												// className="border border-light"
+											/>
+											{/* </div> */}
 											<section className="input_and_logo_section">
-												<div className="input_box px-1">
+												<div className="input_box">
 													<input
 														type="text"
 														placeholder="Add a comment"
@@ -1034,14 +1034,21 @@ const FeedPostCard = ({
 															}
 														}}
 													/>
+													<button
+														type="button"
+														className="btn btn-startup comment-post-btn"
+														onClick={() => sendComment()}
+													>
+														Post
+													</button>
 												</div>
-												<button
+												{/* <button
 													type="button"
 													className="btn btn-startup comment-post-btn"
 													onClick={() => sendComment()}
 												>
 													Post
-												</button>
+												</button> */}
 											</section>
 										</div>
 										{comments?.length ? (
@@ -1061,7 +1068,7 @@ const FeedPostCard = ({
 												className="single-comment row m-0 mt-2"
 												key={val._id}
 											>
-												<div className="img_container col-2 px-2">
+												{/* <div className="img_container col-2 px-2">
 													<Link
 														to={`/user/${
 															val.user?.firstName?.toLowerCase() +
@@ -1082,17 +1089,16 @@ const FeedPostCard = ({
 															className="w-12 h-12 rounded-circle"
 														/>
 													</Link>
-												</div>
+												</div> */}
 												<div className="col-10 p-0 flex-grow-1">
-													<div className="comment-details  rounded-3 p-2 p-lg-3 d-flex flex-column">
-														<header className="d-flex justify-content-between align-items-center p-0">
+													<div className="comment-details  rounded-3 p-2 p-lg-3 d-flex flex align-items-center">
+														<div className="img_container col-2 px-2">
 															<Link
 																to={`/user/${
-																	val.user?.firstName.toLowerCase() +
+																	val.user?.firstName?.toLowerCase() +
 																	"-" +
-																	val.user?.lastName.toLowerCase()
+																	val.user?.lastName?.toLowerCase()
 																}/${val.user.oneLinkId}`}
-																className="text-decoration-none  fs-sm"
 																style={{
 																	pointerEvents: `${
 																		loggedInUser._id === val.user._id
@@ -1101,21 +1107,50 @@ const FeedPostCard = ({
 																	}`,
 																}}
 															>
-																<h6 className="fs-sm m-0">
-																	{val.user.firstName + " " + val.user.lastName}
-																</h6>
+																<img
+																	src={val.user.profilePicture || ""}
+																	alt="Connection"
+																	className="w-12 h-12 rounded-circle"
+																/>
 															</Link>
-															<span className="days_time fs-xs">
-																<TimeAgo datetime={val.createdAt} locale="" />
+														</div>
+														<div className="d-flex flex-column">
+															<header className="d-flex justify-content-between align-items-center p-0">
+																<Link
+																	to={`/user/${
+																		val.user?.firstName.toLowerCase() +
+																		"-" +
+																		val.user?.lastName.toLowerCase()
+																	}/${val.user.oneLinkId}`}
+																	className="text-decoration-none  fs-sm"
+																	style={{
+																		pointerEvents: `${
+																			loggedInUser._id === val.user._id
+																				? "none"
+																				: "all"
+																		}`,
+																	}}
+																>
+																	<h6 className="fs-sm m-0">
+																		{val.user.firstName +
+																			" " +
+																			val.user.lastName}
+																	</h6>
+																</Link>
+																<span className="days_time fs-xs">
+																	<TimeAgo datetime={val.createdAt} locale="" />
+																</span>
+															</header>
+															<span className=" fs-sm m-0">
+																{val.user?.designation}
+																{" , "}{" "}
+																{val.user?.startUp?.company ||
+																	val.user?.investor?.companyName}
 															</span>
-														</header>
-														<span className=" fs-sm m-0">
-															{val.user?.designation}
-															{" , "}{" "}
-															{val.user?.startUp?.company ||
-																val.user?.investor?.companyName}
-														</span>
-														<p className="comment m-0 fs-xs mt-1">{val.text}</p>
+															<p className="comment m-0 fs-xs mt-1">
+																{val.text}
+															</p>
+														</div>
 													</div>
 													<div className="actions d-flex gap-2 px-1 align-items-center justify-content-between">
 														<div>

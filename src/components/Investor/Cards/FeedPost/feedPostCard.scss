@@ -54,6 +54,10 @@
 			flex-direction: column;
 
 			.para_container_text {
+				background: rgba(52, 55, 68, 0.2);
+				padding: 10px 20px;
+				border-radius: 16px;
+				margin-bottom: 15px;
 				p {
 					flex-shrink: 0;
 					// border-radius: var(--border-radius);
@@ -62,10 +66,13 @@
 					// color: #373737;
 					color: var(--d-l-grey);
 					font-size: 0.85rem;
-					font-family: Poppins;
-					font-weight: 500;
-					line-height: 120%;
-					letter-spacing: 0.42px;
+					font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+						Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+						sans-serif;
+					// font-family: Outfit;
+					font-weight: 400;
+					line-height: 150%;
+					letter-spacing: 0.5px;
 					// padding: 10px 5px;
 					// padding: 10px 5px 0 5px;
 					// background: var(--white-to-dgrey);
@@ -259,7 +266,7 @@
 
 	.box {
 		// background-color: #fff;
-		padding: 10px;
+		padding: 20px;
 		border-radius: var(--border-radius);
 		// background: #fff;
 		background-color: var(--white-to-grey);
@@ -267,32 +274,36 @@
 	}
 	.comment_container {
 		display: flex;
-		justify-content: center;
+		// justify-content: center;
 		align-items: center;
 		height: 100px; /* Adjust the height as needed */
-		.logo {
-			img {
-				width: 46px;
-				height: 46px;
-				border-radius: 50%;
-				margin-right: 10px;
-				object-fit: cover;
-			}
+		// .logo {
+		img {
+			width: 65px !important;
+			height: 65px;
+			border-radius: 50%;
+			// margin-right: 10px;
+			object-fit: cover;
+			border: 1px solid rgba(202, 202, 202, 0.2);
 		}
+		// }
 
 		.input_and_logo_section {
 			display: flex;
 			align-items: center;
 			padding: 10px;
-			width: 80%;
+			padding-right: 0;
+			width: 100%;
 			gap: 0.5rem;
 
 			.input_box {
 				display: flex;
 				align-items: center;
 				width: 100%;
+				padding: 0 10px;
 				border-radius: 170px;
-				border: 1px solid #cacaca;
+				// border: 1px solid #cacaca;
+				border: 1px solid rgba(202, 202, 202, 0.2);
 				// background: #fcfcfc;
 				background-color: var(--bs-light);
 				height: 54px;
@@ -348,15 +359,17 @@
 				}
 			}
 			.comment-post-btn {
-				border-radius: 12px;
+				border-radius: 30px;
 			}
 		}
 	}
 
 	.single-comment {
 		.comment-details {
-			background: var(--bs-light);
+			// background: var(--bs-light);
+			background: rgba(30, 30, 30, 1);
 			color: var(--d-l-grey);
+			border-radius: 20px;
 			h6 {
 				color: var(--d-l-grey);
 			}
