@@ -63,6 +63,8 @@ const FeedPostCard = ({
 	location,
 	lastName,
 	oneLinkId,
+	pollOptions,
+	handlePollVote,
 	video,
 	image,
 	images,
@@ -110,6 +112,23 @@ const FeedPostCard = ({
 	const handleClose = () => setLikeModal(false);
 	// const { pathname } = useLocation();
 	// const isInvestorAccount = pathname.includes("/investor");
+
+	// Initialize localPollOptions with pollOptions
+	const [localPollOptions, setLocalPollOptions] = useState(pollOptions || []);
+	const [isVoting, setIsVoting] = useState(false);
+
+	// Log state changes for debugging
+	useEffect(() => {
+		console.log('Poll Options changed:', pollOptions);
+		console.log('Local Poll Options:', localPollOptions);
+	}, [pollOptions, localPollOptions]);
+
+	// Update localPollOptions when pollOptions prop changes
+	useEffect(() => {
+		if (pollOptions && JSON.stringify(pollOptions) !== JSON.stringify(localPollOptions)) {
+			setLocalPollOptions(pollOptions);
+		}
+	}, [pollOptions]);
 
 	const handleConnect = (userId) => {
 		sentConnectionRequest(loggedInUser._id, userId)
@@ -384,6 +403,7 @@ const FeedPostCard = ({
 	const [filingReport, setFilingReport] = useState(false);
 	const [showRepostOptions, setShowRepostOptions] = useState(false);
 
+
 	const repostContainerRef = useRef(null);
 
 	const reportSubmitHandler = () => {
@@ -499,6 +519,35 @@ const FeedPostCard = ({
 	// 	userId,
 	// 	location,
 	// ]);
+
+	const handleVoteClick = async (optionId) => {
+		try {
+			const hasVoted = localPollOptions.find(opt => 
+				opt._id === optionId && opt.votes.includes(loggedInUser._id)
+			);
+
+			// Optimistic update
+			setLocalPollOptions(current =>
+				current.map(opt => {
+					if (opt._id === optionId) {
+						const newVotes = hasVoted
+							? opt.votes.filter(id => id !== loggedInUser._id)
+							: [...opt.votes, loggedInUser._id];
+						return { ...opt, votes: newVotes };
+					}
+					return opt;
+				})
+			);
+
+			// Call API and update with actual data
+			const updatedPollOptions = await handlePollVote(postId, optionId);
+			setLocalPollOptions(updatedPollOptions);
+
+		} catch (error) {
+			console.error('Error handling vote:', error);
+			setLocalPollOptions(pollOptions);
+		}
+	};
 
 	return (
 		<>
@@ -757,6 +806,55 @@ const FeedPostCard = ({
 								</video>
 							</span>
 						)}
+										{localPollOptions && localPollOptions.length > 0 && (
+				<div className="poll-section">
+					{localPollOptions.map((option) => {
+						const hasVoted = option.votes?.includes(loggedInUser._id);
+						const totalVotes = localPollOptions.reduce((sum, opt) => 
+							sum + (opt.votes?.length || 0), 0
+						);
+						const votePercentage = totalVotes > 0 
+							? Math.round((option.votes?.length || 0) * 100 / totalVotes) 
+							: 0;
+
+						return (
+							<div key={option._id} className="poll-option">
+								<div 
+									className="poll-option-content"
+									style={{
+										position: 'relative',
+										overflow: 'hidden'
+									}}
+								>
+									<div 
+										className="progress-bar"
+										style={{
+											width: `${votePercentage}%`,
+											position: 'absolute',
+											left: 0,
+											top: 0,
+											height: '100%',
+											background: 'rgba(253, 89, 1, 0.1)',
+											transition: 'width 0.3s ease'
+										}}
+									/>
+									<span className="option-text">{option.option}</span>
+									<span className="vote-count">{option.votes?.length || 0} votes</span>
+								</div>
+								<button
+									className={`vote-button ${hasVoted ? 'voted' : ''}`}
+									onClick={(e) => {
+										e.stopPropagation();
+										handleVoteClick(option._id);
+									}}
+								>
+									{hasVoted ? 'Voted' : 'Vote'}
+								</button>
+							</div>
+						);
+					})}
+				</div>
+				)}
 						{resharedPostId && (
 							<FeedPostCard
 								repostPreview
@@ -768,6 +866,7 @@ const FeedPostCard = ({
 								firstName={resharedPostId?.user?.firstName}
 								lastName={resharedPostId?.user?.lastName}
 								oneLinkId={resharedPostId?.user?.oneLinkId}
+								pollOptions={resharedPostId?.pollOptions}
 								video={resharedPostId?.video}
 								image={resharedPostId?.image}
 								createdAt={resharedPostId?.createdAt}

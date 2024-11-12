@@ -79,7 +79,9 @@ function Home() {
     response: "",
     repostLoading: "",
     resharedPostId: "",
-    isSubscribed:false
+    isSubscribed:false,
+    pollOptions: "",
+    location: "",
   });
   const dispatch = useDispatch();
   const isInvestorCreatePostModalOpen = useSelector(
@@ -203,6 +205,50 @@ function Home() {
     fetchNews();
 }, []);
 
+  const handlePollVote = async (postId, optionId) => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      const response = await fetch(`${baseUrl}/api/posts/vote`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ 
+          postId, 
+          optionId,
+          userId: loggedInUserId
+        }),
+      });
+
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.message || 'Error voting for poll');
+      }
+
+      // Update the posts state while preserving all post data
+      setAllPosts(prevPosts => 
+        prevPosts.map(post => {
+          if (post._id === postId) {
+            return {
+              ...post,                    // Keep all existing post data
+              pollOptions: result.data    // Update only the poll options
+            };
+          }
+          return post;
+        })
+      );
+
+      // Return the updated poll options for the InvestorFeedPostCard component
+      return result.data;
+
+    } catch (error) {
+      console.error('Error voting for poll:', error);
+      throw error;
+    }
+  };
+
   return (
     <MaxWidthWrapper>
       <div className="investor_feed_container">
@@ -236,6 +282,9 @@ function Home() {
             deletePostFilterData={deletePostFilterData}
             setPostData={setPostData}
             isSubscribed = {postData.isSubscribed}
+            pollOptions={postData.pollOptions}
+            handlePollVote={handlePollVote}
+            location={postData.location}
           />
         ) : (
           <div className="main_content">
@@ -276,80 +325,84 @@ function Home() {
                     </p>
                   }
                 >
-                  {allPosts?.map((post, index) => {
-                    if (!post || !post.user) {
-                      return null;
-                    }
+                  {allPosts?.map(({
+                    description,
+                    user,
+                    video,
+                    image,
+                    images,
+                    documentUrl,
+                    documentName,
+                    createdAt,
+                    likes,
+                    _id,
+                    resharedPostId,
+                    pollOptions,
+                  }, index) => {
+                    if (!user) return null;
+
                     const {
-                      description,
-                      user: {
-                        firstName,
-                        lastName,
-                        designation,
-                        profilePicture,
-                        _id: userId,
-                        startUp,
-                        investor,
-                        oneLinkId,
-                        isSubscribed
-                      },
-                      video,
-                      image,
-                      documentUrl,
-                      documentName,
-                      createdAt,
-                      likes,
-                      _id,
-                      resharedPostId,
-                    } = post;
+                      firstName,
+                      lastName,
+                      location,
+                      designation,
+                      profilePicture,
+                      _id: userId,
+                      startUp,
+                      investor,
+                      oneLinkId,
+                      isSubscribed,
+                    } = user;
+
                     return (
-                      <>
-                            <React.Fragment key={_id}>
-                      <InvestorFeedPostCard
-                        key={_id} // Ensure this is a unique key
-                        userId={userId}
-                        postId={_id}
-                        designation={designation}
-                        profilePicture={profilePicture}
-                        description={description}
-                        startUpCompanyName={startUp}
-                        investorCompanyName={investor}
-                        firstName={firstName}
-                        lastName={lastName}
-                        oneLinkId={oneLinkId}
-                        video={video}
-                        image={image}
-                        documentName={documentName}
-                        documentUrl={documentUrl}
-                        createdAt={createdAt}
-                        likes={likes}
-                        fetchAllPosts={fetchMorePosts}
-                        response={getSavedPostData}
-                        repostWithToughts={(resharedPostId) => {
-                          setRepostingPostId(resharedPostId);
-                          openPopup();
-                        }}
-                        repostInstantly={repostInstantly}
-                        repostLoading={repostLoading}
-                        resharedPostId={resharedPostId}
-                        deletePostFilterData={deletePostFilterData}
-                        setPostData={setPostData}
-                        isSubscribed={isSubscribed||false}
-                      />
-                                      {(index + 1) % 3 === 0 && (
-              <NewsCard 
-              title={newsData[Math.floor(index)]?.title} 
-              description={newsData[Math.floor(index)]?.description} 
-              url={newsData[Math.floor(index)]?.url} 
-              urlToImage={newsData[Math.floor(index)]?.urlToImage} 
-              publishedAt={newsData[Math.floor(index)]?.publishedAt} 
-            />
-            )}
-                            </React.Fragment>
-                        </>
-                      );
-                    }
-                  )}
+                      <React.Fragment key={_id}>
+                        <InvestorFeedPostCard
+                          key={_id}
+                          userId={userId}
+                          postId={_id}
+                          designation={designation}
+                          startUpCompanyName={startUp}
+                          investorCompanyName={investor}
+                          profilePicture={profilePicture}
+                          description={description}
+                          firstName={firstName}
+                          lastName={lastName}
+                          oneLinkId={oneLinkId}
+                          pollOptions={pollOptions}
+                          handlePollVote={handlePollVote}
+                          video={video}
+                          image={image}
+                          images={images}
+                          location={location}
+                          documentName={documentName}
+                          documentUrl={documentUrl}
+                          createdAt={createdAt}
+                          likes={likes}
+                          resharedPostId={resharedPostId}
+                          fetchAllPosts={fetchMorePosts}
+                          response={getSavedPostData}
+                          repostWithToughts={(resharedPostId) => {
+                            setRepostingPostId(resharedPostId);
+                            setPopupOpen(true);
+                          }}
+                          repostInstantly={repostInstantly}
+                          repostLoading={repostLoading}
+                          deletePostFilterData={deletePostFilterData}
+                          setPostData={setPostData}
+                          isSubscribed={isSubscribed}
+                        />
+                        {(index + 1) % 3 === 0 && (
+                          <NewsCard 
+                            title={newsData[Math.floor(index)]?.title} 
+                            description={newsData[Math.floor(index)]?.description} 
+                            url={newsData[Math.floor(index)]?.url} 
+                            urlToImage={newsData[Math.floor(index)]?.urlToImage} 
+                            publishedAt={newsData[Math.floor(index)]?.publishedAt} 
+                          />
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
                   
                 </InfiniteScroll>
 
