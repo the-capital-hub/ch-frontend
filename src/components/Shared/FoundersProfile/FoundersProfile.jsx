@@ -16,8 +16,8 @@ import {
 	FaRegComment,
 	FaHeart,
 	FaShare,
-	// FaUser,
 	FaArrowCircleLeft,
+	FaClock,
 } from "react-icons/fa";
 import UserPic from "../../../Images/UserPic.jpg";
 import AIPoster from "../../../Images/AIPoster.jpg";
@@ -31,6 +31,7 @@ const FounderProfile = () => {
 	const [activeInterestTab, setActiveInterestTab] = useState("Top Voices");
 	const [founder, setFounder] = useState(null);
 	const { username } = useParams();
+	const navigate = useNavigate();
 	console.log("userName", username);
 	// console.log("founder", founder);
 
@@ -197,6 +198,33 @@ const FounderProfile = () => {
 		},
 	};
 
+	const meetingTypes = [
+		{
+			id: "673196cba3d46eeaf9647b8c",
+			title: "Discovery Call",
+			duration: "30 mins",
+			type: "Public",
+			description: "Let's discuss your project and see how we can collaborate.",
+			bookings: 1,
+		},
+		{
+			id: "773196cba3d46eeaf9647b8d",
+			title: "1:1 meeting",
+			duration: "30 mins",
+			type: "Public",
+			description: "One-on-one discussion about specific topics or concerns.",
+			bookings: 2,
+		},
+		{
+			id: "873196cba3d46eeaf9647b8e",
+			title: "Coffee Chat",
+			duration: "15 mins",
+			type: "Public",
+			description: "Quick informal chat to get to know each other better.",
+			bookings: 0,
+		},
+	];
+
 	const founderData = founder
 		? {
 				name: founder.firstName + " " + founder.lastName || dummyData.name,
@@ -310,6 +338,10 @@ const FounderProfile = () => {
 		);
 	};
 
+	const handleMeetingClick = (meetingId) => {
+		navigate(`/meeting/schedule/${username}/${meetingId}`);
+	};
+
 	// users/getUserByUserName  -> search with userName
 
 	return (
@@ -394,6 +426,40 @@ const FounderProfile = () => {
 									<p className="role">{exp.role}</p>
 									<p className="duration">{exp.duration}</p>
 									<p className="description">{exp.description}</p>
+								</div>
+							))}
+						</div>
+					</section>
+
+					{/* Meetings section */}
+					<section className="profile-section meeting-section">
+						<h2>
+							<FaCalendarAlt /> Schedule a Meeting
+						</h2>
+						<div className="meeting-cards">
+							{meetingTypes.map((meeting) => (
+								<div
+									key={meeting.id}
+									className="meeting-card"
+									onClick={() => handleMeetingClick(meeting.id)}
+								>
+									<div className="meeting-card-header">
+										<h3>{meeting.title}</h3>
+										<span className="meeting-type">{meeting.type}</span>
+									</div>
+									<div className="meeting-card-content">
+										<div className="meeting-duration">
+											<FaClock />
+											<span>{meeting.duration}</span>
+										</div>
+										<p>{meeting.description}</p>
+									</div>
+									<div className="meeting-card-footer">
+										<span className="bookings-count">
+											{meeting.bookings}{" "}
+											{meeting.bookings === 1 ? "Booking" : "Bookings"}
+										</span>
+									</div>
 								</div>
 							))}
 						</div>

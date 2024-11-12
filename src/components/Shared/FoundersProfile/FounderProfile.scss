@@ -822,3 +822,95 @@ a:focus {
 		}
 	}
 }
+
+// Add these styles to your existing FounderProfile.scss file
+
+.meeting-section {
+	margin: 2rem 0;
+
+	.meeting-cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 1.5rem;
+		margin-top: 1rem;
+	}
+
+	.meeting-card {
+		background: var(--card-bg, #fff);
+		border: 1px solid var(--border-color, #e1e4e8);
+		border-radius: 8px;
+		padding: 1.5rem;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+		&:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		.meeting-card-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 1rem;
+
+			h3 {
+				margin: 0;
+				font-size: 1.2rem;
+				color: var(--text-primary, #24292e);
+			}
+
+			.meeting-type {
+				font-size: 0.875rem;
+				color: var(--text-secondary, #586069);
+				background: var(--tag-bg, #f6f8fa);
+				padding: 0.25rem 0.75rem;
+				border-radius: 12px;
+			}
+		}
+
+		.meeting-card-content {
+			.meeting-duration {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				color: var(--text-secondary, #586069);
+				margin-bottom: 0.75rem;
+
+				svg {
+					font-size: 1rem;
+				}
+			}
+
+			p {
+				color: var(--text-secondary, #586069);
+				font-size: 0.9rem;
+				line-height: 1.5;
+				margin: 0;
+			}
+		}
+
+		.meeting-card-footer {
+			margin-top: 1rem;
+			padding-top: 1rem;
+			border-top: 1px solid var(--border-color, #e1e4e8);
+
+			.bookings-count {
+				font-size: 0.875rem;
+				color: var(--text-secondary, #586069);
+			}
+		}
+	}
+}
+
+Dark theme support
+[data-theme="dark"] {
+	.meeting-card {
+		--card-bg: #1a1a1a;
+		--border-color: #2d2d2d;
+		--text-primary: #ffffff;
+		--text-secondary: #a0a0a0;
+		--tag-bg: #2d2d2d;
+	}
+}

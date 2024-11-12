@@ -460,6 +460,7 @@ const Login = () => {
 	};
 
 	const handleGoogleLoginSuccess = (credentialResponse) => {
+		// console.log("Google Sign-In successful. Credential:", credentialResponse);
 		googleLoginAPI(credentialResponse.credential).then((response) => {
 			if (response.status === 200) {
 				// console.log("Google Sign-In successful. Response:", response);
@@ -544,75 +545,71 @@ const Login = () => {
 	// }
 
 	return (
-		<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-			<div className="register_container">
-				{/* Left side colomn */}
-				<div className="register_container_left register_heading">
-					<Link to="/">
-						<img
-							className="backArrow"
-							src={backArrow}
-							style={{ cursor: "pointer", height: 40, width: 40 }}
-							alt="arrow_back"
-						/>
-					</Link>
+		// <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+		<div className="register_container">
+			{/* Left side colomn */}
+			<div className="register_container_left register_heading">
+				<Link to="/">
 					<img
-						src={RegisterIcon}
-						alt="register"
-						className="img-fluid"
-						loading="eager"
+						className="backArrow"
+						src={backArrow}
+						style={{ cursor: "pointer", height: 40, width: 40 }}
+						alt="arrow_back"
 					/>
-					<h2 className="text-4xl font-bold mb-4">New Here ?</h2>
-					<p className="text-xl mb-8">Create a account here</p>
-					<Link
-						// className="create_account_btn"
-						className={`create_account_btn ${
-							!isInvestorSelected ? "startup" : "investor"
-						} `}
-						to={"/signup"}
-					>
-						Create account
+				</Link>
+				<img
+					src={RegisterIcon}
+					alt="register"
+					className="img-fluid"
+					loading="eager"
+				/>
+				<h2 className="text-4xl font-bold mb-4">New Here ?</h2>
+				<p className="text-xl mb-8">Create a account here</p>
+				<Link
+					// className="create_account_btn"
+					className={`create_account_btn ${
+						!isInvestorSelected ? "startup" : "investor"
+					} `}
+					to={"/signup"}
+				>
+					Create account
+				</Link>
+			</div>
+
+			{/* Right side colomn */}
+			<div className="register_container_right register_heading_right">
+				{!isMobileApp && (
+					<Link className="d-md-none" to="/">
+						<img className="backArrow" src={backArrow} alt="arrow_back" />
 					</Link>
+				)}
+				<span className="welcome w-100 text-center">Welcome back!</span>
+
+				<div className="login_buttons_row d-flex flex-column align-items-center gap-3">
+					<h1 className="mt-5">Login to your account</h1>
+					<div className="d-flex flex-row justify-content-between align-items-center gap-4 gap-sm-5">
+						<Link to="">
+							<button
+								className={`login_btn ${!isInvestorSelected ? "startup" : ""} `}
+								onClick={() => setIsInvestorSelected(false)}
+								style={{ width: 225, height: 41.6 }}
+							>
+								Start Up
+							</button>
+						</Link>
+						<Link to="">
+							<button
+								className={`login_btn ${isInvestorSelected ? "investor" : ""} `}
+								onClick={() => setIsInvestorSelected(true)}
+								style={{ width: 225, height: 41.6 }}
+							>
+								Investor
+							</button>
+						</Link>
+					</div>
 				</div>
 
-				{/* Right side colomn */}
-				<div className="register_container_right register_heading_right">
-					{!isMobileApp && (
-						<Link className="d-md-none" to="/">
-							<img className="backArrow" src={backArrow} alt="arrow_back" />
-						</Link>
-					)}
-					<span className="welcome w-100 text-center">Welcome back!</span>
-
-					<div className="login_buttons_row d-flex flex-column align-items-center gap-3">
-						<h1 className="mt-5">Login to your account</h1>
-						<div className="d-flex flex-row justify-content-between align-items-center gap-4 gap-sm-5">
-							<Link to="">
-								<button
-									className={`login_btn ${
-										!isInvestorSelected ? "startup" : ""
-									} `}
-									onClick={() => setIsInvestorSelected(false)}
-									style={{ width: 225, height: 41.6 }}
-								>
-									Start Up
-								</button>
-							</Link>
-							<Link to="">
-								<button
-									className={`login_btn ${
-										isInvestorSelected ? "investor" : ""
-									} `}
-									onClick={() => setIsInvestorSelected(true)}
-									style={{ width: 225, height: 41.6 }}
-								>
-									Investor
-								</button>
-							</Link>
-						</div>
-					</div>
-
-					{/* <h3 className="already_have_account" style={{ paddingTop: "0.5rem" }}>
+				{/* <h3 className="already_have_account" style={{ paddingTop: "0.5rem" }}>
 						Don't have an account?{" "}
 						<Link
 							to={"/signup"}
@@ -621,260 +618,260 @@ const Login = () => {
 							Create account
 						</Link>
 					</h3> */}
-					<p className="text-center">Login using social networks</p>
+				<p className="text-center">Login using social networks</p>
 
-					<div
-						className="flex justify-center space-x-4"
-						style={{ display: "flex", gap: 10 }}
-					>
-						<GoogleLogin
-							onSuccess={handleGoogleLoginSuccess}
-							onError={handleGoogleLoginError}
-							useOneTap
-						/>
-						<LinkedInLogin
-							isInvestorSelected={isInvestorSelected}
-							setIsLoginSuccessfull={setIsLoginSuccessfull}
-							setIsInvestorSelected={setIsInvestorSelected}
-							setError={setError}
-						/>
-						{/* <button className="p-2 bg-white border border-gray-300 rounded-full">
+				<div
+					className="flex justify-center space-x-4"
+					style={{ display: "flex", gap: 10 }}
+				>
+					<GoogleLogin
+						onSuccess={handleGoogleLoginSuccess}
+						onError={handleGoogleLoginError}
+						useOneTap
+					/>
+					<LinkedInLogin
+						isInvestorSelected={isInvestorSelected}
+						setIsLoginSuccessfull={setIsLoginSuccessfull}
+						setIsInvestorSelected={setIsInvestorSelected}
+						setError={setError}
+					/>
+					{/* <button className="p-2 bg-white border border-gray-300 rounded-full">
 							<img src={GIcon} alt="Google" width={24} height={24} />
 						</button> */}
-						{/* <button className="p-2 bg-white border border-gray-300 rounded-full">
+					{/* <button className="p-2 bg-white border border-gray-300 rounded-full">
 							<img src={FIcon} alt="Facebook" width={24} height={24} />
 						</button> */}
-					</div>
+				</div>
 
-					<div className="flex items-center">
-						<div className="flex-grow border-t border-gray-300"></div>
-						<span className="flex-shrink mx-4 text-gray-600">Or</span>
-						<div className="flex-grow border-t border-gray-300"></div>
-					</div>
+				<div className="flex items-center">
+					<div className="flex-grow border-t border-gray-300"></div>
+					<span className="flex-shrink mx-4 text-gray-600">Or</span>
+					<div className="flex-grow border-t border-gray-300"></div>
+				</div>
 
-					<div className="d-flex justify-content-center mb-3">
-						<button className="login_btn" onClick={toggleLoginMethod}>
-							{isMobileLogin ? "Use Username/Email" : "Use Mobile Number"}
-						</button>
-					</div>
+				<div className="d-flex justify-content-center mb-3">
+					<button className="login_btn" onClick={toggleLoginMethod}>
+						{isMobileLogin ? "Use Username/Email" : "Use Mobile Number"}
+					</button>
+				</div>
 
-					{!show && (
-						<form
-							onSubmit={handleFormSubmit}
-							className="d-flex flex-column gap-2 login-form-mobile"
-							// style={{ width: "60%" }}
-						>
-							{isMobileLogin ? (
-								<div className="row">
-									<div className="col-md-12 col input-container">
-										<label htmlFor="mobile">Mobile Number</label>
-										<PhoneInput
-											placeholder="Mobile Number"
-											className="form-control plato_form_control rounded-3"
-											defaultCountry="IN"
-											countryCallingCodeEditable={false}
-											initialValueFormat="national"
-											autoComplete="off"
-											onChange={(e) => {
-												handleInputChange(e, "phoneNumber");
-											}}
-											value={inputValues.phoneNumber}
-											countrySelectProps={{
-												native: true,
-												style: { display: "none" },
-											}}
-											international={false}
-										/>
-									</div>
+				{!show && (
+					<form
+						onSubmit={handleFormSubmit}
+						className="d-flex flex-column gap-2 login-form-mobile"
+						// style={{ width: "60%" }}
+					>
+						{isMobileLogin ? (
+							<div className="row">
+								<div className="col-md-12 col input-container">
+									<label htmlFor="mobile">Mobile Number</label>
+									<PhoneInput
+										placeholder="Mobile Number"
+										className="form-control plato_form_control rounded-3"
+										defaultCountry="IN"
+										countryCallingCodeEditable={false}
+										initialValueFormat="national"
+										autoComplete="off"
+										onChange={(e) => {
+											handleInputChange(e, "phoneNumber");
+										}}
+										value={inputValues.phoneNumber}
+										countrySelectProps={{
+											native: true,
+											style: { display: "none" },
+										}}
+										international={false}
+									/>
 								</div>
-							) : (
-								<>
-									{showResetPopUp ? (
-										<div>
-											<div className="row">
-												<div className="col-md-12 col input-container">
-													{/* <label htmlFor="text">Username/Email</label> */}
-													<input
-														type="text"
-														className="form-control mb-3"
-														placeholder="Enter your email"
-														value={inputValues.usernameOrEmail}
-														onChange={(e) => {
-															const email = e.target.value;
-															setInputValues((prev) => ({
-																...prev,
-																usernameOrEmail: email,
-															}));
-														}}
-													/>
-												</div>
-											</div>
-											<div className="row">
-												<div className="col-md-12 col input-container">
-													{/* <label htmlFor="password">Password</label> */}
-													<input
-														type="password"
-														className="form-control mb-3"
-														placeholder="Enter your new password"
-														value={inputValues.password}
-														onChange={(e) => {
-															const password = e.target.value;
-															setInputValues((prev) => ({
-																...prev,
-																password: password,
-															}));
-															if (!validatePassword(password)) {
-																setError(
-																	"Invalid Password. Password cannot contain spaces"
-																);
-															} else {
-																setError("");
-															}
-														}}
-													/>
-												</div>
-											</div>
-											<div
-												className="d-flex"
-												style={{
-													alignItems: "center",
-													justifyContent: "center",
-													width: "100%",
-												}}
-											>
-												<div
-													style={{
-														background:
-															isInvestorSelected === "investor"
-																? "#d3f36b"
-																: "#fd5901",
-														border: "none",
-														padding: "5px 10px",
-														borderRadius: "15px",
-														color: "#fff",
-														cursor: "pointer",
+							</div>
+						) : (
+							<>
+								{showResetPopUp ? (
+									<div>
+										<div className="row">
+											<div className="col-md-12 col input-container">
+												{/* <label htmlFor="text">Username/Email</label> */}
+												<input
+													type="text"
+													className="form-control mb-3"
+													placeholder="Enter your email"
+													value={inputValues.usernameOrEmail}
+													onChange={(e) => {
+														const email = e.target.value;
+														setInputValues((prev) => ({
+															...prev,
+															usernameOrEmail: email,
+														}));
 													}}
-													onClick={restPassword}
-												>
-													Reset Password
-												</div>
+												/>
 											</div>
 										</div>
-									) : (
-										<>
-											<div className="row">
-												<div className="col-md-12 col input-container">
-													{/* <label htmlFor="text">Username/Email</label> */}
-													<input
-														placeholder="Username or Email"
-														className="form-control plato_form_control rounded-3"
-														onChange={(e) => {
-															const email = e.target.value;
-															setInputValues((prev) => ({
-																...prev,
-																usernameOrEmail: email,
-															}));
-														}}
-														value={inputValues?.usernameOrEmail}
-														name="phoneNumber"
-													/>
-												</div>
+										<div className="row">
+											<div className="col-md-12 col input-container">
+												{/* <label htmlFor="password">Password</label> */}
+												<input
+													type="password"
+													className="form-control mb-3"
+													placeholder="Enter your new password"
+													value={inputValues.password}
+													onChange={(e) => {
+														const password = e.target.value;
+														setInputValues((prev) => ({
+															...prev,
+															password: password,
+														}));
+														if (!validatePassword(password)) {
+															setError(
+																"Invalid Password. Password cannot contain spaces"
+															);
+														} else {
+															setError("");
+														}
+													}}
+												/>
 											</div>
-											<div className="row">
-												<div className="col-md-12">
-													{/* <label htmlFor="password">Password</label> */}
-													<input
-														type="password"
-														id="password"
-														name="password"
-														className="form-control rounded-3"
-														required
-														placeholder="Password"
-														onChange={(e) => {
-															const password = e.target.value;
-															setInputValues((prev) => ({
-																...prev,
-																password: password,
-															}));
-															if (!validatePassword(password)) {
-																setError(
-																	"Invalid Password. Password cannot contain spaces"
-																);
-															} else {
-																setError("");
-															}
-														}}
-														value={inputValues?.password}
-													/>
-												</div>
+										</div>
+										<div
+											className="d-flex"
+											style={{
+												alignItems: "center",
+												justifyContent: "center",
+												width: "100%",
+											}}
+										>
+											<div
+												style={{
+													background:
+														isInvestorSelected === "investor"
+															? "#d3f36b"
+															: "#fd5901",
+													border: "none",
+													padding: "5px 10px",
+													borderRadius: "15px",
+													color: "#fff",
+													cursor: "pointer",
+												}}
+												onClick={restPassword}
+											>
+												Reset Password
 											</div>
-										</>
-									)}
-								</>
-							)}
-
-							<div className="row mt-2 staySignedIn-fp">
-								<div className="d-flex gap-2 p-2">
-									<input
-										type="checkbox"
-										id="staySignedInCheckbox"
-										checked={staySignedIn}
-										onChange={handleCheckboxChange}
-									/>
-									<label htmlFor="staySignedInCheckbox">Stay signed in</label>
-								</div>
-								{!isMobileLogin && (
-									<div className="col-md-12">
-										<Link to={""} onClick={() => setShowResetPopUp(true)}>
-											Forgot Password?
-										</Link>
+										</div>
 									</div>
+								) : (
+									<>
+										<div className="row">
+											<div className="col-md-12 col input-container">
+												{/* <label htmlFor="text">Username/Email</label> */}
+												<input
+													placeholder="Username or Email"
+													className="form-control plato_form_control rounded-3"
+													onChange={(e) => {
+														const email = e.target.value;
+														setInputValues((prev) => ({
+															...prev,
+															usernameOrEmail: email,
+														}));
+													}}
+													value={inputValues?.usernameOrEmail}
+													name="phoneNumber"
+												/>
+											</div>
+										</div>
+										<div className="row">
+											<div className="col-md-12">
+												{/* <label htmlFor="password">Password</label> */}
+												<input
+													type="password"
+													id="password"
+													name="password"
+													className="form-control rounded-3"
+													required
+													placeholder="Password"
+													onChange={(e) => {
+														const password = e.target.value;
+														setInputValues((prev) => ({
+															...prev,
+															password: password,
+														}));
+														if (!validatePassword(password)) {
+															setError(
+																"Invalid Password. Password cannot contain spaces"
+															);
+														} else {
+															setError("");
+														}
+													}}
+													value={inputValues?.password}
+												/>
+											</div>
+										</div>
+									</>
 								)}
+							</>
+						)}
+
+						<div className="row mt-2 staySignedIn-fp">
+							<div className="d-flex gap-2 p-2">
+								<input
+									type="checkbox"
+									id="staySignedInCheckbox"
+									checked={staySignedIn}
+									onChange={handleCheckboxChange}
+								/>
+								<label htmlFor="staySignedInCheckbox">Stay signed in</label>
 							</div>
+							{!isMobileLogin && (
+								<div className="col-md-12">
+									<Link to={""} onClick={() => setShowResetPopUp(true)}>
+										Forgot Password?
+									</Link>
+								</div>
+							)}
+						</div>
 
-							<div className="submit_btn mt-3">
-								<button
-									type="submit"
-									className={` ${isInvestorSelected ? "investor" : "startup"}`}
-									style={{
-										width: 225,
-										height: 41.6,
-										borderRadius: 20,
-										fontSize: 16,
-										fontWeight: 700,
-										color: "#fff",
-									}}
-								>
-									{loading ? (
-										<SpinnerBS spinnerSizeClass="spinner-border-sm"></SpinnerBS>
-									) : isMobileLogin ? (
-										"Send OTP"
-									) : (
-										"Login"
-									)}
-								</button>
-							</div>
+						<div className="submit_btn mt-3">
+							<button
+								type="submit"
+								className={` ${isInvestorSelected ? "investor" : "startup"}`}
+								style={{
+									width: 225,
+									height: 41.6,
+									borderRadius: 20,
+									fontSize: 16,
+									fontWeight: 700,
+									color: "#fff",
+								}}
+							>
+								{loading ? (
+									<SpinnerBS spinnerSizeClass="spinner-border-sm"></SpinnerBS>
+								) : isMobileLogin ? (
+									"Send OTP"
+								) : (
+									"Login"
+								)}
+							</button>
+						</div>
 
-							<h3 className="already_have_account_mobile">
-								I don't have an account? &nbsp;
-								<Link to={"/signup"} style={{ color: "red" }}>
-									Create account
-								</Link>
-							</h3>
-						</form>
-					)}
+						<h3 className="already_have_account_mobile">
+							I don't have an account? &nbsp;
+							<Link to={"/signup"} style={{ color: "red" }}>
+								Create account
+							</Link>
+						</h3>
+					</form>
+				)}
 
-					<OtpVerificationModal
-						isOpen={show}
-						setOpen={setShow}
-						onClose={() => setShow(false)}
-						onVerify={ValidateOtp}
-						phoneNumber={inputValues.phoneNumber}
-						sendOTP={sendOTP}
-						inputValues={inputValues}
-						setOrderId={setOrderId}
-					/>
-					{/* {show && (
+				<OtpVerificationModal
+					isOpen={show}
+					setOpen={setShow}
+					onClose={() => setShow(false)}
+					onVerify={ValidateOtp}
+					phoneNumber={inputValues.phoneNumber}
+					sendOTP={sendOTP}
+					inputValues={inputValues}
+					setOrderId={setOrderId}
+				/>
+				{/* {show && (
 					<div
 						className="verification_container"
 						style={{
@@ -940,48 +937,46 @@ const Login = () => {
 					</div>
 				)} */}
 
-					{/*<div className="line-container m-auto">
+				{/*<div className="line-container m-auto">
             <hr className="line" />
             <span className="text mx-2">OR</span>
             <hr className="line" />
           </div>*/}
-					{/*<div className="social-login-container d-flex flex-column justify-content-center">
+				{/*<div className="social-login-container d-flex flex-column justify-content-center">
             {isMobileApp ? (
               <img src={GIcon} alt="Google logo" onClick={googleLoginHandle} />
             ) : (
               <div id="googlesignin" className="mx-auto"></div>
             )}
           </div>*/}
-				</div>
-				{isLoginSuccessfull && !isInvestorSelected && (
-					<AfterSuccessPopUp onClose={handleClosePopup} login={true} />
-				)}
-				{open && (
-					<AfterSuccessPopUp
-						withoutOkButton
-						onClose={() => setOpen(!open)}
-						successText="OTP Send successfully to the mobile"
-					/>
-				)}
-				{isLoginSuccessfull && isInvestorSelected && (
-					<InvestorAfterSuccessPopUp onClose={handleClosePopup} login={true} />
-				)}
+			</div>
+			{isLoginSuccessfull && !isInvestorSelected && (
+				<AfterSuccessPopUp onClose={handleClosePopup} login={true} />
+			)}
+			{open && (
+				<AfterSuccessPopUp
+					withoutOkButton
+					onClose={() => setOpen(!open)}
+					successText="OTP Send successfully to the mobile"
+				/>
+			)}
+			{isLoginSuccessfull && isInvestorSelected && (
+				<InvestorAfterSuccessPopUp onClose={handleClosePopup} login={true} />
+			)}
 
-				{error && <ErrorPopUp message={error} onClose={() => setError(null)} />}
+			{error && <ErrorPopUp message={error} onClose={() => setError(null)} />}
 
-				{/*{showResetPopUp && (
+			{/*{showResetPopUp && (
           <ResetPasswordPopUp onClose={handleCloseResetPopup} />
         )}*/}
-				{showErrorPopup && (
-					<ErrorPopUp
-						message={
-							"Invalid mobile number. Please enter a valid mobile number."
-						}
-						onClose={() => setShowErrorPopup(false)} // Add a handler to close the error popup
-					/>
-				)}
-			</div>
-		</GoogleOAuthProvider>
+			{showErrorPopup && (
+				<ErrorPopUp
+					message={"Invalid mobile number. Please enter a valid mobile number."}
+					onClose={() => setShowErrorPopup(false)} // Add a handler to close the error popup
+				/>
+			)}
+		</div>
+		// </GoogleOAuthProvider>
 	);
 };
 

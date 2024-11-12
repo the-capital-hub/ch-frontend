@@ -72,6 +72,10 @@ const FounderProfile = lazy(() =>
 	import("../components/Shared/FoundersProfile/FoundersProfile")
 );
 
+const ScheduleMeeting = lazy(() =>
+	import("../components/Meetings/ScheduleMeeting/ScheduleMeeting")
+);
+
 function PublicRoutes() {
 	return (
 		<>
@@ -311,6 +315,14 @@ function PublicRoutes() {
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
 						<FounderProfile />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="/meeting/schedule/:username/:meetingId"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<ScheduleMeeting />
 					</Suspense>
 				}
 			/>
