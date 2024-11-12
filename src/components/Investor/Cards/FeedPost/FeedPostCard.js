@@ -819,18 +819,36 @@ const FeedPostCard = ({
 
 						return (
 							<div key={option._id} className="poll-option">
-								<div className="poll-option-content">
-									<span>{option.option}</span>
-									<span>{option.votes?.length || 0} votes ({votePercentage}%)</span>
+								<div 
+									className="poll-option-content"
+									style={{
+										position: 'relative',
+										overflow: 'hidden'
+									}}
+								>
+									<div 
+										className="progress-bar"
+										style={{
+											width: `${votePercentage}%`,
+											position: 'absolute',
+											left: 0,
+											top: 0,
+											height: '100%',
+											background: 'rgba(253, 89, 1, 0.1)',
+											transition: 'width 0.3s ease'
+										}}
+									/>
+									<span className="option-text">{option.option}</span>
+									<span className="vote-count">{option.votes?.length || 0} votes</span>
 								</div>
 								<button
 									className={`vote-button ${hasVoted ? 'voted' : ''}`}
 									onClick={(e) => {
 										e.stopPropagation();
-										handleVoteClick(option._id)
+										handleVoteClick(option._id);
 									}}
 								>
-									{hasVoted ? 'Unvote' : 'Vote'}
+									{hasVoted ? 'Voted' : 'Vote'}
 								</button>
 							</div>
 						);

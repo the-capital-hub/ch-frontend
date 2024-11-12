@@ -24,6 +24,7 @@ import toast from "react-hot-toast";
 import { loginSuccess } from "../../../Store/features/user/userSlice";
 import IconFile from "../../Investor/SvgIcons/IconFile";
 import { sharePostLinkedin } from "../../../Service/user";
+import { BiPoll } from "react-icons/bi";
 
 const IMAGE_MAX_SIZE_MB = 10; // 10MB
 const DOCUMENT_MAX_SIZE_MB = 50; // 50MB
@@ -398,6 +399,72 @@ const CreatePostPopUp = ({
 		}
 	}, [respostingPostId]);
 
+	const [showPollPopup, setShowPollPopup] = useState(false);
+
+	const PollPopup = () => {
+		const handleAddOption = () => {
+			if (pollOptions.length < 4) {
+				setPollOptions([...pollOptions, ""]);
+			}
+		};
+
+		const handleRemoveOption = (index) => {
+			const newOptions = pollOptions.filter((_, i) => i !== index);
+			setPollOptions(newOptions);
+		};
+
+		const handleOptionChange = (index, value) => {
+			const newOptions = [...pollOptions];
+			newOptions[index] = value;
+			setPollOptions(newOptions);
+		};
+
+		const handleSave = () => {
+			const validOptions = pollOptions.filter(opt => opt.trim() !== "");
+			if (validOptions.length >= 2) {
+				setPollOptions(validOptions);
+				setShowPollPopup(false);
+			} else {
+				toast.error("Please add at least 2 valid options");
+			}
+		};
+
+		return (
+			<>
+				<div className="poll-popup-overlay" onClick={() => setShowPollPopup(false)} />
+				<div className="poll-popup">
+					<h3>Create Poll</h3>
+					<div className="poll-options-container">
+						{pollOptions.map((option, index) => (
+							<div key={index} className="poll-option-input">
+								<input
+									type="text"
+									value={option}
+									onChange={(e) => handleOptionChange(index, e.target.value)}
+									placeholder={`Option ${index + 1}`}
+									maxLength={100}
+								/>
+								{pollOptions.length > 2 && (
+									<button onClick={() => handleRemoveOption(index)}>×</button>
+								)}
+							</div>
+						))}
+					</div>
+					<div className="poll-popup-buttons">
+						{pollOptions.length < 4 && (
+							<button className="add-option" onClick={handleAddOption}>
+								Add Option
+							</button>
+						)}
+						<button className="save-poll" onClick={handleSave}>
+							Save Poll
+						</button>
+					</div>
+				</div>
+			</>
+		);
+	};
+
 	return (
 		<>
 			{popupOpen && <div className="createpost-background-overlay"></div>}
@@ -405,8 +472,8 @@ const CreatePostPopUp = ({
 				className={`create_post_modal rounded-4 p-md-2 ${
 					popupOpen ? "d-block" : ""
 				}`}
-				tabIndex="-1"
-				role="dialog"
+					tabIndex="-1"
+					role="dialog"
 			>
 				<div className="modal-dialog modal-dialog-centered" role="document">
 					<div className="modal-content">
@@ -672,37 +739,11 @@ const CreatePostPopUp = ({
 											style={{ color: "var(--d-l-grey)" }}
 										/>
 										<span className="tooltip-text top2">doc</span>
-									</button><div className="poll-section">
-  <h4>Poll</h4>
-  {Array.isArray(pollOptions) && pollOptions.length>0 && pollOptions.map((option, index) => (
- <div key={index} className="poll-option">
- <input
-   type="text"
-   value={option}
-   onChange={(e) => {
-	 const newOptions = [...pollOptions];
-	 newOptions[index] = e.target.value;
-	 setPollOptions(newOptions); 
-   }}
-   placeholder={`Option ${index + 1}`}
- />
- <button
-   className="remove-poll-option"
-   onClick={() => {
-	 const newOptions = [...pollOptions];
-	 newOptions.splice(index, 1);
-	 setPollOptions(newOptions);  
-   }}
- >
-   Remove
- </button>
-</div>
-))}
-
-  <button className="add-poll-option" onClick={handleAddPollOption}>
-    Add Poll Option
-  </button>
-</div>
+									</button>
+									<button className="white_button hover-text" onClick={() => setShowPollPopup(true)}>
+										<BiPoll size={25} style={{ color: "var(--d-l-grey)" }} />
+										<span className="tooltip-text top3">poll</span>
+									</button>
 								</div>
 								<div className="post_button_container">
 									{posting ? (
@@ -724,6 +765,7 @@ const CreatePostPopUp = ({
 					</div>
 				</div>
 			</div>
+			{showPollPopup && <PollPopup />}
 		</>
 	);
 };
