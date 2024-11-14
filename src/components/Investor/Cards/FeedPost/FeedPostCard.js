@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaUserPlus, FaUserCircle } from "react-icons/fa";
-import { GoHome } from "react-icons/go";
-import { PiDotsThreeBold } from "react-icons/pi";
+import { MdBusinessCenter } from "react-icons/md";
+import { IoMdMore } from "react-icons/io";
 import "./feedPostCard.scss";
 import fireIcon from "../../../../Images/post/like-fire.png";
 import { ImFire } from "react-icons/im";
@@ -553,7 +553,7 @@ const FeedPostCard = ({
 									style={{
 										fontSize: "18px",
 										fontWeight: 600,
-										color: "var( --d-l-grey)",
+										color: "var(--d-l-grey)",
 										pointerEvents: `${
 											loggedInUser._id === userId ? "none" : "all"
 										}`,
@@ -573,42 +573,57 @@ const FeedPostCard = ({
 											alt="Batch Icon"
 										/>
 									)}
+									{!connectionSent && loggedInUser._id !== userId && (
+										<button
+											className="btn connect_button_feed d-inline"
+											onClick={(e) => {
+											e.preventDefault();
+											handleConnect(userId);
+											}}
+										>
+											<span>Follow</span>
+										</button>
+									)}
+
 								</Link>
 
-								<span className=" d-flex flex-column flex-md-row justify-content-between">
-									<span
-										className="d-flex align-items-center"
-										style={{
-											fontSize: "12px",
-											fontWeight: 450,
-											color: "var( --d-l-grey)",
-										}}
-									>
-										<GoHome size={13} /> {designation} at{" "}
-										{investorCompanyName?.companyName
-											? investorCompanyName?.companyName
-											: startUpCompanyName?.company}
+								<div className="info-container">
+									<span className="d-flex align-items-center designation-location">
+										<span
+											className="d-flex align-items-center"
+											style={{
+												fontSize: "12px",
+												fontWeight: 450,
+												color: "var(--d-l-grey)",
+											}}
+										>
+											<MdBusinessCenter size={15} />&nbsp;{designation} at{" "}
+											{investorCompanyName?.companyName
+												? investorCompanyName?.companyName
+												: startUpCompanyName?.company}
+										</span>
+										<span
+											className="d-flex align-items-center location"
+											style={{
+												fontSize: "12px",
+												fontWeight: 450,
+												color: "var(--d-l-grey)",
+												marginLeft: "10px", // Adjusts spacing between items
+											}}
+										>
+											<IoLocationOutline size={13} />&nbsp;
+											{location ? location : "Bangalore"}
+										</span>
 									</span>
-									<span
-										className="d-flex align-items-center"
-										style={{
-											fontSize: "12px",
-											fontWeight: 450,
-											color: "var( --d-l-grey)",
-										}}
-									>
-										<IoLocationOutline size={13} />
-										{location ? location : "Bangalore"}
-									</span>
-								</span>
+								</div>
+
 								<span
 									style={{
 										fontSize: "12px",
 										fontWeight: 500,
-										color: "var( --d-l-grey)",
+										color: "var(--d-l-grey)",
 									}}
 								>
-									{" "}
 									<TimeAgo
 										className="text-secondary fs-xs"
 										datetime={createdAt}
@@ -616,28 +631,18 @@ const FeedPostCard = ({
 									/>
 								</span>
 							</div>
+
 						</div>
 
 						{!repostPreview && (
 							<>
-								{!connectionSent && (
-									<button
-										className="btn connect_button_feed"
-										onClick={(e) => {
-											e.preventDefault();
-											handleConnect(userId);
-										}}
-									>
-										<FaUserPlus />
-										<span>Connect</span>
-									</button>
-								)}
+								
 								<div className="three_dot pe-2 px-md-4">
 									<div
 										className="kebab_menu_container"
 										ref={kebabMenuContainerRef}
 									>
-										<PiDotsThreeBold
+										<IoMdMore
 											size={35}
 											style={{ fill: "var(--d-l-grey)" }}
 											onClick={() => {
