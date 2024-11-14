@@ -21,6 +21,7 @@ import { loginSuccess } from "../../../Store/features/user/userSlice";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { selectTheme } from "../../../Store/features/design/designSlice";
+import { BiPoll } from "react-icons/bi";
 
 const CreatePostPopUp = ({
   setPopupOpen,
@@ -174,6 +175,73 @@ const CreatePostPopUp = ({
     setCroppedImage(croppedImg);
   };
 
+  const [showPollPopup, setShowPollPopup] = useState(false);
+  const [pollOptions, setPollOptions] = useState([]);
+
+  const PollPopup = () => {
+    const handleAddOption = () => {
+      if (pollOptions.length < 4) {
+        setPollOptions([...pollOptions, ""]);
+      }
+    };
+
+    const handleRemoveOption = (index) => {
+      const newOptions = pollOptions.filter((_, i) => i !== index);
+      setPollOptions(newOptions);
+    };
+
+    const handleOptionChange = (index, value) => {
+      const newOptions = [...pollOptions];
+      newOptions[index] = value;
+      setPollOptions(newOptions);
+    };
+
+    const handleSave = () => {
+      const validOptions = pollOptions.filter(opt => opt.trim() !== "");
+      if (validOptions.length >= 2) {
+        setPollOptions(validOptions);
+        setShowPollPopup(false);
+      } else {
+        toast.error("Please add at least 2 valid options");
+      }
+    };
+
+    return (
+      <>
+        <div className="poll-popup-overlay" onClick={() => setShowPollPopup(false)} />
+        <div className="poll-popup">
+          <h3>Create Poll</h3>
+          <div className="poll-options-container">
+            {pollOptions.map((option, index) => (
+              <div key={index} className="poll-option-input">
+                <input
+                  type="text"
+                  value={option}
+                  onChange={(e) => handleOptionChange(index, e.target.value)}
+                  placeholder={`Option ${index + 1}`}
+                  maxLength={100}
+                />
+                {pollOptions.length > 2 && (
+                  <button onClick={() => handleRemoveOption(index)}>×</button>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="poll-popup-buttons">
+            {pollOptions.length < 4 && (
+              <button className="add-option" onClick={handleAddOption}>
+                Add Option
+              </button>
+            )}
+            <button className="save-poll" onClick={handleSave}>
+              Save Poll
+            </button>
+          </div>
+        </div>
+      </>
+    );
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setPosting(true);
@@ -211,6 +279,13 @@ const CreatePostPopUp = ({
       postData.append("documentUrl", res.Location);
       postData.append("documentName", selectedDocument.name);
       postData.append("image",res.Location);
+    }
+
+    if (pollOptions.length > 0) {
+      const validOptions = pollOptions.filter(option => option.trim() !== '');
+      validOptions.forEach((option, index) => {
+        postData.append(`pollOptions[${index}]`, option);
+      });
     }
 
     // Call the postUserPost function to make the POST request to the server
@@ -447,6 +522,10 @@ const CreatePostPopUp = ({
                   <button className="white_button" onClick={handleOneLinkClick}>
                     <BsLink45Deg height={"59px"} width={"59px"} size={"20px"} />
                   </button>
+
+                  <button className="white_button" onClick={() => setShowPollPopup(true)}>
+                    <BiPoll size={20} />
+                  </button>
                 </div>
                 <div className="post_button_container">
                   {posting ? (
@@ -467,6 +546,7 @@ const CreatePostPopUp = ({
           </div>
         </div>
       </div>
+      {showPollPopup && <PollPopup />}
     </>
   );
 };

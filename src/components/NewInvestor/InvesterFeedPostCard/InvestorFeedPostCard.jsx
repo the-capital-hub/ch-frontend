@@ -88,7 +88,9 @@ const FeedPostCard = ({
   deletePostFilterData,
   isSinglePost = false,
   setPostData,
-  isSubscribed
+  isSubscribed,
+  pollOptions,
+  handlePollVote,
 }) => {
   const [showComment, setShowComment] = useState(isSinglePost);
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -422,6 +424,7 @@ const FeedPostCard = ({
             createdAt,
             likes,
             resharedPostId,
+            pollOptions,
         }
 
         localStorage.setItem("postDetail", JSON.stringify(PostData));
@@ -455,6 +458,58 @@ const FeedPostCard = ({
       userId,
     });
   }, [firstName, lastName, designation, startUpCompanyName, investorCompanyName, profilePicture, userId]);
+
+  const [localPollOptions, setLocalPollOptions] = useState(pollOptions || []);
+  const [isVoting, setIsVoting] = useState(false);
+
+  useEffect(() => {
+    console.log('Poll Options changed:', pollOptions);
+    console.log('Local Poll Options:', localPollOptions);
+  }, [pollOptions, localPollOptions]);
+
+  useEffect(() => {
+    if (pollOptions && JSON.stringify(pollOptions) !== JSON.stringify(localPollOptions)) {
+      setLocalPollOptions(pollOptions);
+    }
+  }, [pollOptions]);
+
+  const handleVoteClick = async (optionId) => {
+    if (isVoting) return;
+    
+    try {
+      setIsVoting(true);
+      const hasVoted = localPollOptions.find(opt => 
+        opt._id === optionId && opt.votes?.includes(loggedInUser._id)
+      );
+
+      // Optimistic update
+      setLocalPollOptions(current =>
+        current.map(opt => {
+          if (opt._id === optionId) {
+            const newVotes = hasVoted
+              ? opt.votes.filter(id => id !== loggedInUser._id)
+              : [...(opt.votes || []), loggedInUser._id];
+            return { ...opt, votes: newVotes };
+          }
+          return opt;
+        })
+      );
+
+      // Call API
+      if (handlePollVote) {
+        const updatedPollOptions = await handlePollVote(postId, optionId);
+        if (updatedPollOptions) {
+          setLocalPollOptions(updatedPollOptions);
+        }
+      }
+    } catch (error) {
+      console.error('Error handling vote:', error);
+      // Revert to original state on error
+      setLocalPollOptions(pollOptions);
+    } finally {
+      setIsVoting(false);
+    }
+  };
 
   return (
     <>
@@ -681,6 +736,46 @@ const FeedPostCard = ({
               />
             )}
           </div>
+
+          {localPollOptions && localPollOptions.length > 0 && (
+            <div className="poll-section">
+              {localPollOptions.map((option) => {
+                const totalVotes = localPollOptions.reduce((sum, opt) => 
+                  sum + (opt.votes?.length || 0), 0
+                );
+                const votePercentage = totalVotes === 0 
+                  ? 0 
+                  : Math.round((option.votes?.length || 0) * 100 / totalVotes);
+                const hasVoted = option.votes?.includes(loggedInUser._id);
+
+                return (
+                  <div key={option._id} className="poll-option">
+                    <div className="poll-option-content">
+                      <div 
+                        className="progress-bar" 
+                        style={{ width: `${votePercentage}%` }} 
+                      />
+                      <span className="option-text">{option.option}</span>
+                      <span className="vote-count">
+                        {option.votes?.length || 0} votes ({votePercentage}%)
+                      </span>
+                    </div>
+                    <button
+                      className={`vote-button ${hasVoted ? 'voted' : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleVoteClick(option._id);
+                      }}
+                      disabled={isVoting}
+                    >
+                      {hasVoted ? 'Voted' : 'Vote'}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
           {likes && (
             <span
               className="mx-3 pb-2 pt-2 pe-auto d-flex align-items-center gap-1"
