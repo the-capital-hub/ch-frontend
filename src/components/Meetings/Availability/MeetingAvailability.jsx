@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import "./Availability.scss";
 import { environment } from "../../../environments/environment";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../../Store/features/design/designSlice";
 const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 
 const AvailabilitySettings = () => {
+	const theme = useSelector(selectTheme);
+	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 	const [availability, setAvailability] = useState({
 		dayAvailability: [
 			{ day: "Monday", start: "09:00", end: "17:00", enabled: true },
@@ -70,8 +74,14 @@ const AvailabilitySettings = () => {
 		}
 	};
 
+	console.log("theme", theme);
+
 	return (
-		<div className="availability-container">
+		<div
+			className={`availability-container ${
+				theme === "dark" ? " dark-theme" : ""
+			}`}
+		>
 			<div className="availability-wrapper">
 				<h1>Availability</h1>
 

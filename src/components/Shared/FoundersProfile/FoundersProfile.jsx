@@ -30,10 +30,12 @@ const FounderProfile = () => {
 	const [activeTab, setActiveTab] = useState("posts");
 	const [activeInterestTab, setActiveInterestTab] = useState("Top Voices");
 	const [founder, setFounder] = useState(null);
+	const [events, setEvents] = useState([]);
 	const { username } = useParams();
 	const navigate = useNavigate();
-	console.log("userName", username);
+	// console.log("userName", username);
 	// console.log("founder", founder);
+	// console.log("events", events);
 
 	const toggleTheme = () => {
 		const newTheme = theme === "light" ? "dark" : "light";
@@ -66,6 +68,37 @@ const FounderProfile = () => {
 		};
 
 		fetchFounderData();
+	}, [username]);
+
+	// /getEvents/:username
+	useEffect(() => {
+		const fetchEvents = async () => {
+			try {
+				const response = await fetch(
+					`${environment.baseUrl}/meetings/getEvents/${username}`,
+					{
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+						},
+					}
+				);
+				if (response.ok) {
+					const data = await response.json();
+					const publicEvents = data.data.filter(
+						(event) => event.isPrivate === false
+					);
+					setEvents(publicEvents);
+					// setEvents(data.data);
+				} else {
+					console.error("Failed to fetch events");
+				}
+			} catch (error) {
+				console.error("Error fetching events:", error);
+			}
+		};
+
+		fetchEvents();
 	}, [username]);
 
 	const dummyData = {
@@ -201,27 +234,11 @@ const FounderProfile = () => {
 	const meetingTypes = [
 		{
 			id: "673196cba3d46eeaf9647b8c",
-			title: "Discovery Call",
+			title: "Dummy Meeting",
 			duration: "30 mins",
 			type: "Public",
-			description: "Let's discuss your project and see how we can collaborate.",
+			description: "Its a dummy meeting, Means no events to show.",
 			bookings: 1,
-		},
-		{
-			id: "773196cba3d46eeaf9647b8d",
-			title: "1:1 meeting",
-			duration: "30 mins",
-			type: "Public",
-			description: "One-on-one discussion about specific topics or concerns.",
-			bookings: 2,
-		},
-		{
-			id: "873196cba3d46eeaf9647b8e",
-			title: "Coffee Chat",
-			duration: "15 mins",
-			type: "Public",
-			description: "Quick informal chat to get to know each other better.",
-			bookings: 0,
 		},
 	];
 
@@ -437,27 +454,29 @@ const FounderProfile = () => {
 							<FaCalendarAlt /> Schedule a Meeting
 						</h2>
 						<div className="meeting-cards">
-							{meetingTypes.map((meeting) => (
+							{events.map((meeting) => (
 								<div
-									key={meeting.id}
+									key={meeting._id}
 									className="meeting-card"
-									onClick={() => handleMeetingClick(meeting.id)}
+									onClick={() => handleMeetingClick(meeting._id)}
 								>
 									<div className="meeting-card-header">
 										<h3>{meeting.title}</h3>
-										<span className="meeting-type">{meeting.type}</span>
+										<span className="meeting-type">
+											{meeting.isPrivate ? "Private" : "Public"}
+										</span>
 									</div>
 									<div className="meeting-card-content">
 										<div className="meeting-duration">
 											<FaClock />
-											<span>{meeting.duration}</span>
+											<span>{meeting.duration} minutes</span>
 										</div>
 										<p>{meeting.description}</p>
 									</div>
 									<div className="meeting-card-footer">
 										<span className="bookings-count">
-											{meeting.bookings}{" "}
-											{meeting.bookings === 1 ? "Booking" : "Bookings"}
+											{meeting?.bookings.length}{" "}
+											{meeting?.bookings?.length === 1 ? "Booking" : "Bookings"}
 										</span>
 									</div>
 								</div>

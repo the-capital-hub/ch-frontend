@@ -25,7 +25,7 @@ const EventsList = () => {
 	// console.log("username", username);
 	// console.log("events", events);
 
-	useEffect(() => {
+	const fetchEvents = () => {
 		setLoading(true);
 		fetch(`${baseUrl}/meetings/getEvents`, {
 			method: "GET",
@@ -43,7 +43,11 @@ const EventsList = () => {
 				setLoading(false);
 				console.error("Error fetching events:", error);
 			});
-	}, [isModalOpen]);
+	};
+
+	useEffect(() => {
+		fetchEvents();
+	}, []);
 
 	const handleCreateEvent = (eventData) => {
 		console.log("New event:", eventData);
@@ -61,6 +65,7 @@ const EventsList = () => {
 				if (res.status === 200) {
 					console.log("Event created successfully");
 					alert("Event created successfully");
+					fetchEvents();
 				} else {
 					console.log("Error creating event");
 					alert("Error creating event");
@@ -91,6 +96,7 @@ const EventsList = () => {
 				} else {
 					console.log("Error deleting event");
 					alert("Error deleting event");
+					fetchEvents();
 				}
 			});
 		} catch (error) {
@@ -137,7 +143,7 @@ const EventsList = () => {
 							<div className="event-info">
 								<h3>{event.title}</h3>
 								<div className="event-meta">
-									<span>{event.duration}</span>
+									<span>{event.duration} minutes</span>
 									<span className="separator">|</span>
 									<span>{event.isPrivate ? "Private" : "Public"}</span>
 								</div>

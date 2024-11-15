@@ -527,8 +527,6 @@ a:focus {
 	}
 }
 
-// Add these styles to your existing SCSS file
-
 .activity-section {
 	.tabs {
 		display: flex;
@@ -823,8 +821,6 @@ a:focus {
 	}
 }
 
-// Add these styles to your existing FounderProfile.scss file
-
 .meeting-section {
 	margin: 2rem 0;
 
@@ -836,7 +832,7 @@ a:focus {
 	}
 
 	.meeting-card {
-		background: var(--card-bg, #fff);
+		background: var(--background-primary);
 		border: 1px solid var(--border-color, #e1e4e8);
 		border-radius: 8px;
 		padding: 1.5rem;
@@ -846,7 +842,7 @@ a:focus {
 
 		&:hover {
 			transform: translateY(-2px);
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			box-shadow: 0 4px 8px var(--background-secondary);
 		}
 
 		.meeting-card-header {
@@ -864,7 +860,7 @@ a:focus {
 			.meeting-type {
 				font-size: 0.875rem;
 				color: var(--text-secondary, #586069);
-				background: var(--tag-bg, #f6f8fa);
+				background: var(--background-secondary);
 				padding: 0.25rem 0.75rem;
 				border-radius: 12px;
 			}

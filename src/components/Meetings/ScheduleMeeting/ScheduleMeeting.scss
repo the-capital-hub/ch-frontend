@@ -1,287 +1,318 @@
 .meeting-scheduler {
-	width: 100%;
-	max-width: 64rem;
-	margin: 2rem auto;
-	background: white;
-	border-radius: 0.5rem;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	padding: 2rem;
+	min-height: 100vh;
+	background-color: #f5f5f5;
 
 	&__container {
 		display: flex;
+		gap: 2rem;
+		max-width: 1200px;
+		width: 100%;
+		background-color: white;
+		border-radius: 12px;
+		padding: 2rem;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	}
 
 	&__left {
-		width: 33.333%;
-		padding: 1.5rem;
-		border-right: 1px solid #e5e7eb;
-
-		.profile {
-			display: flex;
-			align-items: center;
-			gap: 0.75rem;
-			margin-bottom: 1rem;
-
-			&__image {
-				width: 3rem;
-				height: 3rem;
-				border-radius: 50%;
-				background: #e5e7eb;
-			}
-
-			&__info {
-				h2 {
-					font-weight: 600;
-					font-size: 1.125rem;
-				}
-
-				p {
-					font-size: 0.875rem;
-					color: #6b7280;
-				}
-			}
-		}
-
-		.meeting-info {
-			display: flex;
-			align-items: center;
-			gap: 0.5rem;
-			color: #6b7280;
-			margin-bottom: 1rem;
-
-			svg {
-				width: 1rem;
-				height: 1rem;
-			}
-		}
-
-		.meeting-description {
-			font-size: 0.875rem;
-			color: #6b7280;
-		}
+		flex: 1;
+		padding-right: 2rem;
+		border-right: 1px solid #eee;
 	}
 
 	&__right {
-		width: 66.667%;
-		padding: 1.5rem;
-
-		.calendar-header {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: 1.5rem;
-
-			h3 {
-				font-weight: 600;
-			}
-
-			.nav-buttons {
-				display: flex;
-				gap: 0.5rem;
-
-				button {
-					padding: 0.25rem;
-					border-radius: 0.25rem;
-
-					&:hover {
-						background: #f3f4f6;
-					}
-
-					svg {
-						width: 1.25rem;
-						height: 1.25rem;
-					}
-				}
-			}
-		}
-
-		.calendar-grid {
-			&__days {
-				display: grid;
-				grid-template-columns: repeat(7, 1fr);
-				gap: 0.25rem;
-				text-align: center;
-				font-size: 0.875rem;
-				margin-bottom: 1rem;
-			}
-
-			&__dates {
-				display: grid;
-				grid-template-columns: repeat(7, 1fr);
-				gap: 0.25rem;
-				margin-bottom: 1.5rem;
-
-				.date-cell {
-					width: 2rem;
-					height: 2rem;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					border-radius: 50%;
-					cursor: pointer;
-
-					&:hover {
-						background: #f3f4f6;
-					}
-
-					&--selected {
-						background: #3b82f6;
-						color: white;
-
-						&:hover {
-							background: #2563eb;
-						}
-					}
-				}
-			}
-		}
-
-		.time-slots {
-			margin-bottom: 1.5rem;
-
-			h4 {
-				font-weight: 600;
-				margin-bottom: 0.75rem;
-			}
-
-			&__grid {
-				display: grid;
-				grid-template-columns: repeat(4, 1fr);
-				gap: 0.5rem;
-
-				button {
-					padding: 0.5rem;
-					font-size: 0.875rem;
-					border-radius: 0.25rem;
-					border: 1px solid #e5e7eb;
-
-					&:hover {
-						background: #f3f4f6;
-					}
-
-					&.selected {
-						background: #3b82f6;
-						color: white;
-						border-color: #3b82f6;
-
-						&:hover {
-							background: #2563eb;
-						}
-					}
-				}
-			}
-		}
-
-		.booking-form {
-			display: flex;
-			flex-direction: column;
-			gap: 1rem;
-
-			input,
-			textarea {
-				width: 100%;
-				padding: 0.5rem;
-				border: 1px solid #e5e7eb;
-				border-radius: 0.25rem;
-
-				&:focus {
-					outline: none;
-					border-color: #3b82f6;
-				}
-			}
-
-			button {
-				width: 100%;
-				padding: 0.75rem;
-				background: black;
-				color: white;
-				border-radius: 0.25rem;
-				font-weight: 500;
-
-				&:hover {
-					background: #1f2937;
-				}
-			}
-		}
+		flex: 2;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
 	}
 
 	&__success {
-		width: 66.667%;
-		padding: 1.5rem;
+		flex: 2;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 2rem;
 		text-align: center;
 
 		h3 {
+			color: #4caf50;
 			font-size: 1.5rem;
-			font-weight: 600;
-			margin-bottom: 1rem;
-		}
-
-		.meeting-link {
-			color: #3b82f6;
-
-			&:hover {
-				text-decoration: underline;
-			}
-		}
-
-		.meeting-link-container {
-			margin-top: 1.5rem;
-			display: flex;
-			justify-content: center;
-			gap: 1rem;
-			h4 {
-				font-size: 1.25rem;
-				font-weight: 500;
-			}
 		}
 	}
+}
 
-	.date-cell {
-		width: 2rem;
-		height: 2rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+.profile {
+	display: flex;
+	gap: 1rem;
+	margin-bottom: 2rem;
+
+	&__image {
+		width: 80px;
+		height: 80px;
 		border-radius: 50%;
-		cursor: pointer;
+		object-fit: cover;
+	}
 
-		&:hover:not(&--disabled) {
-			background: #f3f4f6;
+	&__info {
+		h2 {
+			margin: 0;
+			font-size: 1.5rem;
 		}
 
-		&--selected {
-			background: #3b82f6;
-			color: white;
+		p {
+			margin: 0.5rem 0;
+			color: #666;
+		}
+	}
+}
 
-			&:hover {
-				background: #2563eb;
+.meeting-info {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
+	color: #666;
+}
+
+.meeting-description {
+	margin: 1.5rem 0;
+	color: #444;
+	line-height: 1.6;
+}
+
+.book-meeting {
+	width: 100%;
+	padding: 0.8rem;
+	background-color: #1a73e8;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: 500;
+	transition: background-color 0.2s;
+
+	&:hover {
+		background-color: #1557b0;
+	}
+}
+
+// Custom Calendar Styles
+.calendar-container {
+	.custom-calendar {
+		width: 100%;
+		border: none;
+		background: white;
+		padding: 1rem;
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+		.react-calendar__navigation {
+			display: flex;
+			margin-bottom: 1rem;
+
+			button {
+				background: none;
+				border: none;
+				padding: 0.5rem;
+				margin: 0 0.25rem;
+				cursor: pointer;
+
+				&:hover {
+					background-color: #f0f0f0;
+					border-radius: 4px;
+				}
+
+				&:disabled {
+					opacity: 0.5;
+					cursor: not-allowed;
+				}
+			}
+
+			.react-calendar__navigation__label {
+				font-weight: bold;
+				font-size: 1.1rem;
 			}
 		}
 
-		&--disabled {
-			color: #d1d5db;
-			cursor: not-allowed;
+		.react-calendar__month-view__weekdays {
+			text-align: center;
+			text-transform: uppercase;
+			font-weight: bold;
+			font-size: 0.8em;
+			color: #666;
+
+			abbr {
+				text-decoration: none;
+			}
+		}
+
+		.react-calendar__tile {
+			padding: 0.75rem;
+			background: none;
+			border: none;
+			text-align: center;
+			line-height: 1;
+			font-size: 1rem;
+			cursor: pointer;
+			transition: background-color 0.2s;
 
 			&:hover {
-				background: none;
+				background-color: #e6e6e6;
+				border-radius: 4px;
+			}
+
+			&--active {
+				background-color: #1a73e8 !important;
+				color: white;
+				border-radius: 4px;
+
+				&:hover {
+					background-color: #1557b0 !important;
+				}
+			}
+
+			&:disabled {
+				opacity: 0.5;
+				cursor: not-allowed;
+				background-color: #f5f5f5;
+
+				&:hover {
+					background-color: #f5f5f5;
+				}
 			}
 		}
 	}
 }
 
+.time-slots {
+	h4 {
+		margin-bottom: 1rem;
+		color: #333;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+		gap: 0.5rem;
+
+		button {
+			padding: 0.5rem;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			background: white;
+			cursor: pointer;
+			transition: all 0.2s;
+
+			&:hover {
+				background-color: #f0f0f0;
+			}
+
+			&.selected {
+				background-color: #1a73e8;
+				color: white;
+				border-color: #1a73e8;
+			}
+		}
+	}
+}
+.booking-form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+
+	input,
+	textarea {
+		padding: 0.8rem;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		font-size: 1rem;
+		transition: border-color 0.2s;
+
+		&:focus {
+			outline: none;
+			border-color: #1a73e8;
+			box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+		}
+
+		&::placeholder {
+			color: #999;
+		}
+	}
+
+	textarea {
+		resize: vertical;
+		min-height: 100px;
+	}
+
+	button[type="submit"] {
+		padding: 1rem;
+		background-color: #1a73e8;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		font-size: 1rem;
+		font-weight: 500;
+		cursor: pointer;
+		transition: background-color 0.2s;
+
+		&:hover {
+			background-color: #1557b0;
+		}
+
+		&:disabled {
+			background-color: #ccc;
+			cursor: not-allowed;
+		}
+	}
+}
+
+.meeting-link-container {
+	background-color: #f8f9fa;
+	padding: 1.5rem;
+	border-radius: 8px;
+	margin-top: 1rem;
+
+	h4 {
+		margin-bottom: 0.5rem;
+		color: #333;
+	}
+
+	.meeting-link {
+		display: block;
+		padding: 1rem;
+		background-color: white;
+		border: 1px solid #e0e0e0;
+		border-radius: 4px;
+		color: #1a73e8;
+		text-decoration: none;
+		word-break: break-all;
+		transition: all 0.2s;
+
+		&:hover {
+			background-color: #f0f0f0;
+			border-color: #1a73e8;
+		}
+	}
+}
+
+// Loader styles
 .loader-container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 300px;
-	width: 100%;
+	min-height: 100vh;
+	background-color: rgba(255, 255, 255, 0.8);
 }
 
 .loader {
 	width: 50px;
 	height: 50px;
-	border: 4px solid #f3f3f3;
-	border-top: 4px solid #fd5901;
+	border: 3px solid #f3f3f3;
+	border-top: 3px solid #1a73e8;
 	border-radius: 50%;
 	animation: spin 1s linear infinite;
 	position: relative;
@@ -290,14 +321,13 @@
 		position: absolute;
 		width: 70%;
 		height: 70%;
-		border: 4px solid transparent;
-		border-right: 4px solid #fd5901;
-		border-left: 4px solid #fd5901;
+		border: 3px solid #f3f3f3;
+		border-top: 3px solid #1a73e8;
 		border-radius: 50%;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		animation: spin-reverse 1s linear infinite;
+		animation: spin 0.8s linear infinite reverse;
 	}
 }
 
@@ -310,24 +340,135 @@
 	}
 }
 
-@keyframes spin-reverse {
-	0% {
-		transform: translate(-50%, -50%) rotate(0deg);
+// Responsive styles
+@media (max-width: 1024px) {
+	.meeting-scheduler {
+		padding: 1rem;
+
+		&__container {
+			flex-direction: column;
+			gap: 2rem;
+		}
+
+		&__left {
+			padding-right: 0;
+			border-right: none;
+			border-bottom: 1px solid #eee;
+			padding-bottom: 2rem;
+		}
 	}
-	100% {
-		transform: translate(-50%, -50%) rotate(-360deg);
+
+	.time-slots__grid {
+		grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
 	}
 }
 
-// Dark theme support
-.dark-theme {
-	.loader {
-		border-color: #2a2a2a;
-		border-top-color: #fd5901;
-
-		&-inner {
-			border-right-color: #fd5901;
-			border-left-color: #fd5901;
+@media (max-width: 768px) {
+	.meeting-scheduler {
+		&__container {
+			padding: 1rem;
 		}
 	}
+
+	.calendar-container {
+		.custom-calendar {
+			.react-calendar__tile {
+				padding: 0.5rem;
+				font-size: 0.9rem;
+			}
+		}
+	}
+
+	.time-slots__grid {
+		grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+
+		button {
+			padding: 0.4rem;
+			font-size: 0.9rem;
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	.profile {
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+
+	.meeting-info {
+		justify-content: center;
+	}
+
+	.time-slots__grid {
+		grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+	}
+
+	.booking-form {
+		input,
+		textarea,
+		button {
+			font-size: 0.9rem;
+		}
+	}
+}
+
+// Additional utility classes
+.text-center {
+	text-align: center;
+}
+
+.mt-1 {
+	margin-top: 0.25rem;
+}
+.mt-2 {
+	margin-top: 0.5rem;
+}
+.mt-3 {
+	margin-top: 1rem;
+}
+.mt-4 {
+	margin-top: 1.5rem;
+}
+
+.mb-1 {
+	margin-bottom: 0.25rem;
+}
+.mb-2 {
+	margin-bottom: 0.5rem;
+}
+.mb-3 {
+	margin-bottom: 1rem;
+}
+.mb-4 {
+	margin-bottom: 1.5rem;
+}
+
+// Error state styles
+.error {
+	color: #dc3545;
+	font-size: 0.875rem;
+	margin-top: 0.25rem;
+}
+
+.input-error {
+	border-color: #dc3545 !important;
+
+	&:focus {
+		box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25) !important;
+	}
+}
+
+// Success state styles
+.success {
+	color: #28a745;
+	font-size: 0.875rem;
+	margin-top: 0.25rem;
+}
+
+// Disabled state styles
+.disabled {
+	opacity: 0.6;
+	pointer-events: none;
+	cursor: not-allowed;
 }
