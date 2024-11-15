@@ -119,6 +119,18 @@ const EventsList = () => {
 		}
 	};
 
+	const calculateDiscountedPrice = (price, discountPercentage) => {
+		if (discountPercentage && discountPercentage > 0) {
+			const discountAmount = (price * discountPercentage) / 100;
+			return price - discountAmount;
+		}
+		return price;
+	};
+
+	const formatPrice = (price) => {
+		return price === 0 ? "Free" : `₹${price.toFixed(0)}`;
+	};
+
 	if (loading || events.length === 0) {
 		return <Spinner />;
 	}
@@ -141,7 +153,34 @@ const EventsList = () => {
 					{events.map((event, index) => (
 						<div key={index} className="event-card">
 							<div className="event-info">
-								<h3>{event.title}</h3>
+								<div className="event-title-price">
+									<h3>{event.title}</h3>
+									{event.price > 0 && (
+										<div className="price-tag">
+											{event.discount > 0 && (
+												<>
+													<span className="original-price">
+														{formatPrice(event.price)}
+													</span>
+													{/* <span className="discount-badge">
+														{event.discount}% OFF
+													</span> */}
+												</>
+											)}
+											<span className="new-price">
+												{formatPrice(
+													calculateDiscountedPrice(event.price, event.discount)
+												)}
+											</span>
+										</div>
+									)}
+									{event.price === 0 && (
+										<div className="price-tag">
+											<span className="new-price">Free</span>
+										</div>
+									)}
+								</div>
+
 								<div className="event-meta">
 									<span>{event.duration} minutes</span>
 									<span className="separator">|</span>
