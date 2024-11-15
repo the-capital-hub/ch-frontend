@@ -586,8 +586,8 @@
         cursor: not-allowed;
       }
 
-      &.voted {
-        background: #D3F36B; // Investor theme color
+      &.votedInvestorThemeColor {
+        background: #D3F36B ; // Investor theme color
         color: #1d1d1d;
         border-color: #D3F36B;
       }
