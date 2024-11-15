@@ -138,6 +138,17 @@ const MeetingToken = lazy(() => {
 const UserAnalytics = lazy(() =>
 	import("../components/UserAnalytics/UserAnalytics")
 );
+const MeetingEvents = lazy(() =>
+	import("../components/Meetings/Events/MeetingEvents")
+);
+const MeetingPlans = lazy(() =>
+	import("../components/Meetings/Plans/MeetingPlans")
+);
+const MeetingAvailability = lazy(() =>
+	import("../components/Meetings/Availability/MeetingAvailability")
+);
+
+
 function StartUpRoutes() {
 	// Light and dark Theme
 	// const theme = useSelector(selectTheme);
@@ -428,6 +439,31 @@ function StartUpRoutes() {
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
 						<UserAnalytics />
+					</Suspense>
+				}
+			/>
+
+			<Route
+				path="/meeting/events"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<MeetingEvents />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="/meeting/plans"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<MeetingPlans />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="/meeting/availability"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<MeetingAvailability />
 					</Suspense>
 				}
 			/>

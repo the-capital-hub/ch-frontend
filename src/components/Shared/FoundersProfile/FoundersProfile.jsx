@@ -16,8 +16,8 @@ import {
 	FaRegComment,
 	FaHeart,
 	FaShare,
-	// FaUser,
 	FaArrowCircleLeft,
+	FaClock,
 } from "react-icons/fa";
 import UserPic from "../../../Images/UserPic.jpg";
 import AIPoster from "../../../Images/AIPoster.jpg";
@@ -30,9 +30,12 @@ const FounderProfile = () => {
 	const [activeTab, setActiveTab] = useState("posts");
 	const [activeInterestTab, setActiveInterestTab] = useState("Top Voices");
 	const [founder, setFounder] = useState(null);
+	const [events, setEvents] = useState([]);
 	const { username } = useParams();
-	console.log("userName", username);
+	const navigate = useNavigate();
+	// console.log("userName", username);
 	// console.log("founder", founder);
+	// console.log("events", events);
 
 	const toggleTheme = () => {
 		const newTheme = theme === "light" ? "dark" : "light";
@@ -65,6 +68,37 @@ const FounderProfile = () => {
 		};
 
 		fetchFounderData();
+	}, [username]);
+
+	// /getEvents/:username
+	useEffect(() => {
+		const fetchEvents = async () => {
+			try {
+				const response = await fetch(
+					`${environment.baseUrl}/meetings/getEvents/${username}`,
+					{
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+						},
+					}
+				);
+				if (response.ok) {
+					const data = await response.json();
+					const publicEvents = data.data.filter(
+						(event) => event.isPrivate === false
+					);
+					setEvents(publicEvents);
+					// setEvents(data.data);
+				} else {
+					console.error("Failed to fetch events");
+				}
+			} catch (error) {
+				console.error("Error fetching events:", error);
+			}
+		};
+
+		fetchEvents();
 	}, [username]);
 
 	const dummyData = {
@@ -197,6 +231,17 @@ const FounderProfile = () => {
 		},
 	};
 
+	const meetingTypes = [
+		{
+			id: "673196cba3d46eeaf9647b8c",
+			title: "Dummy Meeting",
+			duration: "30 mins",
+			type: "Public",
+			description: "Its a dummy meeting, Means no events to show.",
+			bookings: 1,
+		},
+	];
+
 	const founderData = founder
 		? {
 				name: founder.firstName + " " + founder.lastName || dummyData.name,
@@ -310,6 +355,10 @@ const FounderProfile = () => {
 		);
 	};
 
+	const handleMeetingClick = (meetingId) => {
+		navigate(`/meeting/schedule/${username}/${meetingId}`);
+	};
+
 	// users/getUserByUserName  -> search with userName
 
 	return (
@@ -394,6 +443,42 @@ const FounderProfile = () => {
 									<p className="role">{exp.role}</p>
 									<p className="duration">{exp.duration}</p>
 									<p className="description">{exp.description}</p>
+								</div>
+							))}
+						</div>
+					</section>
+
+					{/* Meetings section */}
+					<section className="profile-section meeting-section">
+						<h2>
+							<FaCalendarAlt /> Schedule a Meeting
+						</h2>
+						<div className="meeting-cards">
+							{events.map((meeting) => (
+								<div
+									key={meeting._id}
+									className="meeting-card"
+									onClick={() => handleMeetingClick(meeting._id)}
+								>
+									<div className="meeting-card-header">
+										<h3>{meeting.title}</h3>
+										<span className="meeting-type">
+											{meeting.isPrivate ? "Private" : "Public"}
+										</span>
+									</div>
+									<div className="meeting-card-content">
+										<div className="meeting-duration">
+											<FaClock />
+											<span>{meeting.duration} minutes</span>
+										</div>
+										<p>{meeting.description}</p>
+									</div>
+									<div className="meeting-card-footer">
+										<span className="bookings-count">
+											{meeting?.bookings.length}{" "}
+											{meeting?.bookings?.length === 1 ? "Booking" : "Bookings"}
+										</span>
+									</div>
 								</div>
 							))}
 						</div>

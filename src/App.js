@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import "./App.scss";
 
@@ -22,9 +23,9 @@ import EcommerceRoutes from "./routes/EcommerceRoutes";
 import NotFound404 from "./pages/Error/NotFound404/NotFound404";
 import { useDispatch } from "react-redux";
 import {
-  setIsMobileApp,
-  setIsMobileView,
-  setShowOnboarding,
+	setIsMobileApp,
+	setIsMobileView,
+	setShowOnboarding,
 } from "./Store/features/design/designSlice";
 import { useEffect } from "react";
 import InvestorOneLinkRoutes from "./routes/InvestorOneLinkRoutes";
@@ -34,99 +35,104 @@ import AppUrlListener from "./pages/AppUrlListener/AppUrlListener";
 import AdminRoutes from "./routes/AdminRoutes";
 
 function App() {
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-  useEffect(() => {
-    // Boolean for whether running on mobile application
-    const currentPlatform = Capacitor.getPlatform();
+	useEffect(() => {
+		// Boolean for whether running on mobile application
+		const currentPlatform = Capacitor.getPlatform();
 
-    if (currentPlatform === "android" || currentPlatform === "ios") {
-      dispatch(setIsMobileApp(true));
-      console.log(`Running on ${currentPlatform}`);
-    } else {
-      dispatch(setIsMobileApp(false));
-      console.log("Not running on Android or iOS");
-    }
+		if (currentPlatform === "android" || currentPlatform === "ios") {
+			dispatch(setIsMobileApp(true));
+			console.log(`Running on ${currentPlatform}`);
+		} else {
+			dispatch(setIsMobileApp(false));
+			console.log("Not running on Android or iOS");
+		}
 
-    // Handle mobile size for web app
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    function handleWindowResize() {
-      const isMobile = window.innerWidth <= 820;
-      dispatch(setIsMobileView(isMobile));
-      dispatch(setShowOnboarding(false));
-    }
-    window.addEventListener("resize", handleWindowResize);
-    handleWindowResize();
+		// Handle mobile size for web app
+		window.scrollTo({ top: 0, behavior: "smooth" });
+		function handleWindowResize() {
+			const isMobile = window.innerWidth <= 820;
+			dispatch(setIsMobileView(isMobile));
+			dispatch(setShowOnboarding(false));
+		}
+		window.addEventListener("resize", handleWindowResize);
+		handleWindowResize();
 
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, []);
+		return () => {
+			window.removeEventListener("resize", handleWindowResize);
+		};
+	}, []);
 
-  //Back functionality for mobile app
-  CapacitorApp.addListener("backButton", ({ canGoBack }) => {
-    const currentUrl = window.location.href;
-    console.log("url", currentUrl);
-    if (
-      !canGoBack ||
-      currentUrl === "https://localhost/home" ||
-      currentUrl === "https://localhost/investor/home"
-    ) {
-      CapacitorApp.exitApp();
-    } else {
-      window.history.back();
-    }
-  });
+	//Back functionality for mobile app
+	CapacitorApp.addListener("backButton", ({ canGoBack }) => {
+		const currentUrl = window.location.href;
+		console.log("url", currentUrl);
+		if (
+			!canGoBack ||
+			currentUrl === "https://localhost/home" ||
+			currentUrl === "https://localhost/investor/home"
+		) {
+			CapacitorApp.exitApp();
+		} else {
+			window.history.back();
+		}
+	});
 
-  return (
-    <Router>
-      <AppUrlListener />
-      <Routes>
-        {/* Public Routes */}
-        {PublicRoutes()}
+	return (
+		<Router>
+			<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+				<AppUrlListener />
+				<Routes>
+					{/* Public Routes */}
+					{PublicRoutes()}
 
-        {/* Chat */}
-        <Route path="/chats" element={<Chats />} />
+					{/* Chat */}
+					<Route path="/chats" element={<Chats />} />
 
-        {/* StartUp */}
-        {StartUpRoutes()}
+					{/* StartUp */}
+					{StartUpRoutes()}
 
-        {/* OneLink */}
-        <Route path="/onelink/:username/:userId" element={<ValidateOneLink />}>
-          {OneLinkRoutes()}
-        </Route>
+					{/* OneLink */}
+					<Route
+						path="/onelink/:username/:userId"
+						element={<ValidateOneLink />}
+					>
+						{OneLinkRoutes()}
+					</Route>
 
-        {/* Investor */}
-        <Route path="/investor" element={<ProtectedInvestorRoutes />}>
-          {InvestorRoutes()}
-        </Route>
+					{/* Investor */}
+					<Route path="/investor" element={<ProtectedInvestorRoutes />}>
+						{InvestorRoutes()}
+					</Route>
 
-        {/* Investor OneLink */}
-        <Route
-          path="/investor/onelink/:oneLink/:userId"
-          element={<InvestorOneLinkLayout />}
-        >
-          {InvestorOneLinkRoutes()}
-        </Route>
+					{/* Investor OneLink */}
+					<Route
+						path="/investor/onelink/:oneLink/:userId"
+						element={<InvestorOneLinkLayout />}
+					>
+						{InvestorOneLinkRoutes()}
+					</Route>
 
-        {/* Blogs */}
-        <Route path="/blog" element={<BlogWrapper />}>
-          {BlogRoutes()}
-        </Route>
+					{/* Blogs */}
+					<Route path="/blog" element={<BlogWrapper />}>
+						{BlogRoutes()}
+					</Route>
 
-        {/* E-Commerce */}
-        <Route path="/landing-page" element={<EcommerceLayout />}>
-          {EcommerceRoutes()}
-        </Route>
+					{/* E-Commerce */}
+					<Route path="/landing-page" element={<EcommerceLayout />}>
+						{EcommerceRoutes()}
+					</Route>
 
-        {/* Admin Routes */}
-        <Route path="/admin/*" element={<AdminRoutes />} />
+					{/* Admin Routes */}
+					<Route path="/admin/*" element={<AdminRoutes />} />
 
-        {/* 404 Not Found */}
-        <Route path="*" element={<NotFound404 />} />
-      </Routes>
-    </Router>
-  );
+					{/* 404 Not Found */}
+					<Route path="*" element={<NotFound404 />} />
+				</Routes>
+			</GoogleOAuthProvider>
+		</Router>
+	);
 }
 
 export default App;

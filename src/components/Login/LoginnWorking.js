@@ -35,10 +35,9 @@ import { fetchCompanyData } from "../../Store/features/user/userThunks";
 import { fetchAllChats } from "../../Store/features/chat/chatThunks";
 
 // imports fro implementing login with google
-// import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 // import { jwtDecode } from "jwt-decode";
 import LinkedInLogin from "./LinkedinLogin/LinkedInLogin";
-// import GoogleLogin from "./GoogleLogin/GoogleLogin";
 
 function OtpVerificationModal({
 	isOpen,
@@ -176,8 +175,8 @@ const Login = () => {
 	const [orderId, setOrderId] = useState("");
 	const userVisitCount = localStorage.getItem("userVisit");
 	const [isMobileLogin, setIsMobileLogin] = useState(true);
-	// const otpInputRefs = useRef([]);
-	// const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+	const otpInputRefs = useRef([]);
+	const [otp, setOtp] = useState(["", "", "", "", "", ""]);
 	const [showErrorPopup, setShowErrorPopup] = useState(false);
 	const [showResetPopUp, setShowResetPopUp] = useState(false);
 	const [inputValues, setInputValues] = useState({
@@ -187,148 +186,44 @@ const Login = () => {
 	});
 	const [staySignedIn, setStaySignedIn] = useState(false);
 
-	const handleGoogleLogin = async () => {
-		try {
-			const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-			// const redirectUri = process.env.REACT_APP_GOOGLE_REDIRECT_URI;
-			const redirectUri = process.env.REACT_APP_GOOGLE_REDIRECT_URI;
+	// useEffect(() => {
+	// 	const params = new URLSearchParams(window.location.search);
+	// 	const code = params.get("code");
 
-			// Construct the authorization URL with all required scopes
-			const authUrl = new URL("https://accounts.google.com/o/oauth2/v2/auth");
-			authUrl.searchParams.append("client_id", clientId);
-			authUrl.searchParams.append("redirect_uri", redirectUri);
-			authUrl.searchParams.append("response_type", "code");
-			authUrl.searchParams.append("access_type", "offline");
-			authUrl.searchParams.append("prompt", "consent"); // Force prompt to get refresh token
-			authUrl.searchParams.append(
-				"scope",
-				[
-					"https://www.googleapis.com/auth/userinfo.profile",
-					"https://www.googleapis.com/auth/userinfo.email",
-					"https://www.googleapis.com/auth/calendar",
-					"https://www.googleapis.com/auth/calendar.events",
-				].join(" ")
-			);
+	// 	if (code) {
+	// 		// Exchange the authorization code for tokens
+	// 		exchangeCodeForTokens(code);
+	// 	}
+	// }, []);
 
-			// Redirect to Google's OAuth page
-			window.location.href = authUrl.toString();
-		} catch (error) {
-			console.error("Error initiating Google login:", error);
-			setError("Failed to initiate Google login");
-		}
-	};
+	// const exchangeCodeForTokens = async (code) => {
+	// 	try {
+	// 		const response = await fetch("https://oauth2.googleapis.com/token", {
+	// 			method: "POST",
+	// 			headers: {
+	// 				"Content-Type": "application/x-www-form-urlencoded",
+	// 			},
+	// 			body: new URLSearchParams({
+	// 				code: code,
+	// 				client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+	// 				client_secret: process.env.REACT_APP_GOOGLE_CLIENT_SECRET,
+	// 				redirect_uri: process.env.REACT_APP_GOOGLE_REDIRECT_URI,
+	// 				grant_type: "authorization_code",
+	// 			}),
+	// 		});
 
-	// Function to exchange authorization code for tokens
-	const exchangeCodeForTokens = async (code) => {
-		try {
-			const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-			const clientSecret = process.env.REACT_APP_GOOGLE_CLIENT_SECRET;
-			const redirectUri = process.env.REACT_APP_GOOGLE_REDIRECT_URI;
-
-			// Exchange code for tokens
-			const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/x-www-form-urlencoded",
-				},
-				body: new URLSearchParams({
-					code,
-					client_id: clientId,
-					client_secret: clientSecret,
-					redirect_uri: redirectUri,
-					grant_type: "authorization_code",
-				}),
-			});
-
-			if (!tokenResponse.ok) {
-				throw new Error("Failed to exchange code for tokens");
-			}
-
-			const tokens = await tokenResponse.json();
-			console.log("tokens", tokens);
-
-			// Send tokens to your backend
-			const response = await googleLoginAPI({
-				access_token: tokens.access_token,
-				refresh_token: tokens.refresh_token,
-				id_token: tokens.id_token,
-			});
-			console.log("response", response);
-
-			if (response.status === 200) {
-				const { user, token } = response;
-
-				// Handle successful login similar to existing code
-				if (!userVisitCount) {
-					localStorage.setItem("userVisit", 1);
-				} else {
-					localStorage.setItem("userVisit", 2);
-				}
-
-				localStorage.setItem("accessToken", token);
-				localStorage.setItem("isLoggedIn", "true");
-
-				if (!isInvestorSelected && user.isInvestor === "true") {
-					setError("Invalid credentials");
-					return;
-				}
-				if (isInvestorSelected && user.isInvestor === "false") {
-					setError("Invalid credentials");
-					return;
-				}
-
-				const storedAccountsKey =
-					user.isInvestor === "true" ? "InvestorAccounts" : "StartupAccounts";
-				const storedAccounts =
-					JSON.parse(localStorage.getItem(storedAccountsKey)) || [];
-
-				if (
-					!storedAccounts.some((account) => account.user?._id === user?._id)
-				) {
-					storedAccounts.push(response);
-					localStorage.setItem(
-						storedAccountsKey,
-						JSON.stringify(storedAccounts)
-					);
-				}
-
-				setIsLoginSuccessfull(true);
-
-				setTimeout(() => {
-					setIsInvestorSelected(false);
-					setIsLoginSuccessfull(false);
-					if (!user.isInvestor) navigate("/home");
-					else navigate("/investor/home");
-				}, 2000);
-
-				dispatch(loginSuccess(user));
-
-				const isInvestor = user.isInvestor === "true";
-				if (isInvestor) {
-					dispatch(fetchCompanyData(user.investor, isInvestor));
-				} else {
-					dispatch(fetchCompanyData(user._id, isInvestor));
-				}
-
-				dispatch(fetchAllChats());
-			}
-		} catch (error) {
-			console.error("Error during token exchange:", error);
-			setError("Google login failed. Please try again.");
-		}
-	};
-
-	// Handle OAuth redirect
-	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const code = urlParams.get("code");
-
-		if (code) {
-			exchangeCodeForTokens(code);
-			// Clean up URL
-			window.history.replaceState({}, document.title, window.location.pathname);
-		}
-	}, []);
+	// 		const data = await response.json();
+	// 		if (response.ok) {
+	// 			console.log("Access Token:", data.access_token);
+	// 			console.log("Refresh Token:", data.refresh_token);
+	// 			// Store tokens securely (e.g., in local storage or state)
+	// 		} else {
+	// 			console.error("Error exchanging code for tokens:", data);
+	// 		}
+	// 	} catch (error) {
+	// 		console.error("Error during token exchange:", error);
+	// 	}
+	// };
 
 	const handleCheckboxChange = () => {
 		setStaySignedIn(!staySignedIn);
@@ -553,24 +448,24 @@ const Login = () => {
 		document.title = "Log In | The Capital Hub";
 	}, []);
 
-	// const handleOtpChange = (event, index) => {
-	// 	const value = event.target.value;
-	// 	const updatedOtp = [...otp];
-	// 	updatedOtp[index] = value;
-	// 	setOtp(updatedOtp);
-	// 	if (value !== "" && index < otp.length - 1) {
-	// 		otpInputRefs.current[index + 1].focus();
-	// 	}
-	// };
+	const handleOtpChange = (event, index) => {
+		const value = event.target.value;
+		const updatedOtp = [...otp];
+		updatedOtp[index] = value;
+		setOtp(updatedOtp);
+		if (value !== "" && index < otp.length - 1) {
+			otpInputRefs.current[index + 1].focus();
+		}
+	};
 
-	// const handleOtpKeyDown = (event, index) => {
-	// 	if (event.key === "Backspace" && index > 0 && otp[index] === "") {
-	// 		const updatedOtp = [...otp];
-	// 		updatedOtp[index - 1] = "";
-	// 		setOtp(updatedOtp);
-	// 		otpInputRefs.current[index - 1].focus();
-	// 	}
-	// };
+	const handleOtpKeyDown = (event, index) => {
+		if (event.key === "Backspace" && index > 0 && otp[index] === "") {
+			const updatedOtp = [...otp];
+			updatedOtp[index - 1] = "";
+			setOtp(updatedOtp);
+			otpInputRefs.current[index - 1].focus();
+		}
+	};
 
 	const restPassword = async () => {
 		try {
@@ -593,95 +488,130 @@ const Login = () => {
 		}
 	};
 
-	// const validateEmail = (email) => {
-	// 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	// 	return emailRegex.test(email);
-	// };
+	const validateEmail = (email) => {
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return emailRegex.test(email);
+	};
 
 	// Function to validate password for spaces
 	const validatePassword = (password) => {
 		return !/\s/.test(password);
 	};
 
-	// const handleGoogleLoginSuccess = (credentialResponse) => {
-	// 	// console.log("Google Sign-In successful. Credential:", credentialResponse);
-	// 	googleLoginAPI(credentialResponse.credential).then((response) => {
-	// 		if (response.status === 200) {
-	// 			// console.log("Google Sign-In successful. Response:", response);
-	// 			// Redirect to the desired page
-	// 			// const isInvestorSelected = false;
-	// 			const user = response.user;
-	// 			const token = response.token;
-	// 			if (!userVisitCount) {
-	// 				localStorage.setItem("userVisit", 1);
-	// 			} else {
-	// 				localStorage.setItem("userVisit", 2);
-	// 			}
-	// 			localStorage.setItem("accessToken", token);
-	// 			localStorage.setItem("isLoggedIn", "true");
-	// 			if (response) {
-	// 				// console.log("response", response);
-	// 				if (!isInvestorSelected && response.user.isInvestor === "true") {
-	// 					setError("Invalid credentials");
-	// 					return;
-	// 				}
-	// 				if (isInvestorSelected && response.user.isInvestor === "false") {
-	// 					setError("Invalid credentials");
-	// 					return;
-	// 				}
+	const handleGoogleLoginSuccess = (credentialResponse) => {
+		// console.log("Google Sign-In successful. Credential:", credentialResponse);
+		googleLoginAPI(credentialResponse.credential).then((response) => {
+			if (response.status === 200) {
+				// console.log("Google Sign-In successful. Response:", response);
+				// Redirect to the desired page
+				// const isInvestorSelected = false;
+				const user = response.user;
+				const token = response.token;
+				if (!userVisitCount) {
+					localStorage.setItem("userVisit", 1);
+				} else {
+					localStorage.setItem("userVisit", 2);
+				}
+				localStorage.setItem("accessToken", token);
+				localStorage.setItem("isLoggedIn", "true");
+				if (response) {
+					// console.log("response", response);
+					if (!isInvestorSelected && response.user.isInvestor === "true") {
+						setError("Invalid credentials");
+						return;
+					}
+					if (isInvestorSelected && response.user.isInvestor === "false") {
+						setError("Invalid credentials");
+						return;
+					}
 
-	// 				const storedAccountsKey =
-	// 					response.user.isInvestor === "true"
-	// 						? "InvestorAccounts"
-	// 						: "StartupAccounts";
-	// 				const storedAccounts =
-	// 					JSON.parse(localStorage.getItem(storedAccountsKey)) || [];
-	// 				const isAccountExists = storedAccounts.some(
-	// 					(account) => account.user?._id === user?._id
-	// 				);
+					const storedAccountsKey =
+						response.user.isInvestor === "true"
+							? "InvestorAccounts"
+							: "StartupAccounts";
+					const storedAccounts =
+						JSON.parse(localStorage.getItem(storedAccountsKey)) || [];
+					const isAccountExists = storedAccounts.some(
+						(account) => account.user?._id === user?._id
+					);
 
-	// 				if (!isAccountExists) {
-	// 					storedAccounts.push(response);
-	// 					localStorage.setItem(
-	// 						storedAccountsKey,
-	// 						JSON.stringify(storedAccounts)
-	// 					);
-	// 				}
+					if (!isAccountExists) {
+						storedAccounts.push(response);
+						localStorage.setItem(
+							storedAccountsKey,
+							JSON.stringify(storedAccounts)
+						);
+					}
 
-	// 				setIsLoginSuccessfull(true);
+					setIsLoginSuccessfull(true);
 
-	// 				setTimeout(() => {
-	// 					setIsInvestorSelected(false);
-	// 					setIsLoginSuccessfull(false);
+					setTimeout(() => {
+						setIsInvestorSelected(false);
+						setIsLoginSuccessfull(false);
 
-	// 					if (!response.user.isInvestor) navigate("/home");
-	// 					else navigate("/investor/home");
-	// 				}, 2000);
+						if (!response.user.isInvestor) navigate("/home");
+						else navigate("/investor/home");
+					}, 2000);
 
-	// 				dispatch(loginSuccess(response?.user));
+					dispatch(loginSuccess(response?.user));
 
-	// 				// console.log("Is Investor:", response?.data?.isInvestor);
-	// 				let isInvestor = response?.user?.isInvestor === "true" ? true : false;
-	// 				if (isInvestor) {
-	// 					dispatch(fetchCompanyData(response?.user?.investor, isInvestor));
-	// 				} else {
-	// 					dispatch(fetchCompanyData(response?.user?._id, isInvestor));
-	// 				}
+					// console.log("Is Investor:", response?.data?.isInvestor);
+					let isInvestor = response?.user?.isInvestor === "true" ? true : false;
+					if (isInvestor) {
+						dispatch(fetchCompanyData(response?.user?.investor, isInvestor));
+					} else {
+						dispatch(fetchCompanyData(response?.user?._id, isInvestor));
+					}
 
-	// 				dispatch(fetchAllChats());
-	// 			}
-	// 		} else {
-	// 			console.error("Google Sign-In failed. Response:", response);
-	// 			setError("Google Sign-In failed. Please try again.");
-	// 		}
-	// 	});
-	// };
+					dispatch(fetchAllChats());
+				}
+			} else {
+				console.error("Google Sign-In failed. Response:", response);
+				setError("Google Sign-In failed. Please try again.");
+			}
+		});
+	};
 
-	// const handleGoogleLoginError = () => {
-	// 	console.error("Google Sign-In failed");
-	// 	setError("Google Sign-In failed. Please try again.");
-	// };
+	const handleGoogleLoginError = () => {
+		console.error("Google Sign-In failed");
+		setError("Google Sign-In failed. Please try again.");
+	};
+	// const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+	// if (!clientId) {
+	// 	console.error("Google OAuth Client ID is not set.");
+	// } else {
+	// 	console.log("Google OAuth Client ID:", clientId);
+	// }
 
+	const handleGoogleLogin = async () => {
+		try {
+			const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+			const redirect_uri = process.env.REACT_APP_GOOGLE_REDIRECT_URI;
+
+			// Check if the client ID is set
+			if (!clientId) {
+				console.error("Google OAuth Client ID is not set.");
+				return; // Exit the function if the client ID is not available
+			}
+
+			console.log("Google OAuth Client ID:", clientId);
+
+			// Construct the Google OAuth login URL
+			const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+				redirect_uri
+			)}&scope=${encodeURIComponent(
+				"https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+			)}&access_type=offline&prompt=consent`;
+
+			// Redirect the user to the Google OAuth login page
+			window.location.href = googleLoginUrl;
+		} catch (error) {
+			console.error("Error logging in with Google:", error);
+		}
+	};
+
+	if (isLoginSuccessfull) {
+	}
 	return (
 		<div className="register_container">
 			{/* Left side colomn */}
@@ -761,28 +691,11 @@ const Login = () => {
 					className="flex justify-center space-x-4"
 					style={{ display: "flex", gap: 10 }}
 				>
-					{/* <GoogleLogin
-						isInvestorSelected={isInvestorSelected}
-						setIsLoginSuccessfull={setIsLoginSuccessfull}
-						setError={setError}
-						setIsInvestorSelected={setIsInvestorSelected}
-					/> */}
-					<button
-						// className="p-2 bg-white border border-gray-300 rounded-full"
-						style={{
-							padding: "0.5rem",
-							backgroundColor: "white",
-							border: "none",
-						}}
-						onClick={handleGoogleLogin}
-					>
-						<img src={GIcon} alt="Google" width={24} height={24} />
-					</button>
-					{/* <GoogleLogin
+					<GoogleLogin
 						onSuccess={handleGoogleLoginSuccess}
 						onError={handleGoogleLoginError}
 						useOneTap
-					/> */}
+					/>
 					<LinkedInLogin
 						isInvestorSelected={isInvestorSelected}
 						setIsLoginSuccessfull={setIsLoginSuccessfull}
