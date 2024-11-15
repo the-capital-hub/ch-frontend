@@ -842,7 +842,7 @@ const FeedPostCard = ({
 									<span className="vote-count">{option.votes?.length || 0} votes</span>
 								</div>
 								<button
-									className={`vote-button ${hasVoted ? 'voted' : ''}`}
+									className={`vote-button ${hasVoted ? 'votedStartUpThemeColor' : ''}`}
 									onClick={(e) => {
 										e.stopPropagation();
 										handleVoteClick(option._id);

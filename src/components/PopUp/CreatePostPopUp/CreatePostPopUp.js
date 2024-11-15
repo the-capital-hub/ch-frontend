@@ -38,6 +38,72 @@ const stripHtmlTags = (html) => {
           ---posted through TheCapitalHub(TheCapitalHub.in)`;
 };
 
+const PollPopup = ({ onSave, initialOptions = ["", ""], onClose }) => {
+	const [localPollOptions, setLocalPollOptions] = useState(initialOptions);
+
+	const handleAddOption = () => {
+		if (localPollOptions.length < 4) {
+			setLocalPollOptions([...localPollOptions, ""]);
+		}
+	};
+
+	const handleRemoveOption = (index) => {
+		const newOptions = localPollOptions.filter((_, i) => i !== index);
+		setLocalPollOptions(newOptions);
+	};
+
+	const handleOptionChange = (index, value) => {
+		const newOptions = [...localPollOptions];
+		newOptions[index] = value;
+		setLocalPollOptions(newOptions);
+	};
+
+	const handleSave = () => {
+		const validOptions = localPollOptions.filter(opt => opt.trim() !== "");
+		if (validOptions.length >= 2) {
+			onSave(validOptions);
+			onClose();
+		} else {
+			toast.error("Please add at least 2 valid options");
+		}
+	};
+
+	return (
+		<>
+			<div className="poll-popup-overlay" onClick={onClose} />
+			<div className="poll-popup">
+				<h3>Create Poll</h3>
+				<div className="poll-options-container">
+					{localPollOptions.map((option, index) => (
+						<div key={index} className="poll-option-input">
+							<input
+								type="text"
+								value={option}
+								onChange={(e) => handleOptionChange(index, e.target.value)}
+								placeholder={`Option ${index + 1}`}
+								maxLength={100}
+							/>
+							{localPollOptions.length > 2 && (
+								<button onClick={() => handleRemoveOption(index)}>×</button>
+							)}
+						</div>
+					))}
+				</div>
+				<div className="poll-popup-buttons">
+					{localPollOptions.length < 4 && (
+						<button className="add-option" onClick={handleAddOption}>
+							Add Option
+						</button>
+					)}
+					<button className="save-poll" onClick={handleSave}>
+						Save Poll
+					</button>
+				</div>
+			</div>
+		</>
+	);
+};
+
 const CreatePostPopUp = ({
 	setPopupOpen,
 	popupOpen,
@@ -91,11 +157,6 @@ const CreatePostPopUp = ({
 	const handleCameraButtonClick = () => {
 		cameraInputRef.current.click();
 	};
-
-	const handleAddPollOption = () => {
-		setPollOptions((prevOptions) => [...prevOptions, ""]);
-		console.log("Poll", pollOptions);
-	  };
 
 	const [cropComplete, setCropComplete] = useState(false);
 	const [previewVideo, setPreviewVideo] = useState("");
@@ -401,70 +462,6 @@ const CreatePostPopUp = ({
 
 	const [showPollPopup, setShowPollPopup] = useState(false);
 
-	const PollPopup = () => {
-		const handleAddOption = () => {
-			if (pollOptions.length < 4) {
-				setPollOptions([...pollOptions, ""]);
-			}
-		};
-
-		const handleRemoveOption = (index) => {
-			const newOptions = pollOptions.filter((_, i) => i !== index);
-			setPollOptions(newOptions);
-		};
-
-		const handleOptionChange = (index, value) => {
-			const newOptions = [...pollOptions];
-			newOptions[index] = value;
-			setPollOptions(newOptions);
-		};
-
-		const handleSave = () => {
-			const validOptions = pollOptions.filter(opt => opt.trim() !== "");
-			if (validOptions.length >= 2) {
-				setPollOptions(validOptions);
-				setShowPollPopup(false);
-			} else {
-				toast.error("Please add at least 2 valid options");
-			}
-		};
-
-		return (
-			<>
-				<div className="poll-popup-overlay" onClick={() => setShowPollPopup(false)} />
-				<div className="poll-popup">
-					<h3>Create Poll</h3>
-					<div className="poll-options-container">
-						{pollOptions.map((option, index) => (
-							<div key={index} className="poll-option-input">
-								<input
-									type="text"
-									value={option}
-									onChange={(e) => handleOptionChange(index, e.target.value)}
-									placeholder={`Option ${index + 1}`}
-									maxLength={100}
-								/>
-								{pollOptions.length > 2 && (
-									<button onClick={() => handleRemoveOption(index)}>×</button>
-								)}
-							</div>
-						))}
-					</div>
-					<div className="poll-popup-buttons">
-						{pollOptions.length < 4 && (
-							<button className="add-option" onClick={handleAddOption}>
-								Add Option
-							</button>
-						)}
-						<button className="save-poll" onClick={handleSave}>
-							Save Poll
-						</button>
-					</div>
-				</div>
-			</>
-		);
-	};
-
 	return (
 		<>
 			{popupOpen && <div className="createpost-background-overlay"></div>}
@@ -765,7 +762,15 @@ const CreatePostPopUp = ({
 					</div>
 				</div>
 			</div>
-			{showPollPopup && <PollPopup />}
+			{showPollPopup && (
+				<PollPopup 
+					initialOptions={pollOptions}
+					onSave={(newOptions) => {
+						setPollOptions(newOptions);
+					}}
+					onClose={() => setShowPollPopup(false)}
+				/>
+			)}
 		</>
 	);
 };

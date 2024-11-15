@@ -677,10 +677,10 @@
 				cursor: not-allowed;
 			}
 
-			&.voted {
-				background: #fd5901;
-				color: white;
-				border-color: #fd5901;
+			&.votedStartUpThemeColor {
+				background: #fd5901 !important;
+				color: white !important;
+				border-color: #fd5901 !important;
 			}
 		}
 	}
