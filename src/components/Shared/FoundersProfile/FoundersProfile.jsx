@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import {
-	FaEnvelope,
 	FaMapMarkerAlt,
 	FaCalendarAlt,
 	FaLinkedin,
@@ -12,7 +11,6 @@ import {
 	FaSun,
 	FaGraduationCap,
 	FaBriefcase,
-	FaNewspaper,
 	FaRegComment,
 	FaHeart,
 	FaShare,
@@ -22,20 +20,38 @@ import {
 import UserPic from "../../../Images/UserPic.jpg";
 import AIPoster from "../../../Images/AIPoster.jpg";
 import { environment } from "../../../environments/environment";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import ImageCarousel from "../../Investor/Cards/FeedPost/ImageCarousel/ImageCarousel";
 import "./FounderProfile.scss";
 
+const Spinner = () => (
+	<div className="loader-container">
+		<div className="loader">
+			<div className="loader-inner"></div>
+		</div>
+	</div>
+);
+
 const FounderProfile = () => {
-	const [theme, setTheme] = useState("light");
+	const [theme, setTheme] = useState("dark");
 	const [activeTab, setActiveTab] = useState("posts");
 	const [activeInterestTab, setActiveInterestTab] = useState("Top Voices");
 	const [founder, setFounder] = useState(null);
+	const [post, setPost] = useState(null);
 	const [events, setEvents] = useState([]);
+	const [loading, setLoading] = useState(false);
+
 	const { username } = useParams();
 	const navigate = useNavigate();
 	// console.log("userName", username);
-	// console.log("founder", founder);
+	console.log("founder", founder);
+	console.log("post", post);
 	// console.log("events", events);
+
+	// Set initial theme when component mounts
+	useEffect(() => {
+		document.body.setAttribute("data-theme", "dark");
+	}, []);
 
 	const toggleTheme = () => {
 		const newTheme = theme === "light" ? "dark" : "light";
@@ -43,8 +59,10 @@ const FounderProfile = () => {
 		document.body.setAttribute("data-theme", newTheme);
 	};
 
+	// /getUserByUserName - Founder data other than events
 	useEffect(() => {
 		const fetchFounderData = async () => {
+			setLoading(true);
 			try {
 				const response = await fetch(
 					`${environment.baseUrl}/users/getUserByUserName`,
@@ -58,11 +76,15 @@ const FounderProfile = () => {
 				);
 				if (response.ok) {
 					const data = await response.json();
-					setFounder(data);
+					setLoading(false);
+					setFounder(data.user);
+					setPost(data.post);
 				} else {
+					setLoading(false);
 					console.error("Failed to fetch founder data");
 				}
 			} catch (error) {
+				setLoading(false);
 				console.error("Error fetching founder data:", error);
 			}
 		};
@@ -70,9 +92,10 @@ const FounderProfile = () => {
 		fetchFounderData();
 	}, [username]);
 
-	// /getEvents/:username
+	// /getEvents/:username - Events
 	useEffect(() => {
 		const fetchEvents = async () => {
+			setLoading(true);
 			try {
 				const response = await fetch(
 					`${environment.baseUrl}/meetings/getEvents/${username}`,
@@ -88,12 +111,15 @@ const FounderProfile = () => {
 					const publicEvents = data.data.filter(
 						(event) => event.isPrivate === false
 					);
+					setLoading(false);
 					setEvents(publicEvents);
 					// setEvents(data.data);
 				} else {
+					setLoading(false);
 					console.error("Failed to fetch events");
 				}
 			} catch (error) {
+				setLoading(false);
 				console.error("Error fetching events:", error);
 			}
 		};
@@ -231,16 +257,10 @@ const FounderProfile = () => {
 		},
 	};
 
-	const meetingTypes = [
-		{
-			id: "673196cba3d46eeaf9647b8c",
-			title: "Dummy Meeting",
-			duration: "30 mins",
-			type: "Public",
-			description: "Its a dummy meeting, Means no events to show.",
-			bookings: 1,
-		},
-	];
+	const formatedDate = (date) => {
+		const options = { year: "numeric", month: "long", day: "numeric" };
+		return new Date(date).toLocaleDateString("en-IN", options);
+	};
 
 	const founderData = founder
 		? {
@@ -252,36 +272,28 @@ const FounderProfile = () => {
 				joined: founder.startUp.startedAtDate || dummyData.joined,
 				about: founder.bio || dummyData.about,
 				profilePic: founder.profilePicture || "", // Assuming a default empty string if not provided
-				education: founder.education.length
-					? founder.education
-					: dummyData.education,
-				experience: [
-					{
-						company: founder.startUp.company || dummyData.experience[0].company,
-						role: founder.designation || dummyData.experience[0].role,
-						duration:
-							founder.startUp.startedAtDate || dummyData.experience[0].duration,
-						description:
-							founder.startUp.description ||
-							dummyData.experience[0].description,
-					},
-				],
 				publicLinks: {
 					website:
-						founder.startUp.socialLinks.website ||
-						dummyData.publicLinks.website,
+						founder.startUp.socialLinks?.website ||
+						dummyData.publicLinks?.website,
 					linkedin: founder.linkedin || dummyData.publicLinks.linkedin,
 					github: founder.startUp.github || dummyData.publicLinks.github,
 				},
 				activities: {
 					posts:
-						(founder.featuredPosts || []).map((post) => ({
-							content: post.description || "",
+						post.map((post) => ({
+							content: post.description
+								? post.description.replace(/<[^>]*>/g, "")
+								: "",
 							image: post.image || "",
-							like: (post.likes || []).length,
-							date: post.createdAt || "",
-							comments: (post.comments || []).length,
-							shares: (post.shares || []).length || 0,
+							images: post.images || [],
+							like: post.likes && post.likes.length ? post.likes.length : 0, // Number of likes
+							comments:
+								post.comments && post.comments.length
+									? post.comments.length
+									: 0, // Number of comments
+							shares: post.resharedCount || 0, // Use resharedCount for the number of shares, defaults to 0 if not present
+							date: formatedDate(post.createdAt) || "",
 						})) || dummyData.activities.posts,
 					comments:
 						(founder.comments || []).map((comment) => ({
@@ -307,18 +319,24 @@ const FounderProfile = () => {
 						<div key={post.id} className="post-card">
 							<div className="post-content">
 								<p>{post.content}</p>
-								{post.image && (
-									<img
-										src={post.image}
-										alt="Post"
-										className="post-image"
-										style={{ width: "600px", height: "400px" }}
-									/>
+								{/* Check for multiple images first */}
+								{post.images && post.images.length > 0 ? (
+									<ImageCarousel images={post.images} />
+								) : (
+									// If no multiple images, check for single image
+									post.image && (
+										<img
+											src={post.image}
+											alt="Post"
+											className="post-image"
+											style={{ width: "600px", height: "400px" }}
+										/>
+									)
 								)}
 							</div>
 							<div className="post-stats">
 								<span>
-									<FaHeart /> {post.likes}
+									<FaHeart /> {post.like}
 								</span>
 								<span>
 									<FaRegComment /> {post.comments}
@@ -359,18 +377,26 @@ const FounderProfile = () => {
 		navigate(`/meeting/schedule/${username}/${meetingId}`);
 	};
 
-	// users/getUserByUserName  -> search with userName
+	const renderNoDataMessage = (section) => (
+		<div className="no-data-message">
+			<p>No {section} data available</p>
+		</div>
+	);
+
+	if (loading || events.length === 0) {
+		return <Spinner />;
+	}
 
 	return (
 		<>
 			<Helmet>
-				<title>{`${founderData.name} - ${founderData.title}`}</title>
-				<meta name="description" content={founderData.about} />
+				<title>{`${founderData?.name} - ${founderData?.title}`}</title>
+				<meta name="description" content={founderData?.about} />
 				<meta
 					property="og:title"
-					content={`${founderData.name} - ${founderData.title}`}
+					content={`${founderData?.name} - ${founderData?.title}`}
 				/>
-				<meta property="og:description" content={founderData.about} />
+				<meta property="og:description" content={founderData?.about} />
 			</Helmet>
 
 			<div className="profile-container">
@@ -391,15 +417,15 @@ const FounderProfile = () => {
 					<section className="profile-header">
 						<div className="profile-avatar">
 							{/* <span>{founderData.name.charAt(0)}</span> */}
-							<img src={founderData.profilePic} alt="Profile" />
+							<img src={founderData?.profilePic} alt="Profile" />
 						</div>
 						<div className="profile-info">
-							<h1>{founderData.name}</h1>
-							<p className="title">{founderData.title}</p>
-							<p className="company">{founderData.company}</p>
+							<h1>{founderData?.name}</h1>
+							<p className="title">{founderData?.title}</p>
+							<p className="company">{founderData?.company}</p>
 							<div className="location">
 								<FaMapMarkerAlt />
-								<span>{founderData.location}</span>
+								<span>{founderData?.location}</span>
 							</div>
 						</div>
 						{/* <div className="profile-actions">
@@ -412,75 +438,94 @@ const FounderProfile = () => {
 					{/* About Section */}
 					<section className="profile-section">
 						<h2>About</h2>
-						<p>{founderData.about}</p>
+						{founderData?.about ? (
+							<p>{founderData.about}</p>
+						) : (
+							renderNoDataMessage("about")
+						)}
 					</section>
 
-					{/* Education Section */}
+					{/* Education Section - Direct Rendering */}
 					<section className="profile-section">
 						<h2>
 							<FaGraduationCap /> Education
 						</h2>
 						<div className="education-list">
-							{founderData.education.map((edu, index) => (
-								<div key={index} className="education-item">
-									<h3>{edu.school}</h3>
-									<p>{edu.degree}</p>
-									<span className="year">{edu.year}</span>
+							{founder?.education ? (
+								<div className="education-item">
+									<p className="text-base">{founder.education}</p>
 								</div>
-							))}
+							) : (
+								<div className="no-data-message">
+									<p>No education data available</p>
+								</div>
+							)}
 						</div>
 					</section>
 
-					{/* Experience Section */}
+					{/* Experience Section - Direct Rendering */}
 					<section className="profile-section">
 						<h2>
 							<FaBriefcase /> Experience
 						</h2>
 						<div className="experience-list">
-							{founderData.experience.map((exp, index) => (
-								<div key={index} className="experience-item">
-									<h3>{exp.company}</h3>
-									<p className="role">{exp.role}</p>
-									<p className="duration">{exp.duration}</p>
-									<p className="description">{exp.description}</p>
+							{founder?.startUp ? (
+								<div className="experience-item">
+									<h3>{founder.startUp.company}</h3>
+									<p className="role">{founder.designation}</p>
+									<p className="duration">{founder.startUp.startedAtDate}</p>
+									<p className="description">{founder.startUp.description}</p>
+									<p className="location">{founder.experience}</p>
 								</div>
-							))}
+							) : (
+								<div className="no-data-message">
+									<p>No experience data available</p>
+								</div>
+							)}
 						</div>
 					</section>
 
-					{/* Meetings section */}
+					{/* Public Events Section with Vertical Scroll */}
 					<section className="profile-section meeting-section">
 						<h2>
-							<FaCalendarAlt /> Schedule a Meeting
+							<FaCalendarAlt /> Public Events
 						</h2>
-						<div className="meeting-cards">
-							{events.map((meeting) => (
-								<div
-									key={meeting._id}
-									className="meeting-card"
-									onClick={() => handleMeetingClick(meeting._id)}
-								>
-									<div className="meeting-card-header">
-										<h3>{meeting.title}</h3>
-										<span className="meeting-type">
-											{meeting.isPrivate ? "Private" : "Public"}
-										</span>
-									</div>
-									<div className="meeting-card-content">
-										<div className="meeting-duration">
-											<FaClock />
-											<span>{meeting.duration} minutes</span>
+						<div className="meeting-cards-container">
+							<div className="meeting-cards">
+								{events.length > 0 ? (
+									events.map((meeting) => (
+										<div
+											key={meeting._id}
+											className="meeting-card"
+											onClick={() => handleMeetingClick(meeting._id)}
+										>
+											<div className="meeting-card-header">
+												<h3>{meeting.title}</h3>
+												<span className="meeting-type">
+													{meeting.isPrivate ? "Private" : "Public"}
+												</span>
+											</div>
+											<div className="meeting-card-content">
+												<div className="meeting-duration">
+													<FaClock />
+													<span>{meeting.duration} minutes</span>
+												</div>
+												<p>{meeting.description}</p>
+											</div>
+											<div className="meeting-card-footer">
+												<span className="bookings-count">
+													{meeting?.bookings?.length}{" "}
+													{meeting?.bookings?.length === 1
+														? "Booking"
+														: "Bookings"}
+												</span>
+											</div>
 										</div>
-										<p>{meeting.description}</p>
-									</div>
-									<div className="meeting-card-footer">
-										<span className="bookings-count">
-											{meeting?.bookings.length}{" "}
-											{meeting?.bookings?.length === 1 ? "Booking" : "Bookings"}
-										</span>
-									</div>
-								</div>
-							))}
+									))
+								) : (
+									<p>No Events Created Yet</p>
+								)}
+							</div>
 						</div>
 					</section>
 
@@ -494,21 +539,32 @@ const FounderProfile = () => {
 							>
 								Posts
 							</button>
-							<button
+							{/* <button
 								className={`tab ${activeTab === "comments" ? "active" : ""}`}
 								onClick={() => setActiveTab("comments")}
 							>
 								Comments
-							</button>
+							</button> */}
 						</div>
-						<div className="activity-content">{renderActivityContent()}</div>
+						<div className="activity-content">
+							{activeTab === "posts" &&
+								founderData?.activities?.posts?.length === 0 &&
+								renderNoDataMessage("posts")}
+							{activeTab === "comments" &&
+								founderData?.activities?.comments?.length === 0 &&
+								renderNoDataMessage("comments")}
+							{renderActivityContent()}
+						</div>
 					</section>
 
-					{/* Interests Section */}
+					{/* Interests Section - Show Dummy Data if No Data Available */}
 					<section className="profile-section interests-section">
 						<h2>Interests</h2>
 						<div className="interests-tabs">
-							{founderData.interests.categories.map((category) => (
+							{(
+								founderData?.interests?.categories ||
+								dummyData.interests.categories
+							).map((category) => (
 								<button
 									key={category.title}
 									className={`tab ${
@@ -521,7 +577,10 @@ const FounderProfile = () => {
 							))}
 						</div>
 						<div className="interests-content">
-							{founderData.interests.categories
+							{(
+								founderData?.interests?.categories ||
+								dummyData.interests.categories
+							)
 								.find((category) => category.title === activeInterestTab)
 								?.items.map((item, index) => (
 									<div key={index} className="interest-card">
@@ -541,17 +600,36 @@ const FounderProfile = () => {
 					{/* Public Links Section */}
 					<section className="profile-section">
 						<h2>Public Links</h2>
-						<div className="public-links">
-							<a href={founderData.publicLinks.website} className="link-item">
-								<FaGlobe /> Website
-							</a>
-							<a href={founderData.publicLinks.linkedin} className="link-item">
-								<FaLinkedin /> LinkedIn
-							</a>
-							<a href={founderData.publicLinks.github} className="link-item">
-								<FaGithub /> GitHub
-							</a>
-						</div>
+						{founderData?.publicLinks ? (
+							<div className="public-links">
+								{founderData.publicLinks.website && (
+									<a
+										href={founderData.publicLinks.website}
+										className="link-item"
+									>
+										<FaGlobe /> Website
+									</a>
+								)}
+								{founderData.publicLinks.linkedin && (
+									<a
+										href={founderData.publicLinks.linkedin}
+										className="link-item"
+									>
+										<FaLinkedin /> LinkedIn
+									</a>
+								)}
+								{founderData.publicLinks.github && (
+									<a
+										href={founderData.publicLinks.github}
+										className="link-item"
+									>
+										<FaGithub /> GitHub
+									</a>
+								)}
+							</div>
+						) : (
+							renderNoDataMessage("public links")
+						)}
 					</section>
 				</main>
 			</div>

@@ -255,7 +255,7 @@ const MeetingScheduler = () => {
 					</div>
 					<div className="meeting-info">
 						<ImPriceTags />
-						<span>Even Price</span>
+						<span>Event Price</span>
 						<div className="price">
 							{events[0]?.price > 0 && (
 								<div className="price-tag">
