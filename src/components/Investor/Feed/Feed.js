@@ -276,7 +276,7 @@ const Feed = () => {
 							<TutorialTrigger steps={startupOnboardingSteps.homePage} />
 
 							{/* Looking for funding */}
-							<LookingForFund />
+							{/* <LookingForFund /> */}
 
 							{/* Write a Post */}
 							<div
