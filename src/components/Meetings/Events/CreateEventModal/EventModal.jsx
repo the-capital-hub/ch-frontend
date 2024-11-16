@@ -8,6 +8,8 @@ const EventModal = ({ isOpen, onClose, onSubmit }) => {
 		description: "",
 		duration: 30,
 		isPrivate: false,
+		price: 0,
+		discount: 0,
 	});
 
 	const handleChange = (e) => {
@@ -26,6 +28,8 @@ const EventModal = ({ isOpen, onClose, onSubmit }) => {
 			description: "",
 			duration: 30,
 			isPrivate: false,
+			price: 0,
+			discount: 0,
 		});
 	};
 
@@ -84,6 +88,28 @@ const EventModal = ({ isOpen, onClose, onSubmit }) => {
 							<option value="true">Private</option>
 							<option value="false">Public</option>
 						</select>
+					</div>
+
+					<div className="form-group">
+						<label htmlFor="price">Event Price</label>
+						<input
+							type="number"
+							id="price"
+							name="price"
+							value={eventData.price}
+							onChange={handleChange}
+						/>
+					</div>
+
+					<div className="form-group">
+						<label htmlFor="discount">Price Discount (%)</label>
+						<input
+							type="number"
+							id="discount"
+							name="discount"
+							value={eventData.discount}
+							onChange={handleChange}
+						/>
 					</div>
 
 					<div className="modal-actions">

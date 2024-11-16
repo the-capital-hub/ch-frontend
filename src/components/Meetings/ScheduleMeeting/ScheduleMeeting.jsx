@@ -6,6 +6,7 @@ import {
 	FaChevronLeft,
 	FaChevronRight,
 } from "react-icons/fa";
+import { ImPriceTags } from "react-icons/im";
 import Calendar from "react-calendar";
 import "./ScheduleMeeting.scss";
 import { useParams } from "react-router-dom";
@@ -33,6 +34,7 @@ const MeetingScheduler = () => {
 	const [events, setEvents] = useState([]);
 	const [meetingLink, setMeetingLink] = useState("");
 	const [error, setError] = useState("");
+	console.log("events", events);
 
 	// const login = useGoogleLogin({
 	// 	onSuccess: (tokenResponse) => {
@@ -210,6 +212,18 @@ const MeetingScheduler = () => {
 		}
 	};
 
+	const calculateDiscountedPrice = (price, discountPercentage) => {
+		if (discountPercentage && discountPercentage > 0) {
+			const discountAmount = (price * discountPercentage) / 100;
+			return price - discountAmount;
+		}
+		return price;
+	};
+
+	const formatPrice = (price) => {
+		return price === 0 ? "Free" : `₹${price.toFixed(0)}`;
+	};
+
 	if (loading) {
 		return <Spinner />;
 	}
@@ -238,6 +252,39 @@ const MeetingScheduler = () => {
 					<div className="meeting-info">
 						<FaVideo />
 						<span>Google Meet</span>
+					</div>
+					<div className="meeting-info">
+						<ImPriceTags />
+						<span>Even Price</span>
+						<div className="price">
+							{events[0]?.price > 0 && (
+								<div className="price-tag">
+									{events[0]?.discount > 0 && (
+										<>
+											<span className="original-price">
+												{formatPrice(events[0]?.price)}
+											</span>
+											{/* <span className="discount-badge">
+												{events[0]?.discount}% OFF
+											</span> */}
+										</>
+									)}
+									<span className="new-price">
+										{formatPrice(
+											calculateDiscountedPrice(
+												events[0]?.price,
+												events[0]?.discount
+											)
+										)}
+									</span>
+								</div>
+							)}
+							{events[0]?.price === 0 && (
+								<div className="price-tag">
+									<span className="new-price">Free</span>
+								</div>
+							)}
+						</div>
 					</div>
 
 					<p className="meeting-description">

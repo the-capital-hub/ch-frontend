@@ -19,9 +19,11 @@
 	width: 100%;
 	max-width: 500px;
 	max-height: 90vh;
-	overflow-y: auto;
 	position: relative;
 	animation: modal-appear 0.3s ease-out;
+	overflow-y: scroll;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 
 	h2 {
 		font-size: 1.25rem;
@@ -35,6 +37,9 @@
 		flex-direction: column;
 		gap: 1.25rem;
 	}
+}
+.modal-content::-webkit-scrollbar {
+	display: none; /* Hide scrollbar in WebKit browsers */
 }
 
 .form-group {
