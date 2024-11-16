@@ -3,6 +3,7 @@ import {
 	ProSidebar,
 	Menu,
 	MenuItem,
+	SubMenu,
 	SidebarHeader,
 	SidebarFooter,
 	SidebarContent,
@@ -17,6 +18,9 @@ import { IoExitOutline } from "react-icons/io5";
 import PlusIcon from "../../../Images/investorIcon/Plus.svg";
 import { BsLink45Deg, BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { IoAnalyticsSharp } from "react-icons/io5";
+import { IoCalendarOutline } from "react-icons/io5";
+import { SlCalender } from "react-icons/sl";
+import { BsCalendarEvent, BsClipboardCheck, BsClock } from "react-icons/bs";
 import "react-pro-sidebar/dist/css/styles.css";
 import "./investorsidebar.scss";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -43,6 +47,11 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 
 	const [showLogoutPopup, setShowLogoutPopup] = useState(false);
 	const [isCommunityDetailOpen, setIsCommunityDetailOpen] = useState(false);
+	const [isMeetingDetailOpen, setIsMeetingDetailOpen] = useState(false);
+
+	const toggleSubMenu = () => {
+		setIsMeetingDetailOpen(!isMeetingDetailOpen);
+	};
 
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -254,7 +263,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Home</span>}
 								</Link>
 							</MenuItem>
-
 							<MenuItem
 								active={location.pathname.includes("/company-profile")}
 								className="active-item"
@@ -268,7 +276,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Company</span>}
 								</Link>
 							</MenuItem>
-
 							<MenuItem
 								active={location.pathname.includes("/explore")}
 								className="active-item"
@@ -282,7 +289,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Explore</span>}
 								</Link>
 							</MenuItem>
-
 							<MenuItem
 								active={location.pathname.includes("/news")}
 								className="active-item"
@@ -292,7 +298,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>News</span>}
 								</Link>
 							</MenuItem>
-
 							<MenuItem
 								active={location.pathname.includes("/onelink")}
 								className="active-item"
@@ -306,7 +311,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>OneLink</span>}
 								</Link>
 							</MenuItem>
-
 							<MenuItem
 								active={location.pathname.includes("/chats")}
 								className="active-item"
@@ -358,7 +362,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									)}
 								</div>
 							</MenuItem>
-
 							<MenuItem
 								active={location.pathname.includes("/documentation")}
 								className="active-item"
@@ -372,7 +375,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Documentation</span>}
 								</Link>
 							</MenuItem>
-
 							<MenuItem
 								active={location.pathname.includes("/savePost")}
 								className="active-item"
@@ -386,7 +388,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Saved posts</span>}
 								</Link>
 							</MenuItem>
-
 							<MenuItem
 								active={location.pathname.includes("/connection")}
 								className="active-item"
@@ -400,7 +401,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Connections</span>}
 								</Link>
 							</MenuItem>
-
 							<MenuItem
 								active={location.pathname.includes("/user-analytics")}
 								className="active-item"
@@ -416,6 +416,72 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 							</MenuItem>
 
 							<MenuItem
+								active={location.pathname.includes("/chats")}
+								className="active-item"
+							>
+								<div
+									className="sidebar__community d-flex gap-4"
+									id="sidebar_community"
+								>
+									<div onClick={handleLinkClick}>
+										<IoCalendarOutline
+											size={25}
+											color={`${
+												isMeetingDetailOpen ? "#fd5901" : "var(--d-l-grey)"
+											}`}
+											className="me-1"
+										/>
+									</div>
+									{!sidebarCollapsed && (
+										<details className="">
+											<summary
+												className="d-flex align-items-center gap-2"
+												onClick={() =>
+													setIsMeetingDetailOpen(!isMeetingDetailOpen)
+												}
+											>
+												Meetings
+												{isMeetingDetailOpen ? (
+													<BsChevronUp />
+												) : (
+													<BsChevronDown />
+												)}
+											</summary>
+											<div className="d-flex flex-column gap-2">
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={() => {
+														setSidebarCollapsed(true);
+														navigate("/meeting/events");
+													}}
+												>
+													Events
+												</button>
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={() => {
+														setSidebarCollapsed(true);
+														navigate("/meeting/plans");
+													}}
+												>
+													Plans
+												</button>
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={() => {
+														setSidebarCollapsed(true);
+														navigate("/meeting/availability");
+													}}
+												>
+													Availability
+												</button>
+											</div>
+										</details>
+									)}
+								</div>
+							</MenuItem>
+
+							<MenuItem
 								active={location.pathname.includes("/help")}
 								className="active-item"
 							>
@@ -424,7 +490,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Help</span>}
 								</Link>
 							</MenuItem>
-
 							<MenuItem
 								active={location.pathname.includes("/settings")}
 								className="active-item"
@@ -434,7 +499,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Settings</span>}
 								</Link>
 							</MenuItem>
-
 							<MenuItem className="active-item">
 								<Link to="/" onClick={handleLinkClick}>
 									<PiSparkleLight size={25} />
