@@ -185,6 +185,10 @@ const Footer = ({ className }) => {
         <Link to="/refund-policy" style={{ color: "#000",fontWeight:"bold" }}>
           Refund & Policy
         </Link>
+        <p style={{padding:"0 5px",marginBottom:"0",fontWeight:"bold"}}>|</p>
+        <Link to="/privacy" style={{ color: "#000",fontWeight:"bold" }}>
+          Privacy Policy
+        </Link>
       </div>
     </div>
   );
