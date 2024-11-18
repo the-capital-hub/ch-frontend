@@ -8,7 +8,6 @@ const token = localStorage.getItem("accessToken");
 
 const AvailabilitySettings = () => {
 	const theme = useSelector(selectTheme);
-	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 	const [availability, setAvailability] = useState({
 		dayAvailability: [
 			{ day: "Monday", start: "09:00", end: "17:00", enabled: true },

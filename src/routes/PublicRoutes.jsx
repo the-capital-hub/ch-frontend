@@ -76,6 +76,10 @@ const ScheduleMeeting = lazy(() =>
 	import("../components/Meetings/ScheduleMeeting/ScheduleMeeting")
 );
 
+const PublicPost = lazy(() =>
+	import("../components/PublicPostPage/PublicPost")
+);
+
 function PublicRoutes() {
 	return (
 		<>
@@ -323,6 +327,14 @@ function PublicRoutes() {
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
 						<ScheduleMeeting />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="/post_details/:postId"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<PublicPost />
 					</Suspense>
 				}
 			/>
