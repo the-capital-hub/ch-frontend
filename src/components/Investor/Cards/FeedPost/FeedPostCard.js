@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaUserPlus, FaUserCircle } from "react-icons/fa";
+import { FaShare } from "react-icons/fa6";
 import { MdBusinessCenter } from "react-icons/md";
 import { IoMdMore } from "react-icons/io";
 import "./feedPostCard.scss";
@@ -55,6 +56,7 @@ import { selectIsInvestor } from "../../../../Store/features/user/userSlice";
 // import { color } from "framer-motion";
 import ImageCarousel from "./ImageCarousel/ImageCarousel";
 import { setRecommendations } from "../../../../Store/features/user/userSlice";
+import SharePopup from "../../../PopUp/SocialSharePopup/SharePopup";
 
 const FeedPostCard = ({
 	postId,
@@ -107,6 +109,8 @@ const FeedPostCard = ({
 	const [likeModal, setLikeModal] = useState(false);
 	const [activeHeader, setActiveHeader] = useState(true);
 	const [connectionSent, setConnectionSent] = useState(false);
+	const [sharePopupOpen, setSharePopupOpen] = useState(false);
+	const [socialUrl, setSocialUrl] = useState("");
 	const theme = useSelector(selectTheme);
 	const handleShow = () => setLikeModal(true);
 	const handleClose = () => setLikeModal(false);
@@ -119,13 +123,16 @@ const FeedPostCard = ({
 
 	// Log state changes for debugging
 	useEffect(() => {
-		console.log('Poll Options changed:', pollOptions);
-		console.log('Local Poll Options:', localPollOptions);
+		console.log("Poll Options changed:", pollOptions);
+		console.log("Local Poll Options:", localPollOptions);
 	}, [pollOptions, localPollOptions]);
 
 	// Update localPollOptions when pollOptions prop changes
 	useEffect(() => {
-		if (pollOptions && JSON.stringify(pollOptions) !== JSON.stringify(localPollOptions)) {
+		if (
+			pollOptions &&
+			JSON.stringify(pollOptions) !== JSON.stringify(localPollOptions)
+		) {
 			setLocalPollOptions(pollOptions);
 		}
 	}, [pollOptions]);
@@ -403,7 +410,6 @@ const FeedPostCard = ({
 	const [filingReport, setFilingReport] = useState(false);
 	const [showRepostOptions, setShowRepostOptions] = useState(false);
 
-
 	const repostContainerRef = useRef(null);
 
 	const reportSubmitHandler = () => {
@@ -522,16 +528,16 @@ const FeedPostCard = ({
 
 	const handleVoteClick = async (optionId) => {
 		try {
-			const hasVoted = localPollOptions.find(opt => 
-				opt._id === optionId && opt.votes.includes(loggedInUser._id)
+			const hasVoted = localPollOptions.find(
+				(opt) => opt._id === optionId && opt.votes.includes(loggedInUser._id)
 			);
 
 			// Optimistic update
-			setLocalPollOptions(current =>
-				current.map(opt => {
+			setLocalPollOptions((current) =>
+				current.map((opt) => {
 					if (opt._id === optionId) {
 						const newVotes = hasVoted
-							? opt.votes.filter(id => id !== loggedInUser._id)
+							? opt.votes.filter((id) => id !== loggedInUser._id)
 							: [...opt.votes, loggedInUser._id];
 						return { ...opt, votes: newVotes };
 					}
@@ -542,13 +548,21 @@ const FeedPostCard = ({
 			// Call API and update with actual data
 			const updatedPollOptions = await handlePollVote(postId, optionId);
 			setLocalPollOptions(updatedPollOptions);
-
 		} catch (error) {
-			console.error('Error handling vote:', error);
+			console.error("Error handling vote:", error);
 			setLocalPollOptions(pollOptions);
 		}
 	};
+	const handleOpenSocialShare = () => {
+		// Generate the post detail URL
+		const baseUrl = window.location.origin; // Gets the base URL (e.g., http://localhost:3000)
+		const postUrl = `${baseUrl}/post_details/${encodeURIComponent(postId)}`;
 
+		// Set the social URL and open the share link in a new tab
+		setSocialUrl(postUrl);
+		setSharePopupOpen(true);
+	};
+	// console.log("postId", postId);
 	return (
 		<>
 			<div className="feedpostcard_main_container mb-2">
@@ -626,14 +640,13 @@ const FeedPostCard = ({
 										<button
 											className="btn connect_button_feed d-inline"
 											onClick={(e) => {
-											e.preventDefault();
-											handleConnect(userId);
+												e.preventDefault();
+												handleConnect(userId);
 											}}
 										>
 											<span>Follow</span>
 										</button>
 									)}
-
 								</Link>
 
 								<div className="info-container">
@@ -646,7 +659,8 @@ const FeedPostCard = ({
 												color: "var(--d-l-grey)",
 											}}
 										>
-											<MdBusinessCenter size={15} />&nbsp;{designation} at{" "}
+											<MdBusinessCenter size={15} />
+											&nbsp;{designation} at{" "}
 											{investorCompanyName?.companyName
 												? investorCompanyName?.companyName
 												: startUpCompanyName?.company}
@@ -660,7 +674,8 @@ const FeedPostCard = ({
 												marginLeft: "10px", // Adjusts spacing between items
 											}}
 										>
-											<IoLocationOutline size={13} />&nbsp;
+											<IoLocationOutline size={13} />
+											&nbsp;
 											{location ? location : "Bangalore"}
 										</span>
 									</span>
@@ -680,12 +695,10 @@ const FeedPostCard = ({
 									/>
 								</span>
 							</div>
-
 						</div>
 
 						{!repostPreview && (
 							<>
-								
 								<div className="three_dot pe-2 px-md-4">
 									<div
 										className="kebab_menu_container"
@@ -811,55 +824,63 @@ const FeedPostCard = ({
 								</video>
 							</span>
 						)}
-										{localPollOptions && localPollOptions.length > 0 && (
-				<div className="poll-section">
-					{localPollOptions.map((option) => {
-						const hasVoted = option.votes?.includes(loggedInUser._id);
-						const totalVotes = localPollOptions.reduce((sum, opt) => 
-							sum + (opt.votes?.length || 0), 0
-						);
-						const votePercentage = totalVotes > 0 
-							? Math.round((option.votes?.length || 0) * 100 / totalVotes) 
-							: 0;
+						{localPollOptions && localPollOptions.length > 0 && (
+							<div className="poll-section">
+								{localPollOptions.map((option) => {
+									const hasVoted = option.votes?.includes(loggedInUser._id);
+									const totalVotes = localPollOptions.reduce(
+										(sum, opt) => sum + (opt.votes?.length || 0),
+										0
+									);
+									const votePercentage =
+										totalVotes > 0
+											? Math.round(
+													((option.votes?.length || 0) * 100) / totalVotes
+											  )
+											: 0;
 
-						return (
-							<div key={option._id} className="poll-option">
-								<div 
-									className="poll-option-content"
-									style={{
-										position: 'relative',
-										overflow: 'hidden'
-									}}
-								>
-									<div 
-										className="progress-bar"
-										style={{
-											width: `${votePercentage}%`,
-											position: 'absolute',
-											left: 0,
-											top: 0,
-											height: '100%',
-											background: 'rgba(253, 89, 1, 0.1)',
-											transition: 'width 0.3s ease'
-										}}
-									/>
-									<span className="option-text">{option.option}</span>
-									<span className="vote-count">{option.votes?.length || 0} votes</span>
-								</div>
-								<button
-									className={`vote-button ${hasVoted ? 'votedStartUpThemeColor' : ''}`}
-									onClick={(e) => {
-										e.stopPropagation();
-										handleVoteClick(option._id);
-									}}
-								>
-									{hasVoted ? 'Voted' : 'Vote'}
-								</button>
+									return (
+										<div key={option._id} className="poll-option">
+											<div
+												className="poll-option-content"
+												style={{
+													position: "relative",
+													overflow: "hidden",
+												}}
+											>
+												<div
+													className="progress-bar"
+													style={{
+														width: `${votePercentage}%`,
+														position: "absolute",
+														left: 0,
+														top: 0,
+														height: "100%",
+														background: "rgba(253, 89, 1, 0.1)",
+														transition: "width 0.3s ease",
+													}}
+												/>
+												<span className="option-text">{option.option}</span>
+												<span className="vote-count">
+													{option.votes?.length || 0} votes
+												</span>
+											</div>
+											<button
+												className={`vote-button ${
+													hasVoted ? "votedStartUpThemeColor" : ""
+												}`}
+												onClick={(e) => {
+													e.stopPropagation();
+													handleVoteClick(option._id);
+												}}
+											>
+												{hasVoted ? "Voted" : "Vote"}
+											</button>
+										</div>
+									);
+								})}
 							</div>
-						);
-					})}
-				</div>
-				)}
+						)}
 						{resharedPostId && (
 							<FeedPostCard
 								repostPreview
@@ -913,83 +934,101 @@ const FeedPostCard = ({
 								style={{ height: "3px", borderColor: "var(--d-l-grey)" }}
 							/> */}
 							<div className="row feedpostcard_footer">
-								<div className="col-6">
-									<div className="feedpostcard_footer_like_comment d-flex justify-content-around gap-2 pt-1">
-										{liked ? (
-											<div
-												className="d-flex flex-column align-items-center justify-content-end
+								<div className="d-flex align-items-center gap-1 justify-content-around pt-1">
+									{/* Like */}
+									{liked ? (
+										<div
+											className="d-flex flex-column align-items-center justify-content-end
                        gap-1"
+										>
+											<img
+												src={fireIcon}
+												width={20}
+												alt="like post"
+												onClick={likeUnlikeHandler}
+												style={{ cursor: "pointer" }}
+											/>
+											<p
+												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+												className="m-0"
 											>
-												<img
-													src={fireIcon}
-													width={20}
-													alt="like post"
-													onClick={likeUnlikeHandler}
-													style={{ cursor: "pointer" }}
-												/>
-												<p
-													style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-													className="m-0"
-												>
-													Like
-												</p>
-											</div>
-										) : (
-											<div
-												className="d-flex flex-column align-items-center justify-content-end
+												Like
+											</p>
+										</div>
+									) : (
+										<div
+											className="d-flex flex-column align-items-center justify-content-end
                        gap-1"
+										>
+											<ImFire
+												onClick={likeUnlikeHandler}
+												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+											/>
+											<p
+												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+												className="m-0"
 											>
-												<ImFire
-													onClick={likeUnlikeHandler}
-													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-												/>
-												<p
-													style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-													className="m-0"
-												>
-													Like
-												</p>
-											</div>
-										)}
-										{!showComment ? (
-											<div
-												className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-											>
-												<FaRegCommentDots
-													size={20}
-													onClick={() => setShowComment((prev) => !prev)}
-													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-												/>
-												<p
-													style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-													className="m-0"
-												>
-													Comment
-												</p>
-											</div>
-										) : (
-											<div
-												className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-											>
-												<FaCommentDots
-													size={20}
-													onClick={() => setShowComment((prev) => !prev)}
-													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-												/>
-												<p
-													style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-													className="m-0"
-												>
-													Comment
-												</p>
-											</div>
-										)}
-									</div>
-								</div>
+												Like
+											</p>
+										</div>
+									)}
 
-								<div className=" col-6 d-flex align-items-center gap-1 justify-content-around pt-1">
+									{/* Comment */}
+									{!showComment ? (
+										<div
+											className="d-flex flex-column align-items-center justify-content-end
+                       gap-1"
+										>
+											<FaRegCommentDots
+												size={20}
+												onClick={() => setShowComment((prev) => !prev)}
+												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+											/>
+											<p
+												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+												className="m-0"
+											>
+												Comment
+											</p>
+										</div>
+									) : (
+										<div
+											className="d-flex flex-column align-items-center justify-content-end
+                       gap-1"
+										>
+											<FaCommentDots
+												size={20}
+												onClick={() => setShowComment((prev) => !prev)}
+												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+											/>
+											<p
+												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+												className="m-0"
+											>
+												Comment
+											</p>
+										</div>
+									)}
+
+									{/* Share post link on socials button */}
+									<div
+										className="d-flex flex-column align-items-center
+											 gap-1"
+									>
+										<FaShare
+											size={20}
+											style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+											onClick={handleOpenSocialShare}
+										/>
+										<p
+											style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+											className="m-0"
+										>
+											Share
+										</p>
+									</div>
+
+									{/* Repost */}
 									<span
 										className={`repost_container rounded-4 ${
 											showRepostOptions ? "bg-light" : ""
@@ -1072,6 +1111,8 @@ const FeedPostCard = ({
 											</span>
 										)}
 									</span>
+
+									{/* Save */}
 									{savedPostId.includes(postId) ? (
 										<div
 											className="d-flex flex-column align-items-center justify-content-end
@@ -1108,6 +1149,7 @@ const FeedPostCard = ({
 										</div>
 									)}
 								</div>
+
 								{/* comment Wrapper */}
 								<div
 									className={`comment-container-wrapper ${
@@ -1302,10 +1344,7 @@ const FeedPostCard = ({
 							</div>
 						</>
 					)}
-					
-					
 				</div>
-				
 
 				{showSavePopUp && (
 					<SavePostPopUP
@@ -1518,6 +1557,13 @@ const FeedPostCard = ({
 					)}
 				</ModalBSFooter>
 			</ModalBSContainer>
+
+			<SharePopup
+				postId={postId}
+				isOpen={sharePopupOpen}
+				setIsOpen={setSharePopupOpen}
+				url={socialUrl}
+			/>
 		</>
 	);
 };
