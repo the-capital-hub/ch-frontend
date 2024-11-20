@@ -1,0 +1,43 @@
+.latest_resources_wrapper {
+  border-radius: var(--border-radius);
+  box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.05);
+  color: white;
+  
+  h1, h2, h3, h4, h5, h6, p, span {
+    color: white !important;
+  }
+
+  .title, .description, .amount {
+    color: white !important;
+  }
+
+  .available-resources {
+    color: white !important;
+  }
+  
+  .orange_button, .btn-outline-light {
+    min-width: 120px;
+    padding: 0.8rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .orange_button {
+    background: linear-gradient(45deg, #fd5901, #ff7a33);
+    color: white !important;
+    border: none;
+    
+    &:hover {
+      background: linear-gradient(45deg, #ff6a1c, #ff8c4d);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(253, 89, 1, 0.3);
+    }
+  }
+
+  .btn-outline-light {
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+} 
