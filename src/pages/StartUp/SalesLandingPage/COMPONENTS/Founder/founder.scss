@@ -310,8 +310,8 @@
 
 		span {
 			background: linear-gradient(90deg, #ffffff 0%, #973501 100%);
-			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
+			-webkit-background-clip: text;
 			background-clip: text;
 			text-fill-color: transparent;
 		}
