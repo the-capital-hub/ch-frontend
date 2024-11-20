@@ -10,6 +10,7 @@ import { ImPriceTags } from "react-icons/im";
 import Calendar from "react-calendar";
 import "./ScheduleMeeting.scss";
 import { useParams } from "react-router-dom";
+import { load } from "@cashfreepayments/cashfree-js";
 import { environment } from "../../../environments/environment";
 const baseUrl = environment.baseUrl;
 // const token = localStorage.getItem("accessToken");
@@ -34,38 +35,11 @@ const MeetingScheduler = () => {
 	const [events, setEvents] = useState([]);
 	const [meetingLink, setMeetingLink] = useState("");
 	const [error, setError] = useState("");
-	console.log("events", events);
-
-	// const login = useGoogleLogin({
-	// 	onSuccess: (tokenResponse) => {
-	// 		console.log("Tokens:", tokenResponse);
-	// 		try {
-	// 			fetch(`${baseUrl}/users/saveMeetingToken`, {
-	// 				method: "POST",
-	// 				headers: {
-	// 					"Content-Type": "application/json",
-	// 					Authorization: `Bearer ${token}`,
-	// 				},
-	// 				body: JSON.stringify({ tokenResponse }),
-	// 			}).then((res) => {
-	// 				if (res.status === 200) {
-	// 					console.log("Token saved successfully");
-	// 				} else {
-	// 					console.log("Error saving token");
-	// 				}
-	// 			});
-	// 		} catch (error) {
-	// 			console.error("Error saving token:", error);
-	// 		}
-	// 	},
-	// 	onError: (error) => {
-	// 		console.error("Login Failed:", error);
-	// 	},
-	// 	scope:
-	// 		"https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
-	// 	flow: "auth-code",
-	// 	accessType: "offline",
-	// });
+	const [orderId, setOrderId] = useState("");
+	const [paymentStatus, setPaymentStatus] = useState(null);
+	// console.log("events", events);
+	// console.log("availability", availability);
+	// console.log("orderId", orderId);
 
 	useEffect(() => {
 		const fetchSchedulePageData = async () => {
@@ -120,71 +94,239 @@ const MeetingScheduler = () => {
 		"16:00",
 	];
 
-	const handleSchedule = (e) => {
-		e.preventDefault();
+	const calculateDiscountedPrice = (price, discountPercentage) => {
+		if (discountPercentage && discountPercentage > 0) {
+			const discountAmount = (price * discountPercentage) / 100;
+			return price - discountAmount;
+		}
+		return price;
+	};
 
-		const startTime = selectedTime;
-		const [startHour, startMinute] = startTime.split(":").map(Number);
-
-		const minimumGap = 30;
-		const endDate = new Date();
-		endDate.setHours(startHour);
-		endDate.setMinutes(startMinute + minimumGap);
-
-		const endTime = `${endDate.getHours().toString().padStart(2, "0")}:${endDate
-			.getMinutes()
-			.toString()
-			.padStart(2, "0")}`;
-
-		const data = {
-			startTime: startTime,
-			endTime: endTime,
-			date: selectedDate.toLocaleDateString("en-US", {
-				day: "numeric",
-				month: "long",
-			}),
-			name: e.target.name.value,
-			email: e.target.email.value,
-			additionalInfo: e.target.additionalInfo.value,
-			eventId: meetingId,
-			username: username,
-		};
-		console.log("data", data);
+	// Initialize Cashfree SDK
+	const initializeCashfree = async () => {
 		try {
-			fetch(`${baseUrl}/meetings/scheduleMeeting`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					// Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify(data),
-			})
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					} else {
-						// Parse the response to get the error message
-						return res.json().then((errorData) => {
-							throw new Error(errorData.message || "Error saving booking data");
-						});
-					}
-				})
-				.then((data) => {
-					console.log("Booking data saved successfully", data.data);
-					setMeetingLink(data.data.meetingLink);
-					setIsBooked(true);
-				})
-				.catch((error) => {
-					console.error("Error saving booking data:", error);
-					setError(error.message);
-					alert(error.message);
-				});
+			return await load({ mode: "sandbox" });
 		} catch (error) {
-			console.error("Error saving booking data:", error);
-			setError(error.message);
-			alert(error.message);
+			console.error("Failed to initialize Cashfree:", error);
+			throw error;
 		}
 	};
+
+	// Create payment session
+	const createPaymentSession = async (paymentData) => {
+		try {
+			const response = await fetch(`${baseUrl}/meetings/createPaymentSession`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(paymentData),
+			});
+			const data = await response.json();
+			console.log("data", data.data);
+
+			if (!data.data.payment_session_id) {
+				throw new Error("Failed to create payment session");
+			}
+
+			// Set orderId in state immediately after creating payment session
+			setOrderId(data.data.order_id);
+
+			return {
+				sessionId: data.data.payment_session_id,
+				orderId: data.data.order_id,
+			};
+		} catch (error) {
+			console.error("Payment session creation failed:", error);
+			throw error;
+		}
+	};
+
+	// Verify payment status
+	const verifyPayment = async (orderId) => {
+		try {
+			const response = await fetch(`${baseUrl}/meetings/verifyPayment`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ orderId }),
+			});
+
+			const data = await response.json();
+			if (data.status !== 200) {
+				throw new Error("Payment verification failed");
+			}
+
+			console.log("Payment verified successfully", data);
+			setPaymentStatus("success");
+			return true;
+		} catch (error) {
+			console.error("Payment verification failed:", error);
+			setPaymentStatus("failed");
+			throw error;
+		}
+	};
+
+	// Schedule meeting with server
+	const scheduleMeeting = async (meetingData) => {
+		try {
+			const response = await fetch(`${baseUrl}/meetings/scheduleMeeting`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ meetingData }),
+			});
+
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.message || "Failed to schedule meeting");
+			}
+
+			const data = await response.json();
+			setMeetingLink(data.data.meetingLink);
+			setIsBooked(true);
+			return data;
+		} catch (error) {
+			console.error("Meeting scheduling failed:", error);
+			setError(error.message);
+			throw error;
+		}
+	};
+
+	// Main handler for scheduling and payment
+	const handleSchedule = async (e) => {
+		e.preventDefault();
+		setError("");
+		setLoading(true);
+
+		try {
+			const startTime = selectedTime;
+			const [startHour, startMinute] = startTime.split(":").map(Number);
+
+			// const minimumGap = availability?.minimumGap || 30;
+			const duration = events[0]?.duration || 30;
+			const endDate = new Date();
+			endDate.setHours(startHour);
+			endDate.setMinutes(startMinute + duration);
+
+			const endTime = `${endDate
+				.getHours()
+				.toString()
+				.padStart(2, "0")}:${endDate.getMinutes().toString().padStart(2, "0")}`;
+			const meetingData = {
+				startTime,
+				endTime,
+				date: selectedDate.toLocaleDateString("en-US", {
+					day: "numeric",
+					month: "long",
+				}),
+				name: e.target.name.value,
+				email: e.target.email.value,
+				additionalInfo: e.target.additionalInfo.value,
+				eventId: meetingId,
+				username: username,
+				paymentAmount:
+					calculateDiscountedPrice(events[0]?.price, events[0]?.discount) || 0,
+				paymentStatus: "Not Required", // Default status
+				paymentId: null, // Default paymentId
+			};
+
+			// Check if payment is required
+			if (events[0]?.price > 0) {
+				// Initialize payment flow
+				const cashfree = await initializeCashfree();
+				const { sessionId, orderId } = await createPaymentSession(meetingData);
+
+				// Handle payment checkout
+				await cashfree.checkout({
+					paymentSessionId: sessionId,
+					redirectTarget: "_modal",
+				});
+
+				// Verify payment before scheduling
+				if (orderId) {
+					const paymentVerified = await verifyPayment(orderId);
+					if (paymentVerified) {
+						// Update meeting data with payment details
+						meetingData.paymentStatus = "Paid";
+						meetingData.paymentId = orderId; // Use the actual order ID
+					}
+				}
+			}
+
+			// Log the meetingData before scheduling
+			console.log("Meeting Data before saving:", meetingData);
+
+			// Schedule meeting after payment (or directly if free)
+			await scheduleMeeting(meetingData);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+			setError(error.message || "An error occurred during the process");
+		}
+	};
+
+	// const handleSchedule = (e) => {
+	// 	e.preventDefault();
+
+	// 	const startTime = selectedTime;
+	// 	const [startHour, startMinute] = startTime.split(":").map(Number);
+
+	// 	const minimumGap = availability?.minimumGap || 30;
+	// 	const endDate = new Date();
+	// 	endDate.setHours(startHour);
+	// 	endDate.setMinutes(startMinute + minimumGap);
+
+	// 	const endTime = `${endDate.getHours().toString().padStart(2, "0")}:${endDate
+	// 		.getMinutes()
+	// 		.toString()
+	// 		.padStart(2, "0")}`;
+
+	// 	const data = {
+	// 		startTime: startTime,
+	// 		endTime: endTime,
+	// 		date: selectedDate.toLocaleDateString("en-US", {
+	// 			day: "numeric",
+	// 			month: "long",
+	// 		}),
+	// 		name: e.target.name.value,
+	// 		email: e.target.email.value,
+	// 		additionalInfo: e.target.additionalInfo.value,
+	// 		eventId: meetingId,
+	// 		username: username,
+	// 	};
+	// 	console.log("data", data);
+	// 	try {
+	// 		fetch(`${baseUrl}/meetings/scheduleMeeting`, {
+	// 			method: "POST",
+	// 			headers: {
+	// 				"Content-Type": "application/json",
+	// 				// Authorization: `Bearer ${token}`,
+	// 			},
+	// 			body: JSON.stringify(data),
+	// 		})
+	// 			.then((res) => {
+	// 				if (res.ok) {
+	// 					return res.json();
+	// 				} else {
+	// 					// Parse the response to get the error message
+	// 					return res.json().then((errorData) => {
+	// 						throw new Error(errorData.message || "Error saving booking data");
+	// 					});
+	// 				}
+	// 			})
+	// 			.then((data) => {
+	// 				console.log("Booking data saved successfully", data.data);
+	// 				setMeetingLink(data.data.meetingLink);
+	// 				setIsBooked(true);
+	// 			})
+	// 			.catch((error) => {
+	// 				console.error("Error saving booking data:", error);
+	// 				setError(error.message);
+	// 				alert(error.message);
+	// 			});
+	// 	} catch (error) {
+	// 		console.error("Error saving booking data:", error);
+	// 		setError(error.message);
+	// 		alert(error.message);
+	// 	}
+	// };
 
 	const isDateAvailable = (date) => {
 		const dayOfWeek = date.getDay();
@@ -212,21 +354,13 @@ const MeetingScheduler = () => {
 		}
 	};
 
-	const calculateDiscountedPrice = (price, discountPercentage) => {
-		if (discountPercentage && discountPercentage > 0) {
-			const discountAmount = (price * discountPercentage) / 100;
-			return price - discountAmount;
-		}
-		return price;
-	};
-
 	const formatPrice = (price) => {
 		return price === 0 ? "Free" : `₹${price.toFixed(0)}`;
 	};
 
-	if (loading) {
-		return <Spinner />;
-	}
+	// if (loading) {
+	// 	return <Spinner />;
+	// }
 
 	return (
 		<div className="meeting-scheduler">
@@ -264,9 +398,6 @@ const MeetingScheduler = () => {
 											<span className="original-price">
 												{formatPrice(events[0]?.price)}
 											</span>
-											{/* <span className="discount-badge">
-												{events[0]?.discount}% OFF
-											</span> */}
 										</>
 									)}
 									<span className="new-price">
@@ -290,12 +421,9 @@ const MeetingScheduler = () => {
 					<p className="meeting-description">
 						{events.map((event) => event.description || "")}
 					</p>
-
-					{/* <button className="book-meeting" onClick={login}>
-						Sync With Google
-					</button> */}
 				</div>
 
+				{loading && <Spinner />}
 				{!isBooked ? (
 					<div className="meeting-scheduler__right">
 						<div className="calendar-container">
@@ -338,12 +466,19 @@ const MeetingScheduler = () => {
 								placeholder="Additional Information"
 								rows={4}
 							/>
-							<button type="submit">Schedule Event</button>
+							<button type="submit" disabled={loading}>
+								{events[0]?.price > 0 ? "Schedule and Pay" : "Schedule Event"}
+							</button>
 						</form>
 						{/* Display error message if exists */}
 						{error && (
 							<div className="error-message">
 								<p>{error}</p>
+							</div>
+						)}
+						{paymentStatus === "failed" && (
+							<div className="error-message">
+								<p>Payment failed. Please try again.</p>
 							</div>
 						)}
 					</div>

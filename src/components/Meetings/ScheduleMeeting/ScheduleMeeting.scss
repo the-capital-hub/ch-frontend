@@ -357,33 +357,39 @@
 
 // Loader styles
 .loader-container {
+	position: fixed; // Changed to fixed positioning
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 100vh;
-	background-color: rgba(255, 255, 255, 0.8);
+	background-color: rgba(255, 255, 255, 0.6); // Made semi-transparent
+	backdrop-filter: blur(3px); // Added subtle blur effect
+	z-index: 1000; // Ensure loader appears above other content
 }
 
 .loader {
-	width: 50px;
-	height: 50px;
-	border: 3px solid #f3f3f3;
-	border-top: 3px solid #1a73e8;
+	width: 40px; // Slightly reduced size
+	height: 40px;
+	border: 2px solid rgba(26, 115, 232, 0.2); // Made border more subtle
+	border-top: 2px solid #1a73e8;
 	border-radius: 50%;
-	animation: spin 1s linear infinite;
+	animation: spin 0.8s linear infinite; // Slightly faster animation
 	position: relative;
 
 	&-inner {
 		position: absolute;
-		width: 70%;
-		height: 70%;
-		border: 3px solid #f3f3f3;
-		border-top: 3px solid #1a73e8;
+		width: 75%;
+		height: 75%;
+		border: 2px solid rgba(26, 115, 232, 0.2);
+		border-top: 2px solid #1a73e8;
 		border-radius: 50%;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		animation: spin 0.8s linear infinite reverse;
+		animation: spin 0.6s linear infinite reverse; // Slightly faster animation
 	}
 }
 

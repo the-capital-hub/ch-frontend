@@ -1,0 +1,105 @@
+// Variables
+$dark-background: #000000;
+$dark-card-background: #19191c;
+$accent-color: #fd5901;
+$text-color: #ffffff;
+$grid-gap: 2rem;
+$border-radius: 10px;
+
+.PublicPost-container {
+	box-sizing: border-box;
+	background-color: $dark-background;
+	min-height: 100vh;
+
+	.PublicPost-content {
+		margin: auto 6 * $grid-gap;
+		padding: $grid-gap 0;
+		display: grid;
+		grid-template-columns: calc(100% - 26rem) 24rem;
+		gap: $grid-gap;
+		justify-content: space-evenly;
+
+		@media (max-width: 1024px) {
+			grid-template-columns: 1fr;
+			margin: auto 1rem;
+		}
+
+		.PublicPost-left {
+			width: 100%;
+			max-width: 700px;
+			background-color: $dark-card-background;
+			border-radius: $border-radius;
+		}
+
+		.PublicPost-right {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+
+			@media (max-width: 1024px) {
+				margin-top: 1rem;
+			}
+
+			&-profile {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				background-color: $dark-card-background;
+				border-radius: $border-radius;
+				gap: 0.5rem;
+				padding: 1.5rem 0;
+				color: $text-color;
+
+				h3 {
+					font-size: 1.25rem;
+					margin: 0;
+				}
+
+				p {
+					text-align: center;
+					padding: 0 1rem;
+					margin: 0;
+					color: rgba($text-color, 0.8);
+				}
+
+				.PublicPost-signin {
+					width: 90%;
+					height: 2.8rem;
+					border-radius: $border-radius;
+					background: $accent-color;
+					font-size: 13px;
+					font-family: Poppins, sans-serif;
+					font-weight: 500;
+					color: $text-color;
+					border: none;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					text-decoration: none;
+					cursor: pointer;
+					transition: background-color 0.2s ease;
+
+					&:hover {
+						background-color: darken($accent-color, 5%);
+					}
+
+					&:active {
+						transform: translateY(1px);
+					}
+				}
+			}
+		}
+	}
+}
+
+// Optional: Add smooth scrolling to the root element
+html {
+	scroll-behavior: smooth;
+}
+
+// Optional: Ensure consistent box-sizing
+* {
+	box-sizing: inherit;
+}

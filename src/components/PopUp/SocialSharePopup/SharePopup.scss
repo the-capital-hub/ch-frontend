@@ -1,0 +1,204 @@
+// SharePopup.scss
+.share-popup {
+	position: relative;
+
+	.share-button {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 8px 16px;
+		border: 1px solid #e2e8f0;
+		border-radius: 6px;
+		background: white;
+		cursor: pointer;
+		transition: all 0.2s;
+
+		&:hover {
+			background: #f7fafc;
+		}
+	}
+
+	.popup-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(0, 0, 0, 0.5);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 1000;
+	}
+
+	.popup-content {
+		background: white;
+		border-radius: 8px;
+		padding: 24px;
+		width: 90%;
+		max-width: 400px;
+		position: relative;
+
+		.popup-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 20px;
+
+			h2 {
+				margin: 0;
+				font-size: 1.25rem;
+				font-weight: 600;
+			}
+
+			.close-button {
+				background: none;
+				border: none;
+				font-size: 24px;
+				cursor: pointer;
+				padding: 0;
+				color: #666;
+
+				&:hover {
+					color: #000;
+				}
+			}
+		}
+	}
+
+	.social-icons {
+		display: flex;
+		justify-content: center;
+		gap: 16px;
+		margin-bottom: 24px;
+
+		.social-button {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid #e2e8f0;
+			background: white;
+			cursor: pointer;
+			transition: all 0.2s;
+
+			svg {
+				width: 20px;
+				height: 20px;
+			}
+
+			&.twitter {
+				color: #1da1f2;
+				&:hover {
+					background: #1da1f2;
+					color: white;
+				}
+			}
+
+			&.facebook {
+				color: #4267b2;
+				&:hover {
+					background: #4267b2;
+					color: white;
+				}
+			}
+
+			&.linkedin {
+				color: #0077b5;
+				&:hover {
+					background: #0077b5;
+					color: white;
+				}
+			}
+
+			&.whatsapp {
+				color: #25d366;
+				&:hover {
+					background: #25d366;
+					color: white;
+				}
+			}
+		}
+	}
+
+	.copy-link {
+		.copy-button {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 8px 16px;
+			border: 1px solid #e2e8f0;
+			border-radius: 6px;
+			color: #666;
+			background: white;
+			cursor: pointer;
+			transition: all 0.2s;
+
+			&:hover {
+				background: #f7fafc;
+			}
+
+			.url-text {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				margin-right: 12px;
+			}
+		}
+	}
+
+	.whatsapp-title {
+		margin: 1rem 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+
+		label {
+			font-size: 0.9rem;
+			color: #666;
+		}
+
+		.whatsapp-title-input {
+			padding: 0.5rem;
+			border: 1px solid #e2e8f0;
+			border-radius: 6px;
+			width: 100%;
+			font-size: 0.9rem;
+			background-color: white;
+			color: #666;
+
+			&:focus {
+				outline: none;
+				border-color: #0077ff;
+			}
+
+			&::placeholder {
+				color: #666;
+			}
+		}
+	}
+
+	.copy-alert {
+		margin-top: 16px;
+		padding: 12px;
+		background: #4caf50;
+		color: white;
+		border-radius: 6px;
+		text-align: center;
+		animation: fadeIn 0.3s ease;
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
