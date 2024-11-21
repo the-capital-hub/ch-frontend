@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
 	BiChevronLeft,
 	BiPlus,
@@ -7,7 +7,11 @@ import {
 	BiShareAlt,
 } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { environment } from "../../../environments/environment";
 import "./ThoughtsMain.scss";
+import industriesAndSkills from "../data/industriesAndSkills";
+
+const baseUrl = environment.baseUrl;
 
 const TopicTag = ({ children, isSelected, onClick }) => (
 	<button
@@ -17,6 +21,31 @@ const TopicTag = ({ children, isSelected, onClick }) => (
 		{children}
 	</button>
 );
+
+function timeAgo(timestamp) {
+	const now = new Date();
+	const date = new Date(timestamp);
+	const seconds = Math.floor((now - date) / 1000);
+
+	const intervals = [
+		{ limit: 60, name: "second", divisor: 1 },
+		{ limit: 60, name: "minute", divisor: 60 },
+		{ limit: 24, name: "hour", divisor: 60 * 60 },
+		{ limit: 7, name: "day", divisor: 24 * 60 * 60 },
+		{ limit: 4.35, name: "week", divisor: 7 * 24 * 60 * 60 },
+		{ limit: 12, name: "month", divisor: 30.44 * 24 * 60 * 60 },
+		{ limit: Infinity, name: "year", divisor: 365.25 * 24 * 60 * 60 },
+	];
+
+	for (const interval of intervals) {
+		const value = Math.floor(seconds / interval.divisor);
+		if (value < interval.limit) {
+			return `${value} ${interval.name}${value !== 1 ? "s" : ""} ago`;
+		}
+	}
+
+	return "just now";
+}
 
 const ArticleCard = ({
 	title,
@@ -39,17 +68,13 @@ const ArticleCard = ({
 			</div>
 			<span className="article-card__stat">{contributors} contributions</span>
 			<span className="article-card__dot">•</span>
-			<span className="article-card__stat">{time}</span>
+			<span className="article-card__stat">{timeAgo(time)}</span>
 		</div>
 
 		{description && <p className="article-card__description">{description}</p>}
 
 		<div className="article-card__tags">
-			{tags.map((tag, index) => (
-				<span key={index} className="article-card__tag">
-					{tag}
-				</span>
-			))}
+			<span className="article-card__tag">{tags}</span>
 		</div>
 
 		<div className="article-card__actions">
@@ -75,19 +100,54 @@ const Thoughts = () => {
 	const navigate = useNavigate();
 	const [selectedFilter, setSelectedFilter] = useState("All");
 	const [selectedTopics, setSelectedTopics] = useState([]);
+	const [questions, setQuestions] = useState([]);
+	const topicsRef = useRef(null);
+	const animationFrameRef = useRef(null);
+	const [isHovering, setIsHovering] = useState(false);
 
-	const filters = ["All", "Latest", "Top Questions", "My Question", "My Poll"];
-	const topics = [
-		"Marketing",
-		"Public Administration",
-		"Healthcare",
-		"Engineering",
-		"IT Services",
-		"Sustainability",
-		"Business Administration",
-		"Telecommunications",
-		"HR Management",
-	];
+	// fetch questions from server
+	useEffect(() => {
+		fetch(`${baseUrl}/thoughts/get-questions`)
+			.then((res) => res.json())
+			.then((data) => setQuestions(data.data));
+	}, []);
+
+	// Auto-scroll for topics only
+	useEffect(() => {
+		const container = topicsRef.current;
+
+		const startAutoScroll = () => {
+			if (container && !isHovering) {
+				// Scroll down by 1 pixel
+				container.scrollTop += 1;
+
+				// If reached bottom, reset to top
+				if (
+					container.scrollTop >=
+					container.scrollHeight - container.clientHeight
+				) {
+					container.scrollTop = 0;
+				}
+
+				// Request next animation frame
+				animationFrameRef.current = requestAnimationFrame(startAutoScroll);
+			}
+		};
+
+		// Start auto-scrolling if not hovering
+		if (!isHovering) {
+			animationFrameRef.current = requestAnimationFrame(startAutoScroll);
+		}
+
+		// Cleanup function
+		return () => {
+			if (animationFrameRef.current) {
+				cancelAnimationFrame(animationFrameRef.current);
+			}
+		};
+	}, [isHovering]);
+
+	const filters = ["All", "Latest", "Top Questions", "My Question"];
 
 	const handleFilterClick = (filter) => {
 		setSelectedFilter(filter);
@@ -101,9 +161,19 @@ const Thoughts = () => {
 		);
 	};
 
-	const handleArticleClick = () => {
-		navigate("/thoughts/answers");
+	const handleArticleClick = (id) => {
+		navigate(`/thoughts/question/${id}`);
 	};
+
+	// Filter questions based on selected topics
+	const filteredQuestions =
+		selectedTopics.length > 0
+			? questions.filter((question) =>
+					selectedTopics.some((topic) =>
+						question.industry.toLowerCase().includes(topic.toLowerCase())
+					)
+			  )
+			: questions;
 
 	return (
 		<div className="app">
@@ -141,43 +211,40 @@ const Thoughts = () => {
 				<div className="content">
 					<div className="content__left">
 						<div className="articles">
-							<ArticleCard
-								title="Your calendar is packed with back-to-back meetings. How do you handle last-minute requests?"
-								contributors="35"
-								time="4 minutes ago"
-								tags={["Administrative Assistance"]}
-								onClick={handleArticleClick}
-							/>
-
-							<ArticleCard
-								title="You're facing data discrepancies and time constraints. How can you effectively manage both?"
-								contributors="11"
-								time="13 minutes ago"
-								description="Tackle data discrepancies and tight deadlines with these strategies. Automate validation, prioritize tasks, and set realistic timelines."
-								tags={["Analytical Skills", "•", "Soft Skills"]}
-								onClick={handleArticleClick}
-							/>
-							<ArticleCard
-								title="Your calendar is packed with back-to-back meetings. How do you handle last-minute requests?"
-								contributors="35"
-								time="4 minutes ago"
-								tags={["Administrative Assistance"]}
-								onClick={handleArticleClick}
-							/>
-							<ArticleCard
-								title="Your calendar is packed with back-to-back meetings. How do you handle last-minute requests?"
-								contributors="35"
-								time="4 minutes ago"
-								tags={["Administrative Assistance"]}
-								onClick={handleArticleClick}
-							/>
+							{filteredQuestions && filteredQuestions.length > 0 ? (
+								filteredQuestions.map((question) => (
+									<ArticleCard
+										key={question._id}
+										title={question.question}
+										contributors={question.upvotes.length}
+										time={question.updatedAt}
+										tags={question.industry}
+										onClick={() => handleArticleClick(question._id)}
+									/>
+								))
+							) : (
+								<div className="no-questions">
+									No questions are available for the selected industry or skill.
+									Please try selecting a different one.
+								</div>
+							)}
 						</div>
 					</div>
 
 					<div className="content__right">
 						<h2 className="content__subtitle">More to explore</h2>
-						<div className="topics">
-							{topics.map((topic) => (
+						<div
+							ref={topicsRef}
+							className="topics"
+							onMouseEnter={() => setIsHovering(true)}
+							onMouseLeave={() => setIsHovering(false)}
+							style={{
+								maxHeight: "560px",
+								overflowY: "auto",
+								position: "relative",
+							}}
+						>
+							{industriesAndSkills.map((topic) => (
 								<TopicTag
 									key={topic}
 									isSelected={selectedTopics.includes(topic)}
