@@ -32,6 +32,7 @@ import { useParams } from "react-router-dom";
 import PostDetail from "../Cards/FeedPost/PostDetail";
 import ArticlePopup from "../../PopUp/ArticlePopup/ArticlePopup";
 import NewsCard from "./Components/NewsCard/NewsCard";
+import LatestResources from "./Components/LatestResources/LatestResources";
 
 const baseUrl = environment.baseUrl;
 
@@ -276,10 +277,15 @@ const Feed = () => {
 							<TutorialTrigger steps={startupOnboardingSteps.homePage} />
 
 							{/* Looking for funding */}
+
 							<LookingForFund />
 
 							{/* Share your thoughts */}
 							<ShareThoughts />
+
+							{/* <LookingForFund /> */}
+							<LatestResources />
+
 
 							{/* Write a Post */}
 							<div
