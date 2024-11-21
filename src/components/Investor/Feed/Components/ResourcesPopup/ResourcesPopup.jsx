@@ -83,7 +83,7 @@ export default function ResourcesPopup({ onClose }) {
             <p>{selectedResource.description}</p>
             <p>Price: ₹{selectedResource.amount}</p>
             
-            {selectedResource.purchased_users.includes(loggedInUser._id) ? (
+            {(loggedInUser.isAdmin || selectedResource.purchased_users.includes(loggedInUser._id)) ? (
               <button 
                 className="download-btn"
                 onClick={() => handleDownload(selectedResource.link)}
