@@ -80,6 +80,18 @@ const PublicPost = lazy(() =>
 	import("../components/PublicPostPage/PublicPost")
 );
 
+const ThoughtsMain = lazy(() =>
+	import("../components/Thoughts/ThoughtsMain/ThoughtsMain")
+);
+
+const ThoughtsQA = lazy(() =>
+	import("../components/Thoughts/ThoughtsQuestionAnswers/ThoughtsQA")
+);
+
+const CreateQuestion = lazy(() =>
+	import("../components/Thoughts/CreateQuestion/CreateQuestion")
+);
+
 function PublicRoutes() {
 	return (
 		<>
@@ -335,6 +347,30 @@ function PublicRoutes() {
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
 						<PublicPost />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="/thoughts"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<ThoughtsMain />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="/thoughts/answers"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<ThoughtsQA />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="/thoughts/create-question"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<CreateQuestion />
 					</Suspense>
 				}
 			/>

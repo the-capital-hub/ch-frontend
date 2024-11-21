@@ -26,6 +26,7 @@ import {
 import { startupOnboardingSteps } from "../../OnBoardUser/steps/startup";
 import TutorialTrigger from "../../Shared/TutorialTrigger/TutorialTrigger";
 import LookingForFund from "./Components/LookingForFund/LookingForFund";
+import ShareThoughts from "./Components/ShareYourThoughts/ShareThoughts";
 import { environment } from "../../../environments/environment";
 import { useParams } from "react-router-dom";
 import PostDetail from "../Cards/FeedPost/PostDetail";
@@ -75,7 +76,7 @@ const Feed = () => {
 	const [getSavedPostData, setgetSavedPostData] = useState("");
 	const [hasMore, setHasMore] = useState(true);
 	const [page, setPage] = useState(1);
-	const [pollOptions, setPollOptions] = useState("")
+	const [pollOptions, setPollOptions] = useState("");
 
 	useEffect(() => {
 		if (Number(userVisitCount) <= 1) {
@@ -146,33 +147,33 @@ const Feed = () => {
 	};
 	const handlePollVote = async (postId, optionId) => {
 		try {
-			const token = localStorage.getItem('accessToken');
+			const token = localStorage.getItem("accessToken");
 			const response = await fetch(`${baseUrl}/api/posts/vote`, {
-				method: 'PATCH',
+				method: "PATCH",
 				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${token}`,
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
 				},
-				body: JSON.stringify({ 
-					postId, 
+				body: JSON.stringify({
+					postId,
 					optionId,
-					userId: loggedInUser._id
+					userId: loggedInUser._id,
 				}),
 			});
 
 			const result = await response.json();
-			
+
 			if (!response.ok) {
-				throw new Error(result.message || 'Error voting for poll');
+				throw new Error(result.message || "Error voting for poll");
 			}
 
 			// Update the posts state while preserving all post data
-			setAllPosts(prevPosts => 
-				prevPosts.map(post => {
+			setAllPosts((prevPosts) =>
+				prevPosts.map((post) => {
 					if (post._id === postId) {
 						return {
-							...post,                    // Keep all existing post data
-							pollOptions: result.data    // Update only the poll options
+							...post, // Keep all existing post data
+							pollOptions: result.data, // Update only the poll options
 						};
 					}
 					return post;
@@ -181,9 +182,8 @@ const Feed = () => {
 
 			// Return the updated poll options for the FeedPostCard component
 			return result.data;
-
 		} catch (error) {
-			console.error('Error voting for poll:', error);
+			console.error("Error voting for poll:", error);
 			throw error;
 		}
 	};
@@ -250,7 +250,7 @@ const Feed = () => {
 						documentUrl={postData.documentUrl}
 						createdAt={postData.createdAt}
 						likes={postData.likes}
-						pollOptions = {postData.pollOptions}
+						pollOptions={postData.pollOptions}
 						handlePollVote={handlePollVote}
 						location={postData.location}
 						resharedPostId={postData.resharedPostId}
@@ -277,8 +277,15 @@ const Feed = () => {
 							<TutorialTrigger steps={startupOnboardingSteps.homePage} />
 
 							{/* Looking for funding */}
+
+							<LookingForFund />
+
+							{/* Share your thoughts */}
+							<ShareThoughts />
+
 							{/* <LookingForFund /> */}
 							<LatestResources />
+
 
 							{/* Write a Post */}
 							<div
@@ -367,7 +374,6 @@ const Feed = () => {
 														lastName={lastName}
 														oneLinkId={oneLinkId}
 														pollOptions={pollOptions}
-														
 														handlePollVote={handlePollVote}
 														video={video}
 														image={image}
