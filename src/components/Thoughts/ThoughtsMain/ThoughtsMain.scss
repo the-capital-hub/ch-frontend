@@ -183,7 +183,7 @@
 
 	&:hover {
 		background-color: rgba(255, 150, 75, 0.8);
-    color: white;
+		color: white;
 	}
 
 	&--selected {
@@ -292,10 +292,28 @@
 			background-color: #f5f5f5;
 			color: #1a1a1a;
 		}
+
+		&:active {
+			color: #f97316;
+		}
+
+		&upvoted {
+			color: #f97316;
+			fill: #f97316;
+		}
 	}
 
 	&__icon {
 		font-size: 1.25rem;
+
+		&:active {
+			color: #f97316;
+		}
+
+		&upvoted {
+			color: #f97316;
+			fill: #f97316;
+		}
 	}
 }
 
@@ -310,4 +328,9 @@
 	font-style: italic;
 	margin: 1rem 0;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+#Upvoted {
+	color: #f97316;
+	fill: #f97316;
 }

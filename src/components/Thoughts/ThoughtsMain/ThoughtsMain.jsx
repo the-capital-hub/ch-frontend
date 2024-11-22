@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
 	BiChevronLeft,
 	BiPlus,
 	BiLike,
-	BiComment,
 	BiShareAlt,
 } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +11,92 @@ import "./ThoughtsMain.scss";
 import industriesAndSkills from "../data/industriesAndSkills";
 
 const baseUrl = environment.baseUrl;
+
+
+// Custom hook for handling upvotes
+const useUpvoteHandler = (baseUrl) => {
+	const [upvotedQuestions, setUpvotedQuestions] = useState(() => {
+		const stored = localStorage.getItem("question");
+		return stored ? JSON.parse(stored).upvote : [];
+	});
+
+	const handleUpvote = useCallback(
+		async (questionId) => {
+			try {
+				const token = localStorage.getItem("accessToken");
+				if (!token) {
+					throw new Error("Authentication required");
+				}
+
+				// Optimistic update
+				setUpvotedQuestions((prev) => {
+					const isUpvoted = prev.includes(questionId);
+					const newUpvotes = isUpvoted
+						? prev.filter((id) => id !== questionId)
+						: [...prev, questionId];
+
+					// Update localStorage
+					const storedQuestions = JSON.parse(
+						localStorage.getItem("question") || '{"upvote":[]}'
+					);
+					storedQuestions.upvote = newUpvotes;
+					localStorage.setItem("question", JSON.stringify(storedQuestions));
+
+					return newUpvotes;
+				});
+
+				// API call
+				const response = await fetch(
+					`${baseUrl}/thoughts/upvoteDownvoteQuestion/${questionId}`,
+					{
+						method: "PATCH",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				);
+
+				if (!response.ok) {
+					throw new Error("Failed to update vote");
+				}
+
+				// Optional: Update questions list with new vote count from server
+				return await response.json();
+			} catch (error) {
+				// Revert optimistic update on error
+				setUpvotedQuestions((prev) => {
+					const isUpvoted = prev.includes(questionId);
+					const revertedUpvotes = isUpvoted
+						? [...prev, questionId]
+						: prev.filter((id) => id !== questionId);
+
+					// Update localStorage
+					const storedQuestions = JSON.parse(
+						localStorage.getItem("question") || '{"upvote":[]}'
+					);
+					storedQuestions.upvote = revertedUpvotes;
+					localStorage.setItem("question", JSON.stringify(storedQuestions));
+
+					return revertedUpvotes;
+				});
+
+				console.error("Error handling upvote:", error);
+				throw error;
+			}
+		},
+		[baseUrl]
+	);
+
+	return {
+		upvotedQuestions,
+		handleUpvote,
+		isUpvoted: useCallback(
+			(questionId) => upvotedQuestions.includes(questionId),
+			[upvotedQuestions]
+		),
+	};
+};
 
 const TopicTag = ({ children, isSelected, onClick }) => (
 	<button
@@ -48,12 +133,15 @@ function timeAgo(timestamp) {
 }
 
 const ArticleCard = ({
+	id,
 	title,
 	contributors,
 	time,
 	description,
 	tags,
 	onClick,
+	isUpvoted,
+	onUpvote,
 }) => (
 	<div className="article-card" onClick={onClick}>
 		<h2 className="article-card__title">{title}</h2>
@@ -80,10 +168,16 @@ const ArticleCard = ({
 		<div className="article-card__actions">
 			<button
 				className="article-card__button"
-				onClick={(e) => e.stopPropagation()}
+				onClick={(e) => {
+					e.stopPropagation();
+					onUpvote(id);
+				}}
 			>
-				<BiLike className="article-card__icon" />
-				<span>Upvote</span>
+				<BiLike
+					className={`article-card__icon ${isUpvoted ? "upvoted" : ""}`}
+					id={`${isUpvoted ? "Upvoted" : ""}`}
+				/>
+				<span id={`${isUpvoted ? "Upvoted" : ""}`}>Upvote</span>
 			</button>
 			<button
 				className="article-card__button"
@@ -104,6 +198,9 @@ const Thoughts = () => {
 	const topicsRef = useRef(null);
 	const animationFrameRef = useRef(null);
 	const [isHovering, setIsHovering] = useState(false);
+	const { upvotedQuestions, handleUpvote, isUpvoted } = useUpvoteHandler(
+		environment.baseUrl
+	);
 
 	// fetch questions from server
 	useEffect(() => {
@@ -165,6 +262,14 @@ const Thoughts = () => {
 		navigate(`/thoughts/question/${id}`);
 	};
 
+	const handleUpvoteClick = async (questionId) => {
+		try {
+			await handleUpvote(questionId);
+		} catch (error) {
+			alert(error.message);
+		}
+	};
+
 	// Filter questions based on selected topics
 	const filteredQuestions =
 		selectedTopics.length > 0
@@ -215,11 +320,14 @@ const Thoughts = () => {
 								filteredQuestions.map((question) => (
 									<ArticleCard
 										key={question._id}
+										id={question._id}
 										title={question.question}
-										contributors={question.upvotes.length}
+										contributors={question.answer.length}
 										time={question.updatedAt}
 										tags={question.industry}
 										onClick={() => handleArticleClick(question._id)}
+										isUpvoted={isUpvoted(question._id)}
+										onUpvote={handleUpvoteClick}
 									/>
 								))
 							) : (
