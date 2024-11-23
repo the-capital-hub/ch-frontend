@@ -37,6 +37,7 @@ import { FiHelpCircle } from "react-icons/fi";
 import Batch from "../../Batch";
 import BatchImag from "../../../Images/tick-mark.png";
 import OnboardingSwitch from "../InvestorNavbar/OnboardingSwitch/OnboardingSwitch";
+import { BsBook } from "react-icons/bs";
 
 // Startup Sidebar
 const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
@@ -309,6 +310,15 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 								>
 									<BsLink45Deg size={25} />
 									{!sidebarCollapsed && <span>OneLink</span>}
+								</Link>
+							</MenuItem>
+							<MenuItem
+								active={location.pathname.includes("/resources")}
+								className="active-item"
+							>
+								<Link to="/resources" onClick={handleLinkClick}>
+									<BsBook size={25} />
+									{!sidebarCollapsed && <span>Resources</span>}
 								</Link>
 							</MenuItem>
 							<MenuItem
