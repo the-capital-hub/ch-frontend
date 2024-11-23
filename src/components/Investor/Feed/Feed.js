@@ -33,6 +33,8 @@ import PostDetail from "../Cards/FeedPost/PostDetail";
 import ArticlePopup from "../../PopUp/ArticlePopup/ArticlePopup";
 import NewsCard from "./Components/NewsCard/NewsCard";
 import LatestResources from "./Components/LatestResources/LatestResources";
+import Milestone from "../../Milestone/Milestone";
+import UserJourney from "../../Milestone/UserJourney";
 
 const baseUrl = environment.baseUrl;
 
@@ -286,7 +288,6 @@ const Feed = () => {
 							{/* <LookingForFund /> */}
 							<LatestResources />
 
-
 							{/* Write a Post */}
 							<div
 								className="rounded-2 start_post_container"
@@ -439,9 +440,13 @@ const Feed = () => {
 					</div>
 				)}
 				<div className="right_content">
-					<RightProfileCard />
-					<NewsCorner />
-					<RecommendationCard />
+					<div className="right_content_wrapper">
+						<RightProfileCard />
+						<Milestone />
+						<UserJourney />
+						<NewsCorner />
+						<RecommendationCard />
+					</div>
 				</div>
 			</div>
 		</MaxWidthWrapper>

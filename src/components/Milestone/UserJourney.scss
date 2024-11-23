@@ -1,0 +1,108 @@
+.profile-section {
+	background-color: #1e1f24;
+	padding: 1rem;
+	border-radius: 1rem;
+	color: white;
+
+	.profile-header {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+
+		.profile-image {
+			width: 2.5rem;
+			height: 2.5rem;
+			border-radius: 50%;
+			object-fit: cover;
+		}
+
+		.profile-info {
+			flex-grow: 1;
+
+			h3 {
+				font-size: 1rem;
+				margin: 0 0 0.25rem 0;
+				font-weight: 500;
+			}
+
+			p {
+				font-size: 0.875rem;
+				color: #9ca3af;
+				margin: 0;
+			}
+		}
+
+		.achievement-badge {
+			width: 2rem;
+			height: 2rem;
+			background-color: #fd5901;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: bold;
+			font-size: 0.875rem;
+		}
+	}
+
+	.level-indicator {
+		position: relative;
+		margin-bottom: 1.5rem;
+
+		.level-progress {
+			height: 0.5rem;
+			background-color: #4a4a4a;
+			border-radius: 0.25rem;
+			overflow: hidden;
+			margin-bottom: 1.5rem;
+
+			.level-fill {
+				height: 100%;
+				background-color: #fd5901;
+				border-radius: 0.25rem;
+				transition: width 0.3s ease;
+			}
+		}
+
+		.level-labels {
+			display: flex;
+			justify-content: space-between;
+			font-size: 0.875rem;
+			color: #9ca3af;
+			position: relative;
+
+			.current-level {
+				position: absolute;
+				transform: translateX(-50%);
+				top: -1rem;
+        left: 50%;
+				background-color: #4a4a4a;
+				padding: 0.25rem 0.5rem;
+				border-radius: 0.25rem;
+				white-space: nowrap;
+				color: white;
+				font-size: 0.75rem;
+				transition: left 0.3s ease;
+			}
+		}
+	}
+
+	.milestone-info {
+		background-color: rgba(6, 6, 6, 0.2);
+		padding: 1rem;
+		border-radius: 0.5rem;
+		margin-top: 1rem;
+
+		p {
+			margin: 0.25rem 0;
+			font-size: 0.875rem;
+			color: #9ca3af;
+
+			&:first-child {
+				color: white;
+				font-weight: 500;
+			}
+		}
+	}
+}
