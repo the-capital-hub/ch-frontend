@@ -19,6 +19,12 @@
 			// flex: 0 0 24rem;
 			// margin-left: 1rem;
 		}
+
+		.right_content_wrapper {
+			display: flex;
+			flex-direction: column;
+			gap: 0.75rem;
+		}
 	}
 
 	.main_content {

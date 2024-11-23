@@ -1,0 +1,96 @@
+.milestone-container {
+	background-color: #1e1f24;
+	padding: 1.5rem;
+	border-radius: 1rem;
+	max-width: 400px;
+	color: white;
+
+	.milestone-section {
+		h2 {
+			font-size: 1.25rem;
+			margin-bottom: 1rem;
+		}
+
+		.milestone-grid {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 1rem;
+			margin-bottom: 1.5rem;
+
+			.milestone-item {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				text-align: center;
+				background: rgba(6, 6, 6, 0.2);
+				border-radius: 40px;
+				padding: 0.5rem 0.25rem;
+
+				.icon-container {
+					position: relative;
+					margin-bottom: 0.5rem;
+
+					.icon-wrapper {
+						width: 3rem;
+						height: 3rem;
+						background-color: #2a2a2a;
+						border-radius: 50%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						margin-bottom: 0.5rem;
+
+						svg {
+							font-size: 1.25rem;
+							color: #3b82f6;
+						}
+					}
+
+					.progress-bar {
+						position: absolute;
+						bottom: 0;
+						left: 0;
+						width: 100%;
+						height: 4px;
+						background-color: #4a4a4a;
+						border-radius: 2px;
+						overflow: hidden;
+
+						.progress-fill {
+							height: 100%;
+							background-color: #fd5901;
+							border-radius: 2px;
+							transition: width 0.3s ease;
+						}
+					}
+				}
+
+				.milestone-name {
+					font-size: 0.75rem;
+					color: #9ca3af;
+					margin-bottom: 0.25rem;
+				}
+
+				.milestone-progress {
+					font-size: 0.75rem;
+					color: #9ca3af;
+				}
+			}
+		}
+
+		.show-all-btn {
+			width: 100%;
+			background-color: #fd5901;
+			color: white;
+			padding: 0.75rem;
+			border-radius: 0.5rem;
+			border: none;
+			cursor: pointer;
+			transition: background-color 0.2s ease;
+
+			&:hover {
+				background-color: darken(#fd5901, 5%);
+			}
+		}
+	}
+}

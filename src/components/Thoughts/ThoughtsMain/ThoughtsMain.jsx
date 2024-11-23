@@ -1,17 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import {
-	BiChevronLeft,
-	BiPlus,
-	BiLike,
-	BiShareAlt,
-} from "react-icons/bi";
+import { BiChevronLeft, BiPlus, BiLike, BiShareAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { environment } from "../../../environments/environment";
 import "./ThoughtsMain.scss";
 import industriesAndSkills from "../data/industriesAndSkills";
 
 const baseUrl = environment.baseUrl;
-
 
 // Custom hook for handling upvotes
 const useUpvoteHandler = (baseUrl) => {
@@ -136,6 +130,7 @@ const ArticleCard = ({
 	id,
 	title,
 	contributors,
+	contributorsList,
 	time,
 	description,
 	tags,
@@ -148,11 +143,14 @@ const ArticleCard = ({
 
 		<div className="article-card__meta">
 			<div className="article-card__contributors">
-				{Array(3)
-					.fill(0)
-					.map((_, i) => (
-						<div key={i} className="article-card__avatar" />
-					))}
+				{contributorsList.map((user, i) => (
+					<img
+						key={i}
+						src={user?.user?.profilePicture}
+						alt="avatar"
+						className="article-card__avatar"
+					/>
+				))}
 			</div>
 			<span className="article-card__stat">{contributors} contributions</span>
 			<span className="article-card__dot">•</span>
@@ -201,6 +199,7 @@ const Thoughts = () => {
 	const { upvotedQuestions, handleUpvote, isUpvoted } = useUpvoteHandler(
 		environment.baseUrl
 	);
+	console.log("questions", questions);
 
 	// fetch questions from server
 	useEffect(() => {
@@ -323,6 +322,7 @@ const Thoughts = () => {
 										id={question._id}
 										title={question.question}
 										contributors={question.answer.length}
+										contributorsList={question.answer}
 										time={question.updatedAt}
 										tags={question.industry}
 										onClick={() => handleArticleClick(question._id)}

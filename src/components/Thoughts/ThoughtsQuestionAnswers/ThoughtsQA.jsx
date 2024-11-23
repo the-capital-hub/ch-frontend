@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import {
-	FaUserCircle,
 	FaRegBookmark,
-	FaChevronRight,
 	FaPaperPlane,
+	FaUserCircle,
+	FaChevronRight,
 } from "react-icons/fa";
 import { BiLike, BiCommentDetail } from "react-icons/bi";
 import "./ThoughtsQA.scss";
 import { useParams } from "react-router-dom";
 import { environment } from "../../../environments/environment";
 import { useUpvoteHandler } from "../UtilityFunction/upvoteDownvote";
+// import AddUserIconBlack from "../../../Images/investorIcon/Add-UserBlack.svg";
 const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 
@@ -84,6 +85,12 @@ const QAComponent = () => {
 
 	// /addSuggestionsToAnswer/:questionId/:answerId
 	const handleCommentClick = async (answerId) => {
+		// first check if the user is logged in
+		if (!token || !user) {
+			alert("Please login to send suggestions");
+			return;
+		}
+
 		try {
 			fetch(`${baseUrl}/thoughts/addSuggestionsToAnswer/${id}/${answerId}`, {
 				method: "POST",
@@ -258,11 +265,16 @@ const QAComponent = () => {
 
 										{/* New comment input */}
 										<div className="comment-input-container">
-											<img
-												src={user.profilePicture}
-												alt=""
-												className="user-icon"
-											/>
+											{user?.profilePicture ? (
+												<img
+													src={user?.profilePicture}
+													alt=""
+													className="user-icon"
+												/>
+											) : (
+												<FaUserCircle className="user-icon" />
+											)}
+
 											<div className="input-wrapper">
 												<input
 													type="text"
