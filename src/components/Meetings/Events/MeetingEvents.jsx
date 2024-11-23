@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { FiCopy, FiTrash2, FiPlus } from "react-icons/fi";
 import "./MeetingEvents.scss";
 import EventModal from "./CreateEventModal/EventModal";
-import { environment } from "../../../environments/environment";
 import { IoCalendarOutline } from "react-icons/io5";
 
+import { environment } from "../../../environments/environment";
 const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 
@@ -31,6 +31,7 @@ const EventsList = () => {
 	const [copiedLinks, setCopiedLinks] = useState({});
 	const user = localStorage.getItem("loggedInUser");
 	const username = user ? JSON.parse(user).userName : null;
+	console.log("Events", events);
 
 	const fetchEvents = () => {
 		setLoading(true);

@@ -359,7 +359,7 @@ function PublicRoutes() {
 				}
 			/>
 			<Route
-				path="/thoughts/answers"
+				path="/thoughts/question/:id"
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
 						<ThoughtsQA />

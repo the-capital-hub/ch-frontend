@@ -1,130 +1,297 @@
-// QAComponent.jsx
-import React from 'react';
-import { FaUserCircle, FaRegBookmark, FaChevronRight, FaPaperPlane } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import {
+	FaUserCircle,
+	FaRegBookmark,
+	FaChevronRight,
+	FaPaperPlane,
+} from "react-icons/fa";
 import { BiLike, BiCommentDetail } from "react-icons/bi";
-import './ThoughtsQA.scss';
+import "./ThoughtsQA.scss";
+import { useParams } from "react-router-dom";
+import { environment } from "../../../environments/environment";
+import { useUpvoteHandler } from "../UtilityFunction/upvoteDownvote";
+const baseUrl = environment.baseUrl;
+const token = localStorage.getItem("accessToken");
 
 const QAComponent = () => {
-  return (
-    <div className="qa-page">
-      {/* Left Side - Questions */}
-      <div className="questions-sidebar">
-        <h2 className="sidebar-title">Questions</h2>
-        <div className="question-preview">
-          <div className="user-info">
-            <FaUserCircle className="user-icon" />
-            <div className="user-details">
-              <span className="username">Suresh Kumar</span>
-              <span className="follow-text">· Follow</span>
-            </div>
-            <button className="more-options">···</button>
-          </div>
-          <p className="preview-text">
-            How are rapidly evolving regulatory environments, particularly around data privacy,
-            cybersecurity, and environmental standards...
-          </p>
-        </div>
-      </div>
+	const [question, setQuestion] = useState({});
+	const [inputText, setInputText] = useState("");
+	const [inputComment, setInputComment] = useState("");
+	const [isCommentsOpen, setIsCommentsOpen] = useState({});
+	const { id } = useParams(); // used as questionId
+	const user = JSON.parse(localStorage.getItem("loggedInUser"));
 
-      {/* Main Content */}
-      <div className="main-content">
-        {/* Question Section */}
-        {/* <div className="question-section">
-          <div className="user-info">
-            <FaUserCircle className="user-icon" />
-            <div className="user-details">
-              <span className="username">Suresh Kumar</span>
-              <span className="follow-text">· Follow</span>
-            </div>
-          </div>
-          
-          <p className="question-text">
-            How are rapidly evolving regulatory environments, particularly around data privacy,
-            cybersecurity, and environmental standards, influencing the strategies and operations
-            of industries like technology, finance, and healthcare, and what are the long-term
-            implications of these regulations for companies trying to balance compliance with
-            innovation?
-          </p>
-        </div> */}
+	const {
+		upvotedIds: upvotedAnswers,
+		handleUpvote: handleAnswerUpvote,
+		isUpvoted: isAnswerUpvoted,
+	} = useUpvoteHandler(baseUrl, "answer");
 
-        {/* Answers Section */}
-        <div className="answers-section">
-          <h3 className="answers-title">Answers</h3>
-          
-          {/* Answer Input */}
-          <div className="answer-input-container">
-            <div className="input-header">
-              <FaUserCircle className="user-icon" />
-              <p className="input-placeholder">Type your answer here</p>
-            </div>
-            <div className="input-actions">
-              <FaPaperPlane className="send-icon" />
-            </div>
-          </div>
+	const {
+		upvotedIds: upvotedComments,
+		handleUpvote: handleCommentUpvote,
+		isUpvoted: isCommentUpvoted,
+	} = useUpvoteHandler(baseUrl, "comment");
 
-          {/* Answer Items */}
-          {[
-            {
-              name: "Rahul Kumar",
-              content: "In the face of rapid advancements in financial technologies (fintech), such as blockchain, digital currencies, and decentralized finance (DeFi), how are traditional financial institutions responding to the threat of disruption while still leveraging these technologies to enhance their own services, and what are the potential risks and rewards of this transition for both consumers and investors With the growing demand for personalized medicine and the rise of biotechnologies such"
-            },
-            {
-              name: "John Smith",
-              content: "In the realm of artificial intelligence (AI) and machine learning (ML), how are organizations adapting to the increasing automation of processes and decision-making, and what are the key considerations for ensuring transparency and accountability in AI-driven systems"
-            },
-            {
-              name: "John Smith",
-              content: "In the realm of artificial intelligence (AI) and machine learning (ML), how are organizations adapting to the increasing automation of processes and decision-making, and what are the key considerations for ensuring transparency and accountability in AI-driven systems"
-            },
-            {
-              name: "John Smith",
-              content: "In the realm of artificial intelligence (AI) and machine learning (ML), how are organizations adapting to the increasing automation of processes and decision-making, and what are the key considerations for ensuring transparency and accountability in AI-driven systems"
-            },
-            {
-              name: "Suresh Kumar",
-              content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quas."
-            }
-          ].map((answer, index) => (
-            <div key={index} className="answer-item">
-              <div className="user-info">
-                <FaUserCircle className="user-icon" />
-                <div className="user-details">
-                  <span className="username">{answer.name}</span>
-                  <span className="follow-text">· Follow</span>
-                </div>
-              </div>
-              
-              <p className="answer-text">
-                {answer.content}
-              </p>
-              
-              <div className="interaction-bar">
-                <div className="action-buttons">
-                  <button className="action-button">
-                    <BiLike />
-                    <span>Like</span>
-                  </button>
-                  <button className="action-button">
-                    <BiCommentDetail />
-                    <span>Comment</span>
-                  </button>
-                </div>
-                <FaRegBookmark className="bookmark-icon" />
-              </div>
-            </div>
-          ))}
+	console.log("question", question);
+	// Fetch question data
+	// /getQuestionById/:questionId
 
-          {/* View More Button */}
-          <div className="view-more">
-            <button className="view-more-button">
-              <span>View more answers</span>
-              <FaChevronRight />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+	const fetchQuestion = async () => {
+		try {
+			const response = await fetch(`${baseUrl}/thoughts/getQuestionById/${id}`);
+			const data = await response.json();
+			setQuestion(data.data);
+		} catch (error) {
+			console.error("Error fetching question:", error);
+		}
+	};
+	useEffect(() => {
+		fetchQuestion();
+	}, [id, upvotedAnswers, upvotedComments]);
+
+	const handleSendClick = () => {
+		console.log(inputText);
+
+		// Send the inputText to the backend
+		// /addAnswerToQuestion/:questionId
+		try {
+			fetch(`${baseUrl}/thoughts/addAnswerToQuestion/${id}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({ answer: inputText }),
+			}).then((res) => {
+				if (res.status === 200) {
+					alert("Answer sent successfully");
+					fetchQuestion();
+				}
+			});
+		} catch (error) {
+			console.error("Error sending answer:", error);
+		}
+		setInputText("");
+	};
+
+	const openComments = (answerId) => {
+		setIsCommentsOpen((prev) => ({
+			...prev,
+			[answerId]: !prev[answerId],
+		}));
+	};
+
+	// /addSuggestionsToAnswer/:questionId/:answerId
+	const handleCommentClick = async (answerId) => {
+		try {
+			fetch(`${baseUrl}/thoughts/addSuggestionsToAnswer/${id}/${answerId}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({ suggestion: inputComment }),
+			}).then((res) => {
+				if (res.status === 200) {
+					alert("Suggestion sent successfully");
+					fetchQuestion();
+				}
+			});
+		} catch (error) {
+			console.error("Error sending suggestion:", error);
+		}
+		setInputComment("");
+	};
+
+	return (
+		<div className="qa-page">
+			{/* Left Side - Questions */}
+			<div className="questions-sidebar">
+				<h2 className="sidebar-title">Questions</h2>
+				<div className="question-preview">
+					<div className="user-info">
+						{/* <FaUserCircle className="user-icon" /> */}
+						<img
+							src={question?.user?.profilePicture}
+							alt="Profile Pic"
+							className="user-icon"
+						/>
+						<div className="user-details">
+							<span className="username">
+								{question?.user?.firstName + " " + question?.user?.lastName}
+							</span>
+							{/* <span className="follow-text">· Follow</span> */}
+						</div>
+						{/* <button className="more-options">···</button> */}
+					</div>
+					<p className="preview-text">{question?.question}</p>
+				</div>
+			</div>
+
+			{/* Main Content */}
+			<div className="main-content">
+				{/* Answers Section */}
+				<div className="answers-section">
+					<h3 className="answers-title">Answers</h3>
+
+					{/* Answer Input */}
+					<div className="answer-input-container">
+						<div className="input-header">
+							{/* <FaUserCircle className="user-icon" /> */}
+							<img
+								src={question?.user?.profilePicture}
+								alt="Profile Pic"
+								className="user-icon"
+							/>
+							<input
+								type="text"
+								placeholder="Type your answer here"
+								className="input-placeholder"
+								value={inputText}
+								onChange={(e) => setInputText(e.target.value)}
+							/>
+						</div>
+						<div className="input-actions">
+							<FaPaperPlane className="send-icon" onClick={handleSendClick} />
+						</div>
+					</div>
+
+					{/* Answer Items */}
+					{question?.answer
+						? question?.answer.map((answer, index) => (
+								<div key={index} className="answer-item">
+									<div className="user-info">
+										<img
+											src={answer?.user?.profilePicture}
+											alt="Profile Pic"
+											className="user-icon"
+										/>
+										<div className="user-details">
+											<span className="username">
+												{answer.user.firstName + " " + answer.user.lastName}
+											</span>
+											{/* <span className="follow-text">· Follow</span> */}
+										</div>
+									</div>
+
+									<p className="answer-text">{answer.answer}</p>
+
+									<div className="interaction-bar">
+										<div className="action-buttons">
+											<button
+												className="action-button"
+												onClick={() => handleAnswerUpvote(id, answer._id)}
+											>
+												<BiLike
+													id={isAnswerUpvoted(answer._id) ? "upvoted" : ""}
+												/>
+												<span>
+													{answer?.upvotes?.length || 0}{" "}
+													{answer?.upvotes?.length === 1 ? "Like" : "Likes"}
+												</span>
+											</button>
+											<button
+												className="action-button"
+												onClick={() => openComments(answer._id)}
+											>
+												<BiCommentDetail />
+												<span>Comment</span>
+											</button>
+										</div>
+										<FaRegBookmark className="bookmark-icon" />
+									</div>
+
+									<div
+										className="comments-section"
+										style={{
+											display: isCommentsOpen[answer._id] ? "block" : "none",
+										}}
+									>
+										<div className="comments-wrapper">
+											{/* Existing comments */}
+											{answer.suggestions?.map((comment, index) => (
+												<div key={index} className="comment-item">
+													<img
+														src={comment.user.profilePicture}
+														alt=""
+														className="user-icon"
+													/>
+													<div className="comment-content">
+														<div className="user-name">
+															{comment.user.firstName +
+																" " +
+																comment.user.lastName}
+														</div>
+														<div className="comment-text">
+															{comment.comment}
+														</div>
+														<div className="comment-actions">
+															<button
+																onClick={() =>
+																	handleCommentUpvote(
+																		id,
+																		answer._id,
+																		comment._id
+																	)
+																}
+															>
+																<BiLike
+																	id={
+																		isCommentUpvoted(comment._id)
+																			? "upvoted"
+																			: ""
+																	}
+																/>{" "}
+																<span>
+																	{comment?.likes?.length || 0}{" "}
+																	{comment?.likes?.length === 1
+																		? "Like"
+																		: "Likes"}
+																</span>
+															</button>
+														</div>
+													</div>
+												</div>
+											))}
+										</div>
+
+										{/* New comment input */}
+										<div className="comment-input-container">
+											<img
+												src={user.profilePicture}
+												alt=""
+												className="user-icon"
+											/>
+											<div className="input-wrapper">
+												<input
+													type="text"
+													value={inputComment}
+													onChange={(e) => setInputComment(e.target.value)}
+													placeholder="Write a comment..."
+												/>
+												<FaPaperPlane
+													className="send-icon"
+													onClick={() => handleCommentClick(answer._id)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+						  ))
+						: "No data found"}
+
+					{/* View More Button */}
+					{/* <div className="view-more">
+						<button className="view-more-button">
+							<span>View more answers</span>
+							<FaChevronRight />
+						</button>
+					</div> */}
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default QAComponent;

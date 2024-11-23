@@ -1,151 +1,192 @@
-import React, { useState } from "react";
-import { FaPlus, FaMinus } from "react-icons/fa";
+import React, { useState, useEffect, useRef } from "react";
 import "./CreateQuestion.scss";
+import { environment } from "../../../environments/environment";
+import industriesAndSkills from "../data/industriesAndSkills";
+
+const baseUrl = environment.baseUrl;
+const token = localStorage.getItem("accessToken");
 
 const QuestionCreator = () => {
-	const [activeTab, setActiveTab] = useState("question");
-	const [question, setQuestion] = useState("");
-	const [industry, setIndustry] = useState("");
-	const [answers, setAnswers] = useState([""]);
-	const [correctAnswer, setCorrectAnswer] = useState("");
+	const [formData, setFormData] = useState({
+		question: "",
+		industry: "",
+	});
+	const [searchTerm, setSearchTerm] = useState("");
+	const [showOptions, setShowOptions] = useState(false);
+	const [customIndustry, setCustomIndustry] = useState("");
+	const optionsContainerRef = useRef(null);
 
-	const handleAddAnswer = () => {
-		if (answers.length < 4) {
-			setAnswers([...answers, ""]);
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			// Check if the click is outside the options container
+			if (
+				optionsContainerRef.current &&
+				!optionsContainerRef.current.contains(event.target)
+			) {
+				setShowOptions(false);
+			}
+		};
+
+		// Add event listener when options are shown
+		if (showOptions) {
+			document.addEventListener("mousedown", handleClickOutside);
+		}
+
+		// Cleanup the event listener
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [showOptions]);
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormData((prevData) => ({
+			...prevData,
+			[name]: value,
+		}));
+	};
+
+	const handleUpload = async () => {
+		const { question, industry } = formData;
+
+		if (!question || !industry) {
+			alert("Please fill in both the question and select an industry.");
+			return;
+		}
+
+		console.log("Question:", question, "Industry:", industry);
+		console.log("Sending data:", JSON.stringify(formData));
+
+		try {
+			const response = await fetch(`${baseUrl}/thoughts/create-question`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify(formData),
+			});
+
+			if (response.ok) {
+				console.log("Question created successfully");
+				alert("Question created successfully");
+			} else {
+				const errorData = await response.json();
+				console.error("Error uploading question:", errorData);
+				alert(
+					`Error uploading question: ${errorData.message || "Unknown error"}`
+				);
+			}
+		} catch (error) {
+			console.error("Network error:", error);
+			alert(
+				"An error occurred while uploading the question. Please try again."
+			);
+		}
+
+		setFormData({
+			question: "",
+			industry: "",
+		});
+		setCustomIndustry("");
+		setSearchTerm("");
+		setShowOptions(false);
+	};
+
+	const handleSearchChange = (e) => {
+		setSearchTerm(e.target.value);
+		setShowOptions(true);
+	};
+
+	const handleOptionClick = (industry) => {
+		setFormData((prevData) => ({
+			...prevData,
+			industry: industry,
+		}));
+		setSearchTerm(industry);
+		setShowOptions(false);
+	};
+
+	const handleCustomIndustryChange = (e) => {
+		setCustomIndustry(e.target.value);
+	};
+
+	const handleAddCustomIndustry = () => {
+		if (customIndustry) {
+			setFormData((prevData) => ({
+				...prevData,
+				industry: customIndustry,
+			}));
+			setSearchTerm(customIndustry);
+			setCustomIndustry("");
+			setShowOptions(false);
+		} else {
+			alert("Please enter a custom industry.");
 		}
 	};
 
-	const handleRemoveAnswer = (index) => {
-		const newAnswers = answers.filter((_, i) => i !== index);
-		setAnswers(newAnswers);
-		if (correctAnswer === `${index + 1}`) {
-			setCorrectAnswer("");
-		}
-	};
-
-	const handleAnswerChange = (index, value) => {
-		const newAnswers = [...answers];
-		newAnswers[index] = value;
-		setAnswers(newAnswers);
-	};
+	const filteredIndustries = industriesAndSkills.filter((industry) =>
+		industry.toLowerCase().includes(searchTerm.toLowerCase())
+	);
 
 	return (
 		<div className="question-creator-container">
 			<div className="question-creator">
-				<div className="tabs">
-					<button
-						className={activeTab === "question" ? "active" : ""}
-						onClick={() => setActiveTab("question")}
-					>
-						Create Question
-					</button>
-					<button
-						className={activeTab === "poll" ? "active" : ""}
-						onClick={() => setActiveTab("poll")}
-					>
-						Create Poll
+				<div className="create-question">
+					<h1>Create Question</h1>
+					<div className="input-group">
+						<label htmlFor="question">Question</label>
+						<input
+							type="text"
+							id="question"
+							name="question"
+							value={formData.question}
+							onChange={handleChange}
+							placeholder="Type your question here..."
+						/>
+					</div>
+					<div className="input-group">
+						<label htmlFor="industry">Select Industry / Skill</label>
+						<input
+							type="text"
+							id="industry"
+							name="industry"
+							value={searchTerm}
+							onChange={handleSearchChange}
+							placeholder="Search or add a custom industry..."
+							onFocus={() => setShowOptions(true)}
+						/>
+						{showOptions && (
+							<div className="options-container" ref={optionsContainerRef}>
+								{filteredIndustries.length > 0 ? (
+									filteredIndustries.map((industry) => (
+										<div
+											key={industry}
+											className="option-item"
+											onClick={() => handleOptionClick(industry)}
+										>
+											{industry}
+										</div>
+									))
+								) : (
+									<div className="no-options">No options found</div>
+								)}
+								<div className="custom-industry">
+									<input
+										type="text"
+										value={customIndustry}
+										onChange={handleCustomIndustryChange}
+										placeholder="Add custom industry"
+									/>
+									<button onClick={handleAddCustomIndustry}>Add</button>
+								</div>
+							</div>
+						)}
+					</div>
+					<button className="upload-button" onClick={handleUpload}>
+						Upload Question
 					</button>
 				</div>
-
-				{activeTab === "question" ? (
-					<div className="create-question">
-						<h1>Create Question</h1>
-						<div className="input-group">
-							<label htmlFor="question">Question</label>
-							<input
-								type="text"
-								id="question"
-								value={question}
-								onChange={(e) => setQuestion(e.target.value)}
-								placeholder="Type your question here..."
-							/>
-						</div>
-						<div className="input-group">
-							<label htmlFor="industry">Select Industry / Skill</label>
-							<select
-								id="industry"
-								value={industry}
-								onChange={(e) => setIndustry(e.target.value)}
-							>
-								<option value="">Select an option</option>
-								<option value="tech">Technology</option>
-								<option value="finance">Finance</option>
-								<option value="healthcare">Healthcare</option>
-							</select>
-						</div>
-						<button className="upload-button">Upload Question</button>
-					</div>
-				) : (
-					<div className="create-poll">
-						<h1>Create Poll</h1>
-						<div className="input-group">
-							<label htmlFor="poll-question">Question</label>
-							<input
-								type="text"
-								id="poll-question"
-								value={question}
-								onChange={(e) => setQuestion(e.target.value)}
-								placeholder="Type your question here..."
-							/>
-						</div>
-						{answers.map((answer, index) => (
-							<div key={index} className="input-group answer-input">
-								<label htmlFor={`answer-${index + 1}`}>
-									Answer {index + 1}
-								</label>
-								<input
-									type="text"
-									id={`answer-${index + 1}`}
-									value={answer}
-									onChange={(e) => handleAnswerChange(index, e.target.value)}
-									placeholder={`Type answer ${index + 1} here...`}
-								/>
-								{index === answers.length - 1 && answers.length < 4 && (
-									<button className="add-answer" onClick={handleAddAnswer}>
-										<FaPlus />
-									</button>
-								)}
-								{answers.length > 1 && (
-									<button
-										className="remove-answer"
-										onClick={() => handleRemoveAnswer(index)}
-									>
-										<FaMinus />
-									</button>
-								)}
-							</div>
-						))}
-						<div className="input-group">
-							<label htmlFor="correct-answer">Select Correct Answer</label>
-							<select
-								id="correct-answer"
-								value={correctAnswer}
-								onChange={(e) => setCorrectAnswer(e.target.value)}
-							>
-								<option value="">Select correct answer</option>
-								{answers.map((_, index) => (
-									<option key={index} value={`${index + 1}`}>
-										Answer {index + 1}
-									</option>
-								))}
-							</select>
-						</div>
-						<div className="input-group">
-							<label htmlFor="poll-industry">Select Industry / Skill</label>
-							<select
-								id="poll-industry"
-								value={industry}
-								onChange={(e) => setIndustry(e.target.value)}
-							>
-								<option value="">Select an option</option>
-								<option value="tech">Technology</option>
-								<option value="finance">Finance</option>
-								<option value="healthcare">Healthcare</option>
-							</select>
-						</div>
-						<button className="upload-button">Upload Poll</button>
-					</div>
-				)}
 			</div>
 		</div>
 	);

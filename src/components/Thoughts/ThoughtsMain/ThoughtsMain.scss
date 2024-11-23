@@ -10,7 +10,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	background-color: #19191C;
+	background-color: #19191c;
 	padding: 0.75rem 1rem;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
@@ -161,6 +161,12 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 }
 
 .topic-tag {
@@ -176,7 +182,8 @@
 	text-align: left;
 
 	&:hover {
-		background-color: #f3f4f6;
+		background-color: rgba(255, 150, 75, 0.8);
+		color: white;
 	}
 
 	&--selected {
@@ -285,9 +292,45 @@
 			background-color: #f5f5f5;
 			color: #1a1a1a;
 		}
+
+		&:active {
+			color: #f97316;
+		}
+
+		&upvoted {
+			color: #f97316;
+			fill: #f97316;
+		}
 	}
 
 	&__icon {
 		font-size: 1.25rem;
+
+		&:active {
+			color: #f97316;
+		}
+
+		&upvoted {
+			color: #f97316;
+			fill: #f97316;
+		}
 	}
+}
+
+.no-questions {
+	width: 100%;
+	text-align: center;
+	color: #666;
+	padding: 2rem;
+	background-color: #f4f4f4;
+	border-radius: 8px;
+	font-size: 0.9rem;
+	font-style: italic;
+	margin: 1rem 0;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+#Upvoted {
+	color: #f97316;
+	fill: #f97316;
 }
