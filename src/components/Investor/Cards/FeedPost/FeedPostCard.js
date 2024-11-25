@@ -122,10 +122,10 @@ const FeedPostCard = ({
 	const [isVoting, setIsVoting] = useState(false);
 
 	// Log state changes for debugging
-	useEffect(() => {
-		console.log("Poll Options changed:", pollOptions);
-		console.log("Local Poll Options:", localPollOptions);
-	}, [pollOptions, localPollOptions]);
+	// useEffect(() => {
+	// 	console.log("Poll Options changed:", pollOptions);
+	// 	console.log("Local Poll Options:", localPollOptions);
+	// }, [pollOptions, localPollOptions]);
 
 	// Update localPollOptions when pollOptions prop changes
 	useEffect(() => {

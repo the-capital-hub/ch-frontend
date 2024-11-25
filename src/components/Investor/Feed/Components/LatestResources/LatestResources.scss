@@ -1,43 +1,165 @@
 .latest_resources_wrapper {
-  border-radius: var(--border-radius);
-  box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.05);
-  color: white;
-  
-  h1, h2, h3, h4, h5, h6, p, span {
-    color: white !important;
-  }
+	background: linear-gradient(135deg, #0d6efd, #28a745);
+	border-radius: 12px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	position: relative;
+	overflow: hidden;
 
-  .title, .description, .amount {
-    color: white !important;
-  }
+	p {
+		color: #ffffff;
+		font-size: 1.25rem;
+		text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+	}
 
-  .available-resources {
-    color: white !important;
-  }
-  
-  .orange_button, .btn-outline-light {
-    min-width: 120px;
-    padding: 0.8rem 1.5rem;
-    border-radius: 20px;
-    font-weight: 600;
-    transition: all 0.2s ease-in-out;
-  }
+	.typed-text {
+		display: inline-block;
+		border-right: 2px solid #ffffff; // Blinking cursor
+		padding-right: 4px;
+		animation: blink 0.8s steps(1) infinite;
+	}
 
-  .orange_button {
-    background: linear-gradient(45deg, #fd5901, #ff7a33);
-    color: white !important;
-    border: none;
-    
-    &:hover {
-      background: linear-gradient(45deg, #ff6a1c, #ff8c4d);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(253, 89, 1, 0.3);
-    }
-  }
+	.btn {
+		// padding: 0.75rem 1.5rem;
+		// border-radius: 50px;
+		// font-weight: bold;
+		// cursor: pointer;
+		// transition: all 0.3s ease-in-out;
+		border-radius: 50px;
+		cursor: pointer;
+		font-weight: 700;
+		margin: 5px;
+		padding: 0.35rem 1.5rem;
+		transition: all 0.3s ease-in-out;
 
-  .btn-outline-light {
-    &:hover {
-      transform: translateY(-2px);
-    }
-  }
-} 
+		&.orange_button {
+			background: linear-gradient(45deg, #ff8000, #ffa733);
+			color: #fff;
+			border: none;
+
+			&:hover {
+				background: linear-gradient(45deg, #ff9100, #ffc04d);
+				transform: translateY(-2px);
+				box-shadow: 0 4px 12px rgba(255, 128, 0, 0.4);
+			}
+		}
+
+		&.btn-outline-light {
+			border: 2px solid #ffffff;
+			color: #ffffff;
+			background: transparent;
+
+			&:hover {
+				color: #0d6efd;
+				background: #ffffff;
+				transform: translateY(-2px);
+			}
+		}
+	}
+}
+
+// Cursor Blinking Effect
+@keyframes blink {
+	0% {
+		border-right-color: #ffffff;
+	}
+	50% {
+		border-right-color: transparent;
+	}
+	100% {
+		border-right-color: #ffffff;
+	}
+}
+
+// import React, { useState, useEffect } from "react";
+// import "./LatestResources.scss";
+// import ResourcesPopup from "../ResourcesPopup/ResourcesPopup";
+
+// export default function LatestResources() {
+//   const [showPopup, setShowPopup] = useState(false);
+//   const [isDismissed, setIsDismissed] = useState(() => {
+//     return localStorage.getItem("resourcesDismissed") === "true";
+//   });
+
+//   const [displayText, setDisplayText] = useState(""); // Current text being displayed
+//   const [isTyping, setIsTyping] = useState(true); // Indicates typing or deleting phase
+//   const [charIndex, setCharIndex] = useState(0); // Current character index
+//   const [wordIndex, setWordIndex] = useState(0); // Current word index in rotation
+
+//   const words = ["Resources", "Documents", "Articles", "Guides", "Updates"]; // Words to cycle through
+
+//   useEffect(() => {
+//     const currentWord = words[wordIndex]; // Get the current word
+
+//     if (isTyping) {
+//       // Typing Phase
+//       if (charIndex < currentWord.length) {
+//         const typingTimeout = setTimeout(() => {
+//           setDisplayText((prev) => prev + currentWord[charIndex]); // Add one character at a time
+//           setCharIndex((prev) => prev + 1);
+//         }, 100); // Typing speed
+//         return () => clearTimeout(typingTimeout); // Cleanup timeout
+//       } else {
+//         // Pause before deleting
+//         setTimeout(() => setIsTyping(false), 1000); // Pause duration
+//       }
+//     } else {
+//       // Deleting Phase
+//       if (charIndex > 0) {
+//         const deletingTimeout = setTimeout(() => {
+//           setDisplayText((prev) => prev.slice(0, -1)); // Remove one character at a time
+//           setCharIndex((prev) => prev - 1);
+//         }, 100); // Deleting speed
+//         return () => clearTimeout(deletingTimeout); // Cleanup timeout
+//       } else {
+//         // Move to the next word
+//         setIsTyping(true);
+//         setWordIndex((prev) => (prev + 1) % words.length); // Cycle to the next word
+//       }
+//     }
+//   }, [isTyping, charIndex, wordIndex, words]);
+
+//   const handleDismiss = () => {
+//     localStorage.setItem("resourcesDismissed", "true");
+//     setIsDismissed(true);
+//   };
+
+//   const handleView = () => {
+//     setShowPopup(true);
+//   };
+
+//   if (isDismissed) return null;
+
+//   return (
+//     <>
+//       <div className="latest_resources_wrapper bg-dark text-white py-3">
+//         <div className="d-flex align-items-center justify-content-between px-4 flex-wrap gap-3">
+//           {/* Section Title with typing effect */}
+//           <p className="m-0 fs-5 fw-bold">
+//             Latest <span className="typed-text">{displayText}</span>
+//           </p>
+
+//           {/* Action Buttons */}
+//           <div className="d-flex gap-3">
+//             <button
+//               onClick={handleView}
+//               className="btn orange_button d-flex align-items-center justify-content-center"
+//               aria-label="View Resources"
+//             >
+//               View
+//             </button>
+//             <button
+//               onClick={handleDismiss}
+//               className="btn btn-outline-light d-flex align-items-center justify-content-center"
+//               aria-label="Dismiss Resources"
+//             >
+//               Dismiss
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Render Popup when showPopup is true */}
+//       {showPopup && <ResourcesPopup onClose={() => setShowPopup(false)} />}
+//     </>
+//   );
+// }

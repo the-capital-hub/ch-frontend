@@ -206,7 +206,7 @@ const QAComponent = () => {
 												<span>Comment</span>
 											</button>
 										</div>
-										<FaRegBookmark className="bookmark-icon" />
+										{/* <FaRegBookmark className="bookmark-icon" /> */}
 									</div>
 
 									<div
