@@ -8,6 +8,8 @@ import {
 import { BiLike, BiCommentDetail } from "react-icons/bi";
 import "./ThoughtsQA.scss";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../../Store/features/design/designSlice";
 import { environment } from "../../../environments/environment";
 import { useUpvoteHandler } from "../UtilityFunction/upvoteDownvote";
 // import AddUserIconBlack from "../../../Images/investorIcon/Add-UserBlack.svg";
@@ -15,6 +17,7 @@ const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 
 const QAComponent = () => {
+	const theme = useSelector(selectTheme);
 	const [question, setQuestion] = useState({});
 	const [inputText, setInputText] = useState("");
 	const [inputComment, setInputComment] = useState("");
@@ -112,10 +115,13 @@ const QAComponent = () => {
 	};
 
 	return (
-		<div className="qa-page">
+		<div
+			className={`qa-page ${theme === "dark" ? " dark-theme" : ""}`}
+			data-bs-theme={theme}
+		>
 			{/* Left Side - Questions */}
 			<div className="questions-sidebar">
-				<h2 className="sidebar-title">Questions</h2>
+				<h2 className="sidebar-title">Question</h2>
 				<div className="question-preview">
 					<div className="user-info">
 						{/* <FaUserCircle className="user-icon" /> */}

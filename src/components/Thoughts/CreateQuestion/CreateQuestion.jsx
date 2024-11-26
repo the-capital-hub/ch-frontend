@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../../Store/features/design/designSlice";
 import "./CreateQuestion.scss";
 import { environment } from "../../../environments/environment";
 import industriesAndSkills from "../data/industriesAndSkills";
@@ -7,6 +9,7 @@ const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 
 const QuestionCreator = () => {
+	const theme = useSelector(selectTheme);
 	const [formData, setFormData] = useState({
 		question: "",
 		industry: "",
@@ -130,7 +133,12 @@ const QuestionCreator = () => {
 	);
 
 	return (
-		<div className="question-creator-container">
+		<div
+			className={`question-creator-container ${
+				theme === "dark" ? " dark-theme" : ""
+			}`}
+			data-bs-theme={theme}
+		>
 			<div className="question-creator">
 				<div className="create-question">
 					<h1>Create Question</h1>

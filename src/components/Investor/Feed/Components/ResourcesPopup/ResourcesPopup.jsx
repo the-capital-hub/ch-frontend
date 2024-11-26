@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import SpinnerBS from "../../../../Shared/Spinner/SpinnerBS";
 import { load } from "@cashfreepayments/cashfree-js";
 const baseUrl = environment.baseUrl;
+const token = localStorage.getItem("accessToken");
 
 export default function ResourcesPopup({ onClose }) {
 	const [resources, setResources] = useState([]);
@@ -13,6 +14,7 @@ export default function ResourcesPopup({ onClose }) {
 	const [showLinks, setShowLinks] = useState(false);
 	const [orderId, setOrderId] = useState("");
 	const [paymentStatus, setPaymentStatus] = useState(null);
+	const [paidResources, setPaidResources] = useState(new Set());
 
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 
@@ -63,7 +65,10 @@ export default function ResourcesPopup({ onClose }) {
 				`${baseUrl}/resources/createPaymentSession`,
 				{
 					method: "POST",
-					headers: { "Content-Type": "application/json" },
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
 					body: JSON.stringify(paymentData),
 				}
 			);
@@ -87,12 +92,15 @@ export default function ResourcesPopup({ onClose }) {
 		}
 	};
 	// verify payment
-	const verifyPayment = async (orderId) => {
+	const verifyPayment = async (orderId, resourceId) => {
 		try {
 			const response = await fetch(`${baseUrl}/resources/verifyPayment`, {
 				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ orderId }),
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({ orderId, resourceId }),
 			});
 
 			const data = await response.json();
@@ -110,37 +118,46 @@ export default function ResourcesPopup({ onClose }) {
 		}
 	};
 	const handlePayment = async (resourceId) => {
-		console.log("Processing payment for resource:", resourceId);
+		// console.log("Processing payment for resource:", resourceId);
 
 		try {
-			const response = await initializeCashfree();
-			if (!response) {
-				console.error("Failed to initialize Cashfree");
-				return;
-			}
-
+			const cashfree = await initializeCashfree();
 			const paymentData = {
 				order_amount: resourceId.amount,
 				customer_name: loggedInUser.firstName + " " + loggedInUser.lastName,
 				customer_email: loggedInUser.email,
 				customer_phone: loggedInUser.phoneNumber,
+				resourceId: resourceId._id,
 			};
 
-			const paymentSession = await createPaymentSession(paymentData);
-			if (!paymentSession) {
-				console.error("Failed to create payment session");
-				return;
-			}
+			const { sessionId, orderId } = await createPaymentSession(paymentData);
 
-			const isPaymentVerified = await verifyPayment(paymentSession.orderId);
-			if (!isPaymentVerified) {
-				console.error("Payment verification failed");
-				return;
-			}
+			// Handle payment checkout
+			await cashfree.checkout({
+				paymentSessionId: sessionId,
+				redirectTarget: "_modal",
+			});
 
-			console.log("Payment successful");
+			// Handle payment verification
+			const paymentVerified = await verifyPayment(orderId, resourceId._id);
+
+			if (paymentVerified) {
+				setPaidResources((prev) => new Set([...prev, resourceId._id]));
+				alert("Payment successful");
+				// console.log("Payment successful", paymentVerified);
+			}
 		} catch (error) {
 			console.error("Error processing payment:", error);
+		}
+	};
+
+	const handleClick = (resource) => {
+		// console.log("paymentStatus", paymentStatus);
+		// console.log("resource", resource);
+		if (paymentStatus === "success" && paidResources.has(resource._id)) {
+			handleResourceClick(resource);
+		} else {
+			handlePayment(resource);
 		}
 	};
 
@@ -184,9 +201,12 @@ export default function ResourcesPopup({ onClose }) {
 										<button
 											className="view-details-btn"
 											// onClick={() => handleResourceClick(resource)}
-											onClick={() => handlePayment(resource)}
+											onClick={() => handleClick(resource)}
 										>
-											Download only at ₹{resource?.amount}
+											{paymentStatus === "success" &&
+											paidResources.has(resource._id)
+												? "Download"
+												: `Download only at ₹${resource?.amount}`}
 										</button>
 									</div>
 								</div>
