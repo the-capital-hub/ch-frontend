@@ -145,10 +145,12 @@ const Resources = () => {
 							style={{
 								backgroundImage: `url('${
 									resource.imageUrl ||
-									"https://thecapitalhub.s3.ap-south-1.amazonaws.com/ss-resouces.png"
+									"https://images.unsplash.com/photo-1631651587690-25d98f3f1393?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+									// "https://thecapitalhub.s3.ap-south-1.amazonaws.com/ss-resouces.png"
 								}')`,
 							}}
 						></div>
+
 						<div className="card-hover-content">
 							<h3>{resource.title}</h3>
 							<p>{resource.description}</p>
