@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./UserJourney.scss";
 import { useSelector } from "react-redux";
+import { selectTheme } from "../../Store/features/design/designSlice";
 import { getPdfData, userPosts } from "../../Service/user";
 import {
 	userRequiredFields,
@@ -80,6 +81,7 @@ const checkCurrentLevel = (milestoneData) => {
 };
 
 const UserJourney = () => {
+	const theme = useSelector(selectTheme);
 	const [userProgress, setUserProgress] = useState({
 		currentLevel: 1,
 		levelProgress: 10,
@@ -205,7 +207,10 @@ const UserJourney = () => {
 	}, []);
 
 	return (
-		<div className="profile-section">
+		<div
+			className={`profile-section ${theme === "dark" ? " dark-theme" : ""}`}
+			data-bs-theme={theme}
+		>
 			<div className="profile-header">
 				<img src={user.profilePicture} alt="" className="profile-image" />
 				<div className="profile-info">

@@ -1,5 +1,25 @@
+:root {
+	--bg-color: #ffffff;
+	--text-color: #333333;
+	--text-color-secondary: #212529;
+	--accent-color: #fd5901;
+	--background-color: #fff;
+	--background-color-secondary: #f5f5f5;
+	--background-btn: rgba(52, 55, 68, 0.2);
+}
+
+.dark-theme {
+	--bg-color: var(--white-to-grey);
+	--text-color: #ffffff;
+	--text-color-secondary: #9ca3af;
+	--accent-color: #fd5901;
+	--background-color: #1e1f24;
+	--background-color-secondary: rgba(6, 6, 6, 0.2);
+	--background-btn: rgb(30, 30, 30);
+}
+
 .profile-section {
-	background-color: #1e1f24;
+	background-color: var(--background-color);
 	padding: 1rem;
 	border-radius: 1rem;
 	color: white;
@@ -24,11 +44,12 @@
 				font-size: 1rem;
 				margin: 0 0 0.25rem 0;
 				font-weight: 500;
+				color: var(--text-color);
 			}
 
 			p {
 				font-size: 0.875rem;
-				color: #9ca3af;
+				color: var(--text-color-secondary);
 				margin: 0;
 			}
 		}
@@ -69,14 +90,14 @@
 			display: flex;
 			justify-content: space-between;
 			font-size: 0.875rem;
-			color: #9ca3af;
+			color: var(--text-color-secondary);
 			position: relative;
 
 			.current-level {
 				position: absolute;
 				transform: translateX(-50%);
 				top: -1rem;
-        left: 50%;
+				left: 50%;
 				background-color: #4a4a4a;
 				padding: 0.25rem 0.5rem;
 				border-radius: 0.25rem;
@@ -97,10 +118,10 @@
 		p {
 			margin: 0.25rem 0;
 			font-size: 0.875rem;
-			color: #9ca3af;
+			color: var(--text-color-secondary);
 
 			&:first-child {
-				color: white;
+				color: var(--text-color);
 				font-weight: 500;
 			}
 		}
