@@ -9,6 +9,7 @@ import Network from "../../Images/Milestone/Network.png";
 import Profile from "../../Images/Milestone/Profile.png";
 import "./Milestone.scss";
 import { useSelector } from "react-redux";
+import { selectTheme } from "../../Store/features/design/designSlice";
 import { getPdfData, userPosts } from "../../Service/user";
 import {
 	userRequiredFields,
@@ -20,6 +21,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const Milestone = () => {
+	const theme = useSelector(selectTheme);
 	const [pdfDocumentsCount, setPdfDocumentsCount] = useState(0);
 	const [postCount, setPostCount] = useState(0);
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -118,7 +120,10 @@ const Milestone = () => {
 	];
 
 	return (
-		<div className="milestone-container">
+		<div
+			className={`milestone-container ${theme === "dark" ? " dark-theme" : ""}`}
+			data-bs-theme={theme}
+		>
 			<div className="milestone-section">
 				<h2>Milestone</h2>
 

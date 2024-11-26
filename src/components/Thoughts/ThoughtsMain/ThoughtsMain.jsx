@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { BiChevronLeft, BiPlus, BiLike, BiShareAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../../Store/features/design/designSlice";
 import { environment } from "../../../environments/environment";
 import "./ThoughtsMain.scss";
 import industriesAndSkills from "../data/industriesAndSkills";
@@ -189,6 +191,7 @@ const ArticleCard = ({
 );
 
 const Thoughts = () => {
+	const theme = useSelector(selectTheme);
 	const navigate = useNavigate();
 	const [selectedFilter, setSelectedFilter] = useState("All");
 	const [selectedTopics, setSelectedTopics] = useState([]);
@@ -199,7 +202,7 @@ const Thoughts = () => {
 	const { upvotedQuestions, handleUpvote, isUpvoted } = useUpvoteHandler(
 		environment.baseUrl
 	);
-	console.log("questions", questions);
+	// console.log("questions", questions);
 
 	// fetch questions from server
 	useEffect(() => {
@@ -280,7 +283,10 @@ const Thoughts = () => {
 			: questions;
 
 	return (
-		<div className="app">
+		<div
+			className={`app ${theme === "dark" ? " dark-theme" : ""}`}
+			data-bs-theme={theme}
+		>
 			<nav className="navbar">
 				<div className="navbar__left">
 					<button className="navbar__back-btn" onClick={() => navigate(-1)}>

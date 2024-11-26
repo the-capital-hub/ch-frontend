@@ -1,9 +1,29 @@
+:root {
+	--bg-color: #ffffff;
+	--text-color: #333333;
+	--text-color-secondary: #848587;
+	--accent-color: #fd5901;
+	--background-color: #fff;
+	--background-color-secondary: #37344433;
+	--background-btn: rgba(52, 55, 68, 0.2);
+}
+
+.dark-theme {
+	--bg-color: var(--white-to-grey);
+	--text-color: #ffffff;
+	--text-color-secondary: #9ca3af;
+	--accent-color: #fd5901;
+	--background-color: #1e1f24;
+	--background-color-secondary: rgba(6, 6, 6, 0.2);
+	--background-btn: rgb(30, 30, 30);
+}
+
 .milestone-container {
-	background-color: #1e1f24;
+	background-color: var(--background-color);
 	padding: 1.5rem;
 	border-radius: 1rem;
 	max-width: 400px;
-	color: white;
+	color: var(--text-color);
 
 	.milestone-section {
 		h2 {
@@ -22,7 +42,7 @@
 				flex-direction: column;
 				align-items: center;
 				text-align: center;
-				background: rgba(6, 6, 6, 0.2);
+				background: var(--background-btn);
 				border-radius: 40px;
 				padding: 0.5rem 0.25rem;
 
@@ -67,13 +87,13 @@
 
 				.milestone-name {
 					font-size: 0.75rem;
-					color: #9ca3af;
+					color: var(--text-color-secondary);
 					margin-bottom: 0.25rem;
 				}
 
 				.milestone-progress {
 					font-size: 0.75rem;
-					color: #9ca3af;
+					color: var(--text-color-secondary);
 				}
 			}
 		}

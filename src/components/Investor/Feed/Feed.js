@@ -276,14 +276,10 @@ const Feed = () => {
 							<SmallProfileCard className="d-none d-md-block" text={"Home"} />
 
 							{/* Onboarding popup */}
-							<TutorialTrigger steps={startupOnboardingSteps.homePage} />
+							{/* <TutorialTrigger steps={startupOnboardingSteps.homePage} /> */}
 
 							{/* Looking for funding */}
-
-							<LookingForFund />
-
-							{/* Share your thoughts */}
-							<ShareThoughts />
+							{/* <LookingForFund /> */}
 
 							{/* <LookingForFund /> */}
 							<LatestResources />
@@ -314,6 +310,10 @@ const Feed = () => {
 									</div>
 								</div>
 							</div>
+
+							{/* Share your thoughts */}
+							<ShareThoughts />
+
 							{/* Posts container - column of <FeedPostCard /> */}
 							<div className="posts__container d-flex flex-column gap-3">
 								<InfiniteScroll
