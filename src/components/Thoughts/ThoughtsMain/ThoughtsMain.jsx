@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { BiChevronLeft, BiPlus, BiLike, BiShareAlt } from "react-icons/bi";
+import { GiHamburgerMenu } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../Store/features/design/designSlice";
@@ -141,49 +142,49 @@ const ArticleCard = ({
 	onUpvote,
 }) => (
 	<div className="article-card" onClick={onClick}>
-		<h2 className="article-card__title">{title}</h2>
+		<h2 className="article-card-title">{title}</h2>
 
-		<div className="article-card__meta">
-			<div className="article-card__contributors">
+		<div className="article-card-meta">
+			<div className="article-card-contributors">
 				{contributorsList.map((user, i) => (
 					<img
 						key={i}
 						src={user?.user?.profilePicture}
 						alt="avatar"
-						className="article-card__avatar"
+						className="article-card-avatar"
 					/>
 				))}
 			</div>
-			<span className="article-card__stat">{contributors} contributions</span>
-			<span className="article-card__dot">•</span>
-			<span className="article-card__stat">{timeAgo(time)}</span>
+			<span className="article-card-stat">{contributors} contributions</span>
+			<span className="article-card-dot">•</span>
+			<span className="article-card-stat">{timeAgo(time)}</span>
 		</div>
 
-		{description && <p className="article-card__description">{description}</p>}
+		{description && <p className="article-card-description">{description}</p>}
 
-		<div className="article-card__tags">
-			<span className="article-card__tag">{tags}</span>
+		<div className="article-card-tags">
+			<span className="article-card-tag">{tags}</span>
 		</div>
 
-		<div className="article-card__actions">
+		<div className="article-card-actions">
 			<button
-				className="article-card__button"
+				className="article-card-button"
 				onClick={(e) => {
 					e.stopPropagation();
 					onUpvote(id);
 				}}
 			>
 				<BiLike
-					className={`article-card__icon ${isUpvoted ? "upvoted" : ""}`}
+					className={`article-card-icon ${isUpvoted ? "upvoted" : ""}`}
 					id={`${isUpvoted ? "Upvoted" : ""}`}
 				/>
 				<span id={`${isUpvoted ? "Upvoted" : ""}`}>Upvote</span>
 			</button>
 			<button
-				className="article-card__button"
+				className="article-card-button"
 				onClick={(e) => e.stopPropagation()}
 			>
-				<BiShareAlt className="article-card__icon" />
+				<BiShareAlt className="article-card-icon" />
 				<span>Share</span>
 			</button>
 		</div>
@@ -196,6 +197,7 @@ const Thoughts = () => {
 	const [selectedFilter, setSelectedFilter] = useState("All");
 	const [selectedTopics, setSelectedTopics] = useState([]);
 	const [questions, setQuestions] = useState([]);
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const topicsRef = useRef(null);
 	const animationFrameRef = useRef(null);
 	const [isHovering, setIsHovering] = useState(false);
@@ -284,21 +286,37 @@ const Thoughts = () => {
 
 	return (
 		<div
-			className={`app ${theme === "dark" ? " dark-theme" : ""}`}
-			data-bs-theme={theme}
+			className={`thoughts-container ${theme === "dark" ? "dark-theme" : ""}`}
 		>
-			<nav className="navbar">
-				<div className="navbar__left">
-					<button className="navbar__back-btn" onClick={() => navigate(-1)}>
-						<BiChevronLeft />
-					</button>
+			<nav className="thoughts-navbar">
+				<div className="thoughts-navbar-left">
+					<div className="thoughts-navbar-buttons">
+						<button
+							className="thoughts-navbar-back-button"
+							onClick={() => navigate(-1)}
+						>
+							<BiChevronLeft />
+						</button>
 
-					<div className="navbar__filters">
+						<button
+							className={`thoughts-navbar-mobile-toggle ${
+								isMobileMenuOpen ? "thoughts-navbar-mobile-toggle-open" : ""
+							}`}
+							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+						>
+							<GiHamburgerMenu />
+						</button>
+					</div>
+					<div
+						className={`thoughts-navbar-filters ${
+							isMobileMenuOpen ? "mobile-open" : ""
+						}`}
+					>
 						{filters.map((filter) => (
 							<button
 								key={filter}
-								className={`navbar__filter-btn ${
-									selectedFilter === filter ? "navbar__filter-btn--active" : ""
+								className={`thoughts-navbar-filter-button ${
+									selectedFilter === filter ? "active" : ""
 								}`}
 								onClick={() => handleFilterClick(filter)}
 							>
@@ -309,7 +327,7 @@ const Thoughts = () => {
 				</div>
 
 				<button
-					className="navbar__create-btn"
+					className="thoughts-navbar-create-button"
 					onClick={() => navigate("/thoughts/create-question")}
 				>
 					<BiPlus />
@@ -317,46 +335,15 @@ const Thoughts = () => {
 				</button>
 			</nav>
 
-			<main className="main">
-				<div className="content">
-					<div className="content__left">
-						<div className="articles">
-							{filteredQuestions && filteredQuestions.length > 0 ? (
-								filteredQuestions.map((question) => (
-									<ArticleCard
-										key={question._id}
-										id={question._id}
-										title={question.question}
-										contributors={question.answer.length}
-										contributorsList={question.answer}
-										time={question.updatedAt}
-										tags={question.industry}
-										onClick={() => handleArticleClick(question._id)}
-										isUpvoted={isUpvoted(question._id)}
-										onUpvote={handleUpvoteClick}
-									/>
-								))
-							) : (
-								<div className="no-questions">
-									No questions are available for the selected industry or skill.
-									Please try selecting a different one.
-								</div>
-							)}
-						</div>
-					</div>
-
-					<div className="content__right">
-						<h2 className="content__subtitle">More to explore</h2>
+			<main className="thoughts-main">
+				<div className="thoughts-content">
+					<div className="thoughts-content-topics">
+						<h2 className="thoughts-content-subtitle">More to explore</h2>
 						<div
 							ref={topicsRef}
-							className="topics"
+							className="thoughts-topics-container"
 							onMouseEnter={() => setIsHovering(true)}
 							onMouseLeave={() => setIsHovering(false)}
-							style={{
-								maxHeight: "560px",
-								overflowY: "auto",
-								position: "relative",
-							}}
 						>
 							{industriesAndSkills.map((topic) => (
 								<TopicTag
@@ -368,6 +355,30 @@ const Thoughts = () => {
 								</TopicTag>
 							))}
 						</div>
+					</div>
+
+					<div className="thoughts-content-articles">
+						{filteredQuestions && filteredQuestions.length > 0 ? (
+							filteredQuestions.map((question) => (
+								<ArticleCard
+									key={question._id}
+									id={question._id}
+									title={question.question}
+									contributors={question.answer.length}
+									contributorsList={question.answer}
+									time={question.updatedAt}
+									tags={question.industry}
+									onClick={() => handleArticleClick(question._id)}
+									isUpvoted={isUpvoted(question._id)}
+									onUpvote={handleUpvoteClick}
+								/>
+							))
+						) : (
+							<div className="thoughts-no-questions">
+								No questions are available for the selected industry or skill.
+								Please try selecting a different one.
+							</div>
+						)}
 					</div>
 				</div>
 			</main>
