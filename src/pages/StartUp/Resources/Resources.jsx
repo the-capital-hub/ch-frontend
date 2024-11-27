@@ -4,6 +4,9 @@ import { environment } from "../../../environments/environment";
 import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
 import "./Resources.scss";
 import { IoMdAdd } from "react-icons/io";
+import { load } from "@cashfreepayments/cashfree-js";
+const baseUrl = environment.baseUrl;
+const token = localStorage.getItem("accessToken");
 
 const Resources = () => {
 	const [resources, setResources] = useState([]);
@@ -18,6 +21,9 @@ const Resources = () => {
 	const [showDownloadLinks, setShowDownloadLinks] = useState(false);
 	const [selectedResourceLinks, setSelectedResourceLinks] = useState(null);
 	const [processing, setProcessing] = useState(false);
+	const [orderId, setOrderId] = useState("");
+	const [paymentStatus, setPaymentStatus] = useState(null);
+	const [paidResources, setPaidResources] = useState(new Set());
 
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 	const isAdmin = loggedInUser?.isAdmin;
@@ -83,25 +89,127 @@ const Resources = () => {
 		setShowDownloadLinks(true);
 	};
 
-	const handlePurchase = async (resource) => {
-		setProcessing(true);
+	// initialize  Cashfree SDK
+	const initializeCashfree = async () => {
+		try {
+			return await load({ mode: "sandbox" });
+		} catch (error) {
+			console.error("Failed to initialize Cashfree:", error);
+			throw error;
+		}
+	};
+	// create payment session
+	const createPaymentSession = async (paymentData) => {
 		try {
 			const response = await fetch(
-				`${environment.baseUrl}/resources/purchase/${resource._id}`,
+				`${baseUrl}/resources/createPaymentSession`,
 				{
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
 					},
+					body: JSON.stringify(paymentData),
 				}
 			);
-			if (response.ok) {
-				fetchResources();
+			const data = await response.json();
+			console.log("data", data.data);
+
+			if (!data.data.payment_session_id) {
+				throw new Error("Failed to create payment session");
+			}
+
+			// Set orderId in state immediately after creating payment session
+			setOrderId(data.data.order_id);
+
+			return {
+				sessionId: data.data.payment_session_id,
+				orderId: data.data.order_id,
+			};
+		} catch (error) {
+			console.error("Payment session creation failed:", error);
+			throw error;
+		}
+	};
+	// verify payment
+	const verifyPayment = async (orderId, resourceId) => {
+		try {
+			const response = await fetch(`${baseUrl}/resources/verifyPayment`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({ orderId, resourceId }),
+			});
+
+			const data = await response.json();
+			if (data.status !== 200) {
+				throw new Error("Payment verification failed");
+			}
+
+			console.log("Payment verified successfully", data);
+			setPaymentStatus("success");
+			return true;
+		} catch (error) {
+			console.error("Payment verification failed:", error);
+			setPaymentStatus("failed");
+			throw error;
+		}
+	};
+
+	const handlePurchase = async (resource) => {
+		setProcessing(true);
+		// try {
+		// 	const response = await fetch(
+		// 		`${environment.baseUrl}/resources/purchase/${resource._id}`,
+		// 		{
+		// 			method: "POST",
+		// 			headers: {
+		// 				"Content-Type": "application/json",
+		// 			},
+		// 		}
+		// 	);
+		// 	if (response.ok) {
+		// 		fetchResources();
+		// 	}
+		// } catch (error) {
+		// 	console.error("Error purchasing resource:", error);
+		// } finally {
+		// 	setProcessing(false);
+		// }
+		try {
+			const cashfree = await initializeCashfree();
+			const paymentData = {
+				order_amount: resource.amount,
+				customer_name: loggedInUser.firstName + " " + loggedInUser.lastName,
+				customer_email: loggedInUser.email,
+				customer_phone: loggedInUser.phoneNumber,
+				resourceId: resource._id,
+			};
+
+			const { sessionId, orderId } = await createPaymentSession(paymentData);
+
+			// Handle payment checkout
+			await cashfree.checkout({
+				paymentSessionId: sessionId,
+				redirectTarget: "_modal",
+			});
+
+			// Handle payment verification
+			const paymentVerified = await verifyPayment(orderId, resource._id);
+
+			if (paymentVerified) {
+				setPaidResources((prev) => new Set([...prev, resource._id]));
+				alert("Payment successful");
+				// setProcessing(false);
+				// console.log("Payment successful", paymentVerified);
 			}
 		} catch (error) {
-			console.error("Error purchasing resource:", error);
+			console.error("Error processing payment:", error);
 		} finally {
 			setProcessing(false);
+			fetchResources();
 		}
 	};
 
@@ -145,10 +253,12 @@ const Resources = () => {
 							style={{
 								backgroundImage: `url('${
 									resource.imageUrl ||
-									"https://thecapitalhub.s3.ap-south-1.amazonaws.com/ss-resouces.png"
+									"https://images.unsplash.com/photo-1631651587690-25d98f3f1393?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+									// "https://thecapitalhub.s3.ap-south-1.amazonaws.com/ss-resouces.png"
 								}')`,
 							}}
 						></div>
+
 						<div className="card-hover-content">
 							<h3>{resource.title}</h3>
 							<p>{resource.description}</p>
