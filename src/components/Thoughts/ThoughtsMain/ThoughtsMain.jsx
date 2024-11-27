@@ -9,6 +9,7 @@ import "./ThoughtsMain.scss";
 import industriesAndSkills from "../data/industriesAndSkills";
 import DarkLogo from "../../../Images/investorIcon/new-logo.png";
 import WhiteLogo from "../../../Images/investorIcon/logo-white.png";
+import SharePopup from "../../PopUp/SocialSharePopup/SharePopup";
 
 const baseUrl = environment.baseUrl;
 
@@ -142,6 +143,7 @@ const ArticleCard = ({
 	onClick,
 	isUpvoted,
 	onUpvote,
+	onShare,
 }) => (
 	<div className="article-card" onClick={onClick}>
 		<h2 className="article-card-title">{title}</h2>
@@ -184,7 +186,10 @@ const ArticleCard = ({
 			</button>
 			<button
 				className="article-card-button"
-				onClick={(e) => e.stopPropagation()}
+				onClick={(e) => {
+					e.stopPropagation();
+					onShare();
+				}}
 			>
 				<BiShareAlt className="article-card-icon" />
 				<span>Share</span>
@@ -206,6 +211,8 @@ const Thoughts = () => {
 	const { upvotedQuestions, handleUpvote, isUpvoted } = useUpvoteHandler(
 		environment.baseUrl
 	);
+	const [sharePopupOpen, setSharePopupOpen] = useState(false);
+	const [socialUrl, setSocialUrl] = useState("");
 	const user = JSON.parse(localStorage.getItem("loggedInUser"));
 	// console.log("questions", questions);
 
@@ -306,6 +313,18 @@ const Thoughts = () => {
 			  )
 			: filteredQuestions;
 
+	const handleOpenSocialShare = (questionId) => {
+		// Generate the post detail URL
+		const baseUrl = window.location.origin;
+		const questionUrl = `${baseUrl}/thoughts/question/${encodeURIComponent(
+			questionId
+		)}`;
+
+		// Set the social URL and open the share link in a new tab
+		setSocialUrl(questionUrl);
+		setSharePopupOpen(true);
+	};
+
 	return (
 		<div
 			className={`thoughts-container ${theme === "dark" ? "dark-theme" : ""}`}
@@ -399,6 +418,7 @@ const Thoughts = () => {
 									onClick={() => handleArticleClick(question._id)}
 									isUpvoted={isUpvoted(question._id)}
 									onUpvote={handleUpvoteClick}
+									onShare={() => handleOpenSocialShare(question._id)}
 								/>
 							))
 						) : (
@@ -410,6 +430,12 @@ const Thoughts = () => {
 					</div>
 				</div>
 			</main>
+
+			<SharePopup
+				url={socialUrl}
+				isOpen={sharePopupOpen}
+				setIsOpen={setSharePopupOpen}
+			/>
 		</div>
 	);
 };
