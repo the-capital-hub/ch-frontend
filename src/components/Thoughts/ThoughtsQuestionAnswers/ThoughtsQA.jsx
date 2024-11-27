@@ -37,7 +37,7 @@ const QAComponent = () => {
 		isUpvoted: isCommentUpvoted,
 	} = useUpvoteHandler(baseUrl, "comment");
 
-	console.log("question", question);
+	// console.log("question", question);
 	// Fetch question data
 	// /getQuestionById/:questionId
 

@@ -206,6 +206,7 @@ const Thoughts = () => {
 	const { upvotedQuestions, handleUpvote, isUpvoted } = useUpvoteHandler(
 		environment.baseUrl
 	);
+	const user = JSON.parse(localStorage.getItem("loggedInUser"));
 	// console.log("questions", questions);
 
 	// fetch questions from server
@@ -276,15 +277,34 @@ const Thoughts = () => {
 		}
 	};
 
+	// Filter questions based on selected filter
+	let filteredQuestions;
+
+	if (selectedFilter === "All") {
+		filteredQuestions = questions;
+	} else if (selectedFilter === "Latest") {
+		filteredQuestions = [...questions].sort(
+			(a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+		);
+	} else if (selectedFilter === "Top Questions") {
+		filteredQuestions = questions.sort(
+			(a, b) => b.answer.length - a.answer.length
+		);
+	} else {
+		filteredQuestions = questions.filter(
+			(question) => question?.user?._id === user?._id
+		);
+	}
+
 	// Filter questions based on selected topics
-	const filteredQuestions =
+	filteredQuestions =
 		selectedTopics.length > 0
-			? questions.filter((question) =>
+			? filteredQuestions.filter((question) =>
 					selectedTopics.some((topic) =>
 						question.industry.toLowerCase().includes(topic.toLowerCase())
 					)
 			  )
-			: questions;
+			: filteredQuestions;
 
 	return (
 		<div
