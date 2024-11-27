@@ -7,6 +7,8 @@ import { selectTheme } from "../../../Store/features/design/designSlice";
 import { environment } from "../../../environments/environment";
 import "./ThoughtsMain.scss";
 import industriesAndSkills from "../data/industriesAndSkills";
+import DarkLogo from "../../../Images/investorIcon/new-logo.png";
+import WhiteLogo from "../../../Images/investorIcon/logo-white.png";
 
 const baseUrl = environment.baseUrl;
 
@@ -297,7 +299,6 @@ const Thoughts = () => {
 						>
 							<BiChevronLeft />
 						</button>
-
 						<button
 							className={`thoughts-navbar-mobile-toggle ${
 								isMobileMenuOpen ? "thoughts-navbar-mobile-toggle-open" : ""
@@ -306,6 +307,13 @@ const Thoughts = () => {
 						>
 							<GiHamburgerMenu />
 						</button>
+					</div>
+					<div className="logo_container">
+						<img
+							src={theme === "dark" ? WhiteLogo : DarkLogo}
+							onClick={() => navigate("/home")}
+							alt="the capital hub logo"
+						/>
 					</div>
 					<div
 						className={`thoughts-navbar-filters ${

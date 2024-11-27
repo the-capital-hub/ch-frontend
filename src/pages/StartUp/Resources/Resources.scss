@@ -49,7 +49,8 @@
 
 		.resource-card {
 			position: relative;
-			height: 350px;
+			width: 350px;
+			aspect-ratio: 0.707;
 			border-radius: 15px;
 			overflow: hidden;
 			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -114,6 +115,7 @@
 				background-size: cover;
 				background-position: center;
 				transition: transform 0.3s ease;
+				object-fit: cover;
 
 				&:hover {
 					transform: scale(1.1);

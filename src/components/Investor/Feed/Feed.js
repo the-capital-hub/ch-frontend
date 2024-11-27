@@ -35,6 +35,7 @@ import NewsCard from "./Components/NewsCard/NewsCard";
 import LatestResources from "./Components/LatestResources/LatestResources";
 import Milestone from "../../Milestone/Milestone";
 import UserJourney from "../../Milestone/UserJourney";
+import NewsHorizontal from "./Components/NewsCardHorizontal/News";
 
 const baseUrl = environment.baseUrl;
 
@@ -412,6 +413,7 @@ const Feed = () => {
 															}
 														/>
 													)}
+													{index === 1 && <NewsHorizontal newsData={newsData} />}
 												</React.Fragment>
 											);
 										}

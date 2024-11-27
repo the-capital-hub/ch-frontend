@@ -5,6 +5,7 @@ import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
 import "./Resources.scss";
 import { IoMdAdd } from "react-icons/io";
 import { load } from "@cashfreepayments/cashfree-js";
+import resource_background from "../../../Images/resources_background.png";
 const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 
@@ -22,7 +23,6 @@ const Resources = () => {
 	const [selectedResourceLinks, setSelectedResourceLinks] = useState(null);
 	const [processing, setProcessing] = useState(false);
 	const [orderId, setOrderId] = useState("");
-	const [paymentStatus, setPaymentStatus] = useState(null);
 	const [paidResources, setPaidResources] = useState(new Set());
 
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -92,7 +92,7 @@ const Resources = () => {
 	// initialize  Cashfree SDK
 	const initializeCashfree = async () => {
 		try {
-			return await load({ mode: "sandbox" });
+			return await load({ mode: "production" });
 		} catch (error) {
 			console.error("Failed to initialize Cashfree:", error);
 			throw error;
@@ -149,35 +149,15 @@ const Resources = () => {
 			}
 
 			console.log("Payment verified successfully", data);
-			setPaymentStatus("success");
 			return true;
 		} catch (error) {
 			console.error("Payment verification failed:", error);
-			setPaymentStatus("failed");
 			throw error;
 		}
 	};
 
 	const handlePurchase = async (resource) => {
 		setProcessing(true);
-		// try {
-		// 	const response = await fetch(
-		// 		`${environment.baseUrl}/resources/purchase/${resource._id}`,
-		// 		{
-		// 			method: "POST",
-		// 			headers: {
-		// 				"Content-Type": "application/json",
-		// 			},
-		// 		}
-		// 	);
-		// 	if (response.ok) {
-		// 		fetchResources();
-		// 	}
-		// } catch (error) {
-		// 	console.error("Error purchasing resource:", error);
-		// } finally {
-		// 	setProcessing(false);
-		// }
 		try {
 			const cashfree = await initializeCashfree();
 			const paymentData = {
@@ -251,11 +231,7 @@ const Resources = () => {
 						<div
 							className="card-background"
 							style={{
-								backgroundImage: `url('${
-									resource.imageUrl ||
-									"https://images.unsplash.com/photo-1631651587690-25d98f3f1393?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-									// "https://thecapitalhub.s3.ap-south-1.amazonaws.com/ss-resouces.png"
-								}')`,
+								backgroundImage: `url(${resource_background})`,
 							}}
 						></div>
 
