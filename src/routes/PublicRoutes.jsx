@@ -10,6 +10,8 @@ import NewPasswordPopUp from "../components/PopUp/NewPasswordPopUp/NewPasswordPo
 import SuspenseLoader from "../components/SuspenseLoader/SuspenseLoader";
 import OurStartup from "../components/OurStartup/OurStartUp";
 import SubscriptionSuccess from "../components/SubscriptionSuccess/SubscriptionSuccess";
+import InvestorNavbar from "../components/Investor/InvestorNavbar/InvestorNavbar";
+import InvestorSidebar from "../components/Investor/InvestorSidebar/InvestorSidebar";
 
 // Import the other components using lazy loading
 const Home = lazy(() => import("../components/Home/Home"));
@@ -354,7 +356,9 @@ function PublicRoutes() {
 				path="/thoughts"
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
+						{/* <InvestorNavbar /> */}
 						<ThoughtsMain />
+						{/* <InvestorSidebar /> */}
 					</Suspense>
 				}
 			/>

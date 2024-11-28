@@ -1,0 +1,132 @@
+:root {
+	--bg-color: #ffffff;
+	--text-color: #333333;
+	--text-color-secondary: #848587;
+	--accent-color: #fd5901;
+	--background-color: #fff;
+	--background-color-secondary: #37344433;
+	--background-btn: rgba(52, 55, 68, 0.2);
+}
+
+.dark-theme {
+	--bg-color: var(--white-to-grey);
+	--text-color: #ffffff;
+	--text-color-secondary: #9ca3af;
+	--accent-color: #fd5901;
+	--background-color: #1e1f24;
+	--background-color-secondary: rgba(6, 6, 6, 0.2);
+	--background-btn: rgb(30, 30, 30);
+}
+
+.news-container {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	background-color: var(--background-color);
+	color: var(--text-color);
+	padding: 1.5rem;
+	border-radius: 0.5rem;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+	.news-item-container {
+		display: flex;
+		gap: 1rem;
+		overflow-x: scroll;
+		// scroll-behavior: smooth;
+
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+
+	.news-item {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		border-radius: 0.5rem;
+		background-color: var(--background-color-secondary);
+		padding: 1rem;
+		max-width: 314px;
+
+		.news-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			.news-profile {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+
+				img {
+					width: 2rem;
+					height: 2rem;
+					border-radius: 50%;
+				}
+			}
+
+			.news-menu {
+				background-color: var(--background-btn);
+				border: none;
+				color: var(--text-color-secondary);
+				padding: 0.5rem;
+				border-radius: 0.25rem;
+				cursor: pointer;
+			}
+		}
+
+		.news-content {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+
+			h3 {
+				font-size: 1.125rem;
+				font-weight: 600;
+				height: 70px;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+
+			p {
+				color: var(--text-color-secondary);
+				font-size: 0.875rem;
+				height: 100px;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+
+			img {
+				width: 282px;
+				height: 200px;
+				border-radius: 0.5rem;
+				cursor: pointer;
+			}
+
+			.news-cta {
+				background-color: var(--accent-color);
+				color: #fff;
+				border: none;
+				padding: 0.5rem 1rem;
+				border-radius: 0.25rem;
+				font-size: 0.875rem;
+				cursor: pointer;
+			}
+
+			.news-footer {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				color: var(--text-color-secondary);
+				font-size: 0.875rem;
+
+				img {
+					width: 1.5rem;
+					height: 1.5rem;
+				}
+			}
+		}
+	}
+}
