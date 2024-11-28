@@ -266,6 +266,7 @@ function Home() {
             oneLinkId={postData.oneLinkId}
             video={postData.video}
             image={postData.image}
+            images= {postData.images}
             documentName={postData.documentName}
             documentUrl={postData.documentUrl}
             createdAt={postData.createdAt}

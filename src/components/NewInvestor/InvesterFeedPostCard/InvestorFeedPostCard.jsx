@@ -49,18 +49,6 @@ import {
 
 import {selectIsInvestor} from "../../../Store/features/user/userSlice";
 
-
-
-
-
-
-
-
-
-
-
-
-
 const FeedPostCard = ({
   postId,
   description,
@@ -69,6 +57,7 @@ const FeedPostCard = ({
   oneLinkId,
   video,
   image,
+  images,
   documentUrl,
   documentName,
   createdAt,
@@ -419,6 +408,7 @@ const FeedPostCard = ({
             oneLinkId,
             video,
             image,
+            images,
             documentName,
             documentUrl,
             createdAt,
