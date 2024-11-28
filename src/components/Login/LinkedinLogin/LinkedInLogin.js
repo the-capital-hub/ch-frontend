@@ -15,6 +15,8 @@ const LinkedInLogin = ({
 	setIsLoginSuccessfull,
 	setIsInvestorSelected,
 	setError,
+	text,
+	REDIRECT_URI
 }) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -24,7 +26,6 @@ const LinkedInLogin = ({
 
 	// Replace with your configuration
 	const CLIENT_ID = process.env.REACT_APP_LINKEDIN_CLIENT_ID;
-	const REDIRECT_URI = "https://thecapitalhub.in/login";
 	const BACKEND_URL = environment.baseUrl;
 	const SCOPE = "email openid profile w_member_social";
 
@@ -49,7 +50,7 @@ const LinkedInLogin = ({
 						headers: {
 							"Content-Type": "application/json",
 						},
-						body: JSON.stringify({ code }),
+						body: JSON.stringify({ code, REDIRECT_URI }),
 					});
 					// console.log("response", response);
 					const data = await response.json();
@@ -150,7 +151,7 @@ const LinkedInLogin = ({
 				className={`linkedin-button ${isLoading ? "loading" : ""}`}
 			>
 				{isLoading && <div className="spinner" />}
-				<span>{isLoading ? "Sign In..." : "Sign in with LinkedIn"}</span>
+				<span>{isLoading ? "Sign In..." : text}</span>
 			</button>
 		</div>
 	);

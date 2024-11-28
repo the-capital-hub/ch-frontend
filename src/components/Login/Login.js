@@ -788,6 +788,8 @@ const Login = () => {
 						setIsLoginSuccessfull={setIsLoginSuccessfull}
 						setIsInvestorSelected={setIsInvestorSelected}
 						setError={setError}
+						text={"Sign in with Linkedin"}
+						REDIRECT_URI={"https://thecapitalhub.in/login"}
 					/>
 					{/* <button
 						className="p-2 bg-white border border-gray-300 rounded-full"
