@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectLoggedInUserId } from "../../Store/features/user/userSlice";
 import NewsCorner from "../Investor/InvestorGlobalCards/NewsCorner/NewsCorner";
 import PostCard from "./PostCard/PostCard";
 import { environment } from "../../environments/environment";
 import "./PublicPost.scss";
 
+const baseUrl = environment.baseUrl;
+
+
 const PublicPost = () => {
+	const loggedInUserId = useSelector(selectLoggedInUserId);
 	const navigate = useNavigate();
 	const { postId } = useParams();
 	const [postData, setPostData] = useState({});
@@ -26,6 +32,50 @@ const PublicPost = () => {
 		fetchSinglePost();
 	}, [postId]);
 
+	// const handlePollVote = async (postId, optionId) => {
+	// 	try {
+	// 	  const token = localStorage.getItem('accessToken');
+	// 	  const response = await fetch(`${baseUrl}/api/posts/vote`, {
+	// 		method: 'PATCH',
+	// 		headers: {
+	// 		  'Content-Type': 'application/json',
+	// 		  'Authorization': `Bearer ${token}`,
+	// 		},
+	// 		body: JSON.stringify({ 
+	// 		  postId, 
+	// 		  optionId,
+	// 		  userId: loggedInUserId
+	// 		}),
+	// 	  });
+	
+	// 	  const result = await response.json();
+		  
+	// 	  if (!response.ok) {
+	// 		throw new Error(result.message || 'Error voting for poll');
+	// 	  }
+	
+	// 	  // Update the posts state while preserving all post data
+	// 	  setAllPosts(prevPosts => 
+	// 		prevPosts.map(post => {
+	// 		  if (post._id === postId) {
+	// 			return {
+	// 			  ...post,                    // Keep all existing post data
+	// 			  pollOptions: result.data    // Update only the poll options
+	// 			};
+	// 		  }
+	// 		  return post;
+	// 		})
+	// 	  );
+	
+	// 	  // Return the updated poll options for the InvestorFeedPostCard component
+	// 	  return result.data;
+	
+	// 	} catch (error) {
+	// 	  console.error('Error voting for poll:', error);
+	// 	  throw error;
+	// 	}
+	//   };
+
 	const {
 		user,
 		startUpCompanyName,
@@ -39,6 +89,7 @@ const PublicPost = () => {
 		createdAt,
 		likes,
 		comments,
+		pollOptions
 	} = postData;
 
 	return (
@@ -62,6 +113,7 @@ const PublicPost = () => {
 						createdAt={createdAt}
 						likes={likes}
 						comments={comments}
+						pollOptions={pollOptions}
 					/>
 				</div>
 				<div className="PublicPost-right">
