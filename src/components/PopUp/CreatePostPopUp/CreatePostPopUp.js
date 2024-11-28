@@ -25,6 +25,7 @@ import { loginSuccess } from "../../../Store/features/user/userSlice";
 import IconFile from "../../Investor/SvgIcons/IconFile";
 import { sharePostLinkedin } from "../../../Service/user";
 import { BiPoll } from "react-icons/bi";
+import LinkedInLogin from "../../Login/LinkedinLogin/LinkedInLogin";
 
 const IMAGE_MAX_SIZE_MB = 10; // 10MB
 const DOCUMENT_MAX_SIZE_MB = 50; // 50MB
@@ -462,6 +463,19 @@ const CreatePostPopUp = ({
 
 	const [showPollPopup, setShowPollPopup] = useState(false);
 
+	const [linkedinError, setLinkedinError] = useState(null);
+
+	const handleLinkedInLoginSuccess = () => {
+		// Handle successful LinkedIn login
+		// You can set any state or perform actions needed after successful login
+		console.log("LinkedIn login successful");
+	};
+
+	const handleLinkedInLoginError = (error) => {
+		// Handle LinkedIn login error
+		setLinkedinError(error);
+	};
+
 	return (
 		<>
 			{popupOpen && <div className="createpost-background-overlay"></div>}
@@ -568,7 +582,7 @@ const CreatePostPopUp = ({
 									className="custom-scrollbar"
 								/>
 
-								{loggedInUser.linkedinId && (
+								{loggedInUser.linkedinId ? (
 									<div className="share-linkedin">
 										<input
 											type="checkbox"
@@ -578,6 +592,16 @@ const CreatePostPopUp = ({
 										/>
 										<label htmlFor="shareLinkedIn">Share on LinkedIn</label>
 									</div>
+								) : (	<div className="d-flex justify-content-center my-4">
+										<LinkedInLogin
+											isInvestorSelected={false}
+											setIsLoginSuccessfull={handleLinkedInLoginSuccess}
+											setIsInvestorSelected={() => {}}
+											setError={handleLinkedInLoginError}
+											text={"Connect with LinkedIn"}
+											REDIRECT_URI={"https://thecapitalhub.in/home"}
+										/>
+										</div>
 								)}
 
 								{respostingPostId &&
@@ -771,6 +795,7 @@ const CreatePostPopUp = ({
 					onClose={() => setShowPollPopup(false)}
 				/>
 			)}
+			{linkedinError && <div className="error-message">{linkedinError}</div>}
 		</>
 	);
 };
