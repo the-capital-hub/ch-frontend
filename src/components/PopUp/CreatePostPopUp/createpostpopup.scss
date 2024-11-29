@@ -4,7 +4,6 @@
 	align-items: center;
 	padding: 15px;
 
-
 	span {
 		margin-left: 10px;
 
@@ -38,9 +37,13 @@
 .create_post_modal {
 	// height: 90vh;
 
+	@media (max-width: 480px) {
+		height: 100dvh;
+	}
+
 	.modal-body {
-		max-height: 50vh;
-		overflow-y: auto;
+		// max-height: 50vh;
+		// overflow-y: auto;
 
 		.createpost_text_area {
 			.custom-scrollbar {
@@ -51,6 +54,7 @@
 			.quill {
 				.ql-container {
 					.ql-snow {
+						border: none !important;
 						.ql-editor {
 							p {
 								color: #e0e0e0;
@@ -62,8 +66,8 @@
 
 			textarea {
 				width: 100%;
-				background-color: var(--bs-light);
-				border-radius: var(--border-radius);
+				// background-color: var(--bs-light);
+				// border-radius: var(--border-radius);
 				color: white;
 
 				&:focus {
@@ -150,13 +154,13 @@
 
 	.post_button {
 		color: #fff;
-		padding: 10px 20px;
+		// padding: 10px 20px;
 		/* Adjust the padding as needed */
 		border: none;
 		border-radius: 26.823px;
 		background: #fd5901;
-		width: 116.467px;
-		height: 40.799px;
+		width: 116px;
+		height: 40px;
 		flex-shrink: 0;
 	}
 }
@@ -387,7 +391,7 @@
 				color: #ff4444;
 				cursor: pointer;
 				padding: 5px;
-				
+
 				&:hover {
 					color: #cc0000;
 				}
@@ -427,4 +431,64 @@
 	bottom: 0;
 	background-color: rgba(0, 0, 0, 0.5);
 	z-index: 10000;
+}
+
+// for text-area
+// .ql-container.ql-snow {
+// 	// border: 1px solid #ccc;
+// 	border: none !important;
+// 	height: 250px !important;
+// }
+
+// .ql-container .ql-editor {
+// 	border: none !important;
+// 	height: 250px !important;
+// }
+
+// .custom-quill {
+// 	height: 200px;
+// 	// color: black;
+// 	border: none;
+// 	// overflow-y: auto;
+// }
+
+/* Styling the custom Quill editor */
+/* Styling the custom Quill editor */
+.custom-quill {
+	height: 200px !important;
+	border: none;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+
+	@media (max-width: 480px) {
+		height: 400px !important;
+	}
+}
+
+.custom-quill .ql-container {
+	border: none !important;
+	min-height: 200px !important;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+.custom-quill .ql-editor {
+	height: 100%;
+	padding: 10px;
+	overflow: hidden;
+	display: flex;
+	// align-items: center;
+	white-space: nowrap;
+	color: var(--d-l-grey);
+	background-color: inherit;
+}
+
+.custom-quill .ql-placeholder {
+	color: var(--placeholder-color);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	flex-grow: 1;
 }
