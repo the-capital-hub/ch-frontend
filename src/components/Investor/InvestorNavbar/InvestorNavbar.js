@@ -446,6 +446,7 @@ const InvestorNavbar = (props) => {
                   />
                 </Link>
               </div>
+              
             </div>
           </div>
         </div>

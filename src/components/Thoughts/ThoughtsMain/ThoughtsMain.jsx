@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { BiChevronLeft, BiPlus, BiLike, BiShareAlt } from "react-icons/bi";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../Store/features/design/designSlice";
 import { environment } from "../../../environments/environment";
@@ -10,6 +10,7 @@ import industriesAndSkills from "../data/industriesAndSkills";
 import DarkLogo from "../../../Images/investorIcon/new-logo.png";
 import WhiteLogo from "../../../Images/investorIcon/logo-white.png";
 import SharePopup from "../../PopUp/SocialSharePopup/SharePopup";
+import OnboardingSwitch from "../../../components/Investor/InvestorNavbar/OnboardingSwitch/OnboardingSwitch";
 
 const baseUrl = environment.baseUrl;
 
@@ -332,12 +333,12 @@ const Thoughts = () => {
 			<nav className="thoughts-navbar">
 				<div className="thoughts-navbar-left">
 					<div className="thoughts-navbar-buttons">
-						<button
+						{/* <button
 							className="thoughts-navbar-back-button"
 							onClick={() => navigate(-1)}
 						>
 							<BiChevronLeft />
-						</button>
+						</button> */}
 						<button
 							className={`thoughts-navbar-mobile-toggle ${
 								isMobileMenuOpen ? "thoughts-navbar-mobile-toggle-open" : ""
@@ -346,13 +347,6 @@ const Thoughts = () => {
 						>
 							<GiHamburgerMenu />
 						</button>
-					</div>
-					<div className="logo_container">
-						<img
-							src={theme === "dark" ? WhiteLogo : DarkLogo}
-							onClick={() => navigate("/home")}
-							alt="the capital hub logo"
-						/>
 					</div>
 					<div
 						className={`thoughts-navbar-filters ${

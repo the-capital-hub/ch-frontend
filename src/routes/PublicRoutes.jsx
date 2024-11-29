@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Route } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
-import Navbar2 from "../components/Navbar/NavbarForSalesLanding/Navbar2";
+// import Navbar2 from "../components/Navbar/NavbarForSalesLanding/Navbar2";
 import Footer from "../components/Footer/Footer";
 import Footer2 from "../components/Footer/FooterForSalesLanding/Footer2";
 import Register from "../components/Register/Register";
@@ -10,8 +10,8 @@ import NewPasswordPopUp from "../components/PopUp/NewPasswordPopUp/NewPasswordPo
 import SuspenseLoader from "../components/SuspenseLoader/SuspenseLoader";
 import OurStartup from "../components/OurStartup/OurStartUp";
 import SubscriptionSuccess from "../components/SubscriptionSuccess/SubscriptionSuccess";
-import InvestorNavbar from "../components/Investor/InvestorNavbar/InvestorNavbar";
-import InvestorSidebar from "../components/Investor/InvestorSidebar/InvestorSidebar";
+import Navbar3 from "../components/Navbar/Navbar3/Navbar3";
+import SidebarPublic from "../components/SidebarPublic/SidebarPublic";
 
 // Import the other components using lazy loading
 const Home = lazy(() => import("../components/Home/Home"));
@@ -332,6 +332,8 @@ function PublicRoutes() {
 				path="/founder/:username"
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
+						<Navbar3 />
+						<SidebarPublic />
 						<FounderProfile />
 					</Suspense>
 				}
@@ -340,6 +342,8 @@ function PublicRoutes() {
 				path="/meeting/schedule/:username/:meetingId"
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
+						<Navbar3 />
+						<SidebarPublic />
 						<ScheduleMeeting />
 					</Suspense>
 				}
@@ -348,6 +352,8 @@ function PublicRoutes() {
 				path="/post_details/:postId"
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
+						<Navbar3 />
+						<SidebarPublic />
 						<PublicPost />
 					</Suspense>
 				}
@@ -356,9 +362,9 @@ function PublicRoutes() {
 				path="/thoughts"
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
-						{/* <InvestorNavbar /> */}
+						<Navbar3 />
+						<SidebarPublic />
 						<ThoughtsMain />
-						{/* <InvestorSidebar /> */}
 					</Suspense>
 				}
 			/>
@@ -366,6 +372,8 @@ function PublicRoutes() {
 				path="/thoughts/question/:id"
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
+						<Navbar3 />
+						<SidebarPublic />
 						<ThoughtsQA />
 					</Suspense>
 				}
@@ -374,6 +382,8 @@ function PublicRoutes() {
 				path="/thoughts/create-question"
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
+						<Navbar3 />
+						<SidebarPublic />
 						<CreateQuestion />
 					</Suspense>
 				}

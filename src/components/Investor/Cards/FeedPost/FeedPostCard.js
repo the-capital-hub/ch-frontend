@@ -786,7 +786,7 @@ const FeedPostCard = ({
 								/>
 							</span>
 						)}
-						{images && (
+						{images && !image && (
 							<ImageCarousel
 								images={images}
 								repostPreview={repostPreview}
@@ -936,7 +936,7 @@ const FeedPostCard = ({
 								style={{ height: "3px", borderColor: "var(--d-l-grey)" }}
 							/> */}
 							<div className="row feedpostcard_footer">
-								<div className="d-flex align-items-center gap-1 justify-content-around pt-1">
+								<div className="d-flex align-items-center gap-1 justify-content-around pt-2 pb-2">
 									{/* Like */}
 									{liked ? (
 										<div

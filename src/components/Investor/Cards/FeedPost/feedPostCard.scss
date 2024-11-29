@@ -112,27 +112,25 @@
 						align-items: center;
 						border-radius: 50px;
 						transition: background-color 0.3s, color 0.3s;
-					
+
 						&:hover {
 							background-color: #fd5901;
 							color: white;
 							border-color: #fd5901;
 						}
 					}
-					
+
 					.connect_button_feed span {
 						font-size: 14px;
 					}
 
-					.info-container{
-						.designation-location{
-							white-space: nowrap;  // Prevent text from wrapping to a new line
-							overflow: hidden;     // Hide any overflow
-							text-overflow: ellipsis;  // Show ellipsis if text overflows
+					.info-container {
+						.designation-location {
+							white-space: nowrap; // Prevent text from wrapping to a new line
+							overflow: hidden; // Hide any overflow
+							text-overflow: ellipsis; // Show ellipsis if text overflows
 						}
 					}
-
-					
 
 					img {
 						width: 15.954px;
@@ -207,8 +205,6 @@
 								color: black;
 								cursor: pointer;
 							}
-
-					
 						}
 						li:last-child {
 							margin-bottom: 0;
@@ -280,6 +276,7 @@
 	.box {
 		// background-color: #fff;
 		padding: 20px;
+		padding-bottom: 0px;
 		border-radius: var(--border-radius);
 		// background: #fff;
 		background-color: var(--white-to-grey);
@@ -603,8 +600,6 @@
 	max-height: 500px; /* Set a maximum height when shown */
 }
 
-
-
 .image-scroll-container {
 	display: flex;
 	overflow-x: auto; // Enable horizontal scrolling
@@ -661,7 +656,8 @@
 				z-index: 0;
 			}
 
-			.option-text, .vote-count {
+			.option-text,
+			.vote-count {
 				position: relative;
 				z-index: 2;
 				color: var(--d-l-grey);
