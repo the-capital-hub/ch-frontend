@@ -39,7 +39,10 @@ const PublicPost = () => {
 		createdAt,
 		likes,
 		comments,
+		pollOptions,
 	} = postData;
+
+	console.log("postData", postData);
 
 	return (
 		<div className="PublicPost-container">
@@ -62,6 +65,7 @@ const PublicPost = () => {
 						createdAt={createdAt}
 						likes={likes}
 						comments={comments}
+						pollOptions={pollOptions}
 					/>
 				</div>
 				<div className="PublicPost-right">

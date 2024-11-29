@@ -10,7 +10,7 @@ $border-radius: 10px;
 	padding-top: 80px;
 	box-sizing: border-box;
 	background-color: $dark-background;
-	min-height: 100vh;
+	// min-height: 100vh;
 
 	.PublicPost-content {
 		margin: auto 6 * $grid-gap;
@@ -20,15 +20,21 @@ $border-radius: 10px;
 		gap: $grid-gap;
 		justify-content: space-evenly;
 
-		@media (max-width: 1024px) {
+		@media (max-width: 1200px) {
 			grid-template-columns: 1fr;
-			margin: auto 1rem;
+			// margin: auto 1rem;
+			// padding-left: 60px;
+			justify-content: center;
+		}
+		@media (max-width: 480px) {
+
+			padding-left: 60px;
 		}
 
 		.PublicPost-left {
 			width: 100%;
-			max-width: 700px;
-			background-color: $dark-card-background;
+			// max-width: 700px;
+			// background-color: $dark-card-background;
 			border-radius: $border-radius;
 		}
 
