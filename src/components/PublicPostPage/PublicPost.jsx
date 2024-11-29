@@ -89,7 +89,7 @@ const PublicPost = () => {
 		createdAt,
 		likes,
 		comments,
-		pollOptions,
+		pollOptions
 	} = postData;
 
 	console.log("postData", postData);
