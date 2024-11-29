@@ -35,6 +35,7 @@ import {
   getLikeCount,
   addToCompanyUpdate,
   getUserByIdBody,
+  getPostById
 } from "../../../../Service/user";
 import { Link } from "react-router-dom";
 import SavePostPopUP from "../../../../components/PopUp/SavePostPopUP/SavePostPopUP";
@@ -49,6 +50,8 @@ import {
 } from "../../../../Store/features/design/designSlice";
 import { selectIsInvestor } from "../../../../Store/features/user/userSlice";
 import BatchImag from "../../../../Images/tick-mark.png";
+import ImageCarousel from "./ImageCarousel/ImageCarousel";
+
 
 const PostDetail = ({
   postId,
@@ -58,6 +61,7 @@ const PostDetail = ({
   oneLinkId,
   video,
   image,
+  images,
   documentUrl,
   documentName,
   createdAt,
@@ -77,6 +81,9 @@ const PostDetail = ({
   deletePostFilterData,
   isSinglePost = false,
   setPostData,
+  pollOptions,
+  handlePollVote,
+  postData
 }) => {
   const [showComment, setShowComment] = useState(isSinglePost);
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -606,10 +613,69 @@ const PostDetail = ({
                   style={{ objectFit: "contain", maxHeight: "30rem" }}
                   width={!repostPreview ? "100%" : "50%"}
                   src={image}
-                  onClick={documentUrl? window.open(documentUrl, '_blank') : null}
                   alt="Post media"
                 />
               </span>
+            )}
+            {images && images.length > 0 && (
+              <ImageCarousel
+                images={images}
+                repostPreview={repostPreview}
+                handleImageOnClick={handleImageOnClick}
+              />
+            )}
+            {pollOptions && pollOptions.length > 0 && (
+              <div className="poll-section">
+                {pollOptions.map((option) => {
+                  const hasVoted = option.votes?.includes(loggedInUser._id);
+                  const totalVotes = pollOptions.reduce(
+                    (sum, opt) => sum + (opt.votes?.length || 0),
+                    0
+                  );
+                  const votePercentage =
+                    totalVotes > 0
+                      ? Math.round(((option.votes?.length || 0) * 100) / totalVotes)
+                      : 0;
+
+                  return (
+                    <div key={option._id} className="poll-option">
+                      <div
+                        className="poll-option-content"
+                        style={{
+                          position: "relative",
+                          overflow: "hidden",
+                        }}
+                      >
+                        <div
+                          className="progress-bar"
+                          style={{
+                            width: `${votePercentage}%`,
+                            position: "absolute",
+                            left: 0,
+                            top: 0,
+                            height: "100%",
+                            background: "rgba(253, 89, 1, 0.1)",
+                            transition: "width 0.3s ease",
+                          }}
+                        />
+                        <span className="option-text">{option.option}</span>
+                        <span className="vote-count">
+                          {option.votes?.length || 0} votes
+                        </span>
+                      </div>
+                      <button
+                        className={`vote-button ${hasVoted ? "votedStartUpThemeColor" : ""}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handlePollVote(postId, option._id);
+                        }}
+                      >
+                        {hasVoted ? "Voted" : "Vote"}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
             )}
             {video && (
               <span className="d-flex">
@@ -625,7 +691,7 @@ const PostDetail = ({
                 </video>
               </span>
             )}
-            {resharedPostId && (
+            {/* {resharedPostId && (
               <FeedPostCard
                 repostPreview
                 userId={resharedPostId?.user?._id}
@@ -643,7 +709,7 @@ const PostDetail = ({
                 startUpCompanyName={resharedPostId.user?.startUp}
                 investorCompanyName={resharedPostId.user?.investor}
               />
-            )}
+            )} */}
           </div>
           {likes && (
             <span

@@ -478,6 +478,8 @@ const FeedPostCard = ({
 					createdAt,
 					likes,
 					resharedPostId,
+					images,
+					pollOptions
 				};
 
 				localStorage.setItem("postDetail", JSON.stringify(PostData));

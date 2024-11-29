@@ -171,57 +171,64 @@ const PostCard = ({
 						</span>
 					)}
 
-					{images && images?.length > 0 && !image && (
-						<ImageCarousel images={images} />
-					)}
+					{images && images.length > 0 && (
+              <ImageCarousel
+                images={images}
+              />
+            )}
+            {pollOptions && pollOptions.length > 0 && (
+              <div className="poll-section">
+                {pollOptions.map((option) => {
+                  const totalVotes = pollOptions.reduce(
+                    (sum, opt) => sum + (opt.votes?.length || 0),
+                    0
+                  );
+                  const votePercentage =
+                    totalVotes > 0
+                      ? Math.round(((option.votes?.length || 0) * 100) / totalVotes)
+                      : 0;
 
-					{pollOptions && pollOptions.length > 0 && (
-						<div className="poll-section">
-							{pollOptions.map((option) => {
-								// const hasVoted = option.votes?.includes(loggedInUser._id);
-								const totalVotes = pollOptions.reduce(
-									(sum, opt) => sum + (opt.votes?.length || 0),
-									0
-								);
-								const votePercentage =
-									totalVotes > 0
-										? Math.round(
-												((option.votes?.length || 0) * 100) / totalVotes
-										  )
-										: 0;
-
-								return (
-									<div key={option._id} className="poll-option">
-										<div
-											className="poll-option-content"
-											style={{
-												position: "relative",
-												overflow: "hidden",
-											}}
-										>
-											<div
-												className="progress-bar"
-												style={{
-													width: `${votePercentage}%`,
-													position: "absolute",
-													left: 0,
-													top: 0,
-													height: "100%",
-													background: "rgba(253, 89, 1, 0.1)",
-													transition: "width 0.3s ease",
-												}}
-											/>
-											<span className="option-text">{option.option}</span>
-											<span className="vote-count">
-												{option.votes?.length || 0} votes
-											</span>
-										</div>
-										<button className={`vote-button`}>Vote</button>
-									</div>
-								);
-							})}
-						</div>
-					)}
+                  return (
+                    <div key={option._id} className="poll-option">
+                      <div
+                        className="poll-option-content"
+                        style={{
+                          position: "relative",
+                          overflow: "hidden",
+                        }}
+                      >
+                        <div
+                          className="progress-bar"
+                          style={{
+                            width: `${votePercentage}%`,
+                            position: "absolute",
+                            left: 0,
+                            top: 0,
+                            height: "100%",
+                            background: "rgba(253, 89, 1, 0.1)",
+                            transition: "width 0.3s ease",
+                          }}
+                        />
+                        <span className="option-text">{option.option}</span>
+                        <span className="vote-count">
+                          {option.votes?.length || 0} votes
+                        </span>
+                      </div>
+                      <button
+					  	disabled
+                        className={`vote-button "votedStartUpThemeColor"`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                         // handlePollVote(postId, option._id);
+                        }}
+                      >
+                        {"Sign Up to Vote"}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
 
 					{video && (
 						<span className="d-flex">

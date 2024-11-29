@@ -253,8 +253,7 @@ const Feed = () => {
 						documentUrl={postData.documentUrl}
 						createdAt={postData.createdAt}
 						likes={postData.likes}
-						pollOptions={postData.pollOptions}
-						handlePollVote={handlePollVote}
+						
 						location={postData.location}
 						resharedPostId={postData.resharedPostId}
 						fetchAllPosts={fetchMorePosts}
@@ -268,6 +267,9 @@ const Feed = () => {
 						deletePostFilterData={deletePostFilterData}
 						setPostData={setPostData}
 						isSubscribed={postData.isSubscribed}
+						pollOptions={postData.pollOptions}
+						handlePollVote={handlePollVote}
+						postData={postData}
 					/>
 				) : (
 					<div className="main_content">
