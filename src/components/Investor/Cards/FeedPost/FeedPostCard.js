@@ -167,7 +167,8 @@ const FeedPostCard = ({
 		}
 	}, [loggedInUser, userId]);
 
-	const toggleDescription = () => {
+	const toggleDescription = (e) => {
+		e.stopPropagation();
 		setExpanded(!expanded);
 	};
 
@@ -769,12 +770,21 @@ const FeedPostCard = ({
 					</div>
 
 					<div className="para_container w-100" onClick={handleImageOnClick}>
-						<div
-							className="para_container_text w-100"
-							dangerouslySetInnerHTML={{
-								__html: DOMPurify.sanitize(description),
-							}}
-						></div>
+					<div className="para_container_text w-100">
+					<div
+						dangerouslySetInnerHTML={{
+						__html: DOMPurify.sanitize(expanded ? description : description.substring(0, 100) + '...'),
+						}}
+					></div>
+					{description.length > 100 && (
+						<span
+						onClick={toggleDescription}
+						className={`read-more-text ${expanded ? 'expanded' : ''}`}
+						>
+						{expanded ? "Read Less" : "Read More"}
+						</span>
+					)}
+					</div>
 						{image && (
 							<span className="d-flex">
 								<img
