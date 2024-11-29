@@ -21,8 +21,6 @@ import UserPic from "../../../Images/UserPic.jpg";
 import AIPoster from "../../../Images/AIPoster.jpg";
 import { environment } from "../../../environments/environment";
 import { useParams, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectTheme } from "../../../Store/features/design/designSlice";
 import ImageCarousel from "../../Investor/Cards/FeedPost/ImageCarousel/ImageCarousel";
 import "./FounderProfile.scss";
 
@@ -35,8 +33,7 @@ const Spinner = () => (
 );
 
 const FounderProfile = () => {
-	const theme = useSelector(selectTheme);
-	// const [theme, setTheme] = useState("dark");
+	const [theme, setTheme] = useState("dark");
 	const [activeTab, setActiveTab] = useState("posts");
 	const [activeInterestTab, setActiveInterestTab] = useState("Top Voices");
 	const [founder, setFounder] = useState(null);
@@ -47,8 +44,8 @@ const FounderProfile = () => {
 	const { username } = useParams();
 	const navigate = useNavigate();
 	// console.log("userName", username);
-	// console.log("founder", founder);
-	// console.log("post", post);
+	console.log("founder", founder);
+	console.log("post", post);
 	// console.log("events", events);
 
 	// Set initial theme when component mounts
@@ -56,11 +53,11 @@ const FounderProfile = () => {
 		document.body.setAttribute("data-theme", "dark");
 	}, []);
 
-	// const toggleTheme = () => {
-	// 	const newTheme = theme === "light" ? "dark" : "light";
-	// 	setTheme(newTheme);
-	// 	document.body.setAttribute("data-theme", newTheme);
-	// };
+	const toggleTheme = () => {
+		const newTheme = theme === "light" ? "dark" : "light";
+		setTheme(newTheme);
+		document.body.setAttribute("data-theme", newTheme);
+	};
 
 	// /getUserByUserName - Founder data other than events
 	useEffect(() => {
@@ -402,8 +399,8 @@ const FounderProfile = () => {
 				<meta property="og:description" content={founderData?.about} />
 			</Helmet>
 
-			<div className={`founder-profile-container ${theme ? "dark" : "light"}`}>
-				{/* <nav className="profile-nav">
+			<div className="profile-container">
+				<nav className="profile-nav">
 					<div className="nav-container">
 						<button className="back-button">
 							<FaArrowCircleLeft />
@@ -413,7 +410,7 @@ const FounderProfile = () => {
 					<button className="theme-toggle" onClick={toggleTheme}>
 						{theme === "light" ? <FaMoon /> : <FaSun />}
 					</button>
-				</nav> */}
+				</nav>
 
 				<main className="profile-main">
 					{/* Header Section */}
