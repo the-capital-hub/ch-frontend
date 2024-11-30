@@ -786,31 +786,13 @@ const FeedPostCard = ({
 								/>
 							</span>
 						)}
-						{images && !image && (
+						{images && images.length > 0 && !image && (
 							<ImageCarousel
 								images={images}
 								repostPreview={repostPreview}
 								handleImageOnClick={handleImageOnClick}
 							/>
 						)}
-
-						{/* {images && (
-							<span className="image-scroll-container">
-								{images.map((image) => (
-									<img
-										className="image-item"
-										// style={{
-										// 	objectFit: "cover",
-										// 	maxHeight: "30rem",
-										// 	overflow: "scroll",
-										// }}
-										width={!repostPreview ? "100%" : "50%"}
-										src={image}
-										alt="Post media"
-									/>
-								))}
-							</span>
-						)} */}
 
 						{video && (
 							<span className="d-flex">
@@ -826,6 +808,7 @@ const FeedPostCard = ({
 								</video>
 							</span>
 						)}
+						{/* Poll */}
 						{localPollOptions && localPollOptions.length > 0 && (
 							<div className="poll-section">
 								{localPollOptions.map((option) => {
