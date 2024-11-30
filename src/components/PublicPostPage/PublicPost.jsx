@@ -92,6 +92,8 @@ const PublicPost = () => {
 		pollOptions
 	} = postData;
 
+	console.log("postData", postData);
+
 	return (
 		<div className="PublicPost-container">
 			<div className="PublicPost-content">

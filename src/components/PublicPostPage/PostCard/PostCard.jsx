@@ -35,13 +35,15 @@ const PostCard = ({
 }) => {
 	const videoRef = useRef(null);
 	const [commentToggle, setCommentToggle] = useState(false);
+	// Initialize localPollOptions with pollOptions
+	// const [localPollOptions, setLocalPollOptions] = useState(pollOptions || []);
 
 	const handleBtnClick = (feature) => {
 		alert(
 			`You need to login first! to use all the features of Capital Hub. Including ${feature} post feature.`
 		);
 	};
-
+	console.log("pollOptions", pollOptions);
 	return (
 		<>
 			<div className="box feedpostcard_container dark-theme">
@@ -257,7 +259,7 @@ const PostCard = ({
 				)}
 
 				<div className="row feedpostcard_footer">
-					<div className="d-flex align-items-center gap-1 justify-content-around pt-1">
+					<div className="d-flex align-items-center gap-1 justify-content-around pt-2 pb-2">
 						<div className="d-flex flex-column align-items-center justify-content-end gap-1">
 							<ImFire
 								style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}

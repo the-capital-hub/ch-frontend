@@ -89,6 +89,7 @@
 			right: 0;
 
 			width: 220px;
+			// padding-left: 60px;
 
 			border: 1px solid lightgray;
 			background-color: var(--white-to-grey);
@@ -353,6 +354,7 @@
 .box {
 	// background-color: #fff;
 	padding: 20px;
+	padding-bottom: 0px;
 	border-radius: var(--border-radius);
 	// background: #fff;
 	background-color: var(--white-to-grey);
@@ -553,10 +555,10 @@
 	}
 }
 
-.logo img {
-	max-width: 50px; /* Adjust the logo size as needed */
-	margin-right: 10px; /* Add some spacing between the logo and input box */
-}
+// .logo img {
+// 	max-width: 50px; /* Adjust the logo size as needed */
+// 	margin-right: 10px; /* Add some spacing between the logo and input box */
+// }
 
 .input_box {
 	display: flex;
@@ -669,9 +671,9 @@ input[type="text"] {
 	max-height: 0; /* Start with max-height of 0 */
 	overflow: hidden; /* Hide overflow */
 	transition: max-height 0.4s ease; /* Smooth transition */
-  span {
-    color: var(--text-color);
-  }
+	span {
+		color: var(--text-color);
+	}
 }
 
 .comment-container-wrapper.show {
@@ -721,7 +723,7 @@ input[type="text"] {
 
 		.poll-option-content {
 			flex: 1;
-			background: var(--bs-light);
+			background: var(--white-to-dgrey);
 			padding: 10px 15px;
 			border-radius: 8px;
 			display: flex;
