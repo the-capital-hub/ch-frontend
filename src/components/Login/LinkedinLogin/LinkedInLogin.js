@@ -9,14 +9,17 @@ import {
 	loginSuccess,
 	// loginFailure,
 } from "../../../Store/features/user/userSlice";
+import { FaLinkedin } from "react-icons/fa6";
 
 const LinkedInLogin = ({
 	isInvestorSelected,
 	setIsLoginSuccessfull,
 	setIsInvestorSelected,
 	setError,
+	REDIRECT_URI,
 	text,
-	REDIRECT_URI
+	showIconAndText = false,
+	Icon = FaLinkedin,
 }) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -150,8 +153,22 @@ const LinkedInLogin = ({
 				disabled={isLoading}
 				className={`linkedin-button ${isLoading ? "loading" : ""}`}
 			>
-				{isLoading && <div className="spinner" />}
-				<span>{isLoading ? "Sign In..." : text}</span>
+				{/* {isLoading && <div className="spinner" />}
+				<span>{isLoading ? "Sign In..." : text}</span> */}
+				{isLoading ? (
+					<div className="spinner" />
+				) : (
+					<div className="button-content">
+						{showIconAndText ? (
+							<>
+								<Icon size={24} />
+								<span>{text}</span>
+							</>
+						) : (
+							<Icon size={24} />
+						)}
+					</div>
+				)}
 			</button>
 		</div>
 	);
