@@ -482,7 +482,7 @@ const CreatePostPopUp = ({
 		<>
 			{popupOpen && <div className="createpost-background-overlay"></div>}
 			<div
-				className={`create_post_modal rounded-4 p-md-2 ${
+				className={`create_post_modal p-md-2 ${
 					popupOpen ? "d-block" : ""
 				}`}
 				tabIndex="-1"
@@ -583,29 +583,6 @@ const CreatePostPopUp = ({
 									// }}
 									className="custom-quill"
 								/>
-								{loggedInUser.linkedinId ? (
-									<div className="share-linkedin">
-										<input
-											type="checkbox"
-											id="shareLinkedIn"
-											checked={shareOnLinkedIn}
-											onChange={() => setShareOnLinkedIn((prev) => !prev)}
-										/>
-										<label htmlFor="shareLinkedIn">Share on LinkedIn</label>
-									</div>
-								) : (
-									<div className="px-3">
-										<LinkedInLogin
-											isInvestorSelected={false}
-											setIsLoginSuccessfull={handleLinkedInLoginSuccess}
-											setIsInvestorSelected={() => {}}
-											setError={handleLinkedInLoginError}
-											text={"Connect"}
-											showIconAndText={true}
-											REDIRECT_URI={"https://thecapitalhub.in/home"}
-										/>
-									</div>
-								)}
 
 								{respostingPostId &&
 									(loadingRepostData ? (
@@ -690,7 +667,8 @@ const CreatePostPopUp = ({
 							<video
 								key={selectedVideo ? selectedVideo.name : ""}
 								controls
-								width={"100%"}
+								// width={"70%"}
+								className="video-preview"
 							>
 								<source src={previewVideo} type={previewVideoType} />
 								Your browser does not support the video tag.
@@ -712,7 +690,30 @@ const CreatePostPopUp = ({
 						)}
 
 						<div className="createpost_modal_footer">
-							<div className="modal_footer_container mt-4 mb-3">
+							{loggedInUser.linkedinId ? (
+								<div className="share-linkedin">
+									<input
+										type="checkbox"
+										id="shareLinkedIn"
+										checked={shareOnLinkedIn}
+										onChange={() => setShareOnLinkedIn((prev) => !prev)}
+									/>
+									<label htmlFor="shareLinkedIn">Share on LinkedIn</label>
+								</div>
+							) : (
+								<div className="mt-1 mb-1">
+									<LinkedInLogin
+										isInvestorSelected={false}
+										setIsLoginSuccessfull={handleLinkedInLoginSuccess}
+										setIsInvestorSelected={() => {}}
+										setError={handleLinkedInLoginError}
+										text={"Connect"}
+										showIconAndText={true}
+										REDIRECT_URI={"https://thecapitalhub.in/home"}
+									/>
+								</div>
+							)}
+							<div className="modal_footer_container mt-2 mb-1">
 								<div className="left_buttons">
 									<input
 										type="file"
