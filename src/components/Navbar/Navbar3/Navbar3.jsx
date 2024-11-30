@@ -74,7 +74,7 @@ const Navbar3 = () => {
 				<div className="navbar-public-logo">
 					<img
 						src={theme === "dark" ? WhiteLogo : DarkLogo}
-						onClick={() => navigate("/home")}
+						onClick={() => navigate("/")}
 						alt="the capital hub logo"
 					/>
 				</div>
@@ -87,7 +87,7 @@ const Navbar3 = () => {
 						<span>Contact Us</span>
 					</Link>
 
-					<Link to="/investor/home">
+					<Link to="/our-investor">
 						<span>Investor</span>
 					</Link>
 

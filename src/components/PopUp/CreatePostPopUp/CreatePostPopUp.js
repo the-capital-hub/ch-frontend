@@ -60,7 +60,7 @@ const PollPopup = ({ onSave, initialOptions = ["", ""], onClose }) => {
 	};
 
 	const handleSave = () => {
-		const validOptions = localPollOptions.filter(opt => opt.trim() !== "");
+		const validOptions = localPollOptions.filter((opt) => opt.trim() !== "");
 		if (validOptions.length >= 2) {
 			onSave(validOptions);
 			onClose();
@@ -373,7 +373,9 @@ const CreatePostPopUp = ({
 				postData.append("image", res.Location);
 			}
 			if (pollOptions.length > 0) {
-				const validOptions = pollOptions.filter(option => option.trim() !== '');
+				const validOptions = pollOptions.filter(
+					(option) => option.trim() !== ""
+				);
 				validOptions.forEach((option, index) => {
 					postData.append(`pollOptions[${index}]`, option);
 				});
@@ -483,8 +485,8 @@ const CreatePostPopUp = ({
 				className={`create_post_modal rounded-4 p-md-2 ${
 					popupOpen ? "d-block" : ""
 				}`}
-					tabIndex="-1"
-					role="dialog"
+				tabIndex="-1"
+				role="dialog"
 			>
 				<div className="modal-dialog modal-dialog-centered" role="document">
 					<div className="modal-content">
@@ -573,15 +575,14 @@ const CreatePostPopUp = ({
 										"image",
 										"video",
 									]}
-									style={{
-										height: respostingPostId ? "100px" : "200px",
-										color: theme === "dark" ? "white" : "black",
-										border: "none",
-										overflowY: "auto",
-									}}
-									className="custom-scrollbar"
+									// style={{
+									// 	// height: respostingPostId ? "100px" : "200px",
+									// 	color: theme === "dark" ? "white" : "black",
+									// 	border: "none",
+									// 	overflowY: "auto",
+									// }}
+									className="custom-quill"
 								/>
-
 								{loggedInUser.linkedinId ? (
 									<div className="share-linkedin">
 										<input
@@ -592,16 +593,18 @@ const CreatePostPopUp = ({
 										/>
 										<label htmlFor="shareLinkedIn">Share on LinkedIn</label>
 									</div>
-								) : (	<div className="d-flex justify-content-center my-4">
+								) : (
+									<div className="px-3">
 										<LinkedInLogin
 											isInvestorSelected={false}
 											setIsLoginSuccessfull={handleLinkedInLoginSuccess}
 											setIsInvestorSelected={() => {}}
 											setError={handleLinkedInLoginError}
-											text={"Connect with LinkedIn"}
+											text={"Connect"}
+											showIconAndText={true}
 											REDIRECT_URI={"https://thecapitalhub.in/home"}
 										/>
-										</div>
+									</div>
 								)}
 
 								{respostingPostId &&
@@ -761,7 +764,10 @@ const CreatePostPopUp = ({
 										/>
 										<span className="tooltip-text top2">doc</span>
 									</button>
-									<button className="white_button hover-text" onClick={() => setShowPollPopup(true)}>
+									<button
+										className="white_button hover-text"
+										onClick={() => setShowPollPopup(true)}
+									>
 										<BiPoll size={25} style={{ color: "var(--d-l-grey)" }} />
 										<span className="tooltip-text top3">poll</span>
 									</button>
@@ -787,7 +793,7 @@ const CreatePostPopUp = ({
 				</div>
 			</div>
 			{showPollPopup && (
-				<PollPopup 
+				<PollPopup
 					initialOptions={pollOptions}
 					onSave={(newOptions) => {
 						setPollOptions(newOptions);
