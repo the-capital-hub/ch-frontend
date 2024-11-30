@@ -326,7 +326,7 @@
 	border-radius: var(--bs-modal-border-radius);
 	outline: 0;
 
-	@media (max-width: 480px) {
+	@media (max-width: 575px) {
 		height: 100dvh;
 		justify-content: space-between;
 		border-radius: 0px;
