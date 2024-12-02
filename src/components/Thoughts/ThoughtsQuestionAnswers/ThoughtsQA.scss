@@ -458,7 +458,6 @@
 	fill: #f97316;
 }
 
-
 .qa-page {
 	display: flex;
 	gap: 24px;
@@ -804,5 +803,289 @@
 @media screen and (max-width: 768px) {
 	.qa-page {
 		gap: 0;
+	}
+}
+
+.questions-sidebar {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	width: 40%;
+	// max-width: 400px;
+	padding: 24px;
+	background-color: #000;
+	color: #fff;
+
+	.section {
+		h2 {
+			font-size: 18px;
+			font-weight: 600;
+			margin-bottom: 16px;
+		}
+	}
+	.question-preview {
+		.user-info {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			margin-bottom: 12px;
+
+			img {
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+				object-fit: cover;
+			}
+
+			span {
+				font-size: 14px;
+				font-weight: 500;
+			}
+		}
+
+		p {
+			font-size: 14px;
+			line-height: 1.5;
+			color: #e0e0e0;
+		}
+	}
+	.creator-details {
+		overflow-y: scroll;
+		scrollbar-width: 0px;
+		// scrollbar-color: #4a4a4a #1a1a1a;
+		&::-webkit-scrollbar {
+			width: 0px;
+		}
+
+		.about-user {
+			display: flex;
+			gap: 16px;
+
+			img {
+				width: 64px;
+				height: 64px;
+				border-radius: 50%;
+				object-fit: cover;
+			}
+
+			.user-details {
+				h3 {
+					font-size: 16px;
+					font-weight: 500;
+					margin-bottom: 4px;
+				}
+
+				p {
+					font-size: 14px;
+					margin-bottom: 4px;
+
+					&.username {
+						color: #888;
+					}
+
+					&.position {
+						color: #e0e0e0;
+					}
+
+					&.stats {
+						color: #888;
+					}
+				}
+			}
+
+			.follow-button {
+				width: auto;
+				height: 30px;
+				background-color: #fd5901;
+				color: #fff;
+				border: none;
+				border-radius: 20px;
+				padding: 4px 12px;
+				font-size: 12px;
+				cursor: pointer;
+				transition: background-color 0.3s ease;
+
+				&:hover {
+					background-color: darken(#fd5901, 10%);
+				}
+			}
+		}
+
+		.company-info {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			margin-bottom: 16px;
+
+			.company-logo {
+				width: 40px;
+				height: 40px;
+				background-color: #fff;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				img {
+					width: 24px;
+					height: 24px;
+				}
+			}
+
+			.company-details {
+				h3 {
+					font-size: 16px;
+					font-weight: 500;
+					margin-bottom: 4px;
+				}
+
+				p {
+					font-size: 14px;
+					color: #888;
+				}
+			}
+		}
+
+		.company-meta {
+			.meta-item {
+				display: flex;
+				flex-direction: column;
+				// justify-content: space-between;
+				margin-bottom: 12px;
+				font-size: 14px;
+
+				.label {
+					color: #888;
+				}
+
+				.value {
+					// text-align: right;
+
+					p {
+						margin-bottom: 4px;
+					}
+				}
+			}
+		}
+
+		.posts-questions {
+			.tabs {
+				display: flex;
+				gap: 24px;
+				margin-bottom: 20px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+				.tab {
+					background: none;
+					border: none;
+					color: #fff;
+					padding: 8px 0;
+					font-size: 16px;
+					cursor: pointer;
+					position: relative;
+					opacity: 0.7;
+
+					&.active {
+						opacity: 1;
+						color: #fd5901;
+
+						&::after {
+							content: "";
+							position: absolute;
+							bottom: -1px;
+							left: 0;
+							width: 100%;
+							height: 2px;
+							background-color: #fd5901;
+						}
+					}
+				}
+			}
+
+			.content {
+				.post-card,
+				.question-card {
+					background-color: #111;
+					border-radius: 8px;
+					padding: 16px;
+					margin-bottom: 16px;
+
+					&:last-child {
+						margin-bottom: 0;
+					}
+				}
+
+				.post-card {
+					.card-header {
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+						margin-bottom: 12px;
+
+						.header-left {
+							display: flex;
+							align-items: center;
+							gap: 8px;
+
+							.logo {
+								width: 32px;
+								height: 32px;
+								background: #fff;
+								border-radius: 50%;
+								display: flex;
+								align-items: center;
+								justify-content: center;
+
+								img {
+									width: 20px;
+									height: 20px;
+								}
+							}
+						}
+
+						.more-options {
+							background: none;
+							border: none;
+							color: #fff;
+							cursor: pointer;
+							padding: 0 8px;
+						}
+					}
+
+					.post-content {
+						font-size: 14px;
+						line-height: 1.5;
+						margin-bottom: 12px;
+						color: rgba(255, 255, 255, 0.9);
+					}
+
+					.engagement {
+						display: flex;
+						align-items: center;
+						gap: 8px;
+						font-size: 14px;
+						color: rgba(255, 255, 255, 0.7);
+
+						.fire-icon,
+						.wave-icon {
+							font-size: 16px;
+						}
+					}
+				}
+
+				.question-card {
+					h4 {
+						font-size: 16px;
+						font-weight: 500;
+						margin-bottom: 8px;
+					}
+
+					p {
+						font-size: 14px;
+						color: rgba(255, 255, 255, 0.7);
+					}
+				}
+			}
+		}
 	}
 }
