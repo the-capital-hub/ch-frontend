@@ -81,7 +81,8 @@
 
 .createpost_modal_footer {
 	display: flex;
-	margin: auto;
+	flex-direction: column;
+	// margin: auto;
 
 	.modal_footer_container {
 		width: 480px;
@@ -90,6 +91,10 @@
 		border-radius: var(--border-radius);
 		border: 0.894px solid #e0e0e0;
 		background-color: var(--bs-light);
+
+		@media (min-width: 1200px) {
+			width: 100%;
+		}
 
 		/* footer */
 		display: flex;
@@ -173,8 +178,8 @@
 
 .image-cropper {
 	position: relative;
-	width: 100%;
-	height: 300px;
+	width: 200px;
+	height: 200px;
 	overflow: hidden;
 }
 
@@ -219,12 +224,18 @@
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	// background-color: white !important;
 	background-color: var(--white-to-grey) !important;
 	transform: translate(-50%, -50%);
 	background-color: rgba(0, 0, 0, 0.5);
-	/* Adjust the background color of the popup */
 	z-index: 10000;
+	border-radius: 10px;
+	@media (max-width: 480px) {
+		border-radius: 0px;
+	}
+	@media (min-width: 1200px) {
+		width: 60%;
+		min-height: 50dvh;
+	}
 }
 
 @media (max-width: 767px) {
@@ -239,6 +250,7 @@
 
 	.createpost_modal_footer {
 		display: flex;
+		width: 100%;
 		margin: auto;
 
 		.modal_footer_container {
@@ -289,6 +301,7 @@
 @media (max-width: 575px) {
 	.create_post_modal {
 		width: 100%;
+		height: 100%;
 		.modal-dialog {
 			margin-inline: 0;
 		}
@@ -296,6 +309,27 @@
 		.modal-body {
 			padding-inline: 0;
 		}
+	}
+}
+
+.modal-content {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 0.5rem;
+	color: white;
+	pointer-events: auto;
+	background-color: var(--bs-modal-bg);
+	background-clip: padding-box;
+	border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
+	border-radius: var(--bs-modal-border-radius);
+	outline: 0;
+
+	@media (max-width: 575px) {
+		height: 100dvh;
+		justify-content: space-between;
+		border-radius: 0px;
 	}
 }
 
@@ -433,56 +467,52 @@
 	z-index: 10000;
 }
 
-// for text-area
-// .ql-container.ql-snow {
-// 	// border: 1px solid #ccc;
-// 	border: none !important;
-// 	height: 250px !important;
-// }
-
-// .ql-container .ql-editor {
-// 	border: none !important;
-// 	height: 250px !important;
-// }
-
-// .custom-quill {
-// 	height: 200px;
-// 	// color: black;
-// 	border: none;
-// 	// overflow-y: auto;
-// }
-
-/* Styling the custom Quill editor */
-/* Styling the custom Quill editor */
 .custom-quill {
-	height: 200px !important;
+	// height: 200px !important;
 	border: none;
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
 
 	@media (max-width: 480px) {
-		height: 400px !important;
+		height: 100px !important;
 	}
 }
 
 .custom-quill .ql-container {
 	border: none !important;
-	min-height: 200px !important;
+	min-height: 100px !important;
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
 }
 
 .custom-quill .ql-editor {
-	height: 100%;
+	height: 100px !important;
 	padding: 10px;
 	overflow: hidden;
 	display: flex;
+	flex-wrap: wrap;
 	// align-items: center;
-	white-space: nowrap;
+	// white-space: nowrap;
 	color: var(--d-l-grey);
 	background-color: inherit;
+	max-width: 60dvw;
+	overflow: scroll;
+	word-wrap: normal;
+
+	&::-webkit-scrollbar {
+		display: none;
+		width: 0;
+	}
+}
+
+.custom-quill .ql-container .ql-snow {
+	height: 100%;
+}
+
+.custom-quill .ql-editor.ql-blank {
+	min-height: 100px !important;
 }
 
 .custom-quill .ql-placeholder {
@@ -491,4 +521,15 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	flex-grow: 1;
+}
+
+.video-preview {
+	@media (min-width: 1200px) {
+		width: 50%;
+		height: 25dvh;
+	}
+	@media (max-width: 480px) {
+		// width: 50%;
+		height: 250px;
+	}
 }
