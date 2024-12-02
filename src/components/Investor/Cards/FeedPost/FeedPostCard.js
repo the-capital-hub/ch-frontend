@@ -862,7 +862,7 @@ const FeedPostCard = ({
 											</div>
 											<button
 												className={`vote-button ${
-													hasVoted ? "votedStartUpThemeColor" : ""
+													hasVoted ? "votedButton" : ""
 												}`}
 												onClick={(e) => {
 													e.stopPropagation();
