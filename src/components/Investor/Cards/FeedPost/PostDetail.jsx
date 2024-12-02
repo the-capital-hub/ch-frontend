@@ -51,7 +51,7 @@ import {
 import { selectIsInvestor } from "../../../../Store/features/user/userSlice";
 import BatchImag from "../../../../Images/tick-mark.png";
 import ImageCarousel from "./ImageCarousel/ImageCarousel";
-
+import { environment } from "../../../../environments/environment";
 
 const PostDetail = ({
   postId,
@@ -82,7 +82,6 @@ const PostDetail = ({
   isSinglePost = false,
   setPostData,
   pollOptions,
-  handlePollVote,
   postData
 }) => {
   const [showComment, setShowComment] = useState(isSinglePost);
@@ -428,6 +427,39 @@ const PostDetail = ({
     navigate(isInvestor ? `/investor/post/${postId}` : `/posts/${postId}`);
   };
 
+  const handlePollVote = async (postId, optionId) => {
+		try {
+			const token = localStorage.getItem("accessToken");
+			const response = await fetch(`${environment.baseUrl}/api/posts/vote`, {
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({
+					postId,
+					optionId,
+					userId: loggedInUser._id,
+				}),
+			});
+
+			const result = await response.json();
+
+			if (!response.ok) {
+				throw new Error(result.message || "Error voting for poll");
+			}
+
+			// Update the posts state while preserving all post data
+			setPostData((prevData) => ({ ...prevData, pollOptions: result.data }));
+
+			// Return the updated poll options for the FeedPostCard component
+			return result.data;
+		} catch (error) {
+			console.error("Error voting for poll:", error);
+			throw error;
+		}
+	};
+
   return (
     <>
       <div className="feedpostcard_main_container mb-2">
@@ -625,7 +657,7 @@ const PostDetail = ({
               />
             )}
             {pollOptions && pollOptions.length > 0 && (
-              <div className="poll-section">
+              <div className={`${isInvestor ? 'poll-section-investor' : 'poll-section'}`}>
                 {pollOptions.map((option) => {
                   const hasVoted = option.votes?.includes(loggedInUser._id);
                   const totalVotes = pollOptions.reduce(
@@ -664,7 +696,7 @@ const PostDetail = ({
                         </span>
                       </div>
                       <button
-                        className={`vote-button ${hasVoted ? "votedStartUpThemeColor" : ""}`}
+                        className={`vote-button ${hasVoted ? "votedButton" : ""}`}
                         onClick={(e) => {
                           e.stopPropagation();
                           handlePollVote(postId, option._id);

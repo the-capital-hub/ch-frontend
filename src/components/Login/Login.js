@@ -318,7 +318,6 @@ const Login = () => {
 			}
 		} catch (error) {
 			console.error("Error during token exchange:", error);
-			setError("Google login failed. Please try again.");
 		}
 	};
 
