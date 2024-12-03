@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import DOMPurify from "dompurify";
 import {
 	FaRegBookmark,
 	FaPaperPlane,
@@ -19,11 +20,17 @@ const token = localStorage.getItem("accessToken");
 const QAComponent = () => {
 	const theme = useSelector(selectTheme);
 	const [question, setQuestion] = useState({});
+	const [questions, setQuestions] = useState([]);
+	const [posts, setPosts] = useState([]);
 	const [inputText, setInputText] = useState("");
 	const [inputComment, setInputComment] = useState("");
 	const [isCommentsOpen, setIsCommentsOpen] = useState({});
 	const { id } = useParams(); // used as questionId
 	const user = JSON.parse(localStorage.getItem("loggedInUser"));
+	const [activeTab, setActiveTab] = useState("posts");
+	// console.log("question", question);
+	// console.log("questions", questions);
+	// console.log("posts", posts);
 
 	const {
 		upvotedIds: upvotedAnswers,
@@ -37,7 +44,6 @@ const QAComponent = () => {
 		isUpvoted: isCommentUpvoted,
 	} = useUpvoteHandler(baseUrl, "comment");
 
-	// console.log("question", question);
 	// Fetch question data
 	// /getQuestionById/:questionId
 
@@ -45,7 +51,9 @@ const QAComponent = () => {
 		try {
 			const response = await fetch(`${baseUrl}/thoughts/getQuestionById/${id}`);
 			const data = await response.json();
-			setQuestion(data.data);
+			setQuestion(data.data.question);
+			setQuestions(data.data.userThoughts);
+			setPosts(data.data.posts);
 		} catch (error) {
 			console.error("Error fetching question:", error);
 		}
@@ -114,17 +122,45 @@ const QAComponent = () => {
 		setInputComment("");
 	};
 
+	const dummyPosts = [
+		{
+			id: 1,
+			content:
+				"As the Founder at Capital HUB, Man's all about building great start-ups from a simple idea to an elegant reality. Humbled and honored to have worked with Angels and VC's across the globe to support and grow the startup culture.As the Founder at Capital HUB, Man's all about building great start-ups",
+			likes: "Harideep and 121 Others",
+		},
+		{
+			id: 2,
+			content:
+				"As the Founder at Capital HUB, Man's all about building great start-ups from a simple idea to an elegant reality. Humbled and honored to have worked with Angels and VC's across the globe to support and grow the startup culture.",
+			likes: "Harideep and 121 Others",
+		},
+	];
+
+	const dummyQuestions = [
+		{
+			id: 1,
+			title: "Onboarding and UI/UX",
+			content: "How can we improve the onboarding experience for new users?",
+		},
+		{
+			id: 2,
+			title: "Fundraising and UI/UX",
+			content:
+				"What are the key metrics investors look for in a startup's UI/UX?",
+		},
+	];
+
 	return (
 		<div
 			className={`qa-page ${theme === "dark" ? " dark-theme" : ""}`}
 			data-bs-theme={theme}
 		>
 			{/* Left Side - Questions */}
-			<div className="questions-sidebar">
+			{/* <div className="questions-sidebar">
 				<h2 className="sidebar-title">Question</h2>
 				<div className="question-preview">
 					<div className="user-info">
-						{/* <FaUserCircle className="user-icon" /> */}
 						<img
 							src={question?.user?.profilePicture}
 							alt="Profile Pic"
@@ -134,14 +170,172 @@ const QAComponent = () => {
 							<span className="username">
 								{question?.user?.firstName + " " + question?.user?.lastName}
 							</span>
-							{/* <span className="follow-text">· Follow</span> */}
 						</div>
-						{/* <button className="more-options">···</button> */}
 					</div>
 					<p className="preview-text">{question?.question}</p>
 				</div>
+			</div> */}
+
+			<div className="questions-sidebar">
+				{/* Questions Section */}
+				<div className="section">
+					<h2>Questions</h2>
+					<div className="question-preview">
+						<div className="user-info">
+							<img
+								src={question?.user?.profilePicture}
+								alt={`${question?.user?.firstName} ${question?.user?.lastName}`}
+							/>
+							<span>{`${question?.user?.firstName} ${question?.user?.lastName}`}</span>
+						</div>
+						<p>{question?.question}</p>
+					</div>
+				</div>
+
+				{/* Creator Details Section */}
+
+				<div className="creator-details">
+					{/* About Section */}
+					<div className="section">
+						<h2>About the {question?.user?.firstName}</h2>
+						<div className="about-user">
+							<img src={question?.user?.profilePicture} alt="Pic" />
+							<div className="user-details">
+								<h3>{`${question?.user?.firstName} ${question?.user?.lastName}`}</h3>
+								<p className="username">@{question?.user?.userName}</p>
+								<p className="position">
+									{question?.user?.designation} of{" "}
+									{question?.user?.startUp.company},{" "}
+									{question?.user?.startUp?.location}
+								</p>
+								<p className="stats">
+									253 Followers | {question?.user?.connections.length}{" "}
+									Connections
+								</p>
+							</div>
+							<button
+								className="follow-button"
+								onClick={() =>
+									alert("Please login first! To Follow for more questions")
+								}
+							>
+								Follow for more questions
+							</button>
+						</div>
+					</div>
+
+					{/* Posts and Questions Section */}
+					<div className="section posts-questions">
+						<div className="tabs">
+							<button
+								className={`tab ${activeTab === "posts" ? "active" : ""}`}
+								onClick={() => setActiveTab("posts")}
+							>
+								Posts
+							</button>
+							<button
+								className={`tab ${activeTab === "questions" ? "active" : ""}`}
+								onClick={() => setActiveTab("questions")}
+							>
+								Previous Questions
+							</button>
+						</div>
+
+						<div className="content">
+							{activeTab === "posts" ? (
+								<div className="posts">
+									{posts.map((post) => (
+										<div key={post.id} className="post-card">
+											<div className="card-header">
+												<div className="header-left">
+													<div className="logo">
+														<img
+															src={post?.user?.startUp?.logo}
+															alt="Capital Hub"
+														/>
+													</div>
+													<span>Capital Hub</span>
+												</div>
+												{/* <button className="more-options">•••</button> */}
+											</div>
+											{/* <p className="post-content">{post?.description}</p> */}
+											<div
+												className="post-content"
+												dangerouslySetInnerHTML={{
+													__html: DOMPurify.sanitize(post?.description),
+												}}
+											></div>
+											<div className="engagement">
+												<span className="fire-icon">🔥</span>
+												{/* <span className="wave-icon">〰️</span> */}
+												<span className="likes">
+													{post?.likes.length} Likes
+												</span>
+											</div>
+										</div>
+									))}
+								</div>
+							) : (
+								<div className="questions">
+									{questions
+										.filter((q) => q._id !== id)
+										.map((q) => (
+											<div key={q._id} className="question-card">
+												<h4>{q.question}</h4>
+												<p>{q.industry}</p>
+											</div>
+										))}
+								</div>
+							)}
+						</div>
+					</div>
+
+					{/* Bio Section */}
+					<div className="section">
+						<h2>Bio</h2>
+						<p>
+							{question?.user?.bio ||
+								"A little about myself. Dejection is a sign of failure but it becomes the cause of success. I wrote this when I was 15 years old and that's exactly when I idealized the reality of life. In this current world, success is defined in many ways, some of which include money, fame and power."}
+						</p>
+					</div>
+
+					{/* Company Section */}
+					<div className="section">
+						<h2>Company</h2>
+						<div className="company-info">
+							<div className="company-logo">
+								<img src={question?.user?.startUp?.logo} alt="Capital Hub" />
+							</div>
+							<div className="company-details">
+								<h3>{question?.user?.startUp?.company}</h3>
+								<p>{question?.user?.startUp?.location}</p>
+							</div>
+						</div>
+						<div className="company-meta">
+							<div className="meta-item">
+								<span className="label">Designation</span>
+								<span className="value">{question?.user?.designation}</span>
+							</div>
+							<div className="meta-item">
+								<span className="label">Education</span>
+								<div className="value">
+									<p>Graduate, University of Northampton</p>
+								</div>
+							</div>
+							<div className="meta-item">
+								<span className="label">Experience</span>
+								<p className="value">
+									{question?.user?.experience
+										? question?.user?.experience
+										: "5+ Years building various startups • Mentored 24 startups Growth $ 50M+ Revenue"}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 
+			{/* Right Side - Answers */}
 			{/* Main Content */}
 			<div className="main-content">
 				{/* Answers Section */}
@@ -153,7 +347,7 @@ const QAComponent = () => {
 						<div className="input-header">
 							{/* <FaUserCircle className="user-icon" /> */}
 							<img
-								src={question?.user?.profilePicture}
+								src={user?.profilePicture}
 								alt="Profile Pic"
 								className="user-icon"
 							/>
@@ -182,13 +376,13 @@ const QAComponent = () => {
 										/>
 										<div className="user-details">
 											<span className="username">
-												{answer.user.firstName + " " + answer.user.lastName}
+												{answer?.user?.firstName + " " + answer?.user?.lastName}
 											</span>
 											{/* <span className="follow-text">· Follow</span> */}
 										</div>
 									</div>
 
-									<p className="answer-text">{answer.answer}</p>
+									<p className="answer-text">{answer?.answer}</p>
 
 									<div className="interaction-bar">
 										<div className="action-buttons">
