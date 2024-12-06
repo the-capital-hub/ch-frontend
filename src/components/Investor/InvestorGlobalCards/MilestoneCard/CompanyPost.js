@@ -4,7 +4,7 @@ import { getCompanyPost } from "../../../../Service/user";
 import SpinnerBS from "../../../Shared/Spinner/SpinnerBS";
 import CompanyUpdateCard from "../../Cards/FeaturedPostCard/CompanyUpdateCard";
 
-const CompanyPost = ({ userId, postDelete, newPost }) => {
+const CompanyPost = ({ userId, postDelete, newPost, selectedMonth }) => {
   const [allPosts, setAllPosts] = useState(null);
   const [user, setUser] = useState(null);
   const [isDeleteSuccessful, setIsDeleteSuccessful] = useState(false);
@@ -23,28 +23,19 @@ const CompanyPost = ({ userId, postDelete, newPost }) => {
       });
   }, [userId, newPost]);
 
-  useEffect(() => {
-    if (isDeleteSuccessful) {
-      getCompanyPost(userId)
-        .then(({ user }) => {
-          setUser(user);
-          setAllPosts(user.companyUpdate);
-        })
-        .catch((err) => {
-          console.log(err);
-          setUser([]);
-          setAllPosts([]);
-        });
-      setIsDeleteSuccessful(false);
-    }
-  }, [isDeleteSuccessful, userId]);
+  // Filter posts by selected month
+  const filteredPosts = allPosts?.filter(post => {
+    if (!selectedMonth) return true; 
+    const postMonth = new Date(post.createdAt).getMonth() + 1; // Get month from createdAt
+    return postMonth === parseInt(selectedMonth); // Compare with selected month
+  });
 
   return (
     <div className="card-container ">
       <div className="post_container_div d-flex gap-4 ps-3 w-100 overflow-x-auto">
-        {allPosts ? (
-          allPosts.length !== 0 ? (
-            allPosts.map(
+        {filteredPosts ? (
+          filteredPosts.length !== 0 ? (
+            filteredPosts.map(
               ({ description, video, image, createdAt, likes, _id }) => (
                 <CompanyUpdateCard
                   key={_id} // Use a unique key for each post
