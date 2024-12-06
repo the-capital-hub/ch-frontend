@@ -86,6 +86,7 @@ const Milestone = () => {
 				postCount,
 				pdfDocumentsCount
 			),
+			link: "/onelink",
 		},
 		{
 			icon: Linkedin,
@@ -96,6 +97,7 @@ const Milestone = () => {
 				postCount,
 				pdfDocumentsCount
 			).toFixed(0),
+			link: "/company-profile",
 		},
 		{
 			icon: Network,
@@ -106,6 +108,7 @@ const Milestone = () => {
 				postCount,
 				pdfDocumentsCount
 			),
+			link: "/home",
 		},
 		{
 			icon: Profile,
@@ -116,6 +119,7 @@ const Milestone = () => {
 				postCount,
 				pdfDocumentsCount
 			),
+			link: "/profile",
 		},
 	];
 
@@ -135,6 +139,7 @@ const Milestone = () => {
 									src={milestone.icon}
 									alt={milestone.name}
 									className="icon-wrapper"
+									onClick={() => navigate(milestone.link)}
 								/>
 								<div className="progress-bar">
 									<div
