@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DOMPurify from "dompurify";
-import {
-	FaRegBookmark,
-	FaPaperPlane,
-	FaUserCircle,
-	FaChevronRight,
-} from "react-icons/fa";
+import { FaPaperPlane, FaUserCircle } from "react-icons/fa";
 import { BiLike, BiCommentDetail } from "react-icons/bi";
 import "./ThoughtsQA.scss";
 import { useParams } from "react-router-dom";
@@ -13,7 +8,6 @@ import { useSelector } from "react-redux";
 import { selectTheme } from "../../../Store/features/design/designSlice";
 import { environment } from "../../../environments/environment";
 import { useUpvoteHandler } from "../UtilityFunction/upvoteDownvote";
-// import AddUserIconBlack from "../../../Images/investorIcon/Add-UserBlack.svg";
 const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 
@@ -25,9 +19,10 @@ const QAComponent = () => {
 	const [inputText, setInputText] = useState("");
 	const [inputComment, setInputComment] = useState("");
 	const [isCommentsOpen, setIsCommentsOpen] = useState({});
-	const { id } = useParams(); // used as questionId
-	const user = JSON.parse(localStorage.getItem("loggedInUser"));
 	const [activeTab, setActiveTab] = useState("posts");
+	const [showCreatorDetails, setShowCreatorDetails] = useState(false);
+	const { id } = useParams();
+	const user = JSON.parse(localStorage.getItem("loggedInUser"));
 	// console.log("question", question);
 	// console.log("questions", questions);
 	// console.log("posts", posts);
@@ -43,9 +38,6 @@ const QAComponent = () => {
 		handleUpvote: handleCommentUpvote,
 		isUpvoted: isCommentUpvoted,
 	} = useUpvoteHandler(baseUrl, "comment");
-
-	// Fetch question data
-	// /getQuestionById/:questionId
 
 	const fetchQuestion = async () => {
 		try {
@@ -157,30 +149,12 @@ const QAComponent = () => {
 			data-bs-theme={theme}
 		>
 			{/* Left Side - Questions */}
-			{/* <div className="questions-sidebar">
-				<h2 className="sidebar-title">Question</h2>
-				<div className="question-preview">
-					<div className="user-info">
-						<img
-							src={question?.user?.profilePicture}
-							alt="Profile Pic"
-							className="user-icon"
-						/>
-						<div className="user-details">
-							<span className="username">
-								{question?.user?.firstName + " " + question?.user?.lastName}
-							</span>
-						</div>
-					</div>
-					<p className="preview-text">{question?.question}</p>
-				</div>
-			</div> */}
-
 			<div className="questions-sidebar">
 				{/* Questions Section */}
 				<div className="section">
-					<h2>Questions</h2>
 					<div className="question-preview">
+						<h2>Questions</h2>
+						<hr />
 						<div className="user-info">
 							<img
 								src={question?.user?.profilePicture}
@@ -188,30 +162,45 @@ const QAComponent = () => {
 							/>
 							<span>{`${question?.user?.firstName} ${question?.user?.lastName}`}</span>
 						</div>
+						<hr />
 						<p>{question?.question}</p>
 					</div>
 				</div>
 
-				{/* Creator Details Section */}
+				{/* button to toggle -show or hide creator details */}
+				{/* <button
+					className="toggle-button"
+					onClick={() => setShowCreatorDetails((prev) => !prev)}
+				>
+					{showCreatorDetails ? "Hide" : "Show"} Creator Details
+				</button> */}
 
-				<div className="creator-details">
-					{/* About Section */}
+				{/* Creator Details Section */}
+				<div
+					className={`creator-details`}
+					// className={`creator-details ${showCreatorDetails ? "show" : "hide"}`}
+				>
 					<div className="section">
 						<h2>About the {question?.user?.firstName}</h2>
+						<hr />
 						<div className="about-user">
-							<img src={question?.user?.profilePicture} alt="Pic" />
-							<div className="user-details">
-								<h3>{`${question?.user?.firstName} ${question?.user?.lastName}`}</h3>
-								<p className="username">@{question?.user?.userName}</p>
-								<p className="position">
-									{question?.user?.designation} of{" "}
-									{question?.user?.startUp.company},{" "}
-									{question?.user?.startUp?.location}
-								</p>
-								<p className="stats">
-									253 Followers | {question?.user?.connections.length}{" "}
-									Connections
-								</p>
+							<div className="about-user-info">
+								<img src={question?.user?.profilePicture} alt="Pic" />
+								<div className="user-details">
+									<h3>{`${question?.user?.firstName} ${question?.user?.lastName}`}</h3>
+									<p className="username">@{question?.user?.userName}</p>
+									<p className="position">
+										{question?.user?.designation} of{" "}
+										{question?.user?.startUp.company},{" "}
+										{question?.user?.startUp?.location}
+									</p>
+									<span className="stats-container">
+										<p className="stats">253 Followers</p>
+										<p className="stats">
+											{question?.user?.connections.length} Connections
+										</p>
+									</span>
+								</div>
 							</div>
 							<button
 								className="follow-button"
@@ -224,7 +213,6 @@ const QAComponent = () => {
 						</div>
 					</div>
 
-					{/* Posts and Questions Section */}
 					<div className="section posts-questions">
 						<div className="tabs">
 							<button
@@ -244,7 +232,7 @@ const QAComponent = () => {
 						<div className="content">
 							{activeTab === "posts" ? (
 								<div className="posts">
-									{posts.map((post) => (
+									{posts?.map((post) => (
 										<div key={post.id} className="post-card">
 											<div className="card-header">
 												<div className="header-left">
@@ -256,9 +244,8 @@ const QAComponent = () => {
 													</div>
 													<span>Capital Hub</span>
 												</div>
-												{/* <button className="more-options">•••</button> */}
 											</div>
-											{/* <p className="post-content">{post?.description}</p> */}
+
 											<div
 												className="post-content"
 												dangerouslySetInnerHTML={{
@@ -267,7 +254,6 @@ const QAComponent = () => {
 											></div>
 											<div className="engagement">
 												<span className="fire-icon">🔥</span>
-												{/* <span className="wave-icon">〰️</span> */}
 												<span className="likes">
 													{post?.likes.length} Likes
 												</span>
@@ -279,7 +265,7 @@ const QAComponent = () => {
 								<div className="questions">
 									{questions
 										.filter((q) => q._id !== id)
-										.map((q) => (
+										?.map((q) => (
 											<div key={q._id} className="question-card">
 												<h4>{q.question}</h4>
 												<p>{q.industry}</p>
@@ -290,8 +276,9 @@ const QAComponent = () => {
 						</div>
 					</div>
 
-					{/* Bio Section */}
-					<div className="section">
+					<hr />
+
+					<div className="section user-bio">
 						<h2>Bio</h2>
 						<p>
 							{question?.user?.bio ||
@@ -299,8 +286,9 @@ const QAComponent = () => {
 						</p>
 					</div>
 
-					{/* Company Section */}
-					<div className="section">
+					<hr />
+
+					<div className="section user-company">
 						<h2>Company</h2>
 						<div className="company-info">
 							<div className="company-logo">

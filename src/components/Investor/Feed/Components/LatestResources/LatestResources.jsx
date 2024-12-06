@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./LatestResources.scss";
 import ResourcesPopup from "../ResourcesPopup/ResourcesPopup";
+import ResourcesPopupNew from "../../../../PopUp/ResourcesPopup/ResourcesPopup";
 import { IoMdCloseCircle } from "react-icons/io";
 
 export default function LatestResources() {
@@ -86,7 +87,7 @@ export default function LatestResources() {
 				</div>
 			</div>
 
-			{showPopup && <ResourcesPopup onClose={() => setShowPopup(false)} />}
+			{showPopup && <ResourcesPopupNew onClose={() => setShowPopup(false)} />}
 		</>
 	);
 }
