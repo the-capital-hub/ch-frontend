@@ -72,7 +72,7 @@
 		.ResourcesPopup-header {
 			h2 {
 				font-family: Outfit;
-				font-size: 32px;
+				font-size: 2rem;
 				font-weight: 500;
 				line-height: 58px;
 				letter-spacing: -0.015em;
@@ -82,6 +82,10 @@
 				color: rgba(255, 255, 255, 1);
 				margin-bottom: 1rem;
 				text-align: center;
+
+				// @media (max-width: 768px) {
+				// 	font-size: 25px;
+				// }
 				span {
 					margin-left: 5px;
 					padding: 10px;
@@ -124,6 +128,10 @@
 				text-decoration-skip-ink: none;
 				margin-bottom: 0.25rem;
 				color: rgba(255, 255, 255, 1);
+
+				// @media (max-width: 768px) {
+				// 	font-size: 18px;
+				// }
 			}
 			hr {
 				border: 1px solid;
@@ -164,7 +172,7 @@
 				color: rgba(255, 255, 255, 1);
 			}
 			.logo-image {
-				width: 35%;
+				width: 40%;
 				margin-bottom: 1.5rem;
 				position: relative;
 				border-radius: 20%;
@@ -269,6 +277,129 @@
 					border: none;
 					background-color: transparent;
 				}
+			}
+		}
+		.view-all-button {
+			color: rgba(255, 98, 14, 1);
+			font-family: Sora;
+			font-size: 16px;
+			font-weight: 400;
+			line-height: 20px;
+			text-align: center;
+			text-underline-position: from-font;
+			text-decoration-skip-ink: none;
+			height: 1rem;
+			width: 165px;
+			border: none;
+			background-color: transparent;
+			margin-top: 0.75rem;
+
+			&:hover {
+				cursor: pointer;
+				opacity: 0.7;
+			}
+		}
+
+		// Tablet Responsiveness
+		@media screen and (max-width: 1024px) and (min-width: 769px) {
+			width: 80%;
+			height: 90dvh;
+			padding: 0.75rem;
+
+			.join-hustlers-club {
+				.logo-image {
+					width: 80%;
+					margin-bottom: 1rem;
+				}
+			}
+		}
+
+		// Mobile Responsiveness
+		@media screen and (max-width: 768px) {
+			width: 100%;
+			height: 100dvh;
+			padding: 0.5rem;
+			padding-top: 3rem;
+			justify-content: start;
+
+			.close {
+				top: 5px;
+				right: 10px;
+				font-size: 20px;
+			}
+
+			.ResourcesPopup-header {
+				h2 {
+					font-size: 24px;
+					line-height: 40px;
+					text-align: center;
+
+					span {
+						font-size: 18px;
+						padding: 5px;
+					}
+				}
+
+				p {
+					font-size: 16px;
+					line-height: 24px;
+					text-align: center;
+					padding-left: 1rem;
+					padding-right: 1rem;
+				}
+			}
+
+			.join-hustlers-club {
+				span {
+					font-size: 20px;
+					line-height: 40px;
+				}
+
+				p {
+					font-size: 16px;
+					text-align: center;
+				}
+
+				.logo-image {
+					width: 90%;
+					margin-bottom: 1rem;
+				}
+			}
+
+			.resources-cards {
+				// grid-template-columns: 1fr;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 0.5rem;
+
+				.card {
+					width: 100%;
+					height: auto;
+					min-height: 100px;
+					padding: 0.5rem;
+
+					img {
+						width: 20px;
+						height: 20px;
+						margin-bottom: 0.25rem;
+					}
+
+					span {
+						font-size: 14px;
+						line-height: 1.2;
+					}
+
+					button {
+						font-size: 14px;
+						width: 100%;
+						margin-top: 0.25rem;
+					}
+				}
+			}
+
+			.view-all-button {
+				font-size: 14px;
+				width: 100%;
+				margin-top: 1rem;
 			}
 		}
 	}
