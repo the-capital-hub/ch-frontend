@@ -216,7 +216,7 @@ $primary-color: #fd5901; // Primary brand color for active elements
     height: 60px;
     background-color: var(--white-to-grey);
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 10000;
+    z-index: 10000s;
 
     .nav-item {
       display: flex;

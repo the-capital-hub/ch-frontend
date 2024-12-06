@@ -51,9 +51,10 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
   const menuItems = [
     { label: "Company", icon: <HiOutlineOfficeBuilding size={25} />, path: "", tab: "company" },
     { label: "Profile", icon: <IconUser height={25} width={25} />, path: "profile", tab: "profile" },
-    { label: "Invest", icon: <RiMoneyDollarCircleLine size={!isMobileView ? "25" : "65"} />, path: "investnow", tab: "investnow", className: "invest-now" },
     { label: "Updates", icon: <IconFile width={25} height={25} />, path: "onepager", tab: "onepager" },
     { label: "Doc", icon: <IoDocumentsOutline size={25} />, path: "documentation", tab: "documentation" },
+    { label: "Invest", icon: <RiMoneyDollarCircleLine size={!isMobileView ? "25" : "65"} />, path: "investnow", tab: "investnow", className: "invest-now" },
+
   ];
 
   return (
