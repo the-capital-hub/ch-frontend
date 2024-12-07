@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { BiChevronLeft, BiPlus, BiLike, BiShareAlt } from "react-icons/bi";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { MdOutlineFilterAlt, MdOutlineFilterAltOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../Store/features/design/designSlice";
@@ -345,7 +346,11 @@ const Thoughts = () => {
 							}`}
 							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
 						>
-							<GiHamburgerMenu />
+							{isMobileMenuOpen ? (
+								<MdOutlineFilterAltOff />
+							) : (
+								<MdOutlineFilterAlt />
+							)}
 						</button>
 					</div>
 					<div
