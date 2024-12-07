@@ -1,0 +1,161 @@
+.resources-new-container {
+	height: calc(100dvh - 150px);
+	padding: 2rem;
+
+	.resources-cards {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+
+		.card {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			// gap: 0.3rem;
+			border-radius: 1.5rem;
+			background: linear-gradient(
+				137.34deg,
+				rgba(27, 28, 54, 0.16) 23.98%,
+				rgba(112, 113, 122, 0.16) 65.73%
+			);
+			position: relative;
+			padding: 15px; // Padding around the text
+			z-index: 1;
+			font-family: Nunito;
+			font-size: 30px;
+			font-weight: 800;
+			line-height: 58px;
+			letter-spacing: -0.015em;
+			text-align: left;
+
+			&:before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				border-radius: 1rem;
+				padding: 1.5px; /* Adjust the thickness here */
+				background: linear-gradient(
+					81.07deg,
+					#2c2d47 53.33%,
+					rgba(68, 74, 226, 0.05) 93.73%
+				);
+				-webkit-mask: linear-gradient(#fff 0 0) content-box,
+					linear-gradient(#fff 0 0);
+				mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+				-webkit-mask-composite: destination-out;
+				mask-composite: exclude;
+				z-index: -1;
+			}
+
+			width: 350px;
+			height: 200px;
+			padding: 1.5rem;
+
+			img {
+				width: 50px;
+				height: 50px;
+				border-radius: 0.75rem;
+			}
+			span {
+				font-family: Outfit;
+				font-size: 2rem;
+				font-weight: 500;
+				line-height: 40.32px;
+				letter-spacing: -1px;
+				text-align: left;
+				text-underline-position: from-font;
+				text-decoration-skip-ink: none;
+				color: rgba(202, 209, 233, 1);
+			}
+			button {
+				color: rgba(255, 98, 14, 1);
+				font-family: Sora;
+				font-size: 1.25rem;
+				font-weight: 400;
+				line-height: 20px;
+				text-align: left;
+				text-underline-position: from-font;
+				text-decoration-skip-ink: none;
+				height: 1rem;
+				width: 165px;
+				border: none;
+				background-color: transparent;
+			}
+		}
+	}
+
+	@media screen and (max-width: 1024px) and (min-width: 769px) {
+		.resources-cards {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media screen and (max-width: 768px) {
+		.resources-cards {
+			justify-content: center;
+			height: 100%;
+			overflow-y: scroll;
+
+			&::-webkit-scrollbar {
+				display: none;
+				width: 0;
+			}
+
+			.card {
+				width: 60%;
+				height: auto;
+				min-height: 150px;
+				padding: 1rem;
+
+				img {
+					width: 35px;
+					height: 35px;
+					margin-bottom: 0.25rem;
+				}
+
+				span {
+					font-size: 1.5rem;
+					line-height: 1.2;
+				}
+
+				button {
+					font-size: 1.25rem;
+					width: 100%;
+					margin-top: 0.25rem;
+				}
+			}
+		}
+	}
+	@media screen and (max-width: 480px) {
+		.resources-cards {
+			justify-content: center;
+			gap: 0.5rem;
+			.card {
+				width: 85%;
+				height: auto;
+				min-height: 140px;
+				padding: 1rem;
+
+				img {
+					width: 35px;
+					height: 35px;
+					margin-bottom: 0.25rem;
+				}
+
+				span {
+					font-size: 1.5rem;
+					line-height: 1.2;
+				}
+
+				button {
+					font-size: 1.25rem;
+					width: 100%;
+					margin-top: 0.25rem;
+				}
+			}
+		}
+	}
+}

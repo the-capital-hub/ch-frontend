@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./LatestResources.scss";
 import ResourcesPopup from "../ResourcesPopup/ResourcesPopup";
-import ResourcesPopupNew from "../../../../PopUp/ResourcesPopup/ResourcesPopup";
+import ResourcesPopupNew from "../../../../PopUp/ResourcesPopup/ResourcesPopupNew";
 import { IoMdCloseCircle } from "react-icons/io";
 
 export default function LatestResources() {

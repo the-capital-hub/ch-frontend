@@ -23,7 +23,7 @@ const MILESTONES = {
 	},
 	2: {
 		name: "Company Profile",
-		requirement: { type: "company_profile_completion", target: 100 },
+		requirement: { type: "company_profile_completion", target: 80 },
 	},
 	3: {
 		name: "Onelink",
@@ -93,7 +93,7 @@ const UserJourney = () => {
 	const loggedInUserCompany = useSelector((state) => state.user.company);
 	const navigate = useNavigate();
 	const [userMilestones, setUserMilestones] = useState({});
-
+	console.log(userMilestones);
 	const fetchUserMilestones = async () => {
 		try {
 			const response = await fetch(`${baseUrl}/users/getUserMilestones`, {
@@ -180,18 +180,13 @@ const UserJourney = () => {
 			postCount,
 			pdfDocumentsCount
 		),
-		post_count: calculateProfileCompletion(
-			"posts",
-			userRequiredFields,
-			postCount,
-			pdfDocumentsCount
-		),
+		posts_count: userMilestones?.userPosts?.length,
 		polls_count: userMilestones?.userPolls?.length,
 		contribute_thoughts: userMilestones?.userThoughts?.length,
 		events_count: userMilestones?.events?.length,
 		bookings_count: userMilestones?.userBookings?.length,
 	};
-	// console.log("milestoneData", milestoneData);
+	console.log("milestoneData", milestoneData);
 
 	useEffect(() => {
 		const currentLevel = checkCurrentLevel(milestoneData);
@@ -247,7 +242,7 @@ const UserJourney = () => {
 					<p>Next milestone: {userProgress.nextMilestone.name}</p>
 					<p>
 						Required: {userProgress.nextMilestone.requirement.target}
-						{"% of "}
+						{userProgress.nextMilestone.requirement.target > 10 ? "% of " : " "}
 						{userProgress.nextMilestone.requirement.type.replace(/_/g, " ")}
 					</p>
 				</div>

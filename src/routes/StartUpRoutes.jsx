@@ -61,7 +61,9 @@ const EditCompanyProfilePage = lazy(() =>
 const StartupExplore = lazy(() =>
 	import("../pages/StartUp/StartupExplore/StartupExplore")
 );
-const Resources = lazy(() => import("../pages/StartUp/Resources/Resources"));
+const Resources = lazy(() =>
+	import("../pages/StartUp/Resources/ResourcesNew/ResourcesNew")
+);
 const OtherCompanyProfilePage = lazy(() =>
 	import("../pages/StartUp/CompanyProfile/OtherCompanyProfilePage")
 );
@@ -148,7 +150,6 @@ const MeetingPlans = lazy(() =>
 const MeetingAvailability = lazy(() =>
 	import("../components/Meetings/Availability/MeetingAvailability")
 );
-
 
 function StartUpRoutes() {
 	// Light and dark Theme
@@ -393,7 +394,7 @@ function StartUpRoutes() {
 					</Suspense>
 				}
 			/>
-				<Route
+			<Route
 				path="/resources"
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
