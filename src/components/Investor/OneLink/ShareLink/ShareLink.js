@@ -20,11 +20,11 @@ const ShareLink = ({
   return (
     <>
       <div className="ShareLink_container  mt-md-0">
-        <div className="box_container rounded-4 shadow-sm border">
-          <section className="title_section">
+        <div className="box_container rounded-4 shadow-sm">
+          <section className="title_section border-bottom">
             <h6>Now share all your startup details in OneLink</h6>
           </section>
-          <hr />
+          {/* <hr /> */}
           {isExitClicked && (OneLink === undefined || OneLink === "") && (
             <div className="warning_message">
               Please fill company details to get the OneLink.
@@ -34,7 +34,7 @@ const ShareLink = ({
             // to={"/onelink/" + oneLink.OneLink}
             className="copy_link_input text-decoration-none"
           >
-            <div className="input_container left_margin">
+            <div className="input_container">
               <div
                 className={`left_icons ${investor ? "investor" : "startup"} `}
               >
@@ -71,7 +71,8 @@ const ShareLink = ({
                   size={30}
                   onClick={onExitClick}
                   className="right_icons_img1"
-                  style={{ fill: "var(--d-l-grey)" }}
+                  // style={{ fill: "var(--d-l-grey)" }}
+                  style={{ fill: "rgba(84, 84, 84, 1)" }}
                 />
 
                 {/* <img

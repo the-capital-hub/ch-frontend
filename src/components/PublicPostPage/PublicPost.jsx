@@ -3,18 +3,43 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectLoggedInUserId } from "../../Store/features/user/userSlice";
 import NewsCorner from "../Investor/InvestorGlobalCards/NewsCorner/NewsCorner";
+import News from "../../components/Investor/Feed/Components/NewsCardHorizontal/News";
 import PostCard from "./PostCard/PostCard";
 import { environment } from "../../environments/environment";
 import "./PublicPost.scss";
 
 const baseUrl = environment.baseUrl;
 
-
 const PublicPost = () => {
 	const loggedInUserId = useSelector(selectLoggedInUserId);
 	const navigate = useNavigate();
 	const { postId } = useParams();
 	const [postData, setPostData] = useState({});
+	const [newsData, setNewsData] = useState([]);
+
+	//Fetching NEWS
+	useEffect(() => {
+		const fetchNews = async () => {
+			try {
+				const response = await fetch(`${baseUrl}/news/getTodaysNews`);
+				const data = await response.json();
+				const filteredArticles =
+					data?.articles?.filter(
+						(article) =>
+							article?.title &&
+							article?.description &&
+							article?.url &&
+							article?.urlToImage &&
+							article?.publishedAt
+					) || [];
+				setNewsData(filteredArticles);
+			} catch (error) {
+				console.error("Error fetching news:", error);
+			}
+		};
+
+		fetchNews();
+	}, []);
 
 	useEffect(() => {
 		const fetchSinglePost = async () => {
@@ -41,21 +66,21 @@ const PublicPost = () => {
 	// 		  'Content-Type': 'application/json',
 	// 		  'Authorization': `Bearer ${token}`,
 	// 		},
-	// 		body: JSON.stringify({ 
-	// 		  postId, 
+	// 		body: JSON.stringify({
+	// 		  postId,
 	// 		  optionId,
 	// 		  userId: loggedInUserId
 	// 		}),
 	// 	  });
-	
+
 	// 	  const result = await response.json();
-		  
+
 	// 	  if (!response.ok) {
 	// 		throw new Error(result.message || 'Error voting for poll');
 	// 	  }
-	
+
 	// 	  // Update the posts state while preserving all post data
-	// 	  setAllPosts(prevPosts => 
+	// 	  setAllPosts(prevPosts =>
 	// 		prevPosts.map(post => {
 	// 		  if (post._id === postId) {
 	// 			return {
@@ -66,10 +91,10 @@ const PublicPost = () => {
 	// 		  return post;
 	// 		})
 	// 	  );
-	
+
 	// 	  // Return the updated poll options for the InvestorFeedPostCard component
 	// 	  return result.data;
-	
+
 	// 	} catch (error) {
 	// 	  console.error('Error voting for poll:', error);
 	// 	  throw error;
@@ -89,7 +114,7 @@ const PublicPost = () => {
 		createdAt,
 		likes,
 		comments,
-		pollOptions
+		pollOptions,
 	} = postData;
 
 	console.log("postData", postData);
@@ -129,7 +154,8 @@ const PublicPost = () => {
 							Sign in
 						</button>
 					</div>
-					<NewsCorner />
+					{/* <NewsCorner /> */}
+					<News newsData={newsData} />
 				</div>
 			</div>
 		</div>

@@ -10,12 +10,13 @@ import WhiteLogo from "../../../Images/investorIcon/logo-white.png";
 import OnboardingSwitch from "../../../components/Investor/InvestorNavbar/OnboardingSwitch/OnboardingSwitch";
 import { BsBell } from "react-icons/bs";
 import { AiOutlineMessage } from "react-icons/ai";
+import { MdMenu, MdMenuOpen } from "react-icons/md";
 import { selectTotalUnreadCount } from "../../../Store/features/chat/chatSlice";
 import { setUnreadNotifications } from "../../../Store/features/user/userSlice";
 import NavPopup from "./Popup/NavPopup";
 import "./Navbar3.scss";
 
-const Navbar3 = () => {
+const Navbar3 = ({ handleSidebarToggle, sidebarCollapse }) => {
 	const theme = useSelector(selectTheme);
 	const user = useSelector((state) => state.user.loggedInUser);
 	const isMobileView = useSelector(selectIsMobileView);
@@ -72,6 +73,17 @@ const Navbar3 = () => {
 				}`}
 			>
 				<div className="navbar-public-logo">
+					<div className="navbar-public-sidebar-toggle">
+						{sidebarCollapse ? (
+							<MdMenu size={25} onClick={handleSidebarToggle} />
+						) : (
+							<MdMenuOpen
+								size={25}
+								onClick={handleSidebarToggle}
+								style={{ fill: "#fd5901" }}
+							/>
+						)}
+					</div>
 					<img
 						src={theme === "dark" ? WhiteLogo : DarkLogo}
 						onClick={() => navigate("/")}

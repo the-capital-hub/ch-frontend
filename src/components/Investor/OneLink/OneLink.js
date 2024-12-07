@@ -110,7 +110,7 @@ const OneLink = () => {
               showPreviousIM={false}
             />
             <div
-              className="rounded-4 border shadow-sm"
+              className="rounded-4 shadow-sm"
               style={{ backgroundColor: "var(--white-to-grey)" }}
             >
               <div
