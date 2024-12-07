@@ -12,6 +12,7 @@ import OurStartup from "../components/OurStartup/OurStartUp";
 import SubscriptionSuccess from "../components/SubscriptionSuccess/SubscriptionSuccess";
 import Navbar3 from "../components/Navbar/Navbar3/Navbar3";
 import SidebarPublic from "../components/SidebarPublic/SidebarPublic";
+import PublicRoute from "../components/Routes/PublicRoutes/PublicRoute";
 
 // Import the other components using lazy loading
 const Home = lazy(() => import("../components/Home/Home"));
@@ -328,66 +329,58 @@ function PublicRoutes() {
 					</Suspense>
 				}
 			/>
-			<Route
-				path="/founder/:username"
-				element={
-					<Suspense fallback={<SuspenseLoader />}>
-						<Navbar3 />
-						<SidebarPublic />
-						<FounderProfile />
-					</Suspense>
-				}
-			/>
-			<Route
-				path="/meeting/schedule/:username/:meetingId"
-				element={
-					<Suspense fallback={<SuspenseLoader />}>
-						<Navbar3 />
-						<SidebarPublic />
-						<ScheduleMeeting />
-					</Suspense>
-				}
-			/>
-			<Route
-				path="/post_details/:postId"
-				element={
-					<Suspense fallback={<SuspenseLoader />}>
-						<Navbar3 />
-						<SidebarPublic />
-						<PublicPost />
-					</Suspense>
-				}
-			/>
-			<Route
-				path="/thoughts"
-				element={
-					<Suspense fallback={<SuspenseLoader />}>
-						<Navbar3 />
-						<SidebarPublic />
-						<ThoughtsMain />
-					</Suspense>
-				}
-			/>
-			<Route
-				path="/thoughts/question/:id"
-				element={
-					<Suspense fallback={<SuspenseLoader />}>
-						<Navbar3 />
-						<SidebarPublic />
-						<ThoughtsQA />
-					</Suspense>
-				}
-			/>
-			<Route
-				path="/thoughts/create-question"
-				element={
-					<Suspense fallback={<SuspenseLoader />}>
-						<Navbar3 />
-						<SidebarPublic />
-						<CreateQuestion />
-					</Suspense>
-				}
-			/>
+			
+			{/* Below routes are public routes with public Navbar and Sidebar */}
+			<Route element={<PublicRoute />}>
+				<Route
+					path="/founder/:username"
+					element={
+						<Suspense fallback={<SuspenseLoader />}>
+							<FounderProfile />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/meeting/schedule/:username/:meetingId"
+					element={
+						<Suspense fallback={<SuspenseLoader />}>
+							<ScheduleMeeting />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/post_details/:postId"
+					element={
+						<Suspense fallback={<SuspenseLoader />}>
+							<PublicPost />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/thoughts"
+					element={
+						<Suspense fallback={<SuspenseLoader />}>
+							<ThoughtsMain />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/thoughts/question/:id"
+					element={
+						<Suspense fallback={<SuspenseLoader />}>
+							<ThoughtsQA />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/thoughts/create-question"
+					element={
+						<Suspense fallback={<SuspenseLoader />}>
+							<CreateQuestion />
+						</Suspense>
+					}
+				/>
+			</Route>
 		</>
 	);
 }

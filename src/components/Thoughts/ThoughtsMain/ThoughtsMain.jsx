@@ -376,54 +376,52 @@ const Thoughts = () => {
 				</button>
 			</nav>
 
-			<main className="thoughts-main">
-				<div className="thoughts-content">
-					<div className="thoughts-content-topics">
-						<h2 className="thoughts-content-subtitle">More to explore</h2>
-						<div
-							ref={topicsRef}
-							className="thoughts-topics-container"
-							onMouseEnter={() => setIsHovering(true)}
-							onMouseLeave={() => setIsHovering(false)}
-						>
-							{industriesAndSkills.map((topic) => (
-								<TopicTag
-									key={topic}
-									isSelected={selectedTopics.includes(topic)}
-									onClick={() => handleTopicClick(topic)}
-								>
-									{topic}
-								</TopicTag>
-							))}
-						</div>
-					</div>
-
-					<div className="thoughts-content-articles">
-						{filteredQuestions && filteredQuestions.length > 0 ? (
-							filteredQuestions.map((question) => (
-								<ArticleCard
-									key={question._id}
-									id={question._id}
-									title={question.question}
-									contributors={question.answer.length}
-									contributorsList={question.answer}
-									time={question.updatedAt}
-									tags={question.industry}
-									onClick={() => handleArticleClick(question._id)}
-									isUpvoted={isUpvoted(question._id)}
-									onUpvote={handleUpvoteClick}
-									onShare={() => handleOpenSocialShare(question._id)}
-								/>
-							))
-						) : (
-							<div className="thoughts-no-questions">
-								No questions are available for the selected industry or skill.
-								Please try selecting a different one.
-							</div>
-						)}
+			<div className="thoughts-content">
+				<div className="thoughts-content-topics">
+					<h2 className="thoughts-content-subtitle">More to explore</h2>
+					<div
+						ref={topicsRef}
+						className="thoughts-topics-container"
+						onMouseEnter={() => setIsHovering(true)}
+						onMouseLeave={() => setIsHovering(false)}
+					>
+						{industriesAndSkills.map((topic) => (
+							<TopicTag
+								key={topic}
+								isSelected={selectedTopics.includes(topic)}
+								onClick={() => handleTopicClick(topic)}
+							>
+								{topic}
+							</TopicTag>
+						))}
 					</div>
 				</div>
-			</main>
+
+				<div className="thoughts-content-articles">
+					{filteredQuestions && filteredQuestions.length > 0 ? (
+						filteredQuestions.map((question) => (
+							<ArticleCard
+								key={question._id}
+								id={question._id}
+								title={question.question}
+								contributors={question.answer.length}
+								contributorsList={question.answer}
+								time={question.updatedAt}
+								tags={question.industry}
+								onClick={() => handleArticleClick(question._id)}
+								isUpvoted={isUpvoted(question._id)}
+								onUpvote={handleUpvoteClick}
+								onShare={() => handleOpenSocialShare(question._id)}
+							/>
+						))
+					) : (
+						<div className="thoughts-no-questions">
+							No questions are available for the selected industry or skill.
+							Please try selecting a different one.
+						</div>
+					)}
+				</div>
+			</div>
 
 			<SharePopup
 				url={socialUrl}

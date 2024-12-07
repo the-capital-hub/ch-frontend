@@ -12,22 +12,22 @@ import {
 	FaLink,
 	FaBook,
 	FaUserFriends,
-	FaUserEdit,
-	FaUserCheck,
 	FaFileAlt,
 	FaCheckSquare,
 	FaChartLine,
 	FaCalendarAlt,
-	FaCalendarCheck,
 	FaQuestionCircle,
 	FaUserCog,
 	FaLightbulb,
+	FaCalendarCheck,
+	FaUserEdit,
+	FaUserCheck,
 	FaPowerOff,
 } from "react-icons/fa";
 
 import "./SidebarPublic.scss";
 
-const PublicSidebar = () => {
+const PublicSidebar = ({ sidebarCollapse }) => {
 	const theme = useSelector(selectTheme);
 	const isMobileView = useSelector(selectIsMobileView);
 	const [isExpanded, setIsExpanded] = useState(false);
@@ -56,7 +56,7 @@ const PublicSidebar = () => {
 		<div
 			className={`public-sidebar ${theme === "dark" ? "dark-theme" : ""} ${
 				isExpanded ? "expanded" : ""
-			}`}
+			} ${sidebarCollapse ? "collapsed" : ""}`}
 			onMouseEnter={() => setIsExpanded(true)}
 			onMouseLeave={() => setIsExpanded(false)}
 		>
