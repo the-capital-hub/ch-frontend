@@ -1,12 +1,9 @@
 import React from "react";
 import "./OneLink.scss";
-// import SmallProfileCard from "../InvestorGlobalCards/TwoSmallMyProfile/SmallProfileCard";
 import RightProfileCard from "../InvestorGlobalCards/RightProfileCard/RightProfileCard";
 import RecommendationCard from "../InvestorGlobalCards/Recommendation/RecommendationCard";
-// import NewsCorner from "../InvestorGlobalCards/NewsCorner/NewsCorner";
 import ShareLink from "./ShareLink/ShareLink";
 import IntroductoryMessage from "./IntroductoryMessage/IntroductoryMessage";
-// import OnePagePreview from "./OnePagePreview/OnePagePreview";
 import ThreeDotsImage from "../../../Images/whiteTheeeDots.svg";
 import FolderImage from "../../../Images/Folder.svg";
 import VideoImage from "../../../Images/Video.svg";
@@ -16,18 +13,6 @@ import { getStartupByFounderId } from "../../../Service/user";
 import SharingOneLinkPopUp from "../../PopUp/SharingOneLinkPopUp/SharingOneLinkPopUp";
 import MaxWidthWrapper from "../../Shared/MaxWidthWrapper/MaxWidthWrapper";
 import { selectTheme, setPageTitle } from "../../../Store/features/design/designSlice";
-// import {
-//   OnePagerCompanyAbout,
-//   OnePagerCompanyInfo,
-//   // OnePagerCompanyLogo,
-//   OnePagerFundAsking,
-//   OnePagerMarketSize,
-//   OnePagerProjections,
-//   OnePagerRoadmap,
-//   OnePagerSocialLinks,
-//   OnePagerTeam,
-// } from "../../Shared/OnePager";
-// import SpinnerBS from "../../Shared/Spinner/SpinnerBS";
 import TutorialTrigger from "../../Shared/TutorialTrigger/TutorialTrigger";
 import { startupOnboardingSteps } from "../../OnBoardUser/steps/startup";
 import {
@@ -35,7 +20,6 @@ import {
   selectLoggedInUserId,
   selectUserCompanyData,
 } from "../../../Store/features/user/userSlice";
-//import FeaturedPostsContainer from "../InvestorGlobalCards/MilestoneCard/FeaturedPostsContainer";
 import { PlusIcon } from "../../NewInvestor/SvgIcons";
 import CompanyPost from "../InvestorGlobalCards/MilestoneCard/CompanyPost";
 import CreatePostPopUp from "../../PopUp/CreatePostPopUp/CreatePostPopUp";
@@ -55,6 +39,7 @@ const OneLink = () => {
   const [respostingPostId, setRepostingPostId] = useState("");
   const [allPosts, setAllPosts] = useState([]);
   const dispatch = useDispatch();
+  const [selectedMonth, setSelectedMonth] = useState("");
 
   useEffect(() => {
     document.title = "OneLink | The Capital Hub";
@@ -77,20 +62,21 @@ const OneLink = () => {
 
   // HandleExitClick
   const handleExitClick = () => {
-    // if (loggedInUser.subscriptionType === "Basic") {
-    //   setPopPayOpen(true);
-    //   return;
-    // }
     setIsExitClicked(true);
   };
 
   const handleClosePopup = () => {
     setIsExitClicked(false);
-    // navigate("/login");
   };
   const appendDataToAllPosts = (data) => {
     setAllPosts([data, ...allPosts]);
   };
+
+  // Function to handle month change
+  const handleMonthChange = (event) => {
+    setSelectedMonth(event.target.value);
+  };
+
   return (
     <MaxWidthWrapper>
       <div className="onelink_container">
@@ -98,8 +84,6 @@ const OneLink = () => {
           {/* Main content */}
 
           <div className="main__content">
-            {/* <SmallProfileCard text={"One Link"} /> */}
-
             {/* Onboarding popup */}
             <TutorialTrigger steps={startupOnboardingSteps.oneLinkPage} />
 
@@ -159,11 +143,19 @@ const OneLink = () => {
                   </button>
                 </div>
               </div>
+              {/* Dropdown for month selection */}
+              <select onChange={handleMonthChange} value={selectedMonth} className="month-dropdown">
+                <option value="">Select Month</option>
+                {["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].map((month, index) => (
+                  <option key={index} value={index + 1}>{month}</option>
+                ))}
+              </select>
               <div className="mt-2 milestones">
                 <CompanyPost
                   userId={loggedInUserId}
                   postDelete={true}
                   newPost={newPost}
+                  selectedMonth={selectedMonth}
                 />
               </div>
             </div>
@@ -176,55 +168,6 @@ const OneLink = () => {
             {/* <NewsCorner /> */}
           </div>
         </div>
-
-        {/* <OnePagePreview show={true} /> */}
-
-        {/* New OnePager start */}
-        {/*{company.length !== 0 ? (
-          <div className="onePager_wrapper d-flex flex-column gap-1">
-            
-            <h3 className="onelink_head rounded-3 text-light p-3 ">
-              Edit OneLink
-            </h3>
-
-            <OnePagerCompanyInfo
-              company={company.company}
-              location={company.location}
-              startedAtDate={company.startedAtDate}
-              keyFocus={company.keyFocus}
-              socialLinks={company.socialLinks}
-              showEdit={true}
-            />
-
-            <OnePagerCompanyAbout
-              description={company.description}
-              problem={company.problem}
-              solution={company.solution}
-              showEdit={true}
-            />
-
-            <div className="market_info rounded-4 border shadow-sm">
-              <div className="">
-                <div className="px-3 px-lg-4 py-5 d-flex flex-column gap-5">
-            
-                  <OnePagerMarketSize companyData={company} />
-                
-                  <OnePagerSocialLinks companyData={company} />
-             
-                  <OnePagerProjections companyData={company} />
-            
-                  <OnePagerFundAsking companyData={company} />
-            
-                  <OnePagerRoadmap companyData={company} />
-     
-                  <OnePagerTeam team={company.team} />
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <SpinnerBS className={"d-flex justify-content-center w-100 py-5"} />
-        )}*/}
 
         {/* New OnePager end */}
         {isExitClicked && company.introductoryMessage && (
