@@ -18,6 +18,8 @@
       border: 1px solid #ccc;
       position: relative;
       overflow: hidden;
+      width: 100%;
+     // height: 10rem;
       //border-top-right-radius: 60px;
       img {
         border-top-left-radius: 10px;
@@ -81,4 +83,85 @@
       width: 100%;
     }
   }
+}
+
+/* Styling for the container that holds the thumbnail */
+.video-thumbnail-container {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  border-radius: 8px; 
+  cursor: pointer;
+  margin: 0 auto; 
+  
+  /* Box shadow for the thumbnail container */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  
+  /* Transition effect for smooth hover */
+  transition: all 0.3s ease;
+  
+  /* Hover effect for the container */
+  &:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+  }
+}
+
+
+.video-thumbnail {
+  width: 100%; 
+  height: 10rem;
+  object-fit:scale-down;
+  object-position: center; 
+  border-radius: 8px; 
+  display: block; 
+}
+
+/* Add some responsive behavior */
+@media (max-width: 768px) {
+  .video-thumbnail-container {
+    max-width: 200px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .video-thumbnail-container {
+    max-width: 150px; 
+  }
+}
+
+.hidden {
+  padding: 0 !important;
+}
+
+.video-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.video-modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  background-color: transparent;
+}
+
+.video-modal-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
 }
