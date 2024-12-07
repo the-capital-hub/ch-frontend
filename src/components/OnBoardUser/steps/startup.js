@@ -198,6 +198,13 @@ const documentationPage = [
     placement: "auto",
     disableBeacon: true,
   },
+  {
+    target: "#OneLink Pitch",
+    title: "OneLink Pitch",
+    content: "View uploaded files under OneLink Pitch here.",
+    placement: "auto",
+    disableBeacon: true,
+  },
 ];
 
 const chatsPage = [

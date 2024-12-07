@@ -10,6 +10,7 @@ import {
   KYC,
   Legal,
   Pitch,
+  GreenPitch
 } from "../../../Images/StartUp/Documentaion";
 import { getFoldersApi } from "../../../Service/user";
 import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
@@ -119,6 +120,9 @@ const Documentation = () => {
                   case "legal and compliance":
                     imageToShow = Legal;
                     break;
+                    case "onelinkpitch":
+                      imageToShow = GreenPitch;
+                      break;
                   default:
                     imageToShow = Pitch;
                 }

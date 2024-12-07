@@ -22,6 +22,7 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
 
   const [folderName, setFolderName] = useState("");
   const [folderSelector, setFolderSelector] = useState([]);
+  const [videoUrl, setVideoUrl] = useState("");  // State for pitch video URL
 
   useEffect(() => {
     const getFolders = () => {
@@ -29,7 +30,6 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
         .then((data) => {
           const folders = data.data;
           folders.push("New Folder");
-          console.log(folders);
           setFolderSelector(folders);
         })
         .catch((error) => {
@@ -37,7 +37,7 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
         });
     };
     getFolders();
-  }, []);
+  }, [loggedInUser.oneLinkId]);
 
   const handleClosePopup = () => {
     setShowPopUp(false);
@@ -47,7 +47,7 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
   const handleFileSelect = (e) => {
     const selectedFiles = [...e.target.files];
     const filteredFiles = selectedFiles.filter(file => {
-      if (file.size > 20 * 1024 * 1024) { // 5MB in bytes
+      if (file.size > 20 * 1024 * 1024) { // 20MB in bytes
         alert(`File ${file.name} exceeds 20MB. Please select a smaller file.`);
         return false;
       }
@@ -72,11 +72,15 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
     formData.append("userId", loggedInUser._id);
     formData.append("folderName", folder === "New Folder" ? folderName : folder);
 
+    // If folder is 'onelinkpitch', append videoUrl
+    if (folder === "onelinkpitch" && videoUrl) {
+      formData.append("videoUrl", videoUrl);
+    }
+
     files.forEach((file) => {
       formData.append("file", file);
     });
 
-    console.log(formData.folderName);
     try {
       const getAuthToken = () => {
         return localStorage.getItem("accessToken");
@@ -94,6 +98,7 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
       setLoading(false);
       setShowPopUp(true);
       setFiles([]);
+      setVideoUrl(""); // Reset the video URL after upload
     } catch (error) {
       console.error("Error uploading file to backend:", error);
       alert("Failed to Upload files");
@@ -103,24 +108,22 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
 
   const renderFileList = () => (
     <ol className="list-group list-group-numbered">
-      {[...files].map((file, index) => {
-        return (
-          <div
-            role="button"
-            className="list-group-item list-group-item-action file_list_button d-flex align-items-center "
-            key={index}
+      {[...files].map((file, index) => (
+        <div
+          role="button"
+          className="list-group-item list-group-item-action file_list_button d-flex align-items-center"
+          key={index}
+        >
+          <p className="text-start uploaded_file_name m-0 lh-1">{file.name}</p>
+          <button
+            type="button"
+            className="btn border-0 ms-auto m-0 p-0"
+            onClick={() => handleRemoveFile(index)}
           >
-            <p className="text-start uploaded_file_name m-0 lh-1">{file.name}</p>{" "}
-            <button
-              type="button"
-              className="btn border-0 ms-auto m-0 p-0"
-              onClick={() => handleRemoveFile(index)}
-            >
-              <IconDelete />
-            </button>
-          </div>
-        );
-      })}
+            <IconDelete />
+          </button>
+        </div>
+      ))}
     </ol>
   );
 
@@ -141,6 +144,7 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
               <option value="business">Business</option>
               <option value="kycdetails">KYC Details</option>
               <option value="legal and compliance">Legal and Compliance</option>
+              <option value="onelinkpitch">OneLink Pitch</option>
               <option value="Other">Other</option>
             </select>
           </div>
@@ -152,6 +156,16 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
               placeholder="Enter folder name"
               value={folderName}
               onChange={(e) => setFolderName(e.target.value)}
+            />
+          )}
+
+          {folder === "onelinkpitch" && (
+            <input
+              className="name_input rounded-pill px-3 py-2 mt-3"
+              type="url"
+              placeholder="Pitch video URL"
+              value={videoUrl}
+              onChange={(e) => setVideoUrl(e.target.value)}
             />
           )}
 
@@ -168,7 +182,10 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
                     onChange={handleFileSelect}
                     className="visually-hidden"
                   />
-                  <label htmlFor="files" className="doc_upload_label">Select Files</label>
+                  {/* Change label text based on selected folder */}
+                  <label htmlFor="files" className="doc_upload_label">
+                    {folder === "onelinkpitch" ? "Select Thumbnail" : "Select Files"}
+                  </label>
                 </div>
                 {files.length !== 0 && (
                   <pre className="ms-lg-3 mt-3 mt-lg-0">{renderFileList()}</pre>
@@ -179,6 +196,7 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
               </button>
             </>
           )}
+
           {uploadProgress > 0 && uploadProgress < 100 && (
             <div
               className="progress"
@@ -193,6 +211,7 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
               </div>
             </div>
           )}
+
           {loading && (
             <div className="d-flex justify-content-center my-4">
               <div className="spinner-border" role="status">
@@ -202,6 +221,7 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
           )}
         </div>
       </div>
+
       {showPopUp && (
         <AfterSuccessPopUp savedFile={true} onClose={handleClosePopup} />
       )}
