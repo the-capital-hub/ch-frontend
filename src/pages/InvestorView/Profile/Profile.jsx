@@ -23,6 +23,7 @@ import {
 import MaxWidthWrapper from "../../../components/Shared/MaxWidthWrapper/MaxWidthWrapper";
 import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
 import BatchImag from "../../../Images/tick-mark.png";
+import MobileOneLinkNavbar from "../../../components/Shared/MobileOnelinkNavbar/MobileOneLinkNavbar";
 
 function Profile() {
 	const { username } = useParams();
@@ -47,6 +48,8 @@ function Profile() {
 	}, [userId, username]);
 	console.log(user);
 	return (
+    <>
+    <MobileOneLinkNavbar/>
 		<div className="my-4">
 			<MaxWidthWrapper>
 				{user.length !== 0 ? (
@@ -338,6 +341,7 @@ function Profile() {
 				)}
 			</MaxWidthWrapper>
 		</div>
+    </>
 	);
 }
 

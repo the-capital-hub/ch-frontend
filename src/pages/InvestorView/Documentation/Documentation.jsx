@@ -14,6 +14,7 @@ import {
 } from "../../../Images/StartUp/Documentaion";
 import { getFoldersApi } from "../../../Service/user";
 import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
+import MobileOneLinkNavbar from "../../../components/Shared/MobileOnelinkNavbar/MobileOneLinkNavbar";
 
 const Documentation = () => {
   const navigate = useNavigate();
@@ -45,6 +46,8 @@ const Documentation = () => {
 
   return (
     <MaxWidthWrapper>
+              <MobileOneLinkNavbar/>
+
       <div className="">
         <div className="documentation shadow-sm border">
           <h1 className="px-md-5">Documentation</h1>

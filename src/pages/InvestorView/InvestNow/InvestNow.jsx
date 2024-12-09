@@ -8,7 +8,7 @@ import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
 import { useSelector } from "react-redux";
 import SubcriptionPop from "../../../components/PopUp/SubscriptionPopUp/SubcriptionPop";
 import emailjs from "emailjs-com"; // Import EmailJS
-
+import MobileOneLinkNavbar from "../../../components/Shared/MobileOnelinkNavbar/MobileOneLinkNavbar";
 const InvestNow = ({ page }) => {
   const [user, setUser] = useState({});
   const { username } = useParams();
@@ -59,6 +59,8 @@ const InvestNow = ({ page }) => {
 
   return (
     <>
+            <MobileOneLinkNavbar/>
+
       <div className="investNow">
         {showModal && <ThankYouModal onCancel={() => setShowModal(false)} />}
         <div className="investNowContainer shadow-sm">

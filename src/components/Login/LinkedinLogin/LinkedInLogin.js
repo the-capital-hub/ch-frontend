@@ -161,11 +161,11 @@ const LinkedInLogin = ({
 					<div className="button-content">
 						{showIconAndText ? (
 							<>
-								<Icon size={24} />
+								<Icon size={30} />
 								<span>{text}</span>
 							</>
 						) : (
-							<Icon size={24} />
+							<Icon size={30} />
 						)}
 					</div>
 				)}

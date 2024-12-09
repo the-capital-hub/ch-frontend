@@ -782,7 +782,7 @@ const Login = () => {
 						}}
 						onClick={handleGoogleLogin}
 					>
-						<img src={GIcon} alt="Google" width={24} height={24} />
+						<img src={GIcon} alt="Google" width={35} height={35} />
 					</button>
 					{/* <GoogleLogin
 						onSuccess={handleGoogleLoginSuccess}
