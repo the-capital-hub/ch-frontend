@@ -35,6 +35,7 @@ import { useState, useEffect } from "react";
 import CompanyProfile from "../../../components/NewInvestor/CompanyProfileComponents/CompanyProfile";
 import MaxWidthWrapper from "../../../components/Shared/MaxWidthWrapper/MaxWidthWrapper";
 import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
+import MobileOneLinkNavbar from "../../../components/Shared/MobileOnelinkNavbar/MobileOneLinkNavbar";
 
 function Company() {
   const { username } = useParams();
@@ -337,6 +338,7 @@ function Company() {
     // Newer version of company profile
     <MaxWidthWrapper>
       <div className="company__profile__container mx-lg-3 my-4 my-xl-3">
+        <MobileOneLinkNavbar/>
         {onePager.length !== 0 ? (
           <CompanyProfile
             isOnelink={true}

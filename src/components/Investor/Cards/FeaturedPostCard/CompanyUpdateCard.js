@@ -5,7 +5,7 @@ import "./FeaturedPostCard.scss";
 import TimeAgo from "timeago-react";
 import { useSelector } from "react-redux";
 import IconDeleteFill from "../../SvgIcons/IconDeleteFill";
-import { removeCompanyUpdatedPost } from "../../../../Service/user";
+import { removeCompanyUpdatedPost, deletePostAPI } from "../../../../Service/user";
 import SpinnerBS from "../../../Shared/Spinner/SpinnerBS";
 import parse from 'html-react-parser';
 
@@ -33,7 +33,7 @@ const CompanyUpdateCard = ({
   const handleRemovePost = async () => {
     setLoading(true);
     try {
-      const response = await removeCompanyUpdatedPost(postId);
+      const response = await deletePostAPI(postId);
       if (response.status === 200) {
         setIsDeleteSuccessful(true);
         onPostDelete(postId);

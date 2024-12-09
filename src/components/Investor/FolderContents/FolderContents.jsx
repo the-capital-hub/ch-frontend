@@ -27,9 +27,8 @@ const FolderContents = () => {
       .catch(() => setUser([]));
   }, [username]);
   const title = route[0].toUpperCase() + route.slice(1);
-  console.log(route);
+  console.log(title);
   let pageTitle;
-
   switch (title) {
     case "Legal and compliance":
       pageTitle = "Legal and Compliance";
@@ -42,6 +41,9 @@ const FolderContents = () => {
       break;
     case "Business":
       pageTitle = "Business";
+      break;
+    case "Onelinkpitch":
+      pageTitle = "OneLink Pitch";
       break;
     default:
       pageTitle = title;

@@ -13,7 +13,7 @@ import {
 	postResetPaswordLink,
 	postUserLogin,
 	sendOTP,
-	// verifyOTP,
+	verifyOTP,
 } from "../../Service/user";
 import AfterSuccessPopUp from "../PopUp/AfterSuccessPopUp/AfterSuccessPopUp";
 import InvestorAfterSuccessPopUp from "../PopUp/InvestorAfterSuccessPopUp/InvestorAfterSuccessPopUp";
@@ -76,7 +76,11 @@ function OtpVerificationModal({
 	};
 
 	const handleVerify = () => {
-		onVerify(otp.join(""));
+		if (otp.join("").length === 6) {
+			onVerify(otp);
+		} else {
+			alert("Please enter a valid 6-digit OTP.");
+		}
 	};
 
 	if (!isOpen) return null;
@@ -314,7 +318,6 @@ const Login = () => {
 			}
 		} catch (error) {
 			console.error("Error during token exchange:", error);
-			setError("Google login failed. Please try again.");
 		}
 	};
 
@@ -451,86 +454,89 @@ const Login = () => {
 				}
 			}
 		} catch (error) {
-			console.log(error);
-			//setError(error.response.data.message);
+			// Set the error message to be displayed in the component
+			setError(error.response?.data?.message || "Login failed. Please try again.");
 		} finally {
 			setLoading(false);
 		}
 	};
 
-	const ValidateOtp = async () => {
+	const ValidateOtp = async (otp) => {
 		setLoading(true);
 		try {
-			// const verificationCode = otp.join(""); // Join the array elements into a string
-			// const res = await verifyOTP({
-			//   otp: verificationCode,
-			//   orderId,
-			//   phoneNumber: inputValues.phoneNumber,
-			// });
-			// if (res.isOTPVerified) {
-			setLoading(true);
-			const response = await postUserLogin(inputValues);
-			const user = response.user;
-			const token = response.token;
-			if (!userVisitCount) {
-				localStorage.setItem("userVisit", 1);
-			} else {
-				localStorage.setItem("userVisit", 2);
-			}
-			localStorage.setItem("accessToken", token);
-			localStorage.setItem("isLoggedIn", "true");
-			if (response) {
-				if (!isInvestorSelected && user.isInvestor === "true") {
-					setError("Invalid credentials");
-					return;
-				}
-				if (isInvestorSelected && user.isInvestor === "false") {
-					setError("Invalid credentials");
-					return;
-				}
+			const verificationCode = otp.join(""); // Join the array elements into a string
+			const res = await verifyOTP({
+				otp: verificationCode,
+				orderId,
+				phoneNumber: inputValues.phoneNumber,
+			});
 
-				const storedAccountsKey =
-					user.isInvestor === "true" ? "InvestorAccounts" : "StartupAccounts";
-
-				const storedAccounts =
-					JSON.parse(localStorage.getItem(storedAccountsKey)) || [];
-				const isAccountExists = storedAccounts.some(
-					(account) => account?.user?._id === user?._id
-				);
-
-				if (!isAccountExists) {
-					storedAccounts.push(response);
-					localStorage.setItem(
-						storedAccountsKey,
-						JSON.stringify(storedAccounts)
-					);
-				}
-
-				setIsLoginSuccessfull(true);
-
-				setTimeout(() => {
-					setIsInvestorSelected(false);
-					setIsLoginSuccessfull(false);
-
-					if (!user.investor) navigate("/home");
-					else navigate("/investor/home");
-				}, 2000);
-
-				dispatch(loginSuccess(response.user));
-				let isInvestor = response.user.isInvestor === "true" ? true : false;
-				if (isInvestor) {
-					dispatch(fetchCompanyData(response.user.investor, isInvestor));
+			if (res.isOTPVerified) {
+				// Proceed with login if OTP is verified
+				const response = await postUserLogin(inputValues);
+				const user = response.user;
+				const token = response.token;
+				if (!userVisitCount) {
+					localStorage.setItem("userVisit", 1);
 				} else {
-					dispatch(fetchCompanyData(response.user._id, isInvestor));
+					localStorage.setItem("userVisit", 2);
 				}
+				localStorage.setItem("accessToken", token);
+				localStorage.setItem("isLoggedIn", "true");
+				if (response) {
+					if (!isInvestorSelected && user.isInvestor === "true") {
+						setError("Invalid credentials");
+						return;
+					}
+					if (isInvestorSelected && user.isInvestor === "false") {
+						setError("Invalid credentials");
+						return;
+					}
 
-				dispatch(fetchAllChats());
+					const storedAccountsKey =
+						user.isInvestor === "true" ? "InvestorAccounts" : "StartupAccounts";
+					const storedAccounts =
+						JSON.parse(localStorage.getItem(storedAccountsKey)) || [];
+					const isAccountExists = storedAccounts.some(
+						(account) => account.user?._id === user?._id
+					);
+
+					if (!isAccountExists) {
+						storedAccounts.push(response);
+						localStorage.setItem(
+							storedAccountsKey,
+							JSON.stringify(storedAccounts)
+						);
+					}
+
+					setIsLoginSuccessfull(true);
+
+					setTimeout(() => {
+						setIsInvestorSelected(false);
+						setIsLoginSuccessfull(false);
+
+						if (!user.investor) navigate("/home");
+						else navigate("/investor/home");
+					}, 2000);
+
+					dispatch(loginSuccess(response?.user));
+
+					let isInvestor = response?.user?.isInvestor === "true" ? true : false;
+					if (isInvestor) {
+						dispatch(fetchCompanyData(response?.user?.investor, isInvestor));
+					} else {
+						dispatch(fetchCompanyData(response?.user?._id, isInvestor));
+					}
+
+					dispatch(fetchAllChats());
+				}
+				// ... existing code for handling successful login ...
+			} else {
+				setError("OTP Verification Failed"); // Update error message
 			}
-			//}
 		} catch (error) {
-			console.log(error);
-			console.error("Login failed:", error.response.data.message);
-			setError(error.response.data.message);
+			// Set the error message to be displayed in the component
+			setError(error.response?.data?.message || "Login failed. Please try again.");
 		} finally {
 			setLoading(false);
 		}
@@ -1023,6 +1029,7 @@ const Login = () => {
 				<OtpVerificationModal
 					isOpen={show}
 					setOpen={setShow}
+					setShow={setShow}
 					onClose={() => setShow(false)}
 					onVerify={ValidateOtp}
 					phoneNumber={inputValues.phoneNumber}

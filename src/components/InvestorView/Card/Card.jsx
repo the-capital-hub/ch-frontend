@@ -17,6 +17,9 @@ const Card = ({ text, onClicked, image }) => {
     case "legal and compliance":
       folderName = "Legal And Compliance";
       break;
+    case "onelinkpitch":
+      folderName = "OneLink Pitch";
+      break;
     default:
       folderName = text;
   }
@@ -33,7 +36,6 @@ const Card = ({ text, onClicked, image }) => {
           style={{ objectFit: "cover", height: "auto", width: "180px" }}
           className="align-self-center"
         />
-        {/* <img src={threeblackdots} alt="" /> */}
         <div className="folder_footer">
           <hr />
           <p>{folderName}</p>
