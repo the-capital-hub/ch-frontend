@@ -25,6 +25,7 @@ import {
 } from "../../../components/Shared/OnePager";
 import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
 import CompanyPost from "../../../components/Investor/InvestorGlobalCards/MilestoneCard/CompanyPost";
+import MobileOneLinkNavbar from "../../../components/Shared/MobileOnelinkNavbar/MobileOneLinkNavbar";
 
 const OnePager = () => {
   const loggedInUserId = useSelector((state) => state?.user?.loggedInUser?._id);
@@ -157,6 +158,7 @@ const OnePager = () => {
 
   return (
     <MaxWidthWrapper>
+              <MobileOneLinkNavbar/>
       <div className="onePager_pdf_outer ps-xl-3 mb-5" style={{minHeight:"80vh"}}>
         {onePager.length !== 0 ? (
           <div
