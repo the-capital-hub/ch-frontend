@@ -1,50 +1,26 @@
 :root {
-	/* Light theme variables */
 	--bg-color: #ffffff;
 	--text-color: #333333;
+	--text-color-secondary: #848587;
 	--accent-color: #fd5901;
-	--background-color: #f5f5f5;
-
-	/* Common variables */
-	--border-radius: 8px;
-	--bs-light: #f8f9fa;
-	--bs-border-color: #dee2e6;
-	--d-l-grey: #484848;
-	--currentTheme-dark: #fd5901;
-
-	/* Additional light theme variables */
-	--white-to-grey: #ffffff;
-	--white-to-dgrey: #fcfcfc;
-	--input-bg: #fcfcfc;
-	--modal-bg: #ffffff;
-	--comment-bg: #ededed;
-	--poll-bg: #f8f9fa;
-	--border-color: rgba(202, 202, 202, 0.2);
+	--background-color: #fff;
+	--background-color-secondary: #37344433;
+	--background-btn: #34374433;
 }
 
 .dark-theme {
-	/* Dark theme overrides */
-	--bg-color: #121212;
+	--bg-color: var(--white-to-grey);
 	--text-color: #ffffff;
-	--background-color: #1e1e1e;
-	--white-to-grey: #2d2d2d;
-	--white-to-dgrey: #1e1e1e;
-	--bs-light: #2d2d2d;
-	--d-l-grey: #e0e0e0;
-	--input-bg: #2d2d2d;
-	--modal-bg: #2d2d2d;
-	--comment-bg: #1e1e1e;
-	--poll-bg: #2d2d2d;
-	--border-color: rgba(255, 255, 255, 0.1);
-
-	/* Keep accent color consistent */
+	--text-color-secondary: #9ca3af;
 	--accent-color: #fd5901;
-	--currentTheme-dark: #fd5901;
+	--background-color: #1e1f24;
+	--background-color-secondary: rgba(6, 6, 6, 0.2);
+	--background-btn: rgb(30, 30, 30);
 }
 
 /* Additional dark theme specific styles */
 .dark-theme .box {
-	background-color: var(--white-to-grey);
+	background-color: var(--background-color);
 	box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.2);
 }
 
@@ -132,7 +108,7 @@
 		flex-direction: column;
 
 		.para_container_text {
-			background: rgba(52, 55, 68, 0.2);
+			background: var(--background-color-secondary);
 			padding: 10px 20px;
 			border-radius: 16px;
 			margin-bottom: 15px;

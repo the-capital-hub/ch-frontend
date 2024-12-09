@@ -32,9 +32,11 @@ const PostCard = ({
 	likes,
 	comments,
 	pollOptions,
+	theme,
 }) => {
 	const videoRef = useRef(null);
 	const [commentToggle, setCommentToggle] = useState(false);
+	const [expanded, setExpanded] = useState(false);
 	// Initialize localPollOptions with pollOptions
 	// const [localPollOptions, setLocalPollOptions] = useState(pollOptions || []);
 
@@ -43,10 +45,14 @@ const PostCard = ({
 			`You need to login first! to use all the features of Capital Hub. Including ${feature} post feature.`
 		);
 	};
-	console.log("pollOptions", pollOptions);
+	// console.log("pollOptions", pollOptions);
+	const toggleDescription = (e) => {
+		e.stopPropagation();
+		setExpanded(!expanded);
+	};
 	return (
 		<>
-			<div className="box feedpostcard_container dark-theme">
+			<div className={`box feedpostcard_container ${theme}`}>
 				<div className="feed_header_container pb-2 ">
 					<div className="feedpostcard_content">
 						<Link
@@ -152,12 +158,30 @@ const PostCard = ({
 				</div>
 
 				<div className="para_container w-100">
-					<div
+					{/* <div
 						className="para_container_text w-100"
 						dangerouslySetInnerHTML={{
 							__html: DOMPurify.sanitize(description),
 						}}
+					></div> */}
+					<div
+						className="para_container_text w-100"
+						dangerouslySetInnerHTML={{
+							__html: DOMPurify.sanitize(
+								expanded ? description : description?.substring(0, 100) + "..."
+							),
+						}}
 					></div>
+					{description?.length > 100 && (
+						<span
+							onClick={toggleDescription}
+							className={`read-more-text ${
+								expanded ? "expanded" : ""
+							} para_container_text w-100`}
+						>
+							{expanded ? "Read Less" : "Read More"}
+						</span>
+					)}
 
 					{image && (
 						<span className="d-flex">
@@ -171,64 +195,62 @@ const PostCard = ({
 						</span>
 					)}
 
-					{images && images.length > 0 && (
-              <ImageCarousel
-                images={images}
-              />
-            )}
-            {pollOptions && pollOptions.length > 0 && (
-              <div className="poll-section">
-                {pollOptions.map((option) => {
-                  const totalVotes = pollOptions.reduce(
-                    (sum, opt) => sum + (opt.votes?.length || 0),
-                    0
-                  );
-                  const votePercentage =
-                    totalVotes > 0
-                      ? Math.round(((option.votes?.length || 0) * 100) / totalVotes)
-                      : 0;
+					{images && images.length > 0 && <ImageCarousel images={images} />}
+					{pollOptions && pollOptions.length > 0 && (
+						<div className="poll-section">
+							{pollOptions.map((option) => {
+								const totalVotes = pollOptions.reduce(
+									(sum, opt) => sum + (opt.votes?.length || 0),
+									0
+								);
+								const votePercentage =
+									totalVotes > 0
+										? Math.round(
+												((option.votes?.length || 0) * 100) / totalVotes
+										  )
+										: 0;
 
-                  return (
-                    <div key={option._id} className="poll-option">
-                      <div
-                        className="poll-option-content"
-                        style={{
-                          position: "relative",
-                          overflow: "hidden",
-                        }}
-                      >
-                        <div
-                          className="progress-bar"
-                          style={{
-                            width: `${votePercentage}%`,
-                            position: "absolute",
-                            left: 0,
-                            top: 0,
-                            height: "100%",
-                            background: "rgba(253, 89, 1, 0.1)",
-                            transition: "width 0.3s ease",
-                          }}
-                        />
-                        <span className="option-text">{option.option}</span>
-                        <span className="vote-count">
-                          {option.votes?.length || 0} votes
-                        </span>
-                      </div>
-                      <button
-					  	disabled
-                        className={`vote-button "votedStartUpThemeColor"`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                         // handlePollVote(postId, option._id);
-                        }}
-                      >
-                        {"Sign Up to Vote"}
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+								return (
+									<div key={option._id} className="poll-option">
+										<div
+											className="poll-option-content"
+											style={{
+												position: "relative",
+												overflow: "hidden",
+											}}
+										>
+											<div
+												className="progress-bar"
+												style={{
+													width: `${votePercentage}%`,
+													position: "absolute",
+													left: 0,
+													top: 0,
+													height: "100%",
+													background: "rgba(253, 89, 1, 0.1)",
+													transition: "width 0.3s ease",
+												}}
+											/>
+											<span className="option-text">{option.option}</span>
+											<span className="vote-count">
+												{option.votes?.length || 0} votes
+											</span>
+										</div>
+										<button
+											disabled
+											className={`vote-button "votedStartUpThemeColor"`}
+											onClick={(e) => {
+												e.stopPropagation();
+												// handlePollVote(postId, option._id);
+											}}
+										>
+											{"Sign Up to Vote"}
+										</button>
+									</div>
+								);
+							})}
+						</div>
+					)}
 
 					{video && (
 						<span className="d-flex">

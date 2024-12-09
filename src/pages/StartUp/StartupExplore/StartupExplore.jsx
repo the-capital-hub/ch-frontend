@@ -31,6 +31,7 @@ import {
 import TutorialTrigger from "../../../components/Shared/TutorialTrigger/TutorialTrigger";
 import InvestorProfileList from "../../../components/Shared/InvestorProfileComponent/InvestorProfileList";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
+import SkeletonLoader from "../../../components/Investor/Feed/Components/SkeletonLoader/SkeletonLoader";
 
 export default function StartupExplore() {
 	const dispatch = useDispatch();
@@ -459,11 +460,12 @@ const handleLoadPrevious = () => {
 				{/* Companies List */}
 				<div className="filtered-results">
 					{loading ? (
-						<SpinnerBS
-							className="container spinner_loader d-flex justify-content-center align-items-center p-5 rounded-4 shadow-sm"
-							colorClass="text-secondary"
-							spinnerSizeClass="xl"
-						/>
+						<SkeletonLoader />
+						// <SpinnerBS
+						// 	className="container spinner_loader d-flex justify-content-center align-items-center p-5 rounded-4 shadow-sm"
+						// 	colorClass="text-secondary"
+						// 	spinnerSizeClass="xl"
+						// />
 					) : filteredData?.length > 0 ? (
 <>
     {renderTabContent()}

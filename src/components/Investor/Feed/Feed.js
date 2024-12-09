@@ -36,6 +36,7 @@ import LatestResources from "./Components/LatestResources/LatestResources";
 import Milestone from "../../Milestone/Milestone";
 import UserJourney from "../../Milestone/UserJourney";
 import NewsHorizontal from "./Components/NewsCardHorizontal/News";
+import SkeletonLoader from "./Components/SkeletonLoader/SkeletonLoader";
 
 const baseUrl = environment.baseUrl;
 
@@ -253,7 +254,6 @@ const Feed = () => {
 						documentUrl={postData.documentUrl}
 						createdAt={postData.createdAt}
 						likes={postData.likes}
-						
 						location={postData.location}
 						resharedPostId={postData.resharedPostId}
 						fetchAllPosts={fetchMorePosts}
@@ -325,9 +325,10 @@ const Feed = () => {
 									next={fetchMorePosts}
 									hasMore={hasMore}
 									loader={
-										<div className="loader_spinner container p-5 text-center my-5  rounded-5 shadow-sm ">
-											<SpinnerBS colorClass={"d-l-grey"} />
-										</div>
+										<SkeletonLoader />
+										// <div className="loader_spinner container p-5 text-center my-5  rounded-5 shadow-sm ">
+										// 	<SpinnerBS colorClass={"d-l-grey"} />
+										// </div>
 									}
 								>
 									{allPosts?.map(
@@ -415,7 +416,9 @@ const Feed = () => {
 															}
 														/>
 													)}
-													{index === 1 && <NewsHorizontal newsData={newsData} />}
+													{index === 1 && (
+														<NewsHorizontal newsData={newsData} />
+													)}
 												</React.Fragment>
 											);
 										}
