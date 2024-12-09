@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectLoggedInUserId } from "../../Store/features/user/userSlice";
+import { selectTheme } from "../../Store/features/design/designSlice";
 import NewsCorner from "../Investor/InvestorGlobalCards/NewsCorner/NewsCorner";
 import News from "../../components/Investor/Feed/Components/NewsCardHorizontal/News";
 import PostCard from "./PostCard/PostCard";
@@ -11,6 +12,7 @@ import "./PublicPost.scss";
 const baseUrl = environment.baseUrl;
 
 const PublicPost = () => {
+	const theme = useSelector(selectTheme);
 	const loggedInUserId = useSelector(selectLoggedInUserId);
 	const navigate = useNavigate();
 	const { postId } = useParams();
@@ -120,7 +122,10 @@ const PublicPost = () => {
 	console.log("postData", postData);
 
 	return (
-		<div className="PublicPost-container">
+		<div
+			className={`PublicPost-container ${theme === "dark" ? "dark-theme" : ""}`}
+			data-bs-theme={theme}
+		>
 			<div className="PublicPost-content">
 				<div className="PublicPost-left">
 					<PostCard
@@ -141,6 +146,7 @@ const PublicPost = () => {
 						likes={likes}
 						comments={comments}
 						pollOptions={pollOptions}
+						theme={theme}
 					/>
 				</div>
 				<div className="PublicPost-right">

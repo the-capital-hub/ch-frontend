@@ -2,7 +2,7 @@
 	position: relative;
 	padding: 10px; // Padding around the text
 	border-radius: 10px;
-	background: transparent; // Background for the text itself (adjust as needed)
+	background-color: var(--white-to-grey);
 	color: #ff8b4d; // Text color
 	z-index: 1;
 	font-family: Nunito;
@@ -43,6 +43,11 @@
 		-webkit-text-fill-color: transparent;
 		-webkit-background-clip: text;
 		background-clip: text;
+		font-size: 1.25rem; /* Corresponding to Bootstrap's fs-5 */
+
+		@media (max-width: 480px) {
+			font-size: 0.9rem;
+		}
 	}
 
 	.orange_button {

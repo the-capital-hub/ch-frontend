@@ -90,7 +90,7 @@ const Navbar3 = ({ handleSidebarToggle, sidebarCollapse }) => {
 						alt="the capital hub logo"
 					/>
 				</div>
-				<div className="navbar-public-links">
+				{/* <div className="navbar-public-links">
 					<Link to="/about">
 						<span>About Us</span>
 					</Link>
@@ -110,7 +110,7 @@ const Navbar3 = ({ handleSidebarToggle, sidebarCollapse }) => {
 					<Link to="/blog">
 						<span>Blog</span>
 					</Link>
-				</div>
+				</div> */}
 				<div className="navbar-public-profile-items">
 					{!isMobileView && <OnboardingSwitch />}
 
