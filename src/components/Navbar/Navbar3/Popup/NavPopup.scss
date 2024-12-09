@@ -54,6 +54,11 @@
 	box-shadow: var(--shadow-light);
 	font-size: var(--font-size-base);
 
+	@media (max-width: 480px) {
+		right: -50px;
+		width: 80vw;
+	}
+
 	.notification-header {
 		display: flex;
 		justify-content: space-between;
