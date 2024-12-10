@@ -140,6 +140,7 @@ const CompanyDetailsCard = ({
             <h3 className="typography-company-name ms-0" style={{ fontSize: "30px", fontFamily: "Outfit"}}>
               {onePager.companyName || onePager.company || userDetails?.startUp?.company || userDetails?.investor?.companyName || "No company found"}
             </h3>
+            {console.log(userDetails?.startUp)}
             <div className="company__header d-flex flex-column flex-lg-row gap-2 ">
               <div className="icon__details d-flex flex-column flex-md-row gap-2 align-items-start" style={{ flexWrap: "wrap" }}>
                 {onePager.location && (
