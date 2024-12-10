@@ -37,6 +37,7 @@ import Milestone from "../../Milestone/Milestone";
 import UserJourney from "../../Milestone/UserJourney";
 import NewsHorizontal from "./Components/NewsCardHorizontal/News";
 import SkeletonLoader from "./Components/SkeletonLoader/SkeletonLoader";
+import JoinHustlersClub from "./Components/JoinHustlersClub/JoinHustlersClub";
 
 const baseUrl = environment.baseUrl;
 
@@ -286,6 +287,9 @@ const Feed = () => {
 
 							{/* <LookingForFund /> */}
 							<LatestResources />
+
+							{/* Hustlers club banner */}
+							<JoinHustlersClub />
 
 							{/* Write a Post */}
 							<div

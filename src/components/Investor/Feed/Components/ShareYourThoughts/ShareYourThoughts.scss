@@ -1,9 +1,15 @@
 .share_your_thoughts_container {
 	position: relative;
 	padding: 10px; // Padding around the text
-	border-radius: 10px;
-	background-color: var(--white-to-grey);
-	color: #ff8b4d; // Text color
+	border-radius: 20px;
+	background: linear-gradient(90deg, #ff4d001f 0%, rgb(0, 0, 0, 0.8) 100%);
+	// background: linear-gradient(
+	// 	90deg,
+	// 	rgba(255, 77, 0, 0.2) 0%,
+	// 	rgba(255, 255, 255, 0.16) 100%
+	// );
+
+	// background-color: var(--white-to-grey);
 	z-index: 1;
 	font-family: Nunito;
 	font-size: 30px;
@@ -12,10 +18,6 @@
 	letter-spacing: -0.015em;
 	text-align: left;
 
-	// @media (max-width: 460px) {
-	// 	font-size: 1rem;
-	// }
-
 	&:before {
 		content: "";
 		position: absolute;
@@ -23,9 +25,10 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		border-radius: 10px;
-		padding: 1.5px; /* Adjust the thickness here */
-		background: linear-gradient(90deg, #973501 0%, #ffffff 100%);
+		border-radius: 20px;
+		padding: 2px; /* Adjust the thickness here */
+
+		background: linear-gradient(90deg, #ff620e 0%, #ffffff 50%, #3f8cff 100%);
 		-webkit-mask: linear-gradient(#fff 0 0) content-box,
 			linear-gradient(#fff 0 0);
 		mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -39,14 +42,25 @@
 	}
 
 	p {
-		background: linear-gradient(90deg, #973501 0%, #ffffff 100%);
-		-webkit-text-fill-color: transparent;
-		-webkit-background-clip: text;
-		background-clip: text;
+		width: 85%;
+		font-family: Outfit;
+		font-size: 22px;
+		font-weight: 500;
+		line-height: 35px;
+		text-align: left;
+		text-underline-position: from-font;
+		text-decoration-skip-ink: none;
+		color: var(--d-l-grey);
+		// color: #ffffff;
+
+		// background: linear-gradient(90deg, black 0%, #ffffff 100%);
+		// -webkit-text-fill-color: transparent;
+		// -webkit-background-clip: text;
+		// background-clip: text;
 		font-size: 1.25rem; /* Corresponding to Bootstrap's fs-5 */
 
 		@media (max-width: 480px) {
-			font-size: 0.9rem;
+			font-size: 1.125rem;
 		}
 	}
 
@@ -54,14 +68,15 @@
 		border-radius: 20px;
 		background: #fd5901;
 		border: 1px solid #fd5901;
-
-		padding: 8px 8px;
+		padding: 4px 8px;
 		font-size: 14px;
 		color: white;
 		transition: 0.25s;
+		width: 125px;
+		height: 40px;
 
 		@media (min-width: 768px) {
-			padding-inline: 25px;
+			// padding-inline: 25px;
 			font-size: 1rem;
 		}
 
