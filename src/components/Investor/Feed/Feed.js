@@ -38,6 +38,7 @@ import UserJourney from "../../Milestone/UserJourney";
 import NewsHorizontal from "./Components/NewsCardHorizontal/News";
 import SkeletonLoader from "./Components/SkeletonLoader/SkeletonLoader";
 import JoinHustlersClub from "./Components/JoinHustlersClub/JoinHustlersClub";
+import TopVoiceTracker from "./Components/TopVoiceTracker/TopVoiceTracker";
 
 const baseUrl = environment.baseUrl;
 
@@ -286,7 +287,7 @@ const Feed = () => {
 							{/* <LookingForFund /> */}
 
 							{/* <LookingForFund /> */}
-							<LatestResources />
+							{/* <LatestResources /> */}
 
 							{/* Hustlers club banner */}
 							<JoinHustlersClub />
@@ -453,6 +454,7 @@ const Feed = () => {
 				<div className="right_content">
 					<div className="right_content_wrapper">
 						<RightProfileCard />
+						<TopVoiceTracker />
 						<Milestone />
 						<UserJourney />
 						<NewsCorner />
