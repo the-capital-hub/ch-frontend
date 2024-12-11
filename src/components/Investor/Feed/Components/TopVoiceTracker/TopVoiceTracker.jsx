@@ -60,8 +60,8 @@ const TopVoice = () => {
 						? `You have made ${posts.length} posts this month. Congratulation, You are a Top Voice Now.`
 						: `You have made ${posts.length} posts. You need ${
 								10 - posts.length
-						  } more
-					to reach the Top Voice`}
+						  } more posts
+					to reach the Top Voice!`}
 				</p>
 			</div>
 

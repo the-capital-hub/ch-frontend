@@ -38,6 +38,8 @@ import Batch from "../../Batch";
 import BatchImag from "../../../Images/tick-mark.png";
 import OnboardingSwitch from "../InvestorNavbar/OnboardingSwitch/OnboardingSwitch";
 import { BsBook } from "react-icons/bs";
+import { checkTopVoiceExpiry } from "../../../utils/utilityFunctions";
+import { RiShieldStarFill } from "react-icons/ri";
 
 // Startup Sidebar
 const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
@@ -228,6 +230,13 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 												alt="Batch Icon"
 											/>
 										)}
+										{loggedInUser?.isTopVoice.status &&
+											checkTopVoiceExpiry(loggedInUser?.isTopVoice.expiry) && (
+												<span className="top-voice-badge">
+													<RiShieldStarFill className="top-voice-icon" />
+													<span className="top-voice-text">Top Voice</span>
+												</span>
+											)}
 									</h3>
 
 									<h4>{loggedInUser?.userName}</h4>
