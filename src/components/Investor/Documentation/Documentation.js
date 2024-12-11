@@ -33,6 +33,7 @@ const Documentation = () => {
   const [showModal, setShowModal] = useState(false);
   const [folderName, setFolderName] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState("predefined");
 
   useEffect(()=>{
     if(Number(userVisitCount)<=1){
@@ -64,10 +65,13 @@ const Documentation = () => {
     dispatch(setPageTitle("Documentation"));
   }, []);
 
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+  };
+
   return (
     <MaxWidthWrapper>
       <div className="documentation-wrapper">
-        {/* Main content */}
         <div className="left-content">
           <SmallProfileCard text={"Documentation"} />
 
@@ -91,7 +95,23 @@ const Documentation = () => {
               onClicked={setShowModal}
               fetchFolder={getFolders}
             />
-            <div className="cards px-xxl-4  py-5 rounded-4 document_container ">
+               {/* Tab Navigation */}
+        <div className="tab-navigation">
+          <button 
+            className={`tab ${activeTab === "predefined" ? "active" : ""}`} 
+            onClick={() => handleTabChange("predefined")}
+          >
+            Pre-Existing Folders
+          </button>
+          <button 
+            className={`tab ${activeTab === "dataRoom" ? "active" : ""}`} 
+            onClick={() => handleTabChange("dataRoom")}
+          >
+            Data Room
+          </button>
+        </div>
+
+            <div className="cards px-xxl-4 py-5 rounded-4 document_container ">
              
               {loading && (
                 <SpinnerBS
@@ -101,45 +121,64 @@ const Documentation = () => {
                 />
               )}
 
-              {folderName.map((folder, index) => {
-                let imageToShow;
-                let folderName;
+              {folderName
+                .filter((folder) => 
+                  activeTab === "predefined" 
+                    ? ["pitchdeck", "business", "kycdetails", "legal and compliance", "onelinkpitch"].includes(folder) 
+                    : activeTab === "dataRoom" 
+                      ? !["pitchdeck", "business", "kycdetails", "legal and compliance", "onelinkpitch"].includes(folder) 
+                      : true
+                )
+                .map((folder, index) => {
+                  let imageToShow;
+                  let folderName;
 
-                switch (folder) {
-                  case "pitchdeck":
-                    imageToShow = Pitch;
-                    folderName = "Pitch Deck";
-                    break;
-                  case "business":
-                    imageToShow = Business;
-                    folderName = "Business";
-                    break;
-                  case "kycdetails":
-                    imageToShow = KYC;
-                    folderName = "KYC Details";
-                    break;
-                  case "legal and compliance":
-                    imageToShow = Legal;
-                    folderName = "Legal And Compliance";
-                    break;
-                    case "onelinkpitch":
-                      imageToShow = GreenPitch;
-                      folderName = "OneLink Pitch";
+                  switch (activeTab) {
+                    case "dataRoom":
+                      imageToShow = Pitch;
+                      folderName = folder;
                       break;
-                  default:
-                    imageToShow = Pitch;
-                    folderName = folder;
-                }
+                    case "predefined":
+                      switch (folder) {
+                        case "pitchdeck":
+                          imageToShow = Pitch;
+                          folderName = "Pitch Deck";
+                          break;
+                        case "business":
+                          imageToShow = Business;
+                          folderName = "Business";
+                          break;
+                        case "kycdetails":
+                          imageToShow = KYC;
+                          folderName = "KYC Details";
+                          break;
+                        case "legal and compliance":
+                          imageToShow = Legal;
+                          folderName = "Legal And Compliance";
+                          break;
+                        case "onelinkpitch":
+                          imageToShow = GreenPitch;
+                          folderName = "OneLink Pitch";
+                          break;
+                        default:
+                          imageToShow = Pitch;
+                          folderName = folder;
+                      }
+                      break;
+                    default:
+                      imageToShow = Pitch;
+                      folderName = folder;
+                  }
 
-                return (
-                  <Card
-                    key={index}
-                    onClicked={() => navigate(`/documentation/${folder}`)}
-                    text={folderName}
-                    image={imageToShow}
-                  />
-                );
-              })}
+                  return (
+                    <Card
+                      key={index}
+                      onClicked={() => navigate(`/documentation/${folder}`)}
+                      text={folderName}
+                      image={imageToShow}
+                    />
+                  );
+                })}
 
             </div>
           </div>

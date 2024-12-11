@@ -145,7 +145,7 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
               <option value="kycdetails">KYC Details</option>
               <option value="legal and compliance">Legal and Compliance</option>
               <option value="onelinkpitch">OneLink Pitch</option>
-              <option value="Other">Other</option>
+              <option value="New Folder">Other</option>
             </select>
           </div>
 
