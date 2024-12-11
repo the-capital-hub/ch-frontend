@@ -24,6 +24,7 @@
 		gap: 0.75rem;
 		align-items: center;
 		justify-content: center;
+		cursor: pointer;
 
 		.hustlers-club-fox {
 			width: 50px;
@@ -40,16 +41,15 @@
 			text-align: left;
 			text-underline-position: from-font;
 			text-decoration-skip-ink: none;
-			cursor: pointer;
 
 			background: linear-gradient(90deg, #fd5901 0%, #ffffff 51%, #ff7d55 100%);
 			-webkit-text-fill-color: transparent;
 			-webkit-background-clip: text;
 			background-clip: text;
 
-      @media (max-width: 480px) {
-        font-size: 1.5rem;
-      }
+			@media (max-width: 480px) {
+				font-size: 1.5rem;
+			}
 		}
 	}
 }
