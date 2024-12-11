@@ -143,6 +143,7 @@ const API = Object.freeze({
 	addArticle: `${baseUrl}/article/add_article`,
 	subscription: `${baseUrl}/subscription/create_subscription`,
 	getPaymentDetail: `${baseUrl}/subscription/get_subscription`,
+	updateTopVoices: `${baseUrl}/users/updateTopVoice`
 });
 
 export default API;
