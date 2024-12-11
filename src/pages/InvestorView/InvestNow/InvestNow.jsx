@@ -94,6 +94,7 @@ const InvestNow = ({ page }) => {
                   <option value="₹5L - ₹10L ">₹5L - ₹10L </option>
                   <option value="₹10 - ₹25L">₹10 - ₹25L</option>
                   <option value="₹25L - ₹50L">₹25L - ₹50L</option>
+                  <option value="NoPreference">Prefer not to disclose now!</option>
                 </select>
               </div>
             </>
@@ -130,6 +131,7 @@ const InvestNow = ({ page }) => {
                   <option value="₹5L - ₹10L ">₹5L - ₹10L </option>
                   <option value="₹10 - ₹25L">₹10 - ₹25L</option>
                   <option value="₹25L - ₹50L">₹25L - ₹50L</option>
+                  <option value="NoPreference">Prefer not to disclose now!</option>
                 </select>
                 {isSubmitted ? (
                   <button>Submitted</button>
