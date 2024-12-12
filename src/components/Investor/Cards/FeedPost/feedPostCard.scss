@@ -99,6 +99,37 @@
 					flex-direction: column;
 					justify-content: center;
 					margin-left: 10px;
+					.header-container {
+						.top-voice-badge {
+							position: relative;
+							margin-left: 0.125rem;
+							// display: flex;
+							// align-items: center;
+							cursor: pointer;
+							top: -1px;
+
+							.top-voice-icon {
+								width: 1.2rem;
+								height: 1.2rem;
+								fill: #c0c0c0;
+							}
+							.top-voice-text {
+								width: 70px;
+								position: absolute;
+								top: -15px;
+								left: 10px;
+								color: #fff;
+								font-size: 0.8rem;
+								font-weight: 500;
+								opacity: 0;
+								transition: opacity 0.3s ease;
+							}
+
+							&:hover .top-voice-text {
+								opacity: 1;
+							}
+						}
+					}
 
 					.connect_button_feed {
 						font-size: 13px;
@@ -382,6 +413,37 @@
 			border-radius: 20px;
 			h6 {
 				color: var(--d-l-grey);
+			}
+			.comments-user-name {
+				display: flex;
+				gap: 0.4rem;
+				.top-voice-badge {
+					position: relative;
+					// display: flex;
+					// align-items: center;
+					// cursor: pointer;
+
+					.top-voice-icon {
+						width: 1.2rem;
+						height: 1.2rem;
+						fill: #c0c0c0;
+					}
+					.top-voice-text {
+						width: 70px;
+						position: absolute;
+						top: -20px;
+						left: 10px;
+						color: #fff;
+						font-size: 0.8rem;
+						font-weight: 500;
+						opacity: 0;
+						transition: opacity 0.3s ease;
+					}
+
+					&:hover .top-voice-text {
+						opacity: 1;
+					}
+				}
 			}
 		}
 		.img_container {
@@ -700,81 +762,86 @@
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
-  
+
 	.poll-option {
-	  display: flex;
-	  align-items: center;
-	  gap: 10px;
-	  width: 100%;
-  
-	  .poll-option-content {
-		flex: 1;
-		background: var(--bs-light);
-		padding: 10px 15px;
-		border-radius: 8px;
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
-		position: relative;
-		z-index: 1;
-  
-		.progress-bar {
-		  position: absolute;
-		  left: 0;
-		  top: 0;
-		  height: 100%;
-		  background-color: rgba(211, 243, 107, 0.3) !important; // Investor theme color with opacity
-		  border-radius: 8px;
-		  transition: width 0.3s ease;
-		  z-index: 0;
+		gap: 10px;
+		width: 100%;
+
+		.poll-option-content {
+			flex: 1;
+			background: var(--bs-light);
+			padding: 10px 15px;
+			border-radius: 8px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			position: relative;
+			z-index: 1;
+
+			.progress-bar {
+				position: absolute;
+				left: 0;
+				top: 0;
+				height: 100%;
+				background-color: rgba(
+					211,
+					243,
+					107,
+					0.3
+				) !important; // Investor theme color with opacity
+				border-radius: 8px;
+				transition: width 0.3s ease;
+				z-index: 0;
+			}
+
+			.option-text,
+			.vote-count {
+				position: relative;
+				z-index: 2;
+				color: var(--d-l-grey);
+				font-size: 14px;
+			}
 		}
-  
-		.option-text, .vote-count {
-		  position: relative;
-		  z-index: 2;
-		  color: var(--d-l-grey);
-		  font-size: 14px;
+
+		.vote-button {
+			padding: 8px 16px;
+			border-radius: 20px;
+			border: 1px solid var(--d-l-grey);
+			background: transparent;
+			color: var(--d-l-grey);
+			font-size: 14px;
+			transition: all 0.3s ease;
+			min-width: 80px;
+			white-space: nowrap;
+
+			&:hover:not(:disabled) {
+				background: var(--bs-light);
+			}
+
+			&:disabled {
+				opacity: 0.6;
+				cursor: not-allowed;
+			}
+
+			&.votedButton {
+				background: #d3f36b !important; // Investor theme color
+				color: #1d1d1d !important;
+				border-color: #d3f36b !important;
+			}
 		}
-	  }
-  
-	  .vote-button {
-		padding: 8px 16px;
-		border-radius: 20px;
-		border: 1px solid var(--d-l-grey);
-		background: transparent;
-		color: var(--d-l-grey);
-		font-size: 14px;
-		transition: all 0.3s ease;
-		min-width: 80px;
-		white-space: nowrap;
-  
-		&:hover:not(:disabled) {
-		  background: var(--bs-light);
-		}
-  
-		&:disabled {
-		  opacity: 0.6;
-		  cursor: not-allowed;
-		}
-  
-		&.votedButton {
-		  background: #D3F36B !important; // Investor theme color
-		  color: #1d1d1d !important;
-		  border-color: #D3F36B !important;
-		}
-	  }
 	}
-  }
-  
+}
 
 .read-more-text {
-	color: grey; 
-	cursor: pointer; 
-	text-decoration: underline; 
-	font-weight: bold; 
-	font-style: italic; 
-  }
-  
-  .read-more-text:hover {
+	color: grey;
+	cursor: pointer;
+	text-decoration: underline;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.read-more-text:hover {
 	color: #0073b1;
-  }
+}

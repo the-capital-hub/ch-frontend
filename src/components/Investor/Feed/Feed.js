@@ -84,6 +84,8 @@ const Feed = () => {
 	const [page, setPage] = useState(1);
 	const [pollOptions, setPollOptions] = useState("");
 
+	console.log("allPosts", allPosts);
+
 	useEffect(() => {
 		if (Number(userVisitCount) <= 1) {
 			dispatch(setShowOnboarding(true));
@@ -367,6 +369,7 @@ const Feed = () => {
 												investor,
 												oneLinkId,
 												isSubscribed,
+												isTopVoice,
 											} = user;
 
 											return (
@@ -405,6 +408,7 @@ const Feed = () => {
 														deletePostFilterData={deletePostFilterData}
 														setPostData={setPostData}
 														isSubscribed={isSubscribed}
+														isTopVoice={isTopVoice}
 													/>
 													{(index + 1) % 3 === 0 && (
 														<NewsCard

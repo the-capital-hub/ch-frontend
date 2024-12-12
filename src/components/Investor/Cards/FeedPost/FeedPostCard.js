@@ -57,6 +57,8 @@ import { selectIsInvestor } from "../../../../Store/features/user/userSlice";
 import ImageCarousel from "./ImageCarousel/ImageCarousel";
 import { setRecommendations } from "../../../../Store/features/user/userSlice";
 import SharePopup from "../../../PopUp/SocialSharePopup/SharePopup";
+import { checkTopVoiceExpiry } from "../../../../utils/utilityFunctions";
+import { RiShieldStarFill } from "react-icons/ri";
 
 const FeedPostCard = ({
 	postId,
@@ -90,6 +92,7 @@ const FeedPostCard = ({
 	isSinglePost = false,
 	setPostData,
 	isSubscribed,
+	isTopVoice,
 }) => {
 	const [showComment, setShowComment] = useState(isSinglePost);
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -120,6 +123,8 @@ const FeedPostCard = ({
 	// Initialize localPollOptions with pollOptions
 	const [localPollOptions, setLocalPollOptions] = useState(pollOptions || []);
 	const [isVoting, setIsVoting] = useState(false);
+
+	console.log("comments", comments);
 
 	// Log state changes for debugging
 	// useEffect(() => {
@@ -480,7 +485,7 @@ const FeedPostCard = ({
 					likes,
 					resharedPostId,
 					images,
-					pollOptions
+					pollOptions,
 				};
 
 				localStorage.setItem("postDetail", JSON.stringify(PostData));
@@ -615,7 +620,7 @@ const FeedPostCard = ({
 									to={`/user/${
 										firstName?.toLowerCase() + "-" + lastName?.toLowerCase()
 									}/${oneLinkId}`}
-									className="text-decoration-none"
+									className="text-decoration-none header-container"
 									style={{
 										fontSize: "18px",
 										fontWeight: 600,
@@ -639,6 +644,13 @@ const FeedPostCard = ({
 											alt="Batch Icon"
 										/>
 									)}
+									{isTopVoice?.status &&
+										checkTopVoiceExpiry(isTopVoice?.expiry) && (
+											<span className="top-voice-badge">
+												<RiShieldStarFill className="top-voice-icon" />
+												<span className="top-voice-text">Top Voice</span>
+											</span>
+										)}
 									{!connectionSent && loggedInUser._id !== userId && (
 										<button
 											className="btn connect_button_feed d-inline"
@@ -770,21 +782,25 @@ const FeedPostCard = ({
 					</div>
 
 					<div className="para_container w-100" onClick={handleImageOnClick}>
-					<div className="para_container_text w-100">
-					<div
-						dangerouslySetInnerHTML={{
-						__html: DOMPurify.sanitize(expanded ? description : description.substring(0, 100) + '...'),
-						}}
-					></div>
-					{description.length > 100 && (
-						<span
-						onClick={toggleDescription}
-						className={`read-more-text ${expanded ? 'expanded' : ''}`}
-						>
-						{expanded ? "Read Less" : "Read More"}
-						</span>
-					)}
-					</div>
+						<div className="para_container_text w-100">
+							<div
+								dangerouslySetInnerHTML={{
+									__html: DOMPurify.sanitize(
+										expanded
+											? description
+											: description.substring(0, 100) + "..."
+									),
+								}}
+							></div>
+							{description.length > 100 && (
+								<span
+									onClick={toggleDescription}
+									className={`read-more-text ${expanded ? "expanded" : ""}`}
+								>
+									{expanded ? "Read Less" : "Read More"}
+								</span>
+							)}
+						</div>
 						{image && (
 							<span className="d-flex">
 								<img
@@ -929,98 +945,86 @@ const FeedPostCard = ({
 								style={{ height: "3px", borderColor: "var(--d-l-grey)" }}
 							/> */}
 							<div className="row feedpostcard_footer">
-								<div className="d-flex align-items-center gap-1 justify-content-around pt-2 pb-2">
-									{/* Like */}
-									{liked ? (
-										<div
-											className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-										>
-											<img
-												src={fireIcon}
-												width={20}
-												alt="like post"
-												onClick={likeUnlikeHandler}
-												style={{ cursor: "pointer" }}
-											/>
-											<p
-												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-												className="m-0"
-											>
-												Like
-											</p>
-										</div>
-									) : (
-										<div
-											className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-										>
-											<ImFire
-												onClick={likeUnlikeHandler}
-												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-											/>
-											<p
-												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-												className="m-0"
-											>
-												Like
-											</p>
-										</div>
-									)}
-
-									{/* Comment */}
-									{!showComment ? (
-										<div
-											className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-										>
-											<FaRegCommentDots
-												size={20}
-												onClick={() => setShowComment((prev) => !prev)}
-												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-											/>
-											<p
-												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-												className="m-0"
-											>
-												Comment
-											</p>
-										</div>
-									) : (
-										<div
-											className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-										>
-											<FaCommentDots
-												size={20}
-												onClick={() => setShowComment((prev) => !prev)}
-												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-											/>
-											<p
-												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-												className="m-0"
-											>
-												Comment
-											</p>
-										</div>
-									)}
-
-									{/* Share post link on socials button */}
+								<div className="d-flex align-items-center gap-1 justify-content-between pt-2 pb-2">
+									{/* Like and Comment */}
 									<div
-										className="d-flex flex-column align-items-center
-											 gap-1"
+										className="d-flex align-items-center gap-1 justify-content-around"
+										style={{ width: "25%" }}
 									>
-										<FaShare
-											size={20}
-											style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-											onClick={handleOpenSocialShare}
-										/>
-										<p
-											style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-											className="m-0"
-										>
-											Share
-										</p>
+										{/* Like */}
+										{liked ? (
+											<div
+												className="d-flex  align-items-center justify-content-end
+                       gap-1"
+											>
+												<img
+													src={fireIcon}
+													width={20}
+													alt="like post"
+													onClick={likeUnlikeHandler}
+													style={{ cursor: "pointer" }}
+												/>
+												<p
+													style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+													className="m-0"
+												>
+													Like
+												</p>
+											</div>
+										) : (
+											<div
+												className="d-flex align-items-center justify-content-end
+                       gap-1"
+											>
+												<ImFire
+													onClick={likeUnlikeHandler}
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												/>
+												<p
+													style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+													className="m-0"
+												>
+													Like
+												</p>
+											</div>
+										)}
+
+										{/* Comment */}
+										{!showComment ? (
+											<div
+												className="d-flex align-items-center justify-content-end
+                       gap-1"
+											>
+												<FaRegCommentDots
+													size={20}
+													onClick={() => setShowComment((prev) => !prev)}
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												/>
+												<p
+													style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+													className="m-0"
+												>
+													Comment
+												</p>
+											</div>
+										) : (
+											<div
+												className="d-flex align-items-center justify-content-end
+                       gap-1"
+											>
+												<FaCommentDots
+													size={20}
+													onClick={() => setShowComment((prev) => !prev)}
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												/>
+												<p
+													style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+													className="m-0"
+												>
+													Comment
+												</p>
+											</div>
+										)}
 									</div>
 
 									{/* Repost */}
@@ -1031,8 +1035,14 @@ const FeedPostCard = ({
 										ref={repostContainerRef}
 									>
 										<div
-											className="d-flex flex-column align-items-center justify-content-end
+											className="d-flex align-items-center justify-content-end
                        gap-1"
+											style={{
+												cursor: "pointer",
+												backgroundColor: "#fd5901",
+												padding: "0.5rem 0.75rem",
+												borderRadius: "2.5rem",
+											}}
 										>
 											<BiRepost
 												onClick={() => setShowRepostOptions(!showRepostOptions)}
@@ -1107,42 +1117,66 @@ const FeedPostCard = ({
 										)}
 									</span>
 
-									{/* Save */}
-									{savedPostId.includes(postId) ? (
+									{/* Share and Save */}
+									<div
+										className="d-flex align-items-center gap-1 justify-content-around"
+										style={{ width: "25%" }}
+									>
+										{/* Share post link on socials button */}
 										<div
-											className="d-flex flex-column align-items-center justify-content-end
+											className="d-flex align-items-center
+											 gap-1"
+										>
+											<FaShare
+												size={20}
+												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												onClick={handleOpenSocialShare}
+											/>
+											<p
+												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+												className="m-0"
+											>
+												Share
+											</p>
+										</div>
+
+										{/* Save */}
+										{savedPostId.includes(postId) ? (
+											<div
+												className="d-flex align-items-center justify-content-end
                        gap-1"
-										>
-											<IoMdBookmark
-												size={20}
-												onClick={handleUnsavePost}
-												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-											/>
-											<p
-												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-												className="m-0"
 											>
-												Save
-											</p>
-										</div>
-									) : (
-										<div
-											className="d-flex flex-column align-items-center justify-content-end
+												<IoMdBookmark
+													size={20}
+													onClick={handleUnsavePost}
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												/>
+												<p
+													style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+													className="m-0"
+												>
+													Save
+												</p>
+											</div>
+										) : (
+											<div
+												className="d-flex align-items-center justify-content-end
                     gap-1"
-										>
-											<CiBookmark
-												size={20}
-												onClick={handleSavePopUp}
-												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-											/>
-											<p
-												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-												className="m-0"
 											>
-												Save
-											</p>
-										</div>
-									)}
+												<CiBookmark
+													size={20}
+													onClick={handleSavePopUp}
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												/>
+												<p
+													style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+													className="m-0"
+												>
+													Save
+												</p>
+											</div>
+										)}
+									</div>
 								</div>
 
 								{/* comment Wrapper */}
@@ -1263,7 +1297,7 @@ const FeedPostCard = ({
 																		"-" +
 																		val.user?.lastName.toLowerCase()
 																	}/${val.user.oneLinkId}`}
-																	className="text-decoration-none  fs-sm"
+																	className="text-decoration-none  fs-sm comments-user-name"
 																	style={{
 																		pointerEvents: `${
 																			loggedInUser._id === val.user._id
@@ -1277,8 +1311,19 @@ const FeedPostCard = ({
 																			" " +
 																			val.user.lastName}
 																	</h6>
+																	{val.user?.isTopVoice?.status &&
+																		checkTopVoiceExpiry(
+																			val.user?.isTopVoice?.expiry
+																		) && (
+																			<span className="top-voice-badge">
+																				<RiShieldStarFill className="top-voice-icon" />
+																				<span className="top-voice-text">
+																					Top Voice
+																				</span>
+																			</span>
+																		)}
 																</Link>
-																<span className="days_time fs-xs">
+																<span className="days_time fs-xs ms-2">
 																	<TimeAgo datetime={val.createdAt} locale="" />
 																</span>
 															</header>
