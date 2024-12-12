@@ -256,10 +256,12 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 						<Menu iconShape="round">
 							{/* Onboarding switch for light and dark theme */}
 							<MenuItem>
-								<div className="d-flex justify-content-center align-items-center gap-2">
-									{/* mobile-onboarding */}
-									Dark {!sidebarCollapsed && <OnboardingSwitch />} Light
-								</div>
+								{!sidebarCollapsed && (
+									<div className="d-flex justify-content-center align-items-center gap-2">
+										{/* mobile-onboarding */}
+										Dark <OnboardingSwitch /> Light
+									</div>
+								)}
 							</MenuItem>
 
 							<MenuItem>

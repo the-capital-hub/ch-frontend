@@ -20,9 +20,9 @@ function PrivateRoute({ children, ...props }) {
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	}, [location]);
 
-	const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+	const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
 	const handleSidebarToggle = () => {
-		setSidebarCollapsed((prev) => prev);
+		setSidebarCollapsed((prev) => !prev);
 	};
 
 	const isLoggedIn = () => {
