@@ -78,8 +78,8 @@ const RightProfileCard = ({ noProfile }) => {
 									alt="Batch Icon"
 								/>
 							)}
-							{loggedInUser?.isTopVoice.status &&
-								checkTopVoiceExpiry(loggedInUser?.isTopVoice.expiry) && (
+							{loggedInUser?.isTopVoice?.status &&
+								checkTopVoiceExpiry(loggedInUser?.isTopVoice?.expiry) && (
 									<span className="top-voice-badge">
 										<RiShieldStarFill className="top-voice-icon" />
 										<span className="top-voice-text">Top Voice</span>
