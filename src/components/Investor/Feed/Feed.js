@@ -84,7 +84,7 @@ const Feed = () => {
 	const [page, setPage] = useState(1);
 	const [pollOptions, setPollOptions] = useState("");
 
-	console.log("allPosts", allPosts);
+	// console.log("allPosts", allPosts);
 
 	useEffect(() => {
 		if (Number(userVisitCount) <= 1) {

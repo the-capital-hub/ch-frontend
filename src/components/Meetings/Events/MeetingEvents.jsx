@@ -3,8 +3,11 @@ import { FiCopy, FiTrash2, FiPlus } from "react-icons/fi";
 import "./MeetingEvents.scss";
 import EventModal from "./CreateEventModal/EventModal";
 import { IoCalendarOutline } from "react-icons/io5";
+import { RxUpdate } from "react-icons/rx";
+import { useNavigate } from "react-router-dom";
 
 import { environment } from "../../../environments/environment";
+import { getUserAvailability } from "../../../Service/user";
 const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 
@@ -29,9 +32,12 @@ const EventsList = () => {
 	const [events, setEvents] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [copiedLinks, setCopiedLinks] = useState({});
+	const [userAvailability, setUserAvailability] = useState({});
 	const user = localStorage.getItem("loggedInUser");
 	const username = user ? JSON.parse(user).userName : null;
-	console.log("Events", events);
+	const navigate = useNavigate();
+	// console.log("Events", events);
+	// console.log("User Availability", userAvailability);
 
 	const fetchEvents = () => {
 		setLoading(true);
@@ -59,6 +65,22 @@ const EventsList = () => {
 
 	useEffect(() => {
 		fetchEvents();
+	}, []);
+
+	useEffect(() => {
+		// Fetch user availability
+		const fetchAvailability = async () => {
+			try {
+				const response = await getUserAvailability();
+				if (response.status === 200) {
+					setUserAvailability(response.availability);
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		};
+
+		fetchAvailability();
 	}, []);
 
 	const handleCreateEvent = (eventData) => {
@@ -124,13 +146,23 @@ const EventsList = () => {
 		<div className="events-container">
 			<div className="events-header">
 				<h1>Events</h1>
-				<button
-					className="create-event-btn"
-					onClick={() => setIsModalOpen(true)}
-				>
-					<FiPlus />
-					<span>Create Event</span>
-				</button>
+				{userAvailability ? (
+					<button
+						className="create-event-btn"
+						onClick={() => setIsModalOpen(true)}
+					>
+						<FiPlus />
+						<span>Create Event</span>
+					</button>
+				) : (
+					<button
+						className="create-event-btn"
+						onClick={() => navigate("/meeting/availability")}
+					>
+						<RxUpdate />
+						<span>Set Availability</span>
+					</button>
+				)}
 			</div>
 
 			{events.length === 0 ? (

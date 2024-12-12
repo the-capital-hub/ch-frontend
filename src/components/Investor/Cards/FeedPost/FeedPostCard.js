@@ -124,7 +124,7 @@ const FeedPostCard = ({
 	const [localPollOptions, setLocalPollOptions] = useState(pollOptions || []);
 	const [isVoting, setIsVoting] = useState(false);
 
-	console.log("comments", comments);
+	// console.log("comments", comments);
 
 	// Log state changes for debugging
 	// useEffect(() => {
