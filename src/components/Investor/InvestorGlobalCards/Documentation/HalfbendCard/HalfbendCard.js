@@ -128,9 +128,9 @@ const HalfbendCard = ({ folderName, userId }) => {
 
               return (
                 <div
-                  className="col-md-4 d-flex justify-content-center align-items-center main_col pdf_card"
+                  className={`col-md-4 d-flex justify-content-center align-items-center main_col ${folderName === 'onelinkpitch' ? 'video_card' : 'pdf_card'}`}
                   key={item.fileName}
-                  style={{maxWidth:"300px", width: "100%", padding: "1rem" }}
+                  style={{width: "100%", padding: "1rem" }}
                 >
                   <div className={custom_card_class_name} style={{ width: "100%" }}>
                     {/* If videoUrl exists, render thumbnail and set iframe on click */}
