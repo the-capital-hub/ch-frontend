@@ -1722,3 +1722,40 @@ export const updateUserWithTopVoice = async () => {
 		throw error;
 	}
 };
+
+export const getUserAvailability = async () => {
+	try {
+		const response = await axiosInstance.get(`${API.getUserAvailability}`);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const getInshortsNews = async (language, category) => {
+	try {
+		const response = await axiosInstance.post(`${API.getInshortNews}`, {
+			language,
+			category,
+		});
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const getMoreInshortsNews = async (language, category, news_offset) => {
+	try {
+		const response = await axiosInstance.post(`${API.getMoreInshortNews}`, {
+			language,
+			category,
+			news_offset,
+		});
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
