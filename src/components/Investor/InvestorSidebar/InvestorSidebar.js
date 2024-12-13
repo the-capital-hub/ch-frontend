@@ -166,8 +166,8 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									<div
 										style={{
 											position: "relative",
-											width: "50px", // Set a width for the div
-											height: "50px", // Set a height for the div
+											width: "100px", // Set a width for the div
+											height: "100px", // Set a height for the div
 											borderRadius: "50%",
 											zIndex: 0,
 											overflow: "hidden", // Ensure content does not overflow
@@ -194,9 +194,10 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 											<img
 												className="rounded-circle"
 												style={{
-													width: "50px",
-													height: "50px",
+													width: "100px",
+													height: "100px",
 													objectFit: "cover",
+													border: "2px solid transparent",
 												}}
 												src={loggedInUser.profilePicture}
 												alt="Profile"
@@ -204,7 +205,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 										</Link>
 									</div>
 
-									<div className="d-flex flex-column align-items-start">
+									<div className="d-flex flex-column align-items-center">
 										<h3
 											style={{
 												display: "flex",

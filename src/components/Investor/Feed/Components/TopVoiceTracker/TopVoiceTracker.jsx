@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { userPosts, updateUserWithTopVoice } from "../../../../../Service/user";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../../../../Store/features/design/designSlice";
 import DOMPurify from "dompurify";
-// import { FaVolumeUp } from "react-icons/fa";
 import TopVoices from "../../../../../Images/TopVoices.png";
 import "./TopVoiceTracker.scss";
 
 const TopVoice = () => {
+	const theme = useSelector(selectTheme);
 	const [posts, setPosts] = useState([]);
 	const [showAllPosts, setShowAllPosts] = useState(false);
 	const [expanded, setExpanded] = useState(false);
@@ -52,7 +54,9 @@ const TopVoice = () => {
 	};
 
 	return (
-		<div className="top-voice-container">
+		<div
+			className={`top-voice-container ${theme === "dark" ? " dark-theme" : ""}`}
+		>
 			<div className="top-voice-header">
 				<span className="top-voice-title">Top Voice</span>
 				<p className="top-voice-subtitle">
@@ -147,7 +151,7 @@ const TopVoice = () => {
 						</div>
 					</div> */}
 				</div>
-				<div className="know-more" onClick={handleShowAllPosts}>
+				<div className="know-more-btn" onClick={handleShowAllPosts}>
 					<button>Know More</button>
 				</div>
 			</div>

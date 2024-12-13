@@ -19,7 +19,7 @@ const NewsCard = () => {
 		const fetchNews = async () => {
 			try {
 				setIsLoading(true);
-				const response = await getInshortsNews();
+				const response = await getInshortsNews("en", "startup");
 				if (response) {
 					setNews(response.posts);
 					setNewsOffset(response.news_offset);
@@ -71,7 +71,7 @@ const NewsCard = () => {
 	const fetchMoreNews = async () => {
 		try {
 			setIsLoading(true);
-			const response = await getInshortsNews("en", "", newsOffset);
+			const response = await getInshortsNews("en", "startup", newsOffset);
 			if (response) {
 				setNews((prevNews) => [...prevNews, ...response.posts]);
 				setNewsOffset(response.news_offset);
@@ -103,7 +103,7 @@ const NewsCard = () => {
 			data-bs-theme={theme}
 		>
 			<div className="news-header">
-				<h3>Latest News</h3>
+				<h3>Startup Corner ({news.length})</h3>
 				{/* Load More Button */}
 				<div className="load-more-container">
 					<button
@@ -111,7 +111,7 @@ const NewsCard = () => {
 						onClick={fetchMoreNews}
 						disabled={isLoading}
 					>
-						{isLoading ? "Loading..." : "Load More News"}
+						{isLoading ? "Loading..." : "Load More"}
 					</button>
 				</div>
 			</div>
