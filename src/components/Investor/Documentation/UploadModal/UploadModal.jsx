@@ -28,6 +28,7 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
     const getFolders = () => {
       getFoldersApi(loggedInUser.oneLinkId)
         .then((data) => {
+          console.log("folders",data);
           const folders = data.data;
           folders.push("New Folder");
           setFolderSelector(folders);
@@ -37,6 +38,7 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
         });
     };
     getFolders();
+
   }, [loggedInUser.oneLinkId]);
 
   const handleClosePopup = () => {
@@ -67,44 +69,57 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
     if (files.length === 0) {
       return;
     }
+  
     setLoading(true);
-    const formData = new FormData();
-    formData.append("userId", loggedInUser._id);
-    formData.append("folderName", folder === "New Folder" ? folderName : folder);
-
-    // If folder is 'onelinkpitch', append videoUrl
-    if (folder === "onelinkpitch" && videoUrl) {
-      formData.append("videoUrl", videoUrl);
+  
+    const getAuthToken = () => {
+      return localStorage.getItem("accessToken");
+    };
+  
+    // Iterate over files and upload them one by one
+    for (let i = 0; i < files.length; i++) {
+      const formData = new FormData();
+      formData.append("userId", loggedInUser._id);
+      formData.append("folderName", folder === "New Folder" ? folderName : folder);
+  
+      // If folder is 'onelinkpitch', append videoUrl
+      if (folder === "onelinkpitch" && videoUrl) {
+        formData.append("videoUrl", videoUrl);
+      }
+  
+      formData.append("file", files[i]);
+  
+      try {
+        const response = await axios.post(
+          `${baseUrl}/documentation/uploadDocument`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            onUploadProgress: (progressEvent) => {
+              const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+              setUploadProgress(percentCompleted);
+            },
+          }
+        );
+  
+        console.log("File uploaded:", response.data);
+  
+      } catch (error) {
+        console.error("Error uploading file to backend:", error);
+        alert(`Failed to upload file: ${files[i].name}`);
+        break;
+      }
     }
-
-    files.forEach((file) => {
-      formData.append("file", file);
-    });
-
-    try {
-      const getAuthToken = () => {
-        return localStorage.getItem("accessToken");
-      };
-      const response = await axios.post(`${baseUrl}/documentation/uploadDocument`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setUploadProgress(percentCompleted);
-        },
-      });
-
-      setLoading(false);
-      setShowPopUp(true);
-      setFiles([]);
-      setVideoUrl(""); // Reset the video URL after upload
-    } catch (error) {
-      console.error("Error uploading file to backend:", error);
-      alert("Failed to Upload files");
-      setLoading(false);
-    }
+  
+    // After all files are uploaded
+    setLoading(false);
+    setShowPopUp(true);
+    setFiles([]);
+    setVideoUrl(""); // Reset the video URL after upload
   };
+  
 
   const renderFileList = () => (
     <ol className="list-group list-group-numbered">
@@ -140,12 +155,24 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
               id=""
               style={{ border: "none", backgroundColor: theme === "dark" ? "#121212" : "#e9ecef" }}
             >
-              <option value="pitchdeck">Pitch Deck</option>
+              {/* <option value="pitchdeck">Pitch Deck</option>
               <option value="business">Business</option>
               <option value="kycdetails">KYC Details</option>
               <option value="legal and compliance">Legal and Compliance</option>
               <option value="onelinkpitch">OneLink Pitch</option>
-              <option value="New Folder">Other</option>
+              <option value="New Folder">Other</option> */}
+               {    folderSelector.map((folderOption, index) => (
+                      <option key={index} value={folderOption}>
+                        {
+                          folderOption === "pitchdeck" ? "Pitch Deck" :
+                          folderOption === "business" ? "Business" :
+                          folderOption === "kycdetails" ? "KYC Details" :
+                          folderOption === "legal and compliance" ? "Legal and Compliance" :
+                          folderOption === "onelinkpitch" ? "OneLink Pitch" : 
+                          folderOption 
+                        }
+                      </option>
+                                                                  ))}
             </select>
           </div>
 
