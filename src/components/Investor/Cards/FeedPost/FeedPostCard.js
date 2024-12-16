@@ -788,11 +788,11 @@ const FeedPostCard = ({
 									__html: DOMPurify.sanitize(
 										expanded
 											? description
-											: description.substring(0, 100) + "..."
+											: description?.substring(0, 100) + "..."
 									),
 								}}
 							></div>
-							{description.length > 100 && (
+							{description?.length > 100 && (
 								<span
 									onClick={toggleDescription}
 									className={`read-more-text ${expanded ? "expanded" : ""}`}
@@ -1035,8 +1035,8 @@ const FeedPostCard = ({
 										ref={repostContainerRef}
 									>
 										<div
-											className="d-flex align-items-center justify-content-end
-                       gap-1"
+											className="d-flex align-items-center justify-content-end gap-1"
+											onClick={() => setShowRepostOptions(!showRepostOptions)}
 											style={{
 												cursor: "pointer",
 												backgroundColor: "#fd5901",
@@ -1045,7 +1045,6 @@ const FeedPostCard = ({
 											}}
 										>
 											<BiRepost
-												onClick={() => setShowRepostOptions(!showRepostOptions)}
 												style={{
 													cursor: "pointer",
 													transform: "rotate(90deg)",

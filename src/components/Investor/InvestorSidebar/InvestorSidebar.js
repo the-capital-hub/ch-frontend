@@ -230,7 +230,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 												alt="Batch Icon"
 											/>
 										)}
-										{loggedInUser?.isTopVoice.status &&
+										{loggedInUser?.isTopVoice?.status &&
 											checkTopVoiceExpiry(loggedInUser?.isTopVoice.expiry) && (
 												<span className="top-voice-badge">
 													<RiShieldStarFill className="top-voice-icon" />

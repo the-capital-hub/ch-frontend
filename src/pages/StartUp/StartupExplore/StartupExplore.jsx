@@ -32,6 +32,12 @@ import TutorialTrigger from "../../../components/Shared/TutorialTrigger/Tutorial
 import InvestorProfileList from "../../../components/Shared/InvestorProfileComponent/InvestorProfileList";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import SkeletonLoader from "../../../components/Investor/Feed/Components/SkeletonLoader/SkeletonLoader";
+import Modal from 'react-bootstrap/Modal'; // Import Modal
+import { toast } from 'react-toastify'; // Import toast for notifications
+import axios from 'axios'; // Import axios for API calls
+import { environment } from "../../../environments/environment"; // Import environment for base URL
+
+const baseUrl = environment.baseUrl; // Define base URL for API calls
 
 export default function StartupExplore() {
 	const dispatch = useDispatch();
@@ -50,6 +56,9 @@ export default function StartupExplore() {
 	const abortControllerRef = useRef(null);
   const [itemsPerPage, setItemsPerPage] = useState(10); 
 const [currentPage, setCurrentPage] = useState(1); 
+const [showModal, setShowModal] = useState(false); // State for modal visibility
+const [formData, setFormData] = useState({}); // State for form data
+const [bulkData, setBulkData] = useState(""); // State for bulk JSON data
 
 	useEffect(() => {
 		if (Number(userVisitCount) <= 1) {
@@ -204,10 +213,506 @@ const handleLoadPrevious = () => {
   setCurrentPage(prevPage => prevPage - 1);
 };
 
+	const handleFormChange = (e) => {
+
+		const { name, value } = e.target;
+
+		if (name === "sector_focus" || name === "stage_focus") {
+			const arrayValue = value.split(',').map((item) => item.trim());
+			setFormData((prevData) => ({
+			  ...prevData,
+			  [name]: arrayValue,
+			}));
+		  } else {
+			setFormData((prevData) => ({
+			  ...prevData,
+			  [name]: value,
+			}));
+		  }
+	};
+
+	const handleFormSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			let response;
+			switch (activeTab) {
+				case "Founder":
+					response = await axios.post(`${baseUrl}/users/createUser`, {
+						...formData,
+						isInvestor: false
+					});
+					break;
+				case "Investor":
+					response = await axios.post(`${baseUrl}/users/createUser`, {
+						...formData,
+						isInvestor: true
+					});
+					break;
+				case "Startup":
+					response = await axios.post(`${baseUrl}/startup/createStartup`, formData);
+					break;
+				case "VC":
+					response = await axios.post(`${baseUrl}/vc/createVc`, formData);
+					break;
+			}
+			
+			if (response.data) {
+				toast.success(`${activeTab} added successfully`);
+				setShowModal(false);
+				onSubmitFilters(); // Refresh the list
+				setBulkData("");
+			}
+		} catch (error) {
+			toast.error(`Error adding ${activeTab}`);
+			console.error(error);
+		}
+	};
+
+	const handleBulkFormSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			const parsedData = JSON.parse(bulkData); 
+			for (const entry of parsedData) {
+				let response;
+				switch (activeTab) {
+					case "Founder":
+						response = await axios.post(`${baseUrl}/users/createUser`, {
+							...entry,
+							isInvestor: false
+						});
+						break;
+					case "Investor":
+						response = await axios.post(`${baseUrl}/users/createUser`, {
+							...entry,
+							isInvestor: true
+						});
+						break;
+					case "Startup":
+						response = await axios.post(`${baseUrl}/startup/createStartup`, entry);
+						break;
+					case "VC":
+						response = await axios.post(`${baseUrl}/vc/createVc`, entry);
+						break;
+				}
+				
+				if (response.data) {
+					toast.success(`${activeTab} added successfully`);
+				}
+			}
+			setShowModal(false);
+			onSubmitFilters();
+		} catch (error) {
+			toast.error(`Error adding ${activeTab}`);
+			console.error(error);
+		}
+	};
+
 	return (
 		<MaxWidthWrapper>
 			<section className="startup_explore_wrapper d-flex flex-column gap-3 mb-4">
 				<TutorialTrigger steps={startupOnboardingSteps.explorePage} />
+
+				{/* Add Button */}
+				<button 
+					className="btn-capital-admin ms-2"
+					onClick={() => setShowModal(true)}
+					style={{color: 'white'}}
+				>
+					Add {activeTab}
+				</button>
+
+				{/* Modal */}
+				<Modal show={showModal} onHide={() => setShowModal(false)} centered>
+					<Modal.Header closeButton>
+						<Modal.Title style={{ color: 'black' }}>Add New {activeTab}</Modal.Title>
+					</Modal.Header>
+	
+<Modal.Body>
+  <form onSubmit={handleFormSubmit}>
+    {(activeTab === "Founder" || activeTab === "Investor") && (
+      <>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="First Name"
+            name="firstName"
+            onChange={handleFormChange}
+            required
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Last Name"
+            name="lastName"
+            onChange={handleFormChange}
+            required
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Email"
+            name="email"
+            onChange={handleFormChange}
+            required
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="tel"
+            className="form-control"
+            placeholder="Phone Number"
+            name="phoneNumber"
+            onChange={handleFormChange}
+            required
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Designation"
+            name="designation"
+            onChange={handleFormChange}
+            required
+          />
+        </div>
+        <div className="form-group mb-3">
+          <select 
+            className="form-control"
+            name="gender"
+            onChange={handleFormChange}
+            required
+          >
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Company"
+            name="company"
+            onChange={handleFormChange}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="url"
+            className="form-control"
+            placeholder="Profile Picture"
+            name="profilePicture"
+            onChange={handleFormChange}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Location"
+            name="location"
+            onChange={handleFormChange}
+          />
+        </div>
+      </>
+    )}
+
+    {activeTab === "Startup" && (
+      <>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Company Name"
+            name="company"
+            onChange={handleFormChange}
+            required
+          />
+        </div>
+        <div className="form-group mb-3">
+          <textarea
+            className="form-control"
+            placeholder="Introductory Message"
+            name="introductoryMessage"
+            onChange={handleFormChange}
+            rows="3"
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Logo URL"
+            name="logo"
+            onChange={handleFormChange}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Location"
+            name="location"
+            onChange={handleFormChange}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <textarea
+            className="form-control"
+            placeholder="Description"
+            name="description"
+            onChange={handleFormChange}
+            rows="3"
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+			placeholder="Age of the company"
+            name="age"
+            onChange={handleFormChange}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Industry Type"
+            name="industryType"
+            onChange={handleFormChange}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Revenue"
+            name="revenue"
+            onChange={handleFormChange}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Funding Ask"
+            name="fundingAsk"
+            onChange={handleFormChange}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <h6>Contact Details</h6>
+          <input
+            type="text"
+            className="form-control mb-2"
+            placeholder="Full Name"
+            name="contactDetails.fullname"
+            onChange={handleFormChange}
+          />
+          <input
+            type="tel"
+            className="form-control mb-2"
+            placeholder="Phone Number"
+            name="contactDetails.phoneNumber"
+            onChange={handleFormChange}
+          />
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Email"
+            name="contactDetails.email"
+            onChange={handleFormChange}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <h6>Social Links</h6>
+          <input
+            type="url"
+            className="form-control mb-2"
+            placeholder="Website"
+            name="socialLinks.website"
+            onChange={handleFormChange}
+          />
+          <input
+            type="url"
+            className="form-control mb-2"
+            placeholder="LinkedIn"
+            name="socialLinks.linkedin"
+            onChange={handleFormChange}
+          />
+          <input
+            type="url"
+            className="form-control mb-2"
+            placeholder="Twitter"
+            name="socialLinks.twitter"
+            onChange={handleFormChange}
+          />
+          <input
+            type="url"
+            className="form-control"
+            placeholder="Instagram"
+            name="socialLinks.instagram"
+            onChange={handleFormChange}
+          />
+        </div>
+      </>
+    )}
+
+    {activeTab === "VC" && (
+      <>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="VC Name"
+            name="name"
+            onChange={handleFormChange}
+            required
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Location"
+            name="location"
+            onChange={handleFormChange}
+            required
+          />
+        </div>
+        <div className="form-group mb-3">
+          <h6>Social Links</h6>
+          <input
+            type="url"
+            className="form-control mb-2"
+            placeholder="Facebook"
+            name="facebook"
+            onChange={handleFormChange}
+          />
+          <input
+            type="url"
+            className="form-control mb-2"
+            placeholder="Instagram"
+            name="instagram"
+            onChange={handleFormChange}
+          />
+          <input
+            type="url"
+            className="form-control mb-2"
+            placeholder="LinkedIn"
+            name="linkedin"
+            onChange={handleFormChange}
+          />
+          <input
+            type="url"
+            className="form-control"
+            placeholder="Twitter"
+            name="twitter"
+            onChange={handleFormChange}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Total Portfolio"
+            name="total_portfolio"
+            onChange={handleFormChange}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Current Fund Corpus"
+            name="current_fund_corpus"
+            onChange={handleFormChange}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Total Fund Corpus"
+            name="total_fund_corpus"
+            onChange={handleFormChange}
+          />
+        </div>
+		<div className="form-group mb-3">
+          <input
+            type="number"
+            className="form-control"
+            placeholder="Ticket Size"
+            name="ticket_size"
+            onChange={handleFormChange}
+          />
+        </div>
+		<div className="form-group mb-3">
+          <input
+            type="number"
+            className="form-control"
+            placeholder="Age"
+            name="age"
+            onChange={handleFormChange}
+          />
+        </div>
+		<div className="form-group mb-3">
+		<input
+			type="text"
+			className="form-control"
+			placeholder="Sector Focus (comma-separated)"
+			name="sector_focus"
+			onChange={handleFormChange}
+		/>
+		</div>
+		<div className="form-group mb-3">
+		<input
+			type="text"
+			className="form-control"
+			placeholder="Stage Focus (comma-separated)"
+			name="stage_focus"
+			onChange={handleFormChange}
+		/>
+		</div>
+        <div className="form-group mb-3">
+          <textarea
+            className="form-control"
+            placeholder="Description"
+            name="description"
+            onChange={handleFormChange}
+            rows="3"
+          />
+        </div>
+      </>
+    )}
+
+    {/* New section for bulk addition */}
+    <h6 style={{color: 'black'}}>Bulk Addition (JSON format)</h6>
+    <textarea
+        className="form-control mb-3"
+        placeholder='Enter JSON data here'
+        name="bulkData"
+        value={bulkData}
+        onChange={(e) => setBulkData(e.target.value)}
+        rows="5"
+    />
+    <button type="button" className="btn-capital w-100" style={{marginBottom: '1rem'}} onClick={handleBulkFormSubmit}>
+        Submit Bulk {activeTab}s
+    </button>
+    <button type="submit" className="btn-capital w-100">
+      Submit
+    </button>
+  </form>
+</Modal.Body>
+				</Modal>
 
 				{/* Header */}
 				<div className="filter_container rounded-4 shadow-sm d-flex flex-column gap-4 px-4 py-4">

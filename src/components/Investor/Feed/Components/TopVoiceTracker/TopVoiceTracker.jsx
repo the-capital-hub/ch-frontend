@@ -120,11 +120,11 @@ const TopVoice = () => {
 										__html: DOMPurify.sanitize(
 											expanded
 												? post.description
-												: post.description.substring(0, 100) + "..."
+												: post.description?.substring(0, 100) + "..."
 										),
 									}}
 								/>
-								{post.description.length > 100 && (
+								{post.description?.length > 100 && (
 									<span
 										onClick={toggleDescription}
 										className={`read-more-text ${expanded ? "expanded" : ""}`}
