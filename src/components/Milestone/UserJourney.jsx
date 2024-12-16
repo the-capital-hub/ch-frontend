@@ -203,7 +203,7 @@ const UserJourney = () => {
 
 	return (
 		<div
-			className={`profile-section ${theme === "dark" ? " dark-theme" : ""}`}
+			className={`journey-profile-container ${theme === "dark" ? " dark-theme" : ""}`}
 			data-bs-theme={theme}
 		>
 			<div className="profile-header">
