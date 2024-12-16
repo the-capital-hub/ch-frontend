@@ -333,9 +333,9 @@ const InvestorManageAccount = () => {
 														alt="Batch Icon"
 													/>
 												)}
-												{loggedInUser?.isTopVoice.status &&
+												{loggedInUser?.isTopVoice?.status &&
 													checkTopVoiceExpiry(
-														loggedInUser?.isTopVoice.expiry
+														loggedInUser?.isTopVoice?.expiry
 													) && (
 														<span className="top-voice-badge">
 															<RiShieldStarFill className="top-voice-icon" />
@@ -436,9 +436,9 @@ const InvestorManageAccount = () => {
 																			alt="Batch Icon"
 																		/>
 																	)}
-																	{account.user?.isTopVoice.status &&
+																	{account.user?.isTopVoice?.status &&
 																		checkTopVoiceExpiry(
-																			account.user?.isTopVoice.expiry
+																			account.user?.isTopVoice?.expiry
 																		) && (
 																			<span className="top-voice-badge">
 																				<RiShieldStarFill className="top-voice-icon" />

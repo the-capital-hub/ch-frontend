@@ -842,7 +842,7 @@ const Login = () => {
 										}}
 										value={inputValues.phoneNumber}
 										countrySelectProps={{
-											native: true,
+											native: "true",
 											style: { display: "none" },
 										}}
 										international={false}

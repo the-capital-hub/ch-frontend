@@ -128,7 +128,6 @@ function SavePostPopUP({
 					</div>
 					<button
 						className="close-button"
-						style={{ color: theme === "dark" ? "#000" : "#fff" }}
 						onClick={onClose}
 					>
 						X

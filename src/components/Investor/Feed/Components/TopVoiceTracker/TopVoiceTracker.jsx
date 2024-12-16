@@ -17,7 +17,6 @@ const TopVoice = () => {
 		const fetchUserPosts = async () => {
 			try {
 				const response = await userPosts();
-				console.log("response", response.data.allPosts);
 				setPosts(response.data.allPosts);
 			} catch (error) {
 				console.error("Failed to fetch user posts:", error);
