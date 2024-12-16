@@ -3,6 +3,7 @@ import { environment } from "../environments/environment";
 const baseUrl = environment.baseUrl;
 const API = Object.freeze({
 	getUser: `${baseUrl}/users/getUser`,
+	getUserAvailability: `${baseUrl}/users/getUserAvailability`,
 	postUser: `${baseUrl}/users/createUser`,
 	getPostById: `${baseUrl}/api/posts/get_post_by_id`,
 	postStartUpData: `${baseUrl}/startup/createStartup`,
@@ -14,7 +15,7 @@ const API = Object.freeze({
 	linkdinLogin: `${baseUrl}/users/linkdin_login`,
 	getLinkedInProfile: `${baseUrl}/users/getLinkedInProfile`,
 	postUserPost: `${baseUrl}/api/posts/newPost`,
-	sharePostOnLinkedin : `${baseUrl}/api/posts/shareOnLinkedin`,
+	sharePostOnLinkedin: `${baseUrl}/api/posts/shareOnLinkedin`,
 	uploadDocument: `${baseUrl}/upload`,
 	getDocument: `${baseUrl}/documentation/getDocumentsByUser`,
 	getAllPosts: `${baseUrl}/api/posts/getposts`,
@@ -143,7 +144,9 @@ const API = Object.freeze({
 	addArticle: `${baseUrl}/article/add_article`,
 	subscription: `${baseUrl}/subscription/create_subscription`,
 	getPaymentDetail: `${baseUrl}/subscription/get_subscription`,
-	updateTopVoices: `${baseUrl}/users/updateTopVoice`
+	updateTopVoices: `${baseUrl}/users/updateTopVoice`,
+	getInshortNews: `${baseUrl}/news/inshortsNews`,
+	getMoreInshortNews: `${baseUrl}/news/inshortsNews/more`,
 });
 
 export default API;

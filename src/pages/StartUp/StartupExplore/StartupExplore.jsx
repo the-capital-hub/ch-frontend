@@ -271,7 +271,7 @@ const handleLoadPrevious = () => {
 	const handleBulkFormSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const parsedData = JSON.parse(bulkData); 
+			const parsedData = JSON.parse(bulkData); // Parse the JSON input
 			for (const entry of parsedData) {
 				let response;
 				switch (activeTab) {

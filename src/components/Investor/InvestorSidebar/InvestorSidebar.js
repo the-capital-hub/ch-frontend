@@ -1,45 +1,50 @@
 import React, { useState } from "react";
 import {
-	ProSidebar,
 	Menu,
 	MenuItem,
-	SubMenu,
+	ProSidebar,
 	SidebarHeader,
-	SidebarFooter,
 	SidebarContent,
+	SubMenu,
+	SidebarFooter,
 } from "react-pro-sidebar";
+import LogOutPopUp from "../../PopUp/LogOutPopUp/LogOutPopUp";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../Store/features/user/userSlice";
+import ModalBsLauncher from "../../PopUp/ModalBS/ModalBsLauncher/ModalBsLauncher";
+import { clearAllChatsData } from "../../../Store/features/chat/chatSlice";
+import OnboardingSwitch from "../InvestorNavbar/OnboardingSwitch/OnboardingSwitch";
+import { checkTopVoiceExpiry } from "../../../utils/utilityFunctions";
+
+// Icons
 import ArrowLeft from "../../../Images/investorsidebar/ArrowLeft.svg";
 import ArrowRight from "../../../Images/investorsidebar/ArrowRight.svg";
-import { IoSettingsOutline, IoNewspaper } from "react-icons/io5";
-import { GoHome } from "react-icons/go";
-import { PiSparkleLight, PiFloppyDiskBackLight } from "react-icons/pi";
-import { HiOutlineOfficeBuilding } from "react-icons/hi";
-import { IoExitOutline } from "react-icons/io5";
 import PlusIcon from "../../../Images/investorIcon/Plus.svg";
-import { BsLink45Deg, BsChevronDown, BsChevronUp } from "react-icons/bs";
-import { IoAnalyticsSharp } from "react-icons/io5";
-import { IoCalendarOutline } from "react-icons/io5";
-import { SlCalender } from "react-icons/sl";
-import { BsCalendarEvent, BsClipboardCheck, BsClock } from "react-icons/bs";
+import CommunitiesIcon from "../ChatComponents/CommunitiesIcon";
+import BatchImag from "../../../Images/tick-mark.png";
+import {
+	IoSettingsOutline,
+	IoNewspaper,
+	IoBookmarksOutline,
+	IoDocumentOutline,
+	IoLink,
+	IoAnalyticsSharp,
+	IoCalendarOutline,
+	IoExitOutline,
+	IoCompassOutline,
+} from "react-icons/io5";
+import { GoHome } from "react-icons/go";
+import { BsBook } from "react-icons/bs";
+import { FiHelpCircle } from "react-icons/fi";
+import { PiSparkleLight } from "react-icons/pi";
+import { RiShieldStarFill } from "react-icons/ri";
+import { HiOutlineUserPlus } from "react-icons/hi2";
+import { HiOutlineOfficeBuilding } from "react-icons/hi";
+import { BsChevronDown, BsChevronUp } from "react-icons/bs";
+
 import "react-pro-sidebar/dist/css/styles.css";
 import "./investorsidebar.scss";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import LogOutPopUp from "../../PopUp/LogOutPopUp/LogOutPopUp";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { logout } from "../../../Store/features/user/userSlice";
-import CommunitiesIcon from "../ChatComponents/CommunitiesIcon";
-import ModalBsLauncher from "../../PopUp/ModalBS/ModalBsLauncher/ModalBsLauncher";
-import { IoCompassOutline } from "react-icons/io5";
-import { HiOutlineDocumentText, HiOutlineUserPlus } from "react-icons/hi2";
-import { clearAllChatsData } from "../../../Store/features/chat/chatSlice";
-import { FiHelpCircle } from "react-icons/fi";
-import Batch from "../../Batch";
-import BatchImag from "../../../Images/tick-mark.png";
-import OnboardingSwitch from "../InvestorNavbar/OnboardingSwitch/OnboardingSwitch";
-import { BsBook } from "react-icons/bs";
-import { checkTopVoiceExpiry } from "../../../utils/utilityFunctions";
-import { RiShieldStarFill } from "react-icons/ri";
 
 // Startup Sidebar
 const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
@@ -189,9 +194,10 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 											<img
 												className="rounded-circle"
 												style={{
-													width: "98px",
-													height: "98px",
+													width: "100px",
+													height: "100px",
 													objectFit: "cover",
+													border: "2px solid transparent",
 												}}
 												src={loggedInUser.profilePicture}
 												alt="Profile"
@@ -199,6 +205,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 										</Link>
 									</div>
 
+<<<<<<< HEAD
 									<h3
 										style={{
 											display: "flex",
@@ -236,16 +243,68 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 													<RiShieldStarFill className="top-voice-icon" />
 													<span className="top-voice-text">Top Voice</span>
 												</span>
+=======
+									<div className="d-flex flex-column align-items-center">
+										<h3
+											style={{
+												display: "flex",
+												alignItems: "center",
+												background: loggedInUser?.isSubscribed
+													? "linear-gradient(180deg, #B68C3C 0%, #F4DD71 100%)"
+													: "none", // No background gradient if not subscribed
+												WebkitBackgroundClip: loggedInUser?.isSubscribed
+													? "text"
+													: "initial", // Apply gradient text effect only if subscribed
+												WebkitTextFillColor: loggedInUser?.isSubscribed
+													? "transparent"
+													: "var(--d-l-grey)", // Text color for subscribed vs non-subscribed
+												color: loggedInUser?.isSubscribed
+													? "transparent"
+													: "var(--d-l-grey)", // Fallback color for non-subscribed
+											}}
+										>
+											{loggedInUser?.firstName} {loggedInUser?.lastName}
+											{loggedInUser.isSubscribed && (
+												<img
+													src={BatchImag}
+													style={{
+														width: "1.2rem",
+														height: "1.2rem",
+														objectFit: "contain",
+														marginLeft: "0.5rem", // Optional: adds space between the name and the icon
+													}}
+													alt="Batch Icon"
+												/>
+>>>>>>> 70f2f6913de7df212380b1f28e39aad1ca882255
 											)}
-									</h3>
-
-									<h4>{loggedInUser?.userName}</h4>
+											{loggedInUser?.isTopVoice.status &&
+												checkTopVoiceExpiry(
+													loggedInUser?.isTopVoice.expiry
+												) && (
+													<span className="top-voice-badge">
+														<RiShieldStarFill className="top-voice-icon" />
+														<span className="top-voice-text">Top Voice</span>
+													</span>
+												)}
+										</h3>
+										<h4>{loggedInUser?.userName}</h4>
+									</div>
 								</>
 							)}
 						</div>
 					</SidebarHeader>
 					<SidebarContent>
 						<Menu iconShape="round">
+							{/* Onboarding switch for light and dark theme */}
+							<MenuItem>
+								{!sidebarCollapsed && (
+									<div className="d-flex justify-content-center align-items-center gap-2">
+										{/* mobile-onboarding */}
+										Dark <OnboardingSwitch /> Light
+									</div>
+								)}
+							</MenuItem>
+
 							<MenuItem>
 								<Link
 									to="home?showPopup=true"
@@ -264,6 +323,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									)}
 								</Link>
 							</MenuItem>
+
 							<MenuItem
 								active={location.pathname.includes("/home")}
 								className="active-item"
@@ -317,7 +377,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									id="sidebar_oneLink"
 									onClick={handleLinkClick}
 								>
-									<BsLink45Deg size={25} />
+									<IoLink size={25} />
 									{!sidebarCollapsed && <span>OneLink</span>}
 								</Link>
 							</MenuItem>
@@ -390,7 +450,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									id="sidebar_documentation"
 									onClick={handleLinkClick}
 								>
-									<HiOutlineDocumentText size={25} />
+									<IoDocumentOutline size={25} />
 									{!sidebarCollapsed && <span>Documentation</span>}
 								</Link>
 							</MenuItem>
@@ -403,7 +463,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									id="sidebar_savedPosts"
 									onClick={handleLinkClick}
 								>
-									<PiFloppyDiskBackLight size={25} />
+									<IoBookmarksOutline size={25} />
 									{!sidebarCollapsed && <span>Saved posts</span>}
 								</Link>
 							</MenuItem>
@@ -524,9 +584,16 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Learn More</span>}
 								</Link>
 							</MenuItem>
+
+							<MenuItem onClick={handleLogout}>
+								<div className="d-flex justify-content-center align-items-center">
+									<IoExitOutline size={25} />
+									{!sidebarCollapsed && <span>Log out</span>}
+								</div>
+							</MenuItem>
 						</Menu>
 					</SidebarContent>
-					<SidebarFooter>
+					{/* <SidebarFooter>
 						<Menu iconShape="round">
 							<MenuItem>
 								<div className="d-flex justify-content-center align-items-center mobile-onboarding">
@@ -540,7 +607,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 								</div>
 							</MenuItem>
 						</Menu>
-					</SidebarFooter>
+					</SidebarFooter> */}
 				</ProSidebar>
 			</div>
 			{showLogoutPopup && (

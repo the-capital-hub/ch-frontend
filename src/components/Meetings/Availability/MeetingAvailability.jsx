@@ -73,7 +73,7 @@ const AvailabilitySettings = () => {
 		}
 	};
 
-	console.log("theme", theme);
+	// console.log("theme", theme);
 
 	return (
 		<div
