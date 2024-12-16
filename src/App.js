@@ -43,10 +43,8 @@ function App() {
 
 		if (currentPlatform === "android" || currentPlatform === "ios") {
 			dispatch(setIsMobileApp(true));
-			console.log(`Running on ${currentPlatform}`);
 		} else {
 			dispatch(setIsMobileApp(false));
-			console.log("Not running on Android or iOS");
 		}
 
 		// Handle mobile size for web app
