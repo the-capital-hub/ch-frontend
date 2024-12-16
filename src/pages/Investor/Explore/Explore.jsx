@@ -1,5 +1,6 @@
 import "./Explore.scss";
 import { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import SmallProfileCard from "../../../components/Investor/InvestorGlobalCards/TwoSmallMyProfile/SmallProfileCard";
 // import Company from "../../../components/NewInvestor/Company/Company";
 import FilterBySelect from "../../../components/NewInvestor/FilterBySelect/FilterBySelect";
@@ -19,8 +20,12 @@ import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
 import { investorOnboardingSteps } from "../../../components/OnBoardUser/steps/investor";
 import TutorialTrigger from "../../../components/Shared/TutorialTrigger/TutorialTrigger";
 import { MdFilterAlt ,MdFilterAltOff } from "react-icons/md";
+import axios from 'axios'
+import { environment } from "../../../environments/environment";
+import { toast } from 'react-toastify';
+import Modal from 'react-bootstrap/Modal';
 
-
+const baseUrl = environment.baseUrl;
 const sectorOptions = [
   "Sector Agnostic",
   "B2B",
@@ -170,8 +175,12 @@ function Explore() {
   const [filteredData, setFilteredData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({});
   const userVisitCount = localStorage.getItem("userVisit");
   const abortControllerRef = useRef(null);
+
+  const loggedInUser = useSelector((state) => state.user.loggedInUser);
 
 
   useEffect(()=>{
@@ -196,6 +205,7 @@ function Explore() {
       ...filters,
       [name]: value,
     });
+    
   };
 
   const fetchFilters = async () => {
@@ -242,6 +252,8 @@ function Explore() {
         type: activeTab,
       });
       setFilteredData(data);
+      console.log("loggedInUser", loggedInUser)
+
     } catch (error) {
       console.log("Error fetching initial filtered results: ", error);
     } finally {
@@ -287,6 +299,49 @@ function Explore() {
     setActiveTab(tab);
     localStorage.setItem("activeTab", tab);
     localStorage.removeItem("filters");
+  };
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+  
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      let response;
+      switch(activeTab) {
+        case "Founder":
+          response = await axios.post(`${baseUrl}/users/createUser`, {
+            ...formData,
+            isInvestor: false
+          });
+          break;
+        case "Investor":
+          response = await axios.post(`${baseUrl}/users/createUser`, {
+            ...formData,
+            isInvestor: true
+          });
+          break;
+        case "Startup":
+          response = await axios.post(`${baseUrl}/startup/createStartup`, formData);
+          break;
+        case "VC":
+          response = await axios.post(`${baseUrl}/vc/createVc`, formData);
+          break;
+      }
+      
+      if(response.data) {
+        toast.success(`${activeTab} added successfully`);
+        setShowModal(false);
+        onSubmitFilters(); // Refresh the list
+      }
+    } catch (error) {
+      toast.error(`Error adding ${activeTab}`);
+      console.error(error);
+    }
   };
 
   return (
@@ -561,7 +616,70 @@ function Explore() {
         </section>
 
         {/* Filtered data list */}
+        
         <div className="filtered-results">
+        {loggedInUser?.isAdmin && (
+  <button 
+    className="btn-capital-admin ms-2"
+    onClick={() => setShowModal(true)}
+  >
+    Add {activeTab}
+  </button>
+)}
+
+{/* Modal */}
+<Modal show={showModal} onHide={() => setShowModal(false)} centered>
+  <Modal.Header closeButton>
+    <Modal.Title>Add New {activeTab}</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <form onSubmit={handleFormSubmit}>
+      {activeTab === "Founder" || activeTab === "Investor" ? (
+        <>
+          <div className="form-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="First Name"
+              name="firstName"
+              onChange={handleFormChange}
+            />
+          </div>
+          {/* Add other fields similarly */}
+        </>
+      ) : activeTab === "Startup" ? (
+        <>
+          <div className="form-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Company Name"
+              name="company"
+              onChange={handleFormChange}
+            />
+          </div>
+          {/* Add other startup fields */}
+        </>
+      ) : (
+        <>
+          <div className="form-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="VC Name"
+              name="name"
+              onChange={handleFormChange}
+            />
+          </div>
+          {/* Add other VC fields */}
+        </>
+      )}
+      <button type="submit" className="btn-capital w-100">
+        Submit
+      </button>
+    </form>
+  </Modal.Body>
+</Modal>
           {loading ? (
             <SpinnerBS
               className="container white-to-grey d-l-grey d-flex justify-content-center align-items-center p-5 rounded-4 shadow-sm"

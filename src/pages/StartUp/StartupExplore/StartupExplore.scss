@@ -104,3 +104,61 @@
     background-color: var(--white-to-grey);
   }
 }
+
+.btn-capital-admin {
+  background-color: rgba(253, 89, 1, 1);
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 8px 16px;
+  color: black;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: darken(rgba(253, 89, 1, 1), 5%);
+    transform: scale(0.98);
+  }
+}
+
+.modal {
+  .modal-content {
+    background: var(--white-to-grey);
+    border-radius: var(--border-radius);
+    .form-group {
+      h6 {
+        color: var(--d-l-grey);
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+      }
+      
+      textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+      
+      select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,...");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px 12px;
+      }
+    }
+    .modal-header {
+      border-bottom-color: rgba(0,0,0,0.1);
+    }
+    
+    .form-control {
+      background-color: var(--bs-light);
+      border: 1px solid rgba(0,0,0,0.1);
+      color: var(--d-l-grey);
+      border-radius: 5px;
+      padding: 10px;
+      
+      &:focus {
+        box-shadow: none;
+        border-color: rgba(253, 89, 1, 1);
+      }
+    }
+  }
+}

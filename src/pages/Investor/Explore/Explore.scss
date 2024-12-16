@@ -150,3 +150,41 @@
     margin-bottom: 20px;
   }
 }
+.btn-capital-admin {
+  background-color: #d3f36b;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 8px 16px;
+  color: black;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: darken(#d3f36b, 5%);
+    transform: scale(0.98);
+  }
+}
+
+.modal {
+  .modal-content {
+    background: var(--white-to-grey);
+    border-radius: var(--border-radius);
+    
+    .modal-header {
+      border-bottom-color: rgba(0,0,0,0.1);
+    }
+    
+    .form-control {
+      background-color: var(--bs-light);
+      border: 1px solid rgba(0,0,0,0.1);
+      color: var(--d-l-grey);
+      border-radius: 5px;
+      padding: 10px;
+      
+      &:focus {
+        box-shadow: none;
+        border-color: #d3f36b;
+      }
+    }
+  }
+}
