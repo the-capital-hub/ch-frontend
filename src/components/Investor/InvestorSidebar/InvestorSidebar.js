@@ -205,45 +205,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 										</Link>
 									</div>
 
-<<<<<<< HEAD
-									<h3
-										style={{
-											display: "flex",
-											alignItems: "center",
-											background: loggedInUser?.isSubscribed
-												? "linear-gradient(180deg, #B68C3C 0%, #F4DD71 100%)"
-												: "none", // No background gradient if not subscribed
-											WebkitBackgroundClip: loggedInUser?.isSubscribed
-												? "text"
-												: "initial", // Apply gradient text effect only if subscribed
-											WebkitTextFillColor: loggedInUser?.isSubscribed
-												? "transparent"
-												: "var(--d-l-grey)", // Text color for subscribed vs non-subscribed
-											color: loggedInUser?.isSubscribed
-												? "transparent"
-												: "var(--d-l-grey)", // Fallback color for non-subscribed
-										}}
-									>
-										{loggedInUser?.firstName} {loggedInUser?.lastName}
-										{loggedInUser.isSubscribed && (
-											<img
-												src={BatchImag}
-												style={{
-													width: "1.2rem",
-													height: "1.2rem",
-													objectFit: "contain",
-													marginLeft: "0.5rem", // Optional: adds space between the name and the icon
-												}}
-												alt="Batch Icon"
-											/>
-										)}
-										{loggedInUser?.isTopVoice?.status &&
-											checkTopVoiceExpiry(loggedInUser?.isTopVoice.expiry) && (
-												<span className="top-voice-badge">
-													<RiShieldStarFill className="top-voice-icon" />
-													<span className="top-voice-text">Top Voice</span>
-												</span>
-=======
 									<div className="d-flex flex-column align-items-center">
 										<h3
 											style={{
@@ -275,11 +236,10 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 													}}
 													alt="Batch Icon"
 												/>
->>>>>>> 70f2f6913de7df212380b1f28e39aad1ca882255
 											)}
-											{loggedInUser?.isTopVoice.status &&
+											{loggedInUser?.isTopVoice?.status &&
 												checkTopVoiceExpiry(
-													loggedInUser?.isTopVoice.expiry
+													loggedInUser?.isTopVoice?.expiry
 												) && (
 													<span className="top-voice-badge">
 														<RiShieldStarFill className="top-voice-icon" />
