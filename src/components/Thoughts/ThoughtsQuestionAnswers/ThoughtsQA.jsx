@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { selectTheme } from "../../../Store/features/design/designSlice";
 import { environment } from "../../../environments/environment";
 import { useUpvoteHandler } from "../UtilityFunction/upvoteDownvote";
+import Spinner from "../../Spinner/Spinner";
 const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 
@@ -20,6 +21,7 @@ const QAComponent = () => {
 	const [inputComment, setInputComment] = useState("");
 	const [isCommentsOpen, setIsCommentsOpen] = useState({});
 	const [activeTab, setActiveTab] = useState("posts");
+	const [loading, setLoading] = useState(true);
 	const [showCreatorDetails, setShowCreatorDetails] = useState(false);
 	const { id } = useParams();
 	const user = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -41,6 +43,7 @@ const QAComponent = () => {
 
 	const fetchQuestion = async () => {
 		try {
+			setLoading(true);
 			const response = await fetch(`${baseUrl}/thoughts/getQuestionById/${id}`);
 			const data = await response.json();
 			setQuestion(data.data.question);
@@ -48,6 +51,8 @@ const QAComponent = () => {
 			setPosts(data.data.posts);
 		} catch (error) {
 			console.error("Error fetching question:", error);
+		} finally {
+			setLoading(false);
 		}
 	};
 	useEffect(() => {
@@ -60,6 +65,7 @@ const QAComponent = () => {
 		// Send the inputText to the backend
 		// /addAnswerToQuestion/:questionId
 		try {
+			setLoading(true);
 			fetch(`${baseUrl}/thoughts/addAnswerToQuestion/${id}`, {
 				method: "POST",
 				headers: {
@@ -75,8 +81,10 @@ const QAComponent = () => {
 			});
 		} catch (error) {
 			console.error("Error sending answer:", error);
+		} finally {
+			setInputText("");
+			setLoading(false);
 		}
-		setInputText("");
 	};
 
 	const openComments = (answerId) => {
@@ -110,8 +118,10 @@ const QAComponent = () => {
 			});
 		} catch (error) {
 			console.error("Error sending suggestion:", error);
+		} finally {
+			setInputComment("");
+			setLoading(false);
 		}
-		setInputComment("");
 	};
 
 	const dummyPosts = [
@@ -142,6 +152,10 @@ const QAComponent = () => {
 				"What are the key metrics investors look for in a startup's UI/UX?",
 		},
 	];
+
+	if (loading) {
+		return <Spinner className="thoughts-qa-spinner" />;
+	}
 
 	return (
 		<div
