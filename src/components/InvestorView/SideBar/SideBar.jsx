@@ -31,6 +31,7 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
   const [expandedPitch, setExpandedPitch] = useState(false);
+  const [logoVisible, setLogoVisible] = useState(true);
 
   useEffect(() => {
     getUserById(username, userId)
@@ -82,11 +83,9 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
           <ProSidebar collapsed={sidebarCollapsed}>
             <SidebarHeader>
               <div className="logotext">
-                {sidebarCollapsed ? (
-                  <img src={user.profilePicture} alt="user profile" />
-                ) : (
+                <img src={user.profilePicture} alt="user profile" />
+                {sidebarCollapsed ? null : (
                   <>
-                    <img src={user.profilePicture} alt="user profile" />
                     <h3 className="fs-6 mt-2">
                       {user?.firstName} {user?.lastName}
                     </h3>
