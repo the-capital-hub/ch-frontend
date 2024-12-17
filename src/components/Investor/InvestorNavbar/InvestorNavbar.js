@@ -140,7 +140,7 @@ const InvestorNavbar = (props) => {
                     }}
                   />
                 )}
-                <h1 className="ms-2 text-break">{pageTitle}</h1>
+                <h1 className="ms-2 text-break">{props.pageTitle || pageTitle}</h1>
               </div>
             </div>
           </div>

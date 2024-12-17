@@ -13,6 +13,8 @@ import "../../Investor/InvestorSidebar/investorsidebar.scss";
 import "./SideBar.scss";
 import MobileNavbar from "../../Shared/MobileNavbar/MobileNavbar";
 import MobileOneLinkNavbar from "../../Shared/MobileOnelinkNavbar/MobileOneLinkNavbar";
+import { FaMicrophoneAlt } from "react-icons/fa";
+
 
 const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
   const isMobileView = useSelector((state) => state.design.isMobileView);
@@ -28,6 +30,7 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
+  const [expandedPitch, setExpandedPitch] = useState(false);
 
   useEffect(() => {
     getUserById(username, userId)
@@ -53,8 +56,15 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
     { label: "Profile", icon: <IconUser height={25} width={25} />, path: "profile", tab: "profile" },
     { label: "Updates", icon: <IconFile width={25} height={25} />, path: "onepager", tab: "onepager" },
     { label: "Doc", icon: <IoDocumentsOutline size={25} />, path: "documentation", tab: "documentation" },
+    { 
+      label: "Pitch Section", 
+      icon: <FaMicrophoneAlt size={25} />, 
+      path: "", 
+      tab: "pitch", 
+      expandable: true
+    },
     { label: "Invest", icon: <RiMoneyDollarCircleLine size={!isMobileView ? "25" : "65"} />, path: "investnow", tab: "investnow", className: "invest-now" },
-
+    
   ];
 
   return (
@@ -88,21 +98,56 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
             <SidebarContent>
               <Menu iconShape="round">
                 {menuItems.map((item) => (
-                  <MenuItem
-                    key={item.tab}
-                    active={currentTab === item.tab}
-                    className={`active-item ${item.className || ""}`}
-                    onClick={() => setCurrentTab(item.tab)}
-                  >
-                    <Link to={item.path}>
-                      {item.icon}
-                      {!sidebarCollapsed && (
-                        <span className={currentTab === item.tab ? "items-active" : ""}>
-                          {item.label}
-                        </span>
-                      )}
-                    </Link>
-                  </MenuItem>
+                  <div key={item.tab}>
+                    <MenuItem
+                      active={currentTab === item.tab}
+                      className={`active-item ${item.className || ""}`}
+                      onClick={() => {
+                        if (item.expandable) {
+                          setExpandedPitch(!expandedPitch);
+                        } else {
+                          setCurrentTab(item.tab);
+                        }
+                      }}
+                    >
+                      <Link to={item.path}>
+                        {item.icon}
+                        {!sidebarCollapsed && (
+                          <span className={currentTab === item.tab ? "items-active" : ""}>
+                            {item.label}
+                          </span>
+                        )}
+                      </Link>
+                    </MenuItem>
+                    {expandedPitch && item.tab === "pitch" && (
+                      <div className="sub-menu">
+                        <MenuItem
+                          active={currentTab === "pitchRecordings" || (sidebarCollapsed && currentTab === "pitch")}
+                          onClick={() => {
+                            setCurrentTab("pitchRecordings");
+                            setExpandedPitch(false);
+                          }}
+                        >
+                          <Link to="documentation/onelinkpitch">
+                            <IoDocumentsOutline size={20} />
+                            {!sidebarCollapsed && <span>Pitch Recordings</span>}
+                          </Link>
+                        </MenuItem>
+                        <MenuItem
+                          active={currentTab === "pitchDays" || (sidebarCollapsed && currentTab === "pitch")}
+                          onClick={() => {
+                            setCurrentTab("pitchDays");
+                            setExpandedPitch(false);
+                          }}
+                        >
+                          <Link to="pitchdays">
+                            <IoDocumentsOutline size={20} />
+                            {!sidebarCollapsed && <span>Pitch Days</span>}
+                          </Link>
+                        </MenuItem>
+                      </div>
+                    )}
+                  </div>
                 ))}
               </Menu>
             </SidebarContent>

@@ -419,12 +419,13 @@ const FeedPostCard = ({
 
 	const repostContainerRef = useRef(null);
 
-	const reportSubmitHandler = () => {
-		setFilingReport(true);
-		setTimeout(() => {
-			setFilingReport(false);
-			setShowReportModal(false);
-		}, 2000);
+	const [showReportSuccess, setShowReportSuccess] = useState(false);
+
+	const reportSubmitHandler = (e) => {
+		e.preventDefault();
+		setFilingReport(false);
+		setShowReportModal(false);
+		setShowReportSuccess(true);
 	};
 
 	const [showFeaturedPostSuccess, setShowFeaturedPostSuccess] = useState(false);
@@ -1474,6 +1475,16 @@ const FeedPostCard = ({
 						successText="The post has been added as a company updates."
 					/>
 				)}
+				{showReportSuccess && (
+					<AfterSuccessPopUp
+						withoutOkButton
+						onClose={(e) => {
+							e.stopPropagation()
+							setShowReportSuccess(false)
+						}}
+						successText="Report submitted successfully"
+					/>
+				)}
 				{/* {connectionSent && !isInvestorAccount && (
 					<AfterSuccessPopup
 						withoutOkButton
@@ -1629,14 +1640,22 @@ const FeedPostCard = ({
 				<ModalBSFooter cancel cancelClass="cancel_button btn">
 					{!filingReport ? (
 						<button
-							type="submit"
+							type="button"
 							className="submit_button btn"
-							onClick={reportSubmitHandler}
+							onClick={(e) => {
+								e.stopPropagation();
+								e.preventDefault();
+								reportSubmitHandler(e);
+							}}
 						>
 							Submit report
 						</button>
 					) : (
-						<button className="submit_button btn" type="button" disabled>
+						<button className="submit_button btn" type="button" onClick={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
+							reportSubmitHandler(e);
+						}} disabled>
 							<span role="status" className="me-1">
 								Submit report
 							</span>

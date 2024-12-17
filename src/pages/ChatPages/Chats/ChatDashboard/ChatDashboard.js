@@ -16,7 +16,7 @@ import OtherMessage from "../../../../components/Investor/ChatComponents/ChatMes
 import { formatMessages } from "../../../../utils/ChatsHelpers";
 import TCHLogoLoader from "../../../../components/Shared/TCHLoaders/TCHLogoLoader/TCHLogoLoader";
 import { selectLoggedInUserId } from "../../../../Store/features/user/userSlice";
-
+import NavBar from "../../../../components/NewInvestor/NavBar/NavBar";
 const ChatDashboard = ({ setSendMessage, recieveMessage, cleared }) => {
   // Fetch global state
   const loggedInUserId = useSelector(selectLoggedInUserId);
@@ -99,6 +99,7 @@ const ChatDashboard = ({ setSendMessage, recieveMessage, cleared }) => {
 
   const formattedMessages = formatMessages(messages, loggedInUserId);
   return (
+    <>
     <div className="chat_dashboard_container">
       <div className="chat_messages_group" ref={chatMessagesContainerRef}>
         {loading ? (
@@ -183,7 +184,9 @@ const ChatDashboard = ({ setSendMessage, recieveMessage, cleared }) => {
         ""
       )}
     </div>
+  </>
   );
+  
 };
 
 export default ChatDashboard;

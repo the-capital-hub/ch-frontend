@@ -48,6 +48,8 @@ import { fetchAllChats } from "../../../Store/features/chat/chatThunks";
 import TCHLogoLoader from "../../../components/Shared/TCHLoaders/TCHLogoLoader/TCHLogoLoader";
 import { selectTheme } from "../../../Store/features/design/designSlice";
 import { Toaster } from "react-hot-toast";
+import NavBar from "../../../components/NewInvestor/NavBar/NavBar";
+import InvestorNavbar from "../../../components/Investor/InvestorNavbar/InvestorNavbar";
 
 const Chats = () => {
   // search params
@@ -299,6 +301,7 @@ const Chats = () => {
   ]);
 
   return allChatsStatus === "loading" ? (
+    
     <div
       className="d-flex flex-column align-items-center justify-content-center"
       style={{ minHeight: "100dvh", backgroundColor: "var(--startup-bg)" }}
@@ -318,9 +321,9 @@ const Chats = () => {
         isChatPage={true}
         theme={theme}
       />
-
       <div className="chat-page-wrapper" data-bs-theme={theme}>
-        <div className="container-xxl p-0 chat_main_container position-relative fadeIn-025">
+      <InvestorNavbar pageTitle = {"Chats"} />
+        <div className="container-xxl p-0 chat_main_container position-relative fadeIn-025" style={{ height: 'calc(100vh - 5.8rem)', margin:"5.8rem", overflow: 'hidden' }}>
           {/* Left section */}
           <div
             className={`left_section_wrapper mx-3 ${isMobileView && "d-none"}`}
@@ -355,7 +358,7 @@ const Chats = () => {
             </section>
           </div>
           {/* Main Chat section */}
-          <section className="main_section">
+          <section className="main_section" style={{ height: '100%', overflowY: 'auto' }}>
             {/* {isMobileView && renderMobileHeader} */}
             {isMobileView ? (
               chatId ? (

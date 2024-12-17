@@ -36,7 +36,7 @@ import Modal from 'react-bootstrap/Modal'; // Import Modal
 import { toast } from 'react-toastify'; // Import toast for notifications
 import axios from 'axios'; // Import axios for API calls
 import { environment } from "../../../environments/environment"; // Import environment for base URL
-
+import { useSelector } from "react-redux";
 const baseUrl = environment.baseUrl; // Define base URL for API calls
 
 export default function StartupExplore() {
@@ -59,6 +59,8 @@ const [currentPage, setCurrentPage] = useState(1);
 const [showModal, setShowModal] = useState(false); // State for modal visibility
 const [formData, setFormData] = useState({}); // State for form data
 const [bulkData, setBulkData] = useState(""); // State for bulk JSON data
+
+const loggedInUser = useSelector((state) => state.user.loggedInUser);
 
 	useEffect(() => {
 		if (Number(userVisitCount) <= 1) {
@@ -313,13 +315,13 @@ const handleLoadPrevious = () => {
 				<TutorialTrigger steps={startupOnboardingSteps.explorePage} />
 
 				{/* Add Button */}
-				<button 
+			{loggedInUser.isAdmin &&	<button 
 					className="btn-capital-admin ms-2"
 					onClick={() => setShowModal(true)}
 					style={{color: 'white'}}
 				>
 					Add {activeTab}
-				</button>
+				</button> }
 
 				{/* Modal */}
 				<Modal show={showModal} onHide={() => setShowModal(false)} centered>
