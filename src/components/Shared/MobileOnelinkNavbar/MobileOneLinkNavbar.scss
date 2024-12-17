@@ -5,6 +5,7 @@
   transform: translateX(50%);
   box-sizing: border-box;
   background: var(--white-to-dgrey);
+  z-index: 99;
 
   .nav-link-text {
     font-size: 9px;

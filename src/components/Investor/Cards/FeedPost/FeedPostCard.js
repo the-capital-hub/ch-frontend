@@ -61,6 +61,8 @@ import { setRecommendations } from "../../../../Store/features/user/userSlice";
 import SharePopup from "../../../PopUp/SocialSharePopup/SharePopup";
 import { checkTopVoiceExpiry } from "../../../../utils/utilityFunctions";
 import { RiShieldStarFill } from "react-icons/ri";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const FeedPostCard = ({
 	postId,
@@ -114,6 +116,8 @@ const FeedPostCard = ({
 	const [likeModal, setLikeModal] = useState(false);
 	const [activeHeader, setActiveHeader] = useState(true);
 	const [connectionSent, setConnectionSent] = useState(false);
+	const [connectionMessageSuccess, setConnectionMessageSuccess] =
+		useState(false);
 	const [sharePopupOpen, setSharePopupOpen] = useState(false);
 	const [socialUrl, setSocialUrl] = useState("");
 	const theme = useSelector(selectTheme);
@@ -125,7 +129,6 @@ const FeedPostCard = ({
 	// Initialize localPollOptions with pollOptions
 	const [localPollOptions, setLocalPollOptions] = useState(pollOptions || []);
 	const [isVoting, setIsVoting] = useState(false);
-
 
 	// Log state changes for debugging
 	// useEffect(() => {
@@ -143,23 +146,67 @@ const FeedPostCard = ({
 		}
 	}, [pollOptions]);
 
-	const handleConnect = (userId) => {
-		sentConnectionRequest(loggedInUser._id, userId)
-			.then(({ data }) => {
-				setConnectionSent(true);
-				setTimeout(() => setConnectionSent(false), 2500);
-				setLoading(true);
-				getRecommendations(loggedInUser._id)
-					.then(({ data }) => {
-						dispatch(setRecommendations(data.slice(0, 5)));
-						setLoading(false);
-					})
-					.catch(() => {
-						dispatch(setRecommendations({}));
-						setLoading(false);
-					});
-			})
-			.catch((error) => console.log(error));
+	// const handleConnect = (userId) => {
+	// 	sentConnectionRequest(loggedInUser._id, userId)
+	// 		.then(({ data }) => {
+	// 			setConnectionSent(true);
+	// 			setTimeout(() => setConnectionSent(false), 2500);
+	// 			setLoading(true);
+	// 			getRecommendations(loggedInUser._id)
+	// 				.then(({ data }) => {
+	// 					dispatch(setRecommendations(data.slice(0, 5)));
+	// 					setLoading(false);
+	// 				})
+	// 				.catch(() => {
+	// 					dispatch(setRecommendations({}));
+	// 					setLoading(false);
+	// 				});
+	// 		})
+	// 		.catch((error) => console.log(error));
+	// };
+
+	const handleConnect = async (userId) => {
+		try {
+			const { data } = await sentConnectionRequest(loggedInUser._id, userId);
+
+			// Replace previous connectionSent logic with toast
+			// toast.success(`Connection request sent to ${firstName} ${lastName}`, {
+			// 	position: "top-center",
+			// 	autoClose: 3000,
+			// 	hideProgressBar: false,
+			// 	closeOnClick: true,
+			// 	pauseOnHover: true,
+			// });
+
+			setConnectionSent(true);
+			setConnectionMessageSuccess(true);
+			setTimeout(() => setConnectionMessageSuccess(false), 2500);
+			setLoading(true);
+
+			try {
+				const recommendationsResponse = await getRecommendations(
+					loggedInUser._id
+				);
+				dispatch(setRecommendations(recommendationsResponse.data.slice(0, 5)));
+			} catch (error) {
+				dispatch(setRecommendations({}));
+			} finally {
+				setLoading(false);
+			}
+		} catch (error) {
+			// Add error toast if connection request fails
+			// toast.error(
+			// 	`Failed to send connection request to ${firstName} ${lastName}`,
+			// 	{
+			// 		position: "top-center",
+			// 		autoClose: 3000,
+			// 		hideProgressBar: false,
+			// 		closeOnClick: true,
+			// 		pauseOnHover: true,
+			// 	}
+			// );
+			console.log(error);
+		}
 	};
 
 	useEffect(() => {
@@ -440,10 +487,9 @@ const FeedPostCard = ({
 
 	const handleAddToFeatured = async (postId) => {
 		try {
-
 			if (isFeatured) {
 				// Remove from featured
-				
+
 				const response = await removeFromFeaturedPost(postId); // Assuming this function exists
 				if (response.status === 200) {
 					setIsFeatured(false);
@@ -617,6 +663,14 @@ const FeedPostCard = ({
 							<div className="spinner-border" role="status">
 								<span className="visually-hidden">Loading...</span>
 							</div>
+						</div>
+					)}
+					{connectionMessageSuccess && (
+						<div className="d-flex justify-content-center my-2">
+							<span className="text-success">
+								You have sent a connection request to{" "}
+								{firstName + " " + lastName}
+							</span>
 						</div>
 					)}
 					<div className="feed_header_container pb-2 ">
@@ -1001,8 +1055,7 @@ const FeedPostCard = ({
 											<div
 												className="d-flex  align-items-center justify-content-end
                        gap-1"
-					   onClick={likeUnlikeHandler}
-
+												onClick={likeUnlikeHandler}
 											>
 												<img
 													src={fireIcon}
@@ -1011,7 +1064,11 @@ const FeedPostCard = ({
 													style={{ cursor: "pointer" }}
 												/>
 												<p
-													style={{ color: "var(--d-l-grey)", fontSize: "10px", cursor: "pointer" }}
+													style={{
+														color: "var(--d-l-grey)",
+														fontSize: "10px",
+														cursor: "pointer",
+													}}
 													className="m-0"
 												>
 													Like
@@ -1021,14 +1078,17 @@ const FeedPostCard = ({
 											<div
 												className="d-flex align-items-center justify-content-end
                        gap-1"
-					   onClick={likeUnlikeHandler}
-
+												onClick={likeUnlikeHandler}
 											>
 												<ImFire
 													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
 												/>
 												<p
-													style={{ color: "var(--d-l-grey)", fontSize: "10px" ,cursor: "pointer"}}
+													style={{
+														color: "var(--d-l-grey)",
+														fontSize: "10px",
+														cursor: "pointer",
+													}}
 													className="m-0"
 												>
 													Like
@@ -1041,15 +1101,18 @@ const FeedPostCard = ({
 											<div
 												className="d-flex align-items-center justify-content-end
                        gap-1"
-					   onClick={() => setShowComment((prev) => !prev)}
-
+												onClick={() => setShowComment((prev) => !prev)}
 											>
 												<FaRegCommentDots
 													size={20}
 													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
 												/>
 												<p
-													style={{ color: "var(--d-l-grey)", fontSize: "10px", cursor: "pointer" }}
+													style={{
+														color: "var(--d-l-grey)",
+														fontSize: "10px",
+														cursor: "pointer",
+													}}
 													className="m-0"
 												>
 													Comment
@@ -1059,15 +1122,18 @@ const FeedPostCard = ({
 											<div
 												className="d-flex align-items-center justify-content-end
                        gap-1"
-					   onClick={() => setShowComment((prev) => !prev)}
-
+												onClick={() => setShowComment((prev) => !prev)}
 											>
 												<FaCommentDots
 													size={20}
 													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
 												/>
 												<p
-													style={{ color: "var(--d-l-grey)", fontSize: "10px" , cursor: "pointer"}}
+													style={{
+														color: "var(--d-l-grey)",
+														fontSize: "10px",
+														cursor: "pointer",
+													}}
 													className="m-0"
 												>
 													Comment
@@ -1174,15 +1240,18 @@ const FeedPostCard = ({
 										<div
 											className="d-flex align-items-center
 											 gap-1"
-											 onClick={handleOpenSocialShare}
-
+											onClick={handleOpenSocialShare}
 										>
 											<FaShare
 												size={20}
 												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
 											/>
 											<p
-												style={{ color: "var(--d-l-grey)", fontSize: "10px", cursor: "pointer" }}
+												style={{
+													color: "var(--d-l-grey)",
+													fontSize: "10px",
+													cursor: "pointer",
+												}}
 												className="m-0"
 											>
 												Share
@@ -1194,15 +1263,18 @@ const FeedPostCard = ({
 											<div
 												className="d-flex align-items-center justify-content-end
                        gap-1"
-					   onClick={handleUnsavePost}
-
+												onClick={handleUnsavePost}
 											>
 												<IoMdBookmark
 													size={20}
 													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
 												/>
 												<p
-													style={{ color: "var(--d-l-grey)", fontSize: "10px", cursor: "pointer" }}
+													style={{
+														color: "var(--d-l-grey)",
+														fontSize: "10px",
+														cursor: "pointer",
+													}}
 													className="m-0"
 												>
 													Save
@@ -1212,15 +1284,18 @@ const FeedPostCard = ({
 											<div
 												className="d-flex align-items-center justify-content-end
                     gap-1"
-					onClick={handleSavePopUp}
-
+												onClick={handleSavePopUp}
 											>
 												<CiBookmark
 													size={20}
 													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
 												/>
 												<p
-													style={{ color: "var(--d-l-grey)", fontSize: "10px",  cursor: "pointer" }}
+													style={{
+														color: "var(--d-l-grey)",
+														fontSize: "10px",
+														cursor: "pointer",
+													}}
 													className="m-0"
 												>
 													Save
@@ -1474,14 +1549,14 @@ const FeedPostCard = ({
 						successText="The post has been added as a company updates."
 					/>
 				)}
-				{/* {connectionSent && !isInvestorAccount && (
-					<AfterSuccessPopup
+				{/* {connectionSent && (
+					<AfterSuccessPopUp
 						withoutOkButton
 						onClose={() => setConnectionSent(false)}
 						successText="Connection Sent Successfully"
 					/>
-				)}
-				{connectionSent && isInvestorAccount && (
+				)} */}
+				{/* {connectionSent && isInvestorAccount && (
 					<InvestorAfterSuccessPopUp
 						withoutOkButton
 						onClose={() => setConnectionSent(false)}
@@ -1648,6 +1723,8 @@ const FeedPostCard = ({
 					)}
 				</ModalBSFooter>
 			</ModalBSContainer>
+
+			<ToastContainer />
 
 			<SharePopup
 				postId={postId}
