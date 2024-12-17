@@ -100,9 +100,9 @@ const HalfbendCard = ({ folderName, userId }) => {
   };
 
   return (
-    <div className="half_bend_container row">
+    <div className="half_bend_container row rowWidth">
       <div className="box_container mt-4">
-        <div className="row">
+        <div className="row rowWidth">
           {loading && (
             <SpinnerBS
               className="d-flex py-5 justify-content-center align-items-center w-100"
