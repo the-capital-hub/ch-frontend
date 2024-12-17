@@ -1242,7 +1242,7 @@ const FeedPostCard = ({
 											<img
 												src={loggedInUser.profilePicture}
 												alt="Logo"
-												// className="border border-light"
+												
 											/>
 											{/* </div> */}
 											<section className="input_and_logo_section">
