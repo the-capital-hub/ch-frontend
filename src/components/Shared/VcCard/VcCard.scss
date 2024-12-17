@@ -1,212 +1,224 @@
+/* General Styles (Desktop Unchanged) */
 .vc-card {
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  color: #fff;
-  margin-top: 2%;
-  background: var(--white-to-grey);
-
-  .header {
-      width: 100%;
-      height: 50%;
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      padding: 10px;
-      border-bottom: 2px solid #686666;
-
-      .vc-logo {
-          height: 7rem !important;
-          max-width: 7rem;
-          margin-right: 10px;
-          border-radius: 10%;
-          object-fit: contain;
-          background-color: #ececec;
-      }
-
-      .vc-info {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-
-          h4 {
-              margin-top: 5%;
-          }
-
-          h5 {
-              margin: 0 !important;
-              width: 100%;
-          }
-
-          p {
-              margin: 2px 0;
-          }
-      }
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    color: #fff;
+    margin-top: 2%;
+    background: var(--white-to-grey);
+  }
+  
+  .vc-card .header {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 10px;
+    border-bottom: 2px solid #686666;
+  }
+  
+  .vc-card .header .vc-logo {
+    height: 7rem !important;
+    max-width: 7rem;
+    margin-right: 10px;
+    border-radius: 10%;
+    object-fit: contain;
+    background-color: #ececec;
+  }
+  
+  .vc-card .header .vc-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    color: var(--bs-heading-color);
+  }
+  
+  .vc-card .header .vc-info h4 {
+    margin-top: 5%;
   }
 
-  .stage-focus {
-      display: flex;
-      flex-wrap: wrap;
-      width: 50%;
-      height: 100%;
-      padding: 10px;
-      overflow: hidden;
-
-      h5 {
-          width: 100%;
-          margin: 10px 0;
-      }
-
-      .bubble {
-          background-color: #632AA9;
-          color: #fff;
-          border-radius: 12px;
-          padding: 5px 10px;
-          margin: 5px;
-          font-size: 1.2em;
-      }
+  .vc-card .header .vc-info h3 {
+    margin-top: 5%;
+    color:var(--d-l-grey);
   }
 
-  .stage-sector-info {
-      display: flex;
-      flex-direction: row;
-      height: calc(50% - 50px);
-
+  
+  .vc-card .header .vc-info h5 {
+    margin: 0 !important;
+    width: 100%;
+  }
+  
+  .vc-card .header .vc-info p {
+    margin: 2px 0;
+    color:var(--d-l-grey);
+    
+  }
+  
+  .vc-card .stage-focus,
+  .vc-card .sector-focus {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+  
+  .vc-card .stage-focus h5,
+  .vc-card .sector-focus h5 {
+    width: 100%;
+    margin: 10px 0;
+    color:var(--d-l-grey);
+  }
+  
+  .vc-card .stage-focus .bubble,
+  .vc-card .sector-focus .bubble {
+    background-color: #632AA9;
+    color: #fff;
+    border-radius: 12px;
+    padding: 5px 10px;
+    margin: 5px;
+    font-size: 1.2em;
+  }
+  
+  .vc-card .ticket-size {
+    font-weight: bold;
+    margin-right: 10%;
+    font-size: larger;
+    color:var(--d-l-grey);
   }
 
-  .sector-focus {
-      display: flex;
-      flex-wrap: wrap;
-      width: 50%;
-      height: auto;
-      overflow: hidden;
-      padding: 10px;
-      border-left: 2px solid #686666 ;
-
-
-      h5 {
-          width: 100%;
-          margin: 10px 0;
-      }
-
-      .bubble {
-          background-color: #632AA9;
-          color: #fff;
-          border-radius: 12px;
-          padding: 5px 10px;
-          margin: 5px;
-          font-size: 1.2em;
-      }
+  @media (max-width: 768px) {
+    .vc-card .ticket-size {
+      margin-right: 0; /* Remove margin-right for mobile */
+    }
   }
-}
 
-.ticket-size {
-  font-weight: bold;
-  margin-right: 10%;
-  font-size: larger;
-}
-
-.know-more{
+  
+  .vc-card .know-more {
     background-color: #632AA9;
     color: white;
     border-radius: 20px;
     padding: 10px;
     margin-right: 1%;
-}
-
-.info {
-  color: #686666;
-}
-
-/* Media Queries for responsiveness */
-
-/* For tablets and small screens */
-@media (max-width: 1024px) {
-  .vc-card {
-      height: auto; /* Make the card height dynamic */
   }
-
-  .stage-focus, .sector-focus {
-      width: 100%; /* Make both sections take full width */
-      border-right: none; /* Remove border for smaller screens */
-      border-bottom: 2px solid #686666; /* Add bottom border */
+  
+  .info {
+    color: #686666;
   }
+  
+  /* Responsive Adjustments */
+  
+  /* For tablets and small screens */
+  @media (max-width: 1024px) {
+    .vc-card {
+      height: auto; /* Make card height dynamic */
+    }
+  
+    .stage-focus,
+    .sector-focus {
+      width: 100%; /* Full width for both sections */
+      border-right: none; /* Remove borders for tablets */
+      border-bottom: 2px solid #686666; /* Add a bottom border */
+      padding: 10px; /* Maintain spacing */
+      color:var(--d-l-grey);
 
-  .stage-sector-info {
-      flex-direction: column; /* Stack the sections vertically */
-  }
-
-  .header .vc-logo {
+    }
+  
+    .stage-sector-info {
+      flex-direction: column; /* Stack sections vertically */
+    }
+  
+    .header .vc-logo {
       max-width: 15%; /* Slightly smaller logo for tablets */
-  }
+    }
 
-  .header .vc-info h4, .header .vc-info h5 {
-      font-size: 1em; /* Adjust heading size */
-  }
-}
+    .header .vc-info p,
+    .header .vc-info h3 {
+        color:var(--d-l-grey)/* Adjust font size */
+    }
 
-/* For mobile phones */
-@media (max-width: 768px) {
-  .vc-card {
-      height: auto; /* Allow dynamic height for mobile */
-      flex-direction: column; /* Stack everything vertically */
-  }
+  
+    .header .vc-info h4,
+    .header .vc-info h5 {
+      font-size: 1em; /* Adjust font size */
+      color:var(--d-l-grey);
+    }
 
-  .header {
-      flex-direction: column; /* Stack logo and info vertically */
+    
+  }
+  
+  /* For mobile phones */
+  @media (max-width: 768px) {
+    .vc-card {
+      flex-direction: column; /* Stack elements vertically */
+      height: auto;
+    }
+  
+    .header {
+      flex-direction: column; /* Align logo and text vertically */
       align-items: flex-start;
-  }
-
-  .header .vc-logo {
-      height: 50%; /* Adjust logo size */
-      max-width: 25%; /* Reduce width on mobile */
+      padding: 10px;
+    }
+  
+    .header .vc-logo {
+      height: auto;
+      max-width: 25%; /* Reduce size for mobile */
       margin-bottom: 10px;
-  }
-
-  .header .vc-info h4, .header .vc-info h5 {
-      font-size: 0.9em; /* Adjust heading size for mobile */
-  }
-
-  .stage-focus, .sector-focus {
+    }
+  
+    .header .vc-info h4,
+    .header .vc-info h5 {
+      font-size: 0.9em; /* Adjust heading size */
+    }
+  
+    .stage-focus,
+    .sector-focus {
       width: 100%; /* Full width for both sections */
       border: none; /* Remove borders */
+      padding: 5px; /* Compact padding */
+    }
+  
+    .bubble {
+      font-size: 1em; /* Smaller bubbles */
+      padding: 4px 8px; /* Adjust bubble padding */
+    }
+  
+    .know-more {
+      display: none; /* Hide 'know more' button */
+    }
   }
-
-  .bubble {
-      font-size: 1em; /* Reduce bubble font size for smaller screens */
-  }
-}
-
-/* For very small mobile screens */
-@media (max-width: 480px) {
-  .vc-card {
-      height: auto; /* Dynamic height */
-  }
-
-  .header {
-      padding: 5px; /* Reduce padding */
-  }
-
-  .header .vc-logo {
-      height: 40%; /* Adjust logo size for small screens */
-      max-width: 30%;
-  }
-
-  .header .vc-info h4, .header .vc-info h5 {
-      font-size: 0.8em; /* Further reduce font size */
-  }
-
-  .stage-focus, .sector-focus {
+  
+  /* For very small mobile screens */
+  @media (max-width: 480px) {
+    .vc-card {
+      padding: 5px; /* Reduce padding for extra-small devices */
+    }
+  
+    .header {
+      padding: 5px;
+    }
+  
+    .header .vc-logo {
+      max-width: 35%; /* Further reduce logo size */
+    }
+  
+    .header .vc-info h4,
+    .header .vc-info h5 {
+      font-size: 0.8em; /* Scale down headings */
+    }
+  
+    .stage-focus,
+    .sector-focus {
       width: 100%; /* Full width for both sections */
-      padding: 5px; /* Reduce padding */
+      padding: 5px; /* Compact padding */
+    }
+  
+    .bubble {
+      font-size: 0.8em; /* Further reduce bubble font size */
+      padding: 3px 6px;
+    }
   }
-
-  .bubble {
-      font-size: 0.9em; /* Smaller bubble font */
-      padding: 3px 8px; /* Adjust padding */
-  }
-}
+  
