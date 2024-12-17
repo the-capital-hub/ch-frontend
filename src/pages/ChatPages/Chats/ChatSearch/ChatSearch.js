@@ -41,7 +41,7 @@ const ChatSearch = () => {
   return (
     <>
      <div className="chat_search_container">
-     <div className="theme_switch_chat"><OnboardingSwitch/></div>
+     {/* <div className="theme_switch_chat"><OnboardingSwitch/></div> */}
         <h1 className="chat_title">Chats</h1>
         <div className="inputs">
           <div className="search_chat">

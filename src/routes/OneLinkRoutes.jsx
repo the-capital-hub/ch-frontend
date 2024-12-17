@@ -14,6 +14,8 @@ const DocumentationIV = lazy(() =>
 const InvestNow = lazy(() =>
   import("../pages/InvestorView/InvestNow/InvestNow")
 );
+const PitchDays = lazy(() => import("../pages/InvestorView/PitchDays/PitchDays"));
+
 
 function OneLinkRoutes() {
   return (
@@ -63,6 +65,14 @@ function OneLinkRoutes() {
         element={
           <Suspense fallback={<SuspenseLoader />}>
             <FolderContents />
+          </Suspense>
+        }
+      />
+      <Route
+        path="pitchdays"
+        element={
+          <Suspense fallback={<SuspenseLoader />}>
+            <PitchDays />
           </Suspense>
         }
       />
