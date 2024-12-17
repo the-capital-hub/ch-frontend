@@ -60,7 +60,7 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
     { 
       label: "Pitch Section", 
       icon: <FaMicrophoneAlt size={25} />, 
-      path: "", 
+      path: "documentation/onelinkpitch", 
       tab: "pitch", 
       expandable: true
     },
@@ -124,7 +124,7 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
                           active={currentTab === "pitchRecordings" || (sidebarCollapsed && currentTab === "pitch")}
                           onClick={() => {
                             setCurrentTab("pitchRecordings");
-                            setExpandedPitch(false);
+                            setExpandedPitch(true);
                           }}
                         >
                           <Link to="documentation/onelinkpitch">
