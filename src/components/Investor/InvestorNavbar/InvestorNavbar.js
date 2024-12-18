@@ -67,7 +67,6 @@ const InvestorNavbar = (props) => {
       setLoading(true);
       setSearchInput(target.value);
       const { data } = await getSearchResultsAPI(target.value);
-      console.log("search suggestions", data);
       setSearchSuggestions(data);
     } catch (error) {
       console.error("Error getting search results: ", error);

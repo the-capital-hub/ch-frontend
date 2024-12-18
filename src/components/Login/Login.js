@@ -90,9 +90,7 @@ function OtpVerificationModal({
 			setOrderId(response?.orderId);
 			setOpen(true);
 			setShow(true);
-			console.log(response);
 		} catch (error) {
-			console.log(error);
 		}
 	};
 
@@ -249,7 +247,6 @@ const Login = () => {
 			}
 
 			const tokens = await tokenResponse.json();
-			console.log("tokens", tokens);
 
 			// Send tokens to your backend
 			const response = await googleLoginAPI({
@@ -257,7 +254,6 @@ const Login = () => {
 				refresh_token: tokens.refresh_token,
 				id_token: tokens.id_token,
 			});
-			console.log("response", response);
 
 			if (response.status === 200) {
 				const { user, token } = response;
@@ -389,7 +385,6 @@ const Login = () => {
 					setShow(true);
 				} else {
 					// Handle invalid phone number scenario
-					console.log("Invalid phone number");
 				}
 			} else {
 				const response = await postUserLogin({
@@ -582,7 +577,6 @@ const Login = () => {
 		try {
 			const response = await postResetPaswordLink(inputValues);
 			if (response.status === "200") {
-				console.log("response1", response);
 
 				setLoading(true);
 				setShowResetPopUp(false);
@@ -591,8 +585,6 @@ const Login = () => {
 				alert("Something went wrong while sending Email");
 			}
 		} catch (error) {
-			console.log(error);
-			console.error("Login failed:", error.response.data.message);
 			setError(error.response.data.message);
 		} finally {
 			setLoading(false);

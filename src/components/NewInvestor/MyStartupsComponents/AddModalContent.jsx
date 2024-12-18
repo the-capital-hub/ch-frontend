@@ -67,7 +67,6 @@ export default function AddModalContent({
 					loggedInUser?.investor,
 					newInterestData
 				);
-				console.log(response.data.myInterests);
 				setMyInterests(response.data.myInterests);
 			} else if (isPastInvestments) {
 				const companyLogo = selectedCompanyId
@@ -85,7 +84,6 @@ export default function AddModalContent({
 					loggedInUser?.investor,
 					newPastinvestments
 				);
-				console.log(response.data.pastInvestments);
 				setPastInvestments(response.data.pastInvestments);
 			} else {
 				const companyLogo = selectedCompanyId

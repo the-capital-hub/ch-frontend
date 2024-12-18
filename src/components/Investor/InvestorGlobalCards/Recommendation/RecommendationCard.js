@@ -56,7 +56,7 @@ const RecommendationCard = ({ maxCount = 5 }) => {
             setLoading(false);
           });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log());
   };
 
  

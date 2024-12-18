@@ -152,7 +152,6 @@ const Register = () => {
 					// Once verified, update the isMobileVerified state
 				} else {
 					// Handle invalid phone number scenario
-					console.log("Invalid phone number");
 				}
 				// const response = await postUser(inputValues, isInvestorSelected);
 				// console.log("User data posted successfully:", response);
@@ -181,7 +180,6 @@ const Register = () => {
 
 	const handleRegisterFormSubmit = (e) => {
 		e.preventDefault();
-		console.log("Form submitted", { ...registerData, ...companyDetail });
 		setIsModalOpen(false);
 		googleRegisterApi({
 			...registerData,
@@ -312,7 +310,6 @@ const Register = () => {
 					isInvestorSelected,
 					companyDetail
 				);
-				console.log("User data posted successfully:", response);
 				localStorage.setItem("user_data", JSON.stringify(response.data));
 				localStorage.setItem("accessToken", response.token);
 				//setIsSubmitted(true);
@@ -381,7 +378,6 @@ const Register = () => {
 	// };
 
 	const handleClick = () => {
-		console.log("handle click");
 	};
 
 	const handleStartupClick = () => {
@@ -401,7 +397,6 @@ const Register = () => {
 	const handleGoogleLoginSuccess = (credentialResponse) => {
 		const decode = jwtDecode(credentialResponse.credential);
 		googleLoginAPI(credentialResponse.credential).then((response) => {
-			console.log(response);
 			if (response.status === 202) {
 				setRegisterData({
 					...registerData,

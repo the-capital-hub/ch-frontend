@@ -23,11 +23,6 @@ const InvestorPublicLinks = ({
   });
 
 
-  useEffect(()=>{
-    console.log("LINKS",links);
-    console.log("publicLinks",publicLinks);
-  })
-
 
   useEffect(() => {
     // Update the state with the latest publicLinks
@@ -52,7 +47,6 @@ const InvestorPublicLinks = ({
         socialLinks: links,
         founderId: loggedInUser._id,
       });
-      console.log("Response", response);
 
       if (setPublicLinks) {
         setPublicLinks(links); 

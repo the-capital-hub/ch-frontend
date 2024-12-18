@@ -85,9 +85,9 @@ function OtpVerificationModal({
 			setOrderId(response?.orderId);
 			setOpen(true);
 			setShow(true);
-			console.log(response);
+			console.log();
 		} catch (error) {
-			console.log(error);
+			console.log();
 		}
 	};
 
@@ -281,7 +281,6 @@ const Login = () => {
 					setShow(true);
 				} else {
 					// Handle invalid phone number scenario
-					console.log("Invalid phone number");
 				}
 			} else {
 				const response = await postUserLogin({
@@ -346,7 +345,7 @@ const Login = () => {
 				}
 			}
 		} catch (error) {
-			console.log(error);
+			console.log();
 			//setError(error.response.data.message);
 		} finally {
 			setLoading(false);
@@ -423,7 +422,7 @@ const Login = () => {
 			}
 			//}
 		} catch (error) {
-			console.log(error);
+			console.log();
 			console.error("Login failed:", error.response.data.message);
 			setError(error.response.data.message);
 		} finally {
@@ -471,7 +470,6 @@ const Login = () => {
 		try {
 			const response = await postResetPaswordLink(inputValues);
 			if (response.status === "200") {
-				console.log("response1", response);
 
 				setLoading(true);
 				setShowResetPopUp(false);
@@ -480,7 +478,7 @@ const Login = () => {
 				alert("Something went wrong while sending Email");
 			}
 		} catch (error) {
-			console.log(error);
+			console.log();
 			console.error("Login failed:", error.response.data.message);
 			setError(error.response.data.message);
 		} finally {
@@ -594,7 +592,6 @@ const Login = () => {
 				return; // Exit the function if the client ID is not available
 			}
 
-			console.log("Google OAuth Client ID:", clientId);
 
 			// Construct the Google OAuth login URL
 			const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(

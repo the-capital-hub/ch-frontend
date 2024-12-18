@@ -159,7 +159,7 @@ const FeedPostCard = ({
 						setLoading(false);
 					});
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => console.log());
 	};
 
 	useEffect(() => {
@@ -195,7 +195,7 @@ const FeedPostCard = ({
 		try {
 			await unsavePost(requestBody);
 		} catch (error) {
-			console.log(error);
+			console.log();
 		}
 	};
 
@@ -376,7 +376,7 @@ const FeedPostCard = ({
 		} catch (error) {
 			!liked ? likes.length-- : likes.length++;
 			setLiked(!liked);
-			console.log("Error liking post: ", error);
+			console.log();
 		}
 	};
 
@@ -388,7 +388,7 @@ const FeedPostCard = ({
 			setComments(updatedComments);
 			await deleteComment(postId, commentId);
 		} catch (error) {
-			console.log("Error deleting comment : ", error);
+			console.log();
 		}
 	};
 
@@ -408,7 +408,7 @@ const FeedPostCard = ({
 			}
 			setLoading(false);
 		} catch (error) {
-			console.log("Error deleting post : ", error);
+			console.log();
 		}
 	};
 
@@ -458,7 +458,7 @@ const FeedPostCard = ({
 				}
 			}
 		} catch (error) {
-			console.log(error);
+			console.log();
 		}
 	};
 
@@ -479,7 +479,7 @@ const FeedPostCard = ({
 				}
 			}
 		} catch (error) {
-			console.log(error);
+			console.log();
 		}
 	};
 
@@ -489,7 +489,7 @@ const FeedPostCard = ({
 				setLikedBy(data?.data.likedBy);
 				setLikedByUser(data?.data.users);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => console.log());
 	}, [postId]);
 
 	const singleClickTimer = useRef(null);

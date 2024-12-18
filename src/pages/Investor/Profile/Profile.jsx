@@ -42,6 +42,7 @@ import Milestones from "../../../components/Investor/Milestones/Milestones";
 function Profile() {
   // Fetch loggedInUser from global state
   const loggedInUserId = useSelector((state) => state.user.loggedInUser._id);
+  const loggedInUser = useSelector((state)=> state.user.loggedInUser);
   const email = useSelector((state)=> state.user.loggedInUser.email)
   const isInvestor = useSelector(selectIsInvestor);
   const [postSection, setPostSection] = useState("featuredPosts");
@@ -53,7 +54,6 @@ function Profile() {
   useEffect(() => {
     document.title = "Profile | Investors - The Capital Hub";
     dispatch(setPageTitle("Profile"));
-
     // Fetch company data
     if (isInvestor && !companyDataId) {
       getInvestorById(userInvestor)
@@ -92,7 +92,7 @@ function Profile() {
             {/* Bio */}
             <PersonalDetail theme={"investor"} />
             <UserBio />
-            <CompanyDetailsCard theme="investor" userDetails={userInvestor} email={email}/>
+            <CompanyDetailsCard theme="investor" userDetails={loggedInUser} email={email}/>
             <InvestorPhilosophy showProfile={false} />
             <div className="box personal_information rounded-2 border">
               <div style={{ display: "flex" }}>

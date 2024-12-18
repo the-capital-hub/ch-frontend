@@ -78,7 +78,6 @@ export default function EditCompanyProfilePage() {
             target: data.colorCard?.target,
           });
           setPublicLinks(data.socialLinks);
-          console.log("socialLinks", publicLinks);
         })
         .catch((error) => {
           console.error("Error fetching startup data:", error);
@@ -97,7 +96,6 @@ export default function EditCompanyProfilePage() {
         target: userCompanyData.colorCard?.target,
       });
       setPublicLinks(userCompanyData.socialLinks);
-      console.log("socialLinks", publicLinks);
     }
     document.title = "Edit Company Profile | The Capital Hub";
     dispatch(setPageTitle("Edit Company"));
@@ -120,7 +118,6 @@ export default function EditCompanyProfilePage() {
   const handleDescriptionChange = (e) => {
     e.target.style.height = "auto";
     e.target.style.height = e.target.scrollHeight + 2 + "px";
-    console.log("theme",theme);
     setCompanyDescription(e.target.value);
   };
 
@@ -147,7 +144,7 @@ export default function EditCompanyProfilePage() {
         dispatch(setUserCompany(response.data));
       }
     } catch (error) {
-      console.log(error);
+      console.log();
       setLoading(false);
       handleShowPopup({ error: true });
     }

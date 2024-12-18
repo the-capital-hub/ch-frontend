@@ -28,13 +28,12 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
     const getFolders = () => {
       getFoldersApi(loggedInUser.oneLinkId)
         .then((data) => {
-          console.log("folders",data);
           const folders = data.data;
           folders.push("New Folder");
           setFolderSelector(folders);
         })
         .catch((error) => {
-          console.log(error);
+          console.log();
         });
     };
     getFolders();
@@ -104,7 +103,6 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
           }
         );
   
-        console.log("File uploaded:", response.data);
   
       } catch (error) {
         console.error("Error uploading file to backend:", error);

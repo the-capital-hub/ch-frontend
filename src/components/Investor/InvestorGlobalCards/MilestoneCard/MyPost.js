@@ -12,12 +12,11 @@ const MyPost = ({ userId, postDelete, newPost }) => {
   useEffect(() => {
     userPosts()
       .then(({ data }) => {
-        console.log("ft", data);
         setUser(data.userData);
         setAllPosts(data.allPosts);
       })
       .catch((err) => {
-        console.log(err);
+        console.log();
         setUser([]);
         setAllPosts([]);
       });

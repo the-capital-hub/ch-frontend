@@ -20,7 +20,7 @@ const VcCard = ({ vc }) => {
 						{vc.location}, {vc.age} years
 					</p>
 				</div>
-				<p className="ticket-size">
+				<div className="ticket-size">
 					<h6>Ticket Size</h6>{" "}
 					{vc.ticket_size
 						? `$${vc.ticket_size
@@ -28,7 +28,7 @@ const VcCard = ({ vc }) => {
 								.map((size) => parseInt(size) / 1000 + "k")
 								.join("-")}`
 						: "N/A"}
-				</p>
+				</div>
 				<button className="know-more">Know more</button>
 			</div>
 			<div className="stage-sector-info">

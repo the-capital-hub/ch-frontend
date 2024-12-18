@@ -60,7 +60,6 @@ const Meetings = () => {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log("Canceled meeting", data);
 				// Refetch meetings after cancellation
 				fetchMeetings();
 			})

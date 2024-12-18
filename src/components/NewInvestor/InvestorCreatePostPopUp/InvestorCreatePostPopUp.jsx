@@ -86,7 +86,7 @@ const CreatePostPopUp = ({
             ` https://thecapitalhub.in/onelink/${data.oneLink}/${loggedInUser.oneLinkId}`
         );
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log());
   };
 
   const [previewImage, setPreviewImage] = useState("");
@@ -291,7 +291,6 @@ const CreatePostPopUp = ({
     // Call the postUserPost function to make the POST request to the server
     postUserPost(postData)
       .then((response) => {
-        console.log(response.data);
         appendDataToAllPosts(response.data);
         setPostText("");
         setSelectedImage(null);
@@ -315,7 +314,7 @@ const CreatePostPopUp = ({
                 achievementId: "6564684649186bca517cd0c9",
               };
               addNotificationAPI(notificationBody)
-                .then((data) => console.log("Added"))
+                .then((data) => console.log())
                 .catch((error) => console.error(error.message));
             })
             .catch((error) => {

@@ -47,7 +47,6 @@ export default function Questionnaire({
 
     try {
       const { data, message } = await getQuestionsAPI(query);
-      console.log(data, message);
       setQuestion(data);
       setLoading(false);
 
@@ -122,7 +121,6 @@ export default function Questionnaire({
   // handle Post Answer
   async function handlePostAnswer(e) {
     e.preventDefault();
-    console.log("answer is", answer);
 
     if (!answer) {
       return;
@@ -138,7 +136,6 @@ export default function Questionnaire({
 
     try {
       const { data } = await answerQuestionAPI(answerObject);
-      console.log("Response from answerPost", data);
 
       // update history
       setHistory((prev) => {

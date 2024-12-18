@@ -15,10 +15,8 @@ const RequestPasswordPopUp = ({ onClose, login }) => {
   const handleSendResetLink = async () => {
     try {
       const response = await postResetPaswordLink(email);
-      console.log("response", response);
 
       if (response.status == "200") {
-        console.log("response1", response);
 
         setShowSuccess(true);
         setTimeout(() => {

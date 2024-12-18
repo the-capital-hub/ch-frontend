@@ -137,7 +137,7 @@ const OneLinkEditView = () => {
       .then(({ data }) => {
         setSelectedLogo(data.logo);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log());
   };
 
   const handleDownloadPDF = () => {
@@ -220,7 +220,6 @@ const OneLinkEditView = () => {
 
   const logoOnChangeHandler = async ({ target }) => {
     const logo = await getBase64(target.files[0]);
-    console.log(target.files[0]);
     setFormData((prevForm) => {
       return {
         ...prevForm,
@@ -309,7 +308,7 @@ const OneLinkEditView = () => {
                 achievementId: "6564689149186bca517cd0d1",
               };
               addNotificationAPI(notificationBody)
-                .then((data) => console.log("Added"))
+                .then((data) => console.log())
                 .catch((error) => console.error(error.message));
 
               toast.dismiss();
@@ -322,7 +321,7 @@ const OneLinkEditView = () => {
             });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log());
   };
 
   return (

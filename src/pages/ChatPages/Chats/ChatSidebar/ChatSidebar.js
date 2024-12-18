@@ -25,15 +25,33 @@ import { selectLoggedInUserId } from "../../../../Store/features/user/userSlice"
 import IconPin from "../../../../components/Investor/SvgIcons/IconPin";
 import { formatTimestamp } from "../../../../utils/ChatsHelpers";
 import BatchImag from "../../../../Images/tick-mark.png"
+import { createSelector } from 'reselect'; 
 
+// Memoized selector for unread message counts
+const selectMemoizedChatsUnreadMessageCount = createSelector(
+  [selectChatsUnreadMessageCount],
+  (unreadCounts) => unreadCounts
+);
+
+// Memoized selector for last messages
+const selectMemoizedChatsLastMessages = createSelector(
+  [selectChatsLastMessages],
+  (lastMessages) => lastMessages
+);
+
+// Memoized selector for last message dates
+const selectMemoizedChatsLastMessageDates = createSelector(
+  [selectChatsLastMessageDates],
+  (lastMessageDates) => lastMessageDates
+);
 
 const ChatSidebar = ({ recieveMessage, sendMessage }) => {
   const loggedInUserId = useSelector(selectLoggedInUserId);
   const myPinnedChats = useSelector(selectPinnedChats);
   const myPersonalChats = useSelector(selectPersonalChats);
-  const chatLastMessages = useSelector(selectChatsLastMessages);
-  const chatLastMessageDates = useSelector(selectChatsLastMessageDates);
-  const chatUnreadCounts = useSelector(selectChatsUnreadMessageCount);
+  const chatLastMessages = useSelector(selectMemoizedChatsLastMessages);
+  const chatLastMessageDates = useSelector(selectMemoizedChatsLastMessageDates);
+  const chatUnreadCounts = useSelector(selectMemoizedChatsUnreadMessageCount);
   const dispatch = useDispatch();
 
   const [chats, setChats] = useState(myPersonalChats);

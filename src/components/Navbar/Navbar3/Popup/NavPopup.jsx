@@ -69,7 +69,6 @@ const NotificationsPopup = ({ popupFor = "notification" }) => {
 
 	const handleNotificationClick = (id) => {
 		// Logic for handling notification click (e.g., navigate to specific page)
-		console.log(`Clicked notification ${id} in ${activePopup}`);
 		markAsRead(id);
 	};
 

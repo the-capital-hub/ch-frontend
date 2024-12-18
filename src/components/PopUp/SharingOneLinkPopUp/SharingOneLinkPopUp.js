@@ -21,7 +21,7 @@ const SharingOneLinkPopUp = ({
   onClose,
   investor = false,
 }) => {
-  console.log(oneLink)
+  console.log()
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
   const dispatch = useDispatch();
   const [isSecretKeyAssigned, setIsSecretKeyAssigned] = useState(false);
@@ -90,7 +90,7 @@ const SharingOneLinkPopUp = ({
         setIsSecretKeyAssigned(false);
       }, 2000);
     } catch (error) {
-      console.log(error);
+      console.log();
     } finally {
       setLoading(false);
     }

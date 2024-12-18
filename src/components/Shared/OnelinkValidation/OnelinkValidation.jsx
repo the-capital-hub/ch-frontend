@@ -65,7 +65,7 @@ export default function OnelinkValidation({
         setError("Key is invalid");
       }
     } catch (error) {
-      console.log(error);
+      console.log();
       setError("Key is invalid");
     } finally {
       setLoading(false);

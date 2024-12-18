@@ -17,7 +17,6 @@ const AboutUs = () => {
 	const handleSubscribe = (e) => {
 		e.preventDefault();
 		// Handle subscription logic here
-		console.log("Subscribed with email:", email);
 		setEmail("");
 	};
 	return (

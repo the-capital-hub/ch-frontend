@@ -113,7 +113,6 @@ const Resources = () => {
 				}
 			);
 			const data = await response.json();
-			console.log("data", data.data);
 
 			if (!data.data.payment_session_id) {
 				throw new Error("Failed to create payment session");
@@ -148,7 +147,6 @@ const Resources = () => {
 				throw new Error("Payment verification failed");
 			}
 
-			console.log("Payment verified successfully", data);
 			return true;
 		} catch (error) {
 			console.error("Payment verification failed:", error);

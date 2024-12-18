@@ -56,10 +56,6 @@ const QuestionCreator = () => {
 			alert("Please fill in both the question and select an industry.");
 			return;
 		}
-
-		console.log("Question:", question, "Industry:", industry);
-		console.log("Sending data:", JSON.stringify(formData));
-
 		try {
 			const response = await fetch(`${baseUrl}/thoughts/create-question`, {
 				method: "POST",
@@ -71,7 +67,6 @@ const QuestionCreator = () => {
 			});
 
 			if (response.ok) {
-				console.log("Question created successfully");
 				alert("Question created successfully");
 			} else {
 				const errorData = await response.json();

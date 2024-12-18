@@ -22,8 +22,7 @@ export default function ColorCards({ colorCardInfo, isNotEditable = true }) {
 
   // handle amount change
   const handleAmountChange = (currentfield, updatedAmount) => {
-    console.log(field);
-    console.log(currentfield);
+  
     setField(currentfield);
     setColorCardData((prevData) => ({
       ...prevData,

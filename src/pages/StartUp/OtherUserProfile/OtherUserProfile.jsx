@@ -78,7 +78,6 @@ function OtherUserProfile() {
 	}, [userData]);
 
 	useEffect(() => {
-    console.log("COMPANY", companyData);
 }, [companyData]);
 
 	function formatNumber(value) {
@@ -104,20 +103,17 @@ function OtherUserProfile() {
 						}, 2500);
 					}
 				})
-				.catch((error) => console.log(error));
+				.catch((error) => console.log());
 		} else {
-			console.log("User not subscribed");
 			setPopPayOpen(true);
 		}
 	};
 
 	const handleMessageButtonClick = () => {
 		if (canSendRequest()) {
-			console.log("Opening chat...");
 			// Add your chat opening logic here
 			navigate(`/chats?userId=${userData?._id}`);
 		} else {
-			console.log("User not subscribed");
 			setPopPayOpen(true);
 		}
 	};
@@ -183,7 +179,6 @@ function OtherUserProfile() {
 			);
 
 			if (response.status === 200) {
-				console.log("User updated successfully", response.data.data);
 				localStorage.setItem(
 					"loggedInUser",
 					JSON.stringify(response.data.data)
@@ -216,8 +211,6 @@ function OtherUserProfile() {
 
 	const handleShowEmail = async () => {
 		const data = await fetchEmailfromServer(loggedInUser?._id);
-		console.log("investorArray", data.investorIdCount);
-		console.log("Count", data.investorIdCount?.length);
 
 		if (data?.investorIdCount?.includes(userData?._id)) {
 			fetchEmailfromServer(userData?._id).then((emailData) => {
