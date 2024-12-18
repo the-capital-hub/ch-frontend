@@ -21,7 +21,7 @@ const VcCard = ({ vc }) => {
 					</p>
 				</div>
 				<p className="ticket-size">
-					<h6>Ticket Size</h6>{" "}
+					<span>Ticket Size</span>{": "}
 					{vc.ticket_size
 						? `$${vc.ticket_size
 								.split("-")

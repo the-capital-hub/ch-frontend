@@ -14,7 +14,7 @@ import InvestorOneLinkLayout from "./pages/InvestorOneLink/InvestorOneLinkLayout
 import Chats from "./pages/ChatPages/Chats/Chats";
 
 // Routes
-import StartUpRoutes from "./routes/StartUpRoutes";	
+import StartUpRoutes from "./routes/StartUpRoutes";
 import OneLinkRoutes from "./routes/OneLinkRoutes";
 import InvestorRoutes from "./routes/InvestorRoutes";
 import BlogRoutes from "./routes/BlogRoutes";
