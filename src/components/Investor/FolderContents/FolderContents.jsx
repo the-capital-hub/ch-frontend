@@ -27,7 +27,6 @@ const FolderContents = () => {
       .catch(() => setUser([]));
   }, [username]);
   const title = route[0].toUpperCase() + route.slice(1);
-  console.log(title);
   let pageTitle;
   switch (title) {
     case "Legal and compliance":

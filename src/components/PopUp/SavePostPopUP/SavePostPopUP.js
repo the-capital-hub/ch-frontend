@@ -70,7 +70,7 @@ function SavePostPopUP({
 							achievementId: "658bb9748a18edb75e6f4241",
 						};
 						addNotificationAPI(notificationBody)
-							.then(() => console.log("Added"))
+							.then(() => console.log())
 							.catch((error) => console.error(error.message));
 
 						// toast.custom((t) => (
@@ -82,7 +82,6 @@ function SavePostPopUP({
 					});
 			}
 		} catch (err) {
-			console.log(err?.response?.data?.message);
 			setPostSaveError(true);
 		}
 	};

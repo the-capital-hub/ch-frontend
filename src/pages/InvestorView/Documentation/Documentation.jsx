@@ -35,7 +35,7 @@ const Documentation = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+        console.log();
         setLoading(false);
       });
   };

@@ -53,7 +53,7 @@ const Documentation = () => {
       .catch((error) => {
         setLoading(false);
 
-        console.log(error);
+        console.log();
       });
   };
   useEffect(() => {

@@ -48,7 +48,6 @@ const InvestorManageAccount = () => {
         else{
           setIsPassword(false);
         }
-        console.log("IsPassword", isPassword);
       })
     }
     getUser();
@@ -94,13 +93,11 @@ const InvestorManageAccount = () => {
           if ( (!response.ok) ||
             (changePasswordForm.confirmNewPassword !== changePasswordForm.newPassword)
           ) {
-            console.log(response);
             return setMessage("Passwords don't match"); 
           }
   }
 
   if (      (changePasswordForm.confirmNewPassword !== changePasswordForm.newPassword)    ) {
-            console.log(response);
             return setMessage("Passwords don't match"); 
           }
     changePasswordAPI(changePasswordForm)
@@ -206,7 +203,7 @@ const InvestorManageAccount = () => {
             achievementId: "658bb96e8a18edb75e6f423f",
           };
           addNotificationAPI(notificationBody)
-            .then((data) => console.log("Added"))
+            .then((data) => console.log())
             .catch((error) => console.error(error.message));
 
           // toast.custom((t) => (
@@ -389,72 +386,61 @@ const InvestorManageAccount = () => {
                   <p></p>
                   <section className="existing_accounts">
                     {otherAccounts?.map((account) => (
-                      <>
-                        <div className="small_card">
-                          <div className="left_section">
-                            <div className="d-flex align-items-center">
-                              <label className="checkbox_container me-2">
-                                <input
-                                  type="checkbox"
-                                  checked={
-                                    account.user._id === selectedAccount._id
-                                  }
-                                  onClick={() => handleSelectedAccount(account)}
-                                />
-                                <span className="checkmark"></span>
-                              </label>
-
-                              <div className="profile_image">
-                                <img
-                                  src={account.user.profilePicture}
-                                  alt="img"
-                                />
-                              </div>
-                              <div className="name_email">
-                                <h4>
-                                  {account.user.firstName}{" "}
-                                  {account.user.lastName}
-                                  {account.user.isSubscribed && <img
+                      <div className="small_card" key={account.user._id}>
+                        <div className="left_section">
+                          <div className="d-flex align-items-center">
+                            <label className="checkbox_container me-2">
+                              <input
+                                type="checkbox"
+                                checked={account.user._id === selectedAccount._id}
+                                onChange={() => handleSelectedAccount(account)}
+                              />
+                              <span className="checkmark"></span>
+                            </label>
+                            <div className="profile_image">
+                              <img
+                                src={account.user.profilePicture}
+                                alt="img"
+                              />
+                            </div>
+                            <div className="name_email">
+                              <h4>
+                                {account.user.firstName}{" "}
+                                {account.user.lastName}
+                                {account.user.isSubscribed && <img
               src={BatchImag}
               style={{
                 width: "1.2rem",
                 height: "1.2rem",
                 objectFit: "contain",
-                marginLeft: "0.5rem", // Optional: adds space between the name and the icon
+                marginLeft: "0.5rem",
               }}
               alt="Batch Icon"
             />}
-                                </h4>
-                                <h6>
-                                  {window.innerWidth <= 600
-                                    ? account?.user?.email?.slice(0, 21) ===
-                                      account?.user?.email
-                                      ? account?.user?.email
-                                      : account?.user?.email?.slice(0, 21) + "..."
-                                    : account?.user?.email?.slice(0, 23) ===
-                                      account?.user?.email
-                                      ? account?.user?.email
-                                      : account?.user?.email?.slice(0, 23) + "..."}
-                                </h6>
-                              </div>
+                              </h4>
+                              <h6>
+                                {window.innerWidth <= 600
+                                  ? account?.user?.email?.slice(0, 21) ===
+                                    account?.user?.email
+                                    ? account?.user?.email
+                                    : account?.user?.email?.slice(0, 21) + "..."
+                                  : account?.user?.email?.slice(0, 23) ===
+                                    account?.user?.email
+                                    ? account?.user?.email
+                                    : account?.user?.email?.slice(0, 23) + "..."}
+                              </h6>
                             </div>
                           </div>
-                          <div className="right_section d-flex flex-column">
-                            <button
-                              className="img-btn  pt-md-2"
-                              onClick={() => handleRemoveAccount(account)}
-                            >
-                              {/* <img
-                                src={deleteIcon}
-                                alt="delete icon"
-                                className="deleteIcon"
-                              /> */}
-                              <MdDelete size={25} />
-
-                            </button>
-                          </div>
                         </div>
-                      </>
+                        <div className="right_section d-flex flex-column">
+                          <button
+                            className="img-btn  pt-md-2"
+                            onClick={() => handleRemoveAccount(account)}
+                          >
+                            <MdDelete size={25} />
+                          </button>
+                        </div>
+                      </div>
                     ))}
                     <div className="footer">
                       {otherAccounts.length > 1 && (

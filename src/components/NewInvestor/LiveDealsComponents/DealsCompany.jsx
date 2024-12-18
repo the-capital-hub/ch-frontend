@@ -19,7 +19,6 @@ export default function DealsCompany({ company, setData }) {
     const isExist = company.intrustedInvestor.filter(
       (item) => item?._id === loggedInUserId
     );
-    console.log(isExist);
     if (isExist) {
       setUserInterested(isExist[0]?._id);
     }
@@ -29,7 +28,7 @@ export default function DealsCompany({ company, setData }) {
       if (!company.intrustedInvestor.includes(loggedInUserId)) {
         addInvestorToLiveDeal(company._id)
           .then((res) => {
-            console.log(res);
+            console.log();
             setData(res);
             // const companyData= res.filter()
             // setUserInterested(true)

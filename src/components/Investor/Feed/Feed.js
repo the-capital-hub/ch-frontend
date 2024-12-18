@@ -150,7 +150,7 @@ const Feed = () => {
 			})
 			.catch((err) => {
 				setHasMore(false);
-				console.log(err);
+				console.log();
 			});
 	};
 	const handlePollVote = async (postId, optionId) => {
@@ -232,7 +232,7 @@ const Feed = () => {
 		setRepostLoading({ ...repostLoading, instant: true });
 		postUserPost({ resharedPostId })
 			.then(() => fetchMorePosts())
-			.catch((err) => console.log(err))
+			.catch((err) => console.log())
 			.finally(() => setRepostLoading({ ...repostLoading, instant: false }));
 	};
 

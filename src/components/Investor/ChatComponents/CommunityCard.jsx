@@ -75,8 +75,8 @@ export default function CommunityCard({
       .then((res) => {
         const latestMessage = res.data;
         setLatestMsgSentetName(
-          latestMessage.senderId.firstName,
-          latestMessage.senderId.lastName
+          latestMessage?.senderId?.firstName,
+          latestMessage?.senderId?.lastName
         );
         setLatestMessages((prevLatestMessages) => ({
           ...prevLatestMessages,

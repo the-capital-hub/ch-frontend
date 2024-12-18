@@ -43,7 +43,6 @@ function Notifications() {
       // console.log(loggedInUser?._id);
       setNotifications(res.data);
     } catch (error) {
-      console.log("Error loading notifications: ", error);
     } finally {
       setLoading(false);
     }

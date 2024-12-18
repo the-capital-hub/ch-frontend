@@ -56,7 +56,7 @@ const Connection = () => {
     setLoading(true);
     pendingConnectionRequestsAPI()
       .then(({ data }) => setReceivedConnections(data))
-      .catch((err) => console.log(err))
+      .catch((err) => console.log())
       .finally(() => setLoading(false));
   };
 
@@ -65,7 +65,7 @@ const Connection = () => {
     setLoading(true);
     getSentConnectionsAPI()
       .then(({ data }) => setReceivedConnections(data))
-      .catch((err) => console.log(err))
+      .catch((err) => console.log())
       .finally(() => setLoading(false));
   };
 
@@ -170,9 +170,9 @@ const Connection = () => {
               <div className="connection_list">
                 {loading ? (
                   <h5 className="text-center my-5">
-                    <div class="d-flex justify-content-center">
-                      <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                    <div className="d-flex justify-content-center">
+                      <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
                       </div>
                     </div>
                   </h5>
@@ -188,7 +188,7 @@ const Connection = () => {
                           <div className="connection_left">
                             <Link to={`/investor/user/${sender?._id}`}>
                               <img
-                                src={sender.profilePicture}
+                                src={sender?.profilePicture}
                                 alt="Connection"
                               />
                             </Link>
@@ -198,11 +198,11 @@ const Connection = () => {
                                   to={`/investor/user/${sender?._id}`}
                                   className="  text-decoration-none"
                                 >
-                                  {`${sender.firstName} ${sender.lastName}`}
+                                  {`${sender?.firstName} ${sender?.lastName}`}
                                 </Link>
                               </p>
                               <p className="connection_designation">
-                                {sender.designation}
+                                {sender?.designation}
                               </p>
                               <p>
                                 <TimeAgo
@@ -300,7 +300,7 @@ const Connection = () => {
                         {/* Render the accepted connection content here */}
                         <div className="connection_left">
                           <Link to={`/investor/user/${data._id}`}>
-                            <img src={data.profilePicture} alt="Connection" />
+                            <img src={data?.profilePicture} alt="Connection" />
                           </Link>
                           <div className="body_container">
                             <p className="connection_name h5">
@@ -308,7 +308,7 @@ const Connection = () => {
                                 to={`/investor/user/${data._id}`}
                                 className="  text-decoration-none"
                               >
-                                {`${data.firstName ? data.firstName : "name"} ${
+                                {`${data?.firstName ? data?.firstName : "name"} ${
                                   data.lastName ? data.lastName : ""
                                 }`}
                               </Link>

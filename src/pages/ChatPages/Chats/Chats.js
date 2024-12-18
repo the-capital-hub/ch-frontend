@@ -75,7 +75,6 @@ const Chats = () => {
   useEffect(() => {
     const fetchallChatsData = async () => {
       try {
-        console.log("fetching ");
         await dispatch(fetchAllChats()).unwrap();
       } catch (error) {
         console.error("Error fetching initial all chats:", error);
@@ -146,7 +145,6 @@ const Chats = () => {
   }, [loggedInUserId]);
 
   useEffect(() => {
-    console.log("recieve");
     socket.current?.on("recieve-message", (data) => {
       setRecieveMessage(data);
       // update last message
@@ -161,8 +159,7 @@ const Chats = () => {
   }, [socket, dispatch]);
 
   useEffect(() => {
-    console.log("Send");
-    console.log(sendMessage);
+
     if (sendMessage !== null) {
       socket.current?.emit("send-message", sendMessage);
       // update last message
@@ -183,7 +180,6 @@ const Chats = () => {
     });
     await createChat(paramUserId, loggedInUserId)
       .then((res) => {
-        console.log("from create chat:", res.data);
         dispatch(setChatId(res.data._id));
         // Add to persoanl chats
         // dispatch(updateCreateChat(res.data));
@@ -203,7 +199,6 @@ const Chats = () => {
       dispatch(setUserId(paramUserId));
       findChat(paramUserId, loggedInUserId)
         .then((res) => {
-          console.log("Result", res);
           dispatch(setIsCommuntySelected(false));
           if (res.data.length === 0) {
             return handleCreateChat();
@@ -342,7 +337,7 @@ const Chats = () => {
                 />
               </span>
               <ChatSearch />
-              <div class="chats-col">
+              <div className="chats-col">
                 <CommunitiesContainer
                   isCommunityOpen={isCommunityOpen}
                   recieveMessage={recieveMessage}
@@ -394,7 +389,7 @@ const Chats = () => {
                     />
                   </span> */}
                   <ChatSearch />
-                  <div class="chats-col">
+                  <div className="chats-col">
                     <CommunitiesContainer
                       isCommunityOpen={isCommunityOpen}
                       recieveMessage={recieveMessage}

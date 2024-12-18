@@ -56,7 +56,7 @@ const Connection = () => {
 		setLoading(true);
 		pendingConnectionRequestsAPI()
 			.then(({ data }) => setReceivedConnections(data))
-			.catch((err) => console.log(err))
+			.catch((err) => console.log())
 			.finally(() => setLoading(false));
 	};
 
@@ -65,7 +65,7 @@ const Connection = () => {
 		setLoading(true);
 		getSentConnectionsAPI()
 			.then(({ data }) => setSentConnections(data))
-			.catch((err) => console.log(err))
+			.catch((err) => console.log())
 			.finally(() => setLoading(false));
 	};
 
@@ -89,7 +89,7 @@ const Connection = () => {
 			}
 			getReceivedConnections();
 		} catch (error) {
-			console.log("Error accepting connection: ", error);
+			console.log();
 		}
 	};
 
@@ -99,7 +99,7 @@ const Connection = () => {
 			await rejectConnectionAPI(connectionId);
 			getReceivedConnections();
 		} catch (error) {
-			console.log("Error rejecting connection: ", error);
+			console.log();
 		}
 	};
 
@@ -109,7 +109,7 @@ const Connection = () => {
 			await cancelConnectionRequestAPI(connectionId);
 			getSentConnection();
 		} catch (error) {
-			console.log("Error cancelling connection: ", error);
+			console.log();
 		}
 	};
 
@@ -126,7 +126,7 @@ const Connection = () => {
 					setGetAllConnection(res.data);
 				});
 			} catch (error) {
-				console.log("Error removing connection: ", error);
+				console.log();
 			}
 		}
 	};

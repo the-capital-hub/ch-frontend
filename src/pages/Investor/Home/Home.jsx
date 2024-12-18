@@ -121,7 +121,7 @@ function Home() {
           dispatch(setUserCompany(data));
         })
         .catch((error) => {
-          console.log(error);
+          console.log();
         });
     }
   }, [dispatch, isInvestor, userInvestor, companyDataId]);
@@ -140,7 +140,7 @@ function Home() {
       })
       .catch((err) => {
         setHasMore(false);
-        console.log(err);
+        console.log();
       })
       .finally(() => setLoadingFeed(false));
   };
@@ -151,7 +151,7 @@ function Home() {
         setgetSavedPostData(data);
       })
       .catch((error) => {
-        console.log(error.message);
+        console.log();
       });
     fetchMorePosts();
   }, [newPost, loggedInUserId]);
@@ -167,7 +167,7 @@ function Home() {
     setRepostLoading({ ...repostLoading, instant: true });
     postUserPost({ resharedPostId })
       .then(() => fetchMorePosts())
-      .catch((err) => console.log(err))
+      .catch((err) => console.log())
       .finally(() => setRepostLoading({ ...repostLoading, instant: false }));
   };
 
@@ -317,13 +317,13 @@ function Home() {
                   next={fetchMorePosts}
                   hasMore={hasMore}
                   loader={
-                    <p className="spinner_loader container p-5 text-center my-5 rounded-4 shadow">
+                    <div className="spinner_loader container p-5 text-center my-5 rounded-4 shadow">
                       <div className="d-flex justify-content-center">
                         <div className="spinner-border text-secondary" role="status">
                           <span className="visually-hidden">Loading...</span>
                         </div>
                       </div>
-                    </p>
+                    </div>
                   }
                 >
                   {allPosts?.map(({

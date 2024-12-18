@@ -50,9 +50,7 @@ export default function ContactForm({ className, page }) {
     axios
       .post(`${baseUrl}/contactUs`, requestBody)
       .then((response) => {
-        console.log("response", response);
         if (response.status === 200) {
-          console.log("form submitted");
           // setFormSubmitted(true);
           setFormData({ ...initialData });
           setLoading(false);

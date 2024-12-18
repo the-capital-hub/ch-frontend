@@ -44,7 +44,6 @@ const ContactUs = () => {
       description: contactForm.description,
     }, process.env.REACT_APP_EMAILJS_PUBLIC_KEY)
     .then((response) => {
-      console.log('Success:', response);
       setFormSubmitted(true);
       setContactForm(initialForm);
     })

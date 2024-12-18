@@ -34,7 +34,7 @@ const NavigatedCardViewer = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+        console.log();
         setLoading(false);
       });
   }, [loggedInUser]);
@@ -57,12 +57,11 @@ const NavigatedCardViewer = () => {
 
       fetchPosts
         .then((data) => {
-          console.log("DATA", data)
           setAllPosts(data.data || []);
           setLoading(false);
         })
         .catch((error) => {
-          console.log(error);
+          console.log();
           setAllPosts([]);
           setLoading(false);
         });

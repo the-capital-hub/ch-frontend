@@ -27,7 +27,6 @@ function OnBoardUser({
       disableBodyScroll(document.body);
     }
   }, [run, noBodyRoll]);
-  console.log(setRun)
   const handleTourClose = () => {
     enableBodyScroll(document.body);
     
@@ -47,7 +46,7 @@ function OnBoardUser({
             achievementId: "658bb9838a18edb75e6f4247",
           };
           addNotificationAPI(notificationBody)
-            .then((data) => console.log("Added"))
+            .then((data) => console.log())
             .catch((error) => console.error(error.message));
 
           // toast.custom((t) => (

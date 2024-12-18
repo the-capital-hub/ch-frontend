@@ -31,20 +31,17 @@ const Investment = ({ canEdit, loading }) => {
       getInvestorById(userInvestor)
         .then(({ data }) => {
           setCompanyData(data);
-          console.log("Fetched company data:", data);
         })
         .catch((error) => {
-          console.log(error.message);
+          console.log();
         });
     } else {
       setCompanyData(userCompanyData);
-      console.log("Using existing company data:", userCompanyData);
     }
   }, [isInvestor, userInvestor, userCompanyData]);
 
   useEffect(() => {
     setCompanyData(userCompanyData);
-    console.log("Updated company data from Redux store:", userCompanyData);
   }, [userCompanyData]);
 
   function formatNumber(value) {
@@ -109,12 +106,11 @@ const Investment = ({ canEdit, loading }) => {
         ),
         age: parseInt(companyData.age),
       };
-      console.log("Payload to be sent:", updatedData); // Debugging log
       const { data } = await postInvestorData(updatedData);
       dispatch(updateUserCompany(data));
       setEdit("");
     } catch (error) {
-      console.log(error);
+      console.log();
     }
   }
 

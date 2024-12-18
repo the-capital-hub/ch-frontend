@@ -82,7 +82,7 @@ export default function EditInvestorCompanyProfilePage() {
           });
         })
         .catch((error) => {
-          console.log(error);
+          console.log();
         });
     } else {
       setPublicLinks(userCompanyData.socialLinks);
@@ -139,7 +139,7 @@ export default function EditInvestorCompanyProfilePage() {
         dispatch(setUserCompany(response.data));
       }
     } catch (error) {
-      console.log(error);
+      console.log();
       setLoading(false);
       handleShowPopup({ error: true });
     }

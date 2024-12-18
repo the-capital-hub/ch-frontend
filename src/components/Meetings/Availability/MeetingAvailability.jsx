@@ -48,7 +48,6 @@ const AvailabilitySettings = () => {
 	};
 
 	const updateAvailability = () => {
-		console.log("Updating availability:", availability);
 		// Make API call to update availability
 		try {
 			fetch(`${baseUrl}/meetings/updateAvailability`, {
@@ -60,10 +59,8 @@ const AvailabilitySettings = () => {
 				body: JSON.stringify(availability),
 			}).then((res) => {
 				if (res.status === 200) {
-					console.log("Availability updated successfully");
 					alert("Availability updated successfully");
 				} else {
-					console.log("Error updating availability");
 					alert("Error updating availability");
 				}
 			});

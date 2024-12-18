@@ -46,7 +46,7 @@ export default function LiveDeals() {
         <section className="section__wrapper">
           <div className="deals__company__container d-flex flex-column gap-4">
             {data.map((company) => {
-              return <DealsCompany company={company} key={company.name} setData={setData}/>;
+              return <DealsCompany key={company._id} company={company} setData={setData}/>;
             })}
           </div>
         </section> 

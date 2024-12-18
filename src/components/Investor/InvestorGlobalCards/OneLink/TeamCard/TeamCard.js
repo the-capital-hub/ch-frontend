@@ -23,9 +23,8 @@ const TeamCard = ({ index, profile, name, designation, page, company }) => {
       founderId: loggedInUser._id,
     })
       .then(({ data }) => {
-        console.log(data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log());
   };
 
   return (

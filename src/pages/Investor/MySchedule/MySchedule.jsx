@@ -20,9 +20,10 @@ import Events from "../../../components/NewInvestor/MyScheduleComponents/Events"
 import Available from "../../../components/NewInvestor/MyScheduleComponents/Available";
 import EventDetails from "../../../components/NewInvestor/MyScheduleComponents/EventDetails";
 import axios from "axios"; // Axios for making API calls
+import { environment } from "../../../environments/environment";
 
 const MEETINGTYPES = ["Event types", "Scheduled events", "Calendar sync"];
-
+const baseUrl = environment.baseUrl;
 export default function MySchedule() {
   const theme = useSelector(selectTheme);
   const oneLinkId = useSelector(selectUserOneLinkId);
@@ -43,7 +44,7 @@ export default function MySchedule() {
   // Fetch existing events from Google Calendar API
   const fetchEvents = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/calendar/events");
+      const response = await axios.get(`${baseUrl}/api/calendar/events`);
       setEvents(response.data); // Store the fetched events in state
     } catch (error) {
       console.error("Error fetching events:", error);
