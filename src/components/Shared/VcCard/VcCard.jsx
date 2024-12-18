@@ -15,7 +15,7 @@ const VcCard = ({ vc }) => {
 					/>
 				)}
 				<div className="vc-info">
-					<h5>{vc.name}</h5>
+					<h3>{vc.name}</h3>
 					<p className="info">
 						{vc.location}, {vc.age} years
 					</p>

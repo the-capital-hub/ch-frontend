@@ -12,6 +12,7 @@ import DarkLogo from "../../../Images/investorIcon/new-logo.png";
 import WhiteLogo from "../../../Images/investorIcon/logo-white.png";
 import SharePopup from "../../PopUp/SocialSharePopup/SharePopup";
 import OnboardingSwitch from "../../../components/Investor/InvestorNavbar/OnboardingSwitch/OnboardingSwitch";
+import Spinner from "../../Spinner/Spinner";
 
 const baseUrl = environment.baseUrl;
 
@@ -215,14 +216,32 @@ const Thoughts = () => {
 	);
 	const [sharePopupOpen, setSharePopupOpen] = useState(false);
 	const [socialUrl, setSocialUrl] = useState("");
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
 	const user = JSON.parse(localStorage.getItem("loggedInUser"));
 	// console.log("questions", questions);
 
-	// fetch questions from server
+	// Fetch questions
 	useEffect(() => {
-		fetch(`${baseUrl}/thoughts/get-questions`)
-			.then((res) => res.json())
-			.then((data) => setQuestions(data.data));
+		const fetchQuestions = async () => {
+			try {
+				setLoading(true);
+				const response = await fetch(`${baseUrl}/thoughts/get-questions`);
+
+				if (!response.ok) {
+					throw new Error("Network response was not ok");
+				}
+
+				const data = await response.json();
+				setQuestions(data.data);
+			} catch (err) {
+				setError(err.message);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchQuestions();
 	}, []);
 
 	// Auto-scroll for topics only
@@ -326,6 +345,14 @@ const Thoughts = () => {
 		setSocialUrl(questionUrl);
 		setSharePopupOpen(true);
 	};
+
+	if (loading) {
+		return <Spinner className="thoughts-spinner" />;
+	}
+
+	if (error) {
+		return <div>Error: {error}</div>;
+	}
 
 	return (
 		<div

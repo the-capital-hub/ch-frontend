@@ -1,8 +1,8 @@
 .vc-profile {
     text-align: center;
     padding: 20px;
-    color: white !important;
-    background: #16161B;
+    color: var(--d-l-grey) !important;
+    // background: var(--);
     width: 80%;
     padding: 50px;
     border-radius: 10px;
@@ -14,19 +14,21 @@
         width: 150px;
         height: 150px;
         margin: 20px auto;
+        object-fit: contain;
+        background: white;
     }
 
     .vc-name {
         font-size: 2rem;
         font-weight: bold;
         margin: 10px 0;
-        color: white;
+        color: var(--d-l-grey);
     }
 
     .vc-description {
         margin-bottom: 20px;
         font-size: 1rem;
-        color: white;
+        color: var(--d-l-grey);
     }
 
     .vc-social-links {
@@ -35,7 +37,7 @@
         a {
             margin: 0 10px;
             text-decoration: none;
-            color: white;
+            color: var(--d-l-grey);
             border-radius: 10px;
             padding: 0 10px 0 10px;
 
@@ -98,7 +100,7 @@
 
         .contact-button {
             display: block;
-            background-color: #CECECE1A;
+            background-color: darkgrey;
             border: none;
             border-radius: 20px;
             padding: 5px 30px;
@@ -108,7 +110,8 @@
             margin-top: 15px;
 
             &:hover {
-                background-color: darkgrey;
+                background-color: #3a3a3a;
+                color: #ffffff;
             }
         }
 
@@ -172,7 +175,7 @@
                     font-size: 16px;
                     font-weight: 600;
                     margin-bottom: 10px;
-                    color: white;
+                    color: var(--d-l-grey);
                 }
 
                 .bubble {

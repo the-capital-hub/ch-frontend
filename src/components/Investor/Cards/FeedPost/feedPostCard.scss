@@ -253,6 +253,7 @@
 					justify-content: center;
 					align-items: center;
 					height: 100px;
+
 				}
 
 				.input_logo_section {
@@ -320,8 +321,8 @@
 		height: 100px; /* Adjust the height as needed */
 		// .logo {
 		img {
-			width: 65px !important;
-			height: 65px;
+			width: 45px !important;
+			height: 45px;
 			border-radius: 50%;
 			// margin-right: 10px;
 			object-fit: cover;
@@ -408,7 +409,7 @@
 	.single-comment {
 		.comment-details {
 			// background: var(--bs-light);
-			background: rgba(30, 30, 30, 1);
+			background: rgba(52, 55, 68, 0.2);
 			color: var(--d-l-grey);
 			border-radius: 20px;
 			h6 {
