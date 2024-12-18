@@ -19,20 +19,16 @@ const NewPasswordPopUp = ({ onClose }) => {
     try {
       const token = new URLSearchParams(location.search).get("token");
       if (token) {
-        console.log("Token:", token);
-        console.log("Password:", password);
+
 
         const response = await postNewPassword(password, token);
-        console.log("Response:", response.data); // Log the response from the API
         if (response.status == "200") {
           setShowSuccess(true);
         }
       } else {
-        console.log("Token not found in URL");
       }
     } catch (error) {
       alert("Invalid User Details or Token");
-      console.error("Error updating password:", error);
     }
   };
 

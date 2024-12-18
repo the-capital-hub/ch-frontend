@@ -60,7 +60,7 @@ export default function ProfessionalInfo({ theme }) {
         setFollowers(data.data.length);
       })
       .catch((err) => {
-        console.log(err);
+        console.log();
       });
   }, [companyName, isInvestor]);
 
@@ -111,7 +111,6 @@ export default function ProfessionalInfo({ theme }) {
       const {
         data: { data },
       } = await updateUserAPI(editedData);
-      console.log("data updateUserAPI", data);
       // Set new loggedInUser data
       dispatch(loginSuccess(data));
       // Set local state
@@ -143,7 +142,7 @@ export default function ProfessionalInfo({ theme }) {
         dispatch(updateUserCompany({ company: data.company }));
       }
     } catch (error) {
-      console.log(error);
+      console.log();
     } finally {
       setIsEditing(false);
       setLoading(false);

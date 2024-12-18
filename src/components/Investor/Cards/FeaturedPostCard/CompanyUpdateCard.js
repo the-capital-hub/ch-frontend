@@ -108,8 +108,8 @@ const CompanyUpdateCard = ({
                 >
                   {firstName + " " + lastName}
                 </span>
-                <span className="d-flex flex-column flex-md-row flex-wrap">
-                  <span
+                <div className="d-flex flex-column flex-md-row flex-wrap">
+                  <div
                     className="d-flex"
                     style={{
                       fontSize: "10px",
@@ -119,11 +119,11 @@ const CompanyUpdateCard = ({
                     }}
                   >
                     <GoHome size={15} />
-                    <p style={{ marginBottom: 0 }}>
+                    <div style={{ marginBottom: 0 }}>
                       {designation}, {userId?.startUp?.company}
-                    </p>
-                  </span>
-                  <span
+                    </div>
+                  </div>
+                  <div
                     style={{
                       fontSize: "10px",
                       fontWeight: 500,
@@ -132,9 +132,9 @@ const CompanyUpdateCard = ({
                   >
                     <IoLocationOutline size={15} />
                     Bangalore, India
-                  </span>
-                </span>
-                <span
+                  </div>
+                </div>
+                <div
                   style={{
                     fontSize: "10px",
                     fontWeight: 500,
@@ -142,7 +142,7 @@ const CompanyUpdateCard = ({
                   }}
                 >
                   <TimeAgo datetime={createdAt} locale="" />
-                </span>
+                </div>
               </div>
             </div>
             {userId === loggedInUser._id && postDelete && (
@@ -167,7 +167,7 @@ const CompanyUpdateCard = ({
         </div>
         <div className="para_container w-100 p-2">
           <div className="para_container_text w-100 d-flex flex-column gap-2">
-            <p
+            <div
               style={{
                 fontSize: "13px",
                 wordWrap: "break-word",
@@ -175,7 +175,7 @@ const CompanyUpdateCard = ({
               }}
             >
               {renderDescription()}
-            </p>
+            </div>
             {image && (
               <span className="d-flex" style={{ maxHeight: "250px" }}>
                 <img

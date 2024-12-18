@@ -60,7 +60,6 @@ export default function ExperienceModal() {
       // Set State
       setFormData((prev) => ({ ...prev, logo: baseImage }));
     } catch (error) {
-      console.log("Error getting base64:", error);
     }
 
     // Set State

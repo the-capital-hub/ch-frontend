@@ -65,7 +65,6 @@ function App() {
 	//Back functionality for mobile app
 	CapacitorApp.addListener("backButton", ({ canGoBack }) => {
 		const currentUrl = window.location.href;
-		console.log("url", currentUrl);
 		if (
 			!canGoBack ||
 			currentUrl === "https://localhost/home" ||

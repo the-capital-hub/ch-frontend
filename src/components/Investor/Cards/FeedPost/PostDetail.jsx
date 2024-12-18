@@ -143,7 +143,7 @@ const PostDetail = ({
     try {
       await unsavePost(requestBody);
     } catch (error) {
-      console.log(error);
+      console.log();
     }
   };
 
@@ -324,7 +324,7 @@ const PostDetail = ({
     } catch (error) {
       !liked ? likes.length-- : likes.length++;
       setLiked(!liked);
-      console.log("Error liking post: ", error);
+      console.log();
     }
   };
 
@@ -336,7 +336,7 @@ const PostDetail = ({
       setComments(updatedComments);
       await deleteComment(postId, commentId);
     } catch (error) {
-      console.log("Error deleting comment : ", error);
+      console.log();
     }
   };
 
@@ -356,7 +356,7 @@ const PostDetail = ({
       }
       setLoading(false);
     } catch (error) {
-      console.log("Error deleting post : ", error);
+      console.log();
     }
   };
 
@@ -385,7 +385,7 @@ const PostDetail = ({
         setShowFeaturedPostSuccess(true);
       }
     } catch (error) {
-      console.log(error);
+      console.log();
     }
   };
   const handleAddToCompanyPost = async (postId) => {
@@ -395,7 +395,7 @@ const PostDetail = ({
         setShowCompanyUpdateSuccess(true);
       }
     } catch (error) {
-      console.log(error);
+      console.log();
     }
   };
   useEffect(() => {
@@ -404,7 +404,7 @@ const PostDetail = ({
         setLikedBy(data?.data.likedBy);
         setLikedByUser(data?.data.users);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log());
   }, [postId]);
 
   const singleClickTimer = useRef(null);

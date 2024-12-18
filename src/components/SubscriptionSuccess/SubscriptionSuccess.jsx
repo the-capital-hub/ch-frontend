@@ -28,7 +28,6 @@ const SubscriptionSuccess = () => {
     const getPaymentStatus = async () => {
       try {
         const response = await getSubscriptionUrl(orderId);
-        console.log(response.user)
         dispatch(loginSuccess(response.user));
         setPaymentData(response?.paymentData);
         setUserName(`${response?.user.fistName} ${response?.user.lastName}`);
@@ -45,7 +44,7 @@ const SubscriptionSuccess = () => {
         ? navigate("/investor/home")
         : navigate("/home");
     } catch (err) {
-      console.log(err);
+      console.log();
     }
   };
 

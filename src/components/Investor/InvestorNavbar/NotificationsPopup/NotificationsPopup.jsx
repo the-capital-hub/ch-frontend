@@ -33,7 +33,7 @@ function NotificationsPopup({ toggleVisibility }) {
       const res = await fetchNotificationsAPI(loggedInUserId);
       setNotifications(res.data.filter(notification => notification.type !== "achievementCompleted"));
     } catch (error) {
-      console.log("Error loading notifications: ", error);
+      console.log();
     } finally {
       setLoading(false);
     }
@@ -182,7 +182,7 @@ function NotificationsPopup({ toggleVisibility }) {
       await fetchNotifications();
       dispatch(decrementUnreadNotifications());
     } catch (error) {
-      console.log("Error marking notification as read", error);
+      console.log();
     }
   };
 
@@ -192,7 +192,7 @@ function NotificationsPopup({ toggleVisibility }) {
       await fetchNotifications();
       dispatch(setUnreadNotifications(0));
     } catch (error) {
-      console.log("Error marking all notifications as read: ", error);
+      console.log();
     }
   };
 

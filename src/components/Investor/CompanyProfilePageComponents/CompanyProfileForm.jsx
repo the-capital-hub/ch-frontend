@@ -229,7 +229,7 @@ export default function CompanyProfileForm({
         handleShowPopup({ success: true });
       }
     } catch (error) {
-      console.log(error);
+      console.log();
       // Show error popup
       setLoading(false);
       handleShowPopup({ error: true });

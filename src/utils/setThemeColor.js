@@ -22,5 +22,4 @@ export const setThemeColor = (custom) => {
     "--currentTheme-text",
     `var(--${themeValue}-text)`
   );
-  return console.log("Theme set to : ", themeValue);
 };

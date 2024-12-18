@@ -39,7 +39,6 @@ const PersonalDetail = ({ theme }) => {
     isInvestor: loggedInUser?.isInvestor || false,
     userName: loggedInUser?.userNam || ""
   });
- console.log(loggedInUser?.industry)
   // State for isEditing
   const [isEditing, setIsEditing] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -90,7 +89,6 @@ const PersonalDetail = ({ theme }) => {
       //   const profilePicture = await getBase64(selectedFile);
       //   editedData = { ...editedData, profilePicture: profilePicture };
       // }
-      console.log(croppedImage);
       if (croppedImage) {
         // const profilePicture = await getBase64(croppedImage);
         const profilePicture = croppedImage;
@@ -101,7 +99,6 @@ const PersonalDetail = ({ theme }) => {
       const {
         data: { data },
       } = await updateUserAPI(editedData);
-      console.log("data updateUserAPI", data);
       // Set new loggedInUser data
       dispatch(loginSuccess(data));
       // Set local state
@@ -133,7 +130,7 @@ const PersonalDetail = ({ theme }) => {
         dispatch(updateUserCompany({ company: data.company }));
       }
     } catch (error) {
-      console.log(error);
+      console.log();
     } finally {
       setIsEditing(false);
       setLoading(false);

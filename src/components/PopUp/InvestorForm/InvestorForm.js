@@ -40,7 +40,6 @@ const InvestorForm = ({ onStartupClick }) => {
     try {
       const { _id } = JSON.parse(localStorage.getItem("user_data"));
       const response = await postInvestorData({ ...formData, founderId: _id });
-      console.log("Investor data posted successfully:", response);
       if (response) {
         setIsSubmitted(true);
       }

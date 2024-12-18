@@ -2,7 +2,6 @@ import DealsCard from "./DealsCard";
 
 
 export default function DealsInvestors({ theme, intrustedInvestor }) {
-  console.log(intrustedInvestor[0]);
   return (
     <div className="deals__investors d-flex flex-column gap-3">
       <h6

@@ -25,7 +25,6 @@ export default function StartupsInvested({investorId, cannotAdd = false }) {
 
   useEffect(() => {
     if (!userStartupsInvested && !investorId) {
-      console.log("1")
       getInvestorById(userInvestor)
         .then(({ data }) => {
           setInvestedStartups(data.startupsInvested);
@@ -33,14 +32,12 @@ export default function StartupsInvested({investorId, cannotAdd = false }) {
         .catch(() => setInvestedStartups([]));
     } 
     else if(investorId){
-      console.log("2")
       getInvestorById(investorId)
       .then(({ data }) => {
         setInvestedStartups(data.startupsInvested);
       })
       .catch(() => setInvestedStartups([]));
     }else {
-      console.log("3")
       setInvestedStartups(userStartupsInvested);
     }
   }, [userInvestor, userStartupsInvested]);

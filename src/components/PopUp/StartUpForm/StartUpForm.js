@@ -41,7 +41,6 @@ const StartUpForm = ({ onStartupClick }) => {
     try {
       const { _id } = JSON.parse(localStorage.getItem("user_data"));
       const response = await postStartUpData({ ...formData, founderId: _id });
-      console.log("Startup data posted successfully:", response);
 
       // Call onStartupClick or other logic here with formData
       if (response) {

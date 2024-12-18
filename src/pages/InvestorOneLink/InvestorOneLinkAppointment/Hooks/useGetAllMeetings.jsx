@@ -25,7 +25,6 @@ export default function useGetAllMeetings(userId) {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        console.log("Error fetching meetings", error);
       }
     }
 

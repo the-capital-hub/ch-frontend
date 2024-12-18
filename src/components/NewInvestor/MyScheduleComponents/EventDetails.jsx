@@ -3,7 +3,6 @@ import { IoIosArrowBack } from "react-icons/io";
 import meet from "../../../Images/google_meet.png";
 
 const EventDetails = ({ setScreen, meeting }) => {
-  console.log(meeting);
   const day = meeting.start.getDate();
   const month = meeting.start.getMonth();
   const year = meeting.start.getFullYear();
@@ -12,7 +11,6 @@ const EventDetails = ({ setScreen, meeting }) => {
  
   // Calculate the difference in milliseconds
   const durationInMillis = end - start;
-  console.log(durationInMillis/ (1000 * 60))
   // Convert milliseconds to minutes
   const durationInMinutes = durationInMillis / (1000 * 60);
 

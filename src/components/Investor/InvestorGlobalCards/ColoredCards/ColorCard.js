@@ -46,7 +46,6 @@ const ColorCard = ({
     if (isInvestor) {
       postInvestorData(updatedData)
         .then((res) => {
-          console.log("Res-->", res);
           dispatch(setUserCompany(res.data));
         })
         .catch((error) => {
@@ -55,11 +54,10 @@ const ColorCard = ({
     } else {
       postStartUpData(updatedData)
         .then((res) => {
-          console.log("Res-->", res);
           dispatch(setUserCompany(res.data));
         })
         .catch((error) => {
-          console.error("Error-->", error);
+          console.error();
         });
     }
   };

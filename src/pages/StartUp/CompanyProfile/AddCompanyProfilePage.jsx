@@ -91,7 +91,7 @@ export default function AddCompanyProfilePage() {
         navigate("/company-profile"); // Navigate to the company profile page after creation
       }
     } catch (error) {
-      console.log(error);
+      console.log();
       setLoading(false);
       handleShowPopup({ error: true });
     }

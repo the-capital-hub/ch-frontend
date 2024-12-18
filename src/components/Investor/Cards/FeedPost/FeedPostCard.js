@@ -146,38 +146,9 @@ const FeedPostCard = ({
 		}
 	}, [pollOptions]);
 
-	// const handleConnect = (userId) => {
-	// 	sentConnectionRequest(loggedInUser._id, userId)
-	// 		.then(({ data }) => {
-	// 			setConnectionSent(true);
-	// 			setTimeout(() => setConnectionSent(false), 2500);
-	// 			setLoading(true);
-	// 			getRecommendations(loggedInUser._id)
-	// 				.then(({ data }) => {
-	// 					dispatch(setRecommendations(data.slice(0, 5)));
-	// 					setLoading(false);
-	// 				})
-	// 				.catch(() => {
-	// 					dispatch(setRecommendations({}));
-	// 					setLoading(false);
-	// 				});
-	// 		})
-	// 		.catch((error) => console.log(error));
-	// };
-
 	const handleConnect = async (userId) => {
 		try {
 			const { data } = await sentConnectionRequest(loggedInUser._id, userId);
-
-			// Replace previous connectionSent logic with toast
-			// toast.success(`Connection request sent to ${firstName} ${lastName}`, {
-			// 	position: "top-center",
-			// 	autoClose: 3000,
-			// 	hideProgressBar: false,
-			// 	closeOnClick: true,
-			// 	pauseOnHover: true,
-			// });
-
 			setConnectionSent(true);
 			setConnectionMessageSuccess(true);
 			setTimeout(() => setConnectionMessageSuccess(false), 2500);
@@ -194,17 +165,6 @@ const FeedPostCard = ({
 				setLoading(false);
 			}
 		} catch (error) {
-			// Add error toast if connection request fails
-			// toast.error(
-			// 	`Failed to send connection request to ${firstName} ${lastName}`,
-			// 	{
-			// 		position: "top-center",
-			// 		autoClose: 3000,
-			// 		hideProgressBar: false,
-			// 		closeOnClick: true,
-			// 		pauseOnHover: true,
-			// 	}
-			// );
 			console.log(error);
 		}
 	};
@@ -242,7 +202,7 @@ const FeedPostCard = ({
 		try {
 			await unsavePost(requestBody);
 		} catch (error) {
-			console.log(error);
+			console.log();
 		}
 	};
 
@@ -423,7 +383,7 @@ const FeedPostCard = ({
 		} catch (error) {
 			!liked ? likes.length-- : likes.length++;
 			setLiked(!liked);
-			console.log("Error liking post: ", error);
+			console.log();
 		}
 	};
 
@@ -435,7 +395,7 @@ const FeedPostCard = ({
 			setComments(updatedComments);
 			await deleteComment(postId, commentId);
 		} catch (error) {
-			console.log("Error deleting comment : ", error);
+			console.log();
 		}
 	};
 
@@ -455,7 +415,7 @@ const FeedPostCard = ({
 			}
 			setLoading(false);
 		} catch (error) {
-			console.log("Error deleting post : ", error);
+			console.log();
 		}
 	};
 
@@ -504,7 +464,7 @@ const FeedPostCard = ({
 				}
 			}
 		} catch (error) {
-			console.log(error);
+			console.log();
 		}
 	};
 
@@ -525,7 +485,7 @@ const FeedPostCard = ({
 				}
 			}
 		} catch (error) {
-			console.log(error);
+			console.log();
 		}
 	};
 
@@ -535,7 +495,7 @@ const FeedPostCard = ({
 				setLikedBy(data?.data.likedBy);
 				setLikedByUser(data?.data.users);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => console.log());
 	}, [postId]);
 
 	const singleClickTimer = useRef(null);

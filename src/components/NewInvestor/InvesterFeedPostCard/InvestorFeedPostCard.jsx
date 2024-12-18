@@ -124,7 +124,6 @@ const FeedPostCard = ({
     try {
       await unsavePost(requestBody);
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -305,7 +304,6 @@ const FeedPostCard = ({
     } catch (error) {
       !liked ? likes.length-- : likes.length++;
       setLiked(!liked);
-      console.log("Error liking post: ", error);
     }
   };
 
@@ -317,7 +315,6 @@ const FeedPostCard = ({
       setComments(updatedComments);
       await deleteComment(postId, commentId);
     } catch (error) {
-      console.log("Error deleting comment : ", error);
     }
   };
 
@@ -337,7 +334,6 @@ const FeedPostCard = ({
       }
       setLoading(false);
     } catch (error) {
-      console.log("Error deleting post : ", error);
     }
   };
 
@@ -366,7 +362,6 @@ const FeedPostCard = ({
         setShowFeaturedPostSuccess(true);
       }
     } catch (error) {
-      console.log(error);
     }
   };
   const handleAddToCompanyPost = async (postId) => {
@@ -376,7 +371,6 @@ const FeedPostCard = ({
         setShowCompanyUpdateSuccess(true);
       }
     } catch (error) {
-      console.log(error);
     }
   };
   useEffect(() => {
@@ -385,7 +379,7 @@ const FeedPostCard = ({
         setLikedBy(data?.data.likedBy);
         setLikedByUser(data?.data.users);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log());
   }, [postId]);
 
   const singleClickTimer = useRef(null);
@@ -436,26 +430,10 @@ const FeedPostCard = ({
   // Determine border color based on user type
   const borderColor = startUpCompanyName ? "orange" : investorCompanyName ? "#D3F36B" : "transparent";
 
-  // Log user data
-  useEffect(() => {
-    console.log("User Data:", {
-      firstName,
-      lastName,
-      designation,
-      startUpCompanyName,
-      investorCompanyName,
-      profilePicture,
-      userId,
-    });
-  }, [firstName, lastName, designation, startUpCompanyName, investorCompanyName, profilePicture, userId]);
 
   const [localPollOptions, setLocalPollOptions] = useState(pollOptions || []);
   const [isVoting, setIsVoting] = useState(false);
 
-  useEffect(() => {
-    console.log('Poll Options changed:', pollOptions);
-    console.log('Local Poll Options:', localPollOptions);
-  }, [pollOptions, localPollOptions]);
 
   useEffect(() => {
     if (pollOptions && JSON.stringify(pollOptions) !== JSON.stringify(localPollOptions)) {
@@ -682,7 +660,8 @@ const FeedPostCard = ({
               }}
             ></div>
             {image && (
-              <span className="d-flex">
+              <span key={"image"} 
+              className="d-flex">
                 <img
                   className="mx-auto"
                   style={{ objectFit: "cover", maxHeight: "30rem" }}
@@ -693,7 +672,7 @@ const FeedPostCard = ({
               </span>
             )}
             {video && (
-              <span className="d-flex">
+              <span key={"video"} className="d-flex">
                 <video
                   className="mx-auto"
                   width={!repostPreview ? "100%" : "100%"}
@@ -706,8 +685,9 @@ const FeedPostCard = ({
                 </video>
               </span>
             )}
-            {resharedPostId && (
+            {resharedPostId && resharedPostId._id  && (
               <FeedPostCard
+                key={resharedPostId._id}
                 repostPreview
                 userId={resharedPostId?.user?._id}
                 postId={resharedPostId?._id}
@@ -739,7 +719,7 @@ const FeedPostCard = ({
                 const hasVoted = option.votes?.includes(loggedInUser._id);
 
                 return (
-                  <div key={option._id} className="poll-option">
+                  <div className="poll-option" key={option._id}>
                     <div className="poll-option-content">
                       <div 
                         className="progress-bar" 
@@ -1043,7 +1023,7 @@ const FeedPostCard = ({
                     {comments.map((val) => (
                       <section
                         className="single-comment row m-0 mt-2"
-                        key={val.tex}
+                        key={val._id}
                       >
                         <div className="img_container col-2 px-2">
                           <Link
@@ -1207,7 +1187,7 @@ const FeedPostCard = ({
         </div>
         <Modal.Body>
           {likedByUsers?.map((user) => (
-            <div className="user-list d-flex align-items-center gap-2 p-2 border-bottom border-1">
+            <div className="user-list d-flex align-items-center gap-2 p-2 border-bottom border-1" key={user._id}>
               <img src={user.profilePicture} alt="user" />
               <div>
                 <h6 className="m-0">

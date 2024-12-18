@@ -73,7 +73,6 @@ export default function ResourcesPopup({ onClose }) {
 				}
 			);
 			const data = await response.json();
-			console.log("data", data.data);
 
 			if (!data.data.payment_session_id) {
 				throw new Error("Failed to create payment session");
@@ -108,7 +107,6 @@ export default function ResourcesPopup({ onClose }) {
 				throw new Error("Payment verification failed");
 			}
 
-			console.log("Payment verified successfully", data);
 			setPaymentStatus("success");
 			return true;
 		} catch (error) {

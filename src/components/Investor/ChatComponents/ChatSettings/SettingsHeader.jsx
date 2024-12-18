@@ -56,7 +56,7 @@ export default function SettingsHeader({ setIsSettingsOpen }) {
         setIsSettingsOpen(false);
       }, 1500);
     } catch (error) {
-      console.log(error);
+      console.log();
       setMessage("Error deleting community. Try again.");
     } finally {
       setLoading((prev) => {
@@ -93,7 +93,7 @@ export default function SettingsHeader({ setIsSettingsOpen }) {
         setIsSettingsOpen(false);
       }, 1500);
     } catch (error) {
-      console.log(error);
+      console.log();
       setMessage("Error exitting from community. Try again.");
     } finally {
       setLoading((prev) => {

@@ -45,7 +45,6 @@ export default function EditMeetingModal({ selectedMeeting, setMeetings }) {
         setAlert(null);
       }, 2500);
     } catch (error) {
-      console.log("Error deleting meeting", error);
 
       //   Revert Loading
       setLoading(false);

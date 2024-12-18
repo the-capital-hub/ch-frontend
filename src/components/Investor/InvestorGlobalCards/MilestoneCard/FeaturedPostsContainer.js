@@ -19,7 +19,7 @@ const FeaturedPostsContainer = ({ userId,postDelete }) => {
         setAllPosts(user.featuredPosts);
       })
       .catch((err) => {
-        console.log(err);
+        console.log();
         setUser([]);
         setAllPosts([]);
       });

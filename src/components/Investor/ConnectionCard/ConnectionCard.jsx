@@ -22,7 +22,7 @@ function ConnectionCard({ userIdData, theme }) {
         setLoading(false);
       })
       .catch((err) => {
-        //console.log(err);
+        //console.log();
         setLoading(false);
       });
   }, [userId, userIdData]);

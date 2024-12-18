@@ -46,7 +46,7 @@ function Search() {
           setConnectionSent(false); // Reset the state after a delay
         }, 2500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log());
   };
 
   // Fetch search Data

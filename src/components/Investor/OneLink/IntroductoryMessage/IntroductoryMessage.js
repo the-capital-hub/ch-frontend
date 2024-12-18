@@ -57,11 +57,9 @@ const IntroductoryMessage = ({
 				});
 				dispatch(setUserCompany(response.data));
 			} else {
-				console.log(formattedMsg);
 				const { data: response } = await updateIntroMsgAPI({
 					introductoryMessage: formattedMsg,
 				});
-				console.log(response.data.data);
 				dispatch(setUserCompany(response.data.data));
 			}
 			setNewPara(formattedMsg);

@@ -46,7 +46,6 @@ const InvestNow = ({ page }) => {
 
     emailjs.send('service_0jwzlw5', 'template_diknlz3', templateParams, 'dGUx-9NH42p_jnnBx')
       .then((response) => {
-        console.log('Email sent successfully:', response.status, response.text);
         setShowModal(true);
         setLoading(false);
         setIsSubmitted(true);

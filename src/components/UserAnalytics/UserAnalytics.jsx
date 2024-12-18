@@ -64,7 +64,6 @@ const AnalyticsCard = () => {
 				}
 			);
 			const data = await response.json();
-			console.log("getUserProfileViews", data);
 			if (data.status === 404) {
 				setUserPublicProfileViews(0);
 				setLoading(false);

@@ -56,7 +56,6 @@ export default function Milestones({
         setJoinedDate(data.userJoinedDate);
         setCompanyFoundedDate(data.startUpFoundedDate);
       } catch (error) {
-        console.log("Error fetching user's milestones:", error);
         setUserMilestones(companyMilestones);
       }
     }

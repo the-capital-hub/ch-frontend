@@ -27,11 +27,10 @@ const InvestorPhilosophy = ({ showProfile }) => {
       const {
         data: { data },
       } = await updateUserAPI(editedData);
-      console.log("data updateUserAPI", data);
       dispatch(loginSuccess(data));
       setPhilosophy(philosophy);
     } catch (error) {
-      console.log(error);
+      console.log();
     } finally {
       setIsEditing(false);
       setLoading(false);

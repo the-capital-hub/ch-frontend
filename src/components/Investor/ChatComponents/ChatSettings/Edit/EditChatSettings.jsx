@@ -38,7 +38,7 @@ export default function EditChatSettings({ theme = "startup" }) {
         dispatch(setCommunityProfile(updatedCommunityProfile));
       })
       .catch((error) => {
-        console.log(error);
+        console.log();
       });
   };
 
@@ -50,7 +50,7 @@ export default function EditChatSettings({ theme = "startup" }) {
         setUnAddedMembers(data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log();
       });
   }, [chatId, loggedInUser._id]);
 
@@ -79,14 +79,14 @@ export default function EditChatSettings({ theme = "startup" }) {
         getCommunitySettings(chatId)
           .then(({ data }) => {
             dispatch(setCommunityProfile(data));
-            console.log(data);
+            console.log();
           })
           .catch((error) => {
-            console.log(error);
+            console.log();
           });
       }
     } catch (error) {
-      console.log(error);
+      console.log();
     }
   };
   return (

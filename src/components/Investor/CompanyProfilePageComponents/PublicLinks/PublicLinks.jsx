@@ -17,11 +17,7 @@ const PublicLinks = ({
   // Initialize state with the initial links provided as props
   const [links, setLinks] = useState({publicLinks});
 
-  useEffect(()=>{
-    console.log("userCompany",userCompanyData);
-    console.log("Links",links);
-    console.log("publicLinks", publicLinks);
-  })
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -52,7 +48,6 @@ const PublicLinks = ({
           ...companySocialLinks,
           founderId : loggedInUser._id
         });
-        console.log("Response", response);
       }
 
    else{
@@ -60,7 +55,6 @@ const PublicLinks = ({
         ...companySocialLinks,
         founderId : loggedInUser._id
       });
-      console.log("Response", response);
    }
       
       // Optionally update state or props

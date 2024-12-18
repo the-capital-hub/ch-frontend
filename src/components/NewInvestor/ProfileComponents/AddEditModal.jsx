@@ -105,7 +105,6 @@ export default function AddEditModal({
             description: formData.description,
             investedEquity: formData.equity,
           };
-          console.log(newStartUpData);
           const response = await addStartupInvested(
             loggedInUser?.investor,
             newStartUpData
@@ -117,18 +116,16 @@ export default function AddEditModal({
             logo: logo,
             name: formData.name,
           };
-          console.log("Sector", newSectorData);
           const response = await addSectorOfInterest(
             loggedInUser?.investor,
             newSectorData
           );
-          console.log(response.data);
           setSectorsData(response.data.sectorInterested);
         }
       }
       resetFormData();
     } catch (error) {
-      console.log(error);
+      console.log();
     } finally {
       setLoading(false);
     }
@@ -155,7 +152,7 @@ export default function AddEditModal({
         setSectorLogo(sector.logo);
       }
     } catch (error) {
-      console.log(error);
+      console.log();
     }
   };
 
@@ -203,7 +200,7 @@ export default function AddEditModal({
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log();
       });
   };
 

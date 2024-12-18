@@ -68,7 +68,6 @@ export default function MeetingRequest({
 
     try {
       const { data } = await rejectMeetingRequestAPI(meetingId, requestId);
-      console.log("decline response", data);
       setDeleting(false);
       setAlert({ success: "Request Declined!" });
       setTimeout(() => {

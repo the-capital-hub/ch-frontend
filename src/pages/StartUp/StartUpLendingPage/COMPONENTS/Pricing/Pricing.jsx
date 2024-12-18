@@ -30,7 +30,7 @@ const Pricing = () => {
   const handlePurchase = async (item) => {
     try {
       const res = await subscribe(item);
-      console.log(res);
+      console.log();
       // if (res) {
       //   setOrderId(res.order_id);
       //   let checkOutOptions = {
@@ -43,11 +43,11 @@ const Pricing = () => {
       //       console.log("Payment Success");
       //     })
       //     .catch((error) => {
-      //       console.log(error);
+      //       console.log();
       //     });
       // }
     } catch (err) {
-      console.log(err);
+      console.log();
     }
   };
 

@@ -30,7 +30,6 @@ function Profile() {
 	const { userId } = useParams();
 	const [user, setUser] = useState([]);
 	const [colorCard, setColorCard] = useState([]);
-	console.log("User", user);
 
 	useEffect(() => {
 		document.title = "Profile - OneLink | The Capital Hub";
@@ -46,7 +45,6 @@ function Profile() {
 			})
 			.catch(() => setUser([]));
 	}, [userId, username]);
-	console.log(user);
 	return (
     <>
     <MobileOneLinkNavbar/>

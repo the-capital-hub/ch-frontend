@@ -30,9 +30,8 @@ const TopVoice = () => {
 	const handleUpdateUserAsTopVoice = async () => {
 		try {
 			const response = await updateUserWithTopVoice();
-			console.log("response", response);
 		} catch (error) {
-			console.error("Failed to update user as top voice:", error);
+			console.error();
 		}
 	};
 

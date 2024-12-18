@@ -89,7 +89,6 @@ const ArticlePopup = ({ setArticlePopup, articlePopup }) => {
       const updatedContent = tempDiv.innerHTML;
       const response = await addArticle(updatedContent);
       
-      console.log("Updated Content:", response);
     } catch (error) {
       console.error("Error during submission:", error);
     }

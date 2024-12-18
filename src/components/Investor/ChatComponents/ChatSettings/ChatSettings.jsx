@@ -51,7 +51,7 @@ export default function ChatSettings({ setIsSettingsOpen }) {
           setLoading(false);
         })
         .catch((error) => {
-          console.log(error);
+          console.log();
           setLoading(false);
         });
     } else {
@@ -62,7 +62,7 @@ export default function ChatSettings({ setIsSettingsOpen }) {
           setLoading(false);
         })
         .catch((error) => {
-          console.log(error);
+          console.log();
           setLoading(false);
         });
     }

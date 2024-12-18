@@ -188,7 +188,6 @@ async function getAllPostsAPI(page) {
 async function getOnePager(oneLink) {
 	try {
 		const response = await axiosInstance.get(API.getOnePager + "/" + oneLink);
-		console.log("Response", response);
 		return response.data;
 	} catch (error) {
 		console.error("Error:", error);
@@ -203,12 +202,10 @@ async function getUserById(oneLink, userId) {
 			const response = await axiosInstance.get(API.getUserById + "/" + userId);
 			response.data.data.company = onePager.data.company;
 			response.data.data.location = onePager.data.location;
-			console.log("Response", response);
-			return response.data;
+						return response.data;
 		} else {
 			const response = await axiosInstance.get(API.getUserById + "/" + userId);
-			console.log("Response", response);
-			return response.data;
+						return response.data;
 		}
 	} catch (error) {
 		console.error("Error:", error);
@@ -231,8 +228,7 @@ export const getStartupByFounderId = async (founderId) => {
 		const response = await axiosInstance.get(
 			API.getStartupByFounderId + "/" + founderId
 		);
-		console.log("Response", response);
-		return response.data;
+				return response.data;
 	} catch (error) {
 		throw error;
 	}
@@ -241,11 +237,9 @@ export const getStartupByFounderId = async (founderId) => {
 //06-08-2024
 export const getStartUpById = async (startupId) => {
 	try {
-		console.log("userService called");
 		const response = await axiosInstance.get(
 			API.getStartUpById + "/" + startupId
 		);
-		console.log(response);
 		return response;
 	} catch (error) {
 		throw error;
@@ -297,7 +291,7 @@ export const changePasswordAPI = async (newData) => {
 		const { data } = await axiosInstance.patch(API.changePassword, newData);
 		return data;
 	} catch (error) {
-		console.log(error);
+		console.log();
 		throw error?.response?.data || error;
 	}
 };
@@ -839,7 +833,6 @@ export const removeFromFeaturedPost = async (postId) => {
 		);
 		return response.data;
 	} catch (error) {
-		console.log("Error while removing post from featured post:", error);
 		throw error;
 	}
 };
@@ -851,7 +844,6 @@ export const removeCompanyUpdatedPost = async (postId) => {
 		);
 		return response.data;
 	} catch (error) {
-		console.log("Error while removing post from featured post:", error);
 		throw error;
 	}
 };
@@ -916,13 +908,11 @@ export const toggleLikeComment = async (postId, commentId) => {
 };
 export const unsavePost = async (requestBody) => {
 	try {
-		console.log("body", requestBody);
 		const response = await axiosInstance.patch(`${API.unsavePost}`, {
 			...requestBody,
 		});
 		return response.data;
 	} catch (error) {
-		console.error("Error while unsaving post:", error);
 		throw error;
 	}
 };

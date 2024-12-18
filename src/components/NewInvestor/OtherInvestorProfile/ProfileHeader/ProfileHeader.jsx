@@ -17,7 +17,6 @@ export default function ProfileHeader({
   const handleConnect = (userId) => {
     sentConnectionRequest(loggedInUser._id, userId)
       .then(({ data }) => {
-        console.log("Connection data: ", data);
         if (data?.message === "Connection Request Sent") {
           setConnectionSent(true); // Set the state to true once
           setTimeout(() => {
@@ -25,7 +24,7 @@ export default function ProfileHeader({
           }, 2500);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log());
   };
 
   return (
