@@ -7,7 +7,7 @@ export default function Faq() {
   return (
     <div className="accordion d-flex flex-column gap-3" id="accordionExample">
       {question.map((qaPair, index) => (
-        <div className="accordion-item rounded-2" style={{overflow:"hidden"}}>
+        <div key={index} className="accordion-item rounded-2" style={{overflow:"hidden"}}>
           <h2 className="accordion-header" id={`heading${index}`}>
             <button
               className="accordion-button collapsed"

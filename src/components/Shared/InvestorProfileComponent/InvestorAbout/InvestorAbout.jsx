@@ -129,7 +129,7 @@ export default function InvestorAbout({
               </div>*/}
 
             <div className="button-social">
-              <a href={linkedIn} class="button linkedin">
+              <a href={linkedIn} className="button linkedin">
                 <FaLinkedin size={"20px"} style={{ marginRight: "10px" }} />{" "}
                 LinkedIn
               </a>
