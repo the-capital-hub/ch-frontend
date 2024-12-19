@@ -25,6 +25,7 @@ import TimeAgo from "timeago-react";
 import IconReportPost from "../../SvgIcons/IconReportPost";
 import { CiCirclePlus } from "react-icons/ci";
 import { useSelector, useDispatch } from "react-redux";
+import { getSentConnectionsAPI, pendingConnectionRequestsAPI, getUserConnections } from "../../../../Service/user";
 // import AfterSuccessPopup from "../../../PopUp/AfterSuccessPopUp/AfterSuccessPopUp";
 // import InvestorAfterSuccessPopUp from "../../../PopUp/InvestorAfterSuccessPopUp/InvestorAfterSuccessPopUp";
 import {
@@ -170,15 +171,26 @@ const FeedPostCard = ({
 	};
 
 	useEffect(() => {
-		if (
-			loggedInUser.connections.includes(userId) ||
-			loggedInUser.connectionsSent.includes(userId)
-		) {
-			setConnectionSent(true);
-		} else {
-			setConnectionSent(false);
-		}
-	}, [loggedInUser, userId]);
+		const fetchSentConnections = async () => {
+		  try {
+			const response = await getSentConnectionsAPI();
+			const connection_recieved = await pendingConnectionRequestsAPI();
+	  
+			const isConnectionSent = response.data.some(
+			  (connection) => connection.receiver._id === userId
+			) || connection_recieved.data.some(
+				(con_rec) => con_rec.sender._id === userId
+			)
+			setConnectionSent(isConnectionSent);
+		  } catch (error) {
+			console.error('Error fetching sent connections:', error);
+			setConnectionSent(false); 
+		  }
+		};
+	  
+		fetchSentConnections();
+	  }, [loggedInUser, userId]);
+	  
 
 	const toggleDescription = (e) => {
 		e.stopPropagation();
@@ -376,14 +388,39 @@ const FeedPostCard = ({
 	}, [video, isVideoAutoplay]);
 
 	const likeUnlikeHandler = async () => {
+		
+		const newLikedState = !liked;
+
 		try {
-			liked ? likes.length-- : likes.length++;
-			setLiked(!liked);
+			// Define newLikedState based on the current liked state
+			setLiked(newLikedState);
+			
+			// Update likes count optimistically
+			if (newLikedState) {
+				likes.push(loggedInUser._id);
+			} else {
+				const index = likes.indexOf(loggedInUser._id);
+				if (index > -1) likes.splice(index, 1);
+			}
+
+			// Make API call
 			await likeUnlikeAPI(postId);
+
+			// Update likes data
+			const likesData = await getLikeCount(postId);
+			setLikedBy(likesData?.data.likedBy);
+			setLikedByUser(likesData?.data.users);
+
 		} catch (error) {
-			!liked ? likes.length-- : likes.length++;
-			setLiked(!liked);
-			console.log();
+			// Revert optimistic updates on error
+			setLiked(!newLikedState);
+			if (!newLikedState) {
+				likes.push(loggedInUser._id);
+			} else {
+				const index = likes.indexOf(loggedInUser._id);
+				if (index > -1) likes.splice(index, 1);
+			}
+			console.error("Error updating like:", error);
 		}
 	};
 
@@ -699,17 +736,25 @@ const FeedPostCard = ({
 												<span className="top-voice-text">Top Voice</span>
 											</span>
 										)}
-									{!connectionSent && loggedInUser._id !== userId && (
-										<button
+									{loggedInUser._id !== userId ? (
+										connectionSent ? (
+											<span className="request_sent_feed d-inline">Request Sent</span>
+										) : loggedInUser.connections.includes(userId) ? (
+											<span className="request_sent_feed d-inline">Following</span>
+										) : (
+											<button
 											className="btn connect_button_feed d-inline"
 											onClick={(e) => {
+												e.stopPropagation();
 												e.preventDefault();
 												handleConnect(userId);
 											}}
-										>
+											>
 											<span>Follow</span>
-										</button>
-									)}
+											</button>
+										)
+										) : null}
+
 								</Link>
 
 								<div className="info-container">

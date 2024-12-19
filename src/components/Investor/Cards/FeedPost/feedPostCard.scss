@@ -151,6 +151,20 @@
 						}
 					}
 
+					.request_sent_feed {
+						font-size: 13px !important;
+						padding: 5px;
+						gap: 4px;
+						align-items: center;
+						color: #fd5901 !important;
+						display: flex;
+						cursor:default;
+						justify-content: center;
+						align-items: center;
+						border-radius: 50px;
+						transition: background-color 0.3s, color 0.3s;
+					}
+
 					.connect_button_feed span {
 						font-size: 14px;
 					}
@@ -846,3 +860,4 @@
 .read-more-text:hover {
 	color: #0073b1;
 }
+
