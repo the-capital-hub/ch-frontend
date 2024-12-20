@@ -20,7 +20,7 @@ const VcCard = ({ vc }) => {
 						{vc.location}, {vc.age} years
 					</p>
 				</div>
-				<p className="ticket-size">
+				<div className="ticket-size">
 					<span>Ticket Size</span>{": "}
 					{vc.ticket_size
 						? `$${vc.ticket_size

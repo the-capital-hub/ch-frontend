@@ -51,6 +51,7 @@ import { PiFloppyDiskBackLight, PiSparkleLight } from "react-icons/pi";
 import { HiOutlineUserPlus } from "react-icons/hi2";
 import Batch from "../../Batch";
 import OnboardingSwitch from "../../Investor/InvestorNavbar/OnboardingSwitch/OnboardingSwitch";
+import { IoCalendarOutline } from "react-icons/io5";
 
 
 // Investor Sidebar
@@ -61,6 +62,8 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
   const isMobileView = useSelector((state) => state.design.isMobileView);
   const [isCommunityDetailOpen, setIsCommunityDetailOpen] = useState(false);
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+  const [isMeetingDetailOpen, setIsMeetingDetailOpen] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
   // const menuIconClick = () => {
@@ -71,6 +74,10 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
     // Step 3: Show the logout popup
     setShowLogoutPopup(true);
   };
+
+  const handleLinkClick = () => {
+		if (isMobileView) setSidebarCollapsed(true);
+	};
 
   const handleLogoutLogic = () => {
     dispatch(logout());
@@ -442,6 +449,71 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
                   {!sidebarCollapsed && <span className="">My Schedules</span>}
                 </Link>
               </MenuItem>
+              <MenuItem
+								active={location.pathname.includes("/chats")}
+								className="active-item"
+							>
+								<div
+									className="sidebar__community d-flex gap-4"
+									id="sidebar_community"
+								>
+									<div onClick={handleLinkClick}>
+										<IoCalendarOutline
+											size={25}
+											color={`${
+												isMeetingDetailOpen ? "#d3f36b" : "var(--d-l-grey)"
+											}`}
+											className="me-1"
+										/>
+									</div>
+									{!sidebarCollapsed && (
+										<details className="">
+											<summary
+												className="d-flex align-items-center gap-2"
+												onClick={() =>
+													setIsMeetingDetailOpen(!isMeetingDetailOpen)
+												}
+											>
+												Meetings
+												{isMeetingDetailOpen ? (
+													<BsChevronUp />
+												) : (
+													<BsChevronDown />
+												)}
+											</summary>
+											<div className="d-flex flex-column gap-2">
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={() => {
+														setSidebarCollapsed(true);
+														navigate("/investor/meeting/events");
+													}}
+												>
+													Events
+												</button>
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={() => {
+														setSidebarCollapsed(true);
+														navigate("/investor/meeting/plans");
+													}}
+												>
+													Plans
+												</button>
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={() => {
+														setSidebarCollapsed(true);
+														navigate("/investor/meeting/availability");
+													}}
+												>
+													Availability
+												</button>
+											</div>
+										</details>
+									)}
+								</div>
+							</MenuItem>
               <MenuItem
                 active={location.pathname.includes("/saved-posts")}
                 className="active-item"
