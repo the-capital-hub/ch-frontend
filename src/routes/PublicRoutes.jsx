@@ -1,18 +1,19 @@
 import { Suspense, lazy } from "react";
 import { Route } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
-// import Navbar2 from "../components/Navbar/NavbarForSalesLanding/Navbar2";
 import Footer from "../components/Footer/Footer";
-import Footer2 from "../components/Footer/FooterForSalesLanding/Footer2";
 import Register from "../components/Register/Register";
 import Login from "../components/Login/Login";
 import NewPasswordPopUp from "../components/PopUp/NewPasswordPopUp/NewPasswordPopUp";
 import SuspenseLoader from "../components/SuspenseLoader/SuspenseLoader";
 import OurStartup from "../components/OurStartup/OurStartUp";
 import SubscriptionSuccess from "../components/SubscriptionSuccess/SubscriptionSuccess";
-import Navbar3 from "../components/Navbar/Navbar3/Navbar3";
-import SidebarPublic from "../components/SidebarPublic/SidebarPublic";
 import PublicRoute from "../components/Routes/PublicRoutes/PublicRoute";
+
+// import Navbar2 from "../components/Navbar/NavbarForSalesLanding/Navbar2";
+// import Footer2 from "../components/Footer/FooterForSalesLanding/Footer2";
+// import Navbar3 from "../components/Navbar/Navbar3/Navbar3";
+// import SidebarPublic from "../components/SidebarPublic/SidebarPublic";
 
 // Import the other components using lazy loading
 const Home = lazy(() => import("../components/Home/Home"));
@@ -73,6 +74,9 @@ const AuthorProfile = lazy(() =>
 );
 const FounderProfile = lazy(() =>
 	import("../components/Shared/FoundersProfile/FoundersProfile")
+);
+const InvestorPublicProfile = lazy(() =>
+	import("../components/InvestorPublicProfile/InvestorPublicProfile")
 );
 
 const ScheduleMeeting = lazy(() =>
@@ -329,7 +333,7 @@ function PublicRoutes() {
 					</Suspense>
 				}
 			/>
-			
+
 			{/* Below routes are public routes with public Navbar and Sidebar */}
 			<Route element={<PublicRoute />}>
 				<Route
@@ -337,6 +341,14 @@ function PublicRoutes() {
 					element={
 						<Suspense fallback={<SuspenseLoader />}>
 							<FounderProfile />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/investor/:username"
+					element={
+						<Suspense fallback={<SuspenseLoader />}>
+							<InvestorPublicProfile />
 						</Suspense>
 					}
 				/>

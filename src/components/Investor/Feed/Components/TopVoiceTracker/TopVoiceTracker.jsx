@@ -6,7 +6,7 @@ import DOMPurify from "dompurify";
 import TopVoices from "../../../../../Images/TopVoices.png";
 import "./TopVoiceTracker.scss";
 
-const TopVoice = () => {
+const TopVoice = ({ isInvestor = false }) => {
 	const theme = useSelector(selectTheme);
 	const [posts, setPosts] = useState([]);
 	const [showAllPosts, setShowAllPosts] = useState(false);
@@ -89,7 +89,12 @@ const TopVoice = () => {
 					<div className="level-progress">
 						<div
 							className="level-fill"
-							style={{ width: `${(posts.length / 10) * 100}%` }}
+							style={{
+								width: `${(posts.length / 10) * 100}%`,
+								backgroundColor: `${
+									isInvestor ? "rgb(211, 243, 107)" : "#fd5901"
+								}`,
+							}}
 						></div>
 					</div>
 					<div className="level-labels">
@@ -151,7 +156,13 @@ const TopVoice = () => {
 					</div> */}
 				</div>
 				<div className="know-more-btn" onClick={handleShowAllPosts}>
-					<button>Know More</button>
+					<button
+						style={{
+							backgroundColor: isInvestor ? "rgb(211, 243, 107)" : "#fd5901",
+						}}
+					>
+						Know More
+					</button>
 				</div>
 			</div>
 		</div>
