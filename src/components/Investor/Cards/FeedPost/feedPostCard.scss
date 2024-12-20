@@ -740,6 +740,15 @@
 				color: var(--d-l-grey);
 				font-size: 14px;
 			}
+
+			&[style*="opacity: 0.6"] {
+				cursor: not-allowed;
+				
+				.option-text,
+				.vote-count {
+					opacity: 0.8;
+				}
+			}
 		}
 
 		.vote-button {
@@ -760,12 +769,17 @@
 			&:disabled {
 				opacity: 0.6;
 				cursor: not-allowed;
+				background: var(--bs-light);
+				border-color: var(--bs-light);
+				color: var(--d-l-grey);
 			}
 
 			&.votedButton {
 				background: #fd5901 !important;
 				color: white !important;
 				border-color: #fd5901 !important;
+				opacity: 1 !important;
+				cursor: pointer !important;
 			}
 		}
 	}
@@ -818,6 +832,15 @@
 				color: var(--d-l-grey);
 				font-size: 14px;
 			}
+
+			&[style*="opacity: 0.6"] {
+				cursor: not-allowed;
+				
+				.option-text,
+				.vote-count {
+					opacity: 0.8;
+				}
+			}
 		}
 
 		.vote-button {
@@ -838,12 +861,17 @@
 			&:disabled {
 				opacity: 0.6;
 				cursor: not-allowed;
+				background: var(--bs-light);
+				border-color: var(--bs-light);
+				color: var(--d-l-grey);
 			}
 
 			&.votedButton {
-				background: #d3f36b !important; // Investor theme color
+				background: #d3f36b !important;
 				color: #1d1d1d !important;
 				border-color: #d3f36b !important;
+				opacity: 1 !important;
+				cursor: pointer !important;
 			}
 		}
 	}

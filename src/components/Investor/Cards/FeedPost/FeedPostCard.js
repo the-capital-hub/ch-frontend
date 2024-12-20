@@ -74,6 +74,7 @@ const FeedPostCard = ({
 	lastName,
 	oneLinkId,
 	pollOptions,
+	allow_multiple_answers,
 	handlePollVote,
 	video,
 	image,
@@ -601,6 +602,7 @@ const FeedPostCard = ({
 					resharedPostId,
 					images,
 					pollOptions,
+					allow_multiple_answers
 				};
 
 				localStorage.setItem("postDetail", JSON.stringify(PostData));
@@ -651,15 +653,26 @@ const FeedPostCard = ({
 
 	const handleVoteClick = async (optionId) => {
 		try {
-			const hasVoted = localPollOptions.find(
+			// Check if user has already voted on this option
+			const hasVotedOnThisOption = localPollOptions.find(
 				(opt) => opt._id === optionId && opt.votes.includes(loggedInUser._id)
 			);
+
+			// Check if user has voted on any option
+			const hasVotedOnAnyOption = localPollOptions.some(
+				(opt) => opt.votes.includes(loggedInUser._id)
+			);
+
+			// If multiple answers not allowed and user has voted on different option
+			if (!allow_multiple_answers && hasVotedOnAnyOption && !hasVotedOnThisOption) {
+				return; // Don't allow voting on other options
+			}
 
 			// Optimistic update
 			setLocalPollOptions((current) =>
 				current.map((opt) => {
 					if (opt._id === optionId) {
-						const newVotes = hasVoted
+						const newVotes = hasVotedOnThisOption
 							? opt.votes.filter((id) => id !== loggedInUser._id)
 							: [...opt.votes, loggedInUser._id];
 						return { ...opt, votes: newVotes };
@@ -982,6 +995,10 @@ const FeedPostCard = ({
 							<div className="poll-section">
 								{localPollOptions.map((option) => {
 									const hasVoted = option.votes?.includes(loggedInUser._id);
+									const hasVotedOnAnyOption = localPollOptions.some(
+										(opt) => opt.votes.includes(loggedInUser._id)
+									);
+									const isDisabled = !allow_multiple_answers && hasVotedOnAnyOption && !hasVoted;
 									const totalVotes = localPollOptions.reduce(
 										(sum, opt) => sum + (opt.votes?.length || 0),
 										0
@@ -1000,6 +1017,7 @@ const FeedPostCard = ({
 												style={{
 													position: "relative",
 													overflow: "hidden",
+													opacity: isDisabled ? 0.6 : 1,
 												}}
 											>
 												<div
@@ -1020,13 +1038,12 @@ const FeedPostCard = ({
 												</span>
 											</div>
 											<button
-												className={`vote-button ${
-													hasVoted ? "votedButton" : ""
-												}`}
+												className={`vote-button ${hasVoted ? "votedButton" : ""}`}
 												onClick={(e) => {
 													e.stopPropagation();
 													handleVoteClick(option._id);
 												}}
+												disabled={isDisabled}
 											>
 												{hasVoted ? "Voted" : "Vote"}
 											</button>
