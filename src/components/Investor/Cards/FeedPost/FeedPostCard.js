@@ -43,6 +43,7 @@ import {
 	getRecommendations,
 	removeFromFeaturedPost,
 	removeCompanyUpdatedPost,
+	reportPost
 } from "../../../../Service/user";
 import { Link, useLocation } from "react-router-dom";
 import SavePostPopUP from "../../../../components/PopUp/SavePostPopUP/SavePostPopUP";
@@ -465,12 +466,49 @@ const FeedPostCard = ({
 
 	const [showReportSuccess, setShowReportSuccess] = useState(false);
 
-	const reportSubmitHandler = (e) => {
-		e.preventDefault();
-		setFilingReport(false);
-		setShowReportModal(false);
-		setShowReportSuccess(true);
+	const reportSubmitHandler = async (e, postId, reportReason) => {
+		try {
+			// Prevent form submission if it's a form event
+			e.preventDefault();
+	
+			if (!reportReason || reportReason.trim() === '') {
+				alert("Please provide a reason for the report.");
+				return;
+			}
+	
+			const postPublicLink = `https://thecapitalhub.in/post_details/${postId}`;
+			const reporterEmail = loggedInUser?.email;
+			const reporterId = loggedInUser?._id;
+			const reportTime = new Date().toISOString();
+			const email = "dev.capitalhub@gmail.com"; 
+	
+			if (!reporterEmail || !reporterId) {
+				console.error("User is not logged in or missing user details.");
+				return;
+			}
+	
+			const response = await reportPost(
+				postPublicLink,
+				postId,
+				reportReason,
+				reporterEmail,
+				reporterId,
+				reportTime,
+				email
+			);
+	
+			console.log(response);
+	
+			setFilingReport(false);
+			setShowReportModal(false);
+			setShowReportSuccess(true);
+		} catch (error) {
+			console.error("Error while sending report email", error);
+			setShowReportModal(false);
+			alert("An error occurred while submitting the report. Please try again.");
+		}
 	};
+	
 
 	const [showFeaturedPostSuccess, setShowFeaturedPostSuccess] = useState(false);
 	const [showCompanyUpdateSuccess, setShowCompanyUpdateSuccess] =
@@ -1725,7 +1763,7 @@ const FeedPostCard = ({
 							onClick={(e) => {
 								e.stopPropagation();
 								e.preventDefault();
-								reportSubmitHandler(e);
+								reportSubmitHandler(e, postId, reportReason);
 							}}
 						>
 							Submit report
@@ -1734,7 +1772,7 @@ const FeedPostCard = ({
 						<button className="submit_button btn" type="button" onClick={(e) => {
 							e.preventDefault();
 							e.stopPropagation();
-							reportSubmitHandler(e);
+							reportSubmitHandler(e, postId, reportReason);
 						}} disabled>
 							<span role="status" className="me-1">
 								Submit report
