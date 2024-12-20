@@ -44,7 +44,6 @@ function Achievements() {
       //   response?.data.completed?.filter((medal) => medal.badge === "bronze") ||
       //   [];
       // setBronzeCount(bCount.length);
-      console.log("User Acheivements are deprecated");
     } catch (error) {
       console.error(error.message);
     } finally {

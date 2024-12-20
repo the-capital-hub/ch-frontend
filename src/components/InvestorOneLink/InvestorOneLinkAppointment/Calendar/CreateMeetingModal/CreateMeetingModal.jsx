@@ -63,7 +63,6 @@ export default function CreateMeetingModal({
         setAlert(null);
       }, 2500);
     } catch (error) {
-      console.log("Create meeting error:", error);
 
       // Revert loading and title
       setLoading(false);

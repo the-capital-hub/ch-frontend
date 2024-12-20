@@ -43,7 +43,6 @@ export default function RequestMeetingModal({ selectedMeeting, setMeetings }) {
   //   handle request submit
   async function handleRequestSubmit(e) {
     e.preventDefault();
-    console.log("meetRequest", requestData);
 
     // Set loading
     setLoading(true);
@@ -80,7 +79,6 @@ export default function RequestMeetingModal({ selectedMeeting, setMeetings }) {
         setAlert(null);
       }, 2500);
     } catch (error) {
-      console.log("Error requesting meeting:", error);
 
       // Revert loading
       setLoading(false);

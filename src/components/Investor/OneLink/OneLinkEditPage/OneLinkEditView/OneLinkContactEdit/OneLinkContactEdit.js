@@ -22,7 +22,7 @@ const OneLinkContactEdit = ({ oneLink, page }) => {
       .then(({ data }) => {
         setUser(data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log());
   };
 
   const handleInputChange = (field, event) => {

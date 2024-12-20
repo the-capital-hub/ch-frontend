@@ -173,7 +173,7 @@ export default function ChatInputContainer({
               `https://thecapitalhub.in/onelink/${data.oneLink}/${userOneLinkId}`
             );
           })
-          .catch((error) => console.log(error));
+          .catch((error) => console.log());
       } else {
         getInvestorById(loggedInUser.investor)
           .then(({ data }) => {
@@ -181,7 +181,7 @@ export default function ChatInputContainer({
               `https://thecapitalhub.in/investor/onelink/${data.oneLink}/${userOneLinkId}`
             );
           })
-          .catch((error) => console.log(error));
+          .catch((error) => console.log());
       }
     } else {
       if (loggedInUser.isInvestor === 'false') {

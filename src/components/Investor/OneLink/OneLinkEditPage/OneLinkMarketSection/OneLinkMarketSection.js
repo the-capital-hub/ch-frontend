@@ -32,9 +32,9 @@ const OneLinkMarketSection = ({ company, page }) => {
       founderId: loggedInUser._id,
     })
       .then(({ data }) => {
-        console.log(data);
+        console.log();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log());
   };
 
   return (

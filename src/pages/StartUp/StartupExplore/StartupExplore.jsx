@@ -118,7 +118,6 @@ const loggedInUser = useSelector((state) => state.user.loggedInUser);
 			const { data } = await fetchExploreFiltersAPI(activeTab);
 			setFilterOptions(data); // Correctly set the filter options for the current tab
 		} catch (error) {
-			console.log("Error fetching filters: ", error);
 		}
 	};
 
@@ -144,7 +143,6 @@ const loggedInUser = useSelector((state) => state.user.loggedInUser);
 
 			setFilteredData(data); // Only update filteredData after fetching is complete
 		} catch (error) {
-			console.log("Error fetching filtered results: ", error);
 		} finally {
 			setLoading(false); // Data fetching is complete
 		}
@@ -159,7 +157,6 @@ const loggedInUser = useSelector((state) => state.user.loggedInUser);
 			});
 			setFilteredData(data);
 		} catch (error) {
-			console.log("Error fetching initial filtered results: ", error);
 		} finally {
 			setLoading(false);
 		}

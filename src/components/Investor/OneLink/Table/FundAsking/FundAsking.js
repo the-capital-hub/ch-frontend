@@ -14,10 +14,10 @@ const FundAsking = ({ company, page }) => {
       founderId: loggedInUser._id,
     })
       .then(({ data }) => {
-        console.log(data);
+        console.log();
         window.location.reload();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log());
   };
 
   return (

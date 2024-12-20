@@ -22,10 +22,8 @@ import EventDetails from "../../../components/NewInvestor/MyScheduleComponents/E
 import axios from "axios"; // Axios for making API calls
 import { environment } from "../../../environments/environment";
 
-const baseUrl = environment.baseUrl;
-
 const MEETINGTYPES = ["Event types", "Scheduled events", "Calendar sync"];
-
+const baseUrl = environment.baseUrl;
 export default function MySchedule() {
 	const theme = useSelector(selectTheme);
 	const oneLinkId = useSelector(selectUserOneLinkId);
@@ -43,16 +41,16 @@ export default function MySchedule() {
 		fetchEvents();
 	}, []);
 
-	// Fetch existing events from Google Calendar API
-	const fetchEvents = async () => {
-		try {
-			const response = await axios.get(`${baseUrl}/api/calendar/events`);
-			setEvents(response.data); // Store the fetched events in state
-		} catch (error) {
-			console.error("Error fetching events:", error);
-			alert("Failed to fetch events");
-		}
-	};
+  // Fetch existing events from Google Calendar API
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}/api/calendar/events`);
+      setEvents(response.data); // Store the fetched events in state
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      alert("Failed to fetch events");
+    }
+  };
 
 	// Update the document title and page title in Redux
 	useEffect(() => {

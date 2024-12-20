@@ -53,7 +53,6 @@ const InvestorManageAccount = () => {
 				} else {
 					setIsPassword(false);
 				}
-				console.log("IsPassword", isPassword);
 			});
 		};
 		getUser();
@@ -78,7 +77,7 @@ const InvestorManageAccount = () => {
 						achievementId: "658bb96e8a18edb75e6f423f",
 					};
 					addNotificationAPI(notificationBody)
-						.then((data) => console.log("Added"))
+						.then((data) => console.log())
 						.catch((error) => console.error(error.message));
 				})
 				.catch((error) => {
@@ -129,7 +128,6 @@ const InvestorManageAccount = () => {
 				!response.ok ||
 				changePasswordForm.confirmNewPassword !== changePasswordForm.newPassword
 			) {
-				console.log(response);
 				return setMessage("Passwords don't match");
 			}
 		}
@@ -137,7 +135,6 @@ const InvestorManageAccount = () => {
 		if (
 			changePasswordForm.confirmNewPassword !== changePasswordForm.newPassword
 		) {
-			console.log(response);
 			return setMessage("Passwords don't match");
 		}
 		changePasswordAPI(changePasswordForm)

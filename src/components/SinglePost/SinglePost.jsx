@@ -38,7 +38,6 @@ function SinglePost() {
         setPostLoading(false);
       })
       .catch((err) => {
-        console.log("Error showing single post : ", err);
         navigate("/");
       });
   }, [_id]);
@@ -54,7 +53,7 @@ function SinglePost() {
     setRepostLoading({ ...repostLoading, instant: true });
     postUserPost({ resharedPostId })
       .then(() => navigate("/home"))
-      .catch((err) => console.log(err))
+      .catch((err) => console.log())
       .finally(() => setRepostLoading({ ...repostLoading, instant: false }));
   };
   const [popupOpen, setPopupOpen] = useState(false);

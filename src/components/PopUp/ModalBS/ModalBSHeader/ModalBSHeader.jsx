@@ -7,7 +7,6 @@ function ModalBSHeader({ title, label, className, closeRef, closeCallback }) {
       closeCallback(); // If closeCallback exists, call it
     } else {
       // Implement default behavior to close the modal
-      console.log("Close functionality not implemented");
     }
   }
 

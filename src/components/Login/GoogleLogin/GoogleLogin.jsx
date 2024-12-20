@@ -76,7 +76,6 @@ const GoogleLoginButton = ({
 				refresh_token: tokens.refresh_token,
 				id_token: tokens.id_token,
 			});
-			console.log("response", response);
 
 			if (response.status === 200) {
 				const { user, token } = response;

@@ -73,10 +73,9 @@ export default function CompanyActions({
         founderId: loggedInUserId,
         myInterests: updatedMyInterests,
       });
-      console.log("uninterest", data);
       dispatch(setUserCompany(data));
     } catch (error) {
-      console.log(error);
+      console.log();
     } finally {
       setLoading(false);
     }
@@ -92,10 +91,9 @@ export default function CompanyActions({
         founderId: loggedInUserId,
         myInterests: updatedMyInterests,
       });
-      console.log("interest", data);
       dispatch(setUserCompany(data));
     } catch (error) {
-      console.log(error);
+      console.log();
     } finally {
       setLoading(false);
     }
@@ -142,7 +140,7 @@ export default function CompanyActions({
       //     console.error("Error creating chat-->", error);
       //   });
     } catch (err) {
-      console.log(err);
+      console.log();
     }
   };
 

@@ -41,7 +41,6 @@ const SubcriptionPop = ({ popPayOpen, setPopPayOpen }) => {
 		try {
 			if (item.subscriptionType === "Basic") {
 				if (loggedInUser.trialStartDate) {
-					console.log("Trial already done");
 					alert("Trial already taken");
 				} else {
 					const res = await subscribe({ subscriptionType: "Basic" });
@@ -66,15 +65,14 @@ const SubcriptionPop = ({ popPayOpen, setPopPayOpen }) => {
 					cashfree
 						.checkout(checkOutOptions)
 						.then(() => {
-							console.log("Payment Success");
 						})
 						.catch((error) => {
-							console.log(error);
+							console.log();
 						});
 				}
 			}
 		} catch (err) {
-			console.log(err);
+			console.log();
 		}
 	};
 

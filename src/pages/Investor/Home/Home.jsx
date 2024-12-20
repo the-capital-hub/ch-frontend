@@ -114,47 +114,47 @@ function Home() {
 		dispatch(setPageTitle("Home"));
 		document.title = "Home | Investors - The Capital Hub";
 
-		// Fetch company data
-		if (isInvestor && !companyDataId) {
-			getInvestorById(userInvestor)
-				.then(({ data }) => {
-					dispatch(setUserCompany(data));
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		}
-	}, [dispatch, isInvestor, userInvestor, companyDataId]);
+    // Fetch company data
+    if (isInvestor && !companyDataId) {
+      getInvestorById(userInvestor)
+        .then(({ data }) => {
+          dispatch(setUserCompany(data));
+        })
+        .catch((error) => {
+          console.log();
+        });
+    }
+  }, [dispatch, isInvestor, userInvestor, companyDataId]);
 
-	const fetchMorePosts = () => {
-		getAllPostsAPI(page)
-			.then(({ data }) => {
-				if (data?.length === 0) {
-					setHasMore(false);
-				} else {
-					const totalPost = data.filter((item) => item?.postType !== "company");
-					const post = allPosts.filter((item) => item?.postType !== "company");
-					setAllPosts([...post, ...totalPost]);
-					setPage(page + 1);
-				}
-			})
-			.catch((err) => {
-				setHasMore(false);
-				console.log(err);
-			})
-			.finally(() => setLoadingFeed(false));
-	};
+  const fetchMorePosts = () => {
+    getAllPostsAPI(page)
+      .then(({ data }) => {
+        if (data?.length === 0) {
+          setHasMore(false);
+        } else {
+          const totalPost = data.filter((item) => item?.postType !== "company");
+          const post = allPosts.filter((item) => item?.postType !== "company");
+          setAllPosts([...post, ...totalPost]);
+          setPage(page + 1);
+        }
+      })
+      .catch((err) => {
+        setHasMore(false);
+        console.log();
+      })
+      .finally(() => setLoadingFeed(false));
+  };
 
-	useEffect(() => {
-		getSavedPostCollections(loggedInUserId)
-			.then((data) => {
-				setgetSavedPostData(data);
-			})
-			.catch((error) => {
-				console.log(error.message);
-			});
-		fetchMorePosts();
-	}, [newPost, loggedInUserId]);
+  useEffect(() => {
+    getSavedPostCollections(loggedInUserId)
+      .then((data) => {
+        setgetSavedPostData(data);
+      })
+      .catch((error) => {
+        console.log();
+      });
+    fetchMorePosts();
+  }, [newPost, loggedInUserId]);
 
 	// Repost
 	const [repostLoading, setRepostLoading] = useState({
@@ -163,13 +163,13 @@ function Home() {
 	});
 	const [respostingPostId, setRepostingPostId] = useState("");
 
-	const repostInstantly = (resharedPostId) => {
-		setRepostLoading({ ...repostLoading, instant: true });
-		postUserPost({ resharedPostId })
-			.then(() => fetchMorePosts())
-			.catch((err) => console.log(err))
-			.finally(() => setRepostLoading({ ...repostLoading, instant: false }));
-	};
+  const repostInstantly = (resharedPostId) => {
+    setRepostLoading({ ...repostLoading, instant: true });
+    postUserPost({ resharedPostId })
+      .then(() => fetchMorePosts())
+      .catch((err) => console.log())
+      .finally(() => setRepostLoading({ ...repostLoading, instant: false }));
+  };
 
 	const location = useLocation();
 	const queryParams = new URLSearchParams(location.search);
@@ -295,60 +295,53 @@ function Home() {
 							{/* Onboarding popup */}
 							<TutorialTrigger steps={investorOnboardingSteps.homePage} />
 
-							{/* Write a post */}
-							<div className="box start_post_container border">
-								<img
-									src={userProfilePicture}
-									alt="Profile"
-									className="rounded-circle"
-									style={{ objectFit: "cover" }}
-								/>
-
-								<div className="w-100 me-4" onClick={openPopup}>
-									<input
-										className="px-3"
-										type="text"
-										placeholder="Write a post..."
-										style={{ pointerEvents: "none" }}
-									/>
-								</div>
-							</div>
-							<InfiniteScroll
-								dataLength={allPosts.length}
-								next={fetchMorePosts}
-								hasMore={hasMore}
-								loader={
-									<p className="spinner_loader container p-5 text-center my-5 rounded-4 shadow">
-										<div className="d-flex justify-content-center">
-											<div
-												className="spinner-border text-secondary"
-												role="status"
-											>
-												<span className="visually-hidden">Loading...</span>
-											</div>
-										</div>
-									</p>
-								}
-							>
-								{allPosts?.map(
-									(
-										{
-											description,
-											user,
-											video,
-											image,
-											images,
-											documentUrl,
-											documentName,
-											createdAt,
-											likes,
-											_id,
-											resharedPostId,
-											pollOptions,
-										},
-										index
-									) => {
-										if (!user) return null;
+              {/* Write a post */}
+              <div className="box start_post_container border">
+                <img
+                  src={userProfilePicture}
+                  alt="Profile"
+                  className="rounded-circle"
+                  style={{ objectFit: "cover" }}
+                />
+                 
+                <div className="w-100 me-4" onClick={openPopup}>
+                  <input
+                    className="px-3"
+                    type="text"
+                    placeholder="Write a post..."
+                    style={{ pointerEvents: "none" }}
+                  />
+                </div>
+              </div>
+              <InfiniteScroll
+                  dataLength={allPosts.length}
+                  next={fetchMorePosts}
+                  hasMore={hasMore}
+                  loader={
+                    <div className="spinner_loader container p-5 text-center my-5 rounded-4 shadow">
+                      <div className="d-flex justify-content-center">
+                        <div className="spinner-border text-secondary" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                >
+                  {allPosts?.map(({
+                    description,
+                    user,
+                    video,
+                    image,
+                    images,
+                    documentUrl,
+                    documentName,
+                    createdAt,
+                    likes,
+                    _id,
+                    resharedPostId,
+                    pollOptions,
+                  }, index) => {
+                    if (!user) return null;
 
 										const {
 											firstName,

@@ -81,7 +81,6 @@ const CommunityDashboard = ({
   const handleDelete = async () => {
     try {
       const result = await deleteMessage(msgId);
-      console.log("delete message Result:", result);
       if (result) {
         setShowFeaturedPostSuccess(true);
         setDeletePopup(false);
@@ -94,7 +93,6 @@ const CommunityDashboard = ({
   useEffect(() => {
     markMessagesAsReadInCommunities(chatId, loggedInUserId)
       .then((response) => {
-        console.log(response.message);
         setIsRead(!isRead);
       })
       .catch((error) => {
@@ -103,7 +101,6 @@ const CommunityDashboard = ({
   }, [chatId, loggedInUserId, recieveMessage]);
 
   useEffect(() => {
-    console.log(recieveMessage);
     if (recieveMessage !== null && recieveMessage?.chatId === chatId) {
       setMessages((prevMessages) => [...prevMessages, recieveMessage]);
       // update last message
@@ -305,7 +302,7 @@ const CommunityDashboard = ({
   //         `https://thecapitalhub.in/onelink/${data.oneLink}/${loggedInUser.oneLinkId}`
   //       );
   //     })
-  //     .catch((error) => console.log(error));
+  //     .catch((error) => console.log());
   // };
 
   // const removeSelectedImage = () => {

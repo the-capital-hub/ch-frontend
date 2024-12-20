@@ -34,10 +34,8 @@ const MyPostCard = ({
   const handleRemovePost = async (postId) => {
     setLoading(true);
     const response = await deletePostAPI(postId);
-    console.log(response.status);
     if (response.status === 200) {
       userPosts().then(({ data }) => {
-        console.log("ft", data);
         setUser(data.userData);
         setAllPosts(data.allPosts);
       });

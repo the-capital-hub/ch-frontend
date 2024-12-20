@@ -57,7 +57,7 @@
 //       .then(({ data }) => {
 //         console.log(data);
 //       })
-//       .catch((err) => console.log(err));
+//       .catch((err) => console.log());
 //   };
 
 //   return (
@@ -147,7 +147,6 @@ const OnePagePreviewCard = ({ company, page }) => {
   ];
 
   const handleUpdate = (field, newValue) => {
-    console.log("field, newValue", field, newValue);
     if (!newValue) return;
     setEditedContent({ ...editedContent, [field]: newValue });
 
@@ -156,10 +155,9 @@ const OnePagePreviewCard = ({ company, page }) => {
       founderId: loggedInUser._id,
     })
       .then((data) => {
-        console.log("saved data", data);
         window.location.reload();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log());
   };
 
   return (

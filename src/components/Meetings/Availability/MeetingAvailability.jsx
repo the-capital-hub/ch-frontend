@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Availability.scss";
 import { environment } from "../../../environments/environment";
 import { useSelector } from "react-redux";
@@ -21,6 +21,12 @@ const AvailabilitySettings = () => {
 		minGap: 15,
 	});
 
+	const [isInvestor, setIsInvestor] = useState(false);
+	const loggedInUser = useSelector((state) => state.user.loggedInUser);
+
+	useEffect(()=>{
+		setIsInvestor(loggedInUser.isInvestor);
+	},[])
 	// Updated handleDayToggle function
 	const handleDayToggle = (day) => {
 		setAvailability((prev) => {
@@ -48,7 +54,6 @@ const AvailabilitySettings = () => {
 	};
 
 	const updateAvailability = () => {
-		console.log("Updating availability:", availability);
 		// Make API call to update availability
 		try {
 			fetch(`${baseUrl}/meetings/updateAvailability`, {
@@ -60,10 +65,8 @@ const AvailabilitySettings = () => {
 				body: JSON.stringify(availability),
 			}).then((res) => {
 				if (res.status === 200) {
-					console.log("Availability updated successfully");
 					alert("Availability updated successfully");
 				} else {
-					console.log("Error updating availability");
 					alert("Error updating availability");
 				}
 			});
@@ -77,9 +80,7 @@ const AvailabilitySettings = () => {
 
 	return (
 		<div
-			className={`availability-container ${
-				theme === "dark" ? " dark-theme" : ""
-			}`}
+			className={`availability-container ${theme === "dark" ? "dark-theme" : ""} ${isInvestor ? "investor-theme" : ""}`}
 		>
 			<div className="availability-wrapper">
 				<h1>Availability</h1>

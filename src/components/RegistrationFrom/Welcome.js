@@ -67,7 +67,6 @@ const Welcome = () => {
         if (!user.investor) navigate("/home");
         else navigate("/investor/home");
       }, 2000);
-      console.log(user)
       dispatch(loginSuccess(user));
       // Fetch company data asynchronously
       let isInvestor = user.isInvestor === "true" ? true : false;

@@ -119,7 +119,6 @@ const PublicPost = () => {
 		pollOptions,
 	} = postData;
 
-	console.log("postData", postData);
 
 	return (
 		<div

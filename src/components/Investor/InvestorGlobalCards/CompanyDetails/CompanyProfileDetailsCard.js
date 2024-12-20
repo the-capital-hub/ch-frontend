@@ -44,38 +44,30 @@ const CompanyProfileDetailsCard = ({
   const [locationData, setLocationData] = useState("");
 
   useEffect(() => {
-    console.log('userDetails:', userDetails);
-    console.log('theme:', theme);
-
+   
     if (theme === "investor") {
-      console.log('Calling getInvestorById');
       getInvestorById(userDetails?.investor)
         .then(({ data }) => {
-          console.log('Investor data:', data);
           setOnePager(data);
           setDescriptionContent(data.description || "");
           setSocialLinks(data.socialLinks || {});
           setLocationData(data.location || "");
         })
         .catch((error) => {
-          console.error('Error fetching investor data:', error);
           setOnePager({});
           setDescriptionContent("");
           setSocialLinks({});
           setLocationData("");
         });
     } else {
-      console.log('Calling getStartupByFounderId');
       getStartupByFounderId(userDetails?._id)
         .then(({ data }) => {
-          console.log('Startup data:', data);
           setOnePager(data);
           setDescriptionContent(data.description || "");
           setSocialLinks(data.socialLinks || {});
           setLocationData(data.location || "");
         })
         .catch((error) => {
-          console.error('Error fetching startup data:', error);
           setOnePager({});
           setDescriptionContent("");
           setSocialLinks({});
@@ -92,10 +84,8 @@ const CompanyProfileDetailsCard = ({
       location: locationData,
     };
     try {
-      console.log('Submitting updated data:', updatedData);
       await postStartUpData(updatedData);
       setIsDescriptionEditable(!isDescriptionEditable);
-      console.log('Description updated successfully');
     } catch (error) {
       console.error('Error updating description:', error);
     }
@@ -115,7 +105,6 @@ const CompanyProfileDetailsCard = ({
             <span className="company_details_logo_container d-md-none d-flex">
               <img src={onePager.logo || userDetails?.startUp?.logo || userDetails?.investor?.logo || LogoX} alt="profileimage d-md-none d-flex" />
             </span>
-            {console.log("logo of startup",userDetails?.startUp)}
             {page === "edit" && (
               <span className="align-self-start ms-auto d-md-none d-block pt-2">
                 <div className="d-flex align-items-center gap-2 flex-wrap">

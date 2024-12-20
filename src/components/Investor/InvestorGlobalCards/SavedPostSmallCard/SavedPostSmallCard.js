@@ -10,7 +10,6 @@ import { selectLoggedInUserId } from "../../../../Store/features/user/userSlice"
 
 const SavedPostSmallCard = ({
   activeHeader,
-  key,
   description,
   firstName,
   lastName,
@@ -62,17 +61,15 @@ const SavedPostSmallCard = ({
 
     try {
       const response = await unsavePost(requestBody);
-      console.log(response);
 
       // Set allPosts
       // setShowKebabMenu(false);
 
       const updatedSavedPosts = allPosts.filter(({ _id }) => _id !== postId);
-      console.log("after remove", updatedSavedPosts);
       setAllPosts(updatedSavedPosts);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      console.log();
       setShowKebabMenu(false);
       setLoading(false);
     }
@@ -81,7 +78,7 @@ const SavedPostSmallCard = ({
   return (
     <>
       {/* <div className="card-viewer"> */}
-      <div key={key} className="card border rounded-4 p-3 ">
+      <div  className="card border rounded-4 p-3 ">
         {/* Card Header */}
         <div className="d-flex align-items-center justify-content-between mb-2">
           <div className="d-flex">
@@ -172,7 +169,7 @@ const SavedPostSmallCard = ({
           />
         ) : resharedPostId?.image ? (
           <>
-            <div key={key} className="card border rounded-4 p-3 ">
+            <div  className="card border rounded-4 p-3 ">
               <div className="d-flex pb-3">
                 <Link
                   to={`${linkPrefix}/user/${
@@ -228,7 +225,7 @@ const SavedPostSmallCard = ({
        />
         ) : resharedPostId?.description ? (
           <div
-            key={key}
+            
             className="card border rounded-4 p-3"
             style={{
               // flex: 'none',

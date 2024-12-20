@@ -43,41 +43,35 @@ const CompanyDetailsCard = ({
 		instagram: "",
 	});
 	const [locationData, setLocationData] = useState("");
-	console.log("OnePager", onePager);
 
 	useEffect(() => {
-		console.log("userDetails:", userDetails);
-		// console.log('theme:', theme);
 
-		if (userDetails.isInvestor === "true") {
-			console.log("Calling getInvestorById");
+		if (userDetails.isInvestor === "true") 
+		{
 			getInvestorById(userDetails._id)
 				.then(({ data }) => {
-					console.log("Investor data:", data);
 					setOnePager(data);
 					setDescriptionContent(data.description || "");
 					setSocialLinks(data.socialLinks || {});
 					setLocationData(data.location || "");
 				})
 				.catch((error) => {
-					console.error("Error fetching investor data:", error);
 					setOnePager({});
 					setDescriptionContent("");
 					setSocialLinks({});
 					setLocationData("");
 				});
-		} else {
-			console.log("Calling getStartupByFounderId");
+		} else 
+		{
 			getStartupByFounderId(userDetails?._id)
 				.then(({ data }) => {
-					console.log("Startup data:", data);
 					setOnePager(data);
 					setDescriptionContent(data.description || "");
 					setSocialLinks(data.socialLinks || {});
 					setLocationData(data.location || "");
 				})
 				.catch((error) => {
-					console.error("Error fetching startup data:", error);
+					console.log("user",userDetails)
 					setOnePager({});
 					setDescriptionContent("");
 					setSocialLinks({});
@@ -86,7 +80,6 @@ const CompanyDetailsCard = ({
 		}
 
 		// console.log("OnePager", onePager);
-		console.log("UserDetails", userDetails?.startUp?.socialLinks?.website);
 	}, [userDetails, theme]);
 
 	const submitDescriptionHandler = async () => {
@@ -97,12 +90,10 @@ const CompanyDetailsCard = ({
 			location: locationData,
 		};
 		try {
-			console.log("Submitting updated data:", updatedData);
 			await postStartUpData(updatedData);
 			setIsDescriptionEditable(!isDescriptionEditable);
-			console.log("Description updated successfully");
 		} catch (error) {
-			console.error("Error updating description:", error);
+			console.error();
 		}
 	};
 

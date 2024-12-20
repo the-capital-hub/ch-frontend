@@ -147,12 +147,11 @@ export default function CompanyProfile({
   const deleteCompany = async () => {
     try {
       const response = await deleteStartUp(companyData._id);
-      console.log(response);
       if (response.delete_status) {
         setCompanyData({});
       }
     } catch (err) {
-      console.log(err);
+      console.log();
     }
   };
 
@@ -181,7 +180,7 @@ export default function CompanyProfile({
       }
     }
     catch(err){
-      console.log(err)
+      console.log()
     }
     
   };

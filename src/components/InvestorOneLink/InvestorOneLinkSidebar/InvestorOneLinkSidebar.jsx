@@ -38,7 +38,7 @@ export default function InvestorOneLinkSidebar({
       .then(({ data }) => {
         setInvestorData(data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log());
   }, []);
 
   // States

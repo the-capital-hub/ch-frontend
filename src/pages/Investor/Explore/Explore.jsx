@@ -213,7 +213,6 @@ function Explore() {
       const { data } = await fetchExploreFiltersAPI(activeTab);
       setFilterOptions(data);
     } catch (error) {
-      console.log("Error fetching filters: ", error);
     }
   };
 
@@ -238,7 +237,6 @@ function Explore() {
 
       setFilteredData(data);
     } catch (error) {
-      console.log("Error fetching filtered results: ", error);
     } finally {
       setLoading(false);
     }
@@ -252,10 +250,8 @@ function Explore() {
         type: activeTab,
       });
       setFilteredData(data);
-      console.log("loggedInUser", loggedInUser)
 
     } catch (error) {
-      console.log("Error fetching initial filtered results: ", error);
     } finally {
       setLoading(false);
     }

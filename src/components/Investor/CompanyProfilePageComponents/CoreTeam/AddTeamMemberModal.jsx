@@ -68,7 +68,6 @@ export default function AddTeamMemberModal({
         const { url } = await uploadLogo({ logo });
         profileImage = url;
       } catch (error) {
-        console.log("Error:", error);
         setLoading(false);
         return;
       }

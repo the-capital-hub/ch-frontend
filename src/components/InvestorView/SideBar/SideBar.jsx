@@ -136,7 +136,7 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
                           active={currentTab === "pitchDays" || (sidebarCollapsed && currentTab === "pitch")}
                           onClick={() => {
                             setCurrentTab("pitchDays");
-                            setExpandedPitch(false);
+                            setExpandedPitch(true);
                           }}
                         >
                           <Link to="pitchdays">

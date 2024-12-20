@@ -42,7 +42,6 @@ const UploadContainer = ({ onClicked }) => {
 
   const handleFile = async (file) => {
     if (file && file.type === "application/pdf") {
-      console.log("Uploaded or Dropped PDF file:", file);
       try {
         const fileReader = new FileReader();
         fileReader.onload = async () => {
@@ -54,7 +53,6 @@ const UploadContainer = ({ onClicked }) => {
         setThumbnailUrl(null);
       }
     } else {
-      console.log("Invalid file type. Only PDF files are allowed.");
       setThumbnailUrl(null);
     }
   };

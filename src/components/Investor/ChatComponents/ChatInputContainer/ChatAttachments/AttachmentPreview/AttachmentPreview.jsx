@@ -27,7 +27,6 @@ export default function AttachmentPreview({
     (node) => {
       if (node && node.childNodes.length === 0) {
         handleClose();
-        console.log("This is the node.", node);
       }
     },
     [handleClose]

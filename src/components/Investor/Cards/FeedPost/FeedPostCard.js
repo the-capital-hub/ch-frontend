@@ -25,6 +25,7 @@ import TimeAgo from "timeago-react";
 import IconReportPost from "../../SvgIcons/IconReportPost";
 import { CiCirclePlus } from "react-icons/ci";
 import { useSelector, useDispatch } from "react-redux";
+import { getSentConnectionsAPI, pendingConnectionRequestsAPI, getUserConnections } from "../../../../Service/user";
 // import AfterSuccessPopup from "../../../PopUp/AfterSuccessPopUp/AfterSuccessPopUp";
 // import InvestorAfterSuccessPopUp from "../../../PopUp/InvestorAfterSuccessPopUp/InvestorAfterSuccessPopUp";
 import {
@@ -42,6 +43,7 @@ import {
 	getRecommendations,
 	removeFromFeaturedPost,
 	removeCompanyUpdatedPost,
+	reportPost
 } from "../../../../Service/user";
 import { Link, useLocation } from "react-router-dom";
 import SavePostPopUP from "../../../../components/PopUp/SavePostPopUP/SavePostPopUP";
@@ -146,38 +148,9 @@ const FeedPostCard = ({
 		}
 	}, [pollOptions]);
 
-	// const handleConnect = (userId) => {
-	// 	sentConnectionRequest(loggedInUser._id, userId)
-	// 		.then(({ data }) => {
-	// 			setConnectionSent(true);
-	// 			setTimeout(() => setConnectionSent(false), 2500);
-	// 			setLoading(true);
-	// 			getRecommendations(loggedInUser._id)
-	// 				.then(({ data }) => {
-	// 					dispatch(setRecommendations(data.slice(0, 5)));
-	// 					setLoading(false);
-	// 				})
-	// 				.catch(() => {
-	// 					dispatch(setRecommendations({}));
-	// 					setLoading(false);
-	// 				});
-	// 		})
-	// 		.catch((error) => console.log(error));
-	// };
-
 	const handleConnect = async (userId) => {
 		try {
 			const { data } = await sentConnectionRequest(loggedInUser._id, userId);
-
-			// Replace previous connectionSent logic with toast
-			// toast.success(`Connection request sent to ${firstName} ${lastName}`, {
-			// 	position: "top-center",
-			// 	autoClose: 3000,
-			// 	hideProgressBar: false,
-			// 	closeOnClick: true,
-			// 	pauseOnHover: true,
-			// });
-
 			setConnectionSent(true);
 			setConnectionMessageSuccess(true);
 			setTimeout(() => setConnectionMessageSuccess(false), 2500);
@@ -194,31 +167,31 @@ const FeedPostCard = ({
 				setLoading(false);
 			}
 		} catch (error) {
-			// Add error toast if connection request fails
-			// toast.error(
-			// 	`Failed to send connection request to ${firstName} ${lastName}`,
-			// 	{
-			// 		position: "top-center",
-			// 		autoClose: 3000,
-			// 		hideProgressBar: false,
-			// 		closeOnClick: true,
-			// 		pauseOnHover: true,
-			// 	}
-			// );
 			console.log(error);
 		}
 	};
 
 	useEffect(() => {
-		if (
-			loggedInUser.connections.includes(userId) ||
-			loggedInUser.connectionsSent.includes(userId)
-		) {
-			setConnectionSent(true);
-		} else {
-			setConnectionSent(false);
-		}
-	}, [loggedInUser, userId]);
+		const fetchSentConnections = async () => {
+		  try {
+			const response = await getSentConnectionsAPI();
+			const connection_recieved = await pendingConnectionRequestsAPI();
+	  
+			const isConnectionSent = response.data.some(
+			  (connection) => connection.receiver._id === userId
+			) || connection_recieved.data.some(
+				(con_rec) => con_rec.sender._id === userId
+			)
+			setConnectionSent(isConnectionSent);
+		  } catch (error) {
+			console.error('Error fetching sent connections:', error);
+			setConnectionSent(false); 
+		  }
+		};
+	  
+		fetchSentConnections();
+	  }, [loggedInUser, userId]);
+	  
 
 	const toggleDescription = (e) => {
 		e.stopPropagation();
@@ -242,7 +215,7 @@ const FeedPostCard = ({
 		try {
 			await unsavePost(requestBody);
 		} catch (error) {
-			console.log(error);
+			console.log();
 		}
 	};
 
@@ -416,14 +389,39 @@ const FeedPostCard = ({
 	}, [video, isVideoAutoplay]);
 
 	const likeUnlikeHandler = async () => {
+		
+		const newLikedState = !liked;
+
 		try {
-			liked ? likes.length-- : likes.length++;
-			setLiked(!liked);
+			// Define newLikedState based on the current liked state
+			setLiked(newLikedState);
+			
+			// Update likes count optimistically
+			if (newLikedState) {
+				likes.push(loggedInUser._id);
+			} else {
+				const index = likes.indexOf(loggedInUser._id);
+				if (index > -1) likes.splice(index, 1);
+			}
+
+			// Make API call
 			await likeUnlikeAPI(postId);
+
+			// Update likes data
+			const likesData = await getLikeCount(postId);
+			setLikedBy(likesData?.data.likedBy);
+			setLikedByUser(likesData?.data.users);
+
 		} catch (error) {
-			!liked ? likes.length-- : likes.length++;
-			setLiked(!liked);
-			console.log("Error liking post: ", error);
+			// Revert optimistic updates on error
+			setLiked(!newLikedState);
+			if (!newLikedState) {
+				likes.push(loggedInUser._id);
+			} else {
+				const index = likes.indexOf(loggedInUser._id);
+				if (index > -1) likes.splice(index, 1);
+			}
+			console.error("Error updating like:", error);
 		}
 	};
 
@@ -435,7 +433,7 @@ const FeedPostCard = ({
 			setComments(updatedComments);
 			await deleteComment(postId, commentId);
 		} catch (error) {
-			console.log("Error deleting comment : ", error);
+			console.log();
 		}
 	};
 
@@ -455,7 +453,7 @@ const FeedPostCard = ({
 			}
 			setLoading(false);
 		} catch (error) {
-			console.log("Error deleting post : ", error);
+			console.log();
 		}
 	};
 
@@ -468,12 +466,49 @@ const FeedPostCard = ({
 
 	const [showReportSuccess, setShowReportSuccess] = useState(false);
 
-	const reportSubmitHandler = (e) => {
-		e.preventDefault();
-		setFilingReport(false);
-		setShowReportModal(false);
-		setShowReportSuccess(true);
+	const reportSubmitHandler = async (e, postId, reportReason) => {
+		try {
+			// Prevent form submission if it's a form event
+			e.preventDefault();
+	
+			if (!reportReason || reportReason.trim() === '') {
+				alert("Please provide a reason for the report.");
+				return;
+			}
+	
+			const postPublicLink = `https://thecapitalhub.in/post_details/${postId}`;
+			const reporterEmail = loggedInUser?.email;
+			const reporterId = loggedInUser?._id;
+			const reportTime = new Date().toISOString();
+			const email = "dev.capitalhub@gmail.com"; 
+	
+			if (!reporterEmail || !reporterId) {
+				console.error("User is not logged in or missing user details.");
+				return;
+			}
+	
+			const response = await reportPost(
+				postPublicLink,
+				postId,
+				reportReason,
+				reporterEmail,
+				reporterId,
+				reportTime,
+				email
+			);
+	
+			console.log(response);
+	
+			setFilingReport(false);
+			setShowReportModal(false);
+			setShowReportSuccess(true);
+		} catch (error) {
+			console.error("Error while sending report email", error);
+			setShowReportModal(false);
+			alert("An error occurred while submitting the report. Please try again.");
+		}
 	};
+	
 
 	const [showFeaturedPostSuccess, setShowFeaturedPostSuccess] = useState(false);
 	const [showCompanyUpdateSuccess, setShowCompanyUpdateSuccess] =
@@ -504,7 +539,7 @@ const FeedPostCard = ({
 				}
 			}
 		} catch (error) {
-			console.log(error);
+			console.log();
 		}
 	};
 
@@ -525,7 +560,7 @@ const FeedPostCard = ({
 				}
 			}
 		} catch (error) {
-			console.log(error);
+			console.log();
 		}
 	};
 
@@ -535,7 +570,7 @@ const FeedPostCard = ({
 				setLikedBy(data?.data.likedBy);
 				setLikedByUser(data?.data.users);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => console.log());
 	}, [postId]);
 
 	const singleClickTimer = useRef(null);
@@ -739,17 +774,25 @@ const FeedPostCard = ({
 												<span className="top-voice-text">Top Voice</span>
 											</span>
 										)}
-									{!connectionSent && loggedInUser._id !== userId && (
-										<button
+									{loggedInUser._id !== userId ? (
+										connectionSent ? (
+											<span className="request_sent_feed d-inline">Request Sent</span>
+										) : loggedInUser.connections.includes(userId) ? (
+											<span className="request_sent_feed d-inline">Following</span>
+										) : (
+											<button
 											className="btn connect_button_feed d-inline"
 											onClick={(e) => {
+												e.stopPropagation();
 												e.preventDefault();
 												handleConnect(userId);
 											}}
-										>
+											>
 											<span>Follow</span>
-										</button>
-									)}
+											</button>
+										)
+										) : null}
+
 								</Link>
 
 								<div className="info-container">
@@ -1720,7 +1763,7 @@ const FeedPostCard = ({
 							onClick={(e) => {
 								e.stopPropagation();
 								e.preventDefault();
-								reportSubmitHandler(e);
+								reportSubmitHandler(e, postId, reportReason);
 							}}
 						>
 							Submit report
@@ -1729,7 +1772,7 @@ const FeedPostCard = ({
 						<button className="submit_button btn" type="button" onClick={(e) => {
 							e.preventDefault();
 							e.stopPropagation();
-							reportSubmitHandler(e);
+							reportSubmitHandler(e, postId, reportReason);
 						}} disabled>
 							<span role="status" className="me-1">
 								Submit report

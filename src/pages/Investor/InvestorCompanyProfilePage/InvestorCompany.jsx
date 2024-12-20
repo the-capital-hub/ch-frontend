@@ -73,7 +73,7 @@ export default function CompanyProfilePage() {
           setLoading(false);
         })
         .catch((error) => {
-          console.log(error.message);
+          console.log();
           setLoading(false);
         })
         .finally(() => {
@@ -125,7 +125,7 @@ export default function CompanyProfilePage() {
           });
       }
     } catch (error) {
-      console.log(error.message);
+      console.log();
     }
   };
 
@@ -143,7 +143,7 @@ export default function CompanyProfilePage() {
         dispatch(loginSuccess(response.data));
         navigate("/investor/company-profile/edit");
       } catch (error) {
-        console.log(error);
+        console.log();
       }
     }
   };

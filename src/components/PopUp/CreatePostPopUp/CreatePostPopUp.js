@@ -384,7 +384,6 @@ const CreatePostPopUp = ({
 			postData.append("postType", postType);
 
 			const response = await postUserPost(postData);
-			console.log("Response from postUser Post:", response);
 			const newPosts = Array.isArray(response.data)
 				? response.data
 				: [response.data];
@@ -470,7 +469,6 @@ const CreatePostPopUp = ({
 	const handleLinkedInLoginSuccess = () => {
 		// Handle successful LinkedIn login
 		// You can set any state or perform actions needed after successful login
-		console.log("LinkedIn login successful");
 	};
 
 	const handleLinkedInLoginError = (error) => {

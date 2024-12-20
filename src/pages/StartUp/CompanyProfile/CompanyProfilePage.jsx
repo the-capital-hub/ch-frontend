@@ -105,7 +105,7 @@ export default function CompanyProfilePage() {
           achievementId: "6564687349186bca517cd0cd",
         };
         addNotificationAPI(notificationBody)
-          .then((data) => console.log("Added"))
+          .then((data) => console.log())
           .catch((error) => console.error(error.message));
       }
       if (response.status === 200) {

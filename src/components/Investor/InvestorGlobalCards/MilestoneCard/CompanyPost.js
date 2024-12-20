@@ -17,7 +17,7 @@ const CompanyPost = ({ userId, postDelete, newPost, selectedMonth }) => {
         setAllPosts(user.companyUpdate);
       })
       .catch((err) => {
-        console.log(err);
+        console.log();
         setUser([]);
         setAllPosts([]);
       });

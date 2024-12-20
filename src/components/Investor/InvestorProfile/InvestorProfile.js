@@ -31,7 +31,6 @@ const InvestorProfile = ({ theme }) => {
     industry: loggedInUser?.industry || "Nun",
     isInvestor: loggedInUser?.isInvestor || false,
   });
-  console.log(loggedInUser?.industry);
   // State for isEditing
   const [isEditing, setIsEditing] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -92,7 +91,6 @@ const InvestorProfile = ({ theme }) => {
       const {
         data: { data },
       } = await updateUserAPI(editedData);
-      console.log("data updateUserAPI", data);
       // Set new loggedInUser data
       dispatch(loginSuccess(data));
       // Set local state
@@ -124,7 +122,7 @@ const InvestorProfile = ({ theme }) => {
         dispatch(updateUserCompany({ company: data.company }));
       }
     } catch (error) {
-      console.log(error);
+      console.log();
     } finally {
       setIsEditing(false);
       setLoading(false);

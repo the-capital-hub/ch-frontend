@@ -22,7 +22,7 @@ export default function ViewMeetingRequestModal({ setMeetings }) {
       .then(({ data }) => {
         setMeetingRequests(data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log());
   }, []);
 
   // const meetingRequests = [
