@@ -917,6 +917,18 @@ export const unsavePost = async (requestBody) => {
 	}
 };
 
+export const reportPost = async (postPublicLink, postId, reportReason, reporterEmail, reporterId, reportTime, email)=>{
+	try{
+		const response = await axiosInstance.post(`${API.reportPost}`, {
+			postPublicLink, postId, reportReason, reporterEmail, reporterId, reportTime, email
+		});
+		return response.data;
+	}
+	catch(error){
+		throw error
+	}
+}
+
 export const deleteMessage = async (messageId) => {
 	try {
 		const response = await axiosInstance.delete(

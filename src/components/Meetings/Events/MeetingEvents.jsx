@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import { environment } from "../../../environments/environment";
 import { getUserAvailability } from "../../../Service/user";
+import { useSelector } from "react-redux";
 const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 
@@ -19,9 +20,9 @@ const getRandomLightColor = () => {
 	return `rgb(${r}, ${g}, ${b})`;
 };
 
-const Spinner = () => (
+const Spinner = ({isInvestor}) => (
 	<div className="loader-container">
-		<div className="loader">
+		<div className={`${isInvestor? 'investor-loader': 'loader'}`}>
 			<div className="loader-inner"></div>
 		</div>
 	</div>
@@ -38,6 +39,9 @@ const EventsList = () => {
 	const navigate = useNavigate();
 	// console.log("Events", events);
 	// console.log("User Availability", userAvailability);
+	const [isInvestor, setIsInvestor] = useState(false);
+
+	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 
 	const fetchEvents = () => {
 		setLoading(true);
@@ -64,6 +68,7 @@ const EventsList = () => {
 	};
 
 	useEffect(() => {
+		setIsInvestor(loggedInUser.isInvestor)
 		fetchEvents();
 	}, []);
 
@@ -139,7 +144,7 @@ const EventsList = () => {
 	};
 
 	if (loading) {
-		return <Spinner />;
+		return <Spinner isInvestor={isInvestor}/>;
 	}
 
 	return (

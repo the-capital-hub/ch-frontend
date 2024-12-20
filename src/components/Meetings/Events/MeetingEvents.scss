@@ -205,6 +205,31 @@
 	}
 }
 
+.investor-loader{
+	width: 50px;
+	height: 50px;
+	border: 4px solid #f3f3f3;
+	border-top: 4px solid #d3f36b !important;
+	border-radius: 50%;
+	animation: spin 1s linear infinite;
+	position: relative;
+
+	&-inner {
+		position: absolute;
+		width: 70%;
+		height: 70%;
+		border: 4px solid transparent;
+		border-right: 4px solid #d3f36b !important;
+		border-left: 4px solid #d3f36b !important; 
+		border-radius: 50%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		animation: spin-reverse 1s linear infinite;
+	}
+
+}
+
 @keyframes spin {
 	0% {
 		transform: rotate(0deg);
@@ -234,4 +259,13 @@
 			border-left-color: #fd5901;
 		}
 	}
+
+	.investor-loader{
+		border-color: #2a2a2a;
+		border-top-color: #d3f36b !important;
+	&-inner{
+		border-right-color: #d3f36b !important;
+		border-left-color: #d3f36b !important;
+	}
+}
 }
