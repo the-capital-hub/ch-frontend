@@ -17,14 +17,14 @@ import {
 	FaArrowCircleLeft,
 	FaClock,
 } from "react-icons/fa";
-import UserPic from "../../../Images/UserPic.jpg";
-import AIPoster from "../../../Images/AIPoster.jpg";
-import { environment } from "../../../environments/environment";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectTheme } from "../../../Store/features/design/designSlice";
-import ImageCarousel from "../../Investor/Cards/FeedPost/ImageCarousel/ImageCarousel";
-import "./FounderProfile.scss";
+import { selectTheme } from "../../Store/features/design/designSlice";
+import { environment } from "../../environments/environment";
+import UserPic from "../../Images/UserPic.jpg";
+import AIPoster from "../../Images/AIPoster.jpg";
+import ImageCarousel from "../Investor/Cards/FeedPost/ImageCarousel/ImageCarousel";
+import "./InvestorPublicProfile.scss";
 
 const Spinner = () => (
 	<div className="loader-container">
@@ -41,14 +41,14 @@ const FounderProfile = () => {
 	const [activeInterestTab, setActiveInterestTab] = useState("Top Voices");
 	const [founder, setFounder] = useState(null);
 	const [post, setPost] = useState(null);
-	const [events, setEvents] = useState([]);
+	// const [events, setEvents] = useState([]);
 	const [loading, setLoading] = useState(false);
 
 	const { username } = useParams();
 	const navigate = useNavigate();
 	// console.log("userName", username);
-	// console.log("founder", founder);
-	// console.log("post", post);
+	console.log("founder", founder);
+	console.log("post", post);
 	// console.log("events", events);
 
 	// Set initial theme when component mounts
@@ -79,7 +79,7 @@ const FounderProfile = () => {
 				);
 				if (response.ok) {
 					const data = await response.json();
-					console.log("User data", data);
+					// console.log("User data", data);
 					setLoading(false);
 					setFounder(data.user);
 					setPost(data.post);
@@ -97,40 +97,40 @@ const FounderProfile = () => {
 	}, [username]);
 
 	// /getEvents/:username - Events
-	useEffect(() => {
-		const fetchEvents = async () => {
-			setLoading(true);
-			try {
-				const response = await fetch(
-					`${environment.baseUrl}/meetings/getEvents/${username}`,
-					{
-						method: "GET",
-						headers: {
-							"Content-Type": "application/json",
-						},
-					}
-				);
-				if (response.ok) {
-					const data = await response.json();
-					console.log("User events data", data);
-					const publicEvents = data.data.filter(
-						(event) => event.isPrivate === false
-					);
-					setLoading(false);
-					setEvents(publicEvents);
-					// setEvents(data.data);
-				} else {
-					setLoading(false);
-					console.error("Failed to fetch events");
-				}
-			} catch (error) {
-				setLoading(false);
-				console.error("Error fetching events:", error);
-			}
-		};
+	// useEffect(() => {
+	// 	const fetchEvents = async () => {
+	// 		setLoading(true);
+	// 		try {
+	// 			const response = await fetch(
+	// 				`${environment.baseUrl}/meetings/getEvents/${username}`,
+	// 				{
+	// 					method: "GET",
+	// 					headers: {
+	// 						"Content-Type": "application/json",
+	// 					},
+	// 				}
+	// 			);
+	// 			if (response.ok) {
+	// 				const data = await response.json();
+	// 				console.log("User events data", data);
+	// 				const publicEvents = data.data.filter(
+	// 					(event) => event.isPrivate === false
+	// 				);
+	// 				setLoading(false);
+	// 				setEvents(publicEvents);
+	// 				// setEvents(data.data);
+	// 			} else {
+	// 				setLoading(false);
+	// 				console.error("Failed to fetch events");
+	// 			}
+	// 		} catch (error) {
+	// 			setLoading(false);
+	// 			console.error("Error fetching events:", error);
+	// 		}
+	// 	};
 
-		fetchEvents();
-	}, [username]);
+	// 	fetchEvents();
+	// }, [username]);
 
 	const dummyData = {
 		name: "Sarah Chen",
@@ -388,7 +388,7 @@ const FounderProfile = () => {
 		</div>
 	);
 
-	if (loading || events.length === 0) {
+	if (loading) {
 		return <Spinner />;
 	}
 
@@ -404,7 +404,11 @@ const FounderProfile = () => {
 				<meta property="og:description" content={founderData?.about} />
 			</Helmet>
 
-			<div className={`founder-profile-container ${theme ? "dark" : "light"}`}>
+			<div
+				className={`founder-profile-container ${
+					theme === "dark" ? " dark-theme" : ""
+				}`}
+			>
 				{/* <nav className="profile-nav">
 					<div className="nav-container">
 						<button className="back-button">
@@ -482,6 +486,14 @@ const FounderProfile = () => {
 									<p className="description">{founder.startUp.description}</p>
 									<p className="location">{founder.experience}</p>
 								</div>
+							) : founder?.experience ? (
+								<div className="experience-item">
+									<h3>{founder.experience.company}</h3>
+									<p className="role">{founder.designation}</p>
+									<p className="duration">{founder.experience}</p>
+									<p className="duration">{founder.experience.startedAtDate}</p>
+									<p className="location">{founder.experience.location}</p>
+								</div>
 							) : (
 								<div className="no-data-message">
 									<p>No experience data available</p>
@@ -491,7 +503,7 @@ const FounderProfile = () => {
 					</section>
 
 					{/* Public Events Section with Vertical Scroll */}
-					<section className="profile-section meeting-section">
+					{/* <section className="profile-section meeting-section">
 						<h2>
 							<FaCalendarAlt /> Public Events
 						</h2>
@@ -532,7 +544,7 @@ const FounderProfile = () => {
 								)}
 							</div>
 						</div>
-					</section>
+					</section> */}
 
 					{/* Activity Section */}
 					<section className="profile-section activity-section">

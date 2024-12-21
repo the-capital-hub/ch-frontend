@@ -167,8 +167,8 @@ const CompanyDetailsCard = ({
 							className="typography-company-name ms-0"
 							style={{ fontSize: "30px", fontFamily: "Outfit" }}
 						>
-							{onePager.companyName ||
-								onePager.company ||
+							{onePager?.companyName ||
+								onePager?.company ||
 								userDetails?.startUp?.company ||
 								userDetails?.investor?.companyName ||
 								"No company found"}
@@ -178,7 +178,7 @@ const CompanyDetailsCard = ({
 								className="icon__details d-flex flex-column flex-md-row gap-2 align-items-start"
 								style={{ flexWrap: "wrap" }}
 							>
-								{onePager.location && (
+								{onePager?.location && (
 									<div style={{ display: "flex", alignItems: "center" }}>
 										<img
 											src={Location}
@@ -193,11 +193,11 @@ const CompanyDetailsCard = ({
 												color: colorTheme === "dark" ? "#fff" : "#000",
 											}}
 										>
-											{onePager.location}
+											{onePager?.location}
 										</p>
 									</div>
 								)}
-								{onePager.startedAtDate && (
+								{onePager?.startedAtDate && (
 									<div style={{ display: "flex", alignItems: "center" }}>
 										<img
 											src={Calendar}

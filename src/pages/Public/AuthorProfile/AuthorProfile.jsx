@@ -34,7 +34,7 @@ export default function AuthorProfile() {
     experience: userData?.experience || "",
     profilePicture: userData?.profilePicture || "",
     fullName: userData?.firstName + " " + userData?.lastName || "",
-    company: userData?.startUp.company,
+    company: userData?.startUp?.company,
     location: userData?.location || "Bangalore, India",
   };
 
@@ -91,7 +91,7 @@ export default function AuthorProfile() {
 
             {/* Color Cards */}
             <ColorCards
-              colorCardInfo={userData.startUp.colorCard}
+              colorCardInfo={userData?.startUp?.colorCard}
               isNotEditable={true}
             />
 
