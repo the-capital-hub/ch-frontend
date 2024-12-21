@@ -24,6 +24,7 @@ import axios from 'axios'
 import { environment } from "../../../environments/environment";
 import { toast } from 'react-toastify';
 import Modal from 'react-bootstrap/Modal';
+import { selectSidebarCollapsed } from "../../../Store/features/design/sidebarSlice";
 
 const baseUrl = environment.baseUrl;
 const sectorOptions = [
@@ -183,6 +184,8 @@ function Explore() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
+  const sidebarCollapsed = useSelector(selectSidebarCollapsed);
+
 
 
   useEffect(()=>{
@@ -354,7 +357,7 @@ function Explore() {
 
   return (
     <MaxWidthWrapper>
-      <div className="explore_container px-md-3 mb-4">
+      <div className={ sidebarCollapsed? "explore_container px-md-3 mb-4" :"explore_container collapsed px-md-3 mb-4"}>
         <SmallProfileCard text="Explore" />
 
         {/* Onboarding popup */}
