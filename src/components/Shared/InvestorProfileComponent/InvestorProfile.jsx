@@ -33,7 +33,7 @@ export default function InvestorProfile({ theme, short, personData }) {
 
   return (
     <div className={`person_profile_wrapper shadow-sm ${theme}`}>
-      <div className="person__section__one d-flex flex-column gap-1 py-2 px-1 px-lg-3">
+      <div className="person__section__one d-flex flex-column gap-1 py-3 px-3 px-lg-3">
         <div className="person__info d-flex flex-column flex-xl-row gap-1 justify-content-between position-relative">
           <InvestorInfo
             fullName={fullName}

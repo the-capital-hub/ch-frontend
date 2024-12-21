@@ -160,6 +160,10 @@
     .person__section__one {
       margin: 20px;
       color: black;
+
+      @media (max-width: 450px) {
+        margin: 0;
+      }
     }
   }
 

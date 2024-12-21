@@ -11,8 +11,10 @@
     align-items: center;
     justify-content: center;
     padding: 10px;
-    border: 1px solid #eaeef2;
-    background-color: #eaeef2;
+    // border: 1px solid #eaeef2;
+    border: none;
+    // background-color: #eaeef2;
+    background: var(--white-to-grey);
     border-radius: 8px;
     // margin: 5% 2% 0% 2%;
 
@@ -48,8 +50,9 @@
       font-size: 14px;
       padding: 8px;
       border-radius: 6px;
-      background-color: #eaeef2;
-      color: #000;
+      // background-color: #eaeef2;
+      background: var(--white-to-grey);
+      color: #ffffff;
 
       &::placeholder {
         color: #555 !important;

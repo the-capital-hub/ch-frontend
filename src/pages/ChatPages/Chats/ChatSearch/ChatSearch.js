@@ -42,7 +42,7 @@ const ChatSearch = () => {
     <>
      <div className="chat_search_container">
      {/* <div className="theme_switch_chat"><OnboardingSwitch/></div> */}
-        <h1 className="chat_title">Chats</h1>
+        {/* <h1 className="chat_title">Chats</h1> */}
         <div className="inputs">
           <div className="search_chat">
             <img src={searchIcon} alt="Search user" width={20} height={20} />
