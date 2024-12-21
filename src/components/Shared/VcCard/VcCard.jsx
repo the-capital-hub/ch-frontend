@@ -20,8 +20,9 @@ const VcCard = ({ vc }) => {
 						{vc.location}, {vc.age} years
 					</p>
 				</div>
-				<div className="ticket-size">
-					<span>Ticket Size</span>{": "}
+				<div className="ticket-size d-none d-sm-block">
+					<span>Ticket Size</span>
+					{": "}
 					{vc.ticket_size
 						? `$${vc.ticket_size
 								.split("-")
@@ -49,6 +50,16 @@ const VcCard = ({ vc }) => {
 								{sector}
 							</div>
 						))}
+				</div>
+				<div className="ticket-size d-block d-sm-none px-3">
+					<span>Ticket Size</span>
+					{": "}
+					{vc.ticket_size
+						? `$${vc.ticket_size
+								.split("-")
+								.map((size) => parseInt(size) / 1000 + "k")
+								.join("-")}`
+						: "N/A"}
 				</div>
 			</div>
 		</div>

@@ -8,6 +8,8 @@ import DefaultAvatar from "../../../../Images/Chat/default-user-avatar.webp";
 import IconCard from "../../../NewInvestor/CompanyProfileComponents/shared-components/icon-card/IconCard";
 import BatchImag from "../../../../Images/tick-mark.png";
 import { FaLinkedin } from "react-icons/fa";
+import "./PersonInfo.scss";
+
 export default function PersonInfo({
 	fullName,
 	designation,
@@ -23,14 +25,19 @@ export default function PersonInfo({
 	return (
 		<div className="person_info">
 			<div
-				className="person__profile__header d-flex flex-column flex-lg-row gap-3 "
+				className="person__profile__header d-flex flex-lg-row gap-3 "
 				style={{ color: "var(--d-l-grey)" }}
 			>
 				<div className="person__profile__image">
 					<img
 						src={profilePicture || DefaultAvatar}
 						alt={fullName}
-						style={{ width: "110px", height: "110px", objectFit: "cover", borderRadius: "55px" }}
+						// style={{
+						// 	width: "110px",
+						// 	height: "110px",
+						// 	objectFit: "cover",
+						// 	borderRadius: "55px",
+						// }}
 						loading="lazy"
 						// className="rounded-3"
 					/>
@@ -69,7 +76,7 @@ export default function PersonInfo({
                </a>
                 )}
               </p> */}
-							<div className="icon__details d-flex flex-row flex-md-row gap-4 align-items-start mt-2">
+							<div className="icon__details d-flex flex-row flex-md-row gap-2 md:gap-4 align-items-start mt-2">
 								<IconCard
 									src={Location}
 									alt={"location icon"}
