@@ -4,6 +4,7 @@ import chatReducer from "./features/chat/chatSlice";
 import designReducer from "./features/design/designSlice";
 import oneLinkReducer from "./features/oneLink/oneLinkSlice";
 import adminReducer from "./features/admin/slice";
+import sidebarReducer from './features/design/sidebarSlice';
 
 //check code
 
@@ -14,5 +15,6 @@ export const store = configureStore({
     design: designReducer,
     onelink: oneLinkReducer,
     admin: adminReducer,
+    sidebar: sidebarReducer,
   },
 });

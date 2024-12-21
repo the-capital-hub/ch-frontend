@@ -113,8 +113,10 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
       }`}
       style={{ 
         display: sidebarCollapsed ? 'none' : 'block', 
-        position: 'absolute', 
+        position: 'fixed',
         top: 0,
+        left: 0,
+        height: '100vh',
         transition: 'all 0.3s ease'
       }}
     >

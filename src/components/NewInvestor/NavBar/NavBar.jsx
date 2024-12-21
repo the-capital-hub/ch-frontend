@@ -114,7 +114,6 @@ const NavBar = (props) => {
     setNavbarPosition(
       !props.sidebarCollapsed ? "shifted": "default"
     );
-    console.log("sidebar", props.sidebarCollapsed, "navbarPosition", navbarPosition )
   },[props.sidebarCollapsed])
 
   return (

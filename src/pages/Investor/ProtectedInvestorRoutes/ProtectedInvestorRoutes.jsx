@@ -10,7 +10,7 @@ import {
   ModalBSHeader,
 } from "../../../components/PopUp/ModalBS";
 import NewCommunityModal from "../../../components/Investor/ChatComponents/NewCommunityModal";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 // import {
 //   toggleNotificationModal,
 //   toggleinvestorCreatePostModal,
@@ -19,17 +19,19 @@ import MobileNavbar from "../../../components/Shared/MobileNavbar/MobileNavbar";
 import { setThemeColor } from "../../../utils/setThemeColor";
 import { Toaster } from "react-hot-toast";
 import { selectTheme } from "../../../Store/features/design/designSlice";
+import { setSidebar } from "../../../Store/features/design/sidebarSlice";
 
 function ProtectedInvestorRoutes({ children, ...props }) {
   const theme = useSelector(selectTheme);
 
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const navigate = useNavigate();
 
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const handleSidebarToggle = () => {
     setSidebarCollapsed((prev) => !prev);
+    dispatch(setSidebar(!sidebarCollapsed));
   };
   const location = useLocation();
 
@@ -40,6 +42,14 @@ function ProtectedInvestorRoutes({ children, ...props }) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location]);
+
+    useEffect(() => {
+    if (theme === "dark") {
+      document.body.style.backgroundColor = "black";
+    } else {
+      document.body.style.backgroundColor = "white";
+    }
+  }, [theme]);
 
   const isLoggedIn = () => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
