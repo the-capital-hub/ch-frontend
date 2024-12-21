@@ -1,6 +1,24 @@
 .container {
+  
+  
+  .hamburger{
+    display: none;
+    margin: auto;
+    transform: scale(0.8);
+    font-size: 2.1rem;
+
+    @media (min-width: 768px) {
+      display: inline;
+    }
+  
+  
+  }
+
+
+  
   .my-investor_navbar {
-    height: 80px;
+    transition: left 0.3s ease; 
+    height: 70px;
     left: 60px;
     top: 39px;
     background: var(--white-to-grey);
@@ -12,8 +30,13 @@
     right: 0;
     z-index: 100;
 
+      &.shifted {
+    left: 200px !important;
+    transition: left 0.3s ease;
+  }
+
     @media (min-width: 768px) {
-      border-radius: 20px;
+      border-radius: 0 !important;
     }
 
     .bar_logo_container {
@@ -24,9 +47,10 @@
 
       .logo_container {
         width: auto;
+        margin-left: 1.5rem;
         
         img {
-          height: 45px;
+          height: 35px;
      
           &:hover {
             cursor: pointer;
@@ -39,81 +63,83 @@
       }
     }
 
-    /* right container */
-    .navbar_right_container {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
+    .search_container {
+      margin-left: 20px;
+      
+      .searchbar-container {
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-right: 10px;
 
-      .search_container {
-        .searchbar-container {
-          display: flex;
-          align-items: center;
-          position: relative;
-          margin-right: 10px;
+        .searchbar-input {
+          height: 49px;
+          width: 391px;
+          background: var(--bs-light);
+          border-radius: 5px;
+          border: none;
+          transition: width 0.4s ease;
+          padding: 0 15px;
+          outline: none;
+        }
 
-          .searchbar-input {
-            height: 49px;
-            background: var(--bs-light);
-            border-radius: 20px;
-            border: none;
-            transition: width 0.4s ease;
-            padding: 0 15px;
-            outline: none;
-          }
+        .investor-searchbar-button {
+          position: absolute;
+          right: -5px;
+          top: 0;
+          width: 48px;
+          height: 49px;
+          color: var(--d-l-grey);
+          background: var(--bs-light);
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+      }
 
-          .investor-searchbar-button {
-            position: absolute;
-            right: -5px;
-            top: 0;
-            width: 48px;
-            height: 49px;
-            background: #d3f36b;
-            border: none;
-            border-top-right-radius: 20px;
-            border-bottom-right-radius: 20px;
-            cursor: pointer;
+      .search_results {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        gap: 5px;
+
+        .single_result:nth-child(6),
+        .single_result:nth-child(13) {
+          border-bottom: none;
+        }
+
+        .search-heading {
+          color: var(--d-l-grey);
+        }
+
+        a {
+          text-decoration: none;
+          color: #6c757d;
+
+          &:hover {
+            color: #d3f36b;
           }
         }
 
-        .search_results {
-          display: flex;
-          width: 100%;
-          flex-direction: column;
-          gap: 5px;
+        .single_result {
+          color: #6c757d;
+          border-bottom: 1px solid lightgrey;
+          padding: 2px 0;
+          transition: padding-left ease 0.2s;
 
-          .single_result:nth-child(6),
-          .single_result:nth-child(13) {
-            border-bottom: none;
-          }
-
-          .search-heading {
-            color: var(--d-l-grey);
-          }
-
-          a {
-            text-decoration: none;
-            color: #6c757d;
-
-            &:hover {
-              color: #d3f36b;
-            }
-          }
-
-          .single_result {
-            color: #6c757d;
-            border-bottom: 1px solid lightgrey;
-            padding: 2px 0;
-            transition: padding-left ease 0.2s;
-
-            &:hover {
-              border-radius: 5px;
-              padding-left: 10px;
-              color: #d3f36b;
-            }
+          &:hover {
+            border-radius: 5px;
+            padding-left: 10px;
+            color: #d3f36b;
           }
         }
       }
+    }
+
+    .navbar_right_container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
 
       .icons-container {
         display: flex;
@@ -236,6 +262,12 @@
       }
     }
   }
+
+  .hamburger {
+    &.hidden {
+      display: none;
+    }
+  }
 }
 
 @keyframes radial-wave {
@@ -282,12 +314,6 @@
       }
 
       .navbar_right_container {
-        .search_container {
-          .searchbar-container {
-            display: none;
-          }
-        }
-
         .icons-container {
           .mobile-icon-wrapper {
             display: flex;
@@ -313,7 +339,7 @@
 
                 .searchbar-input {
                   height: 49px;
-                  width: 310px;
+                  width: 391px;
                   background: #eaeef2;
                   border-radius: 20px;
                   border: none;
