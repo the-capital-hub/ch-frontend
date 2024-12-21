@@ -179,6 +179,8 @@ function Explore() {
   const [formData, setFormData] = useState({});
   const userVisitCount = localStorage.getItem("userVisit");
   const abortControllerRef = useRef(null);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
 
@@ -197,7 +199,7 @@ function Explore() {
   useEffect(() => {
     fetchFilters();
     onSubmitFilters();
-  }, [activeTab]);
+  }, [activeTab, currentPage]);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -224,7 +226,6 @@ function Explore() {
       abortControllerRef.current.abort();
     }
 
-    // Create a new AbortController
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
@@ -232,6 +233,8 @@ function Explore() {
       const { data } = await fetchExploreFilteredResultsAPI({
         type: activeTab,
         ...filters,
+        page: currentPage,
+        limit: itemsPerPage,
       });
       if (controller.signal.aborted) return;
 
@@ -243,7 +246,7 @@ function Explore() {
   };
 
   const fetchInitialData = async () => {
-    setFilters(null);
+    setFilters({});
     setLoading(true);
     try {
       const { data } = await fetchExploreFilteredResultsAPI({
@@ -340,6 +343,15 @@ function Explore() {
     }
   };
 
+  // Add pagination handlers
+  const handleLoadMore = () => {
+    setCurrentPage(prevPage => prevPage + 1);
+  };
+
+  const handleLoadPrevious = () => {
+    setCurrentPage(prevPage => prevPage - 1);
+  };
+
   return (
     <MaxWidthWrapper>
       <div className="explore_container px-md-3 mb-4">
@@ -352,19 +364,19 @@ function Explore() {
           <h5 className="h5">Find StartUps by</h5>
           <div className="filter_by">
             <button
-              className={activeTab === "Startup" ? "active" : "s_f_i_button "}
+              className={`btn_base py-3 px-3 ${activeTab === "Startup" ? "active" : " "}`}
               onClick={() => handleTabChange("Startup")}
             >
               Startup
             </button>
             <button
-              className={activeTab === "Founder" ? "active" : "s_f_i_button "}
+              className={`btn_base py-3 px-3 ${activeTab === "Founder" ? "active" : " "}`}
               onClick={() => handleTabChange("Founder")}
             >
               Founder
             </button>
             <button
-              className={activeTab === "Investor" ? "active" : "s_f_i_button "}
+              className={`btn_base py-3 px-3 ${activeTab === "Investor" ? "active" : " "}`}
               onClick={() => handleTabChange("Investor")}
             >
               Investor
@@ -385,8 +397,8 @@ function Explore() {
               </button>
             )}
 
-{!showFilters && (<MdFilterAlt color="rgba(253, 89, 1, 1)" onClick={()=> setShowFilters(true)} style={{fontSize:'2rem', marginLeft:"10px"}}/>)}
-{showFilters && (<MdFilterAltOff color="white" onClick={()=> setShowFilters(false)} style={{fontSize:'2rem', marginLeft:"10px"}}/>)}
+{!showFilters && (<MdFilterAlt color="rgb(211, 243, 107)" onClick={()=> setShowFilters(true)} style={{fontSize:'3rem', marginLeft:"10px"}}/>)}
+{showFilters && (<MdFilterAltOff color="white" onClick={()=> setShowFilters(false)} style={{fontSize:'3rem', marginLeft:"10px"}}/>)}
           </div>
 
           {/* Filters */}
@@ -689,7 +701,31 @@ function Explore() {
                   No {activeTab} found
                 </div>
               ) : (
-                renderTabContent()
+                <>
+                  {renderTabContent()}
+                  <div className="d-flex justify-content-between align-items-center">
+                    {currentPage > 1 && (
+                      <button 
+                        className="btn" 
+                        onClick={handleLoadPrevious}
+                        style={{ backgroundColor: 'rgb(211, 243, 107)', color: 'black', marginTop: '1rem' }}
+                        aria-label="Load previous content"
+                      >
+                        Previous
+                      </button>
+                    )}
+                    <div className="d-flex justify-content-end flex-grow-1">
+                    <button 
+                className="btn" 
+                onClick={handleLoadMore}
+                style={{ backgroundColor: 'rgb(211, 243, 107)', color: 'black', marginTop: '1rem' }}
+                aria-label="Load more content"
+            >
+                Next
+            </button>
+                    </div>
+                  </div>
+                </>
               )}
             </>
           )}
