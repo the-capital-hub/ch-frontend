@@ -38,6 +38,7 @@ import {
 import TutorialTrigger from "../../../components/Shared/TutorialTrigger/TutorialTrigger";
 import PostDetail from "../../../components/Investor/Cards/FeedPost/PostDetail";
 import TopVoiceTracker from "../../../components/Investor/Feed/Components/TopVoiceTracker/TopVoiceTracker";
+import { selectSidebarCollapsed } from "../../../Store/features/design/sidebarSlice";
 
 const baseUrl = environment.baseUrl;
 
@@ -87,6 +88,7 @@ function Home() {
 	const isInvestorCreatePostModalOpen = useSelector(
 		selectInvestorCreatePostModal
 	);
+	const sidebarCollapsed = useSelector(selectSidebarCollapsed);
 
 	useEffect(() => {
 		if (Number(userVisitCount) <= 1) {
@@ -289,7 +291,9 @@ function Home() {
 						location={postData.location}
 					/>
 				) : (
-					<div className="main_content">
+					<div className={
+						sidebarCollapsed ? "main_content" : "main_content_collapsed"
+					}>
 						{/* <InvestorSmallProfilecard text={"Home"} /> */}
 						<div className="posts_col d-flex flex-column gap-3">
 							{/* Onboarding popup */}

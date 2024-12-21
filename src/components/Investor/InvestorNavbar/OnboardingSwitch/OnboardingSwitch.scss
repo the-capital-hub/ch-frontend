@@ -7,44 +7,46 @@
 
     border-color: #c2c2c2;
     border-width: 2px;
-    // background-image: url("../../../../Images/StartUp/Navbar/OrangeCircle.svg");
 
-    &:focus {
-      box-shadow: 0 0 0 0.25rem var(--currentTheme-light); //#fd590133;
-      border-color: var(--currentTheme);
-      background-image: url("../../../../Images/StartUp/Navbar/OrangeCircle.svg");
+    // Default state based on theme
+    background-image: url("../../../../Images/StartUp/Navbar/OrangeCircle.svg"); // Default for dark theme
+    // Add a class to change the default image for light theme
+    &.light-theme {
+      background-image: url("../../../../Images/StartUp/Navbar/WhiteCircle.svg"); // Default for light theme
+    }
 
+    &:not(:focus) {
+      // Not focused state
       &:checked {
-        background-color: var(--currentTheme);
-        border-color: var(--currentTheme);
-        background-image: url("../../../../Images/StartUp/Navbar/WhiteCircle.svg");
+        // Checked state
+        background-image: url("../../../../Images/StartUp/Navbar/WhiteCircle.svg"); // Light theme
       }
     }
 
-    &:checked {
-      background-color: var(--currentTheme);
-      border-color: var(--currentTheme);
-      background-image: url("../../../../Images/StartUp/Navbar/WhiteCircle.svg");
+    &:focus {
+      // Focused state
+      background-image: url("../../../../Images/StartUp/Navbar/GreenCircle.svg");
+      background-color: transparent; // Make background transparent on focus
+      
+      &:checked {
+        // Checked and focused state
+        background-image: url("../../../../Images/StartUp/Navbar/WhiteCircle.svg"); // Light theme
+      }
     }
 
     // Investor theme
     &.investor {
       &:focus {
-        box-shadow: 0 0 0 0.25rem var(--currentTheme-dark); //#fd590133;
-        border-color: var(--currentTheme-dark);
         background-image: url("../../../../Images/StartUp/Navbar/GreenCircle.svg");
-
+        background-color: transparent; // Make background transparent on focus
+        
         &:checked {
-          background-color: var(--currentTheme);
-          border-color: var(--currentTheme-dark);
-          background-image: url("../../../../Images/StartUp/Navbar/WhiteCircle.svg");
+          background-image: url("../../../../Images/StartUp/Navbar/WhiteCircle.svg"); // Light theme
         }
       }
 
       &:checked {
-        background-color: var(--currentTheme);
-        border-color: var(--currentTheme-dark);
-        background-image: url("../../../../Images/StartUp/Navbar/WhiteCircle.svg");
+        background-image: url("../../../../Images/StartUp/Navbar/WhiteCircle.svg"); // Light theme
       }
     }
   }

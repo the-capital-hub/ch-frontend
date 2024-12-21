@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./NavBar.scss";
-import DarkLogo from "../../../Images/investorIcon/new-logo.png";
-import WhiteLogo from "../../../Images/investorIcon/logo-white.png";
+import logo from "../../../Images/investorIcon/LogoX.png"
 import { FiSearch } from "react-icons/fi";
+import { FaBars } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotificationCount , getSearchResultsAPI} from "../../../Service/user";
@@ -44,6 +44,8 @@ const NavBar = (props) => {
   const notificationPopup = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [navbarPosition, setNavbarPosition] = useState('default');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     getNotificationCount()
@@ -100,15 +102,36 @@ const NavBar = (props) => {
     };
   }, [toggleNotificationPopup]);
 
+  const handleSidebarToggle = () => {
+    setIsSidebarOpen((prev) => !prev);
+    props.handleSidebarToggle();
+    setNavbarPosition(
+      isSidebarOpen ? "shifted": "default"
+    );
+  };
+
+  useEffect(()=> {
+    setNavbarPosition(
+      !props.sidebarCollapsed ? "shifted": "default"
+    );
+  },[props.sidebarCollapsed])
+
   return (
     <>
-      <div className="container pt-1 mb-4 mb-xl-0 pl-2">
-        <div className="d-flex my-investor_navbar justify-content-between">
-          <div className="d-flex">
+      <div className={`container pt-1 mb-4 mb-xl-0 pl-2`}>
+        <div className={`d-flex my-investor_navbar ${navbarPosition} justify-content-between ${props.sidebarCollapsed ? 'minimized' : ''}`}>
+          <div className="d-flex align-items-center">
+            {props.sidebarCollapsed && (
+              <div className="hamburger"  style={{
+                color: theme === "dark" ? "#B0B0B0" : "#000",
+              }} onClick={props.handleSidebarToggle}>
+                <FaBars />
+              </div>
+            )}
             <div className="row bar_logo_container ">
               <div className="logo_container">
                 <img
-                  src={theme === "dark" ? WhiteLogo : DarkLogo}
+                  src={logo}
                   height={""}
                   onClick={() => navigate("/investor/home")}
                   alt="the capital hub logo"
@@ -138,17 +161,13 @@ const NavBar = (props) => {
                 <h1 className="ms-2">{pageTitle}</h1>
               </div>
             </div>
-          </div>
-          <div className="navbar_right_container">
+
             <div className="search_container position-relative">
               <form onSubmit={searchSubmitHandler} className="searchbar-container">
                 <input
                   type="text"
                   className="searchbar-input"
                   placeholder="Search"
-                  style={{
-                    width: `${inputOnFocus ? "400px" : "100%"}`,
-                  }}
                   value={searchInput}
                   onChange={searchInputHandler}
                   onFocus={() => setInputOnFocus(true)}
@@ -158,7 +177,7 @@ const NavBar = (props) => {
                   type="submit"
                   className="investor-searchbar-button d-flex align-items-center justify-content-center"
                 >
-                  <FiSearch size={25} color="black" />
+                  <FiSearch size={25} />
                 </button>
               </form>
               {inputOnFocus && searchSuggestions && !mobileSearch && (
@@ -246,6 +265,8 @@ const NavBar = (props) => {
                 </div>
               )}
             </div>
+          </div>
+          <div className="navbar_right_container">
             <div className="icons-container">
               <div className="mobile-icon-wrapper position-relative ">
                 <span
@@ -255,8 +276,6 @@ const NavBar = (props) => {
                   <IoIosSearch size={30} style={{ fill: "var(--d-l-grey)" }} />
                 </span>
               </div>
-
-              {isMobileView ? "" : <OnboardingSwitch />}
 
               <div className={`notification-container icon-wrapper`} ref={notificationPopup}>
                 {isNotificationModalOpen || toggleNotificationPopup ? (
