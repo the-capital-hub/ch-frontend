@@ -1,0 +1,11 @@
+.modal {
+	&.show {
+		display: block;
+		padding-right: 0 !important;
+	}
+
+	.modal-dialog {
+		margin: 0;
+		max-width: 100%;
+	}
+}
