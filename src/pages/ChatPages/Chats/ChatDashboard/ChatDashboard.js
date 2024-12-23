@@ -101,14 +101,7 @@ const ChatDashboard = ({ setSendMessage, recieveMessage, cleared }) => {
 	const formattedMessages = formatMessages(messages, loggedInUserId);
 	return (
 		<>
-			<div
-				className="chat_dashboard_container"
-				style={{
-					backgroundImage: `url(${CommunityChatBg})`,
-					// backgroundSize: "cover",
-					backgroundPosition: "center",
-				}}
-			>
+			<div className="chat_dashboard_container">
 				<div className="chat_messages_group" ref={chatMessagesContainerRef}>
 					{loading ? (
 						<div className="d-flex h-100 justify-content-center align-items-center">
