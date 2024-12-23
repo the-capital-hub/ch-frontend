@@ -28,7 +28,7 @@ const VcCard = ({ vc }) => {
 								.map((size) => parseInt(size) / 1000 + "k")
 								.join("-")}`
 						: "N/A"}
-				</div>
+				</p>
 				<button className="know-more">Know more</button>
 			</div>
 			<div className="stage-sector-info">
