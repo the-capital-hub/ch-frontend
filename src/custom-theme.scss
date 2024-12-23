@@ -154,7 +154,8 @@
   --white-to-dgrey: var(--bs-light);
 
   // Chat page colors
-  --chat-page-bg: var(--bs-gray-400);
+  --chat-page-bg: var(--bs-gray-200);
+  // --chat-page-bg: var(--bs-gray-400);
   --chat-sidebar-chat-border: var(--bs-gray-400);
 
   .card {
@@ -329,7 +330,7 @@ $color-mode-type: data;
   --darkMode-currentTheme: var(--currentTheme);
 
   // Chat page colors
-  --chat-page-bg: var(--bs-gray-dark);
+  --chat-page-bg: var(--bs-black);
   --chat-sidebar-chat-border: var(--bs-gray-700);
 
   .card {

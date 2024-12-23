@@ -496,324 +496,310 @@ const CreatePostPopUp = ({
 
 	return (
 		<>
-			{popupOpen && <div className="createpost-background-overlay"></div>}
+			{popupOpen && <div className="createpost__overlay"></div>}
 			<div
-				className={`create_post_modal p-md-2 ${
-					popupOpen ? "d-block" : ""
-				}`}
+				className={`createpost__popup ${popupOpen ? "d-block" : ""}`}
 				tabIndex="-1"
 				role="dialog"
 			>
-				<div className="modal-dialog modal-dialog-centered" role="document">
-					<div className="modal-content">
-						<div className="createpost_modal-header">
-							<div className="createpostpopup">
-								<div className="ceatepost_img_name">
-									<img
-										src={loggedInUser.profilePicture}
-										width={50}
-										height={50}
-										style={{ objectFit: "cover" }}
-										className="rounded-circle"
-										alt="profile pic"
-									/>
-									<span>
-										<h2>
-											{loggedInUser?.firstName} {loggedInUser.lastName}
-										</h2>
-										<div
-											style={{
-												display: "flex",
-												width: "110px",
-												justifyContent: "space-between",
-											}}
-										>
-											<h6
-												className=""
-												style={{
-													backgroundColor: postType === "public" && "#fd5901",
-													color: postType === "public" ? "#fff" : "grey",
-													padding: "1px 2px",
-													borderRadius: "2px",
-													cursor: "pointer",
-												}}
-												onClick={() => setPostType("public")}
-											>
-												Public
-											</h6>
-											<h6
-												style={{
-													backgroundColor:
-														postType === "company" && "rgb(211, 243, 107)",
-													color: postType === "company" ? "#000" : "grey",
-													padding: "1px 2px",
-													borderRadius: "2px",
-													cursor: "pointer",
-												}}
-												onClick={() => setPostType("company")}
-											>
-												Company
-											</h6>
-										</div>
-									</span>
-								</div>
-							</div>
-							<div>
-								<button
-									type="button"
-									className="close d-flex justify-content-end"
-									onClick={handleClose}
-									style={{ background: "transparent", border: "none" }}
+				<div className="createpost__container">
+					<div className="createpost__header">
+						<div className="ceatepost__profile">
+							<img
+								src={loggedInUser.profilePicture}
+								width={50}
+								height={50}
+								style={{ objectFit: "cover" }}
+								className="rounded-circle"
+								alt="profile pic"
+							/>
+							<span>
+								<h2>
+									{loggedInUser?.firstName} {loggedInUser.lastName}
+								</h2>
+								<div
+									style={{
+										display: "flex",
+										width: "110px",
+										justifyContent: "space-between",
+									}}
 								>
-									<h3 aria-hidden="true" className="m-3">
-										&times;
-									</h3>
+									<h6
+										className=""
+										style={{
+											backgroundColor: postType === "public" && "#fd5901",
+											color: postType === "public" ? "#fff" : "grey",
+											padding: "1px 2px",
+											borderRadius: "2px",
+											cursor: "pointer",
+										}}
+										onClick={() => setPostType("public")}
+									>
+										Public
+									</h6>
+									<h6
+										style={{
+											backgroundColor:
+												postType === "company" && "rgb(211, 243, 107)",
+											color: postType === "company" ? "#000" : "grey",
+											padding: "1px 2px",
+											borderRadius: "2px",
+											cursor: "pointer",
+										}}
+										onClick={() => setPostType("company")}
+									>
+										Company
+									</h6>
+								</div>
+							</span>
+						</div>
+
+						<button
+							type="button"
+							className="close d-flex justify-content-end"
+							onClick={handleClose}
+							style={{ background: "transparent", border: "none" }}
+						>
+							<h3 aria-hidden="true" className="m-3">
+								&times;
+							</h3>
+						</button>
+					</div>
+
+					<div className="createpost__body">
+						<ReactQuill
+							value={postText}
+							onChange={handleQuillChange}
+							placeholder="What would you like to converse about? Write a post..."
+							modules={{ toolbar: false }} // Hide the toolbar
+							formats={[
+								"header",
+								"bold",
+								"italic",
+								"underline",
+								"strike",
+								"list",
+								"bullet",
+								"link",
+								"image",
+								"video",
+							]}
+							className="custom-quill"
+						/>
+
+						{respostingPostId &&
+							(loadingRepostData ? (
+								<div className="d-flex justify-content-center my-4">
+									<h6 className="h6 me-4">Loading post...</h6>
+									<div className="spinner-border" role="status">
+										<span className="visually-hidden">Loading...</span>
+									</div>
+								</div>
+							) : (
+								<FeedPostCard
+									repostPreview
+									userId={repostingPostData?.user?._id}
+									postId={repostingPostData?._id}
+									designation={repostingPostData?.user?.designation}
+									profilePicture={repostingPostData?.user?.profilePicture}
+									description={repostingPostData?.description}
+									firstName={repostingPostData?.user?.firstName}
+									lastName={repostingPostData?.user?.lastName}
+									video={repostingPostData?.video}
+									image={repostingPostData?.image}
+									createdAt={repostingPostData?.createdAt}
+									likes={repostingPostData?.likes}
+								/>
+							))}
+					</div>
+
+					{previewImages.length > 0 && currentCropIndex !== null && (
+						<div className="d-flex flex-column justify-content-center gap-2">
+							<div className="image-cropper">
+								<EasyCrop
+									image={previewImages[currentCropIndex]}
+									crop={crop}
+									zoom={zoom}
+									onCropChange={setCrop}
+									onZoomChange={setZoom}
+									onCropComplete={onCropComplete}
+								/>
+							</div>
+							<div className="d-flex justify-content-between align-items-center px-3">
+								<span>
+									Image {currentCropIndex + 1} of {selectedImages.length}
+								</span>
+								<button
+									className="btn btn-primary btn-sm"
+									onClick={handleNextCrop}
+								>
+									{currentCropIndex < selectedImages.length - 1
+										? "Next Image"
+										: "Finish Cropping"}
 								</button>
 							</div>
 						</div>
+					)}
 
-						<div className="modal-body">
-							<div className="createpost_text_area">
-								<ReactQuill
-									value={postText}
-									onChange={handleQuillChange}
-									placeholder="What would you like to converse about? Write a post..."
-									modules={{ toolbar: false }} // Hide the toolbar
-									formats={[
-										"header",
-										"bold",
-										"italic",
-										"underline",
-										"strike",
-										"list",
-										"bullet",
-										"link",
-										"image",
-										"video",
-									]}
-									// style={{
-									// 	// height: respostingPostId ? "100px" : "200px",
-									// 	color: theme === "dark" ? "white" : "black",
-									// 	border: "none",
-									// 	overflowY: "auto",
-									// }}
-									className="custom-quill"
-								/>
-
-								{respostingPostId &&
-									(loadingRepostData ? (
-										<div className="d-flex justify-content-center my-4">
-											<h6 className="h6 me-4">Loading post...</h6>
-											<div className="spinner-border" role="status">
-												<span className="visually-hidden">Loading...</span>
-											</div>
-										</div>
-									) : (
-										<FeedPostCard
-											repostPreview
-											userId={repostingPostData?.user?._id}
-											postId={repostingPostData?._id}
-											designation={repostingPostData?.user?.designation}
-											profilePicture={repostingPostData?.user?.profilePicture}
-											description={repostingPostData?.description}
-											firstName={repostingPostData?.user?.firstName}
-											lastName={repostingPostData?.user?.lastName}
-											video={repostingPostData?.video}
-											image={repostingPostData?.image}
-											createdAt={repostingPostData?.createdAt}
-											likes={repostingPostData?.likes}
-										/>
-									))}
-							</div>
+					{cropComplete && (
+						<div className="image-preview-grid">
+							{croppedImages.map((img, index) => (
+								<div key={index} className="image-preview-item">
+									<img
+										src={img}
+										alt={`preview ${index + 1}`}
+										style={{
+											maxHeight: selectedImages.length > 1 ? "15vh" : "15vh",
+											width: "auto",
+											objectFit: "contain",
+										}}
+									/>
+									<button
+										className="remove-image-btn"
+										onClick={() => handleRemoveImage(index)}
+									>
+										×
+									</button>
+								</div>
+							))}
 						</div>
+					)}
 
-						{previewImages.length > 0 && currentCropIndex !== null && (
-							<div className="d-flex flex-column justify-content-center gap-2">
-								<div className="image-cropper">
-									<EasyCrop
-										image={previewImages[currentCropIndex]}
-										crop={crop}
-										zoom={zoom}
-										onCropChange={setCrop}
-										onZoomChange={setZoom}
-										onCropComplete={onCropComplete}
-									/>
-								</div>
-								<div className="d-flex justify-content-between align-items-center px-3">
-									<span>
-										Image {currentCropIndex + 1} of {selectedImages.length}
-									</span>
-									<button
-										className="btn btn-primary btn-sm"
-										onClick={handleNextCrop}
-									>
-										{currentCropIndex < selectedImages.length - 1
-											? "Next Image"
-											: "Finish Cropping"}
-									</button>
-								</div>
+					{previewVideo && (
+						<video
+							key={selectedVideo ? selectedVideo.name : ""}
+							controls
+							// width={"70%"}
+							className="video-preview"
+						>
+							<source src={previewVideo} type={previewVideoType} />
+							Your browser does not support the video tag.
+						</video>
+					)}
+
+					{pdfThumbnail && (
+						<div className="pdf-thumbnail">
+							<img
+								src={pdfThumbnail}
+								alt="PDF Thumbnail"
+								style={{ maxHeight: "30vh", width: "auto" }}
+							/>
+						</div>
+					)}
+
+					{selectedDocument && !pdfThumbnail && (
+						<p>Selected File: {selectedDocument.name}</p>
+					)}
+
+					<div className="createpost__footer">
+						{loggedInUser.linkedinId ? (
+							<div className="share-linkedin">
+								<input
+									type="checkbox"
+									id="shareLinkedIn"
+									checked={shareOnLinkedIn}
+									onChange={() => setShareOnLinkedIn((prev) => !prev)}
+								/>
+								<label htmlFor="shareLinkedIn">Share on LinkedIn</label>
 							</div>
-						)}
-
-						{cropComplete && (
-							<div className="image-preview-grid">
-								{croppedImages.map((img, index) => (
-									<div key={index} className="image-preview-item">
-										<img
-											src={img}
-											alt={`preview ${index + 1}`}
-											style={{
-												maxHeight: selectedImages.length > 1 ? "15vh" : "15vh",
-												width: "auto",
-												objectFit: "contain",
-											}}
-										/>
-										<button
-											className="remove-image-btn"
-											onClick={() => handleRemoveImage(index)}
-										>
-											×
-										</button>
-									</div>
-								))}
-							</div>
-						)}
-
-						{previewVideo && (
-							<video
-								key={selectedVideo ? selectedVideo.name : ""}
-								controls
-								// width={"70%"}
-								className="video-preview"
-							>
-								<source src={previewVideo} type={previewVideoType} />
-								Your browser does not support the video tag.
-							</video>
-						)}
-
-						{pdfThumbnail && (
-							<div className="pdf-thumbnail">
-								<img
-									src={pdfThumbnail}
-									alt="PDF Thumbnail"
-									style={{ maxHeight: "30vh", width: "auto" }}
+						) : (
+							<div className="mt-1 mb-1">
+								<LinkedInLogin
+									isInvestorSelected={false}
+									setIsLoginSuccessfull={handleLinkedInLoginSuccess}
+									setIsInvestorSelected={() => {}}
+									setError={handleLinkedInLoginError}
+									text={"Connect"}
+									showIconAndText={true}
+									REDIRECT_URI={"https://thecapitalhub.in/home"}
 								/>
 							</div>
 						)}
+						<div className="createpost__footer__container mt-2 mb-1">
+							<div className="left_buttons">
+								<input
+									type="file"
+									name="image"
+									style={{ display: "none" }}
+									ref={galleryInputRef}
+									onChange={handleFileChange}
+									accept="image/*"
+								/>
+								<button
+									className="white_button hover-text"
+									onClick={handleGalleryButtonClick}
+								>
+									<CiImageOn size={25} style={{ color: "var(--d-l-grey)" }} />
+									<span className="tooltip-text top">images</span>
+								</button>
 
-						{selectedDocument && !pdfThumbnail && (
-							<p>Selected File: {selectedDocument.name}</p>
-						)}
+								<input
+									type="file"
+									name="video"
+									style={{ display: "none" }}
+									ref={cameraInputRef}
+									onChange={handleFileChange}
+									accept="video/*"
+								/>
+								<button
+									className="white_button hover-text"
+									onClick={handleCameraButtonClick}
+								>
+									<CiVideoOn size={25} style={{ color: "var(--d-l-grey)" }} />
+									<span className="tooltip-text top1">video</span>
+								</button>
 
-						<div className="createpost_modal_footer">
-							{loggedInUser.linkedinId ? (
-								<div className="share-linkedin">
-									<input
-										type="checkbox"
-										id="shareLinkedIn"
-										checked={shareOnLinkedIn}
-										onChange={() => setShareOnLinkedIn((prev) => !prev)}
+								<input
+									type="file"
+									name="document"
+									style={{ display: "none" }}
+									ref={documentInputRef}
+									onChange={handleFileChange}
+								/>
+								<button
+									className="white_button hover-text"
+									onClick={handleDocumentButtonClick}
+								>
+									<IconFile
+										width="16px"
+										height="16px"
+										style={{ color: "var(--d-l-grey)" }}
 									/>
-									<label htmlFor="shareLinkedIn">Share on LinkedIn</label>
-								</div>
-							) : (
-								<div className="mt-1 mb-1">
-									<LinkedInLogin
-										isInvestorSelected={false}
-										setIsLoginSuccessfull={handleLinkedInLoginSuccess}
-										setIsInvestorSelected={() => {}}
-										setError={handleLinkedInLoginError}
-										text={"Connect"}
-										showIconAndText={true}
-										REDIRECT_URI={"https://thecapitalhub.in/home"}
-									/>
-								</div>
-							)}
-							<div className="modal_footer_container mt-2 mb-1">
-								<div className="left_buttons">
-									<input
-										type="file"
-										name="image"
-										style={{ display: "none" }}
-										ref={galleryInputRef}
-										onChange={handleFileChange}
-										accept="image/*"
-									/>
-									<button
-										className="white_button hover-text"
-										onClick={handleGalleryButtonClick}
-									>
-										<CiImageOn size={25} style={{ color: "var(--d-l-grey)" }} />
-										<span className="tooltip-text top">images</span>
+									<span className="tooltip-text top2">doc</span>
+								</button>
+								<button
+									className="white_button hover-text"
+									onClick={() => setShowPollPopup(true)}
+								>
+									<BiPoll size={25} style={{ color: "var(--d-l-grey)" }} />
+									<span className="tooltip-text top3">poll</span>
+								</button>
+							</div>
+							<div className="post_button_container">
+								{posting ? (
+									<button className="post_button" disabled>
+										Posting...
 									</button>
-
-									<input
-										type="file"
-										name="video"
-										style={{ display: "none" }}
-										ref={cameraInputRef}
-										onChange={handleFileChange}
-										accept="video/*"
-									/>
+								) : (
 									<button
-										className="white_button hover-text"
-										onClick={handleCameraButtonClick}
+										className="post_button"
+										onClick={handleSubmit}
+										disabled={posting}
 									>
-										<CiVideoOn size={25} style={{ color: "var(--d-l-grey)" }} />
-										<span className="tooltip-text top1">video</span>
+										Post
 									</button>
-
-									<input
-										type="file"
-										name="document"
-										style={{ display: "none" }}
-										ref={documentInputRef}
-										onChange={handleFileChange}
-									/>
-									<button
-										className="white_button hover-text"
-										onClick={handleDocumentButtonClick}
-									>
-										<IconFile
-											width="16px"
-											height="16px"
-											style={{ color: "var(--d-l-grey)" }}
-										/>
-										<span className="tooltip-text top2">doc</span>
-									</button>
-									<button
-										className="white_button hover-text"
-										onClick={() => setShowPollPopup(true)}
-									>
-										<BiPoll size={25} style={{ color: "var(--d-l-grey)" }} />
-										<span className="tooltip-text top3">poll</span>
-									</button>
-								</div>
-								<div className="post_button_container">
-									{posting ? (
-										<button className="post_button" disabled>
-											Posting...
-										</button>
-									) : (
-										<button
-											className="post_button"
-											onClick={handleSubmit}
-											disabled={posting}
-										>
-											Post
-										</button>
-									)}
-								</div>
+								)}
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
 			{showPollPopup && (
 				<PollPopup
 					initialOptions={pollOptions}
 					onSave={(newOptions, allowMultipleAnswers) => {
-						setAllowMultipleAnswers(allowMultipleAnswers)
+						setAllowMultipleAnswers(allowMultipleAnswers);
 						setPollOptions(newOptions);
 					}}
 					onClose={() => setShowPollPopup(false)}
