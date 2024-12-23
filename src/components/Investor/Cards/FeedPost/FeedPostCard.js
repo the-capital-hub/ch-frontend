@@ -43,6 +43,7 @@ import {
 	getRecommendations,
 	removeFromFeaturedPost,
 	removeCompanyUpdatedPost,
+	reportPost
 } from "../../../../Service/user";
 import { Link, useLocation } from "react-router-dom";
 import SavePostPopUP from "../../../../components/PopUp/SavePostPopUP/SavePostPopUP";
@@ -73,6 +74,7 @@ const FeedPostCard = ({
 	lastName,
 	oneLinkId,
 	pollOptions,
+	allow_multiple_answers,
 	handlePollVote,
 	video,
 	image,
@@ -465,12 +467,49 @@ const FeedPostCard = ({
 
 	const [showReportSuccess, setShowReportSuccess] = useState(false);
 
-	const reportSubmitHandler = (e) => {
-		e.preventDefault();
-		setFilingReport(false);
-		setShowReportModal(false);
-		setShowReportSuccess(true);
+	const reportSubmitHandler = async (e, postId, reportReason) => {
+		try {
+			// Prevent form submission if it's a form event
+			e.preventDefault();
+	
+			if (!reportReason || reportReason.trim() === '') {
+				alert("Please provide a reason for the report.");
+				return;
+			}
+	
+			const postPublicLink = `https://thecapitalhub.in/post_details/${postId}`;
+			const reporterEmail = loggedInUser?.email;
+			const reporterId = loggedInUser?._id;
+			const reportTime = new Date().toISOString();
+			const email = "dev.capitalhub@gmail.com"; 
+	
+			if (!reporterEmail || !reporterId) {
+				console.error("User is not logged in or missing user details.");
+				return;
+			}
+	
+			const response = await reportPost(
+				postPublicLink,
+				postId,
+				reportReason,
+				reporterEmail,
+				reporterId,
+				reportTime,
+				email
+			);
+	
+			console.log(response);
+	
+			setFilingReport(false);
+			setShowReportModal(false);
+			setShowReportSuccess(true);
+		} catch (error) {
+			console.error("Error while sending report email", error);
+			setShowReportModal(false);
+			alert("An error occurred while submitting the report. Please try again.");
+		}
 	};
+	
 
 	const [showFeaturedPostSuccess, setShowFeaturedPostSuccess] = useState(false);
 	const [showCompanyUpdateSuccess, setShowCompanyUpdateSuccess] =
@@ -563,6 +602,7 @@ const FeedPostCard = ({
 					resharedPostId,
 					images,
 					pollOptions,
+					allow_multiple_answers
 				};
 
 				localStorage.setItem("postDetail", JSON.stringify(PostData));
@@ -613,15 +653,26 @@ const FeedPostCard = ({
 
 	const handleVoteClick = async (optionId) => {
 		try {
-			const hasVoted = localPollOptions.find(
+			// Check if user has already voted on this option
+			const hasVotedOnThisOption = localPollOptions.find(
 				(opt) => opt._id === optionId && opt.votes.includes(loggedInUser._id)
 			);
+
+			// Check if user has voted on any option
+			const hasVotedOnAnyOption = localPollOptions.some(
+				(opt) => opt.votes.includes(loggedInUser._id)
+			);
+
+			// If multiple answers not allowed and user has voted on different option
+			if (!allow_multiple_answers && hasVotedOnAnyOption && !hasVotedOnThisOption) {
+				return; // Don't allow voting on other options
+			}
 
 			// Optimistic update
 			setLocalPollOptions((current) =>
 				current.map((opt) => {
 					if (opt._id === optionId) {
-						const newVotes = hasVoted
+						const newVotes = hasVotedOnThisOption
 							? opt.votes.filter((id) => id !== loggedInUser._id)
 							: [...opt.votes, loggedInUser._id];
 						return { ...opt, votes: newVotes };
@@ -944,6 +995,10 @@ const FeedPostCard = ({
 							<div className="poll-section">
 								{localPollOptions.map((option) => {
 									const hasVoted = option.votes?.includes(loggedInUser._id);
+									const hasVotedOnAnyOption = localPollOptions.some(
+										(opt) => opt.votes.includes(loggedInUser._id)
+									);
+									const isDisabled = !allow_multiple_answers && hasVotedOnAnyOption && !hasVoted;
 									const totalVotes = localPollOptions.reduce(
 										(sum, opt) => sum + (opt.votes?.length || 0),
 										0
@@ -962,6 +1017,7 @@ const FeedPostCard = ({
 												style={{
 													position: "relative",
 													overflow: "hidden",
+													opacity: isDisabled ? 0.6 : 1,
 												}}
 											>
 												<div
@@ -982,13 +1038,12 @@ const FeedPostCard = ({
 												</span>
 											</div>
 											<button
-												className={`vote-button ${
-													hasVoted ? "votedButton" : ""
-												}`}
+												className={`vote-button ${hasVoted ? "votedButton" : ""}`}
 												onClick={(e) => {
 													e.stopPropagation();
 													handleVoteClick(option._id);
 												}}
+												disabled={isDisabled}
 											>
 												{hasVoted ? "Voted" : "Vote"}
 											</button>
@@ -1725,7 +1780,7 @@ const FeedPostCard = ({
 							onClick={(e) => {
 								e.stopPropagation();
 								e.preventDefault();
-								reportSubmitHandler(e);
+								reportSubmitHandler(e, postId, reportReason);
 							}}
 						>
 							Submit report
@@ -1734,7 +1789,7 @@ const FeedPostCard = ({
 						<button className="submit_button btn" type="button" onClick={(e) => {
 							e.preventDefault();
 							e.stopPropagation();
-							reportSubmitHandler(e);
+							reportSubmitHandler(e, postId, reportReason);
 						}} disabled>
 							<span role="status" className="me-1">
 								Submit report

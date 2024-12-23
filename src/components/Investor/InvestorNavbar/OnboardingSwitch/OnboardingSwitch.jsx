@@ -25,7 +25,7 @@ export default function OnboardingSwitch() {
   return (
     <OverlayTrigger
       placement="auto"
-      delay={{ show: 250, hide: 400 }}
+      delay={{ show: 2500, hide: 400 }}
       overlay={renderTooltip}
     >
       <div className="onboarding_switch_wrapper">

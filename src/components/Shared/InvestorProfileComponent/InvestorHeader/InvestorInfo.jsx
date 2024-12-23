@@ -31,13 +31,13 @@ export default function InvestorInfo({
 
   return (
     <div className="person_info">
-      <div className="person__profile__header d-flex flex-column flex-lg-row gap-4" style={{ color: "var(--d-l-grey)" }}>
+      <div className="person__profile__header d-flex flex-lg-row gap-4" style={{ color: "var(--d-l-grey)" }}>
       <Link to={linkTo}>
         <div className="person__profile__image">
           <img
             src={profilePicture || DefaultAvatar}
             alt={fullName}
-            style={{ width: "110px", height: "110px", objectFit: "cover" }}
+            // style={{ width: "110px", height: "110px", objectFit: "cover" }}
             loading="lazy"
             className="investor-profile-img"
           />
@@ -45,7 +45,7 @@ export default function InvestorInfo({
         </Link>
 
         <div className="person__profile__details d-flex flex-column gap-4 justify-content-around">
-          <div className="person__profile__headings" style={{ height: "100px" }}>
+          <div className="person__profile__headings" style={{ height: "70px" }}>
             <div style={{ height: "40px" }}>
               <Link to={linkTo}>
                 <h5 className="person__profile__name">{fullName}</h5>

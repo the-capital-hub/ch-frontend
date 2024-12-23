@@ -121,6 +121,20 @@ const CloseAccount = lazy(() =>
     "../pages/StartUp/UserSettings/SettingsPages/CloseAccount/CloseAccount"
   )
 );
+const MeetingToken = lazy(() => {
+	import("../pages/InvestorOneLink/InvestorOneLinkAppointment/MeetingToken");
+});
+
+const MeetingEvents = lazy(() =>
+	import("../components/Meetings/Events/MeetingEvents")
+);
+const MeetingPlans = lazy(() =>
+	import("../components/Meetings/Plans/MeetingPlans")
+);
+const MeetingAvailability = lazy(() =>
+	import("../components/Meetings/Availability/MeetingAvailability")
+);
+
 function InvestorRoutes() {
   return (
     <>
@@ -246,6 +260,30 @@ function InvestorRoutes() {
           </Suspense>
         }
       />
+      <Route
+				path="meeting/events"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<MeetingEvents />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="meeting/plans"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<MeetingPlans />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="meeting/availability"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<MeetingAvailability />
+					</Suspense>
+				}
+			/>
       <Route
         path="company-profile/edit"
         element={

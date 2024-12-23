@@ -79,6 +79,7 @@ const FounderProfile = () => {
 				);
 				if (response.ok) {
 					const data = await response.json();
+					console.log("User data", data);
 					setLoading(false);
 					setFounder(data.user);
 					setPost(data.post);
@@ -111,6 +112,7 @@ const FounderProfile = () => {
 				);
 				if (response.ok) {
 					const data = await response.json();
+					console.log("User events data", data);
 					const publicEvents = data.data.filter(
 						(event) => event.isPrivate === false
 					);
@@ -269,18 +271,18 @@ const FounderProfile = () => {
 		? {
 				name: founder.firstName + " " + founder.lastName || dummyData.name,
 				title: founder.designation || dummyData.title,
-				company: founder.startUp.company || dummyData.company,
-				location: founder.startUp.location || dummyData.location,
+				company: founder?.startUp?.company || dummyData.company,
+				location: founder?.startUp?.location || dummyData.location,
 				email: founder.email || dummyData.email,
-				joined: founder.startUp.startedAtDate || dummyData.joined,
+				joined: founder?.startUp?.startedAtDate || dummyData.joined,
 				about: founder.bio || dummyData.about,
 				profilePic: founder.profilePicture || "", // Assuming a default empty string if not provided
 				publicLinks: {
 					website:
-						founder.startUp.socialLinks?.website ||
+						founder?.startUp?.socialLinks?.website ||
 						dummyData.publicLinks?.website,
 					linkedin: founder.linkedin || dummyData.publicLinks.linkedin,
-					github: founder.startUp.github || dummyData.publicLinks.github,
+					github: founder?.startUp?.github || dummyData.publicLinks.github,
 				},
 				activities: {
 					posts:

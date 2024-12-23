@@ -71,6 +71,7 @@ const Feed = () => {
 		isSubscribed: false,
 		pollOptions: "",
 		location: "",
+		allow_multiple_answers: "",
 	});
 	const [newsData, setNewsData] = useState([]);
 	const [popupOpen, setPopupOpen] = useState(false);
@@ -181,7 +182,7 @@ const Feed = () => {
 					if (post._id === postId) {
 						return {
 							...post, // Keep all existing post data
-							pollOptions: result.data, // Update only the poll options
+							pollOptions: result.data,
 						};
 					}
 					return post;
@@ -353,6 +354,7 @@ const Feed = () => {
 												_id,
 												resharedPostId,
 												pollOptions,
+												allow_multiple_answers
 											},
 											index
 										) => {
@@ -387,6 +389,7 @@ const Feed = () => {
 														lastName={lastName}
 														oneLinkId={oneLinkId}
 														pollOptions={pollOptions}
+														allow_multiple_answers={allow_multiple_answers}
 														handlePollVote={handlePollVote}
 														video={video}
 														image={image}

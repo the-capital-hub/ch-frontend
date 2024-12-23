@@ -7,20 +7,7 @@ import {
   SidebarFooter,
   SidebarContent,
 } from "react-pro-sidebar";
-// import ArrowLeft from "../../../Images/investorsidebar/ArrowLeft.svg";
-// import ArrowRight from "../../../Images/investorsidebar/ArrowRight.svg";
-// import Setting from "../../../Images/investorsidebar/Settings.svg";
-// import Support from "../../../Images/investorsidebar/Support.svg";
-// import HomeIcon from "../../../Images/investorIcon/home.svg";
-// import myStartUpIcon from "../../../Images/Investor/Sidebar/MyStartUps.svg";
-// import exploreIcon from "../../../Images/Investor/Sidebar/explore.svg";
-// import syndicateIcon from "../../../Images/Investor/Sidebar/syndicates.svg";
-// import liveDealsIcon from "../../../Images/Investor/Sidebar/Live Deals.svg";
-// import mySchedulesIcon from "../../../Images/Investor/Sidebar/My Schedules.svg";
-// import savedPostsIcon from "../../../Images/Investor/Sidebar/SavedPosts.svg";
-// import ExitIcon from "../../../Images/investorIcon/Exit.svg";
-// import InvestorIcon from "../../../Images/investorIcon/Pot.svg";
-// import PlusIcon from "../../../Images/investorIcon/Plus.svg";
+import { FaChevronLeft } from "react-icons/fa";
 import "react-pro-sidebar/dist/css/styles.css";
 import { IoNewspaper } from "react-icons/io5";
 import "./SideBar.scss";
@@ -51,6 +38,7 @@ import { PiFloppyDiskBackLight, PiSparkleLight } from "react-icons/pi";
 import { HiOutlineUserPlus } from "react-icons/hi2";
 import Batch from "../../Batch";
 import OnboardingSwitch from "../../Investor/InvestorNavbar/OnboardingSwitch/OnboardingSwitch";
+import { IoCalendarOutline } from "react-icons/io5";
 
 
 // Investor Sidebar
@@ -61,6 +49,8 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
   const isMobileView = useSelector((state) => state.design.isMobileView);
   const [isCommunityDetailOpen, setIsCommunityDetailOpen] = useState(false);
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+  const [isMeetingDetailOpen, setIsMeetingDetailOpen] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
   // const menuIconClick = () => {
@@ -71,6 +61,10 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
     // Step 3: Show the logout popup
     setShowLogoutPopup(true);
   };
+
+  const handleLinkClick = () => {
+		if (isMobileView) setSidebarCollapsed(true);
+	};
 
   const handleLogoutLogic = () => {
     dispatch(logout());
@@ -108,29 +102,33 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
     }
   };
 
+  const handleCloseSidebar = () => {
+    setSidebarCollapsed(true);
+  };
+
   return (
     <div
       className={`container newInvestor_sidebar_container ${
         sidebarCollapsed ? "collapsed" : ""
       }`}
-      onMouseLeave={() => {
-        if (!isMobileView) {
-          setSidebarCollapsed(true);
-          setIsCommunityDetailOpen(false);
-        }
+      style={{ 
+        display: sidebarCollapsed ? 'none' : 'block', 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        height: '100vh',
+        transition: 'all 0.3s ease'
       }}
-      onMouseEnter={() => {
-        if (!isMobileView) {
-          setSidebarCollapsed(false);
-        }
-      }}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
     >
       <div id="header">
         <ProSidebar collapsed={sidebarCollapsed}>
           <SidebarHeader>
+            <button
+              className="close-sidebar-btn"
+              onClick={handleCloseSidebar}
+            >
+              <FaChevronLeft />
+            </button>
             <div className="logotext">
               {sidebarCollapsed ? (
                 <div
@@ -226,6 +224,14 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
           </SidebarHeader>
           <SidebarContent>
             <Menu iconShape="round">
+            <MenuItem>
+								{!sidebarCollapsed && (
+									<div className="d-flex justify-content-center align-items-center gap-2">
+										{/* mobile-onboarding */}
+										Dark <OnboardingSwitch /> Light
+									</div>
+								)}
+							</MenuItem>
               <MenuItem
                 // active={location.pathname.includes("/")}
                 className=""
@@ -443,6 +449,71 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
                 </Link>
               </MenuItem>
               <MenuItem
+								active={location.pathname.includes("/chats")}
+								className="active-item"
+							>
+								<div
+									className="sidebar__community d-flex gap-4"
+									id="sidebar_community"
+								>
+									<div onClick={handleLinkClick}>
+										<IoCalendarOutline
+											size={25}
+											color={`${
+												isMeetingDetailOpen ? "#d3f36b" : "var(--d-l-grey)"
+											}`}
+											className="me-1"
+										/>
+									</div>
+									{!sidebarCollapsed && (
+										<details className="">
+											<summary
+												className="d-flex align-items-center gap-2"
+												onClick={() =>
+													setIsMeetingDetailOpen(!isMeetingDetailOpen)
+												}
+											>
+												Meetings
+												{isMeetingDetailOpen ? (
+													<BsChevronUp />
+												) : (
+													<BsChevronDown />
+												)}
+											</summary>
+											<div className="d-flex flex-column gap-2">
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={() => {
+														setSidebarCollapsed(true);
+														navigate("/investor/meeting/events");
+													}}
+												>
+													Events
+												</button>
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={() => {
+														setSidebarCollapsed(true);
+														navigate("/investor/meeting/plans");
+													}}
+												>
+													Plans
+												</button>
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={() => {
+														setSidebarCollapsed(true);
+														navigate("/investor/meeting/availability");
+													}}
+												>
+													Availability
+												</button>
+											</div>
+										</details>
+									)}
+								</div>
+							</MenuItem>
+              <MenuItem
                 active={location.pathname.includes("/saved-posts")}
                 className="active-item"
               >
@@ -614,7 +685,7 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
       </div>
       {showLogoutPopup && (
         <LogOutPopUp
-          setShowLogoutPopup={setShowLogoutPopup} // Make sure this prop is passed correctly
+          setShowLogoutPopup={setShowLogoutPopup}
           handleLogoutLogic={handleLogoutLogic}
           showLogoutPopup
           isInvestor={true}

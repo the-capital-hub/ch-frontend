@@ -41,6 +41,7 @@ const stripHtmlTags = (html) => {
 
 const PollPopup = ({ onSave, initialOptions = ["", ""], onClose }) => {
 	const [localPollOptions, setLocalPollOptions] = useState(initialOptions);
+	const [allowMultipleAnswers, setAllowMultipleAnswers] = useState(true);
 
 	const handleAddOption = () => {
 		if (localPollOptions.length < 4) {
@@ -62,11 +63,15 @@ const PollPopup = ({ onSave, initialOptions = ["", ""], onClose }) => {
 	const handleSave = () => {
 		const validOptions = localPollOptions.filter((opt) => opt.trim() !== "");
 		if (validOptions.length >= 2) {
-			onSave(validOptions);
+			onSave(validOptions, allowMultipleAnswers);
 			onClose();
 		} else {
 			toast.error("Please add at least 2 valid options");
 		}
+	};
+
+	const handleAllowMultipleChange = () => {
+		setAllowMultipleAnswers(!allowMultipleAnswers);
 	};
 
 	return (
@@ -89,6 +94,16 @@ const PollPopup = ({ onSave, initialOptions = ["", ""], onClose }) => {
 							)}
 						</div>
 					))}
+				</div>
+				<div className="allow-multiple-checkbox">
+					<label>
+						<input
+							type="checkbox"
+							checked={allowMultipleAnswers}
+							onChange={handleAllowMultipleChange}
+						/>
+						Allow multiple answers
+					</label>
 				</div>
 				<div className="poll-popup-buttons">
 					{localPollOptions.length < 4 && (
@@ -123,6 +138,8 @@ const CreatePostPopUp = ({
 	const [postType, setPostType] = useState("public");
 	const [crop, setCrop] = useState({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState(1);
+	const [allowMultipleAnswers, setAllowMultipleAnswers] = useState();
+
 	// const [croppedImage, setCroppedImage] = useState(null);
 	const [pdfThumbnail, setPdfThumbnail] = useState(null);
 
@@ -379,6 +396,7 @@ const CreatePostPopUp = ({
 				validOptions.forEach((option, index) => {
 					postData.append(`pollOptions[${index}]`, option);
 				});
+				postData.append(`allow_multiple_answers`, allowMultipleAnswers);
 			}
 
 			postData.append("postType", postType);
@@ -794,7 +812,8 @@ const CreatePostPopUp = ({
 			{showPollPopup && (
 				<PollPopup
 					initialOptions={pollOptions}
-					onSave={(newOptions) => {
+					onSave={(newOptions, allowMultipleAnswers) => {
+						setAllowMultipleAnswers(allowMultipleAnswers)
 						setPollOptions(newOptions);
 					}}
 					onClose={() => setShowPollPopup(false)}

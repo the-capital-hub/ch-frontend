@@ -5,14 +5,15 @@ import { environment } from "../../../environments/environment";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../Store/features/design/designSlice";
+
 import "./Plans.scss";
 
 const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 
-const Spinner = () => (
+const Spinner = ({isInvestor}) => (
 	<div className="loader-container">
-		<div className="loader">
+		<div className={`${isInvestor? 'investor-loader': 'loader'}`}>
 			<div className="loader-inner"></div>
 		</div>
 	</div>
@@ -24,6 +25,9 @@ const Meetings = () => {
 	const [meetings, setMeetings] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [cancelLoading, setCancelLoading] = useState(null);
+	const [isInvestor, setIsInvestor] = useState(false);
+
+	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 
 	const fetchMeetings = () => {
 		setLoading(true);
@@ -46,6 +50,7 @@ const Meetings = () => {
 	};
 
 	useEffect(() => {
+		setIsInvestor(loggedInUser.isInvestor);
 		fetchMeetings();
 	}, []);
 
@@ -72,12 +77,12 @@ const Meetings = () => {
 	};
 
 	if (loading || !meetings) {
-		return <Spinner />;
+		return <Spinner isInvestor={isInvestor}/>;
 	}
 	// console.log("meetings", meetings);
 	return (
 		<div
-			className={`meetings-container ${theme === "dark" ? " dark-theme" : ""}`}
+		className={`meetings-container ${theme === "dark" ? "dark-theme" : ""} ${isInvestor ? "investor-theme" : ""}`}
 		>
 			<div className="meetings-wrapper">
 				<div className="meetings-header">
