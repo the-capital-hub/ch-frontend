@@ -115,24 +115,9 @@ const NavBar = (props) => {
 
 	return (
 		<>
-			<div className={`container pt-1 mb-4 mb-xl-0 pl-2`}>
-				<div
-					className={`d-flex my-investor_navbar ${navbarPosition} justify-content-between ${
-						props.sidebarCollapsed ? "minimized" : ""
-					}`}
-				>
-					<div className="d-flex align-items-center">
-						{props.sidebarCollapsed && (
-							<div
-								className="hamburger"
-								style={{
-									color: theme === "dark" ? "#B0B0B0" : "#000",
-								}}
-								onClick={props.handleSidebarToggle}
-							>
-								<FaBars />
-							</div>
-						)}
+			    <div className="container pt-1 mb-4 mb-xl-0 pl-2">
+        <div className="d-flex my-investor_navbar justify-content-between">
+          <div className="d-flex">
 						<div className="row bar_logo_container ">
 							<div className="logo_container">
 								<img

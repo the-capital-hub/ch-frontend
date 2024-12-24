@@ -8,16 +8,16 @@
     position: relative;
     min-height: 99vh;
 
-    // .sidebar {
-    //   // width: 300px;
-    //   // background-color: #eaeef2;
-    //   position: fixed;
-    //   top: calc(80px + 0%);
-    //   left: 0;
-    //   bottom: 0;
-    //   z-index: 100;
-    //   transition: width 0.3s ease;
-    //   overflow: scroll;
+    .sidebar {
+      // width: 300px;
+      // background-color: #eaeef2;
+      position: fixed;
+      top: calc(60px + 0%);
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+      transition: width 0.3s ease;
+      overflow: scroll;
 
     //   // Add class for sidebar in fixed position
     //   &.fixed {
@@ -153,4 +153,5 @@
 
 .white-to-grey {
   background-color: var(--white-to-grey);
+}
 }
