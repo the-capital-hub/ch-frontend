@@ -20,7 +20,7 @@ import {
 } from "../../components/Investor/Milestones/UserMilestones";
 import { useNavigate } from "react-router-dom";
 
-const Milestone = () => {
+const Milestone = ({ isInvestor = false }) => {
 	const theme = useSelector(selectTheme);
 	const [pdfDocumentsCount, setPdfDocumentsCount] = useState(0);
 	const [postCount, setPostCount] = useState(0);
@@ -143,7 +143,7 @@ const Milestone = () => {
 								/>
 								<div className="progress-bar">
 									<div
-										className="progress-fill"
+										className={`${isInvestor? "investor-progress-fill" : "progress-fill"}`}
 										style={{ width: `${milestone.progress}%` }}
 									/>
 								</div>
@@ -155,7 +155,7 @@ const Milestone = () => {
 					))}
 				</div>
 
-				<button className="show-all-btn" onClick={() => navigate("/profile")}>
+				<button className={` ${isInvestor? "investor-show-all-button" : "show-all-btn"}`} onClick={() => navigate("/profile")}>
 					Show all Milestone
 				</button>
 			</div>

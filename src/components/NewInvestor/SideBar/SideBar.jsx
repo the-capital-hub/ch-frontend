@@ -7,7 +7,20 @@ import {
   SidebarFooter,
   SidebarContent,
 } from "react-pro-sidebar";
-import { FaChevronLeft } from "react-icons/fa";
+// import ArrowLeft from "../../../Images/investorsidebar/ArrowLeft.svg";
+// import ArrowRight from "../../../Images/investorsidebar/ArrowRight.svg";
+// import Setting from "../../../Images/investorsidebar/Settings.svg";
+// import Support from "../../../Images/investorsidebar/Support.svg";
+// import HomeIcon from "../../../Images/investorIcon/home.svg";
+// import myStartUpIcon from "../../../Images/Investor/Sidebar/MyStartUps.svg";
+// import exploreIcon from "../../../Images/Investor/Sidebar/explore.svg";
+// import syndicateIcon from "../../../Images/Investor/Sidebar/syndicates.svg";
+// import liveDealsIcon from "../../../Images/Investor/Sidebar/Live Deals.svg";
+// import mySchedulesIcon from "../../../Images/Investor/Sidebar/My Schedules.svg";
+// import savedPostsIcon from "../../../Images/Investor/Sidebar/SavedPosts.svg";
+// import ExitIcon from "../../../Images/investorIcon/Exit.svg";
+// import InvestorIcon from "../../../Images/investorIcon/Pot.svg";
+// import PlusIcon from "../../../Images/investorIcon/Plus.svg";
 import "react-pro-sidebar/dist/css/styles.css";
 import { IoNewspaper } from "react-icons/io5";
 import "./SideBar.scss";
@@ -102,33 +115,29 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
     }
   };
 
-  const handleCloseSidebar = () => {
-    setSidebarCollapsed(true);
-  };
-
   return (
     <div
       className={`container newInvestor_sidebar_container ${
         sidebarCollapsed ? "collapsed" : ""
       }`}
-      style={{ 
-        display: sidebarCollapsed ? 'none' : 'block', 
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        height: '100vh',
-        transition: 'all 0.3s ease'
+      onMouseLeave={() => {
+        if (!isMobileView) {
+          setSidebarCollapsed(true);
+          setIsCommunityDetailOpen(false);
+        }
       }}
+      onMouseEnter={() => {
+        if (!isMobileView) {
+          setSidebarCollapsed(false);
+        }
+      }}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       <div id="header">
         <ProSidebar collapsed={sidebarCollapsed}>
           <SidebarHeader>
-            <button
-              className="close-sidebar-btn"
-              onClick={handleCloseSidebar}
-            >
-              <FaChevronLeft />
-            </button>
             <div className="logotext">
               {sidebarCollapsed ? (
                 <div
@@ -224,14 +233,6 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
           </SidebarHeader>
           <SidebarContent>
             <Menu iconShape="round">
-            <MenuItem>
-								{!sidebarCollapsed && (
-									<div className="d-flex justify-content-center align-items-center gap-2">
-										{/* mobile-onboarding */}
-										Dark <OnboardingSwitch /> Light
-									</div>
-								)}
-							</MenuItem>
               <MenuItem
                 // active={location.pathname.includes("/")}
                 className=""
@@ -685,7 +686,7 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
       </div>
       {showLogoutPopup && (
         <LogOutPopUp
-          setShowLogoutPopup={setShowLogoutPopup}
+          setShowLogoutPopup={setShowLogoutPopup} // Make sure this prop is passed correctly
           handleLogoutLogic={handleLogoutLogic}
           showLogoutPopup
           isInvestor={true}

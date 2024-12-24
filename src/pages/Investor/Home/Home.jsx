@@ -38,7 +38,10 @@ import {
 import TutorialTrigger from "../../../components/Shared/TutorialTrigger/TutorialTrigger";
 import PostDetail from "../../../components/Investor/Cards/FeedPost/PostDetail";
 import TopVoiceTracker from "../../../components/Investor/Feed/Components/TopVoiceTracker/TopVoiceTracker";
-import { selectSidebarCollapsed } from "../../../Store/features/design/sidebarSlice";
+import Milestone from "../../../components/Milestone/Milestone";
+import UserJourney from "../../../components/Milestone/UserJourney";
+import JoinHustlersClub from "../../../components/Investor/Feed/Components/JoinHustlersClub/JoinHustlersClub";
+import ShareThoughts from "../../../components/Investor/Feed/Components/ShareYourThoughts/ShareThoughts";
 
 const baseUrl = environment.baseUrl;
 
@@ -88,7 +91,6 @@ function Home() {
 	const isInvestorCreatePostModalOpen = useSelector(
 		selectInvestorCreatePostModal
 	);
-	const sidebarCollapsed = useSelector(selectSidebarCollapsed);
 
 	useEffect(() => {
 		if (Number(userVisitCount) <= 1) {
@@ -291,13 +293,14 @@ function Home() {
 						location={postData.location}
 					/>
 				) : (
-					<div className={
-						sidebarCollapsed ? "main_content" : "main_content_collapsed"
-					}>
+					<div className="main_content">
 						{/* <InvestorSmallProfilecard text={"Home"} /> */}
 						<div className="posts_col d-flex flex-column gap-3">
 							{/* Onboarding popup */}
-							<TutorialTrigger steps={investorOnboardingSteps.homePage} />
+
+							{/* <TutorialTrigger steps={investorOnboardingSteps.homePage} /> */}
+							<JoinHustlersClub />
+
 
               {/* Write a post */}
               <div className="box start_post_container border">
@@ -317,6 +320,8 @@ function Home() {
                   />
                 </div>
               </div>
+			  <ShareThoughts isInvestor={true} />
+
               <InfiniteScroll
                   dataLength={allPosts.length}
                   next={fetchMorePosts}
@@ -419,10 +424,14 @@ function Home() {
 					</div>
 				)}
 				<div className="right_content d-none d-xl-block">
+				<div className="right_content_wrapper">
 					<InvestorRightProfileCard />
 					<TopVoiceTracker isInvestor={true} />
+					<Milestone isInvestor={true}/>
+					<UserJourney isInvestor={true}/>
 					<RecommendationCard isInvestor={true} />
 					<NewsCorner />
+				</div>
 				</div>
 			</div>
 			{popupOpen && (

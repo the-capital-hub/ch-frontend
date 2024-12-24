@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import "./ShareYourThoughts.scss";
 import { WiStars } from "react-icons/wi";
 
-const ShareThoughts = () => {
+const ShareThoughts = (
+	{ isInvestor = false }
+) => {
 	return (
 		<div className="share_your_thoughts_container">
 			<div className="d-flex flex-column flex-md-row align-items-center justify-content-around justify-content-md-between px-md-2 gap-2">
@@ -18,8 +20,9 @@ const ShareThoughts = () => {
 
 				<Link
 					to={"/thoughts"}
-					className="btn orange_button d-flex align-items-center justify-content-center"
-				>
+					className={`btn d-flex align-items-center justify-content-center ${
+						isInvestor ? 'green_button' : 'orange_button'
+					  }`}				>
 					<span>View Question</span>
 					{/* <span>Share your thoughts now</span> */}
 				</Link>
