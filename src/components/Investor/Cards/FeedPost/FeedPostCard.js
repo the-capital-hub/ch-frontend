@@ -25,7 +25,11 @@ import TimeAgo from "timeago-react";
 import IconReportPost from "../../SvgIcons/IconReportPost";
 import { CiCirclePlus } from "react-icons/ci";
 import { useSelector, useDispatch } from "react-redux";
-import { getSentConnectionsAPI, pendingConnectionRequestsAPI, getUserConnections } from "../../../../Service/user";
+import {
+	getSentConnectionsAPI,
+	pendingConnectionRequestsAPI,
+	getUserConnections,
+} from "../../../../Service/user";
 // import AfterSuccessPopup from "../../../PopUp/AfterSuccessPopUp/AfterSuccessPopUp";
 // import InvestorAfterSuccessPopUp from "../../../PopUp/InvestorAfterSuccessPopUp/InvestorAfterSuccessPopUp";
 import {
@@ -43,7 +47,7 @@ import {
 	getRecommendations,
 	removeFromFeaturedPost,
 	removeCompanyUpdatedPost,
-	reportPost
+	reportPost,
 } from "../../../../Service/user";
 import { Link, useLocation } from "react-router-dom";
 import SavePostPopUP from "../../../../components/PopUp/SavePostPopUP/SavePostPopUP";
@@ -174,25 +178,26 @@ const FeedPostCard = ({
 
 	useEffect(() => {
 		const fetchSentConnections = async () => {
-		  try {
-			const response = await getSentConnectionsAPI();
-			const connection_recieved = await pendingConnectionRequestsAPI();
-	  
-			const isConnectionSent = response.data.some(
-			  (connection) => connection.receiver._id === userId
-			) || connection_recieved.data.some(
-				(con_rec) => con_rec.sender._id === userId
-			)
-			setConnectionSent(isConnectionSent);
-		  } catch (error) {
-			console.error('Error fetching sent connections:', error);
-			setConnectionSent(false); 
-		  }
+			try {
+				const response = await getSentConnectionsAPI();
+				const connection_recieved = await pendingConnectionRequestsAPI();
+
+				const isConnectionSent =
+					response.data.some(
+						(connection) => connection.receiver._id === userId
+					) ||
+					connection_recieved.data.some(
+						(con_rec) => con_rec.sender._id === userId
+					);
+				setConnectionSent(isConnectionSent);
+			} catch (error) {
+				console.error("Error fetching sent connections:", error);
+				setConnectionSent(false);
+			}
 		};
-	  
+
 		fetchSentConnections();
-	  }, [loggedInUser, userId]);
-	  
+	}, [loggedInUser, userId]);
 
 	const toggleDescription = (e) => {
 		e.stopPropagation();
@@ -390,13 +395,12 @@ const FeedPostCard = ({
 	}, [video, isVideoAutoplay]);
 
 	const likeUnlikeHandler = async () => {
-		
 		const newLikedState = !liked;
 
 		try {
 			// Define newLikedState based on the current liked state
 			setLiked(newLikedState);
-			
+
 			// Update likes count optimistically
 			if (newLikedState) {
 				likes.push(loggedInUser._id);
@@ -412,7 +416,6 @@ const FeedPostCard = ({
 			const likesData = await getLikeCount(postId);
 			setLikedBy(likesData?.data.likedBy);
 			setLikedByUser(likesData?.data.users);
-
 		} catch (error) {
 			// Revert optimistic updates on error
 			setLiked(!newLikedState);
@@ -471,23 +474,23 @@ const FeedPostCard = ({
 		try {
 			// Prevent form submission if it's a form event
 			e.preventDefault();
-	
-			if (!reportReason || reportReason.trim() === '') {
+
+			if (!reportReason || reportReason.trim() === "") {
 				alert("Please provide a reason for the report.");
 				return;
 			}
-	
+
 			const postPublicLink = `https://thecapitalhub.in/post_details/${postId}`;
 			const reporterEmail = loggedInUser?.email;
 			const reporterId = loggedInUser?._id;
 			const reportTime = new Date().toISOString();
-			const email = "dev.capitalhub@gmail.com"; 
-	
+			const email = "dev.capitalhub@gmail.com";
+
 			if (!reporterEmail || !reporterId) {
 				console.error("User is not logged in or missing user details.");
 				return;
 			}
-	
+
 			const response = await reportPost(
 				postPublicLink,
 				postId,
@@ -497,9 +500,9 @@ const FeedPostCard = ({
 				reportTime,
 				email
 			);
-	
+
 			console.log(response);
-	
+
 			setFilingReport(false);
 			setShowReportModal(false);
 			setShowReportSuccess(true);
@@ -509,7 +512,6 @@ const FeedPostCard = ({
 			alert("An error occurred while submitting the report. Please try again.");
 		}
 	};
-	
 
 	const [showFeaturedPostSuccess, setShowFeaturedPostSuccess] = useState(false);
 	const [showCompanyUpdateSuccess, setShowCompanyUpdateSuccess] =
@@ -602,7 +604,7 @@ const FeedPostCard = ({
 					resharedPostId,
 					images,
 					pollOptions,
-					allow_multiple_answers
+					allow_multiple_answers,
 				};
 
 				localStorage.setItem("postDetail", JSON.stringify(PostData));
@@ -659,12 +661,16 @@ const FeedPostCard = ({
 			);
 
 			// Check if user has voted on any option
-			const hasVotedOnAnyOption = localPollOptions.some(
-				(opt) => opt.votes.includes(loggedInUser._id)
+			const hasVotedOnAnyOption = localPollOptions.some((opt) =>
+				opt.votes.includes(loggedInUser._id)
 			);
 
 			// If multiple answers not allowed and user has voted on different option
-			if (!allow_multiple_answers && hasVotedOnAnyOption && !hasVotedOnThisOption) {
+			if (
+				!allow_multiple_answers &&
+				hasVotedOnAnyOption &&
+				!hasVotedOnThisOption
+			) {
 				return; // Don't allow voting on other options
 			}
 
@@ -699,6 +705,8 @@ const FeedPostCard = ({
 		setSharePopupOpen(true);
 	};
 	// console.log("postId", postId);
+
+	console.log("showRepostOptions", showRepostOptions);
 	return (
 		<>
 			<div className="feedpostcard_main_container mb-2">
@@ -789,23 +797,26 @@ const FeedPostCard = ({
 										)}
 									{loggedInUser._id !== userId ? (
 										connectionSent ? (
-											<span className="request_sent_feed d-inline">Request Sent</span>
+											<span className="request_sent_feed d-inline">
+												Request Sent
+											</span>
 										) : loggedInUser.connections.includes(userId) ? (
-											<span className="request_sent_feed d-inline">Following</span>
+											<span className="request_sent_feed d-inline">
+												Following
+											</span>
 										) : (
 											<button
-											className="btn connect_button_feed d-inline"
-											onClick={(e) => {
-												e.stopPropagation();
-												e.preventDefault();
-												handleConnect(userId);
-											}}
+												className="btn connect_button_feed d-inline"
+												onClick={(e) => {
+													e.stopPropagation();
+													e.preventDefault();
+													handleConnect(userId);
+												}}
 											>
-											<span>Follow</span>
+												<span>Follow</span>
 											</button>
 										)
-										) : null}
-
+									) : null}
 								</Link>
 
 								<div className="info-container">
@@ -995,10 +1006,11 @@ const FeedPostCard = ({
 							<div className="poll-section">
 								{localPollOptions.map((option) => {
 									const hasVoted = option.votes?.includes(loggedInUser._id);
-									const hasVotedOnAnyOption = localPollOptions.some(
-										(opt) => opt.votes.includes(loggedInUser._id)
+									const hasVotedOnAnyOption = localPollOptions.some((opt) =>
+										opt.votes.includes(loggedInUser._id)
 									);
-									const isDisabled = !allow_multiple_answers && hasVotedOnAnyOption && !hasVoted;
+									const isDisabled =
+										!allow_multiple_answers && hasVotedOnAnyOption && !hasVoted;
 									const totalVotes = localPollOptions.reduce(
 										(sum, opt) => sum + (opt.votes?.length || 0),
 										0
@@ -1038,7 +1050,9 @@ const FeedPostCard = ({
 												</span>
 											</div>
 											<button
-												className={`vote-button ${hasVoted ? "votedButton" : ""}`}
+												className={`vote-button ${
+													hasVoted ? "votedButton" : ""
+												}`}
 												onClick={(e) => {
 													e.stopPropagation();
 													handleVoteClick(option._id);
@@ -1105,10 +1119,11 @@ const FeedPostCard = ({
 								style={{ height: "3px", borderColor: "var(--d-l-grey)" }}
 							/> */}
 							<div className="row feedpostcard_footer">
-								<div className="d-flex align-items-center gap-1 justify-content-between pt-2 pb-2">
+								{/* for desktop and tab view */}
+								<div className="d-flex align-items-center gap-1 justify-content-around justify-content-sm-between pt-2 pb-2">
 									{/* Like and Comment */}
 									<div
-										className="d-flex align-items-center gap-1 justify-content-around"
+										className="d-none d-sm-flex align-items-center gap-1 justify-content-around"
 										style={{ width: "25%" }}
 									>
 										{/* Like */}
@@ -1130,7 +1145,7 @@ const FeedPostCard = ({
 														fontSize: "10px",
 														cursor: "pointer",
 													}}
-													className="m-0"
+													className="m-0 actions-btn-text-hide"
 												>
 													Like
 												</p>
@@ -1150,7 +1165,7 @@ const FeedPostCard = ({
 														fontSize: "10px",
 														cursor: "pointer",
 													}}
-													className="m-0"
+													className="m-0 actions-btn-text-hide"
 												>
 													Like
 												</p>
@@ -1174,7 +1189,7 @@ const FeedPostCard = ({
 														fontSize: "10px",
 														cursor: "pointer",
 													}}
-													className="m-0"
+													className="m-0 actions-btn-text-hide"
 												>
 													Comment
 												</p>
@@ -1195,13 +1210,108 @@ const FeedPostCard = ({
 														fontSize: "10px",
 														cursor: "pointer",
 													}}
-													className="m-0"
+													className="m-0 actions-btn-text-hide"
 												>
 													Comment
 												</p>
 											</div>
 										)}
 									</div>
+									{/* Like for mobile view */}
+									<span className="d-block d-sm-none">
+										{/* Like */}
+										{liked ? (
+											<div
+												className="d-flex  align-items-center justify-content-end
+                       gap-1"
+												onClick={likeUnlikeHandler}
+											>
+												<img
+													src={fireIcon}
+													width={20}
+													alt="like post"
+													style={{ cursor: "pointer" }}
+												/>
+												<p
+													style={{
+														color: "var(--d-l-grey)",
+														fontSize: "10px",
+														cursor: "pointer",
+													}}
+													className="m-0 actions-btn-text-hide"
+												>
+													Like
+												</p>
+											</div>
+										) : (
+											<div
+												className="d-flex align-items-center justify-content-end
+                       gap-1"
+												onClick={likeUnlikeHandler}
+											>
+												<ImFire
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												/>
+												<p
+													style={{
+														color: "var(--d-l-grey)",
+														fontSize: "10px",
+														cursor: "pointer",
+													}}
+													className="m-0 actions-btn-text-hide"
+												>
+													Like
+												</p>
+											</div>
+										)}
+									</span>
+									{/* comment for mobile view */}
+									<span className="d-block d-sm-none">
+										{/* Comment */}
+										{!showComment ? (
+											<div
+												className="d-flex align-items-center justify-content-end
+                       gap-1"
+												onClick={() => setShowComment((prev) => !prev)}
+											>
+												<FaRegCommentDots
+													size={20}
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												/>
+												<p
+													style={{
+														color: "var(--d-l-grey)",
+														fontSize: "10px",
+														cursor: "pointer",
+													}}
+													className="m-0 actions-btn-text-hide"
+												>
+													Comment
+												</p>
+											</div>
+										) : (
+											<div
+												className="d-flex align-items-center justify-content-end
+                       gap-1"
+												onClick={() => setShowComment((prev) => !prev)}
+											>
+												<FaCommentDots
+													size={20}
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												/>
+												<p
+													style={{
+														color: "var(--d-l-grey)",
+														fontSize: "10px",
+														cursor: "pointer",
+													}}
+													className="m-0 actions-btn-text-hide"
+												>
+													Comment
+												</p>
+											</div>
+										)}
+									</span>
 
 									{/* Repost */}
 									<span
@@ -1230,7 +1340,7 @@ const FeedPostCard = ({
 											/>
 											<p
 												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-												className="m-0"
+												className="m-0 actions-btn-text-hide"
 											>
 												Repost
 											</p>
@@ -1291,10 +1401,81 @@ const FeedPostCard = ({
 											</span>
 										)}
 									</span>
+									{/* share for mobile view */}
+									<span className="d-block d-sm-none">
+										{/* Share */}
+										<div
+											className="d-flex align-items-center
+											 gap-1"
+											onClick={handleOpenSocialShare}
+										>
+											<FaShare
+												size={20}
+												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+											/>
+											<p
+												style={{
+													color: "var(--d-l-grey)",
+													fontSize: "10px",
+													cursor: "pointer",
+												}}
+												className="m-0 actions-btn-text-hide"
+											>
+												Share
+											</p>
+										</div>
+									</span>
+									{/* save for mobile view */}
+									<span className="d-block d-sm-none">
+										{/* Save */}
+										{savedPostId.includes(postId) ? (
+											<div
+												className="d-flex align-items-center justify-content-end
+                       gap-1"
+												onClick={handleUnsavePost}
+											>
+												<IoMdBookmark
+													size={20}
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												/>
+												<p
+													style={{
+														color: "var(--d-l-grey)",
+														fontSize: "10px",
+														cursor: "pointer",
+													}}
+													className="m-0 actions-btn-text-hide"
+												>
+													Save
+												</p>
+											</div>
+										) : (
+											<div
+												className="d-flex align-items-center justify-content-end
+                    gap-1"
+												onClick={handleSavePopUp}
+											>
+												<CiBookmark
+													size={20}
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												/>
+												<p
+													style={{
+														color: "var(--d-l-grey)",
+														fontSize: "10px",
+														cursor: "pointer",
+													}}
+													className="m-0 actions-btn-text-hide"
+												>
+													Save
+												</p>
+											</div>
+										)}
+									</span>
 
 									{/* Share and Save */}
 									<div
-										className="d-flex align-items-center gap-1 justify-content-around"
+										className="d-none d-sm-flex align-items-center gap-1 justify-content-around d-block sm:hide"
 										style={{ width: "25%" }}
 									>
 										{/* Share post link on socials button */}
@@ -1313,7 +1494,7 @@ const FeedPostCard = ({
 													fontSize: "10px",
 													cursor: "pointer",
 												}}
-												className="m-0"
+												className="m-0 actions-btn-text-hide"
 											>
 												Share
 											</p>
@@ -1336,7 +1517,7 @@ const FeedPostCard = ({
 														fontSize: "10px",
 														cursor: "pointer",
 													}}
-													className="m-0"
+													className="m-0 actions-btn-text-hide"
 												>
 													Save
 												</p>
@@ -1357,7 +1538,7 @@ const FeedPostCard = ({
 														fontSize: "10px",
 														cursor: "pointer",
 													}}
-													className="m-0"
+													className="m-0 actions-btn-text-hide"
 												>
 													Save
 												</p>
@@ -1375,11 +1556,7 @@ const FeedPostCard = ({
 									<div className="mt-1">
 										<div className="comment_container mb-1  border-top border-bottom">
 											{/* <div className="logo"> */}
-											<img
-												src={loggedInUser.profilePicture}
-												alt="Logo"
-												
-											/>
+											<img src={loggedInUser.profilePicture} alt="Logo" />
 											{/* </div> */}
 											<section className="input_and_logo_section">
 												<div className="input_box">
@@ -1614,8 +1791,8 @@ const FeedPostCard = ({
 					<AfterSuccessPopUp
 						withoutOkButton
 						onClose={(e) => {
-							e.stopPropagation()
-							setShowReportSuccess(false)
+							e.stopPropagation();
+							setShowReportSuccess(false);
 						}}
 						successText="Report submitted successfully"
 					/>
@@ -1786,11 +1963,16 @@ const FeedPostCard = ({
 							Submit report
 						</button>
 					) : (
-						<button className="submit_button btn" type="button" onClick={(e) => {
-							e.preventDefault();
-							e.stopPropagation();
-							reportSubmitHandler(e, postId, reportReason);
-						}} disabled>
+						<button
+							className="submit_button btn"
+							type="button"
+							onClick={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
+								reportSubmitHandler(e, postId, reportReason);
+							}}
+							disabled
+						>
 							<span role="status" className="me-1">
 								Submit report
 							</span>

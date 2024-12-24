@@ -297,7 +297,7 @@ const Feed = () => {
 
 							{/* Write a Post */}
 							<div
-								className="rounded-2 start_post_container"
+								className="rounded-2"
 								style={{ flexDirection: "column" }}
 							>
 								<div className="start_post_container" style={{ width: "100%" }}>
@@ -308,12 +308,12 @@ const Feed = () => {
 										style={{ width: "50px", height: "50px" }}
 									/>
 									<div
-										className="w-auto flex-grow-1 me-4"
+										className="w-auto flex-grow-1" //me-4
 										onClick={openPopup}
 										style={{ cursor: "pointer" }}
 									>
 										<input
-											className="px-3 flex-grow-1"
+											className="write_post_input flex-grow-1"
 											type="text"
 											placeholder="Write a post..."
 											style={{ pointerEvents: "none" }}

@@ -43,7 +43,7 @@
 		gap: 1em;
 		// width: 750px;
 		//height: 100px;
-		padding: 10px 20px;
+		padding: 10px;
 		// gap: 10px;
 		box-sizing: border-box;
 		background-color: var(--white-to-grey);
@@ -67,6 +67,10 @@
 			// 	border-color: #fd5901; /* Darker border color on hover */
 			// 	box-shadow: 0 0 10px rgba(253, 89, 1, 0.5);
 			// }
+		}
+		.write_post_input {
+			padding-left: 0.75rem;
+			padding-right: 0.75rem;
 		}
 		.start_footer_container {
 			width: 100%;
