@@ -1,6 +1,5 @@
 .chat-page-wrapper {
-	// background-color: var(--chat-page-bg);
-	background-color: black;
+	background-color: var(--chat-page-bg);
 	height: 100dvh;
 	overflow: hidden;
 	display: grid;
@@ -302,19 +301,10 @@
 				text-underline-offset: 0.25em;
 			}
 		}
-
-		// CSS for Add new community modal
-		.addNewCommunity_modal_wrapper {
-			.modal {
-				.modal-body {
-					// max-height: 85dvh;
-				}
-			}
-		}
 	}
 }
 
 .modal-dialog {
 	margin: 0px;
-	height: 100vh;
+	height: 100dvh;
 }
