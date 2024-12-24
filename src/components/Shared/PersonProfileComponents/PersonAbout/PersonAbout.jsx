@@ -16,10 +16,10 @@ export default function PersonAbout({
 	return (
 		<>
 			<article
-				className="person__about d-flex flex-column gap-4 flex-lg-row gap-lg-0 mt-2"
+				className="person__about d-flex flex-column gap-2 md:gap-4 flex-lg-row gap-lg-0 mt-2"
 				style={{ color: "var(--d-l-grey)" }}
 			>
-				{/* <h6 className="div__heading">Bio:</h6> */}
+				<h6 className="div__heading__person__profile">Bio:</h6>
 				<p className="about__text">{bio}</p>
 			</article>
 			<article

@@ -264,7 +264,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									</div>
 								)}
 							</MenuItem>
-
 							<MenuItem>
 								<Link
 									to="home?showPopup=true"
@@ -283,7 +282,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									)}
 								</Link>
 							</MenuItem>
-
 							<MenuItem
 								active={location.pathname.includes("/home")}
 								className="active-item"
@@ -365,7 +363,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 											color={`${
 												isCommunityDetailOpen ? "#fd5901" : "var(--d-l-grey)"
 											}`}
-											className="me-1"
+											// className="me-1"
 										/>
 									</div>
 									{!sidebarCollapsed && (
@@ -453,7 +451,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Analytics</span>}
 								</Link>
 							</MenuItem>
-
 							<MenuItem
 								active={location.pathname.includes("/chats")}
 								className="active-item"
@@ -468,7 +465,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 											color={`${
 												isMeetingDetailOpen ? "#fd5901" : "var(--d-l-grey)"
 											}`}
-											className="me-1"
+											// className="me-1"
 										/>
 									</div>
 									{!sidebarCollapsed && (
@@ -519,7 +516,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									)}
 								</div>
 							</MenuItem>
-
 							<MenuItem
 								active={location.pathname.includes("/help")}
 								className="active-item"
@@ -544,7 +540,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Learn More</span>}
 								</Link>
 							</MenuItem>
-
 							<MenuItem onClick={handleLogout}>
 								<div className="d-flex justify-content-center align-items-center">
 									<IoExitOutline size={25} />
