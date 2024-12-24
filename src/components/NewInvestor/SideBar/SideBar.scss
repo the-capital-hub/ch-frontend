@@ -3,10 +3,6 @@
 	max-width: 10%;
 	margin: 0;
 	padding: 0;
-	top: 0 !important;
-	position: fixed;
-	transition: transform 0.3s ease;
-	z-index: 1000;
 }
 
 .sidebar-main {
@@ -16,24 +12,6 @@
 	position: absolute;
 	border-radius: 8px 8px 8px 0px;
 	border: 2px solid red;
-	transform: translateY(-100%);
-	display: flex; // Use flexbox to manage layout
-	flex-direction: column; // Stack children vertically
-	
-}
-
-.sidebar-main {
-	flex: 1; // Allow this section to grow and take available space
-	overflow-y: auto; // Enable vertical scrolling
-	-ms-overflow-style: none;  // Hide scrollbar for Internet Explorer and Edge
-	scrollbar-width: none;  // Hide scrollbar for Firefox
-}
-.pro-sidebar-layout::-webkit-scrollbar {
-	display: none;
-}
-
-.sidebar-main.open {
-	transform: translateY(0);
 }
 
 .pro-sidebar .pro-menu a {
@@ -67,6 +45,11 @@
 	width: 220px;
 	// margin: 10px 92px;
 	overflow: hidden;
+
+&::-webkit-scrollbar {
+    display: none; // For Webkit browsers
+  }
+
 }
 
 // #header .pro-sidebar {
@@ -96,13 +79,11 @@
 #header .pro-sidebar-inner {
 	background-color: var(--white-to-grey);
 	box-shadow: 0.5px 0.866px 2px 0px rgba(246, 236, 236, 0.15);
-	position: fixed;
 }
 
 #header .pro-sidebar-inner .pro-sidebar-layout {
-	overflow-y: scroll;
+	overflow-y: hidden;
 }
-
 
 #header .pro-sidebar-inner .pro-sidebar-layout .logotext p {
 	font-size: 20px;
@@ -292,30 +273,4 @@
 	.mobile-onboarding {
 		margin-left: 1rem;
 	}
-}
-
-/* Basic styling for the close button */
-.close-sidebar-btn {
-    position: absolute;
-    top: 1.2rem;
-    right: 0.2rem; 
-    transform: translateY(-50%); 
-    background-color: #d3f36b; 
-    color: black; 
-    border: none;
-    border-radius: 50%; 
-    padding: 7px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center; 
-    align-items: center; /* Vertically center the icon */
-    transition: right 0.3s ease, opacity 0.3s ease;
-    opacity: 1; /* Fully visible when expanded */
-}
-
-/* If the sidebar is collapsed */
-.sidebar.collapsed .close-sidebar-btn {
-    right: -40px; /* Adjust as needed when sidebar collapses */
-    opacity: 0; /* Hide the button when collapsed */
-    pointer-events: none; /* Prevent clicks when the button is hidden */
 }

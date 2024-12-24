@@ -80,7 +80,7 @@ const checkCurrentLevel = (milestoneData) => {
 	return 0;
 };
 
-const UserJourney = () => {
+const UserJourney = ({ isInvestor = false }) => {
 	const theme = useSelector(selectTheme);
 	const [userProgress, setUserProgress] = useState({
 		currentLevel: 1,
@@ -203,7 +203,7 @@ const UserJourney = () => {
 
 	return (
 		<div
-			className={`journey-profile-container ${theme === "dark" ? " dark-theme" : ""}`}
+			className={`journey-profile-container ${theme === "dark" ? " dark-theme" : ""} `}
 			data-bs-theme={theme}
 		>
 			<div className="profile-header">
@@ -212,13 +212,13 @@ const UserJourney = () => {
 					<h3>{user.firstName + " " + user.lastName}</h3>
 					<p>{user.designation}</p>
 				</div>
-				<div className="achievement-badge">{userProgress.currentLevel}</div>
+				<div className={`achievement-badge ${isInvestor? "invester_theme" : ""}`}>{userProgress.currentLevel}</div>
 			</div>
 
 			<div className="level-indicator">
 				<div className="level-progress">
 					<div
-						className="level-fill"
+						className={`level-fill ${isInvestor? "invester_theme" : ""}`}
 						style={{ width: `${userProgress.levelProgress}%` }}
 					></div>
 				</div>

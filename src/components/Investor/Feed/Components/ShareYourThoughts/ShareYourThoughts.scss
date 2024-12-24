@@ -92,4 +92,32 @@
 			color: white;
 		}
 	}
+
+	.green_button {
+		border-radius: 20px;
+		background:#DDFF71;
+		border: 1px solid #DDFF71;
+		padding: 4px 8px;
+		font-size: 14px;
+		color: black;
+		transition: 0.25s;
+		width: 125px;
+		height: 40px;
+
+		@media (min-width: 768px) {
+			// padding-inline: 25px;
+			font-size: 1rem;
+		}
+
+		&:hover {
+			background-color: transparent;
+			color: #DDFF71;
+		}
+
+		&:active {
+			background-color: #DDFF71;
+			border: 1px solid #DDFF71;
+			color: white;
+		}
+	}
 }

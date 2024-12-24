@@ -65,6 +65,10 @@
 			font-weight: bold;
 			font-size: 0.875rem;
 		}
+		.invester_theme {
+			background-color: #DDFF71 !important;
+			color: black !important;
+		}
 	}
 
 	.level-indicator {
@@ -83,6 +87,9 @@
 				background-color: #fd5901;
 				border-radius: 0.25rem;
 				transition: width 0.3s ease;
+			}
+			.invester_theme {
+				background-color: #DDFF71 !important;
 			}
 		}
 
