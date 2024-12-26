@@ -318,7 +318,7 @@ const InvestorManageAccount = () => {
 										<div className="name_email">
 											<h4 className="text-break">
 												{loggedInUser?.firstName} {loggedInUser?.lastName}
-												{loggedInUser.isSubscribed && (
+												{loggedInUser?.isSubscribed && (
 													<img
 														src={BatchImag}
 														style={{
@@ -421,7 +421,7 @@ const InvestorManageAccount = () => {
 															<div className="name_email">
 																<h5 className="m-0">
 																	{fullName}
-																	{account.user.isSubscribed && (
+																	{account?.user?.isSubscribed && (
 																		<img
 																			src={BatchImag}
 																			style={{
