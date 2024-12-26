@@ -43,10 +43,10 @@
       textarea {
         width: 100%;
         background: var(--bs-light);
-        border: none !important;
+        border: 1px solid #e0e0e0;
         border-radius: var(--border-radius);
         outline: none;
-        color: var(--d-l-grey) !important;
+  
         &:focus {
           border-color: var(--currentTheme-dark);
         }
@@ -55,12 +55,11 @@
   }
   
   .createpost_modal_footer {
-    width: 90%;
     display: flex;
     margin: auto;
   
     .modal_footer_container {
-      width: 100%;
+      width: 480px;
       height: 65px;
       flex-shrink: 0;
       border-radius: var(--border-radius);
@@ -161,11 +160,10 @@
   
   .modal {
     position: fixed;
-    width: 50%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: transparent !important;
+    background-color: rgba(0, 0, 0, 0.5);
     /* Adjust the background color of the popup */
     z-index: 10000;
   }
@@ -318,63 +316,4 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 10000;
   }
-  .custom-quill {
-    // height: 200px !important;
-    border: none;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
   
-    @media (max-width: 480px) {
-      height: 100px !important;
-    }
-
-  }
-  .custom-quill .ql-editor::before {
-    color: var(--placeholder-color);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex-grow: 1;
-  }
-  .custom-quill .ql-container {
-    border: none !important;
-    min-height: 100px !important;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .custom-quill .ql-editor {
-    height: 100px !important;
-    padding: 10px;
-    overflow: hidden;
-    display: flex;
-    flex-wrap: wrap;
-    color: var(--d-l-grey);
-    background-color: inherit;
-    max-width: 60dvw;
-    overflow: scroll;
-    word-wrap: normal;
-  
-    &::-webkit-scrollbar {
-      display: none;
-      width: 0;
-    }
-  }
-  
-  .custom-quill .ql-container .ql-snow {
-    height: 100%;
-  }
-  
-  .custom-quill .ql-editor.ql-blank {
-    min-height: 100px !important;
-  }
-  
-  .custom-quill .ql-placeholder {
-    color: var(--d-l-grey);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex-grow: 1;
-  }

@@ -232,16 +232,7 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
             </div> */}
           </SidebarHeader>
           <SidebarContent>
-            
             <Menu iconShape="round">
-            <MenuItem>
-								{!sidebarCollapsed && (
-									<div className="d-flex justify-content-center align-items-center gap-2">
-										{/* mobile-onboarding */}
-										Dark <OnboardingSwitch /> Light
-									</div>
-								)}
-							</MenuItem>
               <MenuItem
                 // active={location.pathname.includes("/")}
                 className=""
@@ -439,18 +430,25 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
                   {!sidebarCollapsed && <span className="">My StartUps</span>}
                 </Link>
               </MenuItem>
-              {/* <MenuItem
+              <MenuItem
                 active={location.pathname.includes("/my-schedule")}
                 className="active-item"
               >
                 <Link
+                  // onClick={() => setSidebarCollapsed(true)}
                   to="/investor/my-schedule"
                   id="sidebar_mySchedule"
                 >
+                  {/* <img
+                    src={mySchedulesIcon}
+                    alt="link for My Schedules"
+                    width="17px"
+                    height="17px"
+                  /> */}
                   <IconClock height="25px" width="25px" />
                   {!sidebarCollapsed && <span className="">My Schedules</span>}
                 </Link>
-              </MenuItem> */}
+              </MenuItem>
               <MenuItem
 								active={location.pathname.includes("/chats")}
 								className="active-item"
