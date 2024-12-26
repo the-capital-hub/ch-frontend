@@ -158,6 +158,7 @@ const TopVoice = ({ isInvestor = false }) => {
 					<button
 						style={{
 							backgroundColor: isInvestor ? "rgb(211, 243, 107)" : "#fd5901",
+							color: isInvestor ? "black" : "white"
 						}}
 					>
 						Know More
