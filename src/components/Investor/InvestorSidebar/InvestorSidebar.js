@@ -348,6 +348,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Resources</span>}
 								</Link>
 							</MenuItem>
+							{/* community */}
 							<MenuItem
 								active={location.pathname.includes("/chats")}
 								className="active-item"
@@ -451,6 +452,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Analytics</span>}
 								</Link>
 							</MenuItem>
+							{/* Meetings/Events */}
 							<MenuItem
 								active={location.pathname.includes("/chats")}
 								className="active-item"
@@ -540,11 +542,11 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Learn More</span>}
 								</Link>
 							</MenuItem>
-							<MenuItem onClick={handleLogout}>
-								<div className="d-flex justify-content-center align-items-center">
+							<MenuItem onClick={handleLogout} className="active-item">
+								{/* <div className="d-flex justify-content-center align-items-center"> */}
 									<IoExitOutline size={25} />
 									{!sidebarCollapsed && <span>Log out</span>}
-								</div>
+								{/* </div> */}
 							</MenuItem>
 						</Menu>
 					</SidebarContent>

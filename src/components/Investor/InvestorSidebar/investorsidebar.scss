@@ -2,10 +2,14 @@
 	width: 65px;
 	max-width: 65px;
 	height: 100dvh;
-	overflow-x: hidden;
 	margin: 0;
 	padding: 0;
 	transition: all 1000ms ease-in-out !important;
+	// hide scroll bar
+	&::-webkit-scrollbar {
+		display: none;
+		width: 0px;
+	}
 
 	.sidebar-main {
 		width: 20%;
@@ -95,9 +99,11 @@
 			background-color: var(--white-to-grey);
 			box-shadow: 0.5px 0.866px 2px 0px rgba(0, 0, 0, 0.15);
 		}
+
 		.pro-sidebar-inner .pro-sidebar-layout {
-			overflow-y: scroll;
+			overflow-y: hidden;
 		}
+
 		.pro-sidebar-inner .pro-sidebar-layout .logotext p {
 			font-size: 20px;
 			padding: 0 20px;
