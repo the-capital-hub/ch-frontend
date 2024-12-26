@@ -114,7 +114,7 @@ const InvestorNavbar = (props) => {
 			<div className="startup_navbar_container">
 				{/* Navbar left */}
 				<div className="startup_navbar_left_container">
-					{props.sidebarCollapsed && (
+					{/* {props.sidebarCollapsed && (
 						<div
 							className="hamburger"
 							style={{
@@ -124,7 +124,7 @@ const InvestorNavbar = (props) => {
 						>
 							<FaBars size={30} />
 						</div>
-					)}
+					)} */}
 					<div className="logo_container">
 						<img
 							src={logo}
