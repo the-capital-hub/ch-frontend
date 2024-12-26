@@ -59,6 +59,11 @@
 	position: relative;
 	width: 100%;
 
+	.public-sidebar-icon {
+		width: 25px;
+		height: 25px;
+	}
+
 	svg {
 		fill: var(--text-color);
 		transition: fill 0.3s ease;
@@ -110,16 +115,13 @@
 			display: none;
 		}
 	}
-}
 
-// Ensure sidebar remains visible on larger screens
-@media (min-width: 481px) {
-	.public-sidebar {
-		width: 60px;
-	}
-
-	.public-sidebar.expanded {
-		width: 200px;
+	.public-sidebar.expended {
+		position: absolute;
+		top: 80px;
+		left: 0;
+		width: 210px;
+		z-index: 1000;
 
 		.public-sidebar-label {
 			position: static;
@@ -132,3 +134,22 @@
 	}
 }
 
+// Ensure sidebar remains visible on larger screens
+@media (min-width: 481px) {
+	.public-sidebar {
+		width: 60px;
+	}
+
+	.public-sidebar.expended {
+		width: 250px;
+
+		.public-sidebar-label {
+			position: static;
+			opacity: 1;
+			visibility: visible;
+			background: none;
+			box-shadow: none;
+			padding: 0 10px;
+		}
+	}
+}
