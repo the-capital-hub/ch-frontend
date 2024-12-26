@@ -407,10 +407,7 @@ const CreatePostPopUp = ({
                     "image",
                     "video",
                   ]}
-                  style={{ 
-                    height: respostingPostId ? "80px" : "200px",
-                    color: theme === "dark" ? "white" : "black"
-                  }}
+                  className="custom-quill"
                 />
 
                 {respostingPostId &&
