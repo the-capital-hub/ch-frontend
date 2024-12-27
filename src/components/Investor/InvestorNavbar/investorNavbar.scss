@@ -36,7 +36,7 @@
 
 			img {
 				width: 50px;
-				height: 41px;
+				height: 50px;
 				&:hover {
 					cursor: pointer;
 				}
@@ -56,20 +56,24 @@
 					border: none;
 					transition: width 0.4s ease;
 					padding: 5px 15px;
+					padding-left: 12%;
+					height: 45px;
 					outline: none;
 					width: 400px;
 				}
 
 				.searchbar-button {
 					position: absolute;
-					right: -5px;
+					left: 1px;
 					top: 0;
 					width: 48px;
+					height: 45px;
 					padding: 4.5px 0;
 					background: var(--bs-light);
 					border: none;
 					border-top-right-radius: 7px;
 					border-bottom-right-radius: 7px;
+					border-radius: 7px;
 					cursor: pointer;
 				}
 			}
@@ -156,9 +160,9 @@
 					box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px inset;
 				}
 
-				@media (min-width: 768px) {
-					background: var(--bs-light);
-				}
+				// @media (min-width: 768px) {
+				// 	background: red;
+				// }
 
 				@media (max-width: 500px) {
 					width: 40px;
