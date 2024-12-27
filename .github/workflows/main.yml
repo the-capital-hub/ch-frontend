@@ -37,13 +37,10 @@ jobs:
               exit 1
               fi
 
-      - name: Upload with lftp
+      - name: Upload Files via lftp
         run: |
-              sudo apt-get update && sudo apt-get install -y lftp
-              lftp -e "mirror -R /home/runner/work/ch-frontend/ch-frontend/build /destination/path; bye" || {
-              echo "lftp upload failed!"
-              exit 1
-              }
+            sudo apt-get update && sudo apt-get install -y lftp
+            lftp -u "$HOSTINGER_FTP_USERNAME,$HOSTINGER_FTP_PASSWORD" $HOSTINGER_FTP_SERVER -e "mirror -R /home/runner/work/ch-frontend/ch-frontend/build /remote/path; bye"
 
       - name: Set up environment
         run: |
