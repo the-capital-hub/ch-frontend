@@ -1176,7 +1176,7 @@ const FeedPostCard = ({
 										{!showComment ? (
 											<div
 												className="d-flex align-items-center justify-content-end
-                       gap-1"
+                       gap-1 position-relative"
 												onClick={() => setShowComment((prev) => !prev)}
 											>
 												<FaRegCommentDots
@@ -1193,11 +1193,14 @@ const FeedPostCard = ({
 												>
 													Comment
 												</p>
+												<span className="feedpostcard_comment_count_badge position-absolute translate-middle badge rounded-pill bg-danger">
+													{comments?.length}
+												</span>
 											</div>
 										) : (
 											<div
 												className="d-flex align-items-center justify-content-end
-                       gap-1"
+                       gap-1 position-relative"
 												onClick={() => setShowComment((prev) => !prev)}
 											>
 												<FaCommentDots
@@ -1214,6 +1217,9 @@ const FeedPostCard = ({
 												>
 													Comment
 												</p>
+												<span className="feedpostcard_comment_count_badge position-absolute translate-middle badge rounded-pill bg-danger">
+													{comments?.length}
+												</span>
 											</div>
 										)}
 									</div>
@@ -1271,7 +1277,7 @@ const FeedPostCard = ({
 										{!showComment ? (
 											<div
 												className="d-flex align-items-center justify-content-end
-                       gap-1"
+                       gap-1 position-relative"
 												onClick={() => setShowComment((prev) => !prev)}
 											>
 												<FaRegCommentDots
@@ -1288,11 +1294,14 @@ const FeedPostCard = ({
 												>
 													Comment
 												</p>
+												<span className="feedpostcard_comment_count_badge position-absolute translate-middle badge rounded-pill bg-danger">
+													{comments?.length}
+												</span>
 											</div>
 										) : (
 											<div
 												className="d-flex align-items-center justify-content-end
-                       gap-1"
+                       gap-1 position-relative"
 												onClick={() => setShowComment((prev) => !prev)}
 											>
 												<FaCommentDots
@@ -1309,6 +1318,9 @@ const FeedPostCard = ({
 												>
 													Comment
 												</p>
+												<span className="feedpostcard_comment_count_badge position-absolute translate-middle badge rounded-pill bg-danger">
+													{comments?.length}
+												</span>
 											</div>
 										)}
 									</span>

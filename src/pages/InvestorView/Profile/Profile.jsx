@@ -48,7 +48,7 @@ function Profile() {
 	return (
     <>
     <MobileOneLinkNavbar/>
-		<div className="my-4">
+		<div className="">
 			<MaxWidthWrapper>
 				{user.length !== 0 ? (
 					<div className="profile_main_container">
