@@ -565,131 +565,132 @@ const CreatePostPopUp = ({
 							</h3>
 						</button>
 					</div>
+					<div className="createpost__body__footer">
+						<div className="createpost__body">
+							<ReactQuill
+								value={postText}
+								onChange={handleQuillChange}
+								placeholder="What would you like to converse about? Write a post..."
+								modules={{ toolbar: false }} // Hide the toolbar
+								formats={[
+									"header",
+									"bold",
+									"italic",
+									"underline",
+									"strike",
+									"list",
+									"bullet",
+									"link",
+									"image",
+									"video",
+								]}
+								className="custom-quill"
+							/>
 
-					<div className="createpost__body">
-						<ReactQuill
-							value={postText}
-							onChange={handleQuillChange}
-							placeholder="What would you like to converse about? Write a post..."
-							modules={{ toolbar: false }} // Hide the toolbar
-							formats={[
-								"header",
-								"bold",
-								"italic",
-								"underline",
-								"strike",
-								"list",
-								"bullet",
-								"link",
-								"image",
-								"video",
-							]}
-							className="custom-quill"
-						/>
-
-						{respostingPostId &&
-							(loadingRepostData ? (
-								<div className="d-flex justify-content-center my-4">
-									<h6 className="h6 me-4">Loading post...</h6>
-									<div className="spinner-border" role="status">
-										<span className="visually-hidden">Loading...</span>
+							{respostingPostId &&
+								(loadingRepostData ? (
+									<div className="d-flex justify-content-center my-4">
+										<h6 className="h6 me-4">Loading post...</h6>
+										<div className="spinner-border" role="status">
+											<span className="visually-hidden">Loading...</span>
+										</div>
+									</div>
+								) : (
+									<FeedPostCard
+										repostPreview
+										userId={repostingPostData?.user?._id}
+										postId={repostingPostData?._id}
+										designation={repostingPostData?.user?.designation}
+										profilePicture={repostingPostData?.user?.profilePicture}
+										description={repostingPostData?.description}
+										firstName={repostingPostData?.user?.firstName}
+										lastName={repostingPostData?.user?.lastName}
+										video={repostingPostData?.video}
+										image={repostingPostData?.image}
+										createdAt={repostingPostData?.createdAt}
+										likes={repostingPostData?.likes}
+									/>
+								))}
+							{previewImages.length > 0 && currentCropIndex !== null && (
+								<div className="d-flex flex-column justify-content-center gap-2 image-cropper-container-absolute">
+									<div className="image-cropper">
+										<EasyCrop
+											image={previewImages[currentCropIndex]}
+											crop={crop}
+											zoom={zoom}
+											onCropChange={setCrop}
+											onZoomChange={setZoom}
+											onCropComplete={onCropComplete}
+										/>
+									</div>
+									<div className="d-flex justify-content-between align-items-center">
+										<span>
+											Image {currentCropIndex + 1} of {selectedImages.length}
+										</span>
+										<button
+											className="btn btn-primary btn-sm"
+											onClick={handleNextCrop}
+										>
+											{currentCropIndex < selectedImages.length - 1
+												? "Next Image"
+												: "Finish Cropping"}
+										</button>
 									</div>
 								</div>
-							) : (
-								<FeedPostCard
-									repostPreview
-									userId={repostingPostData?.user?._id}
-									postId={repostingPostData?._id}
-									designation={repostingPostData?.user?.designation}
-									profilePicture={repostingPostData?.user?.profilePicture}
-									description={repostingPostData?.description}
-									firstName={repostingPostData?.user?.firstName}
-									lastName={repostingPostData?.user?.lastName}
-									video={repostingPostData?.video}
-									image={repostingPostData?.image}
-									createdAt={repostingPostData?.createdAt}
-									likes={repostingPostData?.likes}
-								/>
-							))}
-					</div>
-
-					{previewImages.length > 0 && currentCropIndex !== null && (
-						<div className="d-flex flex-column justify-content-center gap-2">
-							<div className="image-cropper">
-								<EasyCrop
-									image={previewImages[currentCropIndex]}
-									crop={crop}
-									zoom={zoom}
-									onCropChange={setCrop}
-									onZoomChange={setZoom}
-									onCropComplete={onCropComplete}
-								/>
-							</div>
-							<div className="d-flex justify-content-between align-items-center px-3">
-								<span>
-									Image {currentCropIndex + 1} of {selectedImages.length}
-								</span>
-								<button
-									className="btn btn-primary btn-sm"
-									onClick={handleNextCrop}
-								>
-									{currentCropIndex < selectedImages.length - 1
-										? "Next Image"
-										: "Finish Cropping"}
-								</button>
-							</div>
+							)}
 						</div>
-					)}
-
-					{cropComplete && (
-						<div className="image-preview-grid">
-							{croppedImages.map((img, index) => (
-								<div key={index} className="image-preview-item">
-									<img
-										src={img}
-										alt={`preview ${index + 1}`}
-										style={{
-											maxHeight: selectedImages.length > 1 ? "15vh" : "15vh",
-											width: "auto",
-											objectFit: "contain",
-										}}
-									/>
-									<button
-										className="remove-image-btn"
-										onClick={() => handleRemoveImage(index)}
-									>
-										×
-									</button>
+						<div className="d-flex justify-content-between align-items-start">
+							{cropComplete && (
+								<div className="image-preview-grid">
+									{croppedImages.map((img, index) => (
+										<div key={index} className="image-preview-item">
+											<img
+												src={img}
+												alt={`preview ${index + 1}`}
+												style={{
+													maxHeight:
+														selectedImages.length > 1 ? "15vh" : "15vh",
+													width: "auto",
+													objectFit: "contain",
+												}}
+											/>
+											<button
+												className="remove-image-btn"
+												onClick={() => handleRemoveImage(index)}
+											>
+												×
+											</button>
+										</div>
+									))}
 								</div>
-							))}
+							)}
+
+							{previewVideo && (
+								<video
+									key={selectedVideo ? selectedVideo.name : ""}
+									controls
+									// width={"70%"}
+									className="video-preview"
+								>
+									<source src={previewVideo} type={previewVideoType} />
+									Your browser does not support the video tag.
+								</video>
+							)}
 						</div>
-					)}
+						{pdfThumbnail && (
+							<div className="pdf-thumbnail">
+								<img
+									src={pdfThumbnail}
+									alt="PDF Thumbnail"
+									style={{ maxHeight: "30vh", width: "auto" }}
+								/>
+							</div>
+						)}
 
-					{previewVideo && (
-						<video
-							key={selectedVideo ? selectedVideo.name : ""}
-							controls
-							// width={"70%"}
-							className="video-preview"
-						>
-							<source src={previewVideo} type={previewVideoType} />
-							Your browser does not support the video tag.
-						</video>
-					)}
-
-					{pdfThumbnail && (
-						<div className="pdf-thumbnail">
-							<img
-								src={pdfThumbnail}
-								alt="PDF Thumbnail"
-								style={{ maxHeight: "30vh", width: "auto" }}
-							/>
-						</div>
-					)}
-
-					{selectedDocument && !pdfThumbnail && (
-						<p>Selected File: {selectedDocument.name}</p>
-					)}
+						{selectedDocument && !pdfThumbnail && (
+							<p>Selected File: {selectedDocument.name}</p>
+						)}
+					</div>
 
 					<div className="createpost__footer">
 						{loggedInUser.linkedinId ? (

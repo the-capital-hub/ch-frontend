@@ -219,6 +219,7 @@ const Thoughts = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const user = JSON.parse(localStorage.getItem("loggedInUser"));
+	const [isMobileView, setIsMobileView] = useState(false);
 	// console.log("questions", questions);
 
 	// Fetch questions
@@ -244,21 +245,84 @@ const Thoughts = () => {
 		fetchQuestions();
 	}, []);
 
+	// Add resize observer effect
+	useEffect(() => {
+		const checkMobileView = () => {
+			setIsMobileView(window.innerWidth <= 640);
+		};
+
+		// Check initially
+		checkMobileView();
+
+		// Add resize listener
+		window.addEventListener("resize", checkMobileView);
+
+		return () => {
+			window.removeEventListener("resize", checkMobileView);
+		};
+	}, []);
+
 	// Auto-scroll for topics only
+	// useEffect(() => {
+	// 	const container = topicsRef.current;
+
+	// 	const startAutoScroll = () => {
+	// 		if (container && !isHovering) {
+	// 			// Scroll down by 1 pixel
+	// 			container.scrollTop += 1;
+
+	// 			// If reached bottom, reset to top
+	// 			if (
+	// 				container.scrollTop >=
+	// 				container.scrollHeight - container.clientHeight
+	// 			) {
+	// 				container.scrollTop = 0;
+	// 			}
+
+	// 			// Request next animation frame
+	// 			animationFrameRef.current = requestAnimationFrame(startAutoScroll);
+	// 		}
+	// 	};
+
+	// 	// Start auto-scrolling if not hovering
+	// 	if (!isHovering) {
+	// 		animationFrameRef.current = requestAnimationFrame(startAutoScroll);
+	// 	}
+
+	// 	// Cleanup function
+	// 	return () => {
+	// 		if (animationFrameRef.current) {
+	// 			cancelAnimationFrame(animationFrameRef.current);
+	// 		}
+	// 	};
+	// }, [isHovering]);
 	useEffect(() => {
 		const container = topicsRef.current;
 
 		const startAutoScroll = () => {
 			if (container && !isHovering) {
-				// Scroll down by 1 pixel
-				container.scrollTop += 1;
+				if (isMobileView) {
+					// Horizontal scroll for mobile
+					container.scrollLeft += 1;
 
-				// If reached bottom, reset to top
-				if (
-					container.scrollTop >=
-					container.scrollHeight - container.clientHeight
-				) {
-					container.scrollTop = 0;
+					// Reset to start if reached end
+					if (
+						container.scrollLeft >=
+						container.scrollWidth - container.clientWidth
+					) {
+						container.scrollLeft = 0;
+					}
+				} else {
+					// Vertical scroll for desktop
+					container.scrollTop += 1;
+
+					// Reset to top if reached bottom
+					if (
+						container.scrollTop >=
+						container.scrollHeight - container.clientHeight
+					) {
+						container.scrollTop = 0;
+					}
 				}
 
 				// Request next animation frame
@@ -277,7 +341,16 @@ const Thoughts = () => {
 				cancelAnimationFrame(animationFrameRef.current);
 			}
 		};
-	}, [isHovering]);
+	}, [isHovering, isMobileView]);
+
+	// Add touch event handlers for mobile
+	const handleTouchStart = () => {
+		setIsHovering(true);
+	};
+
+	const handleTouchEnd = () => {
+		setIsHovering(false);
+	};
 
 	const filters = ["All", "Latest", "Top Questions", "My Question"];
 
@@ -416,6 +489,8 @@ const Thoughts = () => {
 						className="thoughts-topics-container"
 						onMouseEnter={() => setIsHovering(true)}
 						onMouseLeave={() => setIsHovering(false)}
+						onTouchStart={handleTouchStart}
+						onTouchEnd={handleTouchEnd}
 					>
 						{industriesAndSkills.map((topic) => (
 							<TopicTag

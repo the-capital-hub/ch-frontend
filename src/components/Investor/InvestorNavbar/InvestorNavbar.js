@@ -138,6 +138,12 @@ const InvestorNavbar = (props) => {
 							onSubmit={searchSubmitHandler}
 							className="searchbar-container"
 						>
+							<button
+								type="submit"
+								className="searchbar-button d-flex align-items-center justify-content-center"
+							>
+								<FiSearch size={25} />
+							</button>
 							<input
 								type="text"
 								className="searchbar-input"
@@ -150,12 +156,7 @@ const InvestorNavbar = (props) => {
 								onFocus={() => setInputOnFocus(true)}
 								onBlurCapture={searchInputBlurHandler}
 							/>
-							<button
-								type="submit"
-								className="searchbar-button d-flex align-items-center justify-content-center"
-							>
-								<FiSearch size={25} color="white" />
-							</button>
+							
 						</form>
 						{inputOnFocus && searchSuggestions && !mobileSearch && (
 							<div className="search_results rounded-4 border shadow-sm p-4 position-absolute">
@@ -422,6 +423,7 @@ const InvestorNavbar = (props) => {
 											{unreadNotifications}
 										</div>
 									)}
+									
 								</>
 							)}
 						</div>

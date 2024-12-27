@@ -27,10 +27,9 @@ import {
 
 import "./SidebarPublic.scss";
 
-const PublicSidebar = ({ sidebarCollapse }) => {
+const PublicSidebar = ({ sidebarCollapse, setSidebarCollapse }) => {
 	const theme = useSelector(selectTheme);
 	const isMobileView = useSelector(selectIsMobileView);
-	const [isExpanded, setIsExpanded] = useState(false);
 	const [activeSubMenu, setActiveSubMenu] = useState(null);
 
 	const handleIconClick = (feature) => {
@@ -43,7 +42,7 @@ const PublicSidebar = ({ sidebarCollapse }) => {
 
 	useEffect(() => {
 		const handleScroll = () => {
-			setIsExpanded(false);
+			setSidebarCollapse(false);
 		};
 
 		window.addEventListener("scroll", handleScroll);
@@ -54,11 +53,11 @@ const PublicSidebar = ({ sidebarCollapse }) => {
 
 	return (
 		<div
-			className={`public-sidebar ${theme === "dark" ? "dark-theme" : ""} ${
-				isExpanded ? "expanded" : ""
-			} ${sidebarCollapse ? "collapsed" : ""}`}
-			onMouseEnter={() => setIsExpanded(true)}
-			onMouseLeave={() => setIsExpanded(false)}
+			className={`public-sidebar ${theme === "dark" ? "dark-theme" : ""}${
+				sidebarCollapse ? " collapsed" : " expended"
+			}`}
+			onMouseEnter={() => setSidebarCollapse(false)}
+			onMouseLeave={() => setSidebarCollapse(true)}
 		>
 			<div className="public-sidebar-content">
 				<div
@@ -66,44 +65,54 @@ const PublicSidebar = ({ sidebarCollapse }) => {
 					onClick={() => handleIconClick("Home")}
 				>
 					<FaHome className="public-sidebar-icon" />
-					{isExpanded && <span className="public-sidebar-label">Home</span>}
+					<span className="public-sidebar-label">Home</span>
+					{/* {sidebarCollapse && (
+					)} */}
 				</div>
 				<div
 					className="public-sidebar-item"
 					onClick={() => handleIconClick("Company")}
 				>
 					<FaBuilding className="public-sidebar-icon" />
-					{isExpanded && <span className="public-sidebar-label">Company</span>}
+					<span className="public-sidebar-label">Company</span>
+					{/* {sidebarCollapse && (
+					)} */}
 				</div>
 				<div
 					className="public-sidebar-item"
 					onClick={() => handleIconClick("Explore")}
 				>
 					<FaSearch className="public-sidebar-icon" />
-					{isExpanded && <span className="public-sidebar-label">Explore</span>}
+					<span className="public-sidebar-label">Explore</span>
+					{/* {sidebarCollapse && (
+					)} */}
 				</div>
 				<div
 					className="public-sidebar-item"
 					onClick={() => handleIconClick("News")}
 				>
 					<FaNewspaper className="public-sidebar-icon" />
-					{isExpanded && <span className="public-sidebar-label">News</span>}
+					<span className="public-sidebar-label">News</span>
+					{/* {sidebarCollapse && (
+					)} */}
 				</div>
 				<div
 					className="public-sidebar-item"
 					onClick={() => handleIconClick("OneLink")}
 				>
 					<FaLink className="public-sidebar-icon" />
-					{isExpanded && <span className="public-sidebar-label">OneLink</span>}
+					<span className="public-sidebar-label">OneLink</span>
+					{/* {sidebarCollapse && (
+					)} */}
 				</div>
 				<div
 					className="public-sidebar-item"
 					onClick={() => handleIconClick("Resources")}
 				>
 					<FaBook className="public-sidebar-icon" />
-					{isExpanded && (
-						<span className="public-sidebar-label">Resources</span>
-					)}
+					<span className="public-sidebar-label">Resources</span>
+					{/* {sidebarCollapse && (
+					)} */}
 				</div>
 				<div
 					className={`public-sidebar-item ${
@@ -113,9 +122,9 @@ const PublicSidebar = ({ sidebarCollapse }) => {
 					onClick={() => handleIconClick("Community")}
 				>
 					<FaUserFriends className="public-sidebar-icon" />
-					{isExpanded && (
-						<span className="public-sidebar-label">Community</span>
-					)}
+					<span className="public-sidebar-label">Community</span>
+					{/* {sidebarCollapse && (
+					)} */}
 					{/* {activeSubMenu === "Community" && (
 						<div className="public-sidebar-submenu">
 							<div
@@ -140,36 +149,36 @@ const PublicSidebar = ({ sidebarCollapse }) => {
 					onClick={() => handleIconClick("Documentation")}
 				>
 					<FaFileAlt className="public-sidebar-icon" />
-					{isExpanded && (
-						<span className="public-sidebar-label">Documentation</span>
-					)}
+					<span className="public-sidebar-label">Documentation</span>
+					{/* {sidebarCollapse && (
+					)} */}
 				</div>
 				<div
 					className="public-sidebar-item"
 					onClick={() => handleIconClick("Saved Posts")}
 				>
 					<FaCheckSquare className="public-sidebar-icon" />
-					{isExpanded && (
-						<span className="public-sidebar-label">Saved Posts</span>
-					)}
+					<span className="public-sidebar-label">Saved Posts</span>
+					{/* {sidebarCollapse && (
+					)} */}
 				</div>
 				<div
 					className="public-sidebar-item"
 					onClick={() => handleIconClick("Connections")}
 				>
 					<FaUserFriends className="public-sidebar-icon" />
-					{isExpanded && (
-						<span className="public-sidebar-label">Connections</span>
-					)}
+					<span className="public-sidebar-label">Connections</span>
+					{/* {sidebarCollapse && (
+					)} */}
 				</div>
 				<div
 					className="public-sidebar-item"
 					onClick={() => handleIconClick("Analytics")}
 				>
 					<FaChartLine className="public-sidebar-icon" />
-					{isExpanded && (
-						<span className="public-sidebar-label">Analytics</span>
-					)}
+					<span className="public-sidebar-label">Analytics</span>
+					{/* {sidebarCollapse && (
+					)} */}
 				</div>
 				<div
 					className={`public-sidebar-item ${
@@ -178,7 +187,9 @@ const PublicSidebar = ({ sidebarCollapse }) => {
 					onClick={() => handleIconClick("Meetings")}
 				>
 					<FaCalendarAlt className="public-sidebar-icon" />
-					{isExpanded && <span className="public-sidebar-label">Meetings</span>}
+					<span className="public-sidebar-label">Meetings</span>
+					{/* {sidebarCollapse && (
+					)} */}
 					{/* {activeSubMenu === "Meetings" && (
 						<div className="public-sidebar-submenu">
 							<div
@@ -210,31 +221,37 @@ const PublicSidebar = ({ sidebarCollapse }) => {
 					onClick={() => handleIconClick("Help")}
 				>
 					<FaQuestionCircle className="public-sidebar-icon" />
-					{isExpanded && <span className="public-sidebar-label">Help</span>}
+					<span className="public-sidebar-label">Help</span>
+					{/* {sidebarCollapse && (
+					)} */}
 				</div>
 				<div
 					className="public-sidebar-item"
 					onClick={() => handleIconClick("Settings")}
 				>
 					<FaUserCog className="public-sidebar-icon" />
-					{isExpanded && <span className="public-sidebar-label">Settings</span>}
+					<span className="public-sidebar-label">Settings</span>
+					{/* {sidebarCollapse && (
+					)} */}
 				</div>
 				<div
 					className="public-sidebar-item"
 					onClick={() => handleIconClick("Learn More")}
 				>
 					<FaLightbulb className="public-sidebar-icon" />
-					{isExpanded && (
-						<span className="public-sidebar-label">Learn More</span>
-					)}
+					<span className="public-sidebar-label">Learn More</span>
+					{/* {sidebarCollapse && (
+					)} */}
 				</div>
-				{/* <div
+				<div
 					className="public-sidebar-item"
 					onClick={() => handleIconClick("Logout")}
 				>
 					<FaPowerOff className="public-sidebar-icon" />
-					{isExpanded && <span className="public-sidebar-label">Logout</span>}
-				</div> */}
+					<span className="public-sidebar-label">Logout</span>
+					{/* {sidebarCollapse && (
+					)} */}
+				</div>
 			</div>
 		</div>
 	);

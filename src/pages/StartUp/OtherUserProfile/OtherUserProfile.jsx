@@ -29,7 +29,6 @@ import StartupsInvested from "../../../components/NewInvestor/ProfileComponents/
 import { getInvestorById } from "../../../Service/user";
 import { FaLinkedin } from "react-icons/fa";
 
-
 const token = localStorage.getItem("accessToken");
 
 function OtherUserProfile() {
@@ -64,7 +63,7 @@ function OtherUserProfile() {
 	useEffect(() => {
 		const fetchCompanyData = async () => {
 			if (!userData || !userData._id) {
-				return; 
+				return;
 			}
 			try {
 				const data = await getInvestorById(userData._id);
@@ -73,24 +72,23 @@ function OtherUserProfile() {
 				console.error("Error fetching company data:", error);
 			}
 		};
-	
+
 		fetchCompanyData();
 	}, [userData]);
 
-	useEffect(() => {
-}, [companyData]);
+	useEffect(() => {}, [companyData]);
 
 	function formatNumber(value) {
 		if (typeof value !== "number") return "NA";
 		if (value >= 10000000) {
-		  return (value / 10000000).toFixed(2) + " Crore";
+			return (value / 10000000).toFixed(2) + " Crore";
 		} else if (value >= 100000) {
-		  return (value / 100000).toFixed(2) + " Lakh";
+			return (value / 100000).toFixed(2) + " Lakh";
 		} else if (value >= 1000) {
-		  return (value / 1000).toFixed(2) + " K";
+			return (value / 1000).toFixed(2) + " K";
 		}
 		return value.toString();
-	  }
+	}
 
 	const handleConnect = (userId) => {
 		if (canSendRequest()) {
@@ -233,9 +231,9 @@ function OtherUserProfile() {
 	};
 
 	const recentInvestmentAmount =
-    companyData?.revenue.length > 0
-      ? companyData.revenue[companyData.revenue.length - 1].amount
-      : "NA";
+		companyData?.revenue.length > 0
+			? companyData.revenue[companyData.revenue.length - 1].amount
+			: "NA";
 
 	return (
 		<>
@@ -246,7 +244,7 @@ function OtherUserProfile() {
 						<>
 							<div className="row profile rounded-4 border shadow-sm">
 								<div className="short_details d-flex flex-column flex-md-row align-items-center justify-content-between">
-									<div className="d-flex flex-column w-100 flex-md-row align-items-center justify-content-between ">
+									<div className="d-flex flex-column w-100 flex-md-row align-items-center justify-content-center">
 										<img
 											src={userData.profilePicture}
 											width={100}
@@ -255,7 +253,7 @@ function OtherUserProfile() {
 											className="rounded-circle"
 											style={{ objectFit: "cover" }}
 										/>
-										<div className="flex-grow-1 left_profile_text mt-2 mt-md-0 me-auto me-md-0 ms-md-4">
+										<div className="flex-grow-1 left_profile_text mt-2 mt-md-0 me-md-0 ms-md-4 d-flex flex-column  align-items-center align-items-sm-start justify-content-between">
 											<h3 className="typography h3">
 												{userData?.firstName} {userData?.lastName}
 												{userData.isSubscribed && (
@@ -269,16 +267,22 @@ function OtherUserProfile() {
 														alt="Batch Icon"
 													/>
 												)}
-												<a href={userData?.linkedin} className="button linkedin">
-                <FaLinkedin size={"2rem"} style={{ marginLeft: "0.1rem" }} />
-              </a>
+												<a
+													href={userData?.linkedin}
+													className="button linkedin"
+												>
+													<FaLinkedin
+														size={"2rem"}
+														style={{ marginLeft: "0.1rem" }}
+													/>
+												</a>
 											</h3>
-											
+
 											<span className="small_typo">
 												{userData?.designation ||
 													"Founder & CEO of The Capital Hub"}
 											</span>
-											<br />
+											{/* <br /> */}
 											<span className="small_typo">
 												{userData?.location || "Bangalore , India"}
 											</span>
@@ -319,8 +323,7 @@ function OtherUserProfile() {
 								</div>
 								<div className="details">
 									<div className="single_details row row-cols-1 row-cols-md-2 ">
-										{userData?.startUp?.company ||
-										companyData?.companyName ? (
+										{userData?.startUp?.company || companyData?.companyName ? (
 											<>
 												<span className="col-md-3 label fw-bold">
 													Current Company
@@ -565,7 +568,7 @@ function OtherUserProfile() {
 									) : (
 										""
 									)}
-											{userData?.investmentPhilosophy ? (
+									{userData?.investmentPhilosophy ? (
 										<div className="bio rounded-4 border shadow-sm profile_container">
 											<h4 className="h4">Investment Philosophy</h4>
 											<div className="single_education">
@@ -588,7 +591,12 @@ function OtherUserProfile() {
 											theme="startup"
 										/>
 										<br></br>
-										{companyData?.startupsInvested.length>0 && (<StartupsInvested investorId={userData._id} cannotAdd={true} />)}
+										{companyData?.startupsInvested.length > 0 && (
+											<StartupsInvested
+												investorId={userData._id}
+												cannotAdd={true}
+											/>
+										)}
 									</div>
 								</div>
 								<div className="right_container p-0">
