@@ -45,9 +45,7 @@ const CompanyDetailsCard = ({
 	const [locationData, setLocationData] = useState("");
 
 	useEffect(() => {
-
-		if (userDetails.isInvestor === "true") 
-		{
+		if (userDetails.isInvestor === "true") {
 			getInvestorById(userDetails._id)
 				.then(({ data }) => {
 					setOnePager(data);
@@ -61,8 +59,7 @@ const CompanyDetailsCard = ({
 					setSocialLinks({});
 					setLocationData("");
 				});
-		} else 
-		{
+		} else {
 			getStartupByFounderId(userDetails?._id)
 				.then(({ data }) => {
 					setOnePager(data);
@@ -71,7 +68,7 @@ const CompanyDetailsCard = ({
 					setLocationData(data.location || "");
 				})
 				.catch((error) => {
-					console.log("user",userDetails)
+					console.log("user", userDetails);
 					setOnePager({});
 					setDescriptionContent("");
 					setSocialLinks({});
@@ -125,7 +122,7 @@ const CompanyDetailsCard = ({
 							alt="profileimage"
 						/>
 					</span>
-					<div className="d-flex justify-content-between w-100 d-md-none d-flex">
+					<div className="d-flex justify-content-center justify-content-sm-between w-100 d-md-none">
 						<span className="company_details_logo_container d-md-none d-flex">
 							<img
 								src={
@@ -162,9 +159,9 @@ const CompanyDetailsCard = ({
 							</span>
 						)}
 					</div>
-					<div className="left_profile_text flex_content">
+					<div className="left_profile_text flex_content w-100 text-center text-sm-start">
 						<h3
-							className="typography-company-name ms-0"
+							className="typography-company-name ms-0 text-center text-sm-start w-100"
 							style={{ fontSize: "30px", fontFamily: "Outfit" }}
 						>
 							{onePager?.companyName ||
@@ -173,13 +170,21 @@ const CompanyDetailsCard = ({
 								userDetails?.investor?.companyName ||
 								"No company found"}
 						</h3>
-						<div className="company__header d-flex flex-column flex-lg-row gap-2 ">
+						<div className="company__header d-flex flex-column flex-lg-row gap-2 w-100">
 							<div
-								className="icon__details d-flex flex-column flex-md-row gap-2 align-items-start"
+								className="icon__details d-flex flex-column flex-md-row gap-2 align-items-start justify-content-center justify-content-sm-start"
 								style={{ flexWrap: "wrap" }}
 							>
 								{onePager?.location && (
-									<div style={{ display: "flex", alignItems: "center" }}>
+									<div
+										className="company_details_location"
+										style={{
+											display: "flex",
+											// justifyContent: "center",
+											alignItems: "center",
+											width: "100%",
+										}}
+									>
 										<img
 											src={Location}
 											style={{ width: "14px", height: "14px" }}
@@ -198,7 +203,13 @@ const CompanyDetailsCard = ({
 									</div>
 								)}
 								{onePager?.startedAtDate && (
-									<div style={{ display: "flex", alignItems: "center" }}>
+									<div
+										style={{
+											display: "flex",
+											alignItems: "center",
+											width: "100%",
+										}}
+									>
 										<img
 											src={Calendar}
 											style={{ width: "14px", height: "14px" }}
@@ -217,7 +228,13 @@ const CompanyDetailsCard = ({
 									</div>
 								)}
 								{onePager.lastFunding && (
-									<div style={{ display: "flex", alignItems: "center" }}>
+									<div
+										style={{
+											display: "flex",
+											alignItems: "center",
+											width: "100%",
+										}}
+									>
 										<img
 											src={CircleArrow}
 											style={{ width: "14px", height: "14px" }}
@@ -256,7 +273,7 @@ const CompanyDetailsCard = ({
 									</div>
 								)}
 								{onePager.sector && (
-									<div className="iconCard__container d-flex justify-content-center align-items-center gap-1">
+									<div className="iconCard__container d-flex justify-content-center justify-content-sm-start align-items-center gap-1">
 										<HiOutlineBuildingOffice2 color="#898989" />
 										<p
 											className="icon__text typography"

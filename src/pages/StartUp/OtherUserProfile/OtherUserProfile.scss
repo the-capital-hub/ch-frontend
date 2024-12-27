@@ -53,6 +53,11 @@
 			display: flex;
 			flex-direction: column;
 			gap: 15px;
+			@media (max-width: 480px) {
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+			}
 		}
 	}
 	.email {
@@ -64,10 +69,14 @@
 		h6,
 		.email_value,
 		label {
-			color: white;
+			color: var(--text-color);
 		}
 		@media (max-width: 767px) {
 			margin: 0;
+		}
+		@media (max-width: 480px) {
+			margin: 0;
+			text-align: center;
 		}
 		.show-email-btn {
 			background-color: rgb(253, 89, 1);
@@ -103,9 +112,18 @@
 				flex: 0 0 calc(100% - 26rem);
 			}
 
+			.bio {
+				@media (max-width: 480px) {
+					text-align: center;
+				}
+			}
+
 			.company_details_container {
 				.box {
 					box-shadow: none;
+					@media (max-width: 480px) {
+						text-align: center;
+					}
 				}
 			}
 		}

@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { Suspense, lazy } from "react";
 import { Route } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
@@ -9,6 +10,7 @@ import SuspenseLoader from "../components/SuspenseLoader/SuspenseLoader";
 import OurStartup from "../components/OurStartup/OurStartUp";
 import SubscriptionSuccess from "../components/SubscriptionSuccess/SubscriptionSuccess";
 import PublicRoute from "../components/Routes/PublicRoutes/PublicRoute";
+import PrivateRoute from "../components/Routes/PrivateRoutes";
 
 // import Navbar2 from "../components/Navbar/NavbarForSalesLanding/Navbar2";
 // import Footer2 from "../components/Footer/FooterForSalesLanding/Footer2";
@@ -100,6 +102,7 @@ const CreateQuestion = lazy(() =>
 );
 
 function PublicRoutes() {
+	const user = useSelector((state) => state.user.loggedInUser);
 	return (
 		<>
 			<Route
@@ -335,7 +338,7 @@ function PublicRoutes() {
 			/>
 
 			{/* Below routes are public routes with public Navbar and Sidebar */}
-			<Route element={<PublicRoute />}>
+			<Route element={user ? <PrivateRoute /> : <PublicRoute />}>
 				<Route
 					path="/founder/:username"
 					element={
