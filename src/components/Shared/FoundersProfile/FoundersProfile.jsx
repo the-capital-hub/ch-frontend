@@ -507,7 +507,7 @@ const FounderProfile = () => {
 											<div className="meeting-card-header">
 												<h3>{meeting.title}</h3>
 												<span className="meeting-type">
-													{meeting.isPrivate ? "Private" : "Public"}
+													{meeting.eventType}
 												</span>
 											</div>
 											<div className="meeting-card-content">
