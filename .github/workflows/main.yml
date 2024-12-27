@@ -30,6 +30,18 @@ jobs:
           name: build
           path: build/
 
+      - name: Set up environment
+        run: |
+          sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Verify Installation
+        run: lftp --version
+
+      - name: Check User Permissions
+        run: id
+
+
+
   deploy:
     runs-on: ubuntu-latest
     needs: build-and-test
@@ -46,7 +58,7 @@ jobs:
           HOSTINGER_FTP_USERNAME: ${{ secrets.HOSTINGER_FTP_USERNAME }}
           HOSTINGER_FTP_PASSWORD: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
         run: |
-          apt-get update && apt-get install -y lftp
+          sudo apt-get update && sudo apt-get install -y lftp
           lftp -u $HOSTINGER_FTP_USERNAME,$HOSTINGER_FTP_PASSWORD $HOSTINGER_FTP_SERVER <<EOF
           mirror -R build /path/to/hostinger/directory
           bye
