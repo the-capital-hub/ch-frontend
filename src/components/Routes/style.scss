@@ -1,5 +1,9 @@
 .investor-private-routes {
 	background-color: var(--startup-bg);
+	background-image: radial-gradient(circle, #69027433, transparent 60%);
+	background-repeat: no-repeat;
+	background-size: 100% 120vh;
+	
 
 	.investor_home_container {
 		display: flex;
