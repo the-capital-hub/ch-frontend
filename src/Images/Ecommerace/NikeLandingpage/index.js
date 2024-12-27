@@ -10,7 +10,7 @@ import offershoe from './offershoe.png'
 
 
 
-export default{
+const images = {
     nikelogo,
     whiteBlueOrange,
     blackOrangeRose,
@@ -21,3 +21,5 @@ export default{
     main,
     offershoe
 }
+
+export default images;

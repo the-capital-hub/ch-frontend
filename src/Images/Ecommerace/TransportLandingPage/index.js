@@ -9,7 +9,7 @@ import singleMobile from './singleMobile.png'
 import bookingDetails from './bookingDetails.png'
 import mobileLocation from './mobileLocation.png'
 
-export default{
+const images = {
     transport,
     whiteTruck,
     map,
@@ -21,3 +21,5 @@ export default{
     bookingDetails,
     mobileLocation
 }
+
+export default images;
