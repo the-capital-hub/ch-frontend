@@ -77,9 +77,7 @@ function PrivateRoute({ children, ...props }) {
 								title={"Create a Community"}
 								className={"orange__heading"}
 							/>
-							<ModalBSBody>
 								<NewCommunityModal />
-							</ModalBSBody>
 						</ModalBSContainer>
 					</div>
 
