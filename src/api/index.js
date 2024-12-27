@@ -147,7 +147,8 @@ const API = Object.freeze({
 	updateTopVoices: `${baseUrl}/users/updateTopVoice`,
 	getInshortNews: `${baseUrl}/news/inshortsNews`,
 	getMoreInshortNews: `${baseUrl}/news/inshortsNews/more`,
-	reportPost: `${baseUrl}/users/report`
+	reportPost: `${baseUrl}/users/report`,
+	getEventsByOnelinkId: `${baseUrl}/meetings/getEventsByOnelinkId`,
 });
 
 export default API;

@@ -202,10 +202,10 @@ async function getUserById(oneLink, userId) {
 			const response = await axiosInstance.get(API.getUserById + "/" + userId);
 			response.data.data.company = onePager.data.company;
 			response.data.data.location = onePager.data.location;
-						return response.data;
+			return response.data;
 		} else {
 			const response = await axiosInstance.get(API.getUserById + "/" + userId);
-						return response.data;
+			return response.data;
 		}
 	} catch (error) {
 		console.error("Error:", error);
@@ -228,7 +228,7 @@ export const getStartupByFounderId = async (founderId) => {
 		const response = await axiosInstance.get(
 			API.getStartupByFounderId + "/" + founderId
 		);
-				return response.data;
+		return response.data;
 	} catch (error) {
 		throw error;
 	}
@@ -917,17 +917,30 @@ export const unsavePost = async (requestBody) => {
 	}
 };
 
-export const reportPost = async (postPublicLink, postId, reportReason, reporterEmail, reporterId, reportTime, email)=>{
-	try{
+export const reportPost = async (
+	postPublicLink,
+	postId,
+	reportReason,
+	reporterEmail,
+	reporterId,
+	reportTime,
+	email
+) => {
+	try {
 		const response = await axiosInstance.post(`${API.reportPost}`, {
-			postPublicLink, postId, reportReason, reporterEmail, reporterId, reportTime, email
+			postPublicLink,
+			postId,
+			reportReason,
+			reporterEmail,
+			reporterId,
+			reportTime,
+			email,
 		});
 		return response.data;
+	} catch (error) {
+		throw error;
 	}
-	catch(error){
-		throw error
-	}
-}
+};
 
 export const deleteMessage = async (messageId) => {
 	try {
@@ -1756,6 +1769,18 @@ export const getMoreInshortsNews = async (language, category, news_offset) => {
 			category,
 			news_offset,
 		});
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const getEventsByOnelinkId = async (onelinkId) => {
+	try {
+		const response = await axiosInstance.get(
+			`${API.getEventsByOnelinkId}/${onelinkId}`
+		);
 		return response.data;
 	} catch (error) {
 		console.error(error);
