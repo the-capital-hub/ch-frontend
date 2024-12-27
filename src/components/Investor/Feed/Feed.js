@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NewsCorner from "../InvestorGlobalCards/NewsCorner/NewsCorner";
 import RecommendationCard from "../InvestorGlobalCards/Recommendation/RecommendationCard";
 import { useLocation } from "react-router-dom";
-import SpinnerBS from "../../Shared/Spinner/SpinnerBS";
+//import SpinnerBS from "../../Shared/Spinner/SpinnerBS";
 import MaxWidthWrapper from "../../Shared/MaxWidthWrapper/MaxWidthWrapper";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {
@@ -23,16 +23,16 @@ import {
 	toggleCreatePostModal,
 	setShowOnboarding,
 } from "../../../Store/features/design/designSlice";
-import { startupOnboardingSteps } from "../../OnBoardUser/steps/startup";
-import TutorialTrigger from "../../Shared/TutorialTrigger/TutorialTrigger";
-import LookingForFund from "./Components/LookingForFund/LookingForFund";
+//import { startupOnboardingSteps } from "../../OnBoardUser/steps/startup";
+//okimport TutorialTrigger from "../../Shared/TutorialTrigger/TutorialTrigger";
+//import LookingForFund from "./Components/LookingForFund/LookingForFund";
 import ShareThoughts from "./Components/ShareYourThoughts/ShareThoughts";
 import { environment } from "../../../environments/environment";
 import { useParams } from "react-router-dom";
 import PostDetail from "../Cards/FeedPost/PostDetail";
 import ArticlePopup from "../../PopUp/ArticlePopup/ArticlePopup";
 import NewsCard from "./Components/NewsCard/NewsCard";
-import LatestResources from "./Components/LatestResources/LatestResources";
+//import LatestResources from "./Components/LatestResources/LatestResources";
 import Milestone from "../../Milestone/Milestone";
 import UserJourney from "../../Milestone/UserJourney";
 import NewsHorizontal from "./Components/NewsCardHorizontal/News";
