@@ -955,11 +955,11 @@ const FeedPostCard = ({
 									__html: DOMPurify.sanitize(
 										expanded
 											? description
-											: description?.substring(0, 100) + "..."
+											: description?.substring(0, 500) + "..."
 									),
 								}}
 							></div>
-							{description?.length > 100 && (
+							{description?.length > 500 && (
 								<span
 									onClick={toggleDescription}
 									className={`read-more-text ${expanded ? "expanded" : ""}`}
