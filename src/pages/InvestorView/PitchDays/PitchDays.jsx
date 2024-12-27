@@ -101,9 +101,9 @@ const PitchDays = () => {
 						className="event-card"
 						style={{ backgroundColor: getRandomLightColor() }} // Apply random light color
 					>
-						<div className="coming-soon-banner" style={{ opacity: 0.5 }}>
+						{/* <div className="coming-soon-banner" style={{ opacity: 0.5 }}>
 							Coming Soon
-						</div>
+						</div> */}
 						<div className="event-info">
 							<h3>{event.title}</h3>
 							<div className="event-meta">
@@ -134,17 +134,16 @@ const PitchDays = () => {
 						<div className="event-actions">
 							<div className="action-buttons">
 								<button className="copy-btn" disabled>
-									<FiCopy />
-									Copy Link
+									Get Notified with Meeting Link!
 								</button>
-								<button className="delete-btn" disabled>
+								{/* <button className="delete-btn" disabled>
 									<FiTrash2 /> Delete
-								</button>
+								</button> */}
 							</div>
-							<div className="bookings-count">
+							{/* <div className="bookings-count">
 								{event.bookings.length}{" "}
 								{event.bookings.length === 1 ? "Booking" : "Bookings"}
-							</div>
+							</div> */}
 						</div>
 					</div>
 				))}
