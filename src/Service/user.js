@@ -1613,6 +1613,7 @@ export const addInvestorToLiveDeal = async (liveDealId) => {
 export const getPostById = async (postId) => {
 	try {
 		const response = await axiosInstance.get(`${API.getPostById}`, { postId });
+		return response.data;
 	} catch (err) {
 		throw err;
 	}

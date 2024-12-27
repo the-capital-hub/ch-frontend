@@ -52,6 +52,7 @@ import { selectIsInvestor } from "../../../../Store/features/user/userSlice";
 import BatchImag from "../../../../Images/tick-mark.png";
 import ImageCarousel from "./ImageCarousel/ImageCarousel";
 import { environment } from "../../../../environments/environment";
+import { FaShare } from "react-icons/fa";
 
 const PostDetail = ({
   postId,
@@ -460,6 +461,10 @@ const PostDetail = ({
 		}
 	};
 
+  const handleOpenSocialShare = () => {
+    // Implement social share functionality here
+  };
+
   return (
     <>
       <div className="feedpostcard_main_container mb-2">
@@ -772,342 +777,83 @@ const PostDetail = ({
                 style={{ background: "var(--bs-light)", height: "3px" }}
               />
               <div className="row feedpostcard_footer">
-                <div className="col-6">
-                  <div className="feedpostcard_footer_like_comment d-flex justify-content-around gap-2">
+                <div className="d-flex align-items-center gap-1 justify-content-around justify-content-sm-between pt-2 pb-2">
+                  <div className="d-none d-sm-flex align-items-center gap-1 justify-content-around" style={{ width: "25%" }}>
                     {liked ? (
-                      <div
-                        className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-                      >
-                        <img
-                          src={fireIcon}
-                          width={20}
-                          alt="like post"
-                          onClick={likeUnlikeHandler}
-                          style={{ cursor: "pointer" }}
-                        />
-                        <p
-                          style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-                          className="m-0"
-                        >
-                          Like
-                        </p>
+                      <div className="d-flex align-items-center justify-content-end gap-1" onClick={likeUnlikeHandler}>
+                        <img src={fireIcon} width={20} alt="like post" style={{ cursor: "pointer" }} />
+                        <p style={{ color: "var(--d-l-grey)", fontSize: "10px", cursor: "pointer" }} className="m-0 actions-btn-text-hide">Like</p>
                       </div>
                     ) : (
-                      <div
-                        className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-                      >
-                        <ImFire
-                          onClick={likeUnlikeHandler}
-                          style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-                        />
-                        <p
-                          style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-                          className="m-0"
-                        >
-                          Like
-                        </p>
+                      <div className="d-flex align-items-center justify-content-end gap-1" onClick={likeUnlikeHandler}>
+                        <ImFire style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} />
+                        <p style={{ color: "var(--d-l-grey)", fontSize: "10px", cursor: "pointer" }} className="m-0 actions-btn-text-hide">Like</p>
                       </div>
                     )}
                     {!showComment ? (
-                      <div
-                        className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-                      >
-                        <FaRegCommentDots
-                          size={20}
-                          onClick={() => setShowComment((prev) => !prev)}
-                          style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-                        />
-                        <p
-                          style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-                          className="m-0"
-                        >
-                          Comment
-                        </p>
+                      <div className="d-flex align-items-center justify-content-end gap-1" onClick={() => setShowComment((prev) => !prev)}>
+                        <FaRegCommentDots size={20} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} />
+                        <p style={{ color: "var(--d-l-grey)", fontSize: "10px", cursor: "pointer" }} className="m-0 actions-btn-text-hide">Comment</p>
                       </div>
                     ) : (
-                      <div
-                        className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-                      >
-                        <FaCommentDots
-                          size={20}
-                          onClick={() => setShowComment((prev) => !prev)}
-                          style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-                        />
-                        <p
-                          style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-                          className="m-0"
-                        >
-                          Comment
-                        </p>
+                      <div className="d-flex align-items-center justify-content-end gap-1" onClick={() => setShowComment((prev) => !prev)}>
+                        <FaCommentDots size={20} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} />
+                        <p style={{ color: "var(--d-l-grey)", fontSize: "10px", cursor: "pointer" }} className="m-0 actions-btn-text-hide">Comment</p>
                       </div>
                     )}
                   </div>
-                </div>
-
-                <div className=" col-6 d-flex align-items-center gap-1 justify-content-around">
-                  <span
-                    className={`repost_container rounded-4 ${
-                      showRepostOptions ? "bg-light" : ""
-                    }`}
-                    ref={repostContainerRef}
-                  >
-                    <div
-                      className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-                    >
-                      <BiRepost
-                        onClick={() => setShowRepostOptions(!showRepostOptions)}
-                        style={{
-                          cursor: "pointer",
-                          transform: "rotate(90deg)",
-                          fill: "var(--d-l-grey)",
-                        }}
-                        size={20}
-                      />
-                      <p
-                        style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-                        className="m-0"
-                      >
-                        Repost
-                      </p>
+                  <span className={`repost_container rounded-4 ${showRepostOptions ? "bg-light" : ""}`} ref={repostContainerRef}>
+                    <div className="d-flex align-items-center justify-content-end gap-1" onClick={() => setShowRepostOptions(!showRepostOptions)} style={{ cursor: "pointer", backgroundColor: "#fd5901", padding: "0.5rem 0.75rem", borderRadius: "2.5rem" }}>
+                      <BiRepost style={{ cursor: "pointer", transform: "rotate(90deg)", fill: "var(--d-l-grey)" }} size={20} />
+                      <p style={{ color: "var(--d-l-grey)", fontSize: "10px" }} className="m-0 actions-btn-text-hide">Repost</p>
                     </div>
                     {showRepostOptions && (
                       <span className="repost_options border rounded shadow-sm">
-                        <button
-                          className="single_option btn text-start py-1 px-1 rounded border-bottom"
-                          onClick={() => repostWithToughts(postId)}
-                        >
+                        <button className="single_option btn text-start py-1 px-1 rounded border-bottom" onClick={() => repostWithToughts(postId)}>
                           {!repostLoading?.withThoughts ? (
                             <FaRegEdit size={20} />
                           ) : (
-                            <div
-                              className="spinner-border text-secondary"
-                              role="status"
-                            >
-                              <span className="visually-hidden">
-                                Loading...
-                              </span>
+                            <div className="spinner-border text-secondary" role="status">
+                              <span className="visually-hidden">Loading...</span>
                             </div>
                           )}
                           <div className="d-flex flex-column g-1 ">
-                            <span className="title">
-                              Repost with your thoughts
-                            </span>
-                            <span className="description">
-                              Create a new post
-                            </span>
+                            <span className="title">Repost with your thoughts</span>
+                            <span className="description">Create a new post</span>
                           </div>
                         </button>
-                        <button
-                          className="single_option btn text-start py-1 ps-0 rounded border-bottom"
-                          onClick={() => repostInstantly(postId)}
-                        >
+                        <button className="single_option btn text-start py-1 ps-0 rounded border-bottom" onClick={() => repostInstantly(postId)}>
                           {!repostLoading?.instant ? (
-                            <BiRepost
-                              size={30}
-                              style={{ transform: "rotate(90deg)" }}
-                            />
+                            <BiRepost size={30} style={{ transform: "rotate(90deg)" }} />
                           ) : (
-                            <div
-                              className="spinner-border text-secondary"
-                              role="status"
-                            >
-                              <span className="visually-hidden">
-                                Loading...
-                              </span>
+                            <div className="spinner-border text-secondary" role="status">
+                              <span className="visually-hidden">Loading...</span>
                             </div>
                           )}
                           <div className="d-flex flex-column g-1 ">
                             <span className="title">Repost Instantly</span>
-                            <span className="description">
-                              Instantly bring to other's feed
-                            </span>
+                            <span className="description">Instantly bring to other's feed</span>
                           </div>
                         </button>
                       </span>
                     )}
                   </span>
+                  <div className="d-flex align-items-center gap-1" onClick={handleOpenSocialShare}>
+                    <FaShare size={20} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} />
+                    <p style={{ color: "var(--d-l-grey)", fontSize: "10px", cursor: "pointer" }} className="m-0 actions-btn-text-hide">Share</p>
+                  </div>
                   {savedPostId.includes(postId) ? (
-                    <div
-                      className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-                    >
-                      <IoMdBookmark
-                        size={20}
-                        onClick={handleUnsavePost}
-                        style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-                      />
-                      <p
-                        style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-                        className="m-0"
-                      >
-                        Save
-                      </p>
+                    <div className="d-flex align-items-center justify-content-end gap-1" onClick={handleUnsavePost}>
+                      <IoMdBookmark size={20} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} />
+                      <p style={{ color: "var(--d-l-grey)", fontSize: "10px", cursor: "pointer" }} className="m-0 actions-btn-text-hide">Saved</p>
                     </div>
                   ) : (
-                    <div
-                      className="d-flex flex-column align-items-center justify-content-end
-                    gap-1"
-                    >
-                      <CiBookmark
-                        size={20}
-                        onClick={handleSavePopUp}
-                        style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-                      />
-                      <p
-                        style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-                        className="m-0"
-                      >
-                        Save
-                      </p>
+                    <div className="d-flex align-items-center justify-content-end gap-1" onClick={handleSavePopUp}>
+                      <CiBookmark size={20} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} />
+                      <p style={{ color: "var(--d-l-grey)", fontSize: "10px", cursor: "pointer" }} className="m-0 actions-btn-text-hide">Save</p>
                     </div>
                   )}
                 </div>
-
-                {showComment && (
-                  <div className="border-top mt-1">
-                    <div className="comment_container mb-1 border-bottom">
-                      <div className="logo">
-                        <img
-                          src={loggedInUser.profilePicture}
-                          alt="Logo"
-                          className="border border-light"
-                        />
-                      </div>
-                      <section className="input_and_logo_section">
-                        <div className="input_box px-1">
-                          <input
-                            type="text"
-                            placeholder="Add a comment"
-                            className="fs-14"
-                            value={commentText}
-                            onChange={(e) => setCommentText(e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                sendComment();
-                              }
-                            }}
-                          />
-                        </div>
-                        <button
-                          type="button"
-                          className="btn btn-startup"
-                          onClick={() => sendComment()}
-                        >
-                          Post
-                        </button>
-                      </section>
-                    </div>
-                    {comments?.length ? (
-                      <span
-                        className="fs-6 ps-2 mb-2"
-                        style={{ color: "var(--d-l-grey)" }}
-                      >
-                        Comments
-                      </span>
-                    ) : (
-                      <span className="fs-6 ps-2 mb-2 w-100 d-flex justify-content-center text-center">
-                        No comments
-                      </span>
-                    )}
-                    {comments.map((val) => (
-                      <section
-                        className="single-comment row m-0 mt-2"
-                        key={val.tex}
-                      >
-                        <div className="img_container col-2 px-2">
-                          <Link
-                            to={`/user/${val.user?.firstName?.toLowerCase() + "-" + val.user?.lastName?.toLowerCase()}/${val.user.oneLinkId}`}
-                            style={{
-                              pointerEvents: `${loggedInUser._id === val.user._id ? "none" : "all"}`,
-                            }}
-                          >
-                            <img
-                              src={val.user.profilePicture || ""}
-                              alt="Connection"
-                              className="w-100 rounded-circle border border-light"
-                            />
-                          </Link>
-                        </div>
-                        <div className="col-10 p-0 flex-grow-1">
-                          <div className="comment-details  rounded-3 p-2 p-lg-3 d-flex flex-column">
-                            <header className="d-flex justify-content-between align-items-center p-0">
-                              <Link
-                                to={`/user/${
-                                  val.user?.firstName.toLowerCase() +
-                                  "-" +
-                                  val.user?.lastName.toLowerCase()
-                                }/${val.user.oneLinkId}`}
-                                className="text-decoration-none  fs-sm"
-                                style={{
-                                  pointerEvents: `${
-                                    loggedInUser._id === val.user._id
-                                      ? "none"
-                                      : "all"
-                                  }`,
-                                }}
-                              >
-                                <h6 className="fs-sm m-0">
-                                  {val.user.firstName + " " + val.user.lastName}
-                                </h6>
-                              </Link>
-                              <span className="days_time fs-xs">
-                                <TimeAgo datetime={val.createdAt} locale="" />
-                              </span>
-                            </header>
-                            <span className=" fs-xs m-0">
-                              {val.user?.designation}
-                              {" , "}{" "}
-                              {val.user?.startUp?.company ||
-                                val.user?.investor?.companyName}
-                            </span>
-                            <p className="comment m-0 fs-sm mt-1">{val.text}</p>
-                          </div>
-                          <div className="actions d-flex gap-2 px-1 align-items-center justify-content-between">
-                            <div>
-                              {val?.likes?.includes(loggedInUser._id) ? (
-                                <img
-                                  src={fireIcon}
-                                  width={15}
-                                  alt="like post"
-                                  onClick={() =>
-                                    commentlikeUnlikeHandler(postId, val._id)
-                                  }
-                                />
-                              ) : (
-                                <ImFire
-                                  onClick={() =>
-                                    commentlikeUnlikeHandler(postId, val._id)
-                                  }
-                                  style={{
-                                    cursor: "pointer",
-                                    fill: "var(--d-l-grey)",
-                                  }}
-                                />
-                              )}
-                              <span className="mx-2 text-secondary fs-sm">
-                                {val?.likes?.length} likes
-                              </span>
-                            </div>
-                            {val.user._id === loggedInUser?._id && (
-                              <span
-                                onClick={() => deleteComments(postId, val._id)}
-                                style={{ cursor: "pointer" }}
-                              >
-                                <MdDelete style={{ fill: "var(--d-l-grey)" }} />
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </section>
-                    ))}
-                  </div>
-                )}
               </div>
             </>
           )}
