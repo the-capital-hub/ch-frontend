@@ -30,6 +30,21 @@ jobs:
           name: build
           path: build/
 
+      - name: Check Build Directory
+        run: |
+              if [ ! -d "/home/runner/work/ch-frontend/ch-frontend/build" ]; then
+              echo "Build directory not found!"
+              exit 1
+              fi
+
+      - name: Upload with lftp
+        run: |
+              sudo apt-get update && sudo apt-get install -y lftp
+              lftp -e "mirror -R /home/runner/work/ch-frontend/ch-frontend/build /destination/path; bye" || {
+              echo "lftp upload failed!"
+              exit 1
+              }
+
       - name: Set up environment
         run: |
           sudo apt-get update && sudo apt-get install -y lftp
