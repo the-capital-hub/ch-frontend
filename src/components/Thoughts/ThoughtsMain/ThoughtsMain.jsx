@@ -153,7 +153,7 @@ const ArticleCard = ({
 
 		<div className="article-card-meta">
 			<div className="article-card-contributors">
-				{contributorsList.map((user, i) => (
+				{contributorsList.slice(-2).map((user, i) => (
 					<img
 						key={i}
 						src={user?.user?.profilePicture}
@@ -433,13 +433,7 @@ const Thoughts = () => {
 		>
 			<nav className="thoughts-navbar">
 				<div className="thoughts-navbar-left">
-					<div className="thoughts-navbar-buttons">
-						{/* <button
-							className="thoughts-navbar-back-button"
-							onClick={() => navigate(-1)}
-						>
-							<BiChevronLeft />
-						</button> */}
+					{/* <div className="thoughts-navbar-buttons">
 						<button
 							className={`thoughts-navbar-mobile-toggle ${
 								isMobileMenuOpen ? "thoughts-navbar-mobile-toggle-open" : ""
@@ -452,18 +446,18 @@ const Thoughts = () => {
 								<MdOutlineFilterAlt />
 							)}
 						</button>
-					</div>
+					</div> */}
 					<div
-						className={`thoughts-navbar-filters ${
-							isMobileMenuOpen ? "mobile-open" : ""
-						}`}
+						className={`thoughts-navbar-filters 
+							${isMobileMenuOpen ? "mobile-open" : ""}
+						`}
 					>
 						{filters.map((filter) => (
 							<button
 								key={filter}
-								className={`thoughts-navbar-filter-button ${
-									selectedFilter === filter ? "active" : ""
-								}`}
+								className={`thoughts-navbar-filter-button 
+									${selectedFilter === filter ? "active" : ""}
+								`}
 								onClick={() => handleFilterClick(filter)}
 							>
 								{filter}

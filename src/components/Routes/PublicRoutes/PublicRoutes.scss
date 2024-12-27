@@ -1,3 +1,10 @@
+:root {
+	--background-color: #f5f5f5;
+}
+.dark-theme {
+	--background-color: #000000;
+}
+
 .public-routes-container {
 	height: 100dvh;
 	width: 100dvw;
@@ -6,7 +13,7 @@
 		display: flex;
 		height: calc(100dvh - 80px);
 		width: 100dvw;
-		background: #000000;
+		background: var(--background-secondary);
 
 		.public-routes-main {
 			width: 100%;
