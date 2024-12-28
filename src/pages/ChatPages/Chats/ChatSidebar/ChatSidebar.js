@@ -183,7 +183,7 @@ const ChatSidebar = ({ recieveMessage, sendMessage }) => {
     <div className="chatsidebar_main_container" id="sidebarChats">
       <div className="chatsidebar_content pt-2">
         <span className="m-3 mt-1 chat-category">
-          <img src={pinIcon} alt="" /> PINNED
+          <img src={pinIcon} alt="" /> Pinned
         </span>
         <div className="d-flex flex-column" id="pinnedChats">
           {pinnedChats?.map((chat, index) => (
@@ -193,7 +193,7 @@ const ChatSidebar = ({ recieveMessage, sendMessage }) => {
                   const inputString = latestMessages[chat._id];
                   const unreadMessageCount = unreadMessageCounts[chat._id];
                   const messageTime = formatTimestamp(dates[chat._id]);
-                  const numberOfCharacters = 20;
+                  const numberOfCharacters = 70;
                   let latestMessage;
                   if (inputString?.length > numberOfCharacters) {
                     latestMessage =
@@ -262,7 +262,7 @@ const ChatSidebar = ({ recieveMessage, sendMessage }) => {
         </div>
 
         <span className="m-3 chat-category">
-          <img src={messageIcon} alt="" /> ALL MESSAGE
+          <img src={messageIcon} alt="" /> All Message
         </span>
         <div className="d-flex flex-column" id="normalChats">
           {chats?.map((chat, index) => (
@@ -272,7 +272,7 @@ const ChatSidebar = ({ recieveMessage, sendMessage }) => {
                   const inputString = latestMessages[chat._id];
                   const unreadMessageCount = unreadMessageCounts[chat._id];
                   const messageTime = formatTimestamp(dates[chat._id]);
-                  const numberOfCharacters = 13;
+                  const numberOfCharacters = 25;
                   let latestMessage;
                   if (inputString?.length > numberOfCharacters) {
                     latestMessage =

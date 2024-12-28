@@ -138,9 +138,6 @@ const PitchDays = () => {
 							className="event-card"
 							style={{ backgroundColor: getRandomLightColor() }} // Apply random light color
 						>
-							{/* <div className="coming-soon-banner" style={{ opacity: 0.5 }}>
-							Coming Soon
-						</div> */}
 							<div className="event-info">
 								<h3>{event.title}</h3>
 								<div className="event-meta">
@@ -156,8 +153,16 @@ const PitchDays = () => {
 									<div className="leftRight">
 										{event.price > 0 ? (
 											<div className="price-tag">
+												{event.discount > 0 && (
+													<span className="original-price">
+														₹{event.price.toFixed(0)}
+													</span>
+												)}
 												<span className="new-price">
-													₹{event.price.toFixed(0)}
+													₹
+													{(event.price * (1 - event.discount / 100)).toFixed(
+														0
+													)}
 												</span>
 											</div>
 										) : (
@@ -177,18 +182,7 @@ const PitchDays = () => {
 										<HiVideoCamera />
 										Join Meeting
 									</button>
-									{/* <button className="copy-btn" disabled>
-									<FiCopy />
-									Copy Link
-								</button> */}
-									{/* <button className="delete-btn" disabled>
-									<FiTrash2 /> Delete
-								</button> */}
 								</div>
-								{/* <div className="bookings-count">
-								{event.joinedUsers.length}{" "}
-								{event.joinedUsers.length === 1 ? "User Joined" : "Users Joined"}
-							</div> */}
 							</div>
 						</div>
 					))}

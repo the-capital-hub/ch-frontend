@@ -330,7 +330,7 @@ const Chats = () => {
 						className={`left_section_wrapper px-3 mx-3 ${isMobileView && "d-none"}`}
 					>
 						<section className="left_section">
-							<span
+							{/* <span
 								className="back_img rounded-circle shadow-sm"
 								title="Go Back"
 							>
@@ -341,16 +341,16 @@ const Chats = () => {
 									onClick={() => navigate(-1)}
 									alt=""
 								/>
-							</span>
+							</span> */}
 							<ChatSearch />
 							<div className="chats-col">
-								<CommunitiesContainer
+								{/* <CommunitiesContainer
 									isCommunityOpen={isCommunityOpen}
 									recieveMessage={recieveMessage}
 									sendMessage={sendMessage}
 									setIsRead={setIsRead}
 									isRead={isRead}
-								/>
+								/> */}
 								<ChatSidebar
 									recieveMessage={recieveMessage}
 									sendMessage={sendMessage}

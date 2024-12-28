@@ -1,86 +1,29 @@
-import "./NewCommunityModal.scss";
-import { BsSearch, BsFillCameraFill } from "react-icons/bs";
-// import {
-//   userFive,
-//   userOne,
-//   userTwo,
-//   userFour,
-//   userThree,
-// } from "../../../Images/Investor/CompanyProfile";
-import { getUserConnections, createCommunity } from "../../../Service/user";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getBase64 } from "../../../utils/getBase64";
-import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
-import {
-	resetChat,
-	// updateCreateCommunity,
-} from "../../../Store/features/chat/chatSlice";
+import { useState, useEffect } from "react";
+import { BsArrowLeft } from "react-icons/bs";
+import InvestorNavbar from "../../Investor/InvestorNavbar/InvestorNavbar";
 import CreateCommunityChat from "../../../Images/Chat/CreateCommunityChat.png";
+import "./NewCommunityModal.scss";
+import { Navigate, useNavigate } from "react-router-dom";
+import { environment } from "../../../environments/environment";
+import axios from 'axios';
+import { getBase64 } from "../../../utils/getBase64";
+import { selectLoggedInUserId } from "../../../Store/features/user/userSlice";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
-export default function NewCommunityModal({ theme }) {
-	const [getAllConnection, setGetAllConnection] = useState([]);
-	const [memberIds, setMemberIds] = useState([]);
-	const [name, setName] = useState("");
+export default function NewCommunityModal() {
+
 	const [selectedFile, setSelectedFile] = useState(null);
-	const [searchQuery, setSearchQuery] = useState("");
-	const [filteredConnections, setFilteredConnections] = useState([]);
 	const [previewImageUrl, setPreviewImageUrl] = useState("");
-	const [addedMembers, setAddedMembers] = useState([]);
-	const [loading, setLoading] = useState(false);
-	const [success, setSuccess] = useState(false);
-	const [error, setError] = useState("");
-
-	const loggedInUser = useSelector((state) => state.user.loggedInUser);
-
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		setLoading(true);
-		getUserConnections(loggedInUser._id)
-			.then((res) => {
-				setGetAllConnection(res.data);
-				setFilteredConnections(res.data);
-				setLoading(false);
-			})
-			.catch((error) => {
-				console.error(error.message);
-			});
-	}, [loggedInUser._id]);
-
-	useEffect(() => {
-		const filtered = getAllConnection?.filter((connection) => {
-			const fullName = `${connection.firstName} ${connection.lastName}`;
-			return fullName.toLowerCase().includes(searchQuery.toLowerCase());
-		});
-		setFilteredConnections(filtered);
-	}, [searchQuery, getAllConnection]);
-
-	//set members
-	const handleButtonClick = (event, memberId) => {
-		event.preventDefault();
-		if (memberIds.includes(memberId)) {
-			const updatedMemberIds = memberIds.filter((id) => id !== memberId);
-			setMemberIds(updatedMemberIds);
-			const updatedAddedMembers = addedMembers.filter(
-				(member) => member._id !== memberId
-			);
-			setAddedMembers(updatedAddedMembers);
-		} else {
-			setMemberIds([...memberIds, memberId, loggedInUser._id]);
-			const addedMember = getAllConnection.find(
-				(member) => member._id === memberId
-			);
-			setAddedMembers([...addedMembers, addedMember]);
-		}
-	};
-
-	const handleNameChange = (event) => {
-		setName(event.target.value);
-		if (event.target.value) {
-			setError("");
-		}
-	};
+	const [communityName, setCommunityName] = useState("");
+	const [communitySize, setCommunitySize] = useState("");
+	const [isFree, setIsFree] = useState(true);
+	const [subscriptionAmount, setSubscriptionAmount] = useState("");
+	const baseUrl = environment.baseUrl;
+	const loggedInUserId = useSelector(selectLoggedInUserId);
+	const [isSuccess, setIsSuccess] = useState(false);
+	const [communityUrl, setCommunityUrl] = useState("");
+	const navigate = useNavigate();
 
 	const handleFileChange = (event) => {
 		const file = event.target.files[0];
@@ -89,223 +32,179 @@ export default function NewCommunityModal({ theme }) {
 		setPreviewImageUrl(imageUrl);
 	};
 
-	async function handleSubmit(event) {
-		event.preventDefault();
-		if (!name) {
-			setError("Community name is required");
-			return;
-		}
+	const communitySizeOptions = [
+		"Less than 100k",
+		"100k-200k",
+		"200k-500k",
+		"500k+"
+	];
 
-		setLoading(true);
-		try {
-			const data = {
-				communityName: name,
-				adminId: loggedInUser?._id,
-				members: memberIds,
-			};
-			if (selectedFile) {
-				data.profileImage = await getBase64(selectedFile);
-			}
-			const response = await createCommunity(data);
-			// console.log("rcreatecommunity-", response.data);
-			if (response.status === 200) {
-				// dispatch(updateCreateCommunity(response.data));
-				setSuccess(true);
-				setTimeout(() => {
-					setSuccess(false);
-					setMemberIds([]);
-					setAddedMembers([]);
-					setName("");
-					setSelectedFile(null);
-					dispatch(resetChat());
-					const modalElement = document.querySelector(".newCommunity__modal");
-					if (modalElement) {
-						modalElement
-							.closest(".modal")
-							.querySelector('[data-bs-dismiss="modal"]')
-							.click();
-					}
-				}, 2000);
-			}
-		} catch (error) {
-			console.error(error.message);
-		} finally {
-			setLoading(false);
+	const handleCreateCommunity = async () => {
+		const communityData = {
+		  name: communityName,
+		  size: communitySize,
+		  subscription: isFree ? 'free' : 'paid',
+		  amount: isFree ? null : subscriptionAmount,
+		  adminId: loggedInUserId
+		};
+
+		if (selectedFile) {
+			communityData.image = await getBase64(selectedFile);
 		}
+	  
+		const token = localStorage.getItem('accessToken');  
+	  
+		try {
+		  const response = await axios.post(
+			`${baseUrl}/communities/createCommunity`,
+			communityData,
+			{
+			  headers: {
+				Authorization: `Bearer ${token}`, 
+			  },
+			}
+		  );
+		  console.log('Community created:', response.data);
+		  setCommunityUrl(`${baseUrl}/community/${communityName}`);
+		  setIsSuccess(true);
+		} catch (error) {
+		  console.error('Error creating community:', error);
+		  toast.error(error.response?.data?.message || 'Failed to create community');
+		}
+	  };
+	  
+	if (isSuccess) {
+		return (
+			<div className="community-creation-page">
+				<InvestorNavbar />
+				<button className="back-button" data-bs-dismiss="modal">
+					<BsArrowLeft /> Back
+				</button>
+
+				<div className="content-container">
+					<div className="left-section">
+						<div className="community-preview">
+							<img 
+								src={previewImageUrl || CreateCommunityChat} 
+								alt="Community" 
+								className="community-image"
+							/>
+							<h2>{communityName}</h2>
+							<div className="divider-line"></div>
+							<p>
+								{isFree 
+									? "Any one can join for free" 
+									: `Subscription: $${subscriptionAmount}`
+								}
+							</p>
+						</div>
+					</div>
+
+					<div className="right-section success-content">
+						<h1>Congrats! {communityName} is live!</h1>
+						<div className="community-url-section">
+							<label>Community Page URL</label>
+							<span>{communityUrl}</span>
+							<button 
+								className="continue-button"
+								onClick={() => navigate(`/community/${communityName}`)}
+							>
+								Continue
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
 	}
 
 	return (
-		<form className="newCommunity__modal d-flex flex-column gap-3 p-md-3 ">
-			{/* Profile picture input */}
-			<div className="mx-auto">
-				<input
-					type="file"
-					name="profilePicture"
-					id="profilePicture"
-					accept="image/*"
-					className="visually-hidden"
-					onChange={handleFileChange}
-				/>
-				<label htmlFor="profilePicture" className={`upload__label ${theme} `}>
-					{previewImageUrl ? (
-						<img
-							src={previewImageUrl}
-							alt="Preview"
-							style={{
-								width: "160px",
-								height: "160px",
-							}}
-						/>
-					) : (
-						// <BsFillCameraFill
-						//   size={80}
-						//   style={{
-						//     fontSize: "1.5rem",
-						//     color: `${theme ? "#000" : "rgba(253, 89, 1,1)"}`,
-						//   }}
-						// />
-						<img
-							src={CreateCommunityChat}
-							alt="Preview"
-							style={{
-								width: "160px",
-								height: "160px",
-							}}
-						/>
-					)}
-				</label>
-			</div>
+		<div className="community-creation-page">
+			<InvestorNavbar />
+						<button className="back-button" data-bs-dismiss="modal">
+				<BsArrowLeft /> Back
+			</button>
 
-			{/* Name input */}
-			<div className="py-3">
-				<label className="modal__label" htmlFor="communityName">
-					Enter Name
-				</label>
-				<input
-					type="text"
-					name="communityName"
-					id="communityName"
-					placeholder="Enter here"
-					value={name}
-					className="modal__input p-2 rounded-2 w-100 text-gray-300"
-					onChange={handleNameChange}
-				/>
-				{error && <p className="error-message">{error}</p>}
-			</div>
-
-			{/* Display added members */}
-			{addedMembers.length > 0 && (
-				<div className="added-members">
-					<div className="added-members-list">
-						<strong>Added Members:</strong>
-						<ul>
-							{addedMembers.map((member) => (
-								<li key={member._id}>
-									{member.firstName} {member.lastName}
-								</li>
-							))}
-						</ul>
-					</div>
+			<div className="content-container">
+				<div className="left-section">
+					<input
+						type="file"
+						id="communityImage"
+						hidden
+						onChange={handleFileChange}
+						accept="image/*"
+					/>
+					<label htmlFor="communityImage" className="image-upload-container">
+						<img 
+							src={previewImageUrl || CreateCommunityChat} 
+							alt="Community" 
+						/>
+					</label>
+					<p className="business-text">Start Building Your Business</p>
 				</div>
-			)}
 
-			{/* Contact search */}
-			<div
-				className={`search__members d-flex align-items-center gap-2 p-1 px-2 rounded-2 ${theme}`}
-				style={{ backgroundColor: "var(--bs-light)", maxHeight: "40px" }}
-			>
-				<BsSearch color="var(--d-l-grey)" />
-				<input
-					type="search"
-					name="searchContacts"
-					id="searchContacts"
-					placeholder="Search your network..."
-					className={`modal__input border-0 p-1 w-100 ${theme}`}
-					value={searchQuery}
-					onChange={(e) => setSearchQuery(e.target.value)}
-				/>
-			</div>
-
-			{/* Top contacts */}
-			<div className="top__contacts p-md-2 d-flex flex-column gap-2 ">
-				{loading ? (
-					<SpinnerBS colorClass={"text-dark"} />
-				) : (
-					<div className="contacts-container">
-						{filteredConnections?.map((contact, index) => {
-							const isAdded = addedMembers.some(
-								(member) => member._id === contact._id
-							);
-							return (
-								<div
-									className="contact p-2 d-flex justify-content-between align-items-center rounded-4"
-									key={index}
-									style={{
-										color: "var(--d-l-grey)",
-										backgroundColor: "var(--bs-light)",
-									}}
-								>
-									<img
-										src={contact?.profilePicture}
-										alt="contact"
-										className="img-fluid "
-									/>
-									<h6 className="m-0">
-										{" "}
-										{`${contact?.firstName ? contact?.firstName : "name"} ${
-											contact?.lastName ? contact?.lastName : ""
-										}`}
-									</h6>
-									<button
-										className={`orange_button ${
-											isAdded ? "added-button" : ""
-										} ${theme} `}
-										onClick={(event) => handleButtonClick(event, contact._id)}
-									>
-										{isAdded ? "Added" : "Add"}
-									</button>
-								</div>
-							);
-						})}
-					</div>
-				)}
-			</div>
-			{/* Community Created Success message */}
-			{success && (
-				<p className="success-message d-flex justify-content-center align-items-center">
-					Community created successfully!
-				</p>
-			)}
-
-			{/* Cancel/Done */}
-			<div className="d-flex justify-content-center align-items-center gap-2">
-				<button
-					className="cancel_button"
-					onClick={(event) => {
-						event.preventDefault();
-					}}
-					data-bs-dismiss="modal"
-				>
-					Cancel
-				</button>
-
-				<button
-					type="submit"
-					className={`orange_button ${theme}`}
-					onClick={(event) => handleSubmit(event)}
-				>
-					{loading ? (
-						<SpinnerBS
-							colorClass={
-								loggedInUser.isInvestor === "true" ? "text-dark" : "text-light"
-							}
-							spinnerSizeClass="spinner-border-sm"
+				<div className="right-section">
+					<div className="question-block">
+						<h3>What is the name of your community?</h3>
+						<input
+							type="text"
+							className="modal__input p-2 rounded-2 w-100"
+							value={communityName}
+							onChange={(e) => setCommunityName(e.target.value)}
+							placeholder="Community Name"
 						/>
-					) : (
-						"Done"
-					)}
-				</button>
+					</div>
+
+					<div className="question-block">
+						<h3>How big is your community?</h3>
+						<div className="community-size-options">
+							{communitySizeOptions.map((size) => (
+								<div
+									key={size}
+									className={`size-option ${communitySize === size ? 'selected' : ''}`}
+									onClick={() => setCommunitySize(size)}
+								>
+									{size}
+								</div>
+							))}
+						</div>
+					</div>
+
+					<div className="question-block">
+						<div className="subscription-container">
+							<div className="checkbox-wrapper">
+								<input
+									type="checkbox"
+									id="freeCommunity"
+									checked={isFree}
+									onChange={(e) => setIsFree(e.target.checked)}
+								/>
+								<label htmlFor="freeCommunity">Free Community</label>
+							</div>
+
+							{!isFree && (
+								<div className="subscription-input">
+									<span>Subscription Amount:</span>
+									<input
+										type="number"
+										value={subscriptionAmount}
+										onChange={(e) => setSubscriptionAmount(e.target.value)}
+										placeholder="Enter amount"
+									/>
+								</div>
+							)}
+						</div>
+					</div>
+
+					<button 
+						className="create-community-button" 
+						onClick={handleCreateCommunity} 
+						style={{ backgroundColor: '#FF620E', borderRadius: '60px', color: 'white', padding: '1rem 2rem', marginTop: '20px', width: '100%', maxWidth: '300px', alignSelf: 'center' }}
+					>
+						Create Community
+					</button>
+				</div>
 			</div>
-		</form>
+		</div>
 	);
 }

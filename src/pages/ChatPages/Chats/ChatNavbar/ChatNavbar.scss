@@ -1,10 +1,10 @@
 .chat_navbar_container {
 	border-radius: var(--border-radius);
 	// border: 1px solid #dcdcdc;
-	background: var(--chat-page-nav);
+	background: transparent;
 	box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.05);
 	padding: 10px 30px;
-	height: 80px;
+	height: 60px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -21,8 +21,8 @@
 
 		.rounded_img {
 			border-radius: 50%;
-			height: 60px;
-			width: 60px;
+			height: 40px;
+			width: 40px;
 		}
 
 		.title_and_message {
@@ -30,7 +30,7 @@
 			.name_title {
 				color: var(--text-color);
 				font-family: Poppins;
-				font-size: 24px;
+				font-size: 20px;
 				font-style: normal;
 				font-weight: 500;
 				line-height: normal;
