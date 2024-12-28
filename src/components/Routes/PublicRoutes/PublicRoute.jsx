@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../../Store/features/design/designSlice";
 import { Outlet } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar3/Navbar3";
 import Sidebar from "../../SidebarPublic/SidebarPublic";
@@ -7,6 +8,7 @@ import Sidebar from "../../SidebarPublic/SidebarPublic";
 import "./PublicRoutes.scss";
 
 const PublicRoutes = ({ children, ...props }) => {
+	const theme = useSelector(selectTheme);
 	// const user = useSelector((state) => state.user.loggedInUser);
 	const [sidebarCollapse, setSidebarCollapse] = useState(true);
 	// const [isExpanded, setIsExpanded] = useState(false);
@@ -15,7 +17,11 @@ const PublicRoutes = ({ children, ...props }) => {
 		setSidebarCollapse((prev) => !prev);
 	};
 	return (
-		<div className="public-routes-container">
+		<div
+			className={`public-routes-container ${
+				theme === "dark" ? "dark-theme" : ""
+			}`}
+		>
 			<Navbar
 				handleSidebarToggle={handleSidebarToggle}
 				sidebarCollapse={sidebarCollapse}
@@ -27,10 +33,10 @@ const PublicRoutes = ({ children, ...props }) => {
 						setSidebarCollapsed={handleSidebarToggle}
 					/>
 				)} */}
-				<Sidebar
+				{/* <Sidebar
 					sidebarCollapse={sidebarCollapse}
 					setSidebarCollapse={setSidebarCollapse}
-				/>
+				/> */}
 				<div className="public-routes-main">
 					<Outlet />
 				</div>

@@ -102,16 +102,17 @@ const CompanyDetailsCard = ({
 				}`}
 			>
 				<h4
-					className="typography-company"
+					className="typography-company fs-2"
 					style={{
 						marginBottom: "0.5rem",
 						color: colorTheme === "dark" ? "#fff" : "#000",
+						// fontSize: "28px",
 					}}
 				>
 					Company Details
 				</h4>
-				<div className="image_name_section d-flex flex-column flex-md-row align-items-start align-items-md-center px-2 px-md-0">
-					<span className="company_details_logo_container d-none d-md-block">
+				<div className="image_name_section d-flex flex-column align-items-start px-2 px-md-0">
+					<div className="company_details_logo_container d-flex gap-4 align-items-start">
 						<img
 							src={
 								onePager.logo ||
@@ -121,8 +122,18 @@ const CompanyDetailsCard = ({
 							}
 							alt="profileimage"
 						/>
-					</span>
-					<div className="d-flex justify-content-center justify-content-sm-between w-100 d-md-none">
+						<h3
+							className="typography-company-name ms-0 text-center text-sm-start w-100 fs-4"
+							style={{ fontFamily: "Outfit" }}
+						>
+							{onePager?.companyName ||
+								onePager?.company ||
+								userDetails?.startUp?.company ||
+								userDetails?.investor?.companyName ||
+								"No company found"}
+						</h3>
+					</div>
+					{/* <div className="d-flex justify-content-sm-between w-100 d-md-none">
 						<span className="company_details_logo_container d-md-none d-flex">
 							<img
 								src={
@@ -134,7 +145,6 @@ const CompanyDetailsCard = ({
 								alt="profileimage d-md-none d-flex"
 							/>
 						</span>
-						{/* {console.log("logo of startup",userDetails?.startUp)} */}
 						{page === "edit" && (
 							<span className="align-self-start ms-auto d-md-none d-block pt-2">
 								<div className="d-flex align-items-center gap-2 flex-wrap">
@@ -158,9 +168,9 @@ const CompanyDetailsCard = ({
 								</div>
 							</span>
 						)}
-					</div>
+					</div> */}
 					<div className="left_profile_text flex_content w-100 text-center text-sm-start">
-						<h3
+						{/* <h3
 							className="typography-company-name ms-0 text-center text-sm-start w-100"
 							style={{ fontSize: "30px", fontFamily: "Outfit" }}
 						>
@@ -169,10 +179,10 @@ const CompanyDetailsCard = ({
 								userDetails?.startUp?.company ||
 								userDetails?.investor?.companyName ||
 								"No company found"}
-						</h3>
+						</h3> */}
 						<div className="company__header d-flex flex-column flex-lg-row gap-2 w-100">
 							<div
-								className="icon__details d-flex flex-column flex-md-row gap-2 align-items-start justify-content-center justify-content-sm-start"
+								className="icon__details d-flex flex-column flex-md-row align-items-start justify-content-center justify-content-sm-start"
 								style={{ flexWrap: "wrap" }}
 							>
 								{onePager?.location && (
@@ -258,7 +268,7 @@ const CompanyDetailsCard = ({
 									</div>
 								)}
 								{onePager.stage && (
-									<div className="iconCard__container d-flex justify-content-center align-items-center gap-1">
+									<div className="iconCard__container d-flex align-items-center gap-1 w-100">
 										<GiProgression color="#898989" />
 										<p
 											className="icon__text typography"
@@ -273,7 +283,7 @@ const CompanyDetailsCard = ({
 									</div>
 								)}
 								{onePager.sector && (
-									<div className="iconCard__container d-flex justify-content-center justify-content-sm-start align-items-center gap-1">
+									<div className="iconCard__container w-100 d-flex justify-content-sm-start align-items-center gap-1">
 										<HiOutlineBuildingOffice2 color="#898989" />
 										<p
 											className="icon__text typography"

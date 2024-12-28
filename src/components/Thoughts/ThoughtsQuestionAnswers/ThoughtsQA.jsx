@@ -167,14 +167,38 @@ const QAComponent = () => {
 				{/* Questions Section */}
 				<div className="section">
 					<div className="question-preview">
-						<h2>Questions</h2>
-						<hr />
+						<h2 className="question-title-preview">Questions</h2>
+						<hr className="question-hr" />
 						<div className="user-info">
 							<img
 								src={question?.user?.profilePicture}
 								alt={`${question?.user?.firstName} ${question?.user?.lastName}`}
 							/>
-							<span>{`${question?.user?.firstName} ${question?.user?.lastName}`}</span>
+							{/* <span>{`${question?.user?.firstName} ${question?.user?.lastName}`}</span> */}
+							<div className="user-details">
+								<div className="user-name">
+									<h3>
+										{`${question?.user?.firstName} ${question?.user?.lastName} 
+									`}
+										{/* <span className="username">
+											@{question?.user?.userName}
+										</span> */}
+									</h3>
+									<span className="view-full-profile">View full profile</span>
+								</div>
+								{/* <p className="username">@{question?.user?.userName}</p> */}
+								<p className="position">
+									{question?.user?.designation} of{" "}
+									{question?.user?.startUp.company},{" "}
+									{question?.user?.startUp?.location}
+								</p>
+								<span className="stats-container">
+									{/* <p className="stats">253 Followers</p> */}
+									<p className="stats">
+										{question?.user?.connections.length} Connections
+									</p>
+								</span>
+							</div>
 						</div>
 						<hr />
 						<p>{question?.question}</p>
@@ -201,7 +225,13 @@ const QAComponent = () => {
 							<div className="about-user-info">
 								<img src={question?.user?.profilePicture} alt="Pic" />
 								<div className="user-details">
-									<h3>{`${question?.user?.firstName} ${question?.user?.lastName}`}</h3>
+									<h3>
+										{`${question?.user?.firstName} ${question?.user?.lastName} 
+									`}
+										{/* <span className="username">
+											@{question?.user?.userName}
+										</span> */}
+									</h3>
 									<p className="username">@{question?.user?.userName}</p>
 									<p className="position">
 										{question?.user?.designation} of{" "}
@@ -209,7 +239,7 @@ const QAComponent = () => {
 										{question?.user?.startUp?.location}
 									</p>
 									<span className="stats-container">
-										<p className="stats">253 Followers</p>
+										{/* <p className="stats">253 Followers</p> */}
 										<p className="stats">
 											{question?.user?.connections.length} Connections
 										</p>
