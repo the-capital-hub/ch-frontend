@@ -149,6 +149,10 @@ const API = Object.freeze({
 	getMoreInshortNews: `${baseUrl}/news/inshortsNews/more`,
 	reportPost: `${baseUrl}/users/report`,
 	getEventsByOnelinkId: `${baseUrl}/meetings/getEventsByOnelinkId`,
+	createWebinar: `${baseUrl}/webinars/createWebinar`,
+	getAllWebinars: `${baseUrl}/webinars/getWebinars`,
+	getWebinarsByOnelinkId: `${baseUrl}/webinars/getWebinarsByOnelinkId`,
+	deleteWebinar: `${baseUrl}/webinars/deleteWebinar`
 });
 
 export default API;

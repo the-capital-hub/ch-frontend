@@ -1787,3 +1787,46 @@ export const getEventsByOnelinkId = async (onelinkId) => {
 		throw error;
 	}
 };
+
+export const createWebinar = async (data) => {
+	try {
+		const response = await axiosInstance.post(`${API.createWebinar}`, data);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const getAllWebinars = async () => {
+	try {
+		const response = await axiosInstance.get(`${API.getAllWebinars}`);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+export const getWebinarsByOnelinkId = async (onelinkId) => {
+	try {
+		const response = await axiosInstance.get(
+			`${API.getWebinarsByOnelinkId}/${onelinkId}`
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const deleteWebinar = async (webinarId) => {
+	try {
+		const response = await axiosInstance.delete(
+			`${API.deleteWebinar}/${webinarId}`
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};

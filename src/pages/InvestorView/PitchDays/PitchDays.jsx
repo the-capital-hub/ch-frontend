@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FiCopy, FiTrash2 } from "react-icons/fi";
+import { HiVideoCamera } from "react-icons/hi";
 import Spinner from "../../../components/Spinner/Spinner";
-import { getEventsByOnelinkId } from "../../../Service/user";
+import {
+	getEventsByOnelinkId,
+	getWebinarsByOnelinkId,
+} from "../../../Service/user";
+import PaymentPopup from "./PaymentPopup/PaymentPopup";
 import "./PitchDays.scss"; // Create a corresponding SCSS file for styles
+
 const PitchDays = () => {
 	const { userId } = useParams(); // its onelinkId
 	const [pitchDays, setPitchDays] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		setLoading(true);
-		getEventsByOnelinkId(userId)
+		getWebinarsByOnelinkId(userId)
 			.then((data) => {
 				setLoading(false);
 				if (data && data.data) {
@@ -87,69 +95,113 @@ const PitchDays = () => {
 		return { duration, price, bookings, isPrivate };
 	};
 
+	const handleJoinClick = (event) => {
+		// Handle join button click
+		if (event.price > 0) {
+			// If the event has a price, redirect to the payment page
+			// Replace this with your actual payment page URL
+			// window.location.href = "/payment";
+			setIsPaymentModalOpen(true);
+		} else {
+			// If the event is free, open the Google Meet link in a new tab
+			window.open(event.link, "_blank", "noopener,noreferrer");
+		}
+	};
+
 	if (loading) {
 		return <Spinner />;
 	}
 
+	// console.log(pitchDays);
+	const webinarDetails = {
+		title: "React Best Practices",
+		description: "Learn advanced React patterns...",
+		price: 999,
+		duration: 60,
+		date: "2024-12-28",
+		startTime: "2024-12-28T10:00:00",
+		endTime: "2024-12-28T11:00:00",
+	};
+
+	const handleProceedToPayment = (userDetails) => {
+		console.log("User Details:", userDetails);
+		// Handle payment logic here
+	};
 	return (
-		<div className="pitch-days-container">
-			<h1>Pitch Days</h1>
-			<div className="events-grid">
-				{pitchDays.map((event, index) => (
-					<div
-						key={index}
-						className="event-card"
-						style={{ backgroundColor: getRandomLightColor() }} // Apply random light color
-					>
-						<div className="coming-soon-banner" style={{ opacity: 0.5 }}>
+		<>
+			<div className="pitch-days-container">
+				<h1>Pitch Days</h1>
+				<div className="events-grid">
+					{pitchDays.map((event, index) => (
+						<div
+							key={index}
+							className="event-card"
+							style={{ backgroundColor: getRandomLightColor() }} // Apply random light color
+						>
+							{/* <div className="coming-soon-banner" style={{ opacity: 0.5 }}>
 							Coming Soon
-						</div>
-						<div className="event-info">
-							<h3>{event.title}</h3>
-							<div className="event-meta">
-								<div className="leftTime">
-									<span>
-										<IoCalendarOutline size={20} />
-									</span>{" "}
-									&nbsp;&nbsp;
-									<span>{event.duration} mins</span> &nbsp;&nbsp;
-									<span className="separator">|</span> &nbsp;&nbsp;
-									<span>{event.eventType}</span>
-								</div>
-								<div className="leftRight">
-									{event.price > 0 ? (
-										<div className="price-tag">
-											<span className="new-price">
-												₹{event.price.toFixed(0)}
-											</span>
-										</div>
-									) : (
-										<div className="price-tag">
-											<b>Free</b>
-										</div>
-									)}
+						</div> */}
+							<div className="event-info">
+								<h3>{event.title}</h3>
+								<div className="event-meta">
+									<div className="leftTime">
+										<span>
+											<IoCalendarOutline size={20} />
+										</span>{" "}
+										&nbsp;&nbsp;
+										<span>{event.duration} mins</span> &nbsp;&nbsp;
+										<span className="separator">|</span> &nbsp;&nbsp;
+										<span>{event.eventType}</span>
+									</div>
+									<div className="leftRight">
+										{event.price > 0 ? (
+											<div className="price-tag">
+												<span className="new-price">
+													₹{event.price.toFixed(0)}
+												</span>
+											</div>
+										) : (
+											<div className="price-tag">
+												<b>Free</b>
+											</div>
+										)}
+									</div>
 								</div>
 							</div>
-						</div>
-						<div className="event-actions">
-							<div className="action-buttons">
-								<button className="copy-btn" disabled>
+							<div className="event-actions">
+								<div className="action-buttons">
+									<button
+										className="join-btn"
+										onClick={() => handleJoinClick(event)}
+									>
+										<HiVideoCamera />
+										Join Meeting
+									</button>
+									{/* <button className="copy-btn" disabled>
 									<FiCopy />
 									Copy Link
-								</button>
-								<button className="delete-btn" disabled>
+								</button> */}
+									{/* <button className="delete-btn" disabled>
 									<FiTrash2 /> Delete
-								</button>
-							</div>
-							<div className="bookings-count">
-								{event.bookings.length}{" "}
-								{event.bookings.length === 1 ? "Booking" : "Bookings"}
+								</button> */}
+								</div>
+								{/* <div className="bookings-count">
+								{event.joinedUsers.length}{" "}
+								{event.joinedUsers.length === 1 ? "User Joined" : "Users Joined"}
+							</div> */}
 							</div>
 						</div>
-					</div>
-				))}
+					))}
+				</div>
 			</div>
-		</div>
+
+			<PaymentPopup
+				isOpen={isPaymentModalOpen}
+				onClose={() => setIsPaymentModalOpen(false)}
+				webinarDetails={webinarDetails}
+				onProceed={handleProceedToPayment}
+			/>
+		</>
 	);
 };
 

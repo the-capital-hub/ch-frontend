@@ -239,7 +239,7 @@ export default function NewCommunityModal({ theme }) {
 							return (
 								<div
 									className="contact p-2 d-flex justify-content-between align-items-center rounded-4"
-									key={contact?._id}
+									key={index}
 									style={{
 										color: "var(--d-l-grey)",
 										backgroundColor: "var(--bs-light)",
