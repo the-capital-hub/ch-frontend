@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { load } from "@cashfreepayments/cashfree-js";
 import { IoCalendarOutline } from "react-icons/io5";
-import { FiCopy, FiTrash2 } from "react-icons/fi";
 import { HiVideoCamera } from "react-icons/hi";
 import Spinner from "../../../components/Spinner/Spinner";
 import {
-	getEventsByOnelinkId,
+	// getEventsByOnelinkId,
 	getWebinarsByOnelinkId,
+	createPaymentSessionToJoinWebinar,
+	varifyPaymentToJoinWebinar,
 } from "../../../Service/user";
 import PaymentPopup from "./PaymentPopup/PaymentPopup";
-import "./PitchDays.scss"; // Create a corresponding SCSS file for styles
+import "./PitchDays.scss";
 
 const PitchDays = () => {
 	const { userId } = useParams(); // its onelinkId
 	const [pitchDays, setPitchDays] = useState([]);
+	const [webinarDataForPayment, setWebinarDataForPayment] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-	const navigate = useNavigate();
+	const [paymentStatus, setPaymentStatus] = useState("failed");
+	const [paymentId, setPaymentId] = useState("");
+	const [orderId, setOrderId] = useState("");
+	const [sessionId, setSessionId] = useState("");
+	console.log("Order ID-2:", orderId);
 
 	useEffect(() => {
 		setLoading(true);
@@ -35,48 +42,6 @@ const PitchDays = () => {
 			});
 	}, [userId]);
 
-	const cards = [
-		{
-			title: "Pitch Day 1",
-			duration: 45,
-			price: 200,
-			bookings: ["a", "b", "c"],
-			isPrivate: false,
-		},
-		{
-			title: "Pitch Day 2",
-			duration: 60,
-			price: 300,
-			bookings: ["a", "b", "c", "a", "b", "c"],
-			isPrivate: true,
-		},
-		{
-			title: "Pitch Day 3",
-			duration: 90,
-			price: 0,
-			bookings: ["a", "b", "c", "a", "b", "c", "a", "b", "c"],
-			isPrivate: false,
-		},
-		{
-			title: "Pitch Day 4",
-			duration: 30,
-			price: 150,
-			bookings: [],
-			isPrivate: true,
-		},
-	];
-
-	// Function to generate random descriptions and headings
-	const getRandomDescription = () => {
-		const descriptions = [
-			"Exciting opportunities await!",
-			"Join us for an insightful day.",
-			"Network with industry leaders.",
-			"Discover innovative pitches.",
-		];
-		return descriptions[Math.floor(Math.random() * descriptions.length)];
-	};
-
 	const getRandomLightColor = () => {
 		const r = Math.floor(Math.random() * 156 + 100); // Red value between 100-255
 		const g = Math.floor(Math.random() * 156 + 100); // Green value between 100-255
@@ -84,27 +49,15 @@ const PitchDays = () => {
 		return `rgb(${r}, ${g}, ${b})`;
 	};
 
-	const getRandomHeading = (index) => `Pitch Day ${index + 1}`;
-
-	// New function to generate random time, price, and bookings
-	const getRandomEventDetails = () => {
-		const duration = Math.floor(Math.random() * 120) + 30; // Random duration between 30 and 150 mins
-		const price = Math.floor(Math.random() * 1000); // Random price between 0 and 1000
-		const bookings = Math.floor(Math.random() * 100); // Random bookings between 0 and 100
-		const isPrivate = Math.random() < 0.5; // Randomly decide if the event is private
-		return { duration, price, bookings, isPrivate };
-	};
-
-	const handleJoinClick = (event) => {
+	const handleJoinClick = (webinar) => {
 		// Handle join button click
-		if (event.price > 0) {
-			// If the event has a price, redirect to the payment page
-			// Replace this with your actual payment page URL
-			// window.location.href = "/payment";
+		if (webinar.price > 0) {
+			// If the webinar has a price, redirect to the payment page
+			setWebinarDataForPayment(webinar);
 			setIsPaymentModalOpen(true);
 		} else {
-			// If the event is free, open the Google Meet link in a new tab
-			window.open(event.link, "_blank", "noopener,noreferrer");
+			// If the webinar is free, open the Google Meet link in a new tab
+			window.open(webinar.link, "_blank", "noopener,noreferrer");
 		}
 	};
 
@@ -123,10 +76,83 @@ const PitchDays = () => {
 		endTime: "2024-12-28T11:00:00",
 	};
 
-	const handleProceedToPayment = (userDetails) => {
+	const discountedPrice = (webinar) => {
+		return (webinar.price * (1 - webinar.discount / 100)).toFixed(0);
+	};
+
+	// Initialize Cashfree SDK
+	const initializeCashfree = async () => {
+		try {
+			return await load({ mode: "sandbox" });
+		} catch (error) {
+			console.error("Failed to initialize Cashfree:", error);
+			throw error;
+		}
+	};
+
+	const handleProceedToPayment = async (userDetails) => {
 		console.log("User Details:", userDetails);
 		// Handle payment logic here
+		const dataForPaymentSession = {
+			name: userDetails.name,
+			email: userDetails.email,
+			mobile: userDetails.mobile,
+			amount: discountedPrice(webinarDataForPayment),
+		};
+		const dataForPaymentVerification = {
+			name: userDetails.name,
+			email: userDetails.email,
+			mobile: userDetails.mobile,
+			orderId,
+			webinarId: webinarDataForPayment._id,
+		};
+
+		// Initialize payment flow
+		const cashfree = await initializeCashfree();
+
+		await createPaymentSessionToJoinWebinar(dataForPaymentSession)
+			.then((data) => {
+				console.log("Data:", data.data);
+				console.log("Order ID-1:", data.data.order_id);
+				setOrderId(data.data.order_id);
+				setSessionId(data.data.payment_session_id);
+			})
+			.catch((error) => {
+				console.log("Error creating payment session:", error);
+			});
+
+		// Handle payment checkout
+		await cashfree.checkout({
+			paymentSessionId: sessionId,
+			redirectTarget: "_modal",
+		});
+
+		if (orderId) {
+			await varifyPaymentToJoinWebinar(dataForPaymentVerification)
+				.then((data) => {
+					setPaymentStatus(data.data.status);
+					setPaymentId(data.data.payment_id);
+					if (data.data.status === "SUCCESS") {
+						alert("Payment Success");
+						window.open(
+							webinarDataForPayment.link,
+							"_blank",
+							"noopener,noreferrer"
+						);
+					} else {
+						alert("Payment Failed");
+					}
+				})
+				.catch((error) => {
+					console.log("Error creating payment session:", error);
+				});
+		}
 	};
+
+	// const joinWebinar = async () => {
+	// 	// Handle join button click
+	// 	window.open(webinarDataForPayment.link, "_blank", "noopener,noreferrer");
+	// };
 	return (
 		<>
 			<div className="pitch-days-container">
@@ -159,10 +185,7 @@ const PitchDays = () => {
 													</span>
 												)}
 												<span className="new-price">
-													₹
-													{(event.price * (1 - event.discount / 100)).toFixed(
-														0
-													)}
+													₹ {discountedPrice(event)}
 												</span>
 											</div>
 										) : (
@@ -192,7 +215,9 @@ const PitchDays = () => {
 			<PaymentPopup
 				isOpen={isPaymentModalOpen}
 				onClose={() => setIsPaymentModalOpen(false)}
-				webinarDetails={webinarDetails}
+				webinarDetails={
+					webinarDataForPayment ? webinarDataForPayment : webinarDetails
+				}
 				onProceed={handleProceedToPayment}
 			/>
 		</>

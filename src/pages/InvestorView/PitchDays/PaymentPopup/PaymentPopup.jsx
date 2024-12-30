@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
+// import {
+// 	createPaymentSessionToJoinWebinar,
+// 	varifyPaymentToJoinWebinar,
+// } from "../../../../Service/user";
 import "./PaymentPopup.scss";
 
-const PaymentPopup = ({ isOpen, onClose, webinarDetails, onProceed }) => {
+const PaymentPopup = ({
+	isOpen,
+	onClose,
+	webinarDetails,
+	onProceed,
+	// setPaymentStatus,
+}) => {
 	const [userDetails, setUserDetails] = useState({
 		name: "",
 		email: "",
@@ -35,6 +45,10 @@ const PaymentPopup = ({ isOpen, onClose, webinarDetails, onProceed }) => {
 		onClose();
 	};
 
+	const discountedPrice = (webinar) => {
+		return (webinar.price * (1 - webinar.discount / 100)).toFixed(0);
+	};
+
 	if (!isOpen) return null;
 
 	return (
@@ -60,14 +74,6 @@ const PaymentPopup = ({ isOpen, onClose, webinarDetails, onProceed }) => {
 							<span className="value">{webinarDetails.description}</span>
 						</div>
 						<div className="detail-item">
-							<span className="label">Price:</span>
-							<span className="value">₹{webinarDetails.price}</span>
-						</div>
-						<div className="detail-item">
-							<span className="label">Duration:</span>
-							<span className="value">{webinarDetails.duration} minutes</span>
-						</div>
-						<div className="detail-item">
 							<span className="label">Date:</span>
 							<span className="value">
 								{format(new Date(webinarDetails.date), "MMMM d, yyyy")}
@@ -86,8 +92,20 @@ const PaymentPopup = ({ isOpen, onClose, webinarDetails, onProceed }) => {
 							</span>
 						</div>
 						<div className="detail-item">
+							<span className="label">Duration:</span>
+							<span className="value">{webinarDetails.duration} minutes</span>
+						</div>
+						<div className="detail-item">
 							<span className="label">Platform:</span>
 							<span className="value">Google Meet</span>
+						</div>
+						<div className="detail-item">
+							<span className="label">Price:</span>
+							<span className="value">₹{webinarDetails.price}</span>
+						</div>
+						<div className="detail-item">
+							<span className="label">Discounted Price:</span>
+							<span className="value">₹{discountedPrice(webinarDetails)}</span>
 						</div>
 					</div>
 				</div>

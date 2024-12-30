@@ -152,7 +152,9 @@ const API = Object.freeze({
 	createWebinar: `${baseUrl}/webinars/createWebinar`,
 	getAllWebinars: `${baseUrl}/webinars/getWebinars`,
 	getWebinarsByOnelinkId: `${baseUrl}/webinars/getWebinarsByOnelinkId`,
-	deleteWebinar: `${baseUrl}/webinars/deleteWebinar`
+	deleteWebinar: `${baseUrl}/webinars/deleteWebinar`,
+	createPaymentSessionToJoinWebinar: `${baseUrl}/webinars/createPaymentSession`,
+	varifyPaymentToJoinWebinar: `${baseUrl}/webinars/verifyPayment`,
 });
 
 export default API;

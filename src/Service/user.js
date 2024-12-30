@@ -1830,3 +1830,29 @@ export const deleteWebinar = async (webinarId) => {
 		throw error;
 	}
 };
+
+export const createPaymentSessionToJoinWebinar = async (data) => {
+	try {
+		const response = await axiosInstance.post(
+			`${API.createPaymentSessionToJoinWebinar}`,
+			data
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const varifyPaymentToJoinWebinar = async (data) => {
+	try {
+		const response = await axiosInstance.post(
+			`${API.varifyPaymentToJoinWebinar}`,
+			data
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
