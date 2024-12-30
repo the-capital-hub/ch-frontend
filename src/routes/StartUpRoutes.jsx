@@ -3,6 +3,9 @@ import { Route } from "react-router-dom";
 import PrivateRoute from "../components/Routes/PrivateRoutes";
 import SinglePost from "../components/SinglePost/SinglePost";
 import SuspenseLoader from "../components/SuspenseLoader/SuspenseLoader";
+import MyCommunity from "../components/Investor/Community/MyCommunity";
+import NewCommunityModal from "../components/Investor/Community/NewCommunityModal";
+import Community from "../components/Investor/Community/Community";
 // import { selectTheme } from "../Store/features/design/designSlice";
 // import { useSelector } from "react-redux";
 
@@ -214,6 +217,23 @@ function StartUpRoutes() {
 					</Suspense>
 				}
 			/>
+			 <Route
+      path="/myCommunity"
+      element={
+        <Suspense fallback={<SuspenseLoader />}>
+          <MyCommunity />
+        </Suspense>
+        }
+      />
+	  <Route
+      path="/CreateCommunity"
+      element={
+        <Suspense fallback={<SuspenseLoader />}>
+          <NewCommunityModal />
+        </Suspense>
+        }
+      />
+	
 			<Route
 				path="/createpost"
 				element={

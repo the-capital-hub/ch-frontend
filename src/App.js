@@ -33,6 +33,8 @@ import { Capacitor } from "@capacitor/core";
 import { App as CapacitorApp } from "@capacitor/app";
 import AppUrlListener from "./pages/AppUrlListener/AppUrlListener";
 import AdminRoutes from "./routes/AdminRoutes";
+import CommunityRoutes from "./routes/CommunityRoutes";
+import Community from "./components/Investor/Community/Community";
 
 function App() {
 	const dispatch = useDispatch();
@@ -84,6 +86,8 @@ function App() {
 					{/* Public Routes */}
 					{PublicRoutes()}
 
+					{/* Community Routes */}
+				<Route path="/community/:communityName" element={<Community />} / >
 					{/* Chat */}
 					<Route path="/chats" element={<Chats />} />
 

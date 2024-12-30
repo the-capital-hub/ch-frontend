@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { selectTheme } from "../../../Store/features/design/designSlice";
 
 function SavePostPopUP({
+	communityId,
 	postId,
 	onClose,
 	savedPostStatus,
@@ -27,7 +28,7 @@ function SavePostPopUP({
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 	const dispatch = useDispatch();
 
-	const buttonColor = isInvestor ? "#d3f36b" : "#fd5901";
+	const buttonColor = communityId ? "linear-gradient(90deg, #FD5901 0%, #9306FF 100%) !important;" : isInvestor ? "#d3f36b" : "#fd5901";
 	const buttonText = isInvestor ? "#000" : "#fff";
 
 	useEffect(() => {
@@ -119,7 +120,7 @@ function SavePostPopUP({
 						<button
 							onClick={handleSavePost}
 							style={{ background: buttonColor, color: buttonText }}
-							className="ok_button py-2 px-5"
+							className={`ok_button py-2 px-5 ${communityId? "community-color" : ""}`}
 						>
 							Save
 						</button>

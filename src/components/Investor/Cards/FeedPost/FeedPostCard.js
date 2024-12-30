@@ -104,6 +104,7 @@ const FeedPostCard = ({
 	setPostData,
 	isSubscribed,
 	isTopVoice,
+	communityId
 }) => {
 	const [showComment, setShowComment] = useState(isSinglePost);
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -795,7 +796,7 @@ const FeedPostCard = ({
 												<span className="top-voice-text">Top Voice</span>
 											</span>
 										)}
-									{loggedInUser._id !== userId ? (
+									{(!communityId && loggedInUser._id !== userId) ? (
 										connectionSent ? (
 											<span className="request_sent_feed d-inline">
 												Request Sent
@@ -1040,9 +1041,11 @@ const FeedPostCard = ({
 														left: 0,
 														top: 0,
 														height: "100%",
-														background: "rgba(253, 89, 1, 0.1)",
+														background: communityId 
+														? "linear-gradient(90deg, rgba(253, 89, 1, 0.6) 0%, rgba(147, 6, 255, 0.6) 100%)" 
+														: "rgba(253, 89, 1, 0.1)",
 														transition: "width 0.3s ease",
-													}}
+													  }}
 												/>
 												<span className="option-text">{option.option}</span>
 												<span className="vote-count">
@@ -1051,7 +1054,7 @@ const FeedPostCard = ({
 											</div>
 											<button
 												className={`vote-button ${
-													hasVoted ? "votedButton" : ""
+													hasVoted ? "community-color" : ""
 												}`}
 												onClick={(e) => {
 													e.stopPropagation();
@@ -1337,10 +1340,12 @@ const FeedPostCard = ({
 											onClick={() => setShowRepostOptions(!showRepostOptions)}
 											style={{
 												cursor: "pointer",
-												backgroundColor: "#fd5901",
 												padding: "0.5rem 0.75rem",
 												borderRadius: "2.5rem",
-											}}
+												backgroundColor: communityId ? "transparent" : "#fd5901", 
+												background: communityId ? "linear-gradient(90deg, #FD5901 0%, #9306FF 100%)" : "none", 
+												color: communityId ? "white" : "initial", 
+											  }}
 										>
 											<BiRepost
 												style={{
@@ -1764,6 +1769,7 @@ const FeedPostCard = ({
 
 				{showSavePopUp && (
 					<SavePostPopUP
+						communityId = {communityId}
 						postId={postId}
 						savedPostStatus={receiveSavedPostStatus}
 						onClose={handleCloseSavePopup}

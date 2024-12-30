@@ -87,7 +87,7 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 	};
 
 	function handleMyCommunityClick() {
-		navigate("/chats?isCommunityOpen=true");
+		navigate("/MyCommunity");
 	}
 
 	const [touchStartX, setTouchStartX] = useState(null);

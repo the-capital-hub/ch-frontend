@@ -82,7 +82,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 	};
 
 	function handleMyCommunityClick() {
-		navigate("/chats?isCommunityOpen=true");
+		navigate("/MyCommunity");
 		if (isMobileView) setSidebarCollapsed(true);
 	}
 

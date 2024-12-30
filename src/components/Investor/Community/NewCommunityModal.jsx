@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import InvestorNavbar from "../../Investor/InvestorNavbar/InvestorNavbar";
 import CreateCommunityChat from "../../../Images/Chat/CreateCommunityChat.png";
-import "./NewCommunityModal.scss";
+import "./NewCommunityMod.scss";
 import { Navigate, useNavigate } from "react-router-dom";
 import { environment } from "../../../environments/environment";
 import axios from 'axios';
@@ -10,6 +10,7 @@ import { getBase64 } from "../../../utils/getBase64";
 import { selectLoggedInUserId } from "../../../Store/features/user/userSlice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { ToastContainer } from 'react-toastify';
 
 export default function NewCommunityModal() {
 
@@ -75,8 +76,8 @@ export default function NewCommunityModal() {
 	  
 	if (isSuccess) {
 		return (
-			<div className="community-creation-page" style={{minHeight: "100vh"}}>
-				
+			<div className="community-creation-page" style={{maxHeight: "80vh"}}>
+				<ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
 				<InvestorNavbar />
 				<button className="back-button" data-bs-dismiss="modal">
 					<BsArrowLeft /> Back
@@ -120,11 +121,12 @@ export default function NewCommunityModal() {
 	}
 
 	return (
-		<div className="community-creation-page" style={{minHeight: "100vh"}}>
+		<div className="community-creation-page" style={{maxHeight: "80vh", marginTop:"3rem"}}>
+			<ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
 			<InvestorNavbar />
-						<button className="back-button" data-bs-dismiss="modal">
+						{/* <button className="back-button" data-bs-dismiss="modal">
 				<BsArrowLeft /> Back
-			</button>
+			</button> */}
 
 			<div className="content-container">
 				<div className="left-section">
