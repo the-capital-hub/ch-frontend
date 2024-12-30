@@ -90,69 +90,163 @@ const PitchDays = () => {
 		}
 	};
 
+	// const handleProceedToPayment = async (userDetails) => {
+	// 	console.log("User Details:", userDetails);
+	// 	// Handle payment logic here
+	// 	const dataForPaymentSession = {
+	// 		name: userDetails.name,
+	// 		email: userDetails.email,
+	// 		mobile: userDetails.mobile,
+	// 		amount: discountedPrice(webinarDataForPayment),
+	// 	};
+	// 	const dataForPaymentVerification = {
+	// 		name: userDetails.name,
+	// 		email: userDetails.email,
+	// 		mobile: userDetails.mobile,
+	// 		orderId,
+	// 		webinarId: webinarDataForPayment._id,
+	// 	};
+
+	// 	// Initialize payment flow
+	// 	const cashfree = await initializeCashfree();
+
+	// 	await createPaymentSessionToJoinWebinar(dataForPaymentSession)
+	// 		.then((data) => {
+	// 			console.log("Data:", data.data);
+	// 			console.log("Order ID-1:", data.data.order_id);
+	// 			setOrderId(data.data.order_id);
+	// 			setSessionId(data.data.payment_session_id);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.log("Error creating payment session:", error);
+	// 		});
+
+	// 	// Handle payment checkout
+	// 	await cashfree.checkout({
+	// 		paymentSessionId: sessionId,
+	// 		redirectTarget: "_modal",
+	// 	});
+
+	// 	if (orderId) {
+	// 		await varifyPaymentToJoinWebinar(dataForPaymentVerification)
+	// 			.then((data) => {
+	// 				setPaymentStatus(data.data.status);
+	// 				setPaymentId(data.data.payment_id);
+	// 				if (data.data.status === "SUCCESS") {
+	// 					alert("Payment Success");
+	// 					window.open(
+	// 						webinarDataForPayment.link,
+	// 						"_blank",
+	// 						"noopener,noreferrer"
+	// 					);
+	// 				} else {
+	// 					alert("Payment Failed");
+	// 				}
+	// 			})
+	// 			.catch((error) => {
+	// 				console.log("Error creating payment session:", error);
+	// 			});
+	// 	}
+	// };
+
 	const handleProceedToPayment = async (userDetails) => {
-		console.log("User Details:", userDetails);
-		// Handle payment logic here
-		const dataForPaymentSession = {
-			name: userDetails.name,
-			email: userDetails.email,
-			mobile: userDetails.mobile,
-			amount: discountedPrice(webinarDataForPayment),
-		};
-		const dataForPaymentVerification = {
-			name: userDetails.name,
-			email: userDetails.email,
-			mobile: userDetails.mobile,
-			orderId,
-			webinarId: webinarDataForPayment._id,
-		};
+		try {
+			console.log("User Details:", userDetails);
 
-		// Initialize payment flow
-		const cashfree = await initializeCashfree();
+			// Prepare payment data
+			const dataForPaymentSession = {
+				name: userDetails.name,
+				email: userDetails.email,
+				mobile: userDetails.mobile,
+				amount: discountedPrice(webinarDataForPayment),
+			};
 
-		await createPaymentSessionToJoinWebinar(dataForPaymentSession)
-			.then((data) => {
-				console.log("Data:", data.data);
-				console.log("Order ID-1:", data.data.order_id);
-				setOrderId(data.data.order_id);
-				setSessionId(data.data.payment_session_id);
-			})
-			.catch((error) => {
-				console.log("Error creating payment session:", error);
+			const dataForPaymentVerification = {
+				name: userDetails.name,
+				email: userDetails.email,
+				mobile: userDetails.mobile,
+				orderId,
+				webinarId: webinarDataForPayment._id,
+			};
+
+			// Initialize payment flow
+			const cashfree = await initializeCashfree();
+
+			// Create payment session
+			const sessionResponse = await createPaymentSessionToJoinWebinar(
+				dataForPaymentSession
+			);
+			console.log("Session Data:", sessionResponse.data);
+
+			const newOrderId = sessionResponse.data.order_id;
+			const newSessionId = sessionResponse.data.payment_session_id;
+
+			setOrderId(newOrderId);
+			setSessionId(newSessionId);
+
+			// Handle checkout in a Promise to ensure completion
+			await new Promise((resolve, reject) => {
+				cashfree
+					.checkout({
+						paymentSessionId: newSessionId,
+						redirectTarget: "_modal",
+						// redirectTarget: "_self", // Changed to _self to avoid modal issues
+					})
+					.then((result) => {
+						console.log("Checkout result:", result);
+						resolve(result);
+					})
+					.catch((error) => {
+						console.error("Checkout error:", error);
+						reject(error);
+					});
 			});
 
-		// Handle payment checkout
-		await cashfree.checkout({
-			paymentSessionId: sessionId,
-			redirectTarget: "_modal",
-		});
-
-		if (orderId) {
-			await varifyPaymentToJoinWebinar(dataForPaymentVerification)
-				.then((data) => {
-					setPaymentStatus(data.data.status);
-					setPaymentId(data.data.payment_id);
-					if (data.data.status === "SUCCESS") {
-						alert("Payment Success");
-						window.open(
-							webinarDataForPayment.link,
-							"_blank",
-							"noopener,noreferrer"
-						);
-					} else {
-						alert("Payment Failed");
-					}
-				})
-				.catch((error) => {
-					console.log("Error creating payment session:", error);
+			// Verify payment after checkout completes
+			if (newOrderId) {
+				const verificationResponse = await varifyPaymentToJoinWebinar({
+					...dataForPaymentVerification,
+					orderId: newOrderId,
 				});
+
+				setPaymentStatus(verificationResponse.data.status);
+				setPaymentId(verificationResponse.data.payment_id);
+
+				if (verificationResponse.data.status === "SUCCESS") {
+					// Show success message first
+					await new Promise((resolve) => {
+						alert("Payment Success");
+						resolve();
+					});
+
+					// Then try to open the link
+					try {
+						const webinarWindow = window.open(
+							webinarDataForPayment.link,
+							"_blank"
+						);
+
+						if (webinarWindow === null) {
+							alert(
+								"Please allow popups for this website to access the webinar link"
+							);
+						}
+					} catch (error) {
+						console.error("Error opening webinar link:", error);
+						alert(
+							"Unable to open webinar link automatically. Please check if popups are blocked."
+						);
+					}
+				} else {
+					alert("Payment Failed");
+				}
+			}
+		} catch (error) {
+			console.error("Payment flow error:", error);
+			alert("An error occurred during the payment process. Please try again.");
 		}
 	};
 
-	// const joinWebinar = async () => {
-	// 	// Handle join button click
-	// 	window.open(webinarDataForPayment.link, "_blank", "noopener,noreferrer");
-	// };
 	return (
 		<>
 			<div className="pitch-days-container">
