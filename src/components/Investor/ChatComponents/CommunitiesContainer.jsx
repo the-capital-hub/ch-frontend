@@ -73,20 +73,10 @@ export default function CommunitiesContainer({
           id="AddNewCommunity"
           launchRef={launchRef}
         ></ModalBsLauncher>
-        {/* Add new Modal is added to chats.js because it was not triggered in mobileview */}
-        {/* <ModalBSContainer isStatic={false} id="AddNewCommunity">
-          <ModalBSHeader
-            title={"Create a Community"}
-            className={loggedInUser.isInvestor === "true" ? "yellow__heading" : "orange__heading"}
-          />
-          <ModalBSBody>
-            <NewCommunityModal theme={loggedInUser.isInvestor === "true" ? "investor" : ""} />
-          </ModalBSBody>
-        </ModalBSContainer> */}
+        
 
         {/* Render communities list */}
         <div className="my__communities d-flex flex-column">
-          {/* <h5 className="px-3 m-0 py-3">My Communities</h5> */}
           {getCommunity?.map((community, index) => {
             return (
               <CommunityCard

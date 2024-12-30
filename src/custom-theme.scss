@@ -152,7 +152,8 @@
 	--d-l-grey: var(--bs-gray-900);
 	--tag-box: #c6c6c636;
 	--white-to-dgrey: var(--bs-light);
-  --text-color: #000000;
+	--text-color: #000000;
+	--background-color: #ffffff;
 
 	// Chat page colors
 	--chat-page-bg: var(--bs-gray-200);
@@ -321,7 +322,7 @@ $color-mode-type: data;
 	// Custom colors
 	--startup-bg: #060810;
 	--investor-bg: #060810;
-	--white-to-grey: #11131A;
+	--white-to-grey: #11131a;
 	--white-to-grey-container: #18191dcc;
 	--w-t-n: #ddff71;
 	--w-t-b: white;
@@ -330,12 +331,13 @@ $color-mode-type: data;
 	--d-l-grey: var(--bs-gray-100);
 	--tag-box: #979797;
 	--darkMode-currentTheme: var(--currentTheme);
-  --text-color: #ffffff;
+	--text-color: #ffffff;
+	--background-color: #000000;
 
 	// Chat page colors
 	--chat-page-bg: var(--bs-black);
 	--chat-sidebar-chat-border: var(--bs-gray-700);
-  --chat-page-nav: #1d1d1d;
+	--chat-page-nav: #1d1d1d;
 
 	.card {
 		--bs-card-bg: #1e1f24;

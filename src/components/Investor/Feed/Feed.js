@@ -218,7 +218,7 @@ const Feed = () => {
 	// newPost
 
 	useEffect(() => {
-		document.title = "Homie | The Capital Hub";
+		document.title = "Home | The Capital Hub";
 		dispatch(setPageTitle("Home"));
 	}, [dispatch]);
 

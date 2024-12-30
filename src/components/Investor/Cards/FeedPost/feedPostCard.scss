@@ -894,3 +894,12 @@
 		display: none;
 	}
 }
+
+.feedpostcard_comment_count_badge {
+	right: -30px;
+	top: -5px;
+
+	// @media (max-width: 480px) {
+	// 	right: 0px;
+	// }
+}

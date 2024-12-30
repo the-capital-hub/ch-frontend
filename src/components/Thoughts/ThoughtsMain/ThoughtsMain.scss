@@ -38,6 +38,7 @@
 	width: 100%;
 	height: calc(100dvh - 145px);
 	box-sizing: border-box;
+	font-family: outfit, sans-serif;
 }
 
 // Navbar Styles
@@ -78,6 +79,7 @@
 	&-filter-button {
 		color: var(--text-color);
 		background: none;
+		font-size: 12px;
 		border: none;
 		padding: 0.5rem 1rem;
 		border-radius: 9999px;
@@ -90,9 +92,9 @@
 		}
 	}
 
-	&-mobile-toggle {
-		display: none;
-	}
+	// &-mobile-toggle {
+	// 	display: none;
+	// }
 
 	&-create-button {
 		@include flex-center;
@@ -104,6 +106,13 @@
 		border-radius: 9999px;
 		cursor: pointer;
 		@include hover-effect;
+
+		@media (max-width: 480px) {
+			position: fixed;
+			bottom: 65px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
 	}
 }
 
@@ -112,7 +121,10 @@
 	gap: 1.5rem;
 	padding: 0.5rem 1rem;
 	width: 100%;
-	height: 90%;
+	height: 95%;
+	@media (max-width: 480px) {
+		height: calc(90% - 42px);
+	}
 
 	&-topics {
 		width: 20%;
@@ -124,7 +136,7 @@
 	}
 
 	&-subtitle {
-		font-size: 1.125rem;
+		font-size: 1rem;
 		font-weight: 600;
 		margin-bottom: 1rem;
 		text-align: center;
@@ -133,6 +145,11 @@
 	&-articles {
 		flex: 1;
 		overflow-y: auto;
+
+		&::-webkit-scrollbar {
+			display: none;
+			width: 0;
+		}
 	}
 }
 
@@ -150,7 +167,8 @@
 // Topic Tag Styles
 .topic-tag {
 	width: 100%;
-	padding: 0.5rem 1rem;
+	padding: 10px;
+	font-size: 12px;
 	border: none;
 	color: black;
 	background-color: #b5b4b4;
@@ -178,7 +196,7 @@
 	}
 
 	&-title {
-		font-size: 1.25rem;
+		font-size: 1rem;
 		font-weight: 700;
 		margin-bottom: 0.5rem;
 	}
@@ -244,7 +262,7 @@
 
 		.thoughts-navbar-buttons {
 			width: 100%;
-			display: flex;
+			display: none;
 			align-items: center;
 			justify-content: space-between;
 			gap: 1rem;
@@ -257,13 +275,14 @@
 		}
 
 		&-filters {
-			display: none;
-			flex-direction: column;
+			display: flex;
+			// display: none;
+			// flex-direction: column;
 			width: 100%;
 
-			&.mobile-open {
-				display: flex;
-			}
+			// &.mobile-open {
+			// 	display: flex;
+			// }
 		}
 
 		&-mobile-toggle {
@@ -290,7 +309,7 @@
 		&-topics {
 			width: 100%;
 			// margin-top: 1rem;
-			overflow: hidden;//
+			overflow: hidden; //
 
 			.thoughts-topics-container {
 				display: flex;
@@ -323,11 +342,11 @@
 		// 		padding: 1rem 0;
 
 		// 		// Hide scrollbar but keep functionality
-				// scrollbar-width: none; /* Firefox */
-				// -ms-overflow-style: none; /* IE and Edge */
-				// &::-webkit-scrollbar {
-				// 	display: none; /* Chrome, Safari, Opera */
-				// }
+		// scrollbar-width: none; /* Firefox */
+		// -ms-overflow-style: none; /* IE and Edge */
+		// &::-webkit-scrollbar {
+		// 	display: none; /* Chrome, Safari, Opera */
+		// }
 
 		// 		// Auto-scroll animation
 		// 		@keyframes scroll {

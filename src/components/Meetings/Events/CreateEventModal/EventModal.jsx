@@ -7,7 +7,7 @@ const EventModal = ({ isOpen, onClose, onSubmit }) => {
 		title: "",
 		description: "",
 		duration: 30,
-		isPrivate: false,
+		eventType: "Public",
 		price: 0,
 		discount: 0,
 	});
@@ -27,7 +27,7 @@ const EventModal = ({ isOpen, onClose, onSubmit }) => {
 			title: "",
 			description: "",
 			duration: 30,
-			isPrivate: false,
+			eventType: "Public",
 			price: 0,
 			discount: 0,
 		});
@@ -80,13 +80,14 @@ const EventModal = ({ isOpen, onClose, onSubmit }) => {
 					<div className="form-group">
 						<label htmlFor="privacy">Event Privacy</label>
 						<select
-							id="isPrivate"
-							name="isPrivate"
-							value={eventData.isPrivate}
+							id="eventType"
+							name="eventType"
+							value={eventData.eventType}
 							onChange={handleChange}
 						>
-							<option value="true">Private</option>
-							<option value="false">Public</option>
+							<option value="Private">Private</option>
+							<option value="Public">Public</option>
+							<option value="Pitch Day">Pitch Day</option>
 						</select>
 					</div>
 

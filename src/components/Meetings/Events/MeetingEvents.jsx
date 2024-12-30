@@ -20,9 +20,9 @@ const getRandomLightColor = () => {
 	return `rgb(${r}, ${g}, ${b})`;
 };
 
-const Spinner = ({isInvestor}) => (
+const Spinner = ({ isInvestor }) => (
 	<div className="loader-container">
-		<div className={`${isInvestor? 'investor-loader': 'loader'}`}>
+		<div className={`${isInvestor ? "investor-loader" : "loader"}`}>
 			<div className="loader-inner"></div>
 		</div>
 	</div>
@@ -68,7 +68,7 @@ const EventsList = () => {
 	};
 
 	useEffect(() => {
-		setIsInvestor(loggedInUser.isInvestor)
+		setIsInvestor(loggedInUser.isInvestor);
 		fetchEvents();
 	}, []);
 
@@ -144,7 +144,7 @@ const EventsList = () => {
 	};
 
 	if (loading) {
-		return <Spinner isInvestor={isInvestor}/>;
+		return <Spinner isInvestor={isInvestor} />;
 	}
 
 	return (
@@ -191,7 +191,7 @@ const EventsList = () => {
 										&nbsp;&nbsp;
 										<span>{event.duration} mins</span> &nbsp;&nbsp;
 										<span className="separator">|</span> &nbsp;&nbsp;
-										<span>{event.isPrivate ? "Private" : "Public"}</span>
+										<span>{event.eventType}</span>
 									</div>
 									<div className="leftRight">
 										{event.price > 0 ? (
