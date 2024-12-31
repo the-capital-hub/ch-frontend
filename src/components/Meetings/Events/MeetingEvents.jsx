@@ -28,7 +28,7 @@ const Spinner = ({ isInvestor }) => (
 	</div>
 );
 
-const EventsList = () => {
+const EventsList = ({communityId}) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [events, setEvents] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -46,26 +46,38 @@ const EventsList = () => {
 	const fetchEvents = () => {
 		setLoading(true);
 		fetch(`${baseUrl}/meetings/getEvents`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
-			},
+		  method: "GET",
+		  headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		  },
 		})
-			.then((res) => res.json())
-			.then((data) => {
-				setLoading(false);
-				if (data && data.data) {
-					setEvents(data.data);
-				} else {
-					console.error("Unexpected data format:", data);
-				}
-			})
-			.catch((error) => {
-				setLoading(false);
-				console.error("Error fetching events:", error);
-			});
-	};
+		  .then((res) => res.json())
+		  .then((data) => {
+			setLoading(false);
+			if (data && data.data) {
+			  let eventsToSet = data.data;
+	  
+			  // If communityId is present, filter events by matching communityId
+			  if (communityId) {
+				eventsToSet = eventsToSet.filter(event => event.communityId === communityId);
+			  }
+			  else{
+				eventsToSet = eventsToSet.filter(event => !event.communityId);
+			  }
+	  
+			  // Set the filtered or all events to state
+			  setEvents(eventsToSet);
+			} else {
+			  console.error("Unexpected data format:", data);
+			}
+		  })
+		  .catch((error) => {
+			setLoading(false);
+			console.error("Error fetching events:", error);
+		  });
+	  };
+	  
 
 	useEffect(() => {
 		setIsInvestor(loggedInUser.isInvestor);
@@ -149,7 +161,7 @@ const EventsList = () => {
 
 	return (
 		<div className="events-container">
-			<div className="events-header">
+			{(!communityId && (<div className="events-header">
 				<h1>Events</h1>
 				{userAvailability ? (
 					<button
@@ -168,7 +180,7 @@ const EventsList = () => {
 						<span>Set Availability</span>
 					</button>
 				)}
-			</div>
+			</div>))}
 
 			{events.length === 0 ? (
 				<div className="no-events">No events found.</div>

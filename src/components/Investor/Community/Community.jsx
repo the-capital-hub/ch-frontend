@@ -26,6 +26,11 @@ import { getAllPostsAPI } from "../../../Service/user";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SkeletonLoader from "../Feed/Components/SkeletonLoader/SkeletonLoader";
 import UpdateCommunityForm from "./UpdateCommunityForm";
+import EventsList from "../../Meetings/Events/MeetingEvents";
+import PeopleTab from "./PeopleTab/PeopleTab";
+import Products from "./Products/Products";
+import About from './About/About';
+import { Toaster, toast } from "react-hot-toast";
 
 const Community = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -41,7 +46,7 @@ const Community = () => {
 	const theme = useSelector(selectTheme);
 
 
-   const { communityName } = useParams();
+   const { communityId } = useParams();
    const [posts, setPosts] = useState([]);
    const [community, setCommunity] = useState(null);
    const [activeTab, setActiveTab] = useState("home");
@@ -70,13 +75,13 @@ const Community = () => {
 
   useEffect(() => {
         fetchCommunityDetails();
-      }, [communityName]);
+      }, [communityId]);
     
       const fetchCommunityDetails = async () => {
         try {
           const token = localStorage.getItem("accessToken");
           const response = await axios.get(
-            `${environment.baseUrl}/communities/getCommunityByName/${communityName}`,
+            `${environment.baseUrl}/communities/getCommunityById/${communityId}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -89,7 +94,7 @@ const Community = () => {
       };
   
     
-      const isAdmin = community?.adminId === loggedInUserId;
+      const isAdmin = community?.adminId._id === loggedInUserId;
     
       // const openCreatePostPopup = () => {
       //   setPopupOpen(true);
@@ -306,15 +311,36 @@ const Community = () => {
           case "settings":
             return <UpdateCommunityForm community={community} />;
           case "about":
-            return <div className="about-section">{community?.about}</div>;
-          // Add other cases for products, events, and people tabs
+            return <About community={community} />;
+          case "events":
+            return <EventsList communityId={community._id}/>
+          case "people":
+            return <PeopleTab community={community} />;
+          case "products":
+            return <Products community={community} />;  
           default:
             return <div>Content coming soon...</div>;
         }
       };
 
+      const handlePostCreated = (newPost) => {
+        setAllPosts(prevPosts => [newPost, ...prevPosts]);
+        setPopupOpen(false);
+        toast.success('Post created successfully!');
+      };
+
       return (
         <div className="community-page" data-bs-theme={theme}>
+          <Toaster 
+            position="top-right"
+            toastOptions={{
+              duration: 5000,
+              style: {
+                background: '#363636',
+                color: '#fff',
+              },
+            }}
+          />
           <InvestorNavbar />
           <div className="community-header">
             <div className="community-info">
@@ -386,7 +412,7 @@ const Community = () => {
                   setPopupOpen={setPopupOpen}
                   popupOpen={popupOpen}
                   communityId={community?._id}
-                  appendDataToAllPosts={appendDataToAllPosts}
+                  appendDataToAllPosts={handlePostCreated}
                 />
               )}
             </div>

@@ -6,7 +6,8 @@
   margin: 0 auto;
 
   h2 {
-    color: var(--text-color);
+    background: linear-gradient(90deg, #FD5901 0%, #9306FF 30%);
+    -webkit-background-clip: text;
     margin-bottom: 2rem;
     font-size: 1.5rem;
     text-align: center;
@@ -74,6 +75,44 @@
 
     &:hover {
       opacity: 0.9;
+    }
+  }
+
+  .term-input-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+
+    input {
+      flex: 1;
+    }
+
+    .remove-term {
+      padding: 0.5rem 1rem;
+      background: #ff4444;
+      color: white;
+      border: none;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      
+      &:hover {
+        background: #cc0000;
+      }
+    }
+  }
+
+  .add-term {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    
+    &:hover {
+      background: #45a049;
     }
   }
 }

@@ -55,7 +55,7 @@ export default function MyCommunity() {
         
         <div className="communities-list">
           {communities.map((community) => (
-            <div key={community._id} className="community-card" onClick={() => navigate(`/community/${community.name}`)}>
+            <div key={community._id} className="community-card" onClick={() => navigate(`/community/${community._id}`)}>
               <div className="community-image">
                 <img 
                   src={community.image || "default-community-image.png"} 
@@ -63,7 +63,12 @@ export default function MyCommunity() {
                 />
               </div>
               <div className="community-info">
-                <h3>{community.name}</h3>
+                <div className="name-and-role">
+                  <h3>{community.name}</h3>
+                  <span className={`status ${community.adminId === loggedInUserId ? 'owner' : 'joined'}`}>
+                    {community.adminId === loggedInUserId ? 'Owner' : 'Member'}
+                  </span>
+                </div>
                 <p className="size">{community.size}</p>
                 <div className="stats">
                   <span>{community.members.length + 1} members</span>

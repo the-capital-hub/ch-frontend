@@ -6,6 +6,7 @@ import SuspenseLoader from "../components/SuspenseLoader/SuspenseLoader";
 import MyCommunity from "../components/Investor/Community/MyCommunity";
 import NewCommunityModal from "../components/Investor/Community/NewCommunityModal";
 import Community from "../components/Investor/Community/Community";
+import ExploreCommunities from "../components/Investor/Community/ExploreCommunity";
 // import { selectTheme } from "../Store/features/design/designSlice";
 // import { useSelector } from "react-redux";
 
@@ -201,6 +202,14 @@ function StartUpRoutes() {
 					</Suspense>
 				}
 			/>
+			 <Route
+      path="ExploreCommunities"
+      element={
+        <Suspense fallback={<SuspenseLoader />}>
+          <ExploreCommunities />
+        </Suspense>
+        }
+      />
 			<Route
 				path="/news"
 				element={

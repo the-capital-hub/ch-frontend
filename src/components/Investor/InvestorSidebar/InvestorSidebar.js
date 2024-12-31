@@ -85,6 +85,10 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 		navigate("/MyCommunity");
 		if (isMobileView) setSidebarCollapsed(true);
 	}
+	function handleExploreCommunityClick() {
+		navigate("/ExploreCommunities");
+		if (isMobileView) setSidebarCollapsed(true);
+	}
 
 	const handleLinkClick = () => {
 		if (isMobileView) setSidebarCollapsed(true);
@@ -393,7 +397,13 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 													className="sidebar__community__btn shadow-none"
 													onClick={handleMyCommunityClick}
 												>
-													My Community
+													My Communities
+												</button>
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={handleExploreCommunityClick}
+												>
+													Explore Communities
 												</button>
 											</div>
 										</details>

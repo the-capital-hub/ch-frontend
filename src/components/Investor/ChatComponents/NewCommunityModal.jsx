@@ -24,6 +24,7 @@ export default function NewCommunityModal() {
 	const [isSuccess, setIsSuccess] = useState(false);
 	const [communityUrl, setCommunityUrl] = useState("");
 	const navigate = useNavigate();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleFileChange = (event) => {
 		const file = event.target.files[0];
@@ -40,39 +41,56 @@ export default function NewCommunityModal() {
 	];
 
 	const handleCreateCommunity = async () => {
+		if (!communityName.trim()) {
+			toast.error('Please enter a community name');
+			return;
+		}
+		if (!communitySize) {
+			toast.error('Please select community size');
+			return;
+		}
+		if (!isFree && !subscriptionAmount) {
+			toast.error('Please enter subscription amount');
+			return;
+		}
+
+		setIsLoading(true);
 		const communityData = {
-		  name: communityName,
-		  size: communitySize,
-		  subscription: isFree ? 'free' : 'paid',
-		  amount: isFree ? null : subscriptionAmount,
-		  adminId: loggedInUserId
+			name: communityName,
+			size: communitySize,
+			subscription: isFree ? 'free' : 'paid',
+			amount: isFree ? null : subscriptionAmount,
+			adminId: loggedInUserId
 		};
 
-		if (selectedFile) {
-			communityData.image = await getBase64(selectedFile);
-		}
-	  
-		const token = localStorage.getItem('accessToken');  
-	  
 		try {
-		  const response = await axios.post(
-			`${baseUrl}/communities/createCommunity`,
-			communityData,
-			{
-			  headers: {
-				Authorization: `Bearer ${token}`, 
-			  },
+			if (selectedFile) {
+				communityData.image = await getBase64(selectedFile);
 			}
-		  );
-		  console.log('Community created:', response.data);
-		  setCommunityUrl(`${baseUrl}/community/${communityName}`);
-		  setIsSuccess(true);
-		} catch (error) {
-		  console.error('Error creating community:', error);
-		  toast.error(error.response?.data?.message || 'Failed to create community');
-		}
-	  };
 	  
+			const token = localStorage.getItem('accessToken');  
+			const response = await axios.post(
+				`${baseUrl}/communities/createCommunity`,
+				communityData,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`, 
+					},
+				}
+			);
+			
+			toast.success('Community created successfully!');
+			setCommunityUrl(`/community/${response.data.data._id}`);
+			setIsSuccess(true);
+		} catch (error) {
+			console.error('Error creating community:', error);
+			
+			toast.error(error.response?.data?.message || 'Failed to create community');
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	if (isSuccess) {
 		return (
 			<div className="community-creation-page" style={{minHeight: "100vh"}}>
@@ -105,10 +123,11 @@ export default function NewCommunityModal() {
 						<h1>Congrats! {communityName} is live!</h1>
 						<div className="community-url-section">
 							<label>Community Page URL</label>
-							<span>{communityUrl}</span>
+							<span>{window.location.origin + communityUrl}</span>
 							<button 
 								className="continue-button"
-								onClick={() => navigate(`/community/${communityName}`)}
+								onClick={() => navigate(`${communityUrl}`)}
+
 							>
 								Continue
 							</button>
@@ -200,9 +219,19 @@ export default function NewCommunityModal() {
 					<button 
 						className="create-community-button" 
 						onClick={handleCreateCommunity} 
-						style={{ backgroundColor: '#FF620E', borderRadius: '60px', color: 'white', padding: '1rem 2rem', marginTop: '20px', width: '100%', maxWidth: '300px', alignSelf: 'center' }}
+						disabled={isLoading}
+						style={{ 
+							backgroundColor: '#FF620E', 
+							borderRadius: '60px', 
+							color: 'white', 
+							padding: '1rem 2rem', 
+							marginTop: '20px', 
+							width: '100%', 
+							maxWidth: '300px', 
+							alignSelf: 'center' 
+						}}
 					>
-						Create Community
+						{isLoading ? 'Creating...' : 'Create Community'}
 					</button>
 				</div>
 			</div>

@@ -16,6 +16,7 @@ const UpdateCommunityForm = ({ community }) => {
     amount: community.amount || "",
     isOpen: community.isOpen || false,
     about: community.about || "",
+    terms_and_conditions: community.terms_and_conditions || [""]
   });
 
   const token = localStorage.getItem("accessToken");
@@ -67,6 +68,24 @@ const UpdateCommunityForm = ({ community }) => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleTermChange = (index, value) => {
+    const newTerms = [...formData.terms_and_conditions];
+    newTerms[index] = value;
+    setFormData({ ...formData, terms_and_conditions: newTerms });
+  };
+
+  const addNewTerm = () => {
+    setFormData({
+      ...formData,
+      terms_and_conditions: [...formData.terms_and_conditions, ""]
+    });
+  };
+
+  const removeTerm = (index) => {
+    const newTerms = formData.terms_and_conditions.filter((_, i) => i !== index);
+    setFormData({ ...formData, terms_and_conditions: newTerms });
   };
 
   return (
@@ -155,6 +174,36 @@ const UpdateCommunityForm = ({ community }) => {
             placeholder="Enter community description"
             rows="4"
           />
+        </div>
+
+        <div className="form-group">
+          <label>Terms and Conditions</label>
+          {formData.terms_and_conditions.map((term, index) => (
+            <div key={index} className="term-input-group">
+              <input
+                type="text"
+                value={term}
+                onChange={(e) => handleTermChange(index, e.target.value)}
+                placeholder={`Term ${index + 1}`}
+              />
+              {formData.terms_and_conditions.length > 1 && (
+                <button 
+                  type="button" 
+                  className="remove-term"
+                  onClick={() => removeTerm(index)}
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+          ))}
+          <button 
+            type="button" 
+            className="add-term"
+            onClick={addNewTerm}
+          >
+            Add Term
+          </button>
         </div>
 
         <button type="submit" >{isLoading ? ("Updating...") : ( "Update Community")}</button>

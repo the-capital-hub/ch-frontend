@@ -87,7 +87,7 @@ function App() {
 					{PublicRoutes()}
 
 					{/* Community Routes */}
-				<Route path="/community/:communityName" element={<Community />} / >
+				<Route path="/community/:communityId" element={<Community />} / >
 					{/* Chat */}
 					<Route path="/chats" element={<Chats />} />
 

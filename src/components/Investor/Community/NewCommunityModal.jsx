@@ -25,6 +25,7 @@ export default function NewCommunityModal() {
 	const [isSuccess, setIsSuccess] = useState(false);
 	const [communityUrl, setCommunityUrl] = useState("");
 	const navigate = useNavigate();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleFileChange = (event) => {
 		const file = event.target.files[0];
@@ -41,39 +42,46 @@ export default function NewCommunityModal() {
 	];
 
 	const handleCreateCommunity = async () => {
+		if (!communityName || !communitySize) {
+			toast.error('Please fill in all required fields');
+			return;
+		}
+
+		setIsLoading(true);
 		const communityData = {
-		  name: communityName,
-		  size: communitySize,
-		  subscription: isFree ? 'free' : 'paid',
-		  amount: isFree ? null : subscriptionAmount,
-		  adminId: loggedInUserId
+			name: communityName,
+			size: communitySize,
+			subscription: isFree ? 'free' : 'paid',
+			amount: isFree ? null : subscriptionAmount,
+			adminId: loggedInUserId
 		};
 
 		if (selectedFile) {
 			communityData.image = await getBase64(selectedFile);
 		}
-	  
-		const token = localStorage.getItem('accessToken');  
-	  
+
+		const token = localStorage.getItem('accessToken');
+
 		try {
-		  const response = await axios.post(
-			`${baseUrl}/communities/createCommunity`,
-			communityData,
-			{
-			  headers: {
-				Authorization: `Bearer ${token}`, 
-			  },
-			}
-		  );
-		  console.log('Community created:', response.data);
-		  setCommunityUrl(`${baseUrl}/community/${communityName}`);
-		  setIsSuccess(true);
+			const response = await axios.post(
+				`${baseUrl}/communities/createCommunity`,
+				communityData,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			setCommunityUrl(`/community/${response.data.data._id}`);
+			setIsSuccess(true);
+			toast.success('Community created successfully!');
 		} catch (error) {
-		  console.error('Error creating community:', error);
-		  toast.error(error.response?.data?.message || 'Failed to create community');
+			toast.error(error.response?.data?.message || 'Failed to create community');
+		} finally {
+			setIsLoading(false);
 		}
-	  };
-	  
+	};
+
 	if (isSuccess) {
 		return (
 			<div className="community-creation-page" style={{maxHeight: "80vh"}}>
@@ -106,10 +114,10 @@ export default function NewCommunityModal() {
 						<h1>Congrats! {communityName} is live!</h1>
 						<div className="community-url-section">
 							<label>Community Page URL</label>
-							<span>{communityUrl}</span>
+							<span>{window.location.origin + communityUrl}</span>
 							<button 
 								className="continue-button"
-								onClick={() => navigate(`/community/${communityName}`)}
+								onClick={() => navigate(`${communityUrl}`)}
 							>
 								Continue
 							</button>
@@ -122,7 +130,18 @@ export default function NewCommunityModal() {
 
 	return (
 		<div className="community-creation-page" style={{maxHeight: "80vh", marginTop:"3rem"}}>
-			<ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
+			<ToastContainer 
+				position="top-right" 
+				autoClose={5000} 
+				hideProgressBar={false}
+				newestOnTop
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="colored"
+			/>
 			<InvestorNavbar />
 						{/* <button className="back-button" data-bs-dismiss="modal">
 				<BsArrowLeft /> Back
@@ -201,10 +220,10 @@ export default function NewCommunityModal() {
 
 					<button 
 						className="create-community-button" 
-						onClick={handleCreateCommunity} 
-						style={{ backgroundColor: '#FF620E', borderRadius: '60px', color: 'white', padding: '1rem 2rem', marginTop: '20px', width: '100%', maxWidth: '300px', alignSelf: 'center' }}
+						onClick={handleCreateCommunity}
+						disabled={isLoading}
 					>
-						Create Community
+						{isLoading ? 'Creating...' : 'Create Community'}
 					</button>
 				</div>
 			</div>

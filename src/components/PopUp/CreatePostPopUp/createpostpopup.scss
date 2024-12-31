@@ -473,9 +473,13 @@
 	flex-direction: column;
 }
 
+.ql-editor.ql-blank::before{
+	color: var(--grey-to-white) !important;
+}
+
 .custom-quill .ql-editor {
 	background-color: inherit;
-	color: var(--d-l-grey);
+	color: var(--d-l-grey) !important;
 	max-width: 60dvw;
 	min-height: 100px !important;
 	height: calc(80dvh - 400px);
@@ -509,7 +513,7 @@
 }
 
 .custom-quill .ql-placeholder {
-	color: var(--placeholder-color);
+	color: var(--placeholder-color) !important;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;

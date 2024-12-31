@@ -890,7 +890,7 @@ const FeedPostCard = ({
 
 										{kebabMenuVisible && (
 											<ul className="kebab_menu border rounded shadow-sm p-3">
-												{userId === loggedInUser?._id && (
+												{userId === loggedInUser?._id && ( !communityId && (
 													<li
 														onClick={() => handleAddToFeatured(postId)}
 														className="d-flex align-items-center gap-1"
@@ -904,7 +904,7 @@ const FeedPostCard = ({
 																<span>Featured</span>
 															)}
 														</span>
-													</li>
+													</li>)
 												)}
 												{userId === loggedInUser?._id && (
 													<li
@@ -926,7 +926,7 @@ const FeedPostCard = ({
 													<span>Report</span>
 												</li>
 												{userId === loggedInUser?._id && (
-													<li
+													!communityId && (<li
 														onClick={() => handleAddToCompanyPost(postId)}
 														className="d-flex align-items-center gap-1"
 														style={{ color: "var(--d-l-grey)" }}
@@ -939,7 +939,7 @@ const FeedPostCard = ({
 																<span>Company</span>
 															)}
 														</span>
-													</li>
+													</li>)
 												)}
 											</ul>
 										)}

@@ -448,7 +448,9 @@ const CreatePostPopUp = ({
 			setSelectedDocument(null);
 			setCropComplete(false);
 			setCurrentCropIndex(null);
+			if(!communityId){
 			setNewPost(Math.random());
+			}
 			handleClose();
 
 			// Handle achievements
@@ -575,7 +577,7 @@ const CreatePostPopUp = ({
 								value={postText}
 								onChange={handleQuillChange}
 								placeholder="What would you like to converse about? Write a post..."
-								modules={{ toolbar: false }} // Hide the toolbar
+								modules={{ toolbar: false }} 
 								formats={[
 									"header",
 									"bold",

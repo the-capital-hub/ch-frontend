@@ -6,6 +6,7 @@ import Achievements from "../pages/StartUp/Achievements/Achievements";
 import MyCommunity from "../components/Investor/Community/MyCommunity";
 import NewCommunityModal from "../components/Investor/Community/NewCommunityModal";
 import Community from "../components/Investor/Community/Community";
+import ExploreCommunities from "../components/Investor/Community/ExploreCommunity";
 
 const InvestorConnection = lazy(() =>
   import("../components/NewInvestor/InvestorConnection/InvestorConnection")
@@ -163,6 +164,14 @@ function InvestorRoutes() {
       element={
         <Suspense fallback={<SuspenseLoader />}>
           <MyCommunity />
+        </Suspense>
+        }
+      />
+       <Route
+      path="ExploreCommunities"
+      element={
+        <Suspense fallback={<SuspenseLoader />}>
+          <ExploreCommunities />
         </Suspense>
         }
       />

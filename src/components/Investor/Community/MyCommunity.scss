@@ -86,11 +86,31 @@
         .community-info {
           flex: 1;
 
-          h3 {
-            font-size: 1.1rem;
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
+          .name-and-role {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
             margin-bottom: 0.5rem;
+
+            h3 {
+              margin: 0;
+            }
+
+            .status {
+              padding: 0.25rem 0.75rem;
+              border-radius: 20px;
+              font-size: 0.8rem;
+              
+              &.owner {
+                background: #FF620E;
+                color: white;
+              }
+              
+              &.joined {
+                background: #2E7D32;
+                color: white;
+              }
+            }
           }
 
           .size {
