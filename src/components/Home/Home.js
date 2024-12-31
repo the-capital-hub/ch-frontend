@@ -1,16 +1,6 @@
 import "./home.scss";
-// import GirlIcon from "../../Images/GirlIcons.png";
-// import laptopIcon from "../../Images/Group 6.svg";
-// import AngelIcon from "../../Images/Group 7.svg";
-// import ManageTeamIcon from "../../Images/Group 8.svg";
-// import ManageClientIcon from "../../Images/Group 9.svg";
-// import ManageInvestortIcon from "../../Images/Group 10.svg";
-// import MentorIcon from "../../Images/Group 13.svg";
-// import { Link } from "react-router-dom";
 import WhyChooseUsCard from "../Card/Home/WhyChooseUs/WhyChooseUsCard";
-// import OurStartUp from "./OurStartUp/OurStartUp";
-// import CoInvestor from "./CoInvestor/CoInvestor";
-// import OurCollabration from "./OurCollabration/OurCollabration";
+import NewYearPopper from "../Newyear/NewYearPopper";
 import { featuresData } from "../../constants/LandingPageFeatures";
 import Features from "../WebsiteComponents/LandingPage/Features/Features";
 import LandingHero from "../WebsiteComponents/LandingPage/LandingHero/LandingHero";
@@ -34,6 +24,8 @@ const Home = () => {
 
   return (
     <>
+      
+      <NewYearPopper />
       {/* Hero section */}
       <div className="container mb-md-5">
         <LandingHero />

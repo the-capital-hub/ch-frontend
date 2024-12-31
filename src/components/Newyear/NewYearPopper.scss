@@ -1,0 +1,116 @@
+.new-year-popper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  
+    // Background Layer
+    .background-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5); // Semi-transparent background
+      z-index: 1; // Keep this at the lowest z-index
+    }
+  
+    // Confetti Layer
+    .confetti {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3; // Ensure confetti is above the background and content
+      pointer-events: none; // Prevent interaction blocking
+    }
+  
+    // Content Layer
+    .content {
+      position: relative;
+      z-index: 2; // Above the background but below the confetti
+      text-align: center;
+      animation: popper-burst 2s infinite ease-in-out;
+  
+      h1 {
+        color: #cfae5d; // Fallback color for browsers not supporting gradient
+        font-size: 3rem;
+        font-family: "Outfit", sans-serif; // Choose a vintage-style font
+        font-weight: bold;
+        background: linear-gradient(
+        90deg,
+        #d4af37,
+        #cfae5d,
+        #f0d68f,
+        #cfae5d,
+        #d4af37
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent; // Makes the gradient visible
+        
+        letter-spacing: 2px;
+        margin: 0;
+  
+        .year {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 4rem;
+          font-weight: bold;
+  
+          .logo {
+            display: inline-block;
+  
+            img {
+              width: 60px;
+              height: 60px;
+              animation: logo-spin 3s linear infinite;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Confetti explosion animation
+  @keyframes confetti {
+    0% {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-50px) rotate(360deg);
+    }
+  }
+  
+  // Spin animation for the logo
+  @keyframes logo-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  // Popper burst animation (scaling effect)
+  @keyframes popper-burst {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  

@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import MobileNavbar from "../Shared/MobileNavbar/MobileNavbar";
 import { Toaster } from "react-hot-toast";
 import { selectTheme } from "../../Store/features/design/designSlice";
+import NewYearPopper from "../Newyear/NewYearPopper";
 
 function PrivateRoute({ children, ...props }) {
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -40,6 +41,7 @@ function PrivateRoute({ children, ...props }) {
 		}
 		return (
 			<div className="investor-private-routes" data-bs-theme={theme}>
+				<NewYearPopper/>
 				<InvestorNavbar
 					handleSidebarToggle={handleSidebarToggle}
 					sidebarCollapsed={sidebarCollapsed}

@@ -105,6 +105,7 @@ function PublicRoutes() {
 	const user = useSelector((state) => state.user.loggedInUser);
 	return (
 		<>
+			
 			<Route
 				path="/"
 				element={
