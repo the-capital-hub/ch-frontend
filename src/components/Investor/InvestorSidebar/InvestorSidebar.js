@@ -522,6 +522,16 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 												>
 													Webinars
 												</button>
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={() => {
+														setSidebarCollapsed(true);
+														navigate("/meeting/priority-dm");
+													}}
+												>
+													Priority DMS
+												</button>
+
 											</div>
 										</details>
 									)}

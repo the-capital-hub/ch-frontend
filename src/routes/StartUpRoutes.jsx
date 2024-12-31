@@ -152,6 +152,10 @@ const MeetingAvailability = lazy(() =>
 );
 const Webinars = lazy(() => import("../components/Meetings/Webinars/Webinars"));
 
+const PriorityDM = lazy(() =>
+	import("../components/Meetings/PriorityDM/PriorityDM")
+);
+
 function StartUpRoutes() {
 	// Light and dark Theme
 	// const theme = useSelector(selectTheme);
@@ -484,6 +488,15 @@ function StartUpRoutes() {
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
 						<Webinars />
+					</Suspense>
+				}
+			/>
+
+			<Route
+				path="/meeting/priority-dm"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<PriorityDM />
 					</Suspense>
 				}
 			/>

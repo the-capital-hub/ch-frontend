@@ -16,7 +16,11 @@ import {
 	FaShare,
 	FaArrowCircleLeft,
 	FaClock,
+	FaStar,
+	FaArrowRight,
 } from "react-icons/fa";
+import { BiMailSend } from "react-icons/bi";
+import { GrSend } from "react-icons/gr";
 import UserPic from "../../../Images/UserPic.jpg";
 import AIPoster from "../../../Images/AIPoster.jpg";
 import { environment } from "../../../environments/environment";
@@ -391,6 +395,9 @@ const FounderProfile = () => {
 	if (loading || events.length === 0) {
 		return <Spinner />;
 	}
+	const handlePriorityDMClick = () => {
+		navigate(`/priority-dm/${username}`);
+	};
 
 	return (
 		<>
@@ -487,6 +494,42 @@ const FounderProfile = () => {
 									<p>No experience data available</p>
 								</div>
 							)}
+						</div>
+					</section>
+
+					{/* Priority DM Section */}
+					<section className="profile-section">
+						<h2>
+							<BiMailSend /> Priority DM
+						</h2>
+						{/* Card for Sending Priority DM */}
+						<div className="priority-dm">
+							<div className="priority-dm-card" onClick={handlePriorityDMClick}>
+								<div className="priority-dm-card-header">
+									<div className="pd-rating">
+										<FaStar className="pd-star-icon" />
+										<span>5</span>
+									</div>
+									<span className="pd-badge">Popular</span>
+								</div>
+
+								<h2 className="pd-title">Have a question?</h2>
+
+								<div className="pd-info-section">
+									<div className="pd-info-content">
+										<GrSend className="pd-plane-icon" />
+										<div className="pd-text-group">
+											<div className="pd-reply-time">Replies in 2 days</div>
+											<div className="dm-text">Priority DM</div>
+										</div>
+									</div>
+
+									<button className="pd-price-button">
+										<span>₹{founder?.priorityDMPrice || 100}</span>
+										<FaArrowRight className="pd-arrow-icon" />
+									</button>
+								</div>
+							</div>
 						</div>
 					</section>
 
