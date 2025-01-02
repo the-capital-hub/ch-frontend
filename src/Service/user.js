@@ -1915,6 +1915,16 @@ export const getPriorityDMForFounder = async () => {
 	}
 };
 
+export const getPriorityDMById = async (id) => {
+	try {
+		const response = await axiosInstance.get(`${API.getPriorityDMById}/${id}`);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
 export const updatePriorityDM = async (id, answer) => {
 	try {
 		const response = await axiosInstance.patch(

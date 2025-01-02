@@ -158,10 +158,11 @@ const API = Object.freeze({
 	getUserByUsername: `${baseUrl}/users/getUserByUsername`, ///getUserByUsername/:username
 	createPaymentSessionForPriorityDM: `${baseUrl}/priorityDM/createPaymentSession`,
 	varifyPaymentForPriorityDM: `${baseUrl}/priorityDM/verifyPayment`,
-	
+
 	getPriorityDMForUser: `${baseUrl}/priorityDM/getPriority-DMForUser`,
 	getPriorityDMForFounder: `${baseUrl}/priorityDM/getPriority-DMForFounder`,
 	updatePriorityDM: `${baseUrl}/priorityDM/updatePriority-DM`,
+	getPriorityDMById: `${baseUrl}/priorityDM/getPriorityDMById`,
 });
 
 export default API;

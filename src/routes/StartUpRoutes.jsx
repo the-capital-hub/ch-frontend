@@ -156,6 +156,10 @@ const PriorityDM = lazy(() =>
 	import("../components/Meetings/PriorityDM/PriorityDM")
 );
 
+const DetailedQuestionPDM = lazy(() =>
+	import("../components/Meetings/PriorityDM/DetailedQuestion/DetailedQuestion")
+);
+
 function StartUpRoutes() {
 	// Light and dark Theme
 	// const theme = useSelector(selectTheme);
@@ -497,6 +501,22 @@ function StartUpRoutes() {
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
 						<PriorityDM />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="/meeting/priority-dm/user/my-question/:id"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<DetailedQuestionPDM />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="/meeting/priority-dm/founder/question/:id"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<DetailedQuestionPDM />
 					</Suspense>
 				}
 			/>
