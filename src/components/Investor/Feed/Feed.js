@@ -141,7 +141,7 @@ const Feed = () => {
 				if (data?.length === 0) {
 					setHasMore(false);
 				} else {
-					const totalPost = data.filter((item) => item.postType !== "company");
+					const totalPost = data.filter((item) => item.postType === "public");
 					if (totalPost.length === 0) {
 						setHasMore(false);
 					}

@@ -87,7 +87,12 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 	};
 
 	function handleMyCommunityClick() {
-		navigate("/chats?isCommunityOpen=true");
+		navigate("/MyCommunity");
+	}
+
+	function handleExploreCommunityClick() {
+		navigate("/ExploreCommunities");
+		if (isMobileView) setSidebarCollapsed(true);
 	}
 
 	const [touchStartX, setTouchStartX] = useState(null);
@@ -379,6 +384,12 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 													onClick={handleMyCommunityClick}
 												>
 													My Community
+												</button>
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={handleExploreCommunityClick}
+												>
+													Explore Communities
 												</button>
 											</div>
 										</details>

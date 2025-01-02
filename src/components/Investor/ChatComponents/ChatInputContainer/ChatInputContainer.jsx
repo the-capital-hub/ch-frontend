@@ -98,6 +98,7 @@ export default function ChatInputContainer({
     if (selectedImage) {
       const image = await getBase64(selectedImage);
       message.image = image;
+      console.log("image", image)
     }
     if (selectedVideo) {
       const video = await getBase64(selectedVideo);

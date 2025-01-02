@@ -1,0 +1,122 @@
+.people-tab {
+  padding: 1rem;
+
+  .search-container {
+    margin-bottom: 2rem;
+    
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      background: var(--white-to-grey);
+      color: var(--text-color);
+      
+      &:focus {
+        outline: none;
+        border-color: #fd5901;
+        box-shadow: 0 0 10px rgba(253, 89, 1, 0.2);
+      }
+    }
+  }
+
+  .members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+
+    .member-card {
+      background: var(--white-to-grey);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      border: 1px solid var(--border-color);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .member-info {
+        display: flex;
+        gap: 1rem;
+
+        .profile-picture {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        .member-details {
+          flex: 1;
+
+          h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--text-color);
+          }
+
+          p {
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+            color: var(--d-l-grey);
+          }
+
+          .designation {
+            color: #fd5901;
+            font-weight: 500;
+          }
+
+          .admin-badge {
+            background: linear-gradient(90deg, #FD5901 0%, #9306FF 100%);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+          }
+        }
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        justify-content: flex-end;
+
+        svg {
+          font-size: 1.5rem;
+          cursor: pointer;
+          transition: color 0.2s;
+        }
+
+        .whatsapp-icon {
+          color: #25D366;
+          &:hover {
+            color: darken(#25D366, 10%);
+          }
+        }
+
+        .instagram-icon {
+          color: #E4405F;
+          &:hover {
+            color: darken(#E4405F, 10%);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .people-tab {
+    .members-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+} 

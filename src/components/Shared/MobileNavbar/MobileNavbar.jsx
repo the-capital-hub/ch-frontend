@@ -69,7 +69,7 @@ export default function MobileNavbar({ isInvestor = false }) {
 
 			{/* Community */}
 			<div className="d-flex flex-column align-items-center mx-3">
-				<NavLink to="/chats?isCommunityOpen=true">
+				<NavLink to="/MyCommunity">
 					<img src={Community} className="nav-link-icon" alt="Home" />
 				</NavLink>
 				<span className="nav-link-text">{"Community"}</span>

@@ -26,6 +26,7 @@ import IconFile from "../../Investor/SvgIcons/IconFile";
 import { sharePostLinkedin } from "../../../Service/user";
 import { BiPoll } from "react-icons/bi";
 import LinkedInLogin from "../../Login/LinkedinLogin/LinkedInLogin";
+import { environment } from "../../../environments/environment";
 
 const IMAGE_MAX_SIZE_MB = 10; // 10MB
 const DOCUMENT_MAX_SIZE_MB = 50; // 50MB
@@ -126,6 +127,7 @@ const CreatePostPopUp = ({
 	setNewPost,
 	respostingPostId,
 	appendDataToAllPosts,
+	communityId
 }) => {
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 	const [postText, setPostText] = useState("");
@@ -139,6 +141,7 @@ const CreatePostPopUp = ({
 	const [crop, setCrop] = useState({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState(1);
 	const [allowMultipleAnswers, setAllowMultipleAnswers] = useState();
+	const baseUrl = environment.baseUrl;
 
 	// const [croppedImage, setCroppedImage] = useState(null);
 	const [pdfThumbnail, setPdfThumbnail] = useState(null);
@@ -399,7 +402,12 @@ const CreatePostPopUp = ({
 				postData.append(`allow_multiple_answers`, allowMultipleAnswers);
 			}
 
-			postData.append("postType", postType);
+			if (communityId) {
+				postData.append("postType", "community");
+				postData.append("communityId", communityId);
+			} else {
+				postData.append("postType", postType);
+			}
 
 			const response = await postUserPost(postData);
 			const newPosts = Array.isArray(response.data)
@@ -440,7 +448,9 @@ const CreatePostPopUp = ({
 			setSelectedDocument(null);
 			setCropComplete(false);
 			setCurrentCropIndex(null);
+			if(!communityId){
 			setNewPost(Math.random());
+			}
 			handleClose();
 
 			// Handle achievements
@@ -457,6 +467,7 @@ const CreatePostPopUp = ({
 				};
 				await addNotificationAPI(notificationBody);
 			}
+
 		} catch (error) {
 			console.error("Error submitting post:", error);
 			toast.error("Error creating post. Please try again.");
@@ -517,40 +528,35 @@ const CreatePostPopUp = ({
 								<h2>
 									{loggedInUser?.firstName} {loggedInUser.lastName}
 								</h2>
-								<div
-									style={{
-										display: "flex",
-										width: "110px",
-										justifyContent: "space-between",
-									}}
-								>
-									<h6
-										className=""
-										style={{
-											backgroundColor: postType === "public" && "#fd5901",
-											color: postType === "public" ? "#fff" : "grey",
-											padding: "1px 2px",
-											borderRadius: "2px",
-											cursor: "pointer",
-										}}
-										onClick={() => setPostType("public")}
-									>
-										Public
-									</h6>
-									<h6
-										style={{
-											backgroundColor:
-												postType === "company" && "rgb(211, 243, 107)",
-											color: postType === "company" ? "#000" : "grey",
-											padding: "1px 2px",
-											borderRadius: "2px",
-											cursor: "pointer",
-										}}
-										onClick={() => setPostType("company")}
-									>
-										Company
-									</h6>
-								</div>
+								{!communityId && (
+									<div style={{ display: "flex", width: "110px", justifyContent: "space-between" }}>
+										<h6
+											className=""
+											style={{
+												backgroundColor: postType === "public" && "#fd5901",
+												color: postType === "public" ? "#fff" : "grey",
+												padding: "1px 2px",
+												borderRadius: "2px",
+												cursor: "pointer",
+											}}
+											onClick={() => setPostType("public")}
+										>
+											Public
+										</h6>
+										<h6
+											style={{
+												backgroundColor: postType === "company" && "rgb(211, 243, 107)",
+												color: postType === "company" ? "#000" : "grey",
+												padding: "1px 2px",
+												borderRadius: "2px",
+												cursor: "pointer",
+											}}
+											onClick={() => setPostType("company")}
+										>
+											Company
+										</h6>
+									</div>
+								)}
 							</span>
 						</div>
 
@@ -571,7 +577,7 @@ const CreatePostPopUp = ({
 								value={postText}
 								onChange={handleQuillChange}
 								placeholder="What would you like to converse about? Write a post..."
-								modules={{ toolbar: false }} // Hide the toolbar
+								modules={{ toolbar: false }} 
 								formats={[
 									"header",
 									"bold",
@@ -693,8 +699,9 @@ const CreatePostPopUp = ({
 					</div>
 
 					<div className="createpost__footer">
-						{loggedInUser.linkedinId ? (
-							<div className="share-linkedin">
+						{(loggedInUser.linkedinId && linkedinToken) ? (
+
+						(!communityId &&	<div className="share-linkedin">
 								<input
 									type="checkbox"
 									id="shareLinkedIn"
@@ -702,9 +709,9 @@ const CreatePostPopUp = ({
 									onChange={() => setShareOnLinkedIn((prev) => !prev)}
 								/>
 								<label htmlFor="shareLinkedIn">Share on LinkedIn</label>
-							</div>
+							</div>)
 						) : (
-							<div className="mt-1 mb-1">
+							(!communityId && <div className="mt-1 mb-1">
 								<LinkedInLogin
 									isInvestorSelected={false}
 									setIsLoginSuccessfull={handleLinkedInLoginSuccess}
@@ -714,7 +721,7 @@ const CreatePostPopUp = ({
 									showIconAndText={true}
 									REDIRECT_URI={"https://thecapitalhub.in/home"}
 								/>
-							</div>
+							</div>)
 						)}
 						<div className="createpost__footer__container mt-2 mb-1">
 							<div className="left_buttons">
@@ -778,12 +785,13 @@ const CreatePostPopUp = ({
 							</div>
 							<div className="post_button_container">
 								{posting ? (
-									<button className="post_button" disabled>
+									<button className={`post_button ${communityId? ("community-color") : (" ")}`}
+									disabled>
 										Posting...
 									</button>
 								) : (
 									<button
-										className="post_button"
+										className={`post_button ${communityId? ("community-color") : (" ")}`}
 										onClick={handleSubmit}
 										disabled={posting}
 									>

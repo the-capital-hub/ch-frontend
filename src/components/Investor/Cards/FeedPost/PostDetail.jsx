@@ -778,7 +778,7 @@ const PostDetail = ({
               />
               <div className="row feedpostcard_footer">
                 <div className="d-flex align-items-center gap-1 justify-content-around justify-content-sm-between pt-2 pb-2">
-                  <div className="d-none d-sm-flex align-items-center gap-1 justify-content-around" style={{ width: "25%" }}>
+                  <div className="d-flex d-sm-flex align-items-center gap-1 justify-content-around" style={{ width: "25%" }}>
                     {liked ? (
                       <div className="d-flex align-items-center justify-content-end gap-1" onClick={likeUnlikeHandler}>
                         <img src={fireIcon} width={20} alt="like post" style={{ cursor: "pointer" }} />

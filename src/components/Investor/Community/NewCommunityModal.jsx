@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import InvestorNavbar from "../../Investor/InvestorNavbar/InvestorNavbar";
 import CreateCommunityChat from "../../../Images/Chat/CreateCommunityChat.png";
-import "./NewCommunityModal.scss";
+import "./NewCommunityMod.scss";
 import { Navigate, useNavigate } from "react-router-dom";
 import { environment } from "../../../environments/environment";
 import axios from 'axios';
@@ -10,6 +10,7 @@ import { getBase64 } from "../../../utils/getBase64";
 import { selectLoggedInUserId } from "../../../Store/features/user/userSlice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { ToastContainer } from 'react-toastify';
 
 export default function NewCommunityModal() {
 
@@ -41,16 +42,8 @@ export default function NewCommunityModal() {
 	];
 
 	const handleCreateCommunity = async () => {
-		if (!communityName.trim()) {
-			toast.error('Please enter a community name');
-			return;
-		}
-		if (!communitySize) {
-			toast.error('Please select community size');
-			return;
-		}
-		if (!isFree && !subscriptionAmount) {
-			toast.error('Please enter subscription amount');
+		if (!communityName || !communitySize) {
+			toast.error('Please fill in all required fields');
 			return;
 		}
 
@@ -63,28 +56,26 @@ export default function NewCommunityModal() {
 			adminId: loggedInUserId
 		};
 
+		if (selectedFile) {
+			communityData.image = await getBase64(selectedFile);
+		}
+
+		const token = localStorage.getItem('accessToken');
+
 		try {
-			if (selectedFile) {
-				communityData.image = await getBase64(selectedFile);
-			}
-	  
-			const token = localStorage.getItem('accessToken');  
 			const response = await axios.post(
 				`${baseUrl}/communities/createCommunity`,
 				communityData,
 				{
 					headers: {
-						Authorization: `Bearer ${token}`, 
+						Authorization: `Bearer ${token}`,
 					},
 				}
 			);
-			
-			toast.success('Community created successfully!');
 			setCommunityUrl(`/community/${response.data.data._id}`);
 			setIsSuccess(true);
+			toast.success('Community created successfully!');
 		} catch (error) {
-			console.error('Error creating community:', error);
-			
 			toast.error(error.response?.data?.message || 'Failed to create community');
 		} finally {
 			setIsLoading(false);
@@ -93,8 +84,8 @@ export default function NewCommunityModal() {
 
 	if (isSuccess) {
 		return (
-			<div className="community-creation-page" style={{minHeight: "100vh"}}>
-				
+			<div className="community-creation-page" style={{maxHeight: "80vh"}}>
+				<ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
 				<InvestorNavbar />
 				<button className="back-button" data-bs-dismiss="modal">
 					<BsArrowLeft /> Back
@@ -127,7 +118,6 @@ export default function NewCommunityModal() {
 							<button 
 								className="continue-button"
 								onClick={() => navigate(`${communityUrl}`)}
-
 							>
 								Continue
 							</button>
@@ -139,11 +129,23 @@ export default function NewCommunityModal() {
 	}
 
 	return (
-		<div className="community-creation-page" style={{minHeight: "100vh"}}>
+		<div className="community-creation-page" style={{maxHeight: "80vh", marginTop:"3rem"}}>
+			<ToastContainer 
+				position="top-right" 
+				autoClose={5000} 
+				hideProgressBar={false}
+				newestOnTop
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="colored"
+			/>
 			<InvestorNavbar />
-						<button className="back-button" data-bs-dismiss="modal">
+						{/* <button className="back-button" data-bs-dismiss="modal">
 				<BsArrowLeft /> Back
-			</button>
+			</button> */}
 
 			<div className="content-container">
 				<div className="left-section">
@@ -218,18 +220,8 @@ export default function NewCommunityModal() {
 
 					<button 
 						className="create-community-button" 
-						onClick={handleCreateCommunity} 
+						onClick={handleCreateCommunity}
 						disabled={isLoading}
-						style={{ 
-							backgroundColor: '#FF620E', 
-							borderRadius: '60px', 
-							color: 'white', 
-							padding: '1rem 2rem', 
-							marginTop: '20px', 
-							width: '100%', 
-							maxWidth: '300px', 
-							alignSelf: 'center' 
-						}}
 					>
 						{isLoading ? 'Creating...' : 'Create Community'}
 					</button>

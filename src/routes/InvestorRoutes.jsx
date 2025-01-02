@@ -3,6 +3,10 @@ import { Navigate, Route } from "react-router-dom";
 import SuspenseLoader from "../components/SuspenseLoader/SuspenseLoader";
 import SinglePost from "../components/SinglePost/SinglePost";
 import Achievements from "../pages/StartUp/Achievements/Achievements";
+import MyCommunity from "../components/Investor/Community/MyCommunity";
+import NewCommunityModal from "../components/Investor/Community/NewCommunityModal";
+import Community from "../components/Investor/Community/Community";
+import ExploreCommunities from "../components/Investor/Community/ExploreCommunity";
 
 const InvestorConnection = lazy(() =>
   import("../components/NewInvestor/InvestorConnection/InvestorConnection")
@@ -147,12 +151,35 @@ function InvestorRoutes() {
           </Suspense>
         }
       />
-
       <Route
       path="post_detail/:postId"
       element={
         <Suspense fallback={<SuspenseLoader />}>
           <InvestorHomeFeed />
+        </Suspense>
+        }
+      />
+      <Route
+      path="myCommunity"
+      element={
+        <Suspense fallback={<SuspenseLoader />}>
+          <MyCommunity />
+        </Suspense>
+        }
+      />
+       <Route
+      path="ExploreCommunities"
+      element={
+        <Suspense fallback={<SuspenseLoader />}>
+          <ExploreCommunities />
+        </Suspense>
+        }
+      />
+        <Route
+      path="CreateCommunity"
+      element={
+        <Suspense fallback={<SuspenseLoader />}>
+          <NewCommunityModal />
         </Suspense>
         }
       />
