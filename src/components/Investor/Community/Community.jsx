@@ -31,6 +31,8 @@ import PeopleTab from "./PeopleTab/PeopleTab";
 import Products from "./Products/Products";
 import About from './About/About';
 import { Toaster, toast } from "react-hot-toast";
+import { MdMenu, MdMenuOpen } from "react-icons/md";
+
 
 const Community = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -38,6 +40,7 @@ const Community = () => {
 	const isCommunityOpen = searchParams.get("isCommunityOpen");
 	const navigate = useNavigate();
   const [isMobileView, setIsMobileView] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
 
 	// Fetch global state
@@ -76,6 +79,7 @@ const Community = () => {
   useEffect(() => {
         fetchCommunityDetails();
       }, [communityId]);
+
     
       const fetchCommunityDetails = async () => {
         try {
@@ -341,10 +345,30 @@ const Community = () => {
               },
             }}
           />
-          <InvestorNavbar />
+          <InvestorNavbar isCommunity={true} />
           <div className="community-header">
             <div className="community-info">
               <div className="info-wrapper">
+              {isMobileView && (
+                  !isSidebarOpen ? (
+                    <MdMenu
+                      size={25}
+                      style={{
+                        color: "var(--d-l-grey)",
+                      }}
+                      onClick={() => setIsSidebarOpen(prevState => !prevState)}
+                    />
+                  ) : (
+                    <MdMenuOpen
+                      size={25}
+                      style={{
+                        color: "var(--d-l-grey)",
+                      }}
+                      onClick={() => setIsSidebarOpen(prevState => !prevState)}
+                    />
+                  )
+                )}
+
                 <img src={community?.image} alt={community?.name} />
                 <div className="info-text">
                   <h1>{community?.name}</h1>
@@ -360,7 +384,7 @@ const Community = () => {
           </div>
     
           <div className="community-content">
-            <aside className="sidebar">
+            <aside className={`sidebar ${isMobileView ? (isSidebarOpen ? 'open' : 'closed') : ''}`}>
     
               <nav>
                 <button 

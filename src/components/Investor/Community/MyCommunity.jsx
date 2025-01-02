@@ -10,12 +10,14 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import moment from 'moment';
 import NewCommunityModal from "../ChatComponents/NewCommunityModal";
+import { selectTheme } from "../../../Store/features/design/designSlice";
 
 export default function MyCommunity() {
   const [communities, setCommunities] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const loggedInUserId = useSelector(selectLoggedInUserId);
+  const theme = useSelector(selectTheme);
 
   useEffect(() => {
     fetchCommunities();
@@ -43,10 +45,19 @@ export default function MyCommunity() {
     return moment(date).fromNow();
   };
 
+  const getThemeStyles = () => ({
+    backgroundColor: theme === 'light' ? '#ffffff' : '#060810',
+    color: theme === 'light' ? '#000000' : '#FFFFFF'
+  });
+
+  const backButtonStyles = {
+    color: theme === 'light' ? '#000000' : '#FFFFFF'
+  };
+
   return (
-    <div className="my-community-page">
+    <div className="my-community-page" style={getThemeStyles()} data-theme={theme}>
       <InvestorNavbar />
-      <button className="back-button" onClick={() => navigate(-1)}>
+      <button className="back-button" style={backButtonStyles} onClick={() => navigate(-1)}>
         <BsArrowLeft /> Back
       </button>
 

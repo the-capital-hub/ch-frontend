@@ -2,6 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchAllChats, fetchTotalUnreadMessagesCount } from "./chatThunks";
 
 const chatData = localStorage.getItem("allChatsData");
+let parsedChatData = null;
+
+try {
+  parsedChatData = chatData ? JSON.parse(chatData) : null;
+} catch (error) {
+  console.warn("Failed to parse chat data from localStorage");
+}
 
 const initialState = {
   chatId: "",
@@ -9,10 +16,10 @@ const initialState = {
   isCommunitySelected: false,
   chatProfile: {},
   communityProfile: {},
-  allChatsData: JSON.parse(chatData) || null,
+  allChatsData: parsedChatData,
   allChatsStatus: null,
   totalUnreadCount: 0,
-  blockedUsers: [],  // Added to keep track of blocked users
+  blockedUsers: [],
 };
 
 export const chatSlice = createSlice({
