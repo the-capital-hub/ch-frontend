@@ -77,6 +77,9 @@ const AuthorProfile = lazy(() =>
 const FounderProfile = lazy(() =>
 	import("../components/Shared/FoundersProfile/FoundersProfile")
 );
+const PriorityDM = lazy(() =>
+	import("../components/Shared/FoundersProfile/PriorityDMPage/PriorityDMPage")
+);
 const InvestorPublicProfile = lazy(() =>
 	import("../components/InvestorPublicProfile/InvestorPublicProfile")
 );
@@ -345,6 +348,14 @@ function PublicRoutes() {
 					element={
 						<Suspense fallback={<SuspenseLoader />}>
 							<FounderProfile />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/priority-dm/:username"
+					element={
+						<Suspense fallback={<SuspenseLoader />}>
+							<PriorityDM />
 						</Suspense>
 					}
 				/>

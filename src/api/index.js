@@ -149,6 +149,19 @@ const API = Object.freeze({
 	getMoreInshortNews: `${baseUrl}/news/inshortsNews/more`,
 	reportPost: `${baseUrl}/users/report`,
 	getEventsByOnelinkId: `${baseUrl}/meetings/getEventsByOnelinkId`,
+	createWebinar: `${baseUrl}/webinars/createWebinar`,
+	getAllWebinars: `${baseUrl}/webinars/getWebinars`,
+	getWebinarsByOnelinkId: `${baseUrl}/webinars/getWebinarsByOnelinkId`,
+	deleteWebinar: `${baseUrl}/webinars/deleteWebinar`,
+	createPaymentSessionToJoinWebinar: `${baseUrl}/webinars/createPaymentSession`,
+	varifyPaymentToJoinWebinar: `${baseUrl}/webinars/verifyPayment`,
+	getUserByUsername: `${baseUrl}/users/getUserByUsername`, ///getUserByUsername/:username
+	createPaymentSessionForPriorityDM: `${baseUrl}/priorityDM/createPaymentSession`,
+	varifyPaymentForPriorityDM: `${baseUrl}/priorityDM/verifyPayment`,
+	
+	getPriorityDMForUser: `${baseUrl}/priorityDM/getPriority-DMForUser`,
+	getPriorityDMForFounder: `${baseUrl}/priorityDM/getPriority-DMForFounder`,
+	updatePriorityDM: `${baseUrl}/priorityDM/updatePriority-DM`,
 });
 
 export default API;

@@ -1787,3 +1787,143 @@ export const getEventsByOnelinkId = async (onelinkId) => {
 		throw error;
 	}
 };
+
+export const createWebinar = async (data) => {
+	try {
+		const response = await axiosInstance.post(`${API.createWebinar}`, data);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const getAllWebinars = async () => {
+	try {
+		const response = await axiosInstance.get(`${API.getAllWebinars}`);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+export const getWebinarsByOnelinkId = async (onelinkId) => {
+	try {
+		const response = await axiosInstance.get(
+			`${API.getWebinarsByOnelinkId}/${onelinkId}`
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const deleteWebinar = async (webinarId) => {
+	try {
+		const response = await axiosInstance.delete(
+			`${API.deleteWebinar}/${webinarId}`
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const createPaymentSessionToJoinWebinar = async (data) => {
+	try {
+		const response = await axiosInstance.post(
+			`${API.createPaymentSessionToJoinWebinar}`,
+			data
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const varifyPaymentToJoinWebinar = async (data) => {
+	try {
+		const response = await axiosInstance.post(
+			`${API.varifyPaymentToJoinWebinar}`,
+			data
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const getUserByUsername = async (username) => {
+	try {
+		const response = await axiosInstance.get(
+			`${API.getUserByUsername}/${username}`
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const createPaymentSessionForPriorityDM = async (data) => {
+	try {
+		const response = await axiosInstance.post(
+			`${API.createPaymentSessionForPriorityDM}`,
+			data
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const varifyPaymentForPriorityDM = async (data) => {
+	try {
+		const response = await axiosInstance.post(
+			`${API.varifyPaymentForPriorityDM}`,
+			data
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const getPriorityDMForUser = async () => {
+	try {
+		const response = await axiosInstance.get(`${API.getPriorityDMForUser}`);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const getPriorityDMForFounder = async () => {
+	try {
+		const response = await axiosInstance.get(`${API.getPriorityDMForFounder}`);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const updatePriorityDM = async (id, answer) => {
+	try {
+		const response = await axiosInstance.patch(
+			`${API.updatePriorityDM}/${id}`,
+			{ answer }
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};

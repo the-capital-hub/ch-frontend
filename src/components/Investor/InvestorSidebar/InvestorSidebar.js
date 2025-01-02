@@ -523,6 +523,25 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 												>
 													Availability
 												</button>
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={() => {
+														setSidebarCollapsed(true);
+														navigate("/meeting/webinars");
+													}}
+												>
+													Webinars
+												</button>
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={() => {
+														setSidebarCollapsed(true);
+														navigate("/meeting/priority-dm");
+													}}
+												>
+													Priority DMS
+												</button>
+
 											</div>
 										</details>
 									)}
@@ -554,8 +573,8 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 							</MenuItem>
 							<MenuItem onClick={handleLogout} className="active-item">
 								{/* <div className="d-flex justify-content-center align-items-center"> */}
-									<IoExitOutline size={25} />
-									{!sidebarCollapsed && <span>Log out</span>}
+								<IoExitOutline size={25} />
+								{!sidebarCollapsed && <span>Log out</span>}
 								{/* </div> */}
 							</MenuItem>
 						</Menu>
