@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { BsCalendar, BsClock } from "react-icons/bs";
-import { HiVideoCamera } from "react-icons/hi";
-import { environment } from "../../../environments/environment";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../Store/features/design/designSlice";
 import {
 	getPriorityDMForUser,
 	getPriorityDMForFounder,
-	updatePriorityDM,
 } from "../../../Service/user";
 
 import "./PriorityDM.scss";
-
-const baseUrl = environment.baseUrl;
-const token = localStorage.getItem("accessToken");
 
 const Spinner = ({ isInvestor }) => (
 	<div className="loader-container">
@@ -24,67 +17,149 @@ const Spinner = ({ isInvestor }) => (
 	</div>
 );
 
-const Meetings = () => {
+const QuestionCard = ({ question, isFounder = false }) => {
+	const navigate = useNavigate();
+	const truncatedQuestion =
+		question?.question.length > 100
+			? question.question.substring(0, 100) + "....."
+			: question.question;
+
+	const handleCardClick = (id) => {
+		if (isFounder) {
+			navigate(`/meeting/priority-dm/user/my-question/${id}`);
+		} else {
+			navigate(`/meeting/priority-dm/founder/question/${id}`);
+		}
+	};
+
+	return (
+		<div
+			className="question-card"
+			onClick={() => handleCardClick(question?._id)}
+		>
+			<div className="founder-details">
+				<div className="founder-image">
+					<img
+						src={
+							isFounder
+								? question?.founderId?.profilePicture
+								: question?.userId?.profilePicture
+						}
+						alt="Founder"
+					/>
+				</div>
+				<div className="founder-name">
+					{isFounder
+						? question?.founderId?.firstName +
+						  " " +
+						  question?.founderId?.lastName
+						: question?.userId?.firstName + " " + question?.userId?.lastName}
+				</div>
+				<div className="founder-rating">
+					{question?.founderId?.rating ? question?.founderId?.rating : 4.5}/5
+				</div>
+			</div>
+
+			<div className="question-details">
+				<h3>{truncatedQuestion}</h3>
+				<p className="isanswered-text">
+					{question?.isAnswered
+						? "The founder has answered your question. Please check your email or click on this card to view the response."
+						: "Thank you for your question! When the founder answers your query, we will notify you via email."}
+				</p>
+			</div>
+			<span className="answered-status-text">
+				{question?.isAnswered ? "✨ Answered" : "Unanswered"}
+			</span>
+		</div>
+	);
+};
+
+const PriorityDM = () => {
 	const theme = useSelector(selectTheme);
 	const [activeTab, setActiveTab] = useState("my-questions");
-	const [meetings, setMeetings] = useState([]);
-	const [loading, setLoading] = useState(false);
-	const [cancelLoading, setCancelLoading] = useState(null);
 	const [isInvestor, setIsInvestor] = useState(false);
 
-	const loggedInUser = useSelector((state) => state.user.loggedInUser);
+	const [myQuestions, setMyQuestions] = useState([]);
+	const [unAnsweredQuestions, setUnAnsweredQuestions] = useState([]);
+	const [loadingMyQuestions, setLoadingMyQuestions] = useState(false);
+	const [loadingUnansweredQuestions, setLoadingUnansweredQuestions] =
+		useState(false);
+	const [error, setError] = useState(null);
 
-	const fetchMeetings = () => {
-		setLoading(true);
-		fetch(`${baseUrl}/meetings/getALLScheduledMeetings`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
-			},
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				setLoading(false);
-				setMeetings(data.data);
+	const fetchMyQuestions = () => {
+		setLoadingMyQuestions(true);
+		getPriorityDMForUser()
+			.then((response) => {
+				setLoadingMyQuestions(false);
+				if (response && response.data) {
+					setMyQuestions(response.data);
+				} else {
+					setError("Unexpected data format for my questions.");
+				}
 			})
 			.catch((error) => {
-				setLoading(false);
-				console.error("Error fetching meetings:", error);
+				setLoadingMyQuestions(false);
+				setError("Error fetching my questions.");
+				console.error("Error fetching my questions:", error);
+			});
+	};
+
+	const fetchUnAnsweredQuestions = () => {
+		setLoadingUnansweredQuestions(true);
+		getPriorityDMForFounder()
+			.then((response) => {
+				setLoadingUnansweredQuestions(false);
+				if (response && response.data) {
+					setUnAnsweredQuestions(response.data);
+				} else {
+					setError("Unexpected data format for unanswered questions.");
+				}
+			})
+			.catch((error) => {
+				setLoadingUnansweredQuestions(false);
+				setError("Error fetching unanswered questions.");
+				console.error("Error fetching unanswered questions:", error);
 			});
 	};
 
 	useEffect(() => {
-		setIsInvestor(loggedInUser.isInvestor);
-		fetchMeetings();
+		fetchMyQuestions();
+		fetchUnAnsweredQuestions();
 	}, []);
 
-	const cancelScheduledMeeting = (meetingId) => {
-		setCancelLoading(meetingId);
-		fetch(`${baseUrl}/meetings/cancelScheduledMeeting/${meetingId}`, {
-			method: "DELETE",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
-			},
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				// Refetch meetings after cancellation
-				fetchMeetings();
-			})
-			.catch((error) => {
-				console.error("Error canceling meeting:", error);
-			})
-			.finally(() => {
-				setCancelLoading(null);
-			});
-	};
-
-	if (loading || !meetings) {
+	if (loadingMyQuestions || loadingUnansweredQuestions) {
 		return <Spinner isInvestor={isInvestor} />;
 	}
-	// console.log("meetings", meetings);
+
+	if (error) {
+		return <div className="error-message">{error}</div>;
+	}
+
+	const renderQuestions = () => {
+		if (activeTab === "my-questions") {
+			return myQuestions.map((question) => (
+				<QuestionCard
+					key={question?._id}
+					question={question}
+					isFounder={true}
+				/>
+			));
+		} else if (activeTab === "unanswered") {
+			return unAnsweredQuestions
+				.filter((q) => !q.isAnswered)
+				.map((question) => (
+					<QuestionCard key={question?._id} question={question} />
+				));
+		} else if (activeTab === "answered") {
+			return unAnsweredQuestions
+				.filter((q) => q.isAnswered)
+				.map((question) => (
+					<QuestionCard key={question?._id} question={question} />
+				));
+		}
+	};
+
 	return (
 		<div
 			className={`meetings-container ${theme === "dark" ? "dark-theme" : ""} ${
@@ -105,7 +180,7 @@ const Meetings = () => {
 							className={`tab ${activeTab === "unanswered" ? "active" : ""}`}
 							onClick={() => setActiveTab("unanswered")}
 						>
-							Un Answered
+							Unanswered
 						</button>
 						<button
 							className={`tab ${activeTab === "answered" ? "active" : ""}`}
@@ -115,51 +190,10 @@ const Meetings = () => {
 						</button>
 					</div>
 				</div>
-				<div className="meetings-list">
-					{meetings.map((meeting) => (
-						<div key={meeting?._id} className="meeting-card">
-							<div className="meeting-details">
-								<h3>{meeting?.eventId?.title}</h3>
-								<p className="with-text">
-									with {meeting?.name + " (" + meeting?.email + ")"}
-								</p>
-								<p className="subtitle">{meeting?.additionalInfo}</p>
-
-								<div className="meeting-meta">
-									<div className="meta-item">
-										<BsCalendar />
-										<span>{meeting?.date}</span>
-									</div>
-									<div className="meta-item">
-										<BsClock />
-										<span>{meeting?.eventId?.duration} minutes</span>
-									</div>
-								</div>
-
-								<div className="meeting-actions">
-									<Link to={`${meeting?.meetingLink}`}>
-										<button className="join-btn">
-											<HiVideoCamera />
-											Join Meeting
-										</button>
-									</Link>
-									<button
-										className="cancel-btn"
-										onClick={() => cancelScheduledMeeting(meeting?._id)}
-										disabled={cancelLoading === meeting?._id}
-									>
-										{cancelLoading === meeting?._id
-											? "Cancelling..."
-											: "Cancel Meeting"}
-									</button>
-								</div>
-							</div>
-						</div>
-					))}
-				</div>
+				<div className="meetings-list">{renderQuestions()}</div>
 			</div>
 		</div>
 	);
 };
 
-export default Meetings;
+export default PriorityDM;
