@@ -171,7 +171,7 @@ const FounderProfile = () => {
 				duration: "2020 - 2023",
 				description: "Led machine learning product initiatives.",
 			},
-		],
+		],  
 		activities: {
 			posts: [
 				{
