@@ -1,346 +1,262 @@
 .investorHome_main_container {
-  // margin-top: 40px;
-  // margin-block: 1.5rem;
-  // display: flex;
-  // background-color: rgba(234, 238, 242, 1);
+	.two_column_wrapper {
+		display: grid;
+		grid-template-columns: 100%;
+		justify-content: space-between;
+		@media (min-width: 1200px) {
+			grid-template-columns: calc(100% - 26rem) 24rem;
+		}
+		@media (min-width: 768px) {
+			flex-direction: row;
+		}
 
-  .two_column_wrapper {
-    // margin-inline: 1rem;
+		// display: flex;
+		// gap: 2rem;
+		// width: 90dvw;
 
-    @media (min-width: 768px) {
-      flex-direction: row;
-    }
+		// .seventy {
+		// 	width: 65%;
 
-    display: grid;
-    grid-template-columns: 100%;
-    justify-content: space-between;
-    @media (min-width: 1200px) {
-      grid-template-columns: calc(100% - 26rem) 24rem;
-    }
+		// 	@media (max-width: 1024px) {
+		// 		width: 100%;
+		// 	}
+		// }
+		// .thirty {
+		// 	width: 35%;
+		// }
 
-    .typography {
-      // color: #000;
-      color: var(--d-l-grey);
-      font-size: 20px;
-      font-family: "Poppins";
-      font-weight: 600;
-      margin: 0;
-    }
+		.typography {
+			// color: #000;
+			color: var(--d-l-grey);
+			font-size: 20px;
+			font-family: "Poppins";
+			font-weight: 600;
+			margin: 0;
+		}
 
-    .smallest_typo {
-      color: #686868;
-      font-size: 12px;
-      font-family: Poppins;
-    }
+		.smallest_typo {
+			color: #686868;
+			font-size: 12px;
+			font-family: Poppins;
+		}
 
-    .small_typo {
-      color: var(--d-l-grey);
-      font-size: 14px;
-      font-weight: 500;
-      font-family: Poppins;
-    }
+		.small_typo {
+			color: var(--d-l-grey);
+			font-size: 14px;
+			font-weight: 500;
+			font-family: Poppins;
+		}
 
-    .main_container {
-      border: 2px solid red;
-      /* margin: 1rem; */
-      flex: 0 0 95%;
-      max-width: 95%;
-      display: flex;
-      overflow: hidden;
-    }
+		.main_container {
+			border: 2px solid red;
+			/* margin: 1rem; */
+			flex: 0 0 95%;
+			max-width: 95%;
+			display: flex;
+			overflow: hidden;
+		}
 
-    .box {
-      // background-color: #fff;
-      padding: 10px;
-      border-radius: 0.37rem;
-      //var(--border-radius);
-      // background: #fff;
-      background: var(--white-to-grey);
-      box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.05);
-    }
+		.box {
+			padding: 10px;
+			border-radius: 0.37rem;
+			background: var(--white-to-grey);
+			box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.05);
+		}
 
-    .bio_container {
-      // width: 750px;
-      // height: 411px;
-    }
+		.personal_information {
+			flex-shrink: 0;
+		}
 
-    .personal_information {
-      // width: 750px;
-      flex-shrink: 0;
-    }
+		.bio_information {
+			flex-shrink: 0;
+			height: 340px;
+		}
 
-    .bio_information {
-      // width: 750px;
-      flex-shrink: 0;
-      height: 340px;
-    }
+		.image_name_section {
+			display: flex;
+			// justify-content: center;
+			align-items: center;
+			flex-direction: row;
+			// justify-content: space-around;
+		}
 
-    .image_name_section {
-      display: flex;
-      // justify-content: center;
-      align-items: center;
-      flex-direction: row;
-      // justify-content: space-around;
-    }
+		.image_name_section img {
+			width: 90px;
+			height: 90px;
+		}
 
-    .image_name_section img {
-      width: 90px;
-      height: 90px;
-    }
+		.connect_btn {
+			display: flex;
+			justify-content: end;
+		}
 
-    .connect_btn {
-      display: flex;
-      justify-content: end;
-    }
+		.connect_btn {
+			// width: 9rem;
+			height: 48px;
+			flex-shrink: 0;
+			border-radius: 131px;
+			background: #505050;
+			color: #fff;
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+			color: #fff;
+			font-size: 16px;
+			font-family: Poppins;
+			font-weight: 500;
+		}
 
-    .connect_btn {
-      // width: 9rem;
-      height: 48px;
-      flex-shrink: 0;
-      border-radius: 131px;
-      background: #505050;
-      color: #fff;
-      display: flex;
-      justify-content: space-evenly;
-      align-items: center;
-      color: #fff;
-      font-size: 16px;
-      font-family: Poppins;
-      font-weight: 500;
-    }
+		.edit_btn {
+			button {
+				//border-radius: 131px;
+				//border: 1px solid var(--bs-border-color);
+				border: none;
+				width: fit-content;
+				//height: 35px;
+				flex-shrink: 0;
+				color: var(--startup);
+				font-size: 22px;
+				font-family: Poppins;
+				cursor: pointer;
+				background-color: transparent !important;
+			}
+		}
 
-    .edit_btn {
-      button {
-        //border-radius: 131px;
-        //border: 1px solid var(--bs-border-color);
-        border: none;
-        width: fit-content;
-        //height: 35px;
-        flex-shrink: 0;
-        color: var(--startup);
-        font-size: 22px;
-        font-family: Poppins;
-        cursor: pointer;
-        background-color: transparent !important;
-      }
-    }
+		.divider_hr {
+			color: #000000;
+			height: 2px;
+			flex-shrink: 0;
+			border: 1px solid rgba(80, 80, 80, 0.2);
+			width: 90%;
+			opacity: 0.5;
+			margin: auto;
+			margin-top: 2rem;
+		}
 
-    .divider_hr {
-      color: #000000;
-      height: 2px;
-      flex-shrink: 0;
-      border: 1px solid rgba(80, 80, 80, 0.2);
-      width: 90%;
-      opacity: 0.5;
-      margin: auto;
-      margin-top: 2rem;
-    }
+		.designation_list {
+			color: #000;
+			font-size: 20px;
+			font-family: Poppins;
+			font-weight: 500;
+			padding-right: 50px;
+		}
 
-    .designation_list {
-      color: #000;
-      font-size: 20px;
-      font-family: Poppins;
-      font-weight: 500;
-      padding-right: 50px;
-    }
+		table tr td {
+			padding-bottom: 1rem;
+		}
 
-    table tr td {
-      padding-bottom: 1rem;
-    }
+		.profile_table {
+			width: 100%;
+			@media (min-width: 1200px) {
+				width: 75%;
+			}
+		}
 
-    .profile_table {
-      width: 100%;
-      @media (min-width: 1200px) {
-        width: 75%;
-      }
-    }
+		tr {
+			width: 100%;
+		}
 
-    tr {
-      width: 100%;
-    }
+		.personal_information_header {
+			display: flex;
+			justify-content: space-between;
+			margin: 1rem;
+			h2 {
+				&.active {
+					color: #fd5901;
+				}
+			}
+		}
+		.card_holder {
+			display: flex;
+			justify-content: flex-start;
+			align-items: flex-start;
+			flex-wrap: wrap;
+			@media (max-width: 426px) {
+				margin-top: 0.5rem;
+			}
+		}
 
-    .personal_information_header {
-      display: flex;
-      justify-content: space-between;
-      margin: 1rem;
-      h2{
+		.personal_information_header button {
+			//border-radius: 131px;
+			//border: 1px solid var(--bs-border-color);
+			background-color: transparent;
+			width: fit-content;
+			//height: 35px;
+			flex-shrink: 0;
+			color: var(--startup);
+			font-size: 22px;
+			font-family: Poppins;
+			cursor: pointer;
+		}
 
-        &.active {
-          color: #fd5901;
-        }
-      }
-    }
-    .card_holder {
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      @media (max-width: 426px){
-        margin-top: 0.5rem;
-      }
-    }
+		.designation_info {
+			margin-left: 1rem;
+			textarea {
+				width: 98%;
+			}
+		}
 
-    .personal_information_header button {
-      //border-radius: 131px;
-      //border: 1px solid var(--bs-border-color);
-      background-color: transparent;
-      width: fit-content;
-      //height: 35px;
-      flex-shrink: 0;
-      color: var(--startup);
-      font-size: 22px;
-      font-family: Poppins;
-      cursor: pointer;
-    }
+		.designation_see_more {
+			display: flex;
+			justify-content: end;
+			padding: 1rem;
+		}
 
-    .designation_info {
-      margin-left: 1rem;
-      textarea {
-        width: 98%;
-      }
-    }
+		.designation_see_more a {
+			color: #717171;
+			font-size: 16px;
+			font-family: Poppins;
+			list-style: none;
+			text-decoration: none;
+		}
 
-    .designation_see_more {
-      display: flex;
-      justify-content: end;
-      padding: 1rem;
-    }
+		.milestone_see_more a {
+			color: #717171;
+			font-size: 16px;
+			font-family: Poppins;
+			list-style: none;
+			text-decoration: none;
+		}
+	}
 
-    .designation_see_more a {
-      color: #717171;
-      font-size: 16px;
-      font-family: Poppins;
-      list-style: none;
-      text-decoration: none;
-    }
+	.profile_edit_field {
+		outline: none;
+		border: 1px solid var(--bs-border-color);
+		border-radius: 5px;
+		padding: 0.25em 0.75em;
+		// color: #777;
+		color: var(--d-l-grey);
 
-    .milestone_see_more a {
-      color: #717171;
-      font-size: 16px;
-      font-family: Poppins;
-      list-style: none;
-      text-decoration: none;
-    }
-  }
-
-  .profile_edit_field {
-    outline: none;
-    border: 1px solid var(--bs-border-color);
-    border-radius: 5px;
-    padding: 0.25em 0.75em;
-    // color: #777;
-    color: var(--d-l-grey);
-
-    &:focus {
-      transition: border 0.15s ease-in-out;
-      border: 1px solid rgba(253, 89, 1, 1);
-    }
-  }
+		&:focus {
+			transition: border 0.15s ease-in-out;
+			border: 1px solid rgba(253, 89, 1, 1);
+		}
+	}
 }
 
-// @media (max-width: 768px) {
-//   .seventy,
-//   .thirty {
-//     margin: 0;
-//     padding: 0;
-//   }
-//   .investorHome_main_container {
-//     .bio_container,
-//     .personal_information,
-//     .bio_information {
-//       width: 100%;
-//       max-width: 100%;
-//       height: auto;
-
-//       .designation_list {
-//         color: #000;
-//         font-size: 16px;
-//         font-family: Poppins;
-//         font-weight: 500;
-//         padding-right: 50px;
-//       }
-//     }
-//   }
-
-//   .bio_container {
-//     .col-seven {
-//       padding: 0;
-//       .image_name_section {
-//         img {
-//           height: 20%;
-//         }
-//         .left_profile_text {
-//           .typography {
-//             color: #000;
-//             font-size: 17px;
-//             font-family: Poppins;
-//             font-weight: 600;
-//             margin: 0;
-//           }
-
-//           .smallest_typo {
-//             color: #686868;
-//             font-size: 10px;
-//             font-family: Poppins;
-//           }
-
-//           .small_typo {
-//             color: #717171;
-//             font-size: 14px;
-//             font-family: Poppins;
-//           }
-//         }
-//       }
-//     }
-
-//     .col-five {
-//       padding: 0;
-//       display: flex;
-//       justify-content: center;
-//       .connect_btn button {
-//         width: 8rem;
-//       }
-//     }
-//     .designation {
-//       .designation_list {
-//         color: #000;
-//         font-size: 16px;
-//         font-family: Poppins;
-//         font-weight: 500;
-//         padding-right: 50px;
-//       }
-//     }
-//   }
-// }
 @media (max-width: 820) {
-  .investorHome_main_container {
-    margin-top: 0px !important;
-  }
+	.investorHome_main_container {
+		margin-top: 0px !important;
+	}
 }
 
 @media (max-width: 426px) {
-  .investorHome_main_container {
-    // margin-left: -20px;
-    .profileContainer {
-      display: flex;
-      flex-direction: column;
-      align-items: start;
-      margin-left: 20px;
-      // justify-content: start;
-    }
-    table {
-      width: 300px;
-      font-size: 15px;
-      strong {
-        font-weight: 200;
-        margin-right: 15px;
-      }
-    }
-    .milestones {
-      // overflow-x: scroll;
-    }
-    .small_typo {
-      // width: 300px;
-    }
-  }
+	.investorHome_main_container {
+		// margin-left: -20px;
+		.profileContainer {
+			display: flex;
+			flex-direction: column;
+			align-items: start;
+			margin-left: 20px;
+			// justify-content: start;
+		}
+		table {
+			width: 300px;
+			font-size: 15px;
+			strong {
+				font-weight: 200;
+				margin-right: 15px;
+			}
+		}
+	}
 }
