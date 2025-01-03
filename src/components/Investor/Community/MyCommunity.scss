@@ -2,8 +2,8 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background: #060810;
-  color: #FFFFFF;
+  background: var(--bg-color);
+  color: var(--text-color);
   font-family: 'Outfit', sans-serif;
 
 
@@ -25,7 +25,7 @@
     max-width: 800px;
     margin: 2rem auto;
     padding: 2rem;
-    background: rgba(6, 8, 16, 0.95);
+    background: var(--section-bg);
     border-radius: 30px;
     backdrop-filter: blur(10px);
 
@@ -45,13 +45,13 @@
       .community-card {
         display: flex;
         gap: 1.5rem;
-        background: rgba(255, 255, 255, 0.02);
+        background: var(--card-bg);
         backdrop-filter: blur(10px);
         border-radius: 0;
         padding: 1rem;
         cursor: pointer;
         transition: transform 0.2s;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid var(--border-color);
 
         &:hover {
           transform: translateY(-2px);
@@ -123,14 +123,14 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: #888;
+            color: var(--text-secondary);
             font-size: 0.9rem;
             margin-bottom: 0.5rem;
           }
 
           .subscription {
             font-size: 0.9rem;
-            color: #aaa;
+            color: var(--text-secondary);
           }
         }
       }
@@ -195,4 +195,23 @@
       }
     }
   }
+}
+
+// Add theme variables
+[data-theme="light"] {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --text-secondary: #666666;
+  --section-bg: rgba(0, 0, 0, 0.03);
+  --card-bg: rgba(0, 0, 0, 0.02);
+  --border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+  --bg-color: #060810;
+  --text-color: #FFFFFF;
+  --text-secondary: #888888;
+  --section-bg: rgba(6, 8, 16, 0.95);
+  --card-bg: rgba(255, 255, 255, 0.02);
+  --border-color: rgba(255, 255, 255, 0.1);
 }

@@ -1,9 +1,9 @@
 .community-creation-page {
   position: relative;
   width: 100%;
-  background: #060810;
+  background: var(--bg-color);
   border-radius: 20px;
-  color: #FFFFFF;
+  color: var(--text-color);
   font-family: 'Outfit', sans-serif;
   overflow: hidden;
   
@@ -42,7 +42,7 @@
     height: 100%;
     left: 0;
     top: 0;
-    background: rgba(0, 0, 0, 0.2) !important;
+    background: var(--overlay-bg) !important;
   }
 
   // Gradient blur effect
@@ -89,7 +89,7 @@
     margin: 0 auto;
 
     .left-section {
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--section-bg);
       backdrop-filter: blur(217px);
       border-radius: 30px;
       padding: 2rem;
@@ -149,15 +149,15 @@
         input[type="text"] {
           width: 100%;
           height: 3.5rem;
-          background: rgba(49, 47, 59, 0.4);
+          background: var(--input-bg);
           border-radius: 10px;
           border: none;
           padding: 0 1rem;
-          color: #FFFFFF;
+          color: var(--text-color);
           font-size: 1rem;
 
           &::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--placeholder-color);
             font-size: 0.875rem;
           }
         }
@@ -169,13 +169,14 @@
 
           .size-option {
             height: 3.5rem;
-            background: rgba(217, 217, 217, 0.1);
+            background: var(--option-bg);
             border-radius: 10px;
             padding: 1rem;
             font-weight: 300;
             font-size: 0.938rem;
             position: relative;
             cursor: pointer;
+            color: var(--text-color);
 
             &::after {
               content: '';
@@ -235,15 +236,15 @@
         input[type="number"] {
           width: 100%;
           height: 3.5rem;
-          background: rgba(49, 47, 59, 0.4);
+          background: var(--input-bg);
           border-radius: 10px;
           border: none;
           padding: 0 1rem;
-          color: #FFFFFF;
+          color: var(--text-color);
           font-size: 1rem;
 
           &::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--placeholder-color);
             font-size: 0.875rem;
           }
 
@@ -383,4 +384,25 @@
   .community-url-section {
     max-width: 100%;
   }
+}
+
+// Add theme variables
+[data-theme="light"] {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --overlay-bg: rgba(0, 0, 0, 0.1);
+  --input-bg: rgba(0, 0, 0, 0.1);
+  --placeholder-color: rgba(0, 0, 0, 0.6);
+  --option-bg: rgba(0, 0, 0, 0.05);
+  --section-bg: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] {
+  --bg-color: #060810;
+  --text-color: #FFFFFF;
+  --overlay-bg: rgba(0, 0, 0, 0.2);
+  --input-bg: rgba(49, 47, 59, 0.4);
+  --placeholder-color: rgba(255, 255, 255, 0.6);
+  --option-bg: rgba(217, 217, 217, 0.1);
+  --section-bg: rgba(255, 255, 255, 0.06);
 }

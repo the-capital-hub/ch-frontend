@@ -96,6 +96,10 @@
           }
         }
       }
+
+      &.closed {
+        display: none;
+      }
     }
 
     .main-content {
@@ -170,11 +174,34 @@
 
       .sidebar {
         position: static;
-        width: 100%;
+        margin-top: 3.5rem;
+        margin-left: -1rem;
+        width: 100vw;
       }
 
       .main-content {
         margin-left: 0;
+      }
+    }
+
+    .community-header {
+      .community-info {
+        .info-wrapper {
+          .hamburger-btn {
+            display: block;
+          }
+        }
+      }
+    }
+
+    .community-content {
+      .sidebar {
+        &.open {
+          display: block;
+        }
+        &.closed {
+          display: none;
+        }
       }
     }
   }

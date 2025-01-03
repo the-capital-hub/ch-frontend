@@ -235,7 +235,7 @@ const InvestorNavbar = (props) => {
 					</div>
 
 					{/* Mobile hamberger and page title */}
-					<div
+					{!props.isCommunity && (<div
 						className={`mobile-home-hamberger`}
 						onClick={props.handleSidebarToggle}
 					>
@@ -257,13 +257,20 @@ const InvestorNavbar = (props) => {
 							)}
 						</span>
 						<h1 className="ms-2 text-break">{props.pageTitle || pageTitle}</h1>
-					</div>
+					</div>)}
+					{props.isCommunity && (<div
+						className={`mobile-home-hamberger`}
+						onClick={props.handleSidebarToggle}
+					>
+						<h1 className="ms-2 text-break">{"Community"}</h1>
+					</div>)}
+
 				</div>
 
 				{/* Navbar right */}
 				<div className="startup_navbar_right_container">
 					{/* Search for mobile view start*/}
-					{mobileSearch && (
+					{(mobileSearch && !props.isCommunity) && (
 						<div className="search_container_mobile rounded-4 shadow-sm border p-3 position-absolute d-flex flex-column">
 							<form
 								onSubmit={searchSubmitHandler}
@@ -374,7 +381,7 @@ const InvestorNavbar = (props) => {
 					)}
 					<div className="icons-container">
 						{/* Search for mobile view start*/}
-						<div className="mobile-icon-wrapper-search position-relative ">
+						{!props.isCommunity && (<div className="mobile-icon-wrapper-search position-relative ">
 							<span
 								className="notification-icon"
 								onClick={() => setMobileSearch((prev) => !prev)}
@@ -386,7 +393,7 @@ const InvestorNavbar = (props) => {
 									}}
 								/>
 							</span>
-						</div>
+						</div>)}
 
 						{/* Notification */}
 						<div

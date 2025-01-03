@@ -11,6 +11,7 @@ import { selectLoggedInUserId } from "../../../Store/features/user/userSlice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { ToastContainer } from 'react-toastify';
+import { selectTheme } from "../../../Store/features/design/designSlice";
 
 export default function NewCommunityModal() {
 
@@ -26,6 +27,20 @@ export default function NewCommunityModal() {
 	const [communityUrl, setCommunityUrl] = useState("");
 	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
+	const theme = useSelector(selectTheme);
+
+	const getThemeStyles = () => ({
+		backgroundColor: theme === 'light' ? '#ffffff' : '#060810',
+		color: theme === 'light' ? '#000000' : '#FFFFFF'
+	});
+
+	const backButtonStyles = {
+		color: theme === 'light' ? '#000000' : '#FFFFFF'
+	};
+
+	const svgStyles = {
+		stroke: theme === 'light' ? '#000000' : '#FFFFFF'
+	};
 
 	const handleFileChange = (event) => {
 		const file = event.target.files[0];
@@ -84,13 +99,9 @@ export default function NewCommunityModal() {
 
 	if (isSuccess) {
 		return (
-			<div className="community-creation-page" style={{maxHeight: "80vh"}}>
+			<div className="community-creation-page" style={{maxHeight: "80vh", ...getThemeStyles()}} data-theme={theme}>
 				<ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
 				<InvestorNavbar />
-				<button className="back-button" data-bs-dismiss="modal">
-					<BsArrowLeft /> Back
-				</button>
-
 				<div className="content-container">
 					<div className="left-section">
 						<div className="community-preview">
@@ -129,7 +140,7 @@ export default function NewCommunityModal() {
 	}
 
 	return (
-		<div className="community-creation-page" style={{maxHeight: "80vh", marginTop:"3rem"}}>
+		<div className="community-creation-page" style={{maxHeight: "80vh", marginTop:"3rem", ...getThemeStyles()}} data-theme={theme}>
 			<ToastContainer 
 				position="top-right" 
 				autoClose={5000} 
@@ -140,11 +151,11 @@ export default function NewCommunityModal() {
 				pauseOnFocusLoss
 				draggable
 				pauseOnHover
-				theme="colored"
+				theme={theme}
 			/>
 			<InvestorNavbar />
-						{/* <button className="back-button" data-bs-dismiss="modal">
-				<BsArrowLeft /> Back
+			{/* <button className="back-button" style={backButtonStyles} data-bs-dismiss="modal">
+				<BsArrowLeft style={svgStyles} /> Back
 			</button> */}
 
 			<div className="content-container">

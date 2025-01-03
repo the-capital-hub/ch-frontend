@@ -10,6 +10,7 @@ import { getBase64 } from "../../../utils/getBase64";
 import { selectLoggedInUserId } from "../../../Store/features/user/userSlice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { selectTheme } from "../../../Store/features/design/designSlice";
 
 export default function NewCommunityModal() {
 
@@ -26,6 +27,21 @@ export default function NewCommunityModal() {
 	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
 
+	const theme = useSelector(selectTheme);
+
+	const getThemeStyles = () => ({
+		backgroundColor: theme === 'light' ? '#ffffff' : '#060810',
+		color: theme === 'light' ? '#000000' : '#FFFFFF'
+	});
+
+	const backButtonStyles = {
+		color: theme === 'light' ? '#000000' : '#FFFFFF'
+	};
+
+	const svgStyles = {
+		stroke: theme === 'light' ? '#000000' : '#FFFFFF'
+	};
+
 	const handleFileChange = (event) => {
 		const file = event.target.files[0];
 		setSelectedFile(file);
@@ -39,7 +55,7 @@ export default function NewCommunityModal() {
 		"200k-500k",
 		"500k+"
 	];
-
+	
 	const handleCreateCommunity = async () => {
 		if (!communityName.trim()) {
 			toast.error('Please enter a community name');
@@ -93,11 +109,11 @@ export default function NewCommunityModal() {
 
 	if (isSuccess) {
 		return (
-			<div className="community-creation-page" style={{minHeight: "100vh"}}>
+			<div className="community-creation-page" style={{minHeight: "100vh", ...getThemeStyles()}} data-theme={theme}>
 				
 				<InvestorNavbar />
-				<button className="back-button" data-bs-dismiss="modal">
-					<BsArrowLeft /> Back
+				<button className="back-button" style={backButtonStyles}>
+					<BsArrowLeft style={svgStyles} /> Back
 				</button>
 
 				<div className="content-container">
@@ -139,10 +155,10 @@ export default function NewCommunityModal() {
 	}
 
 	return (
-		<div className="community-creation-page" style={{minHeight: "100vh"}}>
+		<div className="community-creation-page" style={{minHeight: "100vh", ...getThemeStyles()}} data-theme={theme}>
 			<InvestorNavbar />
-						<button className="back-button" data-bs-dismiss="modal">
-				<BsArrowLeft /> Back
+			<button className="back-button" style={backButtonStyles} data-bs-dismiss="modal">
+				<BsArrowLeft style={svgStyles} /> Back
 			</button>
 
 			<div className="content-container">
