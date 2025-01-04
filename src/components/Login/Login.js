@@ -90,8 +90,7 @@ function OtpVerificationModal({
 			setOrderId(response?.orderId);
 			setOpen(true);
 			setShow(true);
-		} catch (error) {
-		}
+		} catch (error) {}
 	};
 
 	return (
@@ -207,7 +206,6 @@ const Login = () => {
 				[
 					"https://www.googleapis.com/auth/userinfo.profile",
 					"https://www.googleapis.com/auth/userinfo.email",
-					"https://www.googleapis.com/auth/calendar",
 					"https://www.googleapis.com/auth/calendar.events",
 				].join(" ")
 			);
@@ -450,7 +448,9 @@ const Login = () => {
 			}
 		} catch (error) {
 			// Set the error message to be displayed in the component
-			setError(error.response?.data?.message || "Login failed. Please try again.");
+			setError(
+				error.response?.data?.message || "Login failed. Please try again."
+			);
 		} finally {
 			setLoading(false);
 		}
@@ -531,7 +531,9 @@ const Login = () => {
 			}
 		} catch (error) {
 			// Set the error message to be displayed in the component
-			setError(error.response?.data?.message || "Login failed. Please try again.");
+			setError(
+				error.response?.data?.message || "Login failed. Please try again."
+			);
 		} finally {
 			setLoading(false);
 		}
@@ -577,7 +579,6 @@ const Login = () => {
 		try {
 			const response = await postResetPaswordLink(inputValues);
 			if (response.status === "200") {
-
 				setLoading(true);
 				setShowResetPopUp(false);
 				setInputValues();
