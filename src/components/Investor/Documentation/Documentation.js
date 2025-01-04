@@ -158,7 +158,7 @@ const Documentation = () => {
                           break;
                         case "onelinkpitch":
                           imageToShow = GreenPitch;
-                          folderName = "OneLink Pitch";
+                          folderName = "Pitch Recordings";
                           break;
                         default:
                           imageToShow = Pitch;

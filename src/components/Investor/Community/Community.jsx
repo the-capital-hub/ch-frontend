@@ -85,10 +85,7 @@ const Community = () => {
         try {
           const token = localStorage.getItem("accessToken");
           const response = await axios.get(
-            `${environment.baseUrl}/communities/getCommunityById/${communityId}`,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
+            `${environment.baseUrl}/communities/getCommunityById/${communityId}`
           );
           setCommunity(response.data.data);
           console.log(response.data.data);

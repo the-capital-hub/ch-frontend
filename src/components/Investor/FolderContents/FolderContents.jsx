@@ -42,7 +42,7 @@ const FolderContents = () => {
       pageTitle = "Business";
       break;
     case "Onelinkpitch":
-      pageTitle = "OneLink Pitch";
+      pageTitle = "Pitch Recordings";
       break;
     default:
       pageTitle = title;

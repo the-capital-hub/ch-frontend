@@ -37,7 +37,7 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
         });
     };
     getFolders();
-
+    console.log("folders", folderSelector)
   }, [loggedInUser.oneLinkId]);
 
   const handleClosePopup = () => {
@@ -157,7 +157,7 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
               <option value="business">Business</option>
               <option value="kycdetails">KYC Details</option>
               <option value="legal and compliance">Legal and Compliance</option>
-              <option value="onelinkpitch">OneLink Pitch</option>
+              <option value="onelinkpitch">Pitch Recordings</option>
               <option value="New Folder">Other</option> */}
                {    folderSelector.map((folderOption, index) => (
                       <option key={index} value={folderOption}>
@@ -166,7 +166,7 @@ const UploadModal = ({ onCancel, fetchFolder, notify }) => {
                           folderOption === "business" ? "Business" :
                           folderOption === "kycdetails" ? "KYC Details" :
                           folderOption === "legal and compliance" ? "Legal and Compliance" :
-                          folderOption === "onelinkpitch" ? "OneLink Pitch" : 
+                          folderOption === "onelinkpitch" ? "Pitch Recordings" : 
                           folderOption 
                         }
                       </option>
