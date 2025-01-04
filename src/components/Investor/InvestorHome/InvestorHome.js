@@ -70,31 +70,30 @@ const InvestorHome = () => {
 		<MaxWidthWrapper>
 			<div className="investorHome_main_container ">
 				<div className="two_column_wrapper">
-					<div className="seventy d-flex flex-column gap-3">
+					<div className="seventy d-flex flex-column gap-4">
 						{/* Small Profile Card */}
 						{/* <SmallProfileCard className={""} /> */}
 
-						<div className="content-70 d-flex flex-column gap-4">
-							{/* Professional info component */}
-							<ProfessionalInfo theme={"startup"} />
-							<PersonalDetail theme={"startup"} />
-							<PersonalInfoCard />
-							{/* offcanvas trigger - Add missing details. Show if details are missing */}
-							{/*<MissingDetails />/}
+						{/* Professional info component */}
+						<ProfessionalInfo theme={"startup"} />
+						<PersonalDetail theme={"startup"} />
+						<PersonalInfoCard />
+						{/* offcanvas trigger - Add missing details. Show if details are missing */}
+						{/*<MissingDetails />/}
 
               {/* Bio */}
-							<UserBio />
-							{/* Company Details */}
-							<div className="">
-								<CompanyProfileDetailsCard
-									className=""
-									userDetails={loggedInUser}
-									page={""}
-									theme="startup"
-								/>
-							</div>
-							{/* achievements */}
-							{/*<div className="box personal_information">
+						<UserBio />
+						{/* Company Details */}
+						<div className="">
+							<CompanyProfileDetailsCard
+								className=""
+								userDetails={loggedInUser}
+								page={""}
+								theme="startup"
+							/>
+						</div>
+						{/* achievements */}
+						{/*<div className="box personal_information">
                 <div className="personal_information_header ">
                   <h2 className="typography">Achievements</h2>
                   <div className="milestone_see_more">
@@ -106,73 +105,73 @@ const InvestorHome = () => {
                 </div>
                  </div>*/}
 
-							{/* Featured Posts */}
-							<div className="box personal_information">
-								<div style={{ display: "flex" }}>
-									<div
-										className="personal_information_header"
-										onClick={() => {
-											setPostSection("featuredPosts");
-										}}
-										style={{ cursor: "pointer" }}
+						{/* Featured Posts */}
+						<div className="box personal_information">
+							<div style={{ display: "flex" }}>
+								<div
+									className="personal_information_header"
+									onClick={() => {
+										setPostSection("featuredPosts");
+									}}
+									style={{ cursor: "pointer" }}
+								>
+									<h2
+										className={`typography ${
+											postSection === "featuredPosts" ? "active" : ""
+										}`}
 									>
-										<h2
-											className={`typography ${
-												postSection === "featuredPosts" ? "active" : ""
-											}`}
-										>
-											Featured posts
-										</h2>
-									</div>
-									<div
-										className="personal_information_header"
-										onClick={() => {
-											setPostSection("companyUpdate");
-										}}
-										style={{ cursor: "pointer" }}
+										Featured posts
+									</h2>
+								</div>
+								<div
+									className="personal_information_header"
+									onClick={() => {
+										setPostSection("companyUpdate");
+									}}
+									style={{ cursor: "pointer" }}
+								>
+									<h2
+										className={`typography ${
+											postSection === "companyUpdate" ? "active" : ""
+										}`}
 									>
-										<h2
-											className={`typography ${
-												postSection === "companyUpdate" ? "active" : ""
-											}`}
-										>
-											Company update
-										</h2>
-										{/* <div className="milestone_see_more">
+										Company update
+									</h2>
+									{/* <div className="milestone_see_more">
                   <Link to={""}>See more</Link>
                 </div> */}
-									</div>
-
-									<div
-										className="personal_information_header"
-										onClick={() => {
-											setPostSection("myPost");
-										}}
-										style={{ cursor: "pointer" }}
-									>
-										<h2
-											className={`typography ${
-												postSection === "myPost" ? "active" : ""
-											}`}
-										>
-											My posts
-										</h2>
-									</div>
 								</div>
-								<div className="mt-2 milestones">
-									{postSection === "companyUpdate" ? (
-										<CompanyPost userId={loggedInUserId} postDelete={true} />
-									) : postSection === "featuredPosts" ? (
-										<FeaturedPostsContainer
-											userId={loggedInUserId}
-											postDelete={true}
-										/>
-									) : (
-										<MyPost userId={loggedInUserId} postDelete={true} />
-									)}
+
+								<div
+									className="personal_information_header"
+									onClick={() => {
+										setPostSection("myPost");
+									}}
+									style={{ cursor: "pointer" }}
+								>
+									<h2
+										className={`typography ${
+											postSection === "myPost" ? "active" : ""
+										}`}
+									>
+										My posts
+									</h2>
 								</div>
 							</div>
-							{/*<div className="box personal_information">
+							<div className="mt-2 milestones">
+								{postSection === "companyUpdate" ? (
+									<CompanyPost userId={loggedInUserId} postDelete={true} />
+								) : postSection === "featuredPosts" ? (
+									<FeaturedPostsContainer
+										userId={loggedInUserId}
+										postDelete={true}
+									/>
+								) : (
+									<MyPost userId={loggedInUserId} postDelete={true} />
+								)}
+							</div>
+						</div>
+						{/*<div className="box personal_information">
               <div className="personal_information_header">
                 <h2 className="typography">Featured posts</h2>
               </div>
@@ -181,30 +180,29 @@ const InvestorHome = () => {
               </div>
              </div>*/}
 
-							<div className="box personal_information">
-								<h4 className="typography" style={{ marginLeft: "1rem" }}>
-									Recent Connections
-								</h4>
-								<div className="col-12 mt-2 milestones">
-									<ConnectionCard />
-								</div>
+						<div className="box personal_information">
+							<h4 className="typography" style={{ marginLeft: "1rem" }}>
+								Recent Connections
+							</h4>
+							<div className="col-12 mt-2 milestones">
+								<ConnectionCard />
 							</div>
-							<div className="box personal_information">
-								<h4
-									className="typography"
-									style={{
-										marginLeft: "1rem",
-										fontFamily: '"Outfit", sans-serif',
-									}}
-								>
-									Milestones
-								</h4>
-								<Milestones pageTheme="startup" />
-							</div>
-							{/* Featured Posts End */}
-
-							{/* Color Cards */}
 						</div>
+						<div className="box personal_information">
+							<h4
+								className="typography"
+								style={{
+									marginLeft: "1rem",
+									fontFamily: '"Outfit", sans-serif',
+								}}
+							>
+								Milestones
+							</h4>
+							<Milestones pageTheme="startup" />
+						</div>
+						{/* Featured Posts End */}
+
+						{/* Color Cards */}
 					</div>
 					<div className="thirty d-none d-xl-block">
 						<RightProfileCard />
