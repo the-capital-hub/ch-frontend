@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { environment } from "../../../environments/environment";
 import "./UpdateCommunityForm.scss";
 import { getBase64 } from "../../../utils/getBase64";
 import { toast, ToastContainer } from 'react-toastify';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@mui/material';
 
 
 const UpdateCommunityForm = ({ community }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: community.name || "",
     image: community.image || "",
@@ -29,6 +32,9 @@ const UpdateCommunityForm = ({ community }) => {
   ];
 
   const [isLoading, setIsLoading] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deletionReason, setDeletionReason] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -86,6 +92,29 @@ const UpdateCommunityForm = ({ community }) => {
   const removeTerm = (index) => {
     const newTerms = formData.terms_and_conditions.filter((_, i) => i !== index);
     setFormData({ ...formData, terms_and_conditions: newTerms });
+  };
+
+  const handleDelete = async () => {
+    if (isDeleting) return;
+    setIsDeleting(true);
+    try {
+      const token = localStorage.getItem('accessToken');
+      await axios.delete(
+        `${environment.baseUrl}/communities/softDelete/${community._id}`,
+        {
+          data: { reason: deletionReason },
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+      toast.success('Community deleted successfully');
+      navigate('/ExploreCommunities');
+    } catch (error) {
+      console.error('Error deleting community:', error);
+      toast.error('Failed to delete community');
+    } finally {
+      setIsDeleting(false);
+      setDeleteDialogOpen(false);
+    }
   };
 
   return (
@@ -208,6 +237,39 @@ const UpdateCommunityForm = ({ community }) => {
 
         <button type="submit" >{isLoading ? ("Updating...") : ( "Update Community")}</button>
       </form>
+
+      <button 
+        className="delete-button"
+        onClick={() => setDeleteDialogOpen(true)}
+      >
+        Delete Community
+      </button>
+
+      <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
+        <DialogTitle>Delete Community</DialogTitle>
+        <DialogContent>
+          <p>Are you sure you want to delete this community? This action cannot be undone.</p>
+          <TextField
+            fullWidth
+            multiline
+            rows={4}
+            label="Reason for deletion"
+            value={deletionReason}
+            onChange={(e) => setDeletionReason(e.target.value)}
+            margin="normal"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
+          <Button 
+            onClick={handleDelete} 
+            color="error"
+            disabled={isDeleting}
+          >
+            {isDeleting ? 'Deleting...' : 'Delete'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

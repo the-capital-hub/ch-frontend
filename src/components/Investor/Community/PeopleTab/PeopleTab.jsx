@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./PeopleTab.scss";
-import { FaWhatsapp, FaInstagram } from "react-icons/fa";
+import { FaWhatsapp, FaInstagram, FaUserTimes } from "react-icons/fa";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { selectLoggedInUserId } from "../../../../Store/features/user/userSlice";
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import { environment } from '../../../../environments/environment';
 
 const PeopleTab = ({ community }) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
+  const [removeReason, setRemoveReason] = useState('');
+  const [selectedMember, setSelectedMember] = useState(null);
+  const loggedInUserId = useSelector(selectLoggedInUserId);
+  const [isRemoving, setIsRemoving] = useState(false);
 
   // Combine admin and members into one array and add member status
   const allMembers = [
@@ -48,6 +59,37 @@ const PeopleTab = ({ community }) => {
     navigate(`/${username}/${userId}`);
   };
 
+  const handleRemoveMember = async () => {
+    if (isRemoving) return;
+    setIsRemoving(true);
+    try {
+      const token = localStorage.getItem('accessToken');
+      await axios.patch(
+        `${environment.baseUrl}/communities/removeMember/${community._id}/${selectedMember._id}`,
+        { reason: removeReason },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      
+      // Update the local state by filtering out the removed member
+      const updatedMembers = allMembers.filter(member => member._id !== selectedMember._id);
+      community.members = community.members.filter(member => member.member._id !== selectedMember._id);
+      
+      toast.success('Member removed successfully');
+      setRemoveDialogOpen(false);
+      setSelectedMember(null);
+      setRemoveReason('');
+    } catch (error) {
+      console.error('Error removing member:', error);
+      toast.error('Failed to remove member');
+    } finally {
+      setIsRemoving(false);
+    }
+  };
+
   useEffect(()=>{
     console.log(allMembers);
   },[])
@@ -87,6 +129,16 @@ const PeopleTab = ({ community }) => {
                 </p>
                 {member.role === "Admin" && <span className="admin-badge">Admin</span>}
               </div>
+              {community.adminId._id === loggedInUserId && (
+                <FaUserTimes 
+                  className="remove-icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedMember(member);
+                    setRemoveDialogOpen(true);
+                  }}
+                />
+              )}
             </div>
             <div className="social-icons">
               <FaWhatsapp className="whatsapp-icon" />
@@ -95,6 +147,33 @@ const PeopleTab = ({ community }) => {
           </div>
         ))}
       </div>
+
+      {/* Add Remove Dialog */}
+      <Dialog open={removeDialogOpen} onClose={() => setRemoveDialogOpen(false)}>
+        <DialogTitle>Remove Member</DialogTitle>
+        <DialogContent>
+          <p>Are you sure you want to remove this member?</p>
+          <TextField
+            fullWidth
+            multiline
+            rows={4}
+            label="Reason for removal"
+            value={removeReason}
+            onChange={(e) => setRemoveReason(e.target.value)}
+            margin="normal"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setRemoveDialogOpen(false)}>Cancel</Button>
+          <Button 
+            onClick={handleRemoveMember} 
+            color="error"
+            disabled={isRemoving}
+          >
+            {isRemoving ? 'Removing...' : 'Remove'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

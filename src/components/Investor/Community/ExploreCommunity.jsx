@@ -133,28 +133,15 @@ export default function ExploreCommunities() {
       await cashfree.checkout({
         paymentSessionId: payment_session_id,
         redirectTarget: "_modal",
-        // onPaymentSuccess: async (data) => {
-        //   console.log("Payment success", data);
-        //   const verificationSuccess = await verifyPayment(order_id, selectedCommunity._id);
-        //   if (verificationSuccess) {
-        //     await joinCommunity(selectedCommunity._id);
-        //   }
-        // },
-        // onPaymentFailure: (data) => {
-        //   console.log("Payment failed", data);
-        //   toast.error("Payment failed");
-        // },
       });
 
       const verificationResponse = await verifyPayment(order_id, selectedCommunity._id);
-      console.log(verificationResponse);
       if (verificationResponse) {
         await joinCommunity(selectedCommunity._id);
-      }
-      else {
+        await fetchCommunities();
+      } else {
         toast.error('Payment verification failed');
       }
-
 
     } catch (error) {
       console.error('Payment error:', error);
