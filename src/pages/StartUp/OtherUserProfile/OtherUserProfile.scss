@@ -167,3 +167,46 @@
 		}
 	}
 }
+
+.PIC {
+	&-view {
+		&-header {
+			display: flex;
+			gap: 0.5rem;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 0.5rem;
+
+			&-left {
+				display: flex;
+				gap: 0.5rem;
+				align-items: center;
+			}
+		}
+
+		&-title {
+			font-size: 1.125rem;
+			margin-bottom: 0;
+			color: var(--d-l-grey);
+		}
+
+		&-location {
+			font-size: 0.75rem;
+			margin-bottom: 0;
+		}
+
+		&-subtitle,
+		&-duration,
+		&-desc {
+			color: var(--d-l-grey);
+			margin-bottom: 0;
+		}
+
+		&-logo {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			object-fit: cover;
+		}
+	}
+}
