@@ -1,0 +1,141 @@
+.purchase-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  .purchase-modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+
+    .modal-header {
+      text-align: center;
+      margin-bottom: 2rem;
+
+      h2 {
+        margin-bottom: 0.5rem;
+        color: #333;
+      }
+
+      p {
+        color: #666;
+        font-size: 0.9rem;
+      }
+    }
+
+    .item-details-card {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+
+      .details-grid {
+        display: grid;
+        gap: 1rem;
+
+        .detail-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          padding: 0.5rem 0;
+          border-bottom: 1px solid #eee;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          .label {
+            font-weight: 600;
+            color: #555;
+            min-width: 120px;
+          }
+
+          .value {
+            color: #333;
+            text-align: right;
+            flex: 1;
+            margin-left: 1rem;
+          }
+        }
+      }
+    }
+
+    form {
+      .form-group {
+        margin-bottom: 1.5rem;
+
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          color: #555;
+          font-weight: 500;
+        }
+
+        input {
+          width: 100%;
+          padding: 0.75rem;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          font-size: 1rem;
+
+          &:focus {
+            outline: none;
+            border-color: #007bff;
+          }
+        }
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        margin-top: 2rem;
+
+        button {
+          padding: 0.75rem 1.5rem;
+          border-radius: 6px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &.cancel-btn {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            color: #333;
+
+            &:hover {
+              background: #e9ecef;
+            }
+          }
+
+          &.proceed-btn {
+            background: #007bff;
+            border: none;
+            color: white;
+
+            &:hover {
+              background: #0056b3;
+            }
+
+            &.disabled {
+              background: #ccc;
+              cursor: not-allowed;
+            }
+          }
+        }
+      }
+    }
+  }
+} 

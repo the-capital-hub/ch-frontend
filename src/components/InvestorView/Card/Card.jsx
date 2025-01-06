@@ -18,7 +18,7 @@ const Card = ({ text, onClicked, image }) => {
       folderName = "Legal And Compliance";
       break;
     case "onelinkpitch":
-      folderName = "OneLink Pitch";
+      folderName = "Pitch Recordings";
       break;
     default:
       folderName = text;

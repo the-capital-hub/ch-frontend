@@ -109,7 +109,7 @@ export default function NewCommunityModal() {
 
 	if (isSuccess) {
 		return (
-			<div className="community-creation-page" style={{minHeight: "100vh", ...getThemeStyles()}} data-theme={theme}>
+			<div className="community-creation-page" style={{maxHeight: "100vh", ...getThemeStyles()}} data-theme={theme}>
 				
 				<InvestorNavbar />
 				<button className="back-button" style={backButtonStyles}>
@@ -129,7 +129,7 @@ export default function NewCommunityModal() {
 							<p>
 								{isFree 
 									? "Any one can join for free" 
-									: `Subscription: $${subscriptionAmount}`
+									: `Subscription: ₹${subscriptionAmount}`
 								}
 							</p>
 						</div>

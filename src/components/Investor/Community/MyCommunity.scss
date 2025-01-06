@@ -215,3 +215,17 @@
   --card-bg: rgba(255, 255, 255, 0.02);
   --border-color: rgba(255, 255, 255, 0.1);
 }
+
+
+.community-size-and-share {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+}
+
+
+.share-icon {
+  cursor: pointer;
+  color: var(--d-l-grey); 
+  font-size: 2rem;
+}
