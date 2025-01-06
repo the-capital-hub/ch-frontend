@@ -15,9 +15,9 @@
 .modal-content {
 	background-color: white;
 	border-radius: 0.5rem;
-	//padding: 2rem;
+	padding: 2rem; // may conflit with any other css in other components
 	width: 100%;
-	//max-width: 500px;
+	max-width: 500px; // may conflit with any other css in other components
 	max-height: 90vh;
 	position: relative;
 	animation: modal-appear 0.3s ease-out;
