@@ -16,9 +16,13 @@ import line from "../images/Group 1261152818.png";
 import { FaArrowRight } from "react-icons/fa";
 import "./features.scss";
 import { useNavigate } from "react-router-dom";
+import { usePaymentFlow } from "../../../../../hooks/usePaymentFlow";
+import Modal from "react-modal";
 
 const Features = () => {
 	const navigate = useNavigate();
+	const paymentFlow = usePaymentFlow();
+
 	return (
 		<div className="features-container">
 			<div className="center-content">
@@ -27,7 +31,7 @@ const Features = () => {
 					Use a single link to share over <span>32+ documents</span> with
 					investors, including profiles, financials, and team info.
 				</p>
-				<button className="join-button">Buy Now</button>
+				<button className="join-button" onClick={() => paymentFlow.setIsModalOpen(true)}>Buy Now</button>
 			</div>
 
 			<div className="features-content">
@@ -60,6 +64,31 @@ const Features = () => {
 			</div>
 			{/* <button className='join-button'>JOIN OUR COMMUNITY FOR FREE</button> */}
 			{/* <img src={line} alt="bottom line" className='bottom-line' /> */}
+
+			<Modal
+				isOpen={paymentFlow.isModalOpen}
+				onRequestClose={() => paymentFlow.setIsModalOpen(false)}
+				className="subscription-modal"
+				overlayClassName="subscription-modal-overlay"
+			>
+				{paymentFlow.renderSubscriptionModal()}
+			</Modal>
+
+			<Modal
+				isOpen={paymentFlow.showOtpModal}
+				onRequestClose={() => paymentFlow.setShowOtpModal(false)}
+				className="otp-modal"
+				overlayClassName="otp-modal-overlay"
+			>
+				{paymentFlow.renderOtpModal()}
+			</Modal>
+
+			{paymentFlow.isLoading && (
+				<div className="loader-overlay">
+					<div className="loader"></div>
+					<p className="loader-text">Processing payment...</p>
+				</div>
+			)}
 		</div>
 	);
 };

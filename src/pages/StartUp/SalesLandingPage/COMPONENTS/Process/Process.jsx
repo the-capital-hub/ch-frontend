@@ -6,8 +6,12 @@ import icon2 from "../images/icon2.png";
 import icon3 from "../images/icon3.png";
 import arrow2 from "../images/arrow2.png";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { usePaymentFlow } from "../../../../../hooks/usePaymentFlow";
+import Modal from "react-modal";
 
 const Process = () => {
+	const paymentFlow = usePaymentFlow();
+
 	return (
 		<div
 			className="process-container"
@@ -49,11 +53,12 @@ const Process = () => {
 								href="#"
 								className="buy-now"
 								style={{ display: "inline-flex", alignItems: "center" }}
+								onClick={(e) => {
+									e.preventDefault();
+									paymentFlow.setIsModalOpen(true);
+								}}
 							>
-								Buy Now{" "}
-								<span>
-									<MdKeyboardArrowRight />
-								</span>{" "}
+								Buy Now <span><MdKeyboardArrowRight /></span>
 							</a>
 						</div>
 
@@ -68,11 +73,12 @@ const Process = () => {
 								href="#"
 								className="buy-now"
 								style={{ display: "inline-flex", alignItems: "center" }}
+								onClick={(e) => {
+									e.preventDefault();
+									paymentFlow.setIsModalOpen(true);
+								}}
 							>
-								Buy Now{" "}
-								<span>
-									<MdKeyboardArrowRight />
-								</span>{" "}
+								Buy Now <span><MdKeyboardArrowRight /></span>
 							</a>
 						</div>
 
@@ -87,11 +93,12 @@ const Process = () => {
 								href="#"
 								className="buy-now"
 								style={{ display: "inline-flex", alignItems: "center" }}
+								onClick={(e) => {
+									e.preventDefault();
+									paymentFlow.setIsModalOpen(true);
+								}}
 							>
-								Buy Now{" "}
-								<span>
-									<MdKeyboardArrowRight />
-								</span>{" "}
+								Buy Now <span><MdKeyboardArrowRight /></span>
 							</a>
 						</div>
 					</div>
@@ -130,13 +137,41 @@ const Process = () => {
 							<div className="getPrice">
 								<span>INR</span> 1,999
 							</div>
-							<a className="button-get-started" href="#">
+							<a className="button-get-started" href="#" onClick={(e) => {
+								e.preventDefault();
+								paymentFlow.setIsModalOpen(true);
+							}}>
 								Get Started
 							</a>
 						</div>
 					</div>
 				</div>
 			</div>
+
+			<Modal
+				isOpen={paymentFlow.isModalOpen}
+				onRequestClose={() => paymentFlow.setIsModalOpen(false)}
+				className="subscription-modal"
+				overlayClassName="subscription-modal-overlay"
+			>
+				{paymentFlow.renderSubscriptionModal()}
+			</Modal>
+
+			<Modal
+				isOpen={paymentFlow.showOtpModal}
+				onRequestClose={() => paymentFlow.setShowOtpModal(false)}
+				className="otp-modal"
+				overlayClassName="otp-modal-overlay"
+			>
+				{paymentFlow.renderOtpModal()}
+			</Modal>
+
+			{paymentFlow.isLoading && (
+				<div className="loader-overlay">
+					<div className="loader"></div>
+					<p className="loader-text">Processing payment...</p>
+				</div>
+			)}
 		</div>
 	);
 };

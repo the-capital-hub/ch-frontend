@@ -3,8 +3,13 @@ import "./deals.scss";
 import Hustler from "../images/hustler.png";
 import Exclusive from "../images/exclusive.png";
 import { useNavigate } from "react-router-dom";
+import { usePaymentFlow } from "../../../../../hooks/usePaymentFlow";
+import Modal from "react-modal";
+
 
 const Deals = () => {
+	const paymentFlow = usePaymentFlow();
+
 	return (
 		<div className="deals-container">
 			<div className="inner-container">
@@ -32,7 +37,7 @@ const Deals = () => {
 								Learn from top investors and founders. These invite-only
 								sessions will help you sharpen your growth strategies.
 							</p>
-							<button className="buy-now-btn">Buy Now</button>
+							<button className="buy-now-btn" onClick={() => paymentFlow.setIsModalOpen(true)}>Buy Now</button>
 						</div>
 						<div className="content-right">
 							<img src={Exclusive} alt="exclusive" />
@@ -50,6 +55,31 @@ const Deals = () => {
 					</div>
 				</div>
 			</div>
+
+			<Modal
+				isOpen={paymentFlow.isModalOpen}
+				onRequestClose={() => paymentFlow.setIsModalOpen(false)}
+				className="subscription-modal"
+				overlayClassName="subscription-modal-overlay"
+			>
+				{paymentFlow.renderSubscriptionModal()}
+			</Modal>
+
+			<Modal
+				isOpen={paymentFlow.showOtpModal}
+				onRequestClose={() => paymentFlow.setShowOtpModal(false)}
+				className="otp-modal"
+				overlayClassName="otp-modal-overlay"
+			>
+				{paymentFlow.renderOtpModal()}
+			</Modal>
+
+			{paymentFlow.isLoading && (
+				<div className="loader-overlay">
+					<div className="loader"></div>
+					<p className="loader-text">Processing payment...</p>
+				</div>
+			)}
 		</div>
 	);
 };
