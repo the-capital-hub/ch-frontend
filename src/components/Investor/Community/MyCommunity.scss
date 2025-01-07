@@ -229,3 +229,20 @@
   color: var(--d-l-grey); 
   font-size: 2rem;
 }
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  .leave-icon {
+    cursor: pointer;
+    color: #dc3545;
+    font-size: 2rem;
+    transition: color 0.2s;
+
+    &:hover {
+      color: darken(#dc3545, 10%);
+    }
+  }
+}

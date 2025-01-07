@@ -87,27 +87,16 @@ const Products = ({ community }) => {
       await cashfree.checkout({
         paymentSessionId: payment_session_id,
         redirectTarget: "_modal",
-        // onPaymentSuccess: async (data) => {
-        //   console.log("Payment success", data);
-        //   const verificationResponse = await verifyPayment(order_id, selectedProduct._id);
-        //   if (verificationResponse) {
-        //     await processPurchase(selectedProduct._id);
-        //   }
-        // },
-        // onPaymentFailure: (data) => {
-        //   console.log("Payment failed", data);
-        //   toast.error("Payment failed");
-        // },
       });
 
       const verificationResponse = await verifyPayment(order_id, selectedProduct._id);
-      console.log(verificationResponse);
       if (verificationResponse) {
         await processPurchase(selectedProduct._id);
-      }
-      else {
+        const updatedCommunity = await fetchCommunityDetails();
+        setProducts(updatedCommunity.products || []);
+      } else {
         toast.error('Payment verification failed');
-      }   
+      }
     } catch (error) {
       console.error('Payment error:', error);
       toast.error('Payment process failed');
@@ -149,6 +138,23 @@ const Products = ({ community }) => {
     setProducts(prevProducts => [...prevProducts, newProduct]);
     setShowAddProduct(false);
     toast.success('Product added successfully!');
+  };
+
+  const fetchCommunityDetails = async () => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      const response = await axios.get(
+        `${environment.baseUrl}/communities/getCommunity/${community._id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+      return response.data.data;
+    } catch (error) {
+      console.error('Error fetching community details:', error);
+      toast.error('Failed to refresh community data');
+      return null;
+    }
   };
 
   return (
