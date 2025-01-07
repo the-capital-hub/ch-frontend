@@ -11,8 +11,10 @@ import { toast } from "react-toastify";
 import moment from 'moment';
 import NewCommunityModal from "../ChatComponents/NewCommunityModal";
 import { selectTheme } from "../../../Store/features/design/designSlice";
-import {  FaShareAlt } from "react-icons/fa";
+import {  FaShareAlt, FaSignOutAlt } from "react-icons/fa";
 import SharePopup from "../../PopUp/SocialSharePopup/SharePopup";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@mui/material';
+
 export default function MyCommunity() {
   const [communities, setCommunities] = useState([]);
   const navigate = useNavigate();
@@ -20,7 +22,10 @@ export default function MyCommunity() {
   const theme = useSelector(selectTheme);
   const [sharePopupOpen, setSharePopupOpen] = useState(false);
   const [communityUrl, setCommunityUrl] = useState('');  
-
+  const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
+  const [leaveReason, setLeaveReason] = useState('');
+  const [selectedCommunityForLeave, setSelectedCommunityForLeave] = useState(null);
+  const [isLeaving, setIsLeaving] = useState(false);
 
   useEffect(() => {
     fetchCommunities();
@@ -65,6 +70,33 @@ export default function MyCommunity() {
     color: theme === 'light' ? '#000000' : '#FFFFFF'
   };
 
+  const handleLeaveCommunity = async () => {
+    if (isLeaving) return;
+    setIsLeaving(true);
+    try {
+      const token = localStorage.getItem('accessToken');
+      await axios.post(
+        `${environment.baseUrl}/communities/leaveCommunity/${selectedCommunityForLeave._id}`,
+        { reason: leaveReason },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success('Successfully left the community');
+      fetchCommunities();
+      setLeaveDialogOpen(false);
+      setSelectedCommunityForLeave(null);
+      setLeaveReason('');
+    } catch (error) {
+      console.error('Error leaving community:', error);
+      toast.error('Failed to leave the community');
+    } finally {
+      setIsLeaving(false);
+    }
+  };
+
   return (
     <div className="my-community-page" style={getThemeStyles()} data-theme={theme}>
       <InvestorNavbar />
@@ -92,10 +124,26 @@ export default function MyCommunity() {
                   </span>
                 </div>
                 <div className="community-size-and-share">
-                <p className="size">{community.size}</p>
-                <FaShareAlt className="share-icon"  onClick={(e) => {
-                  e.stopPropagation();
-                  handleOpenSocialShare(community._id)}}  />
+                  <p className="size">{community.size}</p>
+                  <div className="action-buttons">
+                    {community.adminId !== loggedInUserId && (
+                      <FaSignOutAlt 
+                        className="leave-icon"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedCommunityForLeave(community);
+                          setLeaveDialogOpen(true);
+                        }}
+                      />
+                    )}
+                    <FaShareAlt 
+                      className="share-icon"  
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleOpenSocialShare(community._id);
+                      }}
+                    />
+                  </div>
                 </div>
                 <div className="stats">
                   <span>{community.members.length + 1} members</span>
@@ -124,6 +172,32 @@ export default function MyCommunity() {
         isOpen={sharePopupOpen} 
         setIsOpen={setSharePopupOpen} 
       />
+
+      <Dialog open={leaveDialogOpen} onClose={() => setLeaveDialogOpen(false)}>
+        <DialogTitle>Leave Community</DialogTitle>
+        <DialogContent>
+          <p>Are you sure you want to leave this community?</p>
+          <TextField
+            fullWidth
+            multiline
+            rows={4}
+            label="Reason for leaving"
+            value={leaveReason}
+            onChange={(e) => setLeaveReason(e.target.value)}
+            margin="normal"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setLeaveDialogOpen(false)}>Cancel</Button>
+          <Button 
+            onClick={handleLeaveCommunity} 
+            color="error" 
+            disabled={isLeaving}
+          >
+            {isLeaving ? 'Leaving...' : 'Leave'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

@@ -109,6 +109,20 @@
           }
         }
       }
+
+      .remove-icon {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        cursor: pointer;
+        color: #dc3545;
+        font-size: 1.5rem;
+        transition: color 0.2s;
+
+        &:hover {
+          color: darken(#dc3545, 10%);
+        }
+      }
     }
   }
 }
