@@ -6,6 +6,8 @@ import { IoCloseSharp } from "react-icons/io5";
 // import FIcon from "../../Images/Group 23.svg";
 // import AIcon from "../../Images/Group 24.svg";
 import backArrow from "../../Images/left-arrow.png";
+import otpBanner from "../../Images/otpBanner.png";
+import { RiCloseLine as X } from "react-icons/ri";
 import PhoneInput from "react-phone-number-input";
 import AfterRegisterPopUp from "../PopUp/AfterSuccessPopUp/AfterSuccessPopUp";
 import { Link, useNavigate } from "react-router-dom";
@@ -37,6 +39,127 @@ import { fetchAllChats } from "../../Store/features/chat/chatThunks";
 import { loginSuccess } from "../../Store/features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
+// OTP Verification Modal
+function OtpVerificationModal({
+	isOpen,
+	setOpen,
+	setShow,
+	onClose,
+	onVerify,
+	inputValues,
+	setOrderId,
+}) {
+	const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+	const inputRefs = useRef([]);
+
+	useEffect(() => {
+		if (isOpen && inputRefs.current[0]) {
+			inputRefs.current[0].focus();
+		}
+	}, [isOpen]);
+
+	const handleChange = (index, value) => {
+		if (isNaN(value)) return;
+		const newOtp = [...otp];
+		newOtp[index] = value;
+		setOtp(newOtp);
+
+		if (value !== "" && index < 5) {
+			inputRefs.current[index + 1].focus();
+		}
+	};
+
+	const handleKeyDown = (index, e) => {
+		if (e.key === "Backspace" && index > 0 && otp[index] === "") {
+			inputRefs.current[index - 1].focus();
+		}
+	};
+
+	const handleVerify = () => {
+		if (otp.join("").length === 6) {
+			onVerify(otp);
+		} else {
+			alert("Please enter a valid 6-digit OTP.");
+		}
+	};
+
+	if (!isOpen) return null;
+	const handleOtpChange = async () => {
+		try {
+			const response = await sendOTP(inputValues.phoneNumber);
+			setOrderId(response?.orderId);
+			setOpen(true);
+			setShow(true);
+		} catch (error) {}
+	};
+
+	return (
+		<div className="OtpVerificationModal_container">
+			<div
+				className="OtpVerificationModal_main_container bg-white rounded-lg shadow-xl p-6  relative flex md:flex-row flex-col"
+				style={{ width: "700px" }}
+			>
+				<div style={{ width: "90%" }}>
+					<button onClick={onClose} className="Modal_Close_btn">
+						<X size={30} />
+					</button>
+					<h2 className="enter_verification_code">Enter verification code</h2>
+					<p className="Otp_Sent_Msg">
+						We have just sent a verification code to your mobile number.
+					</p>
+					<div
+						// className="flex justify-between mb-6"
+						style={{
+							display: "flex",
+							justifyContent: "space-between",
+							marginBottom: "1.5rem",
+						}}
+					>
+						{otp.map((digit, index) => (
+							<input
+								key={index}
+								ref={(el) => (inputRefs.current[index] = el)}
+								type="text"
+								maxLength="1"
+								className="OTP_Input"
+								value={digit}
+								onChange={(e) => handleChange(index, e.target.value)}
+								onKeyDown={(e) => handleKeyDown(index, e)}
+							/>
+						))}
+					</div>
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "space-between",
+							marginBottom: "1.5rem",
+							fontSize: "14px",
+							lineHeight: "20px",
+						}}
+					>
+						<button onClick={handleOtpChange} className="Send_OTP_btn">
+							Send the code again
+						</button>
+						<button onClick={onClose} className="Change_Number_btn">
+							Change phone number
+						</button>
+					</div>
+					<button onClick={handleVerify} className="Modal_Verify_btn active">
+						Verify
+					</button>
+				</div>
+				<img
+					src={otpBanner}
+					alt="Verification illustration"
+					width={300}
+					height={300}
+					className="hidden md:block"
+				/>
+			</div>
+		</div>
+	);
+}
+
 const Register = () => {
 	const dispatch = useDispatch();
 	const [isMobileVerified, setIsMobileVerified] = useState(false);
@@ -58,7 +181,7 @@ const Register = () => {
 	const [companyDetail, setCompanyDetail] = useState({
 		company: "",
 	});
-	const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+	// const [otp, setOtp] = useState(["", "", "", "", "", ""]);
 	const otpInputRefs = useRef([]);
 	const [show, setshow] = useState(false);
 	const [showSelectWhatYouAre, setShowSelectWhatYouAre] = useState(false);
@@ -295,7 +418,7 @@ const Register = () => {
 	// };
 
 	// Validate OTP
-	const ValidateOtp = async () => {
+	const ValidateOtp = async (otp) => {
 		try {
 			if (otp === null || final === null) return;
 			const verificationCode = otp.join(""); // Join the array elements into a string
@@ -347,24 +470,24 @@ const Register = () => {
 		}
 	};
 
-	const handleOtpChange = (event, index) => {
-		const value = event.target.value;
-		const updatedOtp = [...otp];
-		updatedOtp[index] = value;
-		setOtp(updatedOtp);
-		if (value !== "" && index < otp.length - 1) {
-			otpInputRefs.current[index + 1].focus();
-		}
-	};
+	// const handleOtpChange = (event, index) => {
+	// 	const value = event.target.value;
+	// 	const updatedOtp = [...otp];
+	// 	updatedOtp[index] = value;
+	// 	setOtp(updatedOtp);
+	// 	if (value !== "" && index < otp.length - 1) {
+	// 		otpInputRefs.current[index + 1].focus();
+	// 	}
+	// };
 
-	const handleOtpKeyDown = (event, index) => {
-		if (event.key === "Backspace" && index > 0 && otp[index] === "") {
-			const updatedOtp = [...otp];
-			updatedOtp[index - 1] = "";
-			setOtp(updatedOtp);
-			otpInputRefs.current[index - 1].focus();
-		}
-	};
+	// const handleOtpKeyDown = (event, index) => {
+	// 	if (event.key === "Backspace" && index > 0 && otp[index] === "") {
+	// 		const updatedOtp = [...otp];
+	// 		updatedOtp[index - 1] = "";
+	// 		setOtp(updatedOtp);
+	// 		otpInputRefs.current[index - 1].focus();
+	// 	}
+	// };
 
 	// const handleOtpPaste = (event) => {
 	//   event.preventDefault();
@@ -377,8 +500,7 @@ const Register = () => {
 	//   setOtp(updatedOtp);
 	// };
 
-	const handleClick = () => {
-	};
+	const handleClick = () => {};
 
 	const handleStartupClick = () => {
 		setShowSelectWhatYouAre(false);
@@ -426,9 +548,7 @@ const Register = () => {
 	return (
 		<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
 			<div className="register_container">
-				{/* <div className="register_container row d-flex m-0"> */}
 				{/* Left section */}
-				{/* <div className="col-lg-6 col-md-12 register_heading bg-pink-50"> */}
 				<div className="register_container_left register_heading">
 					<img
 						className="backArrow"
@@ -450,7 +570,6 @@ const Register = () => {
 					</Link>
 				</div>
 				{/* Right section */}
-				{/* <div className="col-lg-6 col-md-12 register_heading_right"> */}
 				<div
 					className="register_container_right register_heading_right"
 					style={{ padding: "1rem" }}
@@ -467,12 +586,6 @@ const Register = () => {
 						Welcome{" "}
 					</span>
 					<h1>Create your account</h1>
-					{/* <h3 className="already_have_account">
-          Already have an account? &nbsp;
-          <Link to={"/login"} style={{ color: "red" }}>
-            Log In
-          </Link>
-        </h3> */}
 					<div className="login_buttons_row d-flex flex-column align-items-center">
 						<div className="d-flex flex-row justify-content-between align-items-center gap-4 gap-sm-5">
 							<Link to="">
@@ -522,7 +635,7 @@ const Register = () => {
 						<div className="flex-grow border-t border-gray-300"></div>
 					</div>
 
-					{show ? (
+					{/* {show && (
 						<div className="verification_container">
 							<div className="login_content_main">
 								<div className="login_content">
@@ -560,7 +673,9 @@ const Register = () => {
 								</div>
 							</div>
 						</div>
-					) : (
+					)} */}
+
+					{!show && (
 						<div className="form-container">
 							<form onSubmit={handleFormSubmit}>
 								<div className="row">
@@ -612,18 +727,18 @@ const Register = () => {
 												international={false}
 											/>
 											{/*<button
-                    className="btn btn-light rounded-end-3 otp-verify-btn"
-                    onClick={() => handleVerifyMobile(inputValues.phoneNumber)}
-                    style={{ zIndex: 0 }}
-                  >
-                    Verify
-                  </button>*/}
+															className="btn btn-light rounded-end-3 otp-verify-btn"
+															onClick={() => handleVerifyMobile(inputValues.phoneNumber)}
+															style={{ zIndex: 0 }}
+														>
+															Verify
+														</button>*/}
 										</div>
 
 										{/*{isMobileVerified && (
-                  <p className="text-success">Mobile number verified!</p>
-                )}
-              <div id="recaptcha-container"></div>*/}
+														<p className="text-success">Mobile number verified!</p>
+													)}
+												<div id="recaptcha-container"></div>*/}
 									</div>
 									<div className="col-lg-6 col-md-12 form-group mb-2">
 										{/* <label htmlFor="email">Email</label> */}
@@ -640,20 +755,20 @@ const Register = () => {
 									</div>
 								</div>
 								{/* <div className="row">
-              <div className="col-md-12 form-group mb-2">
-                <label htmlFor="linkedin">Linkedin</label>
-                <input
-                  type="text"
-                  id="linkedin"
-                  name="linkedin"
-                  className="form-control"
-                  value={inputValues.linkedin}
-                  required
-                  placeholder="Linkedin"
-                  onChange={(e) => handleInputChange(e, "linkedin")}
-                />
-              </div>
-            </div> */}
+												<div className="col-md-12 form-group mb-2">
+													<label htmlFor="linkedin">Linkedin</label>
+													<input
+														type="text"
+														id="linkedin"
+														name="linkedin"
+														className="form-control"
+														value={inputValues.linkedin}
+														required
+														placeholder="Linkedin"
+														onChange={(e) => handleInputChange(e, "linkedin")}
+													/>
+												</div>
+											</div> */}
 
 								<div className="row">
 									<div className="col-lg-6 col-md-12 form-group mb-2">
@@ -750,19 +865,20 @@ const Register = () => {
 							</form>
 						</div>
 					)}
-					{/* <div className="line-container">
-            <hr className="line" />
-            <span className="text">Or continue with</span>
-            <hr className="line" />
-          </div>
-          <div className="row">
-            <div className="col d-flex justify-content-center align-items-center login_icons">
-              <img src={GIcon} alt="image" />
-              <img src={FIcon} alt="image" />
-              <img src={AIcon} alt="image" />
-            </div>
-          </div> */}
+
+					<OtpVerificationModal
+						isOpen={show}
+						setOpen={setshow}
+						setShow={setshow}
+						onClose={() => setshow(false)}
+						onVerify={ValidateOtp}
+						phoneNumber={inputValues.phoneNumber}
+						sendOTP={sendOTP}
+						inputValues={inputValues}
+						setOrderId={setOrderId}
+					/>
 				</div>
+
 				{isSubmitted && (
 					<AfterRegisterPopUp onClose={handleClosePopup} register={true} />
 				)}
@@ -775,9 +891,10 @@ const Register = () => {
 				)}
 				{showErrorPopup && (
 					<ErrorPopUp
-						message={
-							"Invalid mobile number. Please enter a valid mobile number."
-						}
+						// message={
+						// 	"Invalid mobile number. Please enter a valid mobile number."
+						// }
+						message={errorMessage}
 						onClose={() => setShowErrorPopup(false)} // Add a handler to close the error popup
 					/>
 				)}

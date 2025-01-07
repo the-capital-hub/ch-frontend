@@ -12,6 +12,7 @@ export default function PersonAbout({
 	experience,
 	education,
 	designation,
+	companyName,
 }) {
 	return (
 		<>
@@ -50,11 +51,12 @@ export default function PersonAbout({
 							Company Name:
 						</p>
 						<p className="about__text field-text">
-							{startUp?.company
+							{/* {startUp?.company
 								? startUp?.company
 								: investor?.companyName
 								? investor?.companyName
-								: "No company"}
+								: "No company"} */}
+							{companyName}
 						</p>
 					</div>
 					<div

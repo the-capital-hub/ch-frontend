@@ -7,15 +7,11 @@ import {
 	loginSuccess,
 } from "../../../../../Store/features/user/userSlice";
 import { CiEdit, CiSaveUp2 } from "react-icons/ci";
+import { FiUpload } from "react-icons/fi";
+import { FaPlus, FaTrash } from "react-icons/fa";
+import CollageDummy from "../../../../../Images/dummy/Collage.png";
+import CompanyDummy from "../../../../../Images/dummy/Company.jpg";
 import "./PersonalInfoCard.scss";
-
-const LOGO_OPTIONS = [
-	"https://images.unsplash.com/photo-1576961453646-b4c376c7021b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGNvbXBhbnklMjBmcmVlfGVufDB8fDB8fHww",
-	"https://images.unsplash.com/photo-1556761175-4b46a572b786?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y29tcGFueSUyMGZyZWV8ZW58MHx8MHx8fDA%3D",
-	"https://images.unsplash.com/photo-1531973576160-7125cd663d86?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29tcGFueSUyMGZyZWV8ZW58MHx8MHx8fDA%3D",
-	"https://images.unsplash.com/photo-1554232456-8727aae0cfa4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbXBhbnklMjBmcmVlfGVufDB8fDB8fHww",
-	"https://images.unsplash.com/photo-1571624436279-b272aff752b5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGNvbXBhbnklMjBmcmVlfGVufDB8fDB8fHww",
-];
 
 const emptyExperience = {
 	companyName: "",
@@ -27,7 +23,7 @@ const emptyExperience = {
 };
 
 const emptyEducation = {
-	school: "",
+	schoolName: "",
 	course: "",
 	location: "",
 	passoutYear: "",
@@ -36,7 +32,8 @@ const emptyEducation = {
 };
 
 export default function PersonalInfoCard() {
-	const [isEditing, setIsEditing] = useState(false);
+	const [isEditingExperience, setIsEditingExperience] = useState(false);
+	const [isEditingEducation, setIsEditingEducation] = useState(false);
 	const recentEducation = useSelector(selectUserRecentEducation);
 	const recentExperience = useSelector(selectUserRecentExperience);
 	const dispatch = useDispatch();
@@ -45,6 +42,8 @@ export default function PersonalInfoCard() {
 		recentExperience,
 		recentEducation,
 	});
+
+	const [formErrors, setFormErrors] = useState({});
 
 	const handleExperienceChange = (index, field, value) => {
 		const newExperience = [...formData.recentExperience];
@@ -68,16 +67,58 @@ export default function PersonalInfoCard() {
 		setFormData({ ...formData, recentEducation: newEducation });
 	};
 
+	const validateForm = (data, type) => {
+		const errors = {};
+		data.forEach((item, index) => {
+
+			if (type === "experience") {
+				if (!item.companyName)
+					errors[`companyName-${index}`] = "Company name is required";
+				if (!item.role) errors[`role-${index}`] = "Role is required";
+				if (!item.location)
+					errors[`location-${index}`] = "Location is required";
+				if (!item.experienceDuration.startYear)
+					errors[`startYear-${index}`] = "Start year is required";
+				if (!item.experienceDuration.endYear)
+					errors[`endYear-${index}`] = "End year is required";
+			} else {
+				if (!item.schoolName)
+					errors[`schoolName-${index}`] = "School name is required";
+				if (!item.course) errors[`course-${index}`] = "Course is required";
+				if (!item.location)
+					errors[`location-${index}`] = "Location is required";
+				if (!item.passoutYear)
+					errors[`passoutYear-${index}`] = "Passout year is required";
+			}
+		});
+		return errors;
+	};
+
 	const handleSave = async () => {
 		console.log("Saving:", formData);
-		setIsEditing(false);
+		setIsEditingExperience(false);
+		setIsEditingEducation(false);
+
+		const experienceErrors = validateForm(
+			formData.recentExperience,
+			"experience"
+		);
+		const educationErrors = validateForm(formData.recentEducation, "education");
+
+		if (
+			Object.keys(experienceErrors).length > 0 ||
+			Object.keys(educationErrors).length > 0
+		) {
+			setFormErrors({ ...experienceErrors, ...educationErrors });
+			return;
+		}
 
 		try {
 			const {
 				data: { data },
 			} = await updateUserAPI(formData);
 			dispatch(loginSuccess(data));
-			alert("Education and Experience Updated.");
+			alert("Data Successfully Updated.");
 		} catch (error) {
 			console.error(error);
 		}
@@ -86,8 +127,12 @@ export default function PersonalInfoCard() {
 	const addExperience = () => {
 		setFormData({
 			...formData,
-			recentExperience: [...formData.recentExperience, { ...emptyExperience }],
+			recentExperience: [
+				{ ...emptyExperience, isNew: true, logo: CompanyDummy },
+				...formData.recentExperience,
+			],
 		});
+		setIsEditingExperience(true);
 	};
 
 	const removeExperience = (index) => {
@@ -99,8 +144,12 @@ export default function PersonalInfoCard() {
 	const addEducation = () => {
 		setFormData({
 			...formData,
-			recentEducation: [...formData.recentEducation, { ...emptyEducation }],
+			recentEducation: [
+				{ ...emptyEducation, isNew: true, logo: CollageDummy },
+				...formData.recentEducation,
+			],
 		});
+		setIsEditingEducation(true);
 	};
 
 	const removeEducation = (index) => {
@@ -109,26 +158,38 @@ export default function PersonalInfoCard() {
 		setFormData({ ...formData, recentEducation: newEducation });
 	};
 
+	const handleImageUpload = (event, type, index) => {
+		const file = event.target.files[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				if (type === "experience") {
+					handleExperienceChange(index, "logo", reader.result);
+				} else {
+					handleEducationChange(index, "logo", reader.result);
+				}
+			};
+			reader.readAsDataURL(file);
+		}
+	};
+
+	function convertToDateFormat(dateString) {
+		// Create a new Date object from the input string
+		const date = new Date(dateString);
+
+		// Extract the year, month, and day
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+		const day = String(date.getDate()).padStart(2, "0");
+
+		// Format the date as "yyyy-MM-dd"
+		return `${year}-${month}-${day}`;
+	}
+
 	return (
 		<div className="PIC-card">
 			<div className="PIC-header">
 				<h2>Personal Information</h2>
-				<button
-					className="PIC-btn-edit"
-					onClick={() => setIsEditing(!isEditing)}
-				>
-					{/* <svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="2"
-					>
-						<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-						<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-					</svg> */}
-					<CiEdit />
-				</button>
 			</div>
 
 			<div className="PIC-content">
@@ -136,27 +197,38 @@ export default function PersonalInfoCard() {
 				<div className="PIC-section">
 					<h3>
 						Experience
-						{isEditing && (
+						<div className="PIC-section-right">
 							<button className="PIC-btn-add" onClick={addExperience}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="2"
-								>
-									<line x1="12" y1="5" x2="12" y2="19"></line>
-									<line x1="5" y1="12" x2="19" y2="12"></line>
-								</svg>
+								<FaPlus />
 							</button>
-						)}
+							<button
+								className="PIC-btn-edit"
+								onClick={() => setIsEditingExperience(!isEditingExperience)}
+							>
+								<CiEdit />
+							</button>
+						</div>
 					</h3>
+					{isEditingExperience && (
+						<button className="PIC-btn-save" onClick={handleSave}>
+							<CiSaveUp2 />
+							Save
+						</button>
+					)}
 					{formData.recentExperience.map((exp, index) => (
 						<div key={index} className="PIC-item">
-							{isEditing ? (
+							{isEditingExperience ? (
 								<>
 									<div className="PIC-form-group">
-										<label htmlFor={`companyName-${index}`}>Company</label>
+										<div className="PIC-form-group-top">
+											<label htmlFor={`companyName-${index}`}>Company</label>
+											<button
+												className="PIC-btn-remove"
+												onClick={() => removeExperience(index)}
+											>
+												Remove
+											</button>
+										</div>
 										<input
 											id={`companyName-${index}`}
 											value={exp.companyName}
@@ -167,7 +239,13 @@ export default function PersonalInfoCard() {
 													e.target.value
 												)
 											}
+											required
 										/>
+										{formErrors[`companyName-${index}`] && (
+											<span className="PIC-error">
+												{formErrors[`companyName-${index}`]}
+											</span>
+										)}
 									</div>
 									<div className="PIC-form-group">
 										<label htmlFor={`location-${index}`}>Location</label>
@@ -181,7 +259,13 @@ export default function PersonalInfoCard() {
 													e.target.value
 												)
 											}
+											required
 										/>
+										{formErrors[`location-${index}`] && (
+											<span className="PIC-error">
+												{formErrors[`location-${index}`]}
+											</span>
+										)}
 									</div>
 									<div className="PIC-form-group">
 										<label htmlFor={`role-${index}`}>Role</label>
@@ -191,7 +275,13 @@ export default function PersonalInfoCard() {
 											onChange={(e) =>
 												handleExperienceChange(index, "role", e.target.value)
 											}
+											required
 										/>
+										{formErrors[`role-${index}`] && (
+											<span className="PIC-error">
+												{formErrors[`role-${index}`]}
+											</span>
+										)}
 									</div>
 									<div className="PIC-form-group">
 										<div className="PIC-date-group">
@@ -200,7 +290,9 @@ export default function PersonalInfoCard() {
 												<input
 													id={`exp-start-${index}`}
 													type="date"
-													value={exp.experienceDuration.startYear}
+													value={convertToDateFormat(
+														exp.experienceDuration.startYear
+													)}
 													onChange={(e) =>
 														handleExperienceChange(
 															index,
@@ -210,14 +302,22 @@ export default function PersonalInfoCard() {
 															}
 														)
 													}
+													required
 												/>
+												{formErrors[`startYear-${index}`] && (
+													<span className="PIC-error">
+														{formErrors[`startYear-${index}`]}
+													</span>
+												)}
 											</div>
 											<div>
 												<label htmlFor={`exp-end-${index}`}>End Year</label>
 												<input
 													id={`exp-end-${index}`}
 													type="date"
-													value={exp.experienceDuration.endYear}
+													value={convertToDateFormat(
+														exp.experienceDuration.endYear
+													)}
 													onChange={(e) =>
 														handleExperienceChange(
 															index,
@@ -227,7 +327,13 @@ export default function PersonalInfoCard() {
 															}
 														)
 													}
+													required
 												/>
+												{formErrors[`endYear-${index}`] && (
+													<span className="PIC-error">
+														{formErrors[`endYear-${index}`]}
+													</span>
+												)}
 											</div>
 										</div>
 									</div>
@@ -246,36 +352,39 @@ export default function PersonalInfoCard() {
 										/>
 									</div>
 									<div className="PIC-form-group">
-										<label>Logo</label>
-										<div className="PIC-logo-grid">
-											{LOGO_OPTIONS.map((logo, logoIndex) => (
-												<button
-													key={logoIndex}
-													onClick={() =>
-														handleExperienceChange(index, "logo", logo)
-													}
-													className={exp.logo === logo ? "selected" : ""}
-												>
-													<img src={logo} alt={`Logo ${logoIndex + 1}`} />
-												</button>
-											))}
+										<label htmlFor={`exp-logo-${index}`}>Logo</label>
+										<span className="PIC-image-upload-sublabel">
+											{exp.logo ? "Change Image" : "Upload Image"}
+										</span>
+										<div className="PIC-image-upload">
+											<input
+												type="file"
+												id={`exp-logo-${index}`}
+												accept="image/*"
+												onChange={(e) =>
+													handleImageUpload(e, "experience", index)
+												}
+												className="PIC-image-upload-input"
+											/>
+											<label
+												htmlFor={`exp-logo-${index}`}
+												className="PIC-image-upload-label"
+											>
+												{exp.logo ? (
+													<img
+														src={exp.logo}
+														alt="Company Logo"
+														className="PIC-preview-image"
+													/>
+												) : (
+													<FiUpload />
+												)}
+												<span>
+													{exp.logo ? "Change Image" : "Upload Image"}
+												</span>
+											</label>
 										</div>
 									</div>
-									<button
-										className="PIC-btn-remove"
-										onClick={() => removeExperience(index)}
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											strokeWidth="2"
-										>
-											<line x1="18" y1="6" x2="6" y2="18"></line>
-											<line x1="6" y1="6" x2="18" y2="18"></line>
-										</svg>
-									</button>
 								</>
 							) : (
 								<div className="PIC-view">
@@ -285,16 +394,10 @@ export default function PersonalInfoCard() {
 												<img
 													src={exp.logo}
 													alt="Company Logo"
-													style={{
-														width: "40px",
-														height: "40px",
-														marginBottom: "0.5rem",
-														borderRadius: "50%",
-														objectFit: "cover",
-													}}
+													className="PIC-view-logo"
 												/>
 											)}
-											<div className="d-flex flex-column ">
+											<div className="PIC-view-info">
 												<p className="PIC-view-title">{exp.companyName}</p>
 												<p className="PIC-view-location">{exp.location}</p>
 											</div>
@@ -312,31 +415,50 @@ export default function PersonalInfoCard() {
 					))}
 				</div>
 
+				{isEditingExperience && (
+					<button className="PIC-btn-save" onClick={handleSave}>
+						<CiSaveUp2 />
+						Save
+					</button>
+				)}
+
 				{/* Education Section */}
 				<div className="PIC-section">
 					<h3>
 						Education
-						{isEditing && (
+						<div className="PIC-section-right">
 							<button className="PIC-btn-add" onClick={addEducation}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="2"
-								>
-									<line x1="12" y1="5" x2="12" y2="19"></line>
-									<line x1="5" y1="12" x2="19" y2="12"></line>
-								</svg>
+								<FaPlus />
 							</button>
-						)}
+							<button
+								className="PIC-btn-edit"
+								onClick={() => setIsEditingEducation(!isEditingEducation)}
+							>
+								<CiEdit />
+							</button>
+						</div>
 					</h3>
+					{isEditingEducation && (
+						<button className="PIC-btn-save" onClick={handleSave}>
+							<CiSaveUp2 />
+							Save
+						</button>
+					)}
 					{formData.recentEducation.map((edu, index) => (
 						<div key={index} className="PIC-item">
-							{isEditing ? (
+							{isEditingEducation ? (
 								<>
 									<div className="PIC-form-group">
-										<label htmlFor={`schoolName-${index}`}>School</label>
+										<div className="PIC-form-group-top">
+											<label htmlFor={`schoolName-${index}`}>School</label>
+											<button
+												className="PIC-btn-remove"
+												onClick={() => removeEducation(index)}
+											>
+												Remove
+												{/* <FaTrash /> */}
+											</button>
+										</div>
 										<input
 											id={`schoolName-${index}`}
 											value={edu.schoolName}
@@ -347,7 +469,13 @@ export default function PersonalInfoCard() {
 													e.target.value
 												)
 											}
+											required
 										/>
+										{formErrors[`schoolName-${index}`] && (
+											<span className="PIC-error">
+												{formErrors[`schoolName-${index}`]}
+											</span>
+										)}
 									</div>
 									<div className="PIC-form-group">
 										<label htmlFor={`location-${index}`}>Location</label>
@@ -357,7 +485,13 @@ export default function PersonalInfoCard() {
 											onChange={(e) =>
 												handleEducationChange(index, "location", e.target.value)
 											}
+											required
 										/>
+										{formErrors[`location-${index}`] && (
+											<span className="PIC-error">
+												{formErrors[`location-${index}`]}
+											</span>
+										)}
 									</div>
 									<div className="PIC-form-group">
 										<label htmlFor={`course-${index}`}>Course</label>
@@ -367,7 +501,13 @@ export default function PersonalInfoCard() {
 											onChange={(e) =>
 												handleEducationChange(index, "course", e.target.value)
 											}
+											required
 										/>
+										{formErrors[`course-${index}`] && (
+											<span className="PIC-error">
+												{formErrors[`course-${index}`]}
+											</span>
+										)}
 									</div>
 									<div className="PIC-form-group">
 										<div className="PIC-date-group">
@@ -378,7 +518,7 @@ export default function PersonalInfoCard() {
 												<input
 													id={`passoutYear-${index}`}
 													type="date"
-													value={edu.passoutYear}
+													value={convertToDateFormat(edu.passoutYear)}
 													onChange={(e) =>
 														handleEducationChange(
 															index,
@@ -386,7 +526,13 @@ export default function PersonalInfoCard() {
 															e.target.value
 														)
 													}
+													required
 												/>
+												{formErrors[`passoutYear-${index}`] && (
+													<span className="PIC-error">
+														{formErrors[`passoutYear-${index}`]}
+													</span>
+												)}
 											</div>
 										</div>
 									</div>
@@ -405,36 +551,36 @@ export default function PersonalInfoCard() {
 										/>
 									</div>
 									<div className="PIC-form-group">
-										<label>Logo</label>
-										<div className="PIC-logo-grid">
-											{LOGO_OPTIONS.map((logo, logoIndex) => (
-												<button
-													key={logoIndex}
-													onClick={() =>
-														handleEducationChange(index, "logo", logo)
-													}
-													className={edu.logo === logo ? "selected" : ""}
-												>
-													<img src={logo} alt={`Logo ${logoIndex + 1}`} />
-												</button>
-											))}
+										<label htmlFor={`edu-logo-${index}`}>Logo</label>
+										<span className="PIC-image-upload-sublabel">
+											{edu.logo ? "Change Image" : "Upload Image"}
+										</span>
+										<div className="PIC-image-upload">
+											<input
+												type="file"
+												id={`edu-logo-${index}`}
+												accept="image/*"
+												onChange={(e) =>
+													handleImageUpload(e, "education", index)
+												}
+												className="PIC-image-upload-input"
+											/>
+											<label
+												htmlFor={`edu-logo-${index}`}
+												className="PIC-image-upload-label"
+											>
+												{edu.logo ? (
+													<img
+														src={edu.logo}
+														alt="School Logo"
+														className="PIC-preview-image"
+													/>
+												) : (
+													<FiUpload />
+												)}
+											</label>
 										</div>
 									</div>
-									<button
-										className="PIC-btn-remove"
-										onClick={() => removeEducation(index)}
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											strokeWidth="2"
-										>
-											<line x1="18" y1="6" x2="6" y2="18"></line>
-											<line x1="6" y1="6" x2="18" y2="18"></line>
-										</svg>
-									</button>
 								</>
 							) : (
 								<div className="PIC-view">
@@ -444,24 +590,16 @@ export default function PersonalInfoCard() {
 												<img
 													src={edu.logo}
 													alt="School Logo"
-													style={{
-														width: "40px",
-														height: "40px",
-														borderRadius: "50%",
-														objectFit: "cover",
-														marginBottom: "0.5rem",
-													}}
+													className="PIC-view-logo"
 												/>
 											)}
-											<div className="d-flex flex-column ">
+											<div className="PIC-view-info">
 												<p className="PIC-view-title">{edu.schoolName}</p>
 												<p className="PIC-view-location">{edu.location}</p>
 											</div>
 										</div>
 										<p className="PIC-view-duration">
 											{new Date(edu.passoutYear).getFullYear()}
-											{/* -{" "}
-											{new Date(edu.year.endYear).getFullYear()} */}
 										</p>
 									</div>
 									<p className="PIC-view-subtitle">{edu.course}</p>
@@ -472,19 +610,9 @@ export default function PersonalInfoCard() {
 					))}
 				</div>
 
-				{isEditing && (
+				{isEditingEducation && (
 					<button className="PIC-btn-save" onClick={handleSave}>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-						>
-							<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-							<polyline points="17 21 17 13 7 13 7 21" />
-							<polyline points="7 3 7 8 15 8" />
-						</svg>
+						<CiSaveUp2 />
 						Save
 					</button>
 				)}

@@ -141,7 +141,7 @@ function ProfileInformation() {
         </fieldset>
 
         {/* Company */}
-        <fieldset>
+        {/* <fieldset>
           <legend className="px-2">Company</legend>
           <input
             type="text"
@@ -150,10 +150,10 @@ function ProfileInformation() {
             value={professionalData.company}
             onChange={handleTextChange}
           />
-        </fieldset>
+        </fieldset> */}
 
         {/* Designation */}
-        <fieldset>
+        {/* <fieldset>
           <legend className="px-2">Designation</legend>
           <input
             type="text"
@@ -162,11 +162,11 @@ function ProfileInformation() {
             value={professionalData.designation}
             onChange={handleTextChange}
           />
-        </fieldset>
+        </fieldset> */}
 
         {/* Education */}
 
-        <fieldset>
+        {/* <fieldset>
           <legend className="px-2">Education</legend>
 
           <select
@@ -187,7 +187,7 @@ function ProfileInformation() {
               );
             })}
           </select>
-        </fieldset>
+        </fieldset> */}
 
         {/* Experience */}
 
