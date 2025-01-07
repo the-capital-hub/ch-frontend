@@ -25,7 +25,7 @@ const Home = () => {
   return (
     <>
       
-      <NewYearPopper />
+      {/* <NewYearPopper /> */}
       {/* Hero section */}
       <div className="container mb-md-5">
         <LandingHero />

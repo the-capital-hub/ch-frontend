@@ -205,13 +205,13 @@ const Home = () => {
 					{/* Background Image */}
 					<div className="banner-bg">
 						<div className="best-startup">
-							<img src={smallline} alt="" className="smallline" />
+							{/* <img src={smallline} alt="" className="smallline" /> */}
 							<h1>
 								<b>
 									# No 1 Company For <span id="headBanner">Startup</span>
 								</b>
 							</h1>
-							<img src={smallline} alt="" className="smallline" />
+							{/* <img src={smallline} alt="" className="smallline" /> */}
 						</div>
 
 						{/* Green Arrow */}
@@ -243,8 +243,6 @@ const Home = () => {
 								</button>
 							</div>
 						</center>
-
-						
 					</div>
 				</div>
 			</div>

@@ -13,8 +13,8 @@ import PublicRoute from "../components/Routes/PublicRoutes/PublicRoute";
 import PrivateRoute from "../components/Routes/PrivateRoutes";
 import PublicCommunityView from "../components/Investor/Community/PublicCommunityView";
 
-// import Navbar2 from "../components/Navbar/NavbarForSalesLanding/Navbar2";
-// import Footer2 from "../components/Footer/FooterForSalesLanding/Footer2";
+import Navbar2 from "../components/Navbar/NavbarForSalesLanding/Navbar2";
+import Footer2 from "../components/Footer/FooterForSalesLanding/Footer2";
 // import Navbar3 from "../components/Navbar/Navbar3/Navbar3";
 // import SidebarPublic from "../components/SidebarPublic/SidebarPublic";
 
@@ -109,7 +109,6 @@ function PublicRoutes() {
 	const user = useSelector((state) => state.user.loggedInUser);
 	return (
 		<>
-			
 			<Route
 				path="/"
 				element={
@@ -318,9 +317,9 @@ function PublicRoutes() {
 				path="/know-startup"
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
-						<Navbar />
+						<Navbar2 />
 						<SalesLandingPage />
-						<Footer />
+						<Footer2 />
 					</Suspense>
 				}
 			/>

@@ -5,6 +5,7 @@ import { selectTheme } from "../../../../../Store/features/design/designSlice";
 import DOMPurify from "dompurify";
 import TopVoices from "../../../../../Images/TopVoices.png";
 import "./TopVoiceTracker.scss";
+import { RiShieldFlashFill } from "react-icons/ri";
 
 const TopVoice = ({ isInvestor = false }) => {
 	const theme = useSelector(selectTheme);
@@ -17,7 +18,13 @@ const TopVoice = ({ isInvestor = false }) => {
 		const fetchUserPosts = async () => {
 			try {
 				const response = await userPosts();
-				setPosts(response.data.allPosts);
+
+				//sorting posts from latest to past
+				const sortedPosts = response.data.allPosts.sort(
+					(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+				);
+
+				setPosts(sortedPosts);
 			} catch (error) {
 				console.error("Failed to fetch user posts:", error);
 			}
@@ -56,7 +63,7 @@ const TopVoice = ({ isInvestor = false }) => {
 			className={`top-voice-container ${theme === "dark" ? " dark-theme" : ""}`}
 		>
 			<div className="top-voice-header">
-				<span className="top-voice-title">Top Voice</span>
+				<span className="top-voice-title">Top Voice <RiShieldFlashFill /></span>
 				<p className="top-voice-subtitle">
 					{posts.length >= 10
 						? `You have made ${posts.length} posts this month. Congratulation, You are a Top Voice Now.`
@@ -127,7 +134,7 @@ const TopVoice = ({ isInvestor = false }) => {
 										__html: DOMPurify.sanitize(
 											expanded
 												? post.description
-												: post.description?.substring(0, 100) + "..."
+												: post.description?.substring(0, 80) + "..."
 										),
 									}}
 								/>
