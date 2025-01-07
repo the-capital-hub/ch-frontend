@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import bg from "../images/Polygon 12.png";
 import dot from "../images/Ellipse 9.png";
 import blurdot from "../images/Ellipse 12.png";
@@ -6,9 +6,47 @@ import small from "../images/Ellipse 20.png";
 import "./founder.scss";
 import { useNavigate } from "react-router-dom";
 import profile from "../images/profile.png";
+import { useDispatch } from "react-redux";
+import Modal from "react-modal";
+import axios from "axios";
+import { environment } from "../../../../../environments/environment";
+import { toast } from 'react-toastify';
+import { sendOTP, verifyOTP, postUserLogin, updateUserAPI } from "../../../../../Service/user";
+import { loginSuccess } from "../../../../../Store/features/user/userSlice";
+import { load } from "@cashfreepayments/cashfree-js";
+import { usePaymentFlow } from "../../../../../hooks/usePaymentFlow";
 
 const Founder = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [showOtpModal, setShowOtpModal] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const [formData, setFormData] = useState({
+		firstName: "",
+		lastName: "",
+		email: "",
+		mobileNumber: "",
+		userType: ""
+	});
+	const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+	const [orderId, setOrderId] = useState("");
+	const inputRefs = useRef([]);
+	const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
+	const paymentFlow = usePaymentFlow();
+
+	const handleInputChange = (e) => { /* ... */ };
+	const initializeCashfree = async () => { /* ... */ };
+	const handleOtpChange = (index, value) => { /* ... */ };
+	const handleKeyDown = (index, e) => { /* ... */ };
+	const handleSubmit = async (e) => { /* ... */ };
+	const handleOtpVerify = async () => { /* ... */ };
+	const processPayment = async () => { /* ... */ };
+	const verifyPayment = async (orderId) => { /* ... */ };
+
+	const handleBuyNowClick = () => {
+		paymentFlow.setIsModalOpen(true);
+	};
 
 	return (
 		<div className="founder-container">
@@ -102,9 +140,34 @@ const Founder = () => {
 					<h4>
 						INR <span>1,999</span>
 					</h4>
-					<button>Get Premium</button>
+					<button onClick={handleBuyNowClick}>Get Premium</button>
 				</div>
 			</div>
+
+			<Modal
+				isOpen={paymentFlow.isModalOpen}
+				onRequestClose={() => paymentFlow.setIsModalOpen(false)}
+				className="subscription-modal"
+				overlayClassName="subscription-modal-overlay"
+			>
+				{paymentFlow.renderSubscriptionModal()}
+			</Modal>
+
+			<Modal
+				isOpen={paymentFlow.showOtpModal}
+				onRequestClose={() => paymentFlow.setShowOtpModal(false)}
+				className="otp-modal"
+				overlayClassName="otp-modal-overlay"
+			>
+				{paymentFlow.renderOtpModal()}
+			</Modal>
+
+			{paymentFlow.isLoading && (
+				<div className="loader-overlay">
+					<div className="loader"></div>
+					<p className="loader-text">Processing payment...</p>
+				</div>
+			)}
 		</div>
 	);
 };

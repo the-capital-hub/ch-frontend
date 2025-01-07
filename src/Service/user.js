@@ -64,6 +64,7 @@ async function uploadDocument(userData) {
 async function sendOTP(phoneNumber) {
 	try {
 		const response = await axiosInstance.post(API.sendOtp, { phoneNumber });
+		console.log(response);
 		return response.data;
 	} catch (err) {
 		throw err;
