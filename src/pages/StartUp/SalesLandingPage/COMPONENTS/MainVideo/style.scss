@@ -8,6 +8,7 @@
 	}
 }
 .mainVideo-container {
+	margin-top: -1px;
 	background-color: #050505;
 	color: #ffffff;
 	width: 100vw;
@@ -43,7 +44,7 @@
 				}
 
 				@media (max-width: 460px) {
-					width: 80%;
+					width: 100%;
 				}
 
 				.main-image {
