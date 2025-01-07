@@ -139,9 +139,10 @@ export default function StartupExplore() {
 				limit: itemsPerPage,
 			});
 			if (controller.signal.aborted) return;
-
+			console.log("Initial data:", data);
 			setFilteredData(data); // Only update filteredData after fetching is complete
 		} catch (error) {
+			console.error("Error fetching filtered data:", error);
 		} finally {
 			setLoading(false); // Data fetching is complete
 		}
@@ -154,8 +155,10 @@ export default function StartupExplore() {
 			const { data } = await fetchExploreFilteredResultsAPI({
 				type: activeTab,
 			});
+			// console.log("Initial data:", data);
 			setFilteredData(data);
 		} catch (error) {
+			console.error("Error fetching initial data:", error);
 		} finally {
 			setLoading(false);
 		}
@@ -729,7 +732,10 @@ export default function StartupExplore() {
 				{/* Header */}
 				<div className="filter_container rounded-4 shadow-sm d-flex flex-column gap-4 px-2 sm:px-4 py-4">
 					{/* Heading */}
-					<h5 className="m-0 d-none d-sm-block" style={{ color: "var(--d-l-grey)" }}>
+					<h5
+						className="m-0 d-none d-sm-block"
+						style={{ color: "var(--d-l-grey)" }}
+					>
 						Find {activeTab} by
 					</h5>
 

@@ -9,6 +9,8 @@ import {
 import { CiEdit, CiSaveUp2 } from "react-icons/ci";
 import { FiUpload } from "react-icons/fi";
 import { FaPlus, FaTrash } from "react-icons/fa";
+import CollageDummy from "../../../../../Images/dummy/Collage.png";
+import CompanyDummy from "../../../../../Images/dummy/Company.jpg";
 import "./PersonalInfoCard.scss";
 
 const emptyExperience = {
@@ -21,7 +23,7 @@ const emptyExperience = {
 };
 
 const emptyEducation = {
-	school: "",
+	schoolName: "",
 	course: "",
 	location: "",
 	passoutYear: "",
@@ -68,6 +70,7 @@ export default function PersonalInfoCard() {
 	const validateForm = (data, type) => {
 		const errors = {};
 		data.forEach((item, index) => {
+
 			if (type === "experience") {
 				if (!item.companyName)
 					errors[`companyName-${index}`] = "Company name is required";
@@ -79,7 +82,8 @@ export default function PersonalInfoCard() {
 				if (!item.experienceDuration.endYear)
 					errors[`endYear-${index}`] = "End year is required";
 			} else {
-				if (!item.school) errors[`school-${index}`] = "School name is required";
+				if (!item.schoolName)
+					errors[`schoolName-${index}`] = "School name is required";
 				if (!item.course) errors[`course-${index}`] = "Course is required";
 				if (!item.location)
 					errors[`location-${index}`] = "Location is required";
@@ -124,7 +128,7 @@ export default function PersonalInfoCard() {
 		setFormData({
 			...formData,
 			recentExperience: [
-				{ ...emptyExperience, isNew: true },
+				{ ...emptyExperience, isNew: true, logo: CompanyDummy },
 				...formData.recentExperience,
 			],
 		});
@@ -141,7 +145,7 @@ export default function PersonalInfoCard() {
 		setFormData({
 			...formData,
 			recentEducation: [
-				{ ...emptyEducation, isNew: true },
+				{ ...emptyEducation, isNew: true, logo: CollageDummy },
 				...formData.recentEducation,
 			],
 		});
