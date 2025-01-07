@@ -672,16 +672,7 @@ const Login = () => {
 						</Link>
 					</div>
 				</div>
-
-				{/* <h3 className="already_have_account" style={{ paddingTop: "0.5rem" }}>
-						Don't have an account?{" "}
-						<Link
-							to={"/signup"}
-							className={isInvestorSelected ? "green" : "orange"}
-						>
-							Create account
-						</Link>
-					</h3> */}
+				
 				<p className="text-center">Login using social networks</p>
 
 				<div
@@ -938,84 +929,6 @@ const Login = () => {
 					inputValues={inputValues}
 					setOrderId={setOrderId}
 				/>
-				{/* {show && (
-					<div
-						className="verification_container"
-						style={{
-							height: "300px",
-							display: "flex",
-							justifyContent: "center",
-							alignItems: "center",
-							marginTop: "2rem",
-						}}
-					>
-						<div className="login_content_main" style={{ boxShadow: "none" }}>
-							<div className="login_content">
-								<h2>Enter verification code</h2>
-								<h6>
-									We have just sent a verification code to your mobile number
-								</h6>
-								<div className="otp-container">
-									{otp.map((value, index) => (
-										<input
-											key={index}
-											type="text"
-											value={value}
-											onChange={(event) => handleOtpChange(event, index)}
-											onKeyDown={(event) => handleOtpKeyDown(event, index)}
-											className={`otp-box ${value !== "" ? "has-value" : ""}`}
-											maxLength={1}
-											ref={(inputRef) => {
-												otpInputRefs.current[index] = inputRef;
-											}}
-										/>
-									))}
-								</div>
-								<div
-									onClick={async () => {
-										const res = await sendOTP(inputValues.phoneNumber);
-										setOrderId(res?.orderId);
-										setOpen(true);
-										setShow(true);
-									}}
-									style={{ cursor: "pointer" }}
-								>
-									<h3>Send the code again</h3>
-								</div>
-								<div
-									onClick={() => {
-										setShow(false);
-									}}
-									style={{ cursor: "pointer" }}
-								>
-									<h3>Change phone number</h3>
-								</div>
-								<div className="submit_btn mt-3">
-									<button
-										type="submit"
-										className="btn btn-primary text-white"
-										onClick={ValidateOtp}
-									>
-										Verify
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				)} */}
-
-				{/*<div className="line-container m-auto">
-            <hr className="line" />
-            <span className="text mx-2">OR</span>
-            <hr className="line" />
-          </div>*/}
-				{/*<div className="social-login-container d-flex flex-column justify-content-center">
-            {isMobileApp ? (
-              <img src={GIcon} alt="Google logo" onClick={googleLoginHandle} />
-            ) : (
-              <div id="googlesignin" className="mx-auto"></div>
-            )}
-          </div>*/}
 			</div>
 			{isLoginSuccessfull && !isInvestorSelected && (
 				<AfterSuccessPopUp onClose={handleClosePopup} login={true} />

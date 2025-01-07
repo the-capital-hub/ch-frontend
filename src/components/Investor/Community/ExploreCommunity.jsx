@@ -11,6 +11,8 @@ import { toast } from "react-toastify";
 import moment from 'moment';
 import NewCommunityModal from "../ChatComponents/NewCommunityModal";
 import { selectTheme } from "../../../Store/features/design/designSlice";
+import PurchasePopup from '../../../components/Shared/PurchasePopup/PurchasePopup';
+import { load } from "@cashfreepayments/cashfree-js";
 
 export default function ExploreCommunities() {
   const [communities, setCommunities] = useState([]);
@@ -19,6 +21,8 @@ export default function ExploreCommunities() {
   const navigate = useNavigate();
   const loggedInUserId = useSelector(selectLoggedInUserId);
   const theme = useSelector(selectTheme);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedCommunity, setSelectedCommunity] = useState(null);
 
   useEffect(() => {
     fetchCommunities();
@@ -65,7 +69,14 @@ export default function ExploreCommunities() {
       return;
     }
 
-    // Attempt to join the community
+    // If community is paid, show payment modal
+    if (community.subscription === 'paid') {
+      setSelectedCommunity(community);
+      setShowPaymentModal(true);
+      return;
+    }
+
+    // If free, join directly
     try {
       const token = localStorage.getItem('accessToken');
       await axios.post(
@@ -80,7 +91,111 @@ export default function ExploreCommunities() {
         }
       );
       toast.success('Successfully joined the community!');
-      fetchCommunities(); 
+      navigate(`/community/${community._id}`);
+    } catch (error) {
+      console.error('Error joining community:', error);
+      toast.error('Failed to join the community');
+    }
+  };
+
+  // Initialize Cashfree SDK
+  const initializeCashfree = async () => {
+    try {
+      return await load({ mode: "sandbox" });
+    } catch (error) {
+      console.error("Failed to initialize Cashfree:", error);
+      throw error;
+    }
+  };
+
+  const handlePaymentSuccess = async (userDetails) => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      const cashfree = await initializeCashfree();
+
+      const paymentResponse = await axios.post(
+        `${environment.baseUrl}/communities/create-payment-session`,
+        {
+          name: userDetails.name,
+          email: userDetails.email,
+          mobile: userDetails.mobile,
+          amount: selectedCommunity.amount,
+          entityId: selectedCommunity._id,
+          entityType: 'community'
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      const { order_id, payment_session_id } = paymentResponse.data.data;
+
+      await cashfree.checkout({
+        paymentSessionId: payment_session_id,
+        redirectTarget: "_modal",
+      });
+
+      const verificationResponse = await verifyPayment(order_id, selectedCommunity._id);
+      if (verificationResponse) {
+        await joinCommunity(selectedCommunity._id);
+        await fetchCommunities();
+      } else {
+        toast.error('Payment verification failed');
+      }
+
+    } catch (error) {
+      console.error('Payment error:', error);
+      toast.error('Payment process failed');
+    } finally {
+      setShowPaymentModal(false);
+    }
+  };
+
+  const verifyPayment = async (orderId, entityId) => {
+    const token = localStorage.getItem('accessToken');
+    try {
+      const verificationResponse = await axios.post(
+        `${environment.baseUrl}/communities/verify-payment`,
+        {
+          orderId,
+          entityId,
+          entityType: 'community'
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      if (verificationResponse.data.data.status === "SUCCESS") {
+        toast.success('Payment successful!');
+        return true;
+      } else {
+        toast.error('Payment verification failed');
+        return false;
+      }
+    } catch (error) {
+      console.error('Verification error:', error);
+      toast.error('Payment verification failed');
+      return false;
+    }
+  };
+
+  const joinCommunity = async (communityId) => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      await axios.post(
+        `${environment.baseUrl}/communities/addMembersToCommunity/${communityId}`,
+        {
+          memberIds: [loggedInUserId],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success('Successfully joined the community!');
+      navigate(`/community/${communityId}`);
     } catch (error) {
       console.error('Error joining community:', error);
       toast.error('Failed to join the community');
@@ -173,6 +288,23 @@ export default function ExploreCommunities() {
           ))}
         </div>
       </div>
+
+      {showPaymentModal && selectedCommunity && (
+        <PurchasePopup
+          isOpen={showPaymentModal}
+          onClose={() => setShowPaymentModal(false)}
+          itemDetails={{
+            type: 'community',
+            name: selectedCommunity.name,
+            description: selectedCommunity.about,
+            memberCount: selectedCommunity.members.length + 1,
+            isOpen: selectedCommunity.isOpen,
+            amount: selectedCommunity.amount,
+            is_free: selectedCommunity.subscription === 'free'
+          }}
+          onProceed={handlePaymentSuccess}
+        />
+      )}
     </div>
   );
 }

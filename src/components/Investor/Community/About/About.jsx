@@ -8,7 +8,14 @@ const About = ({ community }) => {
     <div className="about-container">
       <div className="community-banner">
         <img src={community?.image} alt={community?.name} className="community-image" />
-        <h1>{community?.name}</h1>
+        <h1>
+          {community?.name}
+          {community?.subscription === 'free' ? (
+            <span style={{ fontSize: '1rem', fontStyle: 'italic', marginLeft: '8px' }}>Free to Join</span>
+          ) : (
+            <span style={{ fontSize: '1rem', marginLeft: '8px' }}>Paid Community: ₹{community?.amount}</span>
+          )}
+        </h1>
       </div>
 
       <div className="content-section">

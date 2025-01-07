@@ -1,5 +1,14 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { useSelector } from "react-redux";
+import { selectLoggedInUserId } from "./Store/features/user/userSlice";
+import axios from "axios";
+import { environment } from "./environments/environment";
+import { useState } from "react";
+import { Suspense } from "react";
+import SuspenseLoader from "./components/SuspenseLoader/SuspenseLoader";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
 
@@ -35,6 +44,7 @@ import AppUrlListener from "./pages/AppUrlListener/AppUrlListener";
 import AdminRoutes from "./routes/AdminRoutes";
 import CommunityRoutes from "./routes/CommunityRoutes";
 import Community from "./components/Investor/Community/Community";
+import PublicCommunityView from "./components/Investor/Community/PublicCommunityView.jsx";
 
 function App() {
 	const dispatch = useDispatch();
@@ -87,7 +97,7 @@ function App() {
 					{PublicRoutes()}
 
 					{/* Community Routes */}
-				<Route path="/community/:communityId" element={<Community />} / >
+					<Route path="/community/:communityId" element={<CommunityAccessControl />} />
 					{/* Chat */}
 					<Route path="/chats" element={<Chats />} />
 
@@ -134,6 +144,52 @@ function App() {
 			</GoogleOAuthProvider>
 		</Router>
 	);
+}
+
+function CommunityAccessControl() {
+	const { communityId } = useParams();
+	const [loading, setLoading] = useState(true);
+	const [hasAccess, setHasAccess] = useState(false);
+	const loggedInUserId = useSelector(selectLoggedInUserId);
+
+	useEffect(() => {
+		checkAccess();
+	}, [communityId]);
+
+	const checkAccess = async () => {
+		try {
+			const token = localStorage.getItem("accessToken");
+			const response = await axios.get(
+				`${environment.baseUrl}/communities/getCommunityById/${communityId}`,
+				{
+					headers: { Authorization: `Bearer ${token}` },
+				}
+			);
+			
+			const community = response.data.data;
+			const isAdmin = community.adminId._id === loggedInUserId;
+			const isMember = community.members.includes(loggedInUserId);
+			
+			setHasAccess(isAdmin || isMember);
+			setLoading(false);
+		} catch (error) {
+			console.error("Error checking access:", error);
+			setLoading(false);
+			setHasAccess(false);
+		}
+	};
+
+	if (loading) {
+		return <SuspenseLoader/>; 
+	}
+
+	return hasAccess ? <Community /> : (
+											<Suspense fallback={<SuspenseLoader />}>
+											<Navbar />
+											<PublicCommunityView />
+											<Footer />
+											</Suspense>
+										)
 }
 
 export default App;

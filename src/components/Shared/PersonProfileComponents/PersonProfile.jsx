@@ -59,15 +59,18 @@ export default function PersonProfile({ theme, short, personData }) {
 		bio = personData?.bio;
 		linkedin = personData?.linkedin;
 		isInvestor = personData?.isInvestor === "true" ? true : false;
-		companyName = personData?.startUp.company;
 		location = personData?.startUp.location;
 		lastFunding = personData?.startUp.lastFunding;
 		startedAtDate = personData?.startUp.startedAtDate;
 		socialLinks = personData?.startUp.socialLinks;
 		colorCard = personData?.startUp.colorCard;
 		startUp = personData?.startUp;
-		experience = personData?.experience;
-		education = personData?.education;
+		companyName = personData?.startup.company || "Data Not Available";
+		experience =
+			personData?.yearsOfExperience || "Data Not Available";
+		education =
+			personData?.recentEducation?.map((edu) => edu.course).join(", ") ||
+			"Data Not Available";
 		industry = personData?.industry || "Nun";
 	} else {
 		profilePicture = personData?.profilePicture;
@@ -136,6 +139,7 @@ export default function PersonProfile({ theme, short, personData }) {
 					designation={designation}
 					experience={experience}
 					education={education}
+					companyName={companyName || PERSON.companyName}
 				/>
 				<PublicLinks socialLinks={socialLinks} />
 			</div>
@@ -145,9 +149,9 @@ export default function PersonProfile({ theme, short, personData }) {
       </div> */}
 			{/* <div className="person__section__two d-flex flex-column gap-4 pt-3 pb-5 px-3 px-lg-5">
 				{/* <PublicLinks socialLinks={socialLinks} /> */}
-				{/* Have to make this component reusable. Right now color card title is hard coded */}
-				{/* {!short && <CompanyStats colorCard={colorCard} />} */}
-			{/* </div> */} 
+			{/* Have to make this component reusable. Right now color card title is hard coded */}
+			{/* {!short && <CompanyStats colorCard={colorCard} />} */}
+			{/* </div> */}
 		</div>
 	);
 }

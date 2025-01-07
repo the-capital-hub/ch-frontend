@@ -707,7 +707,7 @@ const FeedPostCard = ({
 	};
 	// console.log("postId", postId);
 
-	console.log("showRepostOptions", showRepostOptions);
+	// console.log("showRepostOptions", showRepostOptions);
 	return (
 		<>
 			<div className="feedpostcard_main_container mb-2">
@@ -1331,7 +1331,7 @@ const FeedPostCard = ({
 									{/* Repost */}
 									<span
 										className={`repost_container rounded-4 ${
-											showRepostOptions ? "bg-light" : ""
+											showRepostOptions ? "" : ""
 										}`}
 										ref={repostContainerRef}
 									>

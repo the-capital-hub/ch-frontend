@@ -37,6 +37,7 @@ function OtherUserProfile() {
 	const userCompanyData = useSelector(selectUserCompanyData);
 	const [userData, setUserData] = useState(null);
 	const [companyData, setCompanyData] = useState(null);
+	console.log("userData", userData);
 
 	const [popPayOpen, setPopPayOpen] = useState(false);
 	const [connectionSent, setConnectionSent] = useState(false);
@@ -349,30 +350,88 @@ function OtherUserProfile() {
 										) : null}
 									</div>
 
-									<div className="single_details row row-cols-1 row-cols-md-2 ">
-										{userData?.education ? (
-											<>
-												<span className="col-md-3 label fw-bold">
-													Education
-												</span>
-												<span className="col-md-9 value">
-													{userData?.education}
-												</span>
-											</>
-										) : null}
+									<div className="single_details row row-cols-1 row-cols-md-2">
+										<span className="col-md-3 label fw-bold">Education</span>
+										<span className="col-md-9 value">
+											{userData?.recentEducation
+												? userData?.recentEducation?.map((edu, index) => (
+														<div key={index} className="PIC-view">
+															<div className="PIC-view-header">
+																<div className="PIC-view-header-left">
+																	{edu.logo && (
+																		<img
+																			src={edu.logo}
+																			alt="School Logo"
+																			className="PIC-view-logo"
+																		/>
+																	)}
+																	<div className="PIC-view-info">
+																		<p className="PIC-view-title">
+																			{edu.schoolName}
+																		</p>
+																		<p className="PIC-view-location">
+																			{edu.location}
+																		</p>
+																	</div>
+																</div>
+																<p className="PIC-view-duration">
+																	{new Date(edu.passoutYear).getFullYear()}
+																</p>
+															</div>
+															<p className="PIC-view-subtitle">{edu.course}</p>
+															<p className="PIC-view-desc">{edu.description}</p>
+														</div>
+												  ))
+												: "Please add your education details"}
+										</span>
 									</div>
 
-									<div className="single_details row row-cols-1 row-cols-md-2 ">
-										{userData?.experience ? (
-											<>
-												<span className="col-md-3 label fw-bold">
-													Experience
-												</span>
-												<span className="col-md-9 value">
-													{userData?.experience}
-												</span>
-											</>
-										) : null}
+									<div className="single_details">
+										{userData?.recentExperience
+											? userData?.recentExperience?.map((exp, index) => (
+													<div className="row row-cols-1 row-cols-md-2">
+														<span className="col-md-3 label fw-bold">
+															Experience
+														</span>
+														<span className="col-md-9 value">
+															<div className="PIC-view">
+																<div className="PIC-view-header">
+																	<div className="PIC-view-header-left">
+																		{exp.logo && (
+																			<img
+																				src={exp.logo}
+																				alt="Company Logo"
+																				className="PIC-view-logo"
+																			/>
+																		)}
+																		<div className="PIC-view-info">
+																			<p className="PIC-view-title">
+																				{exp.companyName}
+																			</p>
+																			<p className="PIC-view-location">
+																				{exp.location}
+																			</p>
+																		</div>
+																	</div>
+																	<p className="PIC-view-duration">
+																		{new Date(
+																			exp.experienceDuration.startYear
+																		).getFullYear()}{" "}
+																		-{" "}
+																		{new Date(
+																			exp.experienceDuration.endYear
+																		).getFullYear()}
+																	</p>
+																</div>
+																<p className="PIC-view-subtitle">{exp.role}</p>
+																<p className="PIC-view-desc">
+																	{exp.description}
+																</p>
+															</div>
+														</span>
+													</div>
+											  ))
+											: "Please add your experience details"}
 									</div>
 								</div>
 							</div>

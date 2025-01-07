@@ -7,9 +7,12 @@ import "./pricing.scss";
 import { useNavigate } from "react-router-dom";
 import Networking from '../images/networking.png';
 import Features from "../Features/Features";
+import { usePaymentFlow } from "../../../../../hooks/usePaymentFlow";
+import Modal from "react-modal";
 
 const Pricing = () => {
   const navigate = useNavigate();
+  const paymentFlow = usePaymentFlow();
 
   return (
     <div className="pricing-container">
@@ -25,7 +28,7 @@ const Pricing = () => {
         <div className="net-platform">
           <h1>Networking Platform</h1>
           <p>Engage with fellow startups and investors, create posts, and build a network that accelerates your growth.</p>
-          <button>Buy Now</button>
+          <button onClick={() => paymentFlow.setIsModalOpen(true)}>Buy Now</button>
         </div>
       </div>
 
@@ -40,6 +43,30 @@ const Pricing = () => {
       
       <Features />
 
+      <Modal
+        isOpen={paymentFlow.isModalOpen}
+        onRequestClose={() => paymentFlow.setIsModalOpen(false)}
+        className="subscription-modal"
+        overlayClassName="subscription-modal-overlay"
+      >
+        {paymentFlow.renderSubscriptionModal()}
+      </Modal>
+
+      <Modal
+        isOpen={paymentFlow.showOtpModal}
+        onRequestClose={() => paymentFlow.setShowOtpModal(false)}
+        className="otp-modal"
+        overlayClassName="otp-modal-overlay"
+      >
+        {paymentFlow.renderOtpModal()}
+      </Modal>
+
+      {paymentFlow.isLoading && (
+        <div className="loader-overlay">
+          <div className="loader"></div>
+          <p className="loader-text">Processing payment...</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -6,6 +6,8 @@ import './Products.scss';
 import axios from 'axios';
 import { environment } from '../../../../environments/environment';
 import { toast } from 'react-toastify';
+import PurchasePopup from '../../../../components/Shared/PurchasePopup/PurchasePopup';
+import { load } from "@cashfreepayments/cashfree-js";
 
 const Products = ({ community }) => {
   const [showAddProduct, setShowAddProduct] = useState(false);
@@ -13,8 +15,29 @@ const Products = ({ community }) => {
   const [products, setProducts] = useState(community?.products || []);
   const loggedInUserId = useSelector(selectLoggedInUserId);
   const isAdmin = community?.adminId._id === loggedInUserId;
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const handleBuyProduct = async (productId) => {
+  // Initialize Cashfree SDK
+  const initializeCashfree = async () => {
+    try {
+      return await load({ mode: "sandbox" });
+    } catch (error) {
+      console.error("Failed to initialize Cashfree:", error);
+      throw error;
+    }
+  };
+
+  const handleBuyProduct = async (product) => {
+    if (product.is_free) {
+      await processPurchase(product._id);
+    } else {
+      setSelectedProduct(product);
+      setShowPaymentModal(true);
+    }
+  };
+
+  const processPurchase = async (productId) => {
     try {
       const token = localStorage.getItem('accessToken');
       await axios.post(
@@ -24,18 +47,90 @@ const Products = ({ community }) => {
           headers: { Authorization: `Bearer ${token}` }
         }
       );
-      setProducts(prevProducts => prevProducts.map(product => {
-        if (product._id === productId) {
-          return {
-            ...product,
-            purchased_by: [...(product.purchased_by || []), loggedInUserId]
-          };
-        }
-        return product;
-      }));
-      toast.success('Product purchased successfully!');
+      toast.success('Product acquired successfully!');
+      // Update products list to reflect the purchase
+      setProducts(prevProducts => 
+        prevProducts.map(p => 
+          p._id === productId 
+            ? { ...p, purchased_by: [...(p.purchased_by || []), loggedInUserId] }
+            : p
+        )
+      );
     } catch (error) {
-      toast.error('Error purchasing product: ' + (error.response?.data?.message || 'Unknown error'));
+      toast.error('Error acquiring product');
+      console.error('Purchase error:', error);
+    }
+  };
+
+  const handlePaymentSuccess = async (userDetails) => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      const cashfree = await initializeCashfree();
+
+      const paymentResponse = await axios.post(
+        `${environment.baseUrl}/communities/create-payment-session`,
+        {
+          name: userDetails.name,
+          email: userDetails.email,
+          mobile: userDetails.mobile,
+          amount: selectedProduct.amount,
+          entityId: selectedProduct._id,
+          entityType: 'product'
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      const { order_id, payment_session_id } = paymentResponse.data.data;
+
+      await cashfree.checkout({
+        paymentSessionId: payment_session_id,
+        redirectTarget: "_modal",
+      });
+
+      const verificationResponse = await verifyPayment(order_id, selectedProduct._id);
+      if (verificationResponse) {
+        await processPurchase(selectedProduct._id);
+        const updatedCommunity = await fetchCommunityDetails();
+        setProducts(updatedCommunity.products || []);
+      } else {
+        toast.error('Payment verification failed');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      toast.error('Payment process failed');
+    } finally {
+      setShowPaymentModal(false);
+    }
+  };
+
+  const verifyPayment = async (orderId, entityId) => {
+    const token = localStorage.getItem('accessToken');
+    try {
+      const verificationResponse = await axios.post(
+        `${environment.baseUrl}/communities/verify-payment`,
+        {
+          orderId,
+          entityId,
+          entityType: 'product'
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      if (verificationResponse.data.data.status === "SUCCESS") {
+        toast.success('Payment successful!');
+        return true;
+      } else {
+        toast.error('Payment verification failed');
+        return false;
+      }
+    } catch (error) {
+      console.error('Verification error:', error);
+      toast.error('Payment verification failed');
+      return false;
     }
   };
 
@@ -43,6 +138,23 @@ const Products = ({ community }) => {
     setProducts(prevProducts => [...prevProducts, newProduct]);
     setShowAddProduct(false);
     toast.success('Product added successfully!');
+  };
+
+  const fetchCommunityDetails = async () => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      const response = await axios.get(
+        `${environment.baseUrl}/communities/getCommunity/${community._id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+      return response.data.data;
+    } catch (error) {
+      console.error('Error fetching community details:', error);
+      toast.error('Failed to refresh community data');
+      return null;
+    }
   };
 
   return (
@@ -77,7 +189,7 @@ const Products = ({ community }) => {
               ) : (
                 <button 
                   className="access-btn"
-                  onClick={() => handleBuyProduct(product._id)}
+                  onClick={() => handleBuyProduct(product)}
                 >
                   {product.is_free ? 'Buy for Free' : `Buy for ₹${product.amount}`}
                 </button>
@@ -113,6 +225,22 @@ const Products = ({ community }) => {
           communityId={community._id}
           onClose={() => setShowAddProduct(false)}
           onProductAdded={handleProductAdded}
+        />
+      )}
+
+      {showPaymentModal && selectedProduct && (
+        <PurchasePopup
+          isOpen={showPaymentModal}
+          onClose={() => setShowPaymentModal(false)}
+          itemDetails={{
+            type: 'product',
+            name: selectedProduct.name,
+            description: selectedProduct.description,
+            resourceCount: selectedProduct.URLS.length,
+            amount: selectedProduct.amount,
+            is_free: selectedProduct.is_free
+          }}
+          onProceed={handlePaymentSuccess}
         />
       )}
     </div>
