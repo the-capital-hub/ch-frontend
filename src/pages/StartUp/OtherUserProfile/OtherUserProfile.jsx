@@ -280,11 +280,11 @@ function OtherUserProfile() {
 
 											<span className="small_typo">
 												{userData?.designation ||
-													"Founder & CEO of The Capital Hub"}
+													""}
 											</span>
 											{/* <br /> */}
 											<span className="small_typo">
-												{userData?.location || "Bangalore , India"}
+												{userData?.location || ""}
 											</span>
 										</div>
 									</div>

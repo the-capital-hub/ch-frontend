@@ -41,7 +41,7 @@ function PrivateRoute({ children, ...props }) {
 		}
 		return (
 			<div className="investor-private-routes" data-bs-theme={theme}>
-				<NewYearPopper/>
+				{/* <NewYearPopper/> */}
 				<InvestorNavbar
 					handleSidebarToggle={handleSidebarToggle}
 					sidebarCollapsed={sidebarCollapsed}
