@@ -26,6 +26,8 @@ export const usePaymentFlow = () => {
 	const inputRefs = useRef([]);
 	const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
 
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
 	const handleInputChange = (e) => {
 		setFormData({
 			...formData,
@@ -124,9 +126,21 @@ export const usePaymentFlow = () => {
 				throw new Error("Cashfree SDK not initialized");
 			}
 
+			const paymentFormData = {
+				firstName: formData.firstName || loggedInUser?.firstName || "",
+				lastName: formData.lastName || loggedInUser?.lastName || "",
+				email: formData.email || loggedInUser?.email || "",
+				mobileNumber: formData.mobileNumber || loggedInUser?.phoneNumber?.replace('+91', '') || "",
+				userType: formData.userType || loggedInUser?.userType || "startup founder"
+			};
+
+			if (!paymentFormData.firstName || !paymentFormData.email || !paymentFormData.mobileNumber) {
+				throw new Error("Missing required payment information");
+			}
+
 			const paymentResponse = await axios.post(
 				`${environment.baseUrl}/users/create-subscription-payment`,
-				formData
+				paymentFormData
 			);
 
 			const { orderId, paymentSessionId } = paymentResponse.data.data;
@@ -143,7 +157,7 @@ export const usePaymentFlow = () => {
 			}
 		} catch (error) {
 			console.error("Payment Error:", error);
-			toast.error("Payment failed. Please try again.");
+			toast.error(error.message || "Payment failed. Please try again.");
 		} finally {
 			setIsLoading(false);
 			setIsModalOpen(false);
@@ -175,6 +189,28 @@ export const usePaymentFlow = () => {
 			return false;
 		}
 	};
+
+	const handleBuyNowClick = () => {
+        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+        
+        if (loggedInUser) {
+            if (loggedInUser.isSubscribed) {
+                navigate('/resources');
+                return;
+            } else {
+                setFormData({
+                    firstName: loggedInUser.firstName || "",
+                    lastName: loggedInUser.lastName || "",
+                    email: loggedInUser.email || "",
+                    mobileNumber: loggedInUser.phoneNumber || "",
+                    userType: loggedInUser.userType || "startup founder"
+                });
+                processPayment();
+                return;
+            }
+        }
+        setIsModalOpen(true);
+    };
 
 	const renderSubscriptionModal = () => (
 		<div className="modal-content">
@@ -275,6 +311,7 @@ export const usePaymentFlow = () => {
 		handleSubmit,
 		handleOtpVerify,
 		renderSubscriptionModal,
-		renderOtpModal
+		renderOtpModal,
+		handleBuyNowClick
 	};
 }; 
