@@ -18,8 +18,8 @@ const Footer = ({ className }) => {
 				</div>
 
 				<div>
-					<h4 className="font-bold text-lg mb-4">General</h4>
-					<ul className="space-y-2">
+					<h4 className="font-bold text-lg mb-2">General</h4>
+					<ul className="flex flex-col md:flex-row justify-center md:justify-start items-center md:items-start md:gap-3">
 						<li>
 							<a href="/about" className="hover:text-gray-300">
 								About Us
@@ -44,8 +44,8 @@ const Footer = ({ className }) => {
 				</div>
 
 				<div>
-					<h4 className="font-bold text-lg mb-4">Policies</h4>
-					<ul className="space-y-2">
+					<h4 className="font-bold text-lg mb-2">Policies</h4>
+					<ul className="flex flex-col md:flex-row justify-center md:justify-start items-center md:items-start md:gap-3">
 						<li>
 							<a href="/security" className="hover:text-gray-300">
 								Security safeguards
@@ -71,21 +71,24 @@ const Footer = ({ className }) => {
 
 				<div>
 					<h4 className="font-bold text-lg mb-4">Get in touch</h4>
-					<p className="text-sm mb-4">
+					<p className="text-sm md:mb-4">
 						Follow us on social media and stay updated with the latest
 						information about our services
 					</p>
-					<div className="flex space-x-4">
-						<Link to="#" className="hover:text-gray-300">
+					<div className="flex justify-center md:justify-start space-x-4">
+						<Link to="#" className="footer2-social-icon hover:text-gray-300">
 							<FaFacebookF size={24} />
 						</Link>
-						<Link to="#" className="hover:text-gray-300">
+						<Link to="#" className="footer2-social-icon hover:text-gray-300">
 							<FaTwitter size={24} />
 						</Link>
-						<Link to="#" className="hover:text-gray-300">
+						<Link to="#" className="footer2-social-icon hover:text-gray-300">
 							<FaInstagram size={24} />
 						</Link>
-						<Link to="#" className="hover:text-gray-300">
+						<Link
+							to="#"
+							className="footer2-social-icon hover:text-gray-300 text-gray-600"
+						>
 							<FaYoutube size={24} />
 						</Link>
 					</div>
@@ -113,7 +116,7 @@ const Footer = ({ className }) => {
 				</div>
 			</div>
 
-			<div className="mt-8 text-center text-sm">
+			<div className="mt-8 pb-8 text-center text-sm">
 				<p>&copy; {new Date().getFullYear()} Lorem all rights reserved</p>
 			</div>
 		</footer>

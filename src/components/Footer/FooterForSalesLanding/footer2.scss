@@ -2,14 +2,12 @@
 	background-color: #050505;
 	color: #fff;
 	padding: 0 2rem;
+	margin-top: -1px;
 
 	.footer_container_top {
 		display: grid;
 		grid-template-columns: repeat(1, minmax(0, 1fr));
-		gap: 1rem /* 16px */;
-		// justify-items: center;
-		// align-items: center;
-		// justify-content: center;
+		gap: 1.5rem /* 16px */;
 
 		@media (min-width: 1024px) {
 			grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -17,11 +15,15 @@
 		@media (min-width: 640px) {
 			grid-template-columns: repeat(3, minmax(0, 1fr));
 		}
-		
+
+		// display: flex;
+		// gap: 1rem;
+		// justify-content: space-between;
+		// align-items: center;
 
 		& h4 {
 			color: #fff;
-			font-size: 20px;
+			font-size: 24px;
 			margin-bottom: 10px;
 			font-family: "Poppins";
 			font-style: normal;
@@ -29,6 +31,10 @@
 			line-height: 30px;
 			/* identical to box height */
 			letter-spacing: -0.002em;
+
+			@media (max-width: 460px) {
+				text-align: center;
+			}
 		}
 
 		& a {
@@ -55,9 +61,9 @@
 			}
 		}
 	}
-	
+
 	p {
-		padding-bottom: 20px;
+		// padding-bottom: 20px;
 		margin-bottom: 0;
 		font-family: "Poppins";
 		font-style: normal;
@@ -66,6 +72,10 @@
 		line-height: 21px;
 		letter-spacing: -0.002em;
 		color: #ffffff;
+
+		@media (max-width: 460px) {
+			text-align: center;
+		}
 	}
 }
 
@@ -144,6 +154,19 @@
 	letter-spacing: -0.24px;
 
 	color: #bdb9b9;
+}
+
+.footer2-social-icon {
+	width: 40px;
+	height: 40px;
+	background-color: white;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	svg {
+		fill: #050505;
+	}
 }
 
 @media screen and (max-width: 768px) {
