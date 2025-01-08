@@ -255,7 +255,7 @@ export const usePaymentFlow = () => {
 					required
 				>
 					<option value="">Select User Type</option>
-					<option value="startup founder">Startup Founder</option>
+					<option value="startup founder" selected>Startup Founder</option>
 					<option value="startup employee">Startup Employee</option>
 					<option value="investor">Investor</option>
 					<option value="vc">VC</option>
