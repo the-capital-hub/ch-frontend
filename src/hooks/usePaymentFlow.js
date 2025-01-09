@@ -37,7 +37,7 @@ export const usePaymentFlow = () => {
 
 	const initializeCashfree = async () => {
 		try {
-			return await load({ mode: "sandbox" });
+			return await load({ mode: "production" });
 		} catch (error) {
 			console.error("Failed to initialize Cashfree:", error);
 			throw error;
@@ -142,7 +142,7 @@ export const usePaymentFlow = () => {
 				`${environment.baseUrl}/users/create-subscription-payment`,
 				paymentFormData
 			);
-
+			
 			const { orderId, paymentSessionId } = paymentResponse.data.data;
 			
 			await cashfree.checkout({

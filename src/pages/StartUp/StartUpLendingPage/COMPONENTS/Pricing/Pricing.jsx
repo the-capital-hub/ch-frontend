@@ -19,7 +19,7 @@ const Pricing = () => {
 
   const initializeSDK = async () => {
     cashfree = await load({
-      mode: "sandbox",
+      mode: "production",
     });
   };
 
