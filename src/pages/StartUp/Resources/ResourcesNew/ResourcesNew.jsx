@@ -10,7 +10,6 @@ import lock from "./images/lock.png";
 
 const ResourcesNew = () => {
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
-	console.log("loggedInUser", loggedInUser.isSubscribed);
 	return (
 		<div className="resources-new-container">
 			<div className="resource-main">
@@ -29,7 +28,7 @@ const ResourcesNew = () => {
 									<span className="hustler-text"> Hustlers Club</span>
 								</>
 							) : (
-								"Hey Pramod !"
+								`Hey ${loggedInUser.firstName} !`
 							)}
 						</p>
 						<p className="sub-text">

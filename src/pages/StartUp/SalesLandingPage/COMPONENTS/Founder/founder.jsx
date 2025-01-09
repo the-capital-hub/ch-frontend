@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import bg from "../images/Polygon 12.png";
-import dot from "../images/Ellipse 9.png";
-import blurdot from "../images/Ellipse 12.png";
-import small from "../images/Ellipse 20.png";
+import bg from "../images/Polygon 7.png";
+import dot from "../images/Polygon 12.png";
+import blurdot from "../images/Polygon 2 (2).png";
+import small from "../images/Polygon 12.png";
 import "./founder.scss";
 import { useNavigate } from "react-router-dom";
 import profile from "../images/profile.png";
