@@ -46,7 +46,7 @@
 		border: 3px solid #ff8b4d; // Accent orange
 		color: #ff8b4d;
 		padding: 10px 20px;
-		font-size: 14px;
+		font-size: 18px;
 		font-family: Outfit;
 		font-weight: bold;
 		margin-top: 100px;
@@ -290,9 +290,9 @@
 			margin-left: 40px;
 			margin-bottom: 10px;
 			display: inline-block;
-			font-family: Nunito;
-			font-size: 25px;
-			font-weight: 800;
+			// font-family: Nunito;
+			font-size: 30px;
+			font-weight: 500;
 			line-height: 50px;
 			letter-spacing: -0.015em;
 			position: relative;
@@ -338,8 +338,8 @@
 
 		.no-hassles {
 			margin-top: 10px;
-			font-size: 40px;
-			font-family: Nunito;
+			font-size: 35px;
+			// font-family: Nunito;
 			font-weight: 800;
 			line-height: 48px;
 			letter-spacing: -0.02em;
@@ -362,8 +362,8 @@
 			margin-top: 5px;
 			font-weight: 500;
 			text-align: right;
-			font-family: Nunito;
-			font-size: 40px;
+			// font-family: Nunito;
+			font-size: 30px;
 			line-height: 54.56px;
 
 			@media (max-width: 820px) {
@@ -532,8 +532,8 @@
 
 		.no-hassles {
 			margin-top: 10px;
-			font-size: 40px;
-			font-family: Nunito;
+			font-size: 35px;
+			// font-family: Nunito;
 			font-weight: 800;
 			line-height: 48px;
 			letter-spacing: -0.02em;
@@ -570,10 +570,10 @@
 
 		.download-info {
 			margin-top: 5px;
-			font-family: Nunito;
 			letter-spacing: -0.02em;
+			font-family: Nunito;
 			font-family: Outfit;
-			font-size: 23px;
+			font-size: 20px;
 			font-weight: 500;
 			line-height: 40px;
 			text-align: left;
