@@ -76,7 +76,11 @@ const InvestorHome = () => {
 
 						{/* Professional info component */}
 						<ProfessionalInfo theme={"startup"} />
-						<PersonalDetail theme={"startup"} />
+
+						{/* Below card is used to show Professional info  */}
+						{/* <PersonalDetail theme={"startup"} /> */}
+
+						{/* Below card is used to show Personal info(Latest Implementation of education and experience) */}
 						<PersonalInfoCard />
 						{/* offcanvas trigger - Add missing details. Show if details are missing */}
 						{/*<MissingDetails />/}
