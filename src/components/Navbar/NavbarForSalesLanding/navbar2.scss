@@ -6,15 +6,13 @@ $secondary-color: #1b2430;
 	left: 0;
 	right: 0;
 	z-index: 100;
-	background-color: transparent;
 	color: white;
 	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	padding: 10px 40px;
-	// margin-top: 10px;
-	background-color: rgba(0, 0, 0, 0.9);
+	background-color: #000000;
 
 	@media (max-width: 768px) {
 		width: 768px;
@@ -96,7 +94,7 @@ $secondary-color: #1b2430;
 				display: none;
 			}
 			position: relative;
-			padding: 0.7rem 2rem;
+			padding: 0.5rem 1rem;
 			background: #050505; /* Solid background for the button */
 			color: #fff;
 			border-radius: 20px;

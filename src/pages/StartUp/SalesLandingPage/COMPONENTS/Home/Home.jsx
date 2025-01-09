@@ -54,8 +54,7 @@ const Home = () => {
 
 						<center>
 							<p className="description">
-								Access India’s Most Comprehensive Investor Database and Start
-								Connecting with 500+ VCs and 1000+ Angel Investors
+								Access India’s Most Comprehensive Investor Database and Start Connecting with 500+ VCs and 1000+ Angel Investors
 							</p>
 						</center>
 
