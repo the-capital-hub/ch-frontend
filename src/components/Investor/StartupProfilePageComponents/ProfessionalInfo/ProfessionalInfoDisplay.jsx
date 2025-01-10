@@ -61,6 +61,10 @@ export default function ProfessionalInfoDisplay({
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 	const [crop, setCrop] = useState({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState(1);
+
+	console.log("professionalData", professionalData);
+	console.log("yearsOfExperience", professionalData.yearsOfExperience);
+
 	const getCroppedImg = async (imageSrc, crop) => {
 		const image = new Image();
 		image.src = imageSrc;
@@ -105,6 +109,12 @@ export default function ProfessionalInfoDisplay({
 		setCroppedImage(croppedImg);
 	};
 
+	const getExperienceValue = () => {
+		return (
+			professionalData.yearsOfExperience || professionalData.experience || ""
+		);
+	};
+
 	return (
 		<>
 			{/* header */}
@@ -119,7 +129,10 @@ export default function ProfessionalInfoDisplay({
 							className="rounded-circle"
 						/>
 						<div className="d-flex flex-column justify-content-center gap-1 ">
-							<div style={{ display: "flex" }}>
+							<div
+								className="d-flex gap-2 align-items-center justify-content-between"
+								style={{ display: "flex" }}
+							>
 								<h5 className="m-0 fw-semibold">
 									{professionalData.fullName}
 									{loggedInUser.isSubscribed && (
@@ -139,13 +152,10 @@ export default function ProfessionalInfoDisplay({
 								{canEdit && (
 									<span className="edit_btn d-flex align-self-end align-md-self-start ">
 										<span
-										//className=" ms-auto d-flex flex-row gap-2"
 										>
 											<button
-												//className="btn d-flex align-items-center gap-1"
 												onClick={() => setIsEditing(!isEditing)}
 											>
-												{/*{isEditing ? "Cancel" : "Edit"}*/}
 												<CiEdit
 													style={{
 														color:
@@ -210,17 +220,14 @@ export default function ProfessionalInfoDisplay({
 							justifyContent: "space-between",
 						}}
 					>
-						<h4 className="typography">Personal Information</h4>
+						<h4 className="typography">Professional Information</h4>
 						{canEdit && (
 							<span className="edit_btn d-flex align-self-end align-md-self-start ">
 								<span
-								//className=" ms-auto d-flex flex-row gap-2"
 								>
 									<button
-										//className="btn d-flex align-items-center gap-1"
 										onClick={() => setIsEditing(!isEditing)}
 									>
-										{/*{isEditing ? "Cancel" : "Edit"}*/}
 										<CiEdit
 											style={{
 												color:
@@ -287,10 +294,26 @@ export default function ProfessionalInfoDisplay({
 										color: theme === "dark" ? "#9F9F9F" : "#5d5d5d",
 									}}
 								>
-									Experience
+									Industry
 								</h6>
 								<p className="m-0" style={{ paddingTop: "3px" }}>
-									{professionalData.experience}
+									{professionalData.industry}
+								</p>
+							</div>
+							<div className="text_field gap-3 gap-lg-3 align-items-start">
+								<h6
+									className="m-0"
+									style={{
+										fontWeight: 400,
+										color: theme === "dark" ? "#9F9F9F" : "#5d5d5d",
+									}}
+								>
+									{professionalData.yearsOfExperience
+										? "Experience"
+										: "Industry Experience"}
+								</h6>
+								<p className="m-0" style={{ paddingTop: "3px" }}>
+									{getExperienceValue()}
 								</p>
 							</div>
 						</div>
@@ -421,36 +444,62 @@ export default function ProfessionalInfoDisplay({
             </select>*/}
 						</fieldset>
 					)}
+					{detail && (
+						<fieldset className={` ${theme} `}>
+							<legend className="px-2">Industry</legend>
+							<input
+								type="text"
+								className="professional_form_input"
+								name="industry"
+								value={professionalData.industry}
+								onChange={handleTextChange}
+							/>
+							{/*<select
+              name="education"
+              id="userEducation"
+              onChange={handleTextChange}
+              value={professionalData.education}
+              className="professional_form_input"
+            >
+              <option value="" hidden={Boolean(professionalData.education)}>
+                Education
+              </option>
+              {educationOptions.map((option, index) => {
+                return (
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
+                );
+              })}
+            </select>*/}
+						</fieldset>
+					)}
 
 					{/* Experience */}
 					{detail && (
 						<fieldset className={` ${theme} `}>
-							<legend className="px-2">Experience</legend>
-							{/* <textarea
-              type="text"
-              className="professional_form_input"
-              name="experience"
-              value={professionalData.experience}
-              onChange={handleTextChange}
-              rows={5}
-            /> */}
+							<legend className="px-2">
+								{/* {professionalData.yearsOfExperience
+									? "Experience"
+									: "Industry Experience"} */}
+								Industry Experience
+							</legend>
 							<select
 								name="experience"
 								id="userExperience"
 								onChange={handleTextChange}
+								// value={getExperienceValue()}
 								value={professionalData.experience}
 								className="professional_form_input"
 							>
-								<option value="" hidden={Boolean(professionalData.experience)}>
-									Experience
+								<option value="" hidden>
+									Select Experience
 								</option>
-								{EXPERIENCE_OPTIONS.map((option, index) => {
-									return (
-										<option value={option} key={option}>
-											{option}
-										</option>
-									);
-								})}
+								{EXPERIENCE_OPTIONS.map((option) => (
+									<option value={option} key={option}>
+										{option}
+									</option>
+								))}
 							</select>
 						</fieldset>
 					)}

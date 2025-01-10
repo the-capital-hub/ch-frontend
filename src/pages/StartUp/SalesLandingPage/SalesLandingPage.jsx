@@ -18,7 +18,6 @@ const StartUpLendingPage = () => {
       <Pricing/>
       <Founder />
       <About />
-
     </div>
   )
 }

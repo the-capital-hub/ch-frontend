@@ -37,7 +37,7 @@ export const usePaymentFlow = () => {
 
 	const initializeCashfree = async () => {
 		try {
-			return await load({ mode: "sandbox" });
+			return await load({ mode: "production" });
 		} catch (error) {
 			console.error("Failed to initialize Cashfree:", error);
 			throw error;
@@ -142,7 +142,7 @@ export const usePaymentFlow = () => {
 				`${environment.baseUrl}/users/create-subscription-payment`,
 				paymentFormData
 			);
-
+			
 			const { orderId, paymentSessionId } = paymentResponse.data.data;
 			
 			await cashfree.checkout({
@@ -255,7 +255,7 @@ export const usePaymentFlow = () => {
 					required
 				>
 					<option value="">Select User Type</option>
-					<option value="startup founder">Startup Founder</option>
+					<option value="startup founder" selected>Startup Founder</option>
 					<option value="startup employee">Startup Employee</option>
 					<option value="investor">Investor</option>
 					<option value="vc">VC</option>

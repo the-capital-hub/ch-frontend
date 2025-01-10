@@ -153,7 +153,7 @@
 
 		h1 {
 			font-weight: 600;
-			font-size: 2.7rem;
+			font-size: 2.5rem;
 
 			@media (max-width: 460px) {
 				font-size: 2rem;
@@ -208,8 +208,9 @@
 			// color: #ff8b4d; // Text color
 			z-index: 1;
 			font-family: Nunito;
+			font-family: "Outfit", serif;
 			font-size: 30px;
-			font-weight: 800;
+			font-weight: 600;
 			line-height: 58px;
 			letter-spacing: -0.015em;
 			text-align: left;
@@ -280,7 +281,7 @@
 	}
 	h2 {
 		font-weight: 400;
-		font-size: 2.2rem;
+		font-size: 2.25rem;
 
 		@media (max-width: 460px) {
 			font-size: 1.5rem;
@@ -345,6 +346,7 @@
 	padding: 15px 30px;
 	border: 2px solid #3d3d3d;
 	margin: 40px auto;
+	margin-bottom: 0;
 	border-radius: 32px;
 	background: linear-gradient(
 		80.42deg,

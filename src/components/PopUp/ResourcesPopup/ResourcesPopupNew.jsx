@@ -61,7 +61,7 @@ const ResourcesPopup = ({ onClose }) => {
 	// initialize  Cashfree SDK
 	const initializeCashfree = async () => {
 		try {
-			return await load({ mode: "sandbox" });
+			return await load({ mode: "production" });
 		} catch (error) {
 			console.error("Failed to initialize Cashfree:", error);
 			throw error;
