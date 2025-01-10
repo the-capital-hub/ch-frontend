@@ -8,7 +8,7 @@ body {
 	color: white;
 	text-align: center;
 	padding: 3rem 2rem;
-	font-family: "Roboto", sans-serif;
+	font-family: "Outfit", serif;
 	@media (max-width: 460px) {
 		padding: 0 2rem;
 	}
@@ -173,13 +173,14 @@ body {
 		}
 
 		p {
-			font-size: 1rem;
+			font-size: 1.125rem;
 			margin-bottom: 2rem;
 		}
 
 		.buy-now-btn {
 			position: relative;
 			padding: 0.7rem 2rem;
+			font-size: 1.125rem;
 			background: #050505; /* Solid background for the button */
 			color: #fff;
 			border-radius: 5px;
