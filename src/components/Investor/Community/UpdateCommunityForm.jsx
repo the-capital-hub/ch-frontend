@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { environment } from "../../../environments/environment";
@@ -6,6 +6,7 @@ import "./UpdateCommunityForm.scss";
 import { getBase64 } from "../../../utils/getBase64";
 import { toast, ToastContainer } from 'react-toastify';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@mui/material';
+import { sendOTP, verifyOTP } from "../../../Service/user";
 
 
 const UpdateCommunityForm = ({ community }) => {
@@ -22,6 +23,7 @@ const UpdateCommunityForm = ({ community }) => {
     terms_and_conditions: community.terms_and_conditions || [""]
   });
 
+
   const token = localStorage.getItem("accessToken");
 
   const communitySizeOptions = [
@@ -35,6 +37,11 @@ const UpdateCommunityForm = ({ community }) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deletionReason, setDeletionReason] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [otpDialogOpen, setOtpDialogOpen] = useState(false);
+  const [otp, setOtp] = useState('');
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [orderId, setOrderId] = useState('');
+  const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -97,23 +104,60 @@ const UpdateCommunityForm = ({ community }) => {
   const handleDelete = async () => {
     if (isDeleting) return;
     setIsDeleting(true);
+    
     try {
-      const token = localStorage.getItem('accessToken');
-      await axios.delete(
-        `${environment.baseUrl}/communities/softDelete/${community._id}`,
-        {
-          data: { reason: deletionReason },
-          headers: { Authorization: `Bearer ${token}` }
-        }
-      );
-      toast.success('Community deleted successfully');
-      navigate('/ExploreCommunities');
+      // Send OTP using the same service as Login page
+      const response = await sendOTP(community.adminId.phoneNumber);
+
+      if (response?.orderId) {
+        setOrderId(response.orderId);
+        setOtpDialogOpen(true);
+        toast.info('Please enter the OTP sent to your phone');
+      } else {
+        throw new Error('Failed to send OTP');
+      }
     } catch (error) {
-      console.error('Error deleting community:', error);
-      toast.error('Failed to delete community');
+      console.error('Error:', error);
+      toast.error('Failed to send OTP');
     } finally {
       setIsDeleting(false);
       setDeleteDialogOpen(false);
+    }
+  };
+
+  const handleOtpSubmit = async () => {
+    setIsVerifyingOtp(true);
+    try {
+      const verifyResponse = await verifyOTP({
+        otp: otp,
+        orderId: orderId,
+        phoneNumber: community.adminId.phoneNumber
+      });
+
+      if (verifyResponse.isOTPVerified) {
+        // If OTP is verified, proceed with community deletion
+        const deleteResponse = await axios.delete(
+          `${environment.baseUrl}/communities/softDelete/${community._id}`,
+          {
+            data: { reason: deletionReason },
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
+
+        if (deleteResponse.data.status === 200) {
+          toast.success('Community deleted successfully');
+          navigate('/ExploreCommunities');
+        }
+      } else {
+        toast.error('Invalid OTP');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('Invalid OTP or error occurred');
+    } finally {
+      setIsVerifyingOtp(false);
+      setOtpDialogOpen(false);
+      setOtp('');
     }
   };
 
@@ -267,6 +311,31 @@ const UpdateCommunityForm = ({ community }) => {
             disabled={isDeleting}
           >
             {isDeleting ? 'Deleting...' : 'Delete'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={otpDialogOpen} onClose={() => setOtpDialogOpen(false)}>
+        <DialogTitle>Enter OTP</DialogTitle>
+        <DialogContent>
+          <p>Please enter the OTP sent to your phone number</p>
+          <TextField
+            fullWidth
+            label="OTP"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            margin="normal"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOtpDialogOpen(false)}>Cancel</Button>
+          <Button 
+            onClick={handleOtpSubmit}
+            color="primary"
+            variant="contained"
+            disabled={isVerifyingOtp}
+          >
+            {isVerifyingOtp ? 'Verifying...' : 'Verify & Delete'}
           </Button>
         </DialogActions>
       </Dialog>
