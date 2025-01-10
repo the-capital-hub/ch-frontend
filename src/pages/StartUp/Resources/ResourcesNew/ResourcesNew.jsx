@@ -38,15 +38,13 @@ const ResourcesNew = () => {
 
 	useEffect(() => {
 		fetchResources();
-		console.log(theme);
-	}, [theme]);
+	}, []);
 
 	const fetchResources = async () => {
 		try {
 			const response = await fetch(`${environment.baseUrl}/resources/getAll`);
 			const data = await response.json();
 			setResources(data);
-			console.log(data);
 		} catch (error) {
 			console.error("Error fetching resources:", error);
 		}
