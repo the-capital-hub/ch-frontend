@@ -779,9 +779,9 @@ const FounderProfile = () => {
 	const { username } = useParams();
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		document.body.setAttribute("data-theme", "dark");
-	}, []);
+	// useEffect(() => {
+	// 	document.body.setAttribute("data-theme", "dark");
+	// }, []);
 
 	useEffect(() => {
 		const fetchFounderData = async () => {
@@ -977,7 +977,11 @@ const FounderProfile = () => {
 				/>
 			</Helmet>
 
-			<div className={`founder-profile-container ${theme ? "dark" : "light"}`}>
+			<div
+				className={`founder-profile-container ${
+					theme === "dark" ? "dark-theme" : ""
+				}`}
+			>
 				<main className="profile-main">
 					{/* Header Section */}
 					<section className="profile-header">

@@ -37,7 +37,7 @@
 	gap: 24px;
 	width: 50%;
 	padding: 24px;
-	background-color: var(--background-color-secondary);
+	// background-color: var(--background-color-secondary);
 	color: var(--text-color);
 
 	&::-webkit-scrollbar {
@@ -392,7 +392,7 @@
 				}
 			}
 
-			.content {
+			.thoughts-qa-content {
 				.posts,
 				.questions {
 					display: flex;

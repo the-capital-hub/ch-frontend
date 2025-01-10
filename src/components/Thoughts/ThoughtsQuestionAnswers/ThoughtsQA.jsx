@@ -3,17 +3,19 @@ import DOMPurify from "dompurify";
 import { FaPaperPlane, FaUserCircle } from "react-icons/fa";
 import { BiLike, BiCommentDetail } from "react-icons/bi";
 import "./ThoughtsQA.scss";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../Store/features/design/designSlice";
 import { environment } from "../../../environments/environment";
 import { useUpvoteHandler } from "../UtilityFunction/upvoteDownvote";
 import Spinner from "../../Spinner/Spinner";
+import { sentConnectionRequest } from "../../../Service/user";
 const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 
 const QAComponent = () => {
 	const theme = useSelector(selectTheme);
+	const navigate = useNavigate();
 	const [question, setQuestion] = useState({});
 	const [questions, setQuestions] = useState([]);
 	const [posts, setPosts] = useState([]);
@@ -25,6 +27,13 @@ const QAComponent = () => {
 	const [showCreatorDetails, setShowCreatorDetails] = useState(false);
 	const { id } = useParams();
 	const user = JSON.parse(localStorage.getItem("loggedInUser"));
+	const [connectionMessageSuccess, setConnectionMessageSuccess] =
+		useState(false);
+	const [connectionStatus, setConnectionStatus] = useState({
+		isConnected: false,
+		isPending: false,
+		isLoading: false,
+	});
 	// console.log("question", question);
 	// console.log("questions", questions);
 	// console.log("posts", posts);
@@ -124,34 +133,106 @@ const QAComponent = () => {
 		}
 	};
 
-	const dummyPosts = [
-		{
-			id: 1,
-			content:
-				"As the Founder at Capital HUB, Man's all about building great start-ups from a simple idea to an elegant reality. Humbled and honored to have worked with Angels and VC's across the globe to support and grow the startup culture.As the Founder at Capital HUB, Man's all about building great start-ups",
-			likes: "Harideep and 121 Others",
-		},
-		{
-			id: 2,
-			content:
-				"As the Founder at Capital HUB, Man's all about building great start-ups from a simple idea to an elegant reality. Humbled and honored to have worked with Angels and VC's across the globe to support and grow the startup culture.",
-			likes: "Harideep and 121 Others",
-		},
-	];
+	// Function to check connection status
+	const checkConnectionStatus = (questionUser) => {
+		if (!user || !questionUser) return;
 
-	const dummyQuestions = [
-		{
-			id: 1,
-			title: "Onboarding and UI/UX",
-			content: "How can we improve the onboarding experience for new users?",
-		},
-		{
-			id: 2,
-			title: "Fundraising and UI/UX",
-			content:
-				"What are the key metrics investors look for in a startup's UI/UX?",
-		},
-	];
+		const isAlreadyConnected = questionUser.connections?.includes(user._id);
+		const hasPendingRequest =
+			questionUser.connectionsReceived?.includes(user._id) ||
+			questionUser.connectionsSent?.includes(user._id);
+
+		setConnectionStatus({
+			isConnected: isAlreadyConnected,
+			isPending: hasPendingRequest,
+			isLoading: false,
+		});
+	};
+
+	// Effect to check connection status when question data changes
+	useEffect(() => {
+		if (question?.user) {
+			checkConnectionStatus(question.user);
+		}
+	}, [question?.user, user?._id]);
+
+	// Enhanced connection handler with proper error handling and loading states
+	const handleConnect = async (e, userId) => {
+		e?.preventDefault();
+		e?.stopPropagation();
+
+		if (!user) {
+			alert("Please login first to connect!");
+			return;
+		}
+
+		if (connectionStatus.isConnected || connectionStatus.isPending) {
+			return;
+		}
+
+		try {
+			setConnectionStatus((prev) => ({ ...prev, isLoading: true }));
+
+			const { data } = await sentConnectionRequest(user._id, userId);
+
+			setConnectionStatus({
+				isConnected: false,
+				isPending: true,
+				isLoading: false,
+			});
+
+			// Show success message temporarily
+			setConnectionMessageSuccess(true);
+			setTimeout(() => setConnectionMessageSuccess(false), 2500);
+		} catch (error) {
+			console.error("Connection request failed:", error);
+			alert("Failed to send connection request. Please try again.");
+
+			setConnectionStatus((prev) => ({
+				...prev,
+				isLoading: false,
+			}));
+		}
+	};
+
+	// Connection button renderer
+	const renderConnectionButton = () => {
+		if (!user) {
+			return (
+				<button
+					className="follow-button"
+					onClick={() => alert("Please login first to follow!")}
+				>
+					Follow for more questions
+				</button>
+			);
+		}
+
+		const buttonText = connectionStatus.isLoading
+			? "Processing..."
+			: connectionStatus.isConnected
+			? "Following"
+			: connectionStatus.isPending
+			? "Request Pending"
+			: "Follow for more questions";
+
+		return (
+			<button
+				className={`follow-button ${
+					connectionStatus.isConnected ? "connected" : ""
+				} 
+										 ${connectionStatus.isPending ? "pending" : ""}`}
+				onClick={(e) => handleConnect(e, question?.user?._id)}
+				disabled={
+					connectionStatus.isLoading ||
+					connectionStatus.isConnected ||
+					connectionStatus.isPending
+				}
+			>
+				{buttonText}
+			</button>
+		);
+	};
 
 	if (loading) {
 		return <Spinner className="thoughts-qa-spinner" />;
@@ -184,7 +265,23 @@ const QAComponent = () => {
 											@{question?.user?.userName}
 										</span> */}
 									</h3>
-									<span className="view-full-profile">View full profile</span>
+
+									<span
+										onClick={() => {
+											user
+												? navigate(
+														`/user/${
+															question?.user?.firstName?.toLowerCase() +
+															"-" +
+															question?.user?.lastName?.toLowerCase()
+														}/${question?.user?.oneLinkId}`
+												  )
+												: navigate(`/founder/${question?.user?.userName}`);
+										}}
+										className="view-full-profile"
+									>
+										View full profile
+									</span>
 								</div>
 								{/* <p className="username">@{question?.user?.userName}</p> */}
 								<p className="position">
@@ -246,14 +343,15 @@ const QAComponent = () => {
 									</span>
 								</div>
 							</div>
-							<button
-								className="follow-button"
-								onClick={() =>
-									alert("Please login first! To Follow for more questions")
-								}
-							>
-								Follow for more questions
-							</button>
+
+							<div className="connection-section">
+								{renderConnectionButton()}
+								{connectionMessageSuccess && (
+									<p className="connection-message success">
+										Connection request sent successfully
+									</p>
+								)}
+							</div>
 						</div>
 					</div>
 
@@ -273,7 +371,7 @@ const QAComponent = () => {
 							</button>
 						</div>
 
-						<div className="content">
+						<div className="thoughts-qa-content">
 							{activeTab === "posts" ? (
 								<div className="posts">
 									{posts?.map((post) => (
@@ -320,19 +418,19 @@ const QAComponent = () => {
 						</div>
 					</div>
 
-					<hr />
+					{/* <hr /> */}
 
-					<div className="section user-bio">
+					{/* <div className="section user-bio">
 						<h2>Bio</h2>
 						<p>
 							{question?.user?.bio ||
 								"A little about myself. Dejection is a sign of failure but it becomes the cause of success. I wrote this when I was 15 years old and that's exactly when I idealized the reality of life. In this current world, success is defined in many ways, some of which include money, fame and power."}
 						</p>
-					</div>
+					</div> */}
 
-					<hr />
+					{/* <hr /> */}
 
-					<div className="section user-company">
+					{/* <div className="section user-company">
 						<h2>Company</h2>
 						<div className="company-info">
 							<div className="company-logo">
@@ -363,7 +461,7 @@ const QAComponent = () => {
 								</p>
 							</div>
 						</div>
-					</div>
+					</div> */}
 				</div>
 			</div>
 
