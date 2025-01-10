@@ -85,6 +85,12 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 		navigate("/MyCommunity");
 		if (isMobileView) setSidebarCollapsed(true);
 	}
+
+	function handleNewCommunityClick() {
+		navigate("/CreateCommunity");
+		if (isMobileView) setSidebarCollapsed(true);
+	}
+
 	function handleExploreCommunityClick() {
 		navigate("/ExploreCommunities");
 		if (isMobileView) setSidebarCollapsed(true);
@@ -387,12 +393,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 												)}
 											</summary>
 											<div className="d-flex flex-column gap-2">
-												<ModalBsLauncher
-													id="AddNewCommunity"
-													className="sidebar__community__btn m-0"
-												>
-													<p className="m-0">Create a Community</p>
-												</ModalBsLauncher>
+													<button className="sidebar__community__btn shadow-none" onClick={handleNewCommunityClick}>Create a Community</button>
 												<button
 													className="sidebar__community__btn shadow-none"
 													onClick={handleMyCommunityClick}
