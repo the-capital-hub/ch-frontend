@@ -214,6 +214,7 @@ export const usePaymentFlow = () => {
 
 	const renderSubscriptionModal = () => (
 		<div className="modal-content">
+			<button onClick={() => setIsModalOpen(false)} style={{position: "relative", marginLeft: "28rem", marginTop: "-2rem", background: "none", border: "none", fontSize: "1.5rem", color: "var(--text-color)", cursor: "pointer"}}>X</button>
 			<h2>Subscribe to Premium</h2>
 			<form onSubmit={handleSubmit}>
 				<input
@@ -250,12 +251,12 @@ export const usePaymentFlow = () => {
 				/>
 				<select
 					name="userType"
-					value={formData.userType}
+					value={formData.userType || "startup founder"}
 					onChange={handleInputChange}
 					required
 				>
 					<option value="">Select User Type</option>
-					<option value="startup founder" selected>Startup Founder</option>
+					<option value="startup founder">Startup Founder</option>
 					<option value="startup employee">Startup Employee</option>
 					<option value="investor">Investor</option>
 					<option value="vc">VC</option>

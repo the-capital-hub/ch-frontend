@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaLinkedin } from 'react-icons/fa';
 import './About.scss';
+import { useNavigate } from "react-router-dom";
+
 
 const About = ({ community }) => {
+  const navigate = useNavigate();
+
+
+  const handleAdminClick = (username, userId) => {
+    navigate(`/user/${username}/${userId}`);
+  };
+
+ 
   const admin = community?.adminId;
+  
   return (
     <div className="about-container">
       <div className="community-banner">
@@ -28,7 +39,7 @@ const About = ({ community }) => {
         <div className="admin-section">
           <h2 className='community-heading'>Community Admin</h2>
           {admin && (
-            <div className="admin-card">
+            <div className="admin-card" onClick={() => handleAdminClick(admin.userName, admin._id)}>
               <img src={admin.profilePicture} alt={`${admin.firstName} ${admin.lastName}`} />
               <div className="admin-info">
                 <h3 style={{ display: 'flex', alignItems: 'center' }}>
@@ -40,6 +51,7 @@ const About = ({ community }) => {
                       rel="noopener noreferrer"
                       className="linkedin-link"
                       style={{ marginLeft: '8px' }}
+                      onClick={(e) => e.stopPropagation()}
                     >
                       <FaLinkedin />
                     </a>
