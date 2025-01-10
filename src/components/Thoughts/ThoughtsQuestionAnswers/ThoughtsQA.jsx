@@ -34,7 +34,7 @@ const QAComponent = () => {
 		isPending: false,
 		isLoading: false,
 	});
-	// console.log("question", question);
+	console.log("question", question);
 	// console.log("questions", questions);
 	// console.log("posts", posts);
 
@@ -496,131 +496,136 @@ const QAComponent = () => {
 
 					{/* Answer Items */}
 					{question?.answer
-						? question?.answer.map((answer, index) => (
-								<div key={index} className="answer-item">
-									<div className="user-info">
-										<img
-											src={answer?.user?.profilePicture}
-											alt="Profile Pic"
-											className="user-icon"
-										/>
-										<div className="user-details">
-											<span className="username">
-												{answer?.user?.firstName + " " + answer?.user?.lastName}
-											</span>
-											{/* <span className="follow-text">· Follow</span> */}
-										</div>
-									</div>
-
-									<p className="answer-text">{answer?.answer}</p>
-
-									<div className="interaction-bar">
-										<div className="action-buttons">
-											<button
-												className="action-button"
-												onClick={() => handleAnswerUpvote(id, answer._id)}
-											>
-												<BiLike
-													id={isAnswerUpvoted(answer._id) ? "upvoted" : ""}
-												/>
-												<span>
-													{answer?.upvotes?.length || 0}{" "}
-													{answer?.upvotes?.length === 1 ? "Like" : "Likes"}
+						? question?.answer
+								.slice()
+								.reverse()
+								.map((answer, index) => (
+									<div key={index} className="answer-item">
+										<div className="user-info">
+											<img
+												src={answer?.user?.profilePicture}
+												alt="Profile Pic"
+												className="user-icon"
+											/>
+											<div className="user-details">
+												<span className="username">
+													{answer?.user?.firstName +
+														" " +
+														answer?.user?.lastName}
 												</span>
-											</button>
-											<button
-												className="action-button"
-												onClick={() => openComments(answer._id)}
-											>
-												<BiCommentDetail />
-												<span>Comment</span>
-											</button>
+												{/* <span className="follow-text">· Follow</span> */}
+											</div>
 										</div>
-										{/* <FaRegBookmark className="bookmark-icon" /> */}
-									</div>
 
-									<div
-										className="comments-section"
-										style={{
-											display: isCommentsOpen[answer._id] ? "block" : "none",
-										}}
-									>
-										<div className="comments-wrapper">
-											{/* Existing comments */}
-											{answer.suggestions?.map((comment, index) => (
-												<div key={index} className="comment-item">
+										<p className="answer-text">{answer?.answer}</p>
+
+										<div className="interaction-bar">
+											<div className="action-buttons">
+												<button
+													className="action-button"
+													onClick={() => handleAnswerUpvote(id, answer._id)}
+												>
+													<BiLike
+														id={isAnswerUpvoted(answer._id) ? "upvoted" : ""}
+													/>
+													<span>
+														{answer?.upvotes?.length || 0}{" "}
+														{answer?.upvotes?.length === 1 ? "Like" : "Likes"}
+													</span>
+												</button>
+												<button
+													className="action-button"
+													onClick={() => openComments(answer._id)}
+												>
+													<BiCommentDetail />
+													<span>Comment</span>
+												</button>
+											</div>
+											{/* <FaRegBookmark className="bookmark-icon" /> */}
+										</div>
+
+										<div
+											className="comments-section"
+											style={{
+												display: isCommentsOpen[answer._id] ? "block" : "none",
+											}}
+										>
+											<div className="comments-wrapper">
+												{/* Existing comments */}
+												{answer.suggestions?.map((comment, index) => (
+													<div key={index} className="comment-item">
+														<img
+															src={comment.user.profilePicture}
+															alt=""
+															className="user-icon"
+														/>
+														<div className="comment-content">
+															<div className="user-name">
+																{comment.user.firstName +
+																	" " +
+																	comment.user.lastName}
+															</div>
+															<div className="comment-text">
+																{comment.comment}
+															</div>
+															<div className="comment-actions">
+																<button
+																	onClick={() =>
+																		handleCommentUpvote(
+																			id,
+																			answer._id,
+																			comment._id
+																		)
+																	}
+																>
+																	<BiLike
+																		id={
+																			isCommentUpvoted(comment._id)
+																				? "upvoted"
+																				: ""
+																		}
+																	/>{" "}
+																	<span>
+																		{comment?.likes?.length || 0}{" "}
+																		{comment?.likes?.length === 1
+																			? "Like"
+																			: "Likes"}
+																	</span>
+																</button>
+															</div>
+														</div>
+													</div>
+												))}
+											</div>
+
+											{/* New comment input */}
+											<div className="comment-input-container">
+												{user?.profilePicture ? (
 													<img
-														src={comment.user.profilePicture}
+														src={user?.profilePicture}
 														alt=""
 														className="user-icon"
 													/>
-													<div className="comment-content">
-														<div className="user-name">
-															{comment.user.firstName +
-																" " +
-																comment.user.lastName}
-														</div>
-														<div className="comment-text">
-															{comment.comment}
-														</div>
-														<div className="comment-actions">
-															<button
-																onClick={() =>
-																	handleCommentUpvote(
-																		id,
-																		answer._id,
-																		comment._id
-																	)
-																}
-															>
-																<BiLike
-																	id={
-																		isCommentUpvoted(comment._id)
-																			? "upvoted"
-																			: ""
-																	}
-																/>{" "}
-																<span>
-																	{comment?.likes?.length || 0}{" "}
-																	{comment?.likes?.length === 1
-																		? "Like"
-																		: "Likes"}
-																</span>
-															</button>
-														</div>
-													</div>
+												) : (
+													<FaUserCircle className="user-icon" />
+												)}
+
+												<div className="input-wrapper">
+													<input
+														type="text"
+														value={inputComment}
+														onChange={(e) => setInputComment(e.target.value)}
+														placeholder="Write a comment..."
+													/>
+													<FaPaperPlane
+														className="send-icon"
+														onClick={() => handleCommentClick(answer._id)}
+													/>
 												</div>
-											))}
-										</div>
-
-										{/* New comment input */}
-										<div className="comment-input-container">
-											{user?.profilePicture ? (
-												<img
-													src={user?.profilePicture}
-													alt=""
-													className="user-icon"
-												/>
-											) : (
-												<FaUserCircle className="user-icon" />
-											)}
-
-											<div className="input-wrapper">
-												<input
-													type="text"
-													value={inputComment}
-													onChange={(e) => setInputComment(e.target.value)}
-													placeholder="Write a comment..."
-												/>
-												<FaPaperPlane
-													className="send-icon"
-													onClick={() => handleCommentClick(answer._id)}
-												/>
 											</div>
 										</div>
 									</div>
-								</div>
-						  ))
+								))
 						: "No data found"}
 
 					{/* View More Button */}
