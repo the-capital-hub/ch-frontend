@@ -10,7 +10,7 @@ import "./salesLandingPage.css"
 
 const StartUpLendingPage = () => {
   return (
-    <div className='hom-container'>
+    <div className='sales-lending-page-container'>
       <Home/>
       <MainVideo/>
       <Process/>
