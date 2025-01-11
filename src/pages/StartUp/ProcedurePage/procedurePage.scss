@@ -1,0 +1,141 @@
+.procedure-page {
+    margin-top: 3rem;
+    background-color: #000000;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    color: #ffffff;
+  
+    .main-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      color: #ffffff;
+    }
+  
+    .progress-container {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding-left: 30px;
+  
+      .progress-line {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        filter: drop-shadow(0 0 1px rgba(255, 162, 89, 0.3));
+      }
+    }
+  
+    .step {
+      margin-bottom: 3rem;
+      position: relative;
+      opacity: 0.95;
+      margin-left: 2rem;
+      max-width: 400px;
+      z-index: 1;
+  
+      &:nth-child(even) {
+        margin-left: auto;
+        margin-right: 2rem;
+      }
+  
+      .step-number {
+        position: absolute;
+        left: -45px;
+        top: 15px;
+        background: rgba(255, 89, 0, 0.2);
+        border: 1px solid #FF5900;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        color: #FF5900;
+      }
+  
+      .step-content {
+        background: rgba(20, 20, 20, 0.4);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 89, 0, 0.1);
+        backdrop-filter: blur(10px);
+  
+        h2 {
+          color: #FFA259;
+          margin-bottom: 1rem;
+          font-size: 1.3rem;
+          font-weight: 500;
+        }
+  
+        .step-icon {
+          font-size: 1.8rem;
+          margin-bottom: 0.8rem;
+          color: #FF5900;
+        }
+  
+        p {
+          color: #e3e3e3;
+          line-height: 1.4;
+          font-size: 0.9rem;
+          margin-bottom: 1rem;
+        }
+  
+        .step-image {
+          width: 100%;
+          max-width: 300px;
+          height: auto;
+          margin: 1rem 0;
+          border-radius: 8px;
+        }
+      }
+  
+      &.step-1 { margin-top: 2rem; }
+      &.step-2 { margin-top: 4rem; }
+      &.step-3 { margin-top: 4rem; }
+      &.step-4 { margin-top: 4rem; }
+      &.step-5 { margin-top: 4rem; }
+      &.step-6 { margin-top: 4rem; }
+      &.center-step {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  
+    .resource-cards {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem 0;
+  
+      .card {
+        flex: 1;
+        background: rgba(20, 20, 20, 0.6);
+        border: 1px solid rgba(255, 89, 0, 0.2);
+        padding: 1rem;
+        border-radius: 8px;
+        text-align: center;
+  
+        .card-icon {
+          font-size: 1.5rem;
+          margin-bottom: 0.5rem;
+          color: #FFA259;
+        }
+      }
+    }
+  
+    .access-btn {
+      background: #FF5900;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.5rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+  
+      &:hover {
+        background: #d84e04;
+      }
+    }
+  }

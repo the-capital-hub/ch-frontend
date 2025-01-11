@@ -290,10 +290,10 @@ const FeedPostCard = ({
 
 			const fetchSavedPostData = async () => {
 				try {
-					if (response.data && response.data.length > 0) {
-						const allSavedPostDataIds = response.data.reduce(
+					if (response?.data && response?.data?.length > 0) {
+						const allSavedPostDataIds = response?.data?.reduce(
 							(acc, collection) => {
-								if (collection.posts && Array.isArray(collection.posts)) {
+								if (collection?.posts && Array.isArray(collection?.posts)) {
 									acc = acc.concat(collection.posts);
 								}
 								return acc;
@@ -308,7 +308,7 @@ const FeedPostCard = ({
 			};
 
 			fetchSavedPostData();
-			setLiked(likes?.includes(loggedInUser._id) || null);
+			setLiked(likes?.includes(loggedInUser?._id) || null);
 
 			getPostComment({ postId }).then((res) => {
 				setComments(res.data.data);
@@ -521,8 +521,8 @@ const FeedPostCard = ({
 	const [isCompanyUpdated, setIsCompanyUpdated] = useState(false);
 
 	useEffect(() => {
-		setIsFeatured(loggedInUser.featuredPosts.includes(postId));
-		setIsCompanyUpdated(loggedInUser.companyUpdate.includes(postId));
+		setIsFeatured(loggedInUser?.featuredPosts.includes(postId));
+		setIsCompanyUpdated(loggedInUser?.companyUpdate.includes(postId));
 	}, [loggedInUser, postId]);
 
 	const handleAddToFeatured = async (postId) => {
@@ -740,7 +740,7 @@ const FeedPostCard = ({
 								className="rounded-circle"
 								style={{
 									pointerEvents: `${
-										loggedInUser._id === userId ? "none" : "all"
+										loggedInUser?._id === userId ? "none" : "all"
 									}`,
 								}}
 							>
@@ -771,7 +771,7 @@ const FeedPostCard = ({
 										fontWeight: 600,
 										color: "var(--d-l-grey)",
 										pointerEvents: `${
-											loggedInUser._id === userId ? "none" : "all"
+											loggedInUser?._id === userId ? "none" : "all"
 										}`,
 									}}
 								>
@@ -1006,9 +1006,9 @@ const FeedPostCard = ({
 						{localPollOptions && localPollOptions.length > 0 && (
 							<div className="poll-section">
 								{localPollOptions.map((option) => {
-									const hasVoted = option.votes?.includes(loggedInUser._id);
+									const hasVoted = option.votes?.includes(loggedInUser?._id);
 									const hasVotedOnAnyOption = localPollOptions.some((opt) =>
-										opt.votes.includes(loggedInUser._id)
+										opt.votes.includes(loggedInUser?._id)
 									);
 									const isDisabled =
 										!allow_multiple_answers && hasVotedOnAnyOption && !hasVoted;
@@ -1573,7 +1573,7 @@ const FeedPostCard = ({
 									<div className="mt-1">
 										<div className="comment_container mb-1  border-top border-bottom">
 											{/* <div className="logo"> */}
-											<img src={loggedInUser.profilePicture} alt="Logo" />
+											<img src={loggedInUser?.profilePicture} alt="Logo" />
 											{/* </div> */}
 											<section className="input_and_logo_section">
 												<div className="input_box">
@@ -1657,7 +1657,7 @@ const FeedPostCard = ({
 																}/${val.user.oneLinkId}`}
 																style={{
 																	pointerEvents: `${
-																		loggedInUser._id === val.user._id
+																		loggedInUser?._id === val.user._id
 																			? "none"
 																			: "all"
 																	}`,
@@ -1681,7 +1681,7 @@ const FeedPostCard = ({
 																	className="text-decoration-none  fs-sm comments-user-name"
 																	style={{
 																		pointerEvents: `${
-																			loggedInUser._id === val.user._id
+																			loggedInUser?._id === val.user._id
 																				? "none"
 																				: "all"
 																		}`,
@@ -1721,7 +1721,7 @@ const FeedPostCard = ({
 													</div>
 													<div className="actions d-flex gap-2 px-1 align-items-center justify-content-between">
 														<div>
-															{val?.likes?.includes(loggedInUser._id) ? (
+															{val?.likes?.includes(loggedInUser?._id) ? (
 																<img
 																	src={fireIcon}
 																	width={15}

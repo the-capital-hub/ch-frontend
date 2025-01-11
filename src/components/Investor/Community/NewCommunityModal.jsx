@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { ToastContainer } from 'react-toastify';
 import { selectTheme } from "../../../Store/features/design/designSlice";
+import communityPlaceholder from "../../../Images/communityPlaceholder.svg";
 
 export default function NewCommunityModal() {
 
@@ -106,7 +107,7 @@ export default function NewCommunityModal() {
 					<div className="left-section">
 						<div className="community-preview">
 							<img 
-								src={previewImageUrl || CreateCommunityChat} 
+								src={previewImageUrl || communityPlaceholder} 
 								alt="Community" 
 								className="community-image"
 							/>
@@ -169,7 +170,7 @@ export default function NewCommunityModal() {
 					/>
 					<label htmlFor="communityImage" className="image-upload-container">
 						<img 
-							src={previewImageUrl || CreateCommunityChat} 
+							src={previewImageUrl || communityPlaceholder} 
 							alt="Community" 
 						/>
 					</label>

@@ -32,7 +32,53 @@ import Products from "./Products/Products";
 import About from './About/About';
 import { Toaster, toast } from "react-hot-toast";
 import { MdMenu, MdMenuOpen } from "react-icons/md";
+import { IoFilter } from "react-icons/io5";
+import JoinWhatsAppGroupPopup from "./JoinWhatsAppGroupPopup";
 
+const WhatsAppBanner = ({ onClick, onClose }) => {
+	const [isLoading, setIsLoading] = useState(false);
+
+	const handleClick = async () => {
+		setIsLoading(true);
+		try {
+			await onClick();
+		} catch (error) {
+			console.error("Failed to join WhatsApp group:", error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	return (
+		<div className="whatsapp-banner">
+			<div className="banner-content" onClick={handleClick}>
+				<div className="banner-text">
+					<img 
+						src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+						alt="WhatsApp"
+						className="whatsapp-icon"
+					/>
+					<div className="banner-message">
+						<span className="title">Join our WhatsApp Community</span>
+						<span className="subtitle">Get instant updates and connect with members</span>
+					</div>
+				</div>
+				<button className="join-btn" disabled={isLoading}>
+					{isLoading ? (
+						<div className="spinner-border spinner-border-sm text-light" role="status">
+							<span className="visually-hidden">Loading...</span>
+						</div>
+					) : (
+						'Join Now'
+					)}
+				</button>
+			</div>
+			<button className="close-btn" onClick={onClose} aria-label="Close">
+				×
+			</button>
+		</div>
+	);
+};
 
 const Community = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -41,12 +87,14 @@ const Community = () => {
 	const navigate = useNavigate();
   const [isMobileView, setIsMobileView] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showWhatsAppBanner, setShowWhatsAppBanner] = useState(true);
 
 
 	// Fetch global state
 	const loggedInUserId = useSelector(selectLoggedInUserId);
 	const isInvestor = useSelector(selectIsInvestor);
 	const theme = useSelector(selectTheme);
+	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 
 
    const { communityId } = useParams();
@@ -56,6 +104,7 @@ const Community = () => {
    const [popupOpen, setPopupOpen] = useState(false);
 	const dispatch = useDispatch();
   const [showSettings, setShowSettings] = useState(false);
+  const [showWhatsAppPopup, setShowWhatsAppPopup] = useState(false);
 
 	// New Fetch call
 	useEffect(() => {
@@ -206,11 +255,31 @@ const Community = () => {
         }
       };
 
+      const [filterType, setFilterType] = useState("all");
+      const [showFilterDropdown, setShowFilterDropdown] = useState(false);
+
+      const getFilteredPosts = useMemo(() => {
+        switch (filterType) {
+          case "admin":
+            return allPosts.filter(post => post.user._id === community?.adminId._id);
+          case "members":
+            return allPosts.filter(post => post.user._id !== community?.adminId._id);
+          default:
+            return allPosts;
+        }
+      }, [allPosts, filterType, community]);
+
       const renderTabContent = () => {
         switch (activeTab) {
           case "home":
             return (
               <>
+                {community?.whatsapp_group_link && showWhatsAppBanner && (
+                  <WhatsAppBanner 
+                    onClick={() => setShowWhatsAppPopup(true)} 
+                    onClose={() => setShowWhatsAppBanner(false)}
+                  />
+                )}
                 <div className="create-post">
                   <img src={community?.image} alt="Community" />
                   <input 
@@ -218,16 +287,35 @@ const Community = () => {
                     placeholder="Share your thoughts with the community..."
                     onClick={() => setPopupOpen(true)}
                   />
+                  <button 
+                    className="filter-button"
+                    onClick={() => setShowFilterDropdown(!showFilterDropdown)}
+                  >
+                    <IoFilter />
+                  </button>
+                  {showFilterDropdown && (
+                    <div className="filter-dropdown">
+                      <div className="filter-option" onClick={() => { setFilterType("all"); setShowFilterDropdown(false); }}>
+                        All Posts
+                      </div>
+                      <div className="filter-option" onClick={() => { setFilterType("admin"); setShowFilterDropdown(false); }}>
+                        Admin Posts
+                      </div>
+                      <div className="filter-option" onClick={() => { setFilterType("members"); setShowFilterDropdown(false); }}>
+                        Member Posts
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="posts-container">
                   <InfiniteScroll
                     className="m-0 p-0"
-                    dataLength={allPosts.length}
+                    dataLength={getFilteredPosts.length}
                     next={fetchMorePosts}
                     hasMore={hasMore}
                     loader={<SkeletonLoader />}
                   >
-                    {allPosts?.map(
+                    {getFilteredPosts?.map(
                       ({
                         description,
                         user,
@@ -329,6 +417,44 @@ const Community = () => {
         toast.success('Post created successfully!');
       };
 
+      // Function to handle WhatsApp group join request
+      const handleJoinWhatsAppGroup = async (phoneNumber) => {
+        try {
+          const token = localStorage.getItem("accessToken");
+          const emailData = {
+            name: loggedInUser.firstName + " " + loggedInUser.lastName,
+            email: loggedInUser.email,
+            phoneNumber: loggedInUser.phoneNumber,
+            requestedNumber: phoneNumber,
+            adminEmail: community?.adminId?.email,
+          };
+
+          const response = await axios.post(
+            `${environment.baseUrl}/communities/sendJoinRequest`, 
+            emailData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
+          );
+
+          if (response.status === 200) {
+            toast.success("Join request sent successfully!");
+            // Open WhatsApp link
+            window.open(community.whatsapp_group_link, "_blank");
+            // Small delay before closing popup and banner
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            setShowWhatsAppPopup(false);
+            setShowWhatsAppBanner(false);
+          }
+        } catch (error) {
+          console.error("Error sending join request:", error);
+          toast.error("Failed to send join request. Please try again.");
+          throw error; // Propagate error to maintain loading state in popup
+        }
+      };
+
       return (
         <div className="community-page" data-bs-theme={theme}>
           <Toaster 
@@ -345,7 +471,7 @@ const Community = () => {
           <div className="community-header">
             <div className="community-info">
               <div className="info-wrapper">
-              {isMobileView && (
+                {isMobileView && (
                   !isSidebarOpen ? (
                     <MdMenu
                       size={25}
@@ -375,21 +501,13 @@ const Community = () => {
                   </div>
                 </div>
               </div>
-              <OnboardingSwitch/>
-            </div>
-          </div>
-    
-          <div className="community-content">
-            <aside className={`sidebar ${isMobileView ? (isSidebarOpen ? 'open' : 'closed') : ''}`}>
-    
-              <nav>
+              <nav className="horizontal-menu">
                 <button 
                   className={activeTab === "home" ? "active" : ""} 
                   onClick={() => handleTabChange("home")}
                 >
                   Home
                 </button>
-                
                 <button 
                   className={activeTab === "products" ? "active" : ""} 
                   onClick={() => handleTabChange("products")}
@@ -423,8 +541,11 @@ const Community = () => {
                   </button>
                 )}
               </nav>
-            </aside>
+              <OnboardingSwitch/>
+            </div>
+          </div>
     
+          <div className="community-content">
             <div className="main-content">
               {renderTabContent()}
               {popupOpen && (
@@ -437,6 +558,12 @@ const Community = () => {
               )}
             </div>
           </div>
+          {showWhatsAppPopup && (
+            <JoinWhatsAppGroupPopup 
+              onClose={() => setShowWhatsAppPopup(false)} 
+              onJoin={handleJoinWhatsAppGroup} 
+            />
+          )}
         </div>
       );
 }

@@ -103,9 +103,9 @@ const PostCard = ({
 										alt="Batch Icon"
 									/>
 								)}
-								<button className="btn connect_button_feed d-inline">
+								{/* <button className="btn connect_button_feed d-inline">
 									<span>Follow</span>
-								</button>
+								</button> */}
 							</Link>
 
 							<div className="info-container">
@@ -157,7 +157,7 @@ const PostCard = ({
 					</div>
 				</div>
 
-				<div className="para_container w-100">
+				<div className="para_container w-97">
 					{/* <div
 						className="para_container_text w-100"
 						dangerouslySetInnerHTML={{

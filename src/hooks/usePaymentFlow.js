@@ -19,7 +19,8 @@ export const usePaymentFlow = () => {
 		lastName: "",
 		email: "",
 		mobileNumber: "",
-		userType: ""
+		userType: "",
+		registeredFrom: "Sales-Landing-Page"
 	});
 	const [otp, setOtp] = useState(["", "", "", "", "", ""]);
 	const [orderId, setOrderId] = useState("");
