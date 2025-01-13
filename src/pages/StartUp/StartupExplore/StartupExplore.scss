@@ -1,4 +1,84 @@
+.modal {
+  .modal-dialog-centered {
+    display: flex; // Ensure flex display for centering
+    align-items: center; // Center vertically
+    justify-content: center; // Center horizontally
+    margin: auto; // Center the modal
+  }
+
+  .modal-content {
+    background: var(--white-to-grey);
+    border-radius: var(--border-radius);
+    // ... existing styles ...
+  }
+  .btn-capital-admin {
+    background-color: rgba(253, 89, 1, 1);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 8px 16px;
+    color: black;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: darken(rgba(253, 89, 1, 1), 5%);
+      transform: scale(0.98);
+    }
+  }
+  .btn-capital {
+    width: 25%;
+    background: transparent;
+    background-color: rgba(253, 89, 1, 1);
+    border: 1px solid rgba(253, 89, 1, 1);
+    border-radius: 5px;
+    outline: none;
+
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    line-height: 1rem;
+
+    font-weight: 400;
+    padding: 0.75em 1em;
+    @media (max-width: 450px) {
+      width: 100%;      }
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+      transform: scale(0.97);
+    }
+  }
+
+  .btn-capital-small {
+    width: fit-content;
+    height: fit-content;
+
+    background-color: rgba(253, 89, 1, 1);
+    border: 1px solid rgba(253, 89, 1, 1);
+    border-radius: 5px;
+    outline: none;
+
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.75rem;
+    line-height: 0.5rem;
+
+    font-weight: 500;
+    padding: 0.3em 0.5em;
+
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+      transform: scale(0.98);
+    }
+  }
+}
 .startup_explore_wrapper {
+  .modal-dialog-centered {
+    margin: auto;
+}
   .filter_container{
     background: var(--white-to-grey);
     h5{
