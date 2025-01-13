@@ -16,6 +16,10 @@
 .home__container {
 	position: relative;
 	padding: 0 1rem;
+
+	@media (max-width: 820px) {
+		padding: 0 2rem;
+	}
 }
 
 .banner-bg {
@@ -139,16 +143,41 @@
 	}
 }
 
-.description {
+.description-1 {
+	width: 82%;
+	color: #b1b1b1;
+	margin: 0 auto;
+	margin-bottom: 1.5rem;
+	z-index: 2;
+
 	font-family: Outfit;
-	font-size: 20px;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 40px;
+	letter-spacing: 0.02em;
+	text-align: center;
+	text-underline-position: from-font;
+	text-decoration-skip-ink: none;
+
+	@media (max-width: 460px) {
+		// font-size: 15px;
+		width: 95%;
+		margin-top: 0.5rem;
+		font-size: 0.8rem;
+		line-height: 1.5rem;
+	}
+}
+.description {
+	width: 100%;
+	font-family: Outfit;
+	font-size: 18px;
 	font-weight: 400;
 	line-height: 30px;
 	color: #b1b1b1;
-	width: 60%;
+	// width: 60%;
 	margin: 0 auto;
 	text-align: center;
-	margin-top: 2rem;
+	// margin-top: 2rem;
 	z-index: 2; /* Text above background */
 
 	@media (max-width: 460px) {
@@ -211,7 +240,7 @@
 .arrow-container {
 	position: absolute;
 	left: 28%;
-	top: 97%;
+	top: 100%;
 	z-index: 10;
 
 	@media (max-width: 820px) {
@@ -220,17 +249,17 @@
 	}
 	@media (max-width: 768px) {
 		left: 14%;
-		top: 56%;
+		top: 66%;
 	}
 
 	@media (max-width: 460px) {
 		left: 6%;
-		top: 59%;
+		top: 83%;
 	}
 }
 
 .green-arrow {
-	height: 100px;
+	height: 90px;
 	width: auto;
 	transform: rotate(60deg); /* Adjust the rotation if needed */
 	z-index: 1000;
@@ -334,7 +363,8 @@
 		flex-direction: column;
 		gap: 1.2rem;
 
-		input, select {
+		input,
+		select {
 			padding: 1rem 1.2rem;
 			border-radius: 8px;
 			border: 1px solid #ddd;
@@ -404,7 +434,7 @@
 	justify-content: center;
 	align-items: center;
 	z-index: 1100;
-	
+
 	.loader {
 		width: 50px;
 		height: 50px;
@@ -422,8 +452,12 @@
 }
 
 @keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 .otp-modal {
@@ -438,27 +472,27 @@
 	max-width: 400px;
 	z-index: 1001;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-	
+
 	.modal-content {
 		text-align: center;
-  
+
 		h2 {
 			color: #333;
 			font-size: 1.5rem;
 			margin-bottom: 1rem;
 		}
-		
+
 		p {
 			margin-bottom: 2rem;
 			color: #666;
 		}
-		
+
 		.otp-container {
 			display: flex;
 			justify-content: space-between;
 			margin-bottom: 2rem;
 			gap: 8px;
-			
+
 			.otp-input {
 				width: 40px;
 				height: 40px;
@@ -466,20 +500,20 @@
 				border: 2px solid #ddd;
 				border-radius: 4px;
 				font-size: 1.2rem;
-				
+
 				&:focus {
 					border-color: #fd5901;
 					box-shadow: 0 0 0 2px rgba(253, 89, 1, 0.1);
 				}
 			}
 		}
-		
+
 		button {
 			background-color: #fd5901;
 			padding: 0.8rem 2.5rem;
 			border-radius: 8px;
 			font-weight: 600;
-			
+
 			&:hover {
 				background-color: #e54e00;
 			}

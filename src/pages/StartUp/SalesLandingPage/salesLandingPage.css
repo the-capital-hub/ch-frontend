@@ -1,6 +1,7 @@
 .sales-lending-page-container {
-  overflow-x: hidden;
-  width: 100dvw;
+	overflow-x: hidden;
+	width: 100dvw;
+	background-color: #050505;
 }
 @tailwind base;
 @tailwind components;
@@ -10,7 +11,6 @@
 	padding: 0;
 	margin: 0;
 }
-
 
 .text {
 	font-size: 20px;
