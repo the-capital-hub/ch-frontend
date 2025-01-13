@@ -56,7 +56,7 @@ const PeopleTab = ({ community }) => {
   
 
   const handleUserClick = (username, userId) => {
-    navigate(`/${username}/${userId}`);
+    navigate(`/user/${username}/${userId}`);
   };
 
   const handleRemoveMember = async () => {

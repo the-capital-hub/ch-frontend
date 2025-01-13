@@ -76,6 +76,7 @@ const AddProductPopup = ({ communityId, onClose, onProductAdded }) => {
   return (
     <div className="add-product-popup">
       <div className="popup-content">
+        <button className="close-btn" onClick={onClose}>×</button>
         <h2>Add New Product</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">

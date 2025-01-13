@@ -88,7 +88,6 @@ const Community = () => {
             `${environment.baseUrl}/communities/getCommunityById/${communityId}`
           );
           setCommunity(response.data.data);
-          console.log(response.data.data);
         } catch (error) {
           console.error("Error fetching community:", error);
         }
