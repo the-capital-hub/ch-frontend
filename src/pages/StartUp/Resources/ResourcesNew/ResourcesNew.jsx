@@ -367,17 +367,20 @@ const ResourcesNew = () => {
 							<p className="description">{selectedResource.description}</p>
 							<div className="resource-links">
 								<h3>Resource Files</h3>
-								{selectedResource.link.map((link, index) => (
-									<a 
-										key={index} 
-										href={link.url} 
-										target="_blank" 
-										rel="noopener noreferrer"
-										className="resource-link"
-									>
-										{link.name}
-									</a>
-								))}
+								{selectedResource.link.map((link, index) => {
+									const fileExtension = link.url.split('.').pop();
+									return (
+										<a 
+											key={index} 
+											href={link.url} 
+											target="_blank" 
+											rel="noopener noreferrer"
+											className="resource-link"
+										>
+											{link.name} <span className="file-extension">({fileExtension})</span>
+										</a>
+									);
+								})}
 							</div>
 						</div>
 					</div>

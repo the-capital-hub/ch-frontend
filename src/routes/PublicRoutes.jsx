@@ -11,7 +11,6 @@ import OurStartup from "../components/OurStartup/OurStartUp";
 import SubscriptionSuccess from "../components/SubscriptionSuccess/SubscriptionSuccess";
 import PublicRoute from "../components/Routes/PublicRoutes/PublicRoute";
 import PrivateRoute from "../components/Routes/PrivateRoutes";
-import PublicCommunityView from "../components/Investor/Community/PublicCommunityView";
 
 import Navbar2 from "../components/Navbar/NavbarForSalesLanding/Navbar2";
 import Footer2 from "../components/Footer/FooterForSalesLanding/Footer2";
@@ -91,6 +90,10 @@ const ScheduleMeeting = lazy(() =>
 
 const PublicPost = lazy(() =>
 	import("../components/PublicPostPage/PublicPost")
+);
+
+const ProcedurePage = lazy(() =>
+	import("../pages/StartUp/ProcedurePage/ProcedurePage")
 );
 
 const ThoughtsMain = lazy(() =>
@@ -320,6 +323,16 @@ function PublicRoutes() {
 						<Navbar2 />
 						<SalesLandingPage />
 						<Footer2 />
+					</Suspense>
+				}
+			/>
+
+			<Route
+				path="/procedure"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<Navbar2 />
+						<ProcedurePage />
 					</Suspense>
 				}
 			/>

@@ -11,7 +11,7 @@ import "./PublicPost.scss";
 
 const baseUrl = environment.baseUrl;
 
-const PublicPost = () => {
+const PublicPost = ({CommunityPostId}) => {
 	const theme = useSelector(selectTheme);
 	const loggedInUserId = useSelector(selectLoggedInUserId);
 	const navigate = useNavigate();
@@ -46,9 +46,16 @@ const PublicPost = () => {
 	useEffect(() => {
 		const fetchSinglePost = async () => {
 			try {
-				const response = await fetch(
-					`${environment.baseUrl}/api/posts/getSinglePost/${postId}`
-				);
+				let response;
+				if(CommunityPostId){
+					response = await fetch(
+						`${environment.baseUrl}/api/posts/getSinglePost/${CommunityPostId}`
+					);
+				}else{
+					response = await fetch(
+						`${environment.baseUrl}/api/posts/getSinglePost/${postId}`
+					);
+				}
 				const { data } = await response.json();
 				setPostData(data);
 			} catch (error) {

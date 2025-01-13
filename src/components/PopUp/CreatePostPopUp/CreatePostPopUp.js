@@ -155,9 +155,6 @@ const CreatePostPopUp = ({
 	const [croppedImages, setCroppedImages] = useState([]);
 
 	const dispatch = useDispatch();
-	const theme = useSelector(selectTheme);
-	const linkedinToken = localStorage.getItem("linkedinToken");
-	const token = localStorage.getItem("accessToken");
 	const handleClose = () => {
 		setPopupOpen(false);
 		dispatch(toggleCreatePostModal());
@@ -432,7 +429,7 @@ const CreatePostPopUp = ({
 							text: linkedinText,
 						},
 					},
-					token: linkedinToken,
+					token: loggedInUser.linkedinToken,
 				};
 
 				// LinkedIn API call
@@ -699,7 +696,7 @@ const CreatePostPopUp = ({
 					</div>
 
 					<div className="createpost__footer">
-						{(loggedInUser.linkedinId && linkedinToken) ? (
+						{(loggedInUser.linkedinId && loggedInUser.linkedinToken) ? (
 
 						(!communityId &&	<div className="share-linkedin">
 								<input
