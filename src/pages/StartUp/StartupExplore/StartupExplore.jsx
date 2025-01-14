@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import MaxWidthWrapper from "../../../components/Shared/MaxWidthWrapper/MaxWidthWrapper";
 import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
 import "./StartupExplore.scss";
+
 import FilterBySelect from "../../../components/NewInvestor/FilterBySelect/FilterBySelect";
 import VcProfileList from "../../../components/NewInvestor/CompanyProfileComponents/Vcprofile";
 import CompanyProfileList from "../../../components/NewInvestor/CompanyProfileComponents/CompanyProfileList";
@@ -314,7 +315,7 @@ export default function StartupExplore() {
 	};
 
 	return (
-		<MaxWidthWrapper>
+		<MaxWidthWrapper className="startup-explore-wrapper">
 			<section className="startup_explore_wrapper d-flex flex-column gap-3 mb-4 px-3">
 				<TutorialTrigger steps={startupOnboardingSteps.explorePage} />
 
@@ -330,7 +331,7 @@ export default function StartupExplore() {
 				)}
 
 				{/* Modal */}
-				<Modal show={showModal} onHide={() => setShowModal(false)} centered>
+				<Modal show={showModal} onHide={() => setShowModal(false)} centered dialogClassName="modal-dialog-centered">
 					<Modal.Header closeButton>
 						<Modal.Title style={{ color: "black" }}>
 							Add New {activeTab}
@@ -599,6 +600,16 @@ export default function StartupExplore() {
 										/>
 									</div>
 									<div className="form-group mb-3">
+										<input
+											type="text"
+											className="form-control"
+											placeholder="Logo URL"
+											name="logo"
+											onChange={handleFormChange}
+											required
+										/>
+									</div>
+									<div className="form-group mb-3">
 										<h6>Social Links</h6>
 										<input
 											type="url"
@@ -717,7 +728,6 @@ export default function StartupExplore() {
 							<button
 								type="button"
 								className="btn-capital w-100"
-								style={{ marginBottom: "1rem" }}
 								onClick={handleBulkFormSubmit}
 							>
 								Submit Bulk {activeTab}s

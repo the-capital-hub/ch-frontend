@@ -20,7 +20,8 @@ const UpdateCommunityForm = ({ community }) => {
     amount: community.amount || "",
     isOpen: community.isOpen || false,
     about: community.about || "",
-    terms_and_conditions: community.terms_and_conditions || [""]
+    terms_and_conditions: community.terms_and_conditions || [""],
+    whatsapp_group_link: community.whatsapp_group_link || ""
   });
 
 
@@ -246,6 +247,16 @@ const UpdateCommunityForm = ({ community }) => {
             onChange={handleChange}
             placeholder="Enter community description"
             rows="4"
+          />
+        </div>
+        <div className="form-group">
+          <label>Whatsapp Group Link</label>
+          <input
+            type="text"
+            name="whatsapp_group_link"
+            value={formData.whatsapp_group_link}
+            onChange={handleChange}
+            placeholder="Enter whatsapp group link"
           />
         </div>
 
