@@ -572,9 +572,18 @@ const FeedPostCard = ({
 		getLikeCount(postId)
 			.then((data) => {
 				setLikedBy(data?.data.likedBy);
-				setLikedByUser(data?.data.users);
+				// Remove duplicates based on user ID
+				const uniqueUsers = data?.data.users.reduce((acc, current) => {
+					const x = acc.find(item => item._id === current._id);
+					if (!x) {
+						return acc.concat([current]);
+					} else {
+						return acc;
+					}
+				}, []);
+				setLikedByUser(uniqueUsers);
 			})
-			.catch((error) => console.log());
+			.catch((error) => console.log(error));
 	}, [postId]);
 
 	const singleClickTimer = useRef(null);
@@ -1121,246 +1130,36 @@ const FeedPostCard = ({
 								className="mt-1 mb-2 hr"
 								style={{ height: "3px", borderColor: "var(--d-l-grey)" }}
 							/> */}
-							<div className="row feedpostcard_footer">
+							<div className="row feedpostcard_footer" style={{ width: "98%" , marginLeft: "1%"}}>
 								{/* for desktop and tab view */}
-								<div className="d-flex align-items-center gap-1 justify-content-around justify-content-sm-between pt-2 pb-2">
-									{/* Like and Comment */}
-									<div
-										className="d-none d-sm-flex align-items-center gap-1 justify-content-around"
-										style={{ width: "25%" }}
-									>
-										{/* Like */}
-										{liked ? (
-											<div
-												className="d-flex  align-items-center justify-content-end
-                       gap-1"
-												onClick={likeUnlikeHandler}
-											>
-												<img
-													src={fireIcon}
-													width={20}
-													alt="like post"
-													style={{ cursor: "pointer" }}
-												/>
-												<p
-													style={{
-														color: "var(--d-l-grey)",
-														fontSize: "10px",
-														cursor: "pointer",
-													}}
-													className="m-0 actions-btn-text-hide"
-												>
-													Like
-												</p>
-											</div>
+								<div className="d-flex align-items-center gap-1 justify-content-between pt-2 pb-2">
+									{/* Save */}
+									<div className="d-flex align-items-center">
+										{savedPostId.includes(postId) ? (
+											<IoMdBookmark size={23} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} onClick={handleUnsavePost} />
 										) : (
-											<div
-												className="d-flex align-items-center justify-content-end
-                       gap-1"
-												onClick={likeUnlikeHandler}
-											>
-												<ImFire
-													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-												/>
-												<p
-													style={{
-														color: "var(--d-l-grey)",
-														fontSize: "10px",
-														cursor: "pointer",
-													}}
-													className="m-0 actions-btn-text-hide"
-												>
-													Like
-												</p>
-											</div>
-										)}
-
-										{/* Comment */}
-										{!showComment ? (
-											<div
-												className="d-flex align-items-center justify-content-end
-                       gap-1 position-relative"
-												onClick={() => setShowComment((prev) => !prev)}
-											>
-												<FaRegCommentDots
-													size={20}
-													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-												/>
-												<p
-													style={{
-														color: "var(--d-l-grey)",
-														fontSize: "10px",
-														cursor: "pointer",
-													}}
-													className="m-0 actions-btn-text-hide"
-												>
-													Comment
-												</p>
-												<span className="feedpostcard_comment_count_badge position-absolute translate-middle badge rounded-pill bg-danger">
-													{comments?.length}
-												</span>
-											</div>
-										) : (
-											<div
-												className="d-flex align-items-center justify-content-end
-                       gap-1 position-relative"
-												onClick={() => setShowComment((prev) => !prev)}
-											>
-												<FaCommentDots
-													size={20}
-													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-												/>
-												<p
-													style={{
-														color: "var(--d-l-grey)",
-														fontSize: "10px",
-														cursor: "pointer",
-													}}
-													className="m-0 actions-btn-text-hide"
-												>
-													Comment
-												</p>
-												<span className="feedpostcard_comment_count_badge position-absolute translate-middle badge rounded-pill bg-danger">
-													{comments?.length}
-												</span>
-											</div>
+											<CiBookmark size={23} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} onClick={handleSavePopUp} />
 										)}
 									</div>
-									{/* Like for mobile view */}
-									<span className="d-block d-sm-none">
-										{/* Like */}
-										{liked ? (
-											<div
-												className="d-flex  align-items-center justify-content-end
-                       gap-1"
-												onClick={likeUnlikeHandler}
-											>
-												<img
-													src={fireIcon}
-													width={20}
-													alt="like post"
-													style={{ cursor: "pointer" }}
-												/>
-												<p
-													style={{
-														color: "var(--d-l-grey)",
-														fontSize: "10px",
-														cursor: "pointer",
-													}}
-													className="m-0 actions-btn-text-hide"
-												>
-													Like
-												</p>
-											</div>
-										) : (
-											<div
-												className="d-flex align-items-center justify-content-end
-                       gap-1"
-												onClick={likeUnlikeHandler}
-											>
-												<ImFire
-													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-												/>
-												<p
-													style={{
-														color: "var(--d-l-grey)",
-														fontSize: "10px",
-														cursor: "pointer",
-													}}
-													className="m-0 actions-btn-text-hide"
-												>
-													Like
-												</p>
-											</div>
-										)}
-									</span>
-									{/* comment for mobile view */}
-									<span className="d-block d-sm-none">
-										{/* Comment */}
-										{!showComment ? (
-											<div
-												className="d-flex align-items-center justify-content-end
-                       gap-1 position-relative"
-												onClick={() => setShowComment((prev) => !prev)}
-											>
-												<FaRegCommentDots
-													size={20}
-													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-												/>
-												<p
-													style={{
-														color: "var(--d-l-grey)",
-														fontSize: "10px",
-														cursor: "pointer",
-													}}
-													className="m-0 actions-btn-text-hide"
-												>
-													Comment
-												</p>
-												<span className="feedpostcard_comment_count_badge position-absolute translate-middle badge rounded-pill bg-danger">
-													{comments?.length}
-												</span>
-											</div>
-										) : (
-											<div
-												className="d-flex align-items-center justify-content-end
-                       gap-1 position-relative"
-												onClick={() => setShowComment((prev) => !prev)}
-											>
-												<FaCommentDots
-													size={20}
-													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-												/>
-												<p
-													style={{
-														color: "var(--d-l-grey)",
-														fontSize: "10px",
-														cursor: "pointer",
-													}}
-													className="m-0 actions-btn-text-hide"
-												>
-													Comment
-												</p>
-												<span className="feedpostcard_comment_count_badge position-absolute translate-middle badge rounded-pill bg-danger">
-													{comments?.length}
-												</span>
-											</div>
-										)}
-									</span>
+
+									{/* Share */}
+									<div className="d-flex align-items-center">
+										<FaShare size={23} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} onClick={handleOpenSocialShare} />
+									</div>
 
 									{/* Repost */}
-									<span
-										className={`repost_container rounded-4 ${
-											showRepostOptions ? "" : ""
-										}`}
-										ref={repostContainerRef}
-									>
-										<div
-											className="d-flex align-items-center justify-content-end gap-1"
-											onClick={() => setShowRepostOptions(!showRepostOptions)}
-											style={{
-												cursor: "pointer",
-												padding: "0.5rem 0.75rem",
-												borderRadius: "2.5rem",
+									<span className="repost_container">
+										<div className="d-flex align-items-center" style={{ cursor: "pointer",
+												padding: "0.5rem",
+												borderRadius: "50%",
 												backgroundColor: communityId ? "transparent" : "#fd5901", 
-												background: communityId ? "linear-gradient(90deg, #FD5901 0%, #9306FF 100%)" : "none", 
-												color: communityId ? "white" : "initial", 
-											  }}
-										>
-											<BiRepost
-												style={{
-													cursor: "pointer",
-													transform: "rotate(90deg)",
-													fill: "var(--d-l-grey)",
-												}}
-												size={20}
+												background: communityId ? "linear-gradient(90deg, #FD5901 0%, #9306FF 100%)" : "#fd5901", 
+												color: communityId ? "white" : "initial" }}>
+											<BiRepost 
+												style={{ cursor: "pointer", transform: "rotate(90deg)", fill: "var(--d-l-grey)"  }}
+												size={23}
+												onClick={() => setShowRepostOptions(!showRepostOptions)}
 											/>
-											<p
-												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-												className="m-0 actions-btn-text-hide"
-											>
-												Repost
-											</p>
 										</div>
 										{showRepostOptions && (
 											<span className="repost_options border rounded shadow-sm">
@@ -1369,7 +1168,7 @@ const FeedPostCard = ({
 													onClick={() => repostWithToughts(postId)}
 												>
 													{!repostLoading?.withThoughts ? (
-														<FaRegEdit size={20} />
+														<FaRegEdit size={23} />
 													) : (
 														<div
 															className="spinner-border text-secondary"
@@ -1418,148 +1217,28 @@ const FeedPostCard = ({
 											</span>
 										)}
 									</span>
-									{/* share for mobile view */}
-									<span className="d-block d-sm-none">
-										{/* Share */}
-										<div
-											className="d-flex align-items-center
-											 gap-1"
-											onClick={handleOpenSocialShare}
-										>
-											<FaShare
-												size={20}
-												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-											/>
-											<p
-												style={{
-													color: "var(--d-l-grey)",
-													fontSize: "10px",
-													cursor: "pointer",
-												}}
-												className="m-0 actions-btn-text-hide"
-											>
-												Share
-											</p>
-										</div>
-									</span>
-									{/* save for mobile view */}
-									<span className="d-block d-sm-none">
-										{/* Save */}
-										{savedPostId.includes(postId) ? (
-											<div
-												className="d-flex align-items-center justify-content-end
-                       gap-1"
-												onClick={handleUnsavePost}
-											>
-												<IoMdBookmark
-													size={20}
-													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-												/>
-												<p
-													style={{
-														color: "var(--d-l-grey)",
-														fontSize: "10px",
-														cursor: "pointer",
-													}}
-													className="m-0 actions-btn-text-hide"
-												>
-													Save
-												</p>
+
+									{/* Comment */}
+									<div className="d-flex align-items-center">
+										{!showComment ? (
+											<div className="d-flex align-items-center gap-1">
+												<FaRegCommentDots size={23} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} onClick={() => setShowComment(prev => !prev)} />
+												<span className="feedpostcard_comment_count_badge">{comments?.length}</span>
 											</div>
 										) : (
-											<div
-												className="d-flex align-items-center justify-content-end
-                    gap-1"
-												onClick={handleSavePopUp}
-											>
-												<CiBookmark
-													size={20}
-													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-												/>
-												<p
-													style={{
-														color: "var(--d-l-grey)",
-														fontSize: "10px",
-														cursor: "pointer",
-													}}
-													className="m-0 actions-btn-text-hide"
-												>
-													Save
-												</p>
+											<div className="d-flex align-items-center gap-1">
+												<FaCommentDots size={23} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} onClick={() => setShowComment(prev => !prev)} />
+												<span className="feedpostcard_comment_count_badge">{comments?.length}</span>
 											</div>
 										)}
-									</span>
+									</div>
 
-									{/* Share and Save */}
-									<div
-										className="d-none d-sm-flex align-items-center gap-1 justify-content-around d-block sm:hide"
-										style={{ width: "25%" }}
-									>
-										{/* Share post link on socials button */}
-										<div
-											className="d-flex align-items-center
-											 gap-1"
-											onClick={handleOpenSocialShare}
-										>
-											<FaShare
-												size={20}
-												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-											/>
-											<p
-												style={{
-													color: "var(--d-l-grey)",
-													fontSize: "10px",
-													cursor: "pointer",
-												}}
-												className="m-0 actions-btn-text-hide"
-											>
-												Share
-											</p>
-										</div>
-
-										{/* Save */}
-										{savedPostId.includes(postId) ? (
-											<div
-												className="d-flex align-items-center justify-content-end
-                       gap-1"
-												onClick={handleUnsavePost}
-											>
-												<IoMdBookmark
-													size={20}
-													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-												/>
-												<p
-													style={{
-														color: "var(--d-l-grey)",
-														fontSize: "10px",
-														cursor: "pointer",
-													}}
-													className="m-0 actions-btn-text-hide"
-												>
-													Save
-												</p>
-											</div>
+									{/* Like */}
+									<div className="d-flex align-items-center">
+										{liked ? (
+											<img src={fireIcon} width={20} alt="like post" style={{ cursor: "pointer" }} onClick={likeUnlikeHandler} />
 										) : (
-											<div
-												className="d-flex align-items-center justify-content-end
-                    gap-1"
-												onClick={handleSavePopUp}
-											>
-												<CiBookmark
-													size={20}
-													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-												/>
-												<p
-													style={{
-														color: "var(--d-l-grey)",
-														fontSize: "10px",
-														cursor: "pointer",
-													}}
-													className="m-0 actions-btn-text-hide"
-												>
-													Save
-												</p>
-											</div>
+											<ImFire style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} onClick={likeUnlikeHandler} />
 										)}
 									</div>
 								</div>
@@ -1696,11 +1375,11 @@ const FeedPostCard = ({
 																		checkTopVoiceExpiry(
 																			val.user?.isTopVoice?.expiry
 																		) && (
-																			<span className="top-voice-badge">
+																			<span className="top-voice-badge" style={{ marginTop: "-0.2rem" }}>
 																				<RiShieldStarFill className="top-voice-icon" />
-																				<span className="top-voice-text">
+																				{/* <span className="top-voice-text">
 																					Top Voice
-																				</span>
+																				</span> */}
 																			</span>
 																		)}
 																</Link>
@@ -1722,24 +1401,19 @@ const FeedPostCard = ({
 													<div className="actions d-flex gap-2 px-1 align-items-center justify-content-between">
 														<div>
 															{val?.likes?.includes(loggedInUser?._id) ? (
-																<img
-																	src={fireIcon}
-																	width={15}
-																	alt="like post"
-																	onClick={() =>
-																		commentlikeUnlikeHandler(postId, val._id)
-																	}
-																/>
+																<span
+																	onClick={() => commentlikeUnlikeHandler(postId, val._id)}
+																	className="like-text liked"
+																>
+																	Unlike
+																</span>
 															) : (
-																<ImFire
-																	onClick={() =>
-																		commentlikeUnlikeHandler(postId, val._id)
-																	}
-																	style={{
-																		cursor: "pointer",
-																		fill: "var(--d-l-grey)",
-																	}}
-																/>
+																<span
+																	onClick={() => commentlikeUnlikeHandler(postId, val._id)}
+																	className="like-text"
+																>
+																	Like
+																</span>
 															)}
 															<span className="mx-2 text-secondary fs-sm">
 																{val?.likes?.length} likes

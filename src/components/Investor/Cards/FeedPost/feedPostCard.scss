@@ -269,43 +269,30 @@
 					height: 100px;
 				}
 
-				.input_logo_section {
-					display: flex;
+				.d-flex {
+					width: 100%;
+					justify-content: space-between !important;
 					align-items: center;
-					padding: 10px;
-					width: 80%;
+					padding: 0 20px;
 
-					.logo {
-						img {
-							max-width: 50px;
-							margin-right: 10px;
-							object-fit: contain;
-						}
+					// Remove width constraint from existing elements
+					div {
+						width: auto !important;
 					}
 
-					.input_box {
-						display: flex;
-						align-items: center;
-						width: 100%;
+					// Adjust comment count style
+					.feedpostcard_comment_count_badge {
+						position: static !important;
+						transform: none !important;
+						margin-left: 5px;
+						background: transparent;
+						color: var(--white-to-grey) !important;
+						font-size: 12px;
+					}
 
-						input[type="text"] {
-							flex-grow: 1;
-							padding: 5px;
-							border: none;
-							border-radius: 4px;
-						}
-
-						.icons {
-							display: flex;
-							margin-left: 10px;
-
-							.smiley_icon,
-							.image_icon {
-								font-size: 20px;
-								cursor: pointer;
-								margin-right: 5px;
-							}
-						}
+					// Hide text labels
+					.actions-btn-text-hide {
+						display: none !important;
 					}
 				}
 			}
@@ -394,12 +381,8 @@
 					.smiley_icon,
 					.image_icon {
 						font-size: 20px;
-						cursor: pointer; // Optional: Add cursor pointer for icons
+						cursor: pointer;
 						margin-right: 5px;
-						img {
-							height: 50px;
-							width: 50px;
-						}
 					}
 				}
 
@@ -421,53 +404,78 @@
 
 	.single-comment {
 		.comment-details {
-			// background: var(--bs-light);
 			background: rgba(52, 55, 68, 0.2);
 			color: var(--d-l-grey);
-			border-radius: 20px;
+			border-radius: 1.25rem;
+			padding: 0.75rem 1rem;
+			margin-bottom: 0.5rem;
+
 			h6 {
 				color: var(--d-l-grey);
+				font-family: 'Outfit', sans-serif;
+				font-weight: 600;
+				font-size: 0.875rem;
+				margin-bottom: 0.25rem;
 			}
+
 			.comments-user-name {
 				display: flex;
 				gap: 0.4rem;
-				.top-voice-badge {
-					position: relative;
-					// display: flex;
-					// align-items: center;
-					// cursor: pointer;
+				text-decoration: none;
+				
+				h6 {
+					font-weight: 700; // Make username bolder
+					margin: 0;
+				}
+			}
 
-					.top-voice-icon {
-						width: 1.2rem;
-						height: 1.2rem;
-						fill: #c0c0c0;
-					}
-					.top-voice-text {
-						width: 70px;
-						position: absolute;
-						top: -20px;
-						left: 10px;
-						color: #fff;
-						font-size: 0.8rem;
-						font-weight: 500;
-						opacity: 0;
-						transition: opacity 0.3s ease;
-					}
+			.comment {
+				font-family: 'Outfit', sans-serif;
+				font-size: 0.75rem;
+				font-weight: 400;
+				line-height: 0.945rem;
+				text-align: left;
+				margin-top: 0.5rem;
+				color: var(--d-l-grey);
+			}
+		}
 
-					&:hover .top-voice-text {
-						opacity: 1;
-					}
+		.actions {
+			padding: 0.5rem 1rem;
+
+			.like-text {
+				font-family: 'Outfit', sans-serif;
+				font-size: 0.75rem;
+				font-weight: 500;
+				color: var(--d-l-grey);
+				cursor: pointer;
+				transition: color 0.2s ease;
+				text-decoration: underline;
+				text-underline-position: from-font;
+				text-decoration-skip-ink: none;
+
+				&:hover {
+					color: #fd5901;
+				}
+
+				&.liked {
+					color: #fd5901;
+					font-weight: 600;
 				}
 			}
 		}
+
 		.img_container {
-			max-width: 80px;
+			max-width: 5rem;
+			
 			img {
 				object-fit: cover;
-				padding: 2px;
-				height: 50px;
-				width: 50px;
-				max-width: 55px;
+				padding: 0.125rem;
+				height: 3.125rem;
+				width: 3.125rem;
+				max-width: 3.438rem;
+				border: 1px solid rgba(202, 202, 202, 0.2);
+				border-radius: 50%;
 			}
 		}
 	}
@@ -588,12 +596,26 @@
 	.modal-title {
 		color: var(--d-l-grey);
 	}
+	.modal-dialog {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: calc(100% - 1rem);
+		margin: 0 auto; // Center horizontally
+	}
+	
 	.modal-content {
 		background-color: var(--white-to-grey);
+		width: 100%;
+		max-width: 500px; // Add max-width for better appearance
+		margin: auto; // Add some margin
+		
 		.modal-body {
 			overflow: auto;
 			max-height: 70vh;
 			color: var(--d-l-grey);
+			padding: 1rem;
+			
 			.user-list {
 				img {
 					object-fit: cover;
@@ -896,6 +918,7 @@
 }
 
 .feedpostcard_comment_count_badge {
+	color: var(--d-l-grey) !important;
 	right: -30px;
 	top: -5px;
 
@@ -908,4 +931,9 @@
 .community-color {
 	background: linear-gradient(90deg, #FD5901 0%, #9306FF 100%) !important;
 	color: white;
+}
+
+// Remove the top circle badge
+.position-absolute.translate-middle.badge {
+	display: none;
 }
