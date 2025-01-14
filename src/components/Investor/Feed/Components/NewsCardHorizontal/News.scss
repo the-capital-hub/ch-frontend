@@ -28,7 +28,7 @@
 	border-radius: 0.5rem;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-	.news-header{
+	.news-header {
 		display: flex;
 		justify-content: space-between;
 	}
@@ -54,6 +54,7 @@
 		background-color: var(--background-color-secondary);
 		padding: 1rem;
 		max-width: 314px;
+		cursor: pointer;
 
 		.news-header {
 			display: flex;

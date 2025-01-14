@@ -154,6 +154,7 @@
 	--white-to-dgrey: var(--bs-light);
 	--text-color: #000000;
 	--background-color: #ffffff;
+	--ex-key-focus-bg: var(--bs-gray-300);
 
 	// Chat page colors
 	--chat-page-bg: var(--bs-gray-200);
@@ -164,6 +165,8 @@
 	.card {
 		--bs-card-bg: #ffffff;
 	}
+
+	--skeleton-item-bg: #e2e2e233;
 }
 
 // Dark Mode colors
@@ -333,6 +336,7 @@ $color-mode-type: data;
 	--darkMode-currentTheme: var(--currentTheme);
 	--text-color: #ffffff;
 	--background-color: #000000;
+	--ex-key-focus-bg: white;
 
 	// Chat page colors
 	--chat-page-bg: var(--bs-black);
@@ -343,11 +347,11 @@ $color-mode-type: data;
 		--bs-card-bg: #1e1f24;
 	}
 
+	--skeleton-item-bg: #2b2b2b;
 	// .btn {
 	//   --bs-btn-bg: #979797;
 	//   --bs-btn-hover-border-color: rgb(141, 141, 141);
 	// }
-
 	.btn-startup {
 		--bs-btn-bg: #{$startup};
 		--bs-btn-hover-border-color: #{tint-color($startup, 15%)};
