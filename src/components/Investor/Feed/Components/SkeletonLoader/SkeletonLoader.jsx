@@ -1,12 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../../../../Store/features/design/designSlice";
 import { ImFire } from "react-icons/im";
 import { FaShare, FaRegBookmark, FaRegCommentDots } from "react-icons/fa6";
 import { BiRepost } from "react-icons/bi";
 import "./SkeletonLoader.scss";
 
 const SkeletonLoader = () => {
+	const theme = useSelector(selectTheme);
 	return (
-		<div className="skeleton-loader">
+		<div className={`skeleton-loader ${theme} === "dark" ? "dark" : "light"`}>
 			<div className="profile-info">
 				<div className="profile-image skeleton-item"></div>
 				<div className="profile-details">

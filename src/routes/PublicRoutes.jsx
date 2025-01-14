@@ -19,6 +19,7 @@ import Footer2 from "../components/Footer/FooterForSalesLanding/Footer2";
 
 // Import the other components using lazy loading
 const Home = lazy(() => import("../components/Home/Home"));
+const HomeNew = lazy(() => import("../components/Home/HomeNew/Home"));
 const AboutUs = lazy(() => import("../components/AboutUs/AboutUs"));
 const ContactUs = lazy(() => import("../components/ContactUs/ContactUs"));
 const Service = lazy(() => import("../components/Service/Service"));
@@ -119,6 +120,16 @@ function PublicRoutes() {
 						<Navbar />
 						<Home />
 						<Footer />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="/home-new"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						{/* <Navbar /> */}
+						<HomeNew />
+						{/* <Footer /> */}
 					</Suspense>
 				}
 			/>

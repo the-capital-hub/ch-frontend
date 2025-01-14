@@ -145,7 +145,7 @@ export default function CompanyActions({
   };
 
   return (
-    <div className="company__actions d-flex flex-column justify-content-end">
+    <div className="company__actions d-flex flex-column justify-content-end justify-content-xl-start">
       {/* {isOnelink ? (
         ""
       ) : (

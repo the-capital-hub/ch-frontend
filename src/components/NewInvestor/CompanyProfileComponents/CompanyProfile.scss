@@ -124,7 +124,7 @@ $color-startup-shadow: rgba(234, 238, 242, 1);
 
     // background-color: white;
     border: 1px solid var(--color-btn);
-    border-radius: 5px;
+    border-radius: 20px;
     outline: none;
 
     color: var(--color-outline-btn);
@@ -148,7 +148,7 @@ $color-startup-shadow: rgba(234, 238, 242, 1);
   }
 
   .div__heading {
-    text-decoration: underline;
+    // text-decoration: underline;
     text-decoration-color: var(--color-btn);
     text-decoration-thickness: 2px;
     text-underline-offset: 0.25em;

@@ -26,7 +26,7 @@ export default function PersonActions({
 			<div className="d-flex flex-column-reverse flex-md-row align-items-start gap-3 mt-3 mb-3 mt-lg-0">
 				{loggedInUserId !== userId && (
 					<Link to={linkTo}>
-						<button className="btn btn-capital-outline actions-btn">
+						<button className="btn btn-capital-outline actions-btn rounded-xl">
 							Connect with the {person}
 						</button>
 					</Link>

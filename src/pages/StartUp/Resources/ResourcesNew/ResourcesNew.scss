@@ -86,7 +86,8 @@
 				}
 
 				.sub-text1 {
-					color: #ffffffcc;
+					// color: #ffffffcc;
+					color: var(--text-color);
 					position: absolute;
 					bottom: 13%;
 					font-family: Outfit;
@@ -113,7 +114,8 @@
 				}
 
 				.sub-text {
-					color: #ffffffcc;
+					// color: #ffffffcc;
+					color: var(--text-color);
 					position: absolute;
 					bottom: 1%;
 					padding: 10px;
@@ -166,6 +168,7 @@
 					}
 
 					h3 {
+						color: var(--text-color);
 						font-size: 20px;
 						font-weight: 600;
 						line-height: 48px;
@@ -175,6 +178,7 @@
 					}
 
 					h4 {
+						color: var(--text-color);
 						font-size: 32px;
 						font-weight: 600;
 						margin-top: 20px;
@@ -196,7 +200,8 @@
 						padding: 0.7rem 2rem;
 						background: transparent;
 
-						color: #fff;
+						// color: #fff;
+						color: var(--text-color);
 						border-radius: 5px;
 						border: 1px solid transparent;
 						cursor: pointer;
@@ -263,7 +268,8 @@
 			width: 100%;
 
 			.resource-access-text {
-				color: #ffffffcc;
+				// color: #ffffffcc;
+				color: var(--text-color);
 				font-family: Outfit;
 				font-size: 32px;
 				font-weight: 500;
@@ -344,8 +350,8 @@
 						justify-content: space-between;
 
 						img {
-							width: 40px !important;
-							height: 40px !important;
+							width: 40px;
+							height: 40px;
 							object-fit: contain !important;
 							border-radius: 0.75rem;
 						}
@@ -561,7 +567,9 @@
 				font-weight: 500;
 			}
 
-			input, textarea, select {
+			input,
+			textarea,
+			select {
 				width: 100%;
 				padding: 0.75rem;
 				border-radius: 8px;
@@ -605,21 +613,23 @@
 		width: 95%;
 		padding: 1rem;
 		margin: 1rem;
-		
+
 		.modal-header {
 			h2 {
 				font-size: 1.25rem;
 			}
 		}
-		
+
 		.form-group {
 			margin-bottom: 1rem;
-			
+
 			label {
 				font-size: 14px;
 			}
-			
-			input, textarea, select {
+
+			input,
+			textarea,
+			select {
 				padding: 0.5rem;
 				font-size: 14px;
 			}
@@ -696,7 +706,7 @@
 		list-style: none;
 		padding: 0;
 		margin: 0;
-		
+
 		li {
 			display: flex;
 			justify-content: space-between;
@@ -709,7 +719,7 @@
 			transition: all 0.2s ease;
 
 			&:hover {
-				box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 			}
 
 			.file-info {
@@ -759,42 +769,42 @@
 }
 
 .files-section {
-  .file-upload-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
+	.file-upload-container {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-bottom: 10px;
 
-    input[type="file"] {
-      display: none;
-    }
+		input[type="file"] {
+			display: none;
+		}
 
-    .add-file-btn {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      padding: 8px 16px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.2s;
+		.add-file-btn {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			padding: 8px 16px;
+			background-color: #007bff;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: background-color 0.2s;
 
-      &:hover {
-        background-color: #0056b3;
-      }
+			&:hover {
+				background-color: #0056b3;
+			}
 
-      svg {
-        font-size: 1.2em;
-      }
-    }
-  }
+			svg {
+				font-size: 1.2em;
+			}
+		}
+	}
 }
 
 .resource-card-header {
 	position: relative;
-	
+
 	.delete-resource-btn {
 		position: absolute;
 		//top: 0;
@@ -835,13 +845,13 @@
 			width: 100% !important;
 			min-width: unset !important;
 			margin: 0.5rem 0;
-			
+
 			.resource-card-header {
 				img {
 					width: 30px !important;
 					height: 30px !important;
 				}
-				
+
 				.card-lock-icon {
 					width: 65px;
 					height: 22px;
@@ -849,7 +859,7 @@
 					font-size: 12px;
 				}
 			}
-			
+
 			span {
 				font-size: 1.25rem !important;
 				line-height: 1.5rem !important;
@@ -859,20 +869,20 @@
 }
 
 .file-name-input {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 4px 8px;
-    margin-right: 8px;
-    font-size: 14px;
-    width: 200px;
-    &:focus {
-        outline: none;
-        border-color: #007bff;
-    }
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 4px 8px;
+	margin-right: 8px;
+	font-size: 14px;
+	width: 200px;
+	&:focus {
+		outline: none;
+		border-color: #007bff;
+	}
 }
 
 .file-details {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
 }
