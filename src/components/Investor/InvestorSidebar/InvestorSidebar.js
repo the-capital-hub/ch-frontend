@@ -362,6 +362,9 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 							<MenuItem
 								active={location.pathname.includes("/chats")}
 								className="active-item"
+								style={{
+									paddingLeft: "10px",
+								}}
 							>
 								<div
 									className="sidebar__community d-flex gap-4"
@@ -467,6 +470,9 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 							<MenuItem
 								active={location.pathname.includes("/chats")}
 								className="active-item"
+								style={{
+									paddingLeft: "10px",
+								}}
 							>
 								<div
 									className="sidebar__community d-flex gap-4"
@@ -572,7 +578,9 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Learn More</span>}
 								</Link>
 							</MenuItem>
-							<MenuItem onClick={handleLogout} className="active-item">
+							<MenuItem onClick={handleLogout} className="active-item" style={{
+								paddingLeft: "10px",
+							}}>
 								{/* <div className="d-flex justify-content-center align-items-center"> */}
 								<IoExitOutline size={25} />
 								{!sidebarCollapsed && <span>Log out</span>}

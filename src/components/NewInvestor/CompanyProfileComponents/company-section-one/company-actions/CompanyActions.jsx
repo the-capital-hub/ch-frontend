@@ -2,6 +2,7 @@ import "./CompanyActions.scss";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import SubcriptionPop from "../../../../PopUp/SubscriptionPopUp/SubcriptionPop"
 import {
   selectIsInvestor,
@@ -14,12 +15,15 @@ import {
   addNotificationAPI,
   createChat,
   postInvestorData,
+  sendOneLinkRequest,
+  getStartupByFounderId
 } from "../../../../../Service/user";
 import { useState } from "react";
 import SpinnerBS from "../../../../Shared/Spinner/SpinnerBS";
 import { generateId } from "../../../../../utils/ChatsHelpers";
 import AfterSuccessPopUp from "../../../../PopUp/AfterSuccessPopUp/AfterSuccessPopUp";
 import { setChatId } from "../../../../../Store/features/chat/chatSlice";
+import { toast } from "react-hot-toast";
 
 export default function CompanyActions({
   isOnelink = false,
@@ -31,16 +35,37 @@ export default function CompanyActions({
 
   const [send, setSend] = useState(false);
   const [open, setOpen] = useState(false);
+  const [startupData, setStartupData] = useState(null);
   const [popPayOpen, setPopPayOpen] = useState(false);
   const isInvestor = useSelector(selectIsInvestor);
   const myInterests = useSelector(selectMyInterests);
   const loggedInUserId = useSelector(selectLoggedInUserId);
   const userCompanyData = useSelector((state) => state.user.company);
 
+  let loggedInUser = localStorage.getItem("loggedInUser");
+  if (loggedInUser) {
+    loggedInUser = JSON.parse(loggedInUser);
+  }
+
   // Loading states
   const [loading, setLoading] = useState(false);
+  const [isRequestLoading, setIsRequestLoading] = useState(false);
+
+  // New state for OneLink request status
+  const [oneLinkRequestStatus, setOneLinkRequestStatus] = useState(null);
 
   let myInterestsIds = myInterests?.map((interest) => interest.companyId);
+
+  useEffect(() => {
+    console.log(founderId);
+    getStartupByFounderId(founderId._id)
+      .then(({ data }) => {
+        setStartupData(data);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+    
+  }, []);
 
   const linkTo = isInvestor
     ? `/investor/user/${
@@ -101,48 +126,27 @@ export default function CompanyActions({
 
   const handelOnlinkRequest = async () => {
     try {
-      setPopPayOpen(true);
-      // const notificationBody = {
-      //   recipient: founderId._id,
-      //   type: "onlinkRequest",
-      //   achievementId: "658bb97a8a18edb75e6f4243",
-      // };
-
-      // await createChat(founderId._id, loggedInUserId)
-      //   .then(async (res) => {
-      //     //console.log(res);
-      //     if (res.message === "Chat already exists") {
-      //       setOpen(true);
-      //       return;
-      //     }
-      //     addNotificationAPI(notificationBody)
-      //       .then((data) => console.log(""))
-      //       .catch((error) => console.error(error.message));
-      //     console.log("founderId", founderId);
-      //     console.log("from create chat:", res.data);
-      //     dispatch(setChatId(res?.data._id));
-      //     const message = {
-      //       id: generateId(),
-      //       senderId: loggedInUserId,
-      //       text: `${loggedInUser.firstName}${loggedInUser.lastName} has send you for onlink request`,
-      //       chatId: res?.data?._id,
-      //     };
-      //     await addMessage(message)
-      //       .then(({ data }) => {
-      //         setSend(!send);
-      //         console.log("response after adding to db", data);
-      //       })
-      //       .catch((error) => {
-      //         console.error("Error-->", error);
-      //       });
-      //   })
-      //   .catch((error) => {
-      //     console.error("Error creating chat-->", error);
-      //   });
+      setIsRequestLoading(true);
+      if (loggedInUser.isSubscribed) {
+        setPopPayOpen(false);
+        const response = await sendOneLinkRequest(companyId, loggedInUserId);
+        console.log(response);
+        toast.success("OneLink request sent successfully!");
+        setOneLinkRequestStatus("pending");
+      } else {
+        setPopPayOpen(true);
+      }
     } catch (err) {
-      console.log();
+      console.log(err);
+      toast.error("Failed to send OneLink request.");
+    } finally {
+      setIsRequestLoading(false);
     }
   };
+
+  const oneLinkRequest = startupData?.oneLinkRequest.find(
+    (request) => request.userId.toString() === loggedInUserId
+  );
 
   return (
     <div className="company__actions d-flex flex-column justify-content-end">
@@ -203,15 +207,39 @@ export default function CompanyActions({
                 </button>
               </Link>
             )}
-            {/* {loggedInUserId !== founderId._id && (
+      {loggedInUserId !== founderId._id && (
+          <>
+            {oneLinkRequestStatus === "pending" ? (
+              <button className="btn btn-capital-outline actions-btn" style={{ fontSize: "14px" }} disabled>
+                One Link Request Pending...
+              </button>
+            ) : oneLinkRequestStatus === "rejected" ? (
+              <button className="btn btn-capital-outline actions-btn" style={{ fontSize: "14px" }} disabled>
+                One Link Request Rejected!
+              </button>
+            ) : oneLinkRequestStatus === "approved" ? (
+              <Link to={`/onelink/${companyId}`}>
+                <button className="btn btn-capital-outline actions-btn" style={{ fontSize: "14px" }}>
+                  Access OneLink
+                </button>
+              </Link>
+            ) : (
               <button
                 className="btn btn-capital-outline actions-btn"
-                style={{ fontSize: "14px", padding: "5px" }}
+                style={{ fontSize: "14px" }}
                 onClick={handelOnlinkRequest}
+                disabled={isRequestLoading}
               >
-                Request for onelink
+                {isRequestLoading ? (
+                  "One Link Request Loading..."
+                ) : (
+                  "Request for OneLink"
+                )}
               </button>
-            )} */}
+            )}
+          </>
+        )}
+
           </>
         )}
         {!location.pathname === "/company-profile" && (

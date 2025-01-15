@@ -42,6 +42,8 @@ export default function ProfessionalInfo({ theme }) {
 		followers: loggedInUser?.connections || 0,
 		userName: loggedInUser?.userName || " ",
 		yearsOfExperience: loggedInUser?.yearsOfExperience || "",
+		firstName: loggedInUser?.firstName || "",
+		lastName: loggedInUser?.lastName || "",
 	});
 
 	// State for isEditing
@@ -92,6 +94,9 @@ export default function ProfessionalInfo({ theme }) {
 		console.log("Data", professionalData);
 
 		let editedData = {
+			firstName: professionalData.firstName,
+			lastName: professionalData.lastName,
+			userName: professionalData.userName,
 			designation: professionalData.designation,
 			education: professionalData.education,
 			experience: professionalData.experience,
@@ -125,6 +130,7 @@ export default function ProfessionalInfo({ theme }) {
 				profilePicture: data?.profilePicture,
 				fullName: data?.firstName + " " + data?.lastName,
 				location: data?.location,
+				userName: data?.userName,
 			}));
 
 			if (isInvestor) {

@@ -62,8 +62,7 @@ export default function ProfessionalInfoDisplay({
 	const [crop, setCrop] = useState({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState(1);
 
-	console.log("professionalData", professionalData);
-	console.log("yearsOfExperience", professionalData.yearsOfExperience);
+
 
 	const getCroppedImg = async (imageSrc, crop) => {
 		const image = new Image();
@@ -115,6 +114,10 @@ export default function ProfessionalInfoDisplay({
 		);
 	};
 
+	const getFullName = () => {
+		return `${professionalData.firstName} ${professionalData.lastName}`;
+	};
+
 	return (
 		<>
 			{/* header */}
@@ -124,7 +127,7 @@ export default function ProfessionalInfoDisplay({
 					<div className="d-flex gap-4" style={{ width: "100%" }}>
 						<img
 							src={professionalData.profilePicture || DefaultAvatar}
-							alt={professionalData.fullName}
+							alt={getFullName()}
 							style={{ width: "120px", height: "120px", objectFit: "cover" }}
 							className="rounded-circle"
 						/>
@@ -133,55 +136,64 @@ export default function ProfessionalInfoDisplay({
 								className="d-flex gap-2 align-items-center justify-content-between"
 								style={{ display: "flex" }}
 							>
-								<h5 className="m-0 fw-semibold">
-									{professionalData.fullName}
-									{loggedInUser.isSubscribed && (
-										<img
-											src={BatchImag}
-											style={{
-												width: "1.2rem",
-												height: "1.2rem",
-												objectFit: "contain",
-												marginLeft: "4px",
-												marginBottom: "4px",
-											}}
-											alt="Batch Icon"
+								{isEditing ? (
+									<>
+										<input
+											type="text"
+											name="firstName"
+											value={professionalData.firstName}
+											onChange={handleTextChange}
+											className="form-control"
 										/>
-									)}
-								</h5>
+										<input
+											type="text"
+											name="lastName"
+											value={professionalData.lastName}
+											onChange={handleTextChange}
+											className="form-control"
+										/>
+									</>
+								) : (
+									<h5 className="m-0 fw-semibold">{getFullName()}</h5>
+								)}
 								{canEdit && (
 									<span className="edit_btn d-flex align-self-end align-md-self-start ">
-										<span
-										//className=" ms-auto d-flex flex-row gap-2"
+										<button
+											onClick={() => setIsEditing(!isEditing)}
 										>
-											<button
-												//className="btn d-flex align-items-center gap-1"
-												onClick={() => setIsEditing(!isEditing)}
-											>
-												{/*{isEditing ? "Cancel" : "Edit"}*/}
-												<CiEdit
-													style={{
-														color:
-															theme !== "startup"
-																? "rgb(211, 243, 107)"
-																: "#ffb27d",
-													}}
-												/>
-											</button>
-										</span>
+											<CiEdit
+												style={{
+													color:
+														theme !== "startup"
+															? "rgb(211, 243, 107)"
+															: "#ffb27d",
+												}}
+											/>
+										</button>
 									</span>
 								)}
 							</div>
 
-							<h6
-								className="m-0 fw-semibold"
-								style={{
-									color: userTheme === "dark" ? "#fff" : "#000",
-									marginTop: "-5px",
-								}}
-							>
-								{professionalData.userName || ""}
-							</h6>
+							{!isEditing && (
+								<h6
+									className="m-0 fw-semibold"
+									style={{
+										color: userTheme === "dark" ? "#fff" : "#000",
+										marginTop: "-5px",
+									}}
+								>
+									{professionalData.userName || ""}
+								</h6>
+							)}
+							{isEditing && (
+								<input
+									type="text"
+									name="userName"
+									value={professionalData.userName}
+									onChange={handleTextChange}
+									className="form-control"
+								/>
+							)}
 							<p className="m-0">
 								{professionalData.designation && (
 									<>
@@ -508,7 +520,7 @@ export default function ProfessionalInfoDisplay({
 						</fieldset>
 					)}
 					{isEditing && canEdit && (
-						<span className="edit_btn d-flex align-self-end align-md-self-start ">
+						<span className="edit_btn d-flex align-self-end align-md-self-start justify-content-end">
 							<button
 								className="btn ms-2 d-flex align-items-center gap-1"
 								onClick={handleSubmit}
