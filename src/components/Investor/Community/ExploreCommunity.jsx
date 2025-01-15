@@ -272,7 +272,7 @@ export default function ExploreCommunities() {
                       : `₹ ${community.amount} subscription`}
                   </span>
                 </div>
-                {(!community.members.some(member => member.member.toString() === loggedInUserId) && community.isOpen) && community.adminId!==loggedInUserId && (
+                {(!community.members.some(member => member?.member?.toString() === loggedInUserId) && community.isOpen) && community.adminId!==loggedInUserId && (
                   <button 
                     className="join-button" 
                     onClick={(e) => {

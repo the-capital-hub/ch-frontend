@@ -121,6 +121,7 @@ const API = Object.freeze({
 	getQuestions: `${baseUrl}/question/getQuestions`,
 	googleLogin: `${baseUrl}/users/googleLogin`,
 	googleRegister: `${baseUrl}/users/googleRegister`,
+	Register: `${baseUrl}/users/createUser`,
 	answerQuestion: `${baseUrl}/question/answerQuestion`,
 	getQuestionCount: `${baseUrl}/question/getQuestionCount`,
 	addRecentExperience: `${baseUrl}/users/addExperience`,
@@ -158,11 +159,14 @@ const API = Object.freeze({
 	getUserByUsername: `${baseUrl}/users/getUserByUsername`, ///getUserByUsername/:username
 	createPaymentSessionForPriorityDM: `${baseUrl}/priorityDM/createPaymentSession`,
 	varifyPaymentForPriorityDM: `${baseUrl}/priorityDM/verifyPayment`,
-
 	getPriorityDMForUser: `${baseUrl}/priorityDM/getPriority-DMForUser`,
 	getPriorityDMForFounder: `${baseUrl}/priorityDM/getPriority-DMForFounder`,
 	updatePriorityDM: `${baseUrl}/priorityDM/updatePriority-DM`,
 	getPriorityDMById: `${baseUrl}/priorityDM/getPriorityDMById`,
+	sendOneLinkRequest: `${baseUrl}/startup/sendOneLinkRequest`,
+	getOneLinkRequest: `${baseUrl}/startup/getOneLinkRequest/:startUpId`,
+	approveOneLinkRequest: `${baseUrl}/startup/approveOneLinkRequest`,
+	rejectOneLinkRequest: `${baseUrl}/startup/rejectOneLinkRequest`,
 });
 
 export default API;
