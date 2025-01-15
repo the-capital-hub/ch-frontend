@@ -6,11 +6,7 @@ import HustlersCapitalHub from "./COMPONENTS/WhyJoinHustlers&WhyUseCapitalHub/Hu
 import EmpowerYourStartup from "./COMPONENTS/EmpowerYourStartup/EmpowerYourStartup";
 import Founder from "./COMPONENTS/Founder/founder";
 import About from "./COMPONENTS/About/AboutUs";
-// import Process from "./COMPONENTS/Process/Process";
-// import Deals from "./COMPONENTS/Deals/Deals";
-// import Pricing from "./COMPONENTS/Pricing/Pricing";
-// import MainVideo from "./COMPONENTS/MainVideo/MainVideo";
-import "./salesLandingPage.css";
+import "./salesLandingPage.scss";
 
 const StartUpLendingPage = () => {
 	return (
@@ -22,10 +18,6 @@ const StartUpLendingPage = () => {
 			<HustlersCapitalHub />
 			<Founder />
 			<About />
-			{/* <MainVideo /> */}
-			{/* <Process /> */}
-			{/* <Deals/> */}
-			{/* <Pricing/> */}
 		</div>
 	);
 };

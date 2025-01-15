@@ -1,0 +1,183 @@
+.whyUseCapitalHub-container {
+	width: 100%;
+	padding: 3rem 2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2.5rem;
+
+	h1 {
+		color: #ffffff;
+		font-family: Outfit;
+		font-size: 48px;
+		font-weight: 600;
+		line-height: 58px;
+		letter-spacing: -0.015em;
+		text-align: left;
+		text-underline-position: from-font;
+		text-decoration-skip-ink: none;
+
+		span {
+			padding: 0.25rem 0.75rem;
+			position: relative;
+			z-index: 1;
+			backdrop-filter: blur(2px);
+			border-radius: 30px;
+
+			&:before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				border-radius: 30px;
+				padding: 1.5px; /* Adjust the thickness here */
+				background: linear-gradient(
+					90deg,
+					#6f1d04 0%,
+					#9d9d9d 50%,
+					#015aab 100%
+				);
+				-webkit-mask: linear-gradient(#fff 0 0) content-box,
+					linear-gradient(#fff 0 0);
+				mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+				-webkit-mask-composite: destination-out;
+				mask-composite: exclude;
+				z-index: -1;
+			}
+		}
+	}
+
+	&-cards {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1.5rem;
+
+		&-card {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+			width: 640px;
+			height: 380px;
+			border-radius: 20px;
+			padding: 1rem;
+
+			background-image: url("../../Images/whyusecapitalhub-card-bg.png");
+			background-size: cover;
+			background-position: center;
+
+			// card shadow
+			box-shadow: 0 0 30px rgba(255, 255, 255, 0.03),
+				0 0 60px rgba(255, 255, 255, 0.02), 0 0 90px rgba(255, 255, 255, 0.01);
+			transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+			&:hover {
+				box-shadow: 0 0 40px rgba(255, 255, 255, 0.05),
+					0 0 80px rgba(255, 255, 255, 0.03),
+					0 0 120px rgba(255, 255, 255, 0.02);
+			}
+
+			img {
+				width: 125px;
+				height: 125px;
+			}
+
+			&-title {
+				color: #ffffff;
+				font-family: Outfit;
+				font-size: 36px;
+				font-weight: 600;
+				line-height: 45.36px;
+				text-align: left;
+				text-underline-position: from-font;
+				text-decoration-skip-ink: none;
+			}
+
+			&-description {
+				color: #ffffffcc;
+				font-family: Outfit;
+				font-size: 1rem;
+				font-weight: 400;
+				line-height: 30px;
+				text-align: left;
+				text-underline-position: from-font;
+				text-decoration-skip-ink: none;
+			}
+		}
+	}
+
+	&-onelink-card {
+		width: 75%;
+		width: 1050px;
+		height: 680px;
+
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+
+		border-radius: 20px;
+		padding: 2rem;
+
+		background-image: url("../../Images/whyusecapitalhub-card-bg.png");
+		background-size: cover;
+		background-position: center;
+
+		// card shadow
+		box-shadow: 0 0 30px rgba(255, 255, 255, 0.03),
+			0 0 60px rgba(255, 255, 255, 0.02), 0 0 90px rgba(255, 255, 255, 0.01);
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+		&:hover {
+			box-shadow: 0 0 40px rgba(255, 255, 255, 0.05),
+				0 0 80px rgba(255, 255, 255, 0.03), 0 0 120px rgba(255, 255, 255, 0.02);
+		}
+
+		&-top {
+			display: flex;
+			gap: 1rem;
+			img {
+				width: 80px;
+			}
+
+			h3 {
+				color: #ffffff;
+				font-family: Outfit;
+				font-size: 36px;
+				font-weight: 600;
+				line-height: 45.36px;
+				text-align: left;
+				text-underline-position: from-font;
+				text-decoration-skip-ink: none;
+			}
+		}
+
+		p {
+			color: #ffffffcc;
+			font-family: Outfit;
+			font-size: 18px;
+			font-weight: 400;
+			line-height: 35px;
+			text-align: left;
+			text-underline-position: from-font;
+			text-decoration-skip-ink: none;
+		}
+
+		&-images {
+			display: flex;
+			gap: 1rem;
+
+			.onelink2 {
+				width: 350px;
+				height: 375px;
+			}
+
+			.onelink2 {
+				width: 700px;
+				height: 375px;
+			}
+		}
+	}
+}

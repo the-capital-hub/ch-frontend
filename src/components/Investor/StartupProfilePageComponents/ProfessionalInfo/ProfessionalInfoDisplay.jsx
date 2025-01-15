@@ -62,8 +62,8 @@ export default function ProfessionalInfoDisplay({
 	const [crop, setCrop] = useState({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState(1);
 
-	console.log("professionalData", professionalData);
-	console.log("yearsOfExperience", professionalData.yearsOfExperience);
+	// console.log("professionalData", professionalData);
+	// console.log("yearsOfExperience", professionalData.yearsOfExperience);
 
 	const getCroppedImg = async (imageSrc, crop) => {
 		const image = new Image();
