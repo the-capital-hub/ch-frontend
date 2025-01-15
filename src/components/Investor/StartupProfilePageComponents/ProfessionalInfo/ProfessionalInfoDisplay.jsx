@@ -239,13 +239,10 @@ export default function ProfessionalInfoDisplay({
 						{canEdit && (
 							<span className="edit_btn d-flex align-self-end align-md-self-start ">
 								<span
-								//className=" ms-auto d-flex flex-row gap-2"
 								>
 									<button
-										//className="btn d-flex align-items-center gap-1"
 										onClick={() => setIsEditing(!isEditing)}
 									>
-										{/*{isEditing ? "Cancel" : "Edit"}*/}
 										<CiEdit
 											style={{
 												color:
@@ -497,15 +494,17 @@ export default function ProfessionalInfoDisplay({
 					{detail && (
 						<fieldset className={` ${theme} `}>
 							<legend className="px-2">
-								{professionalData.yearsOfExperience
+								{/* {professionalData.yearsOfExperience
 									? "Experience"
-									: "Industry Experience"}
+									: "Industry Experience"} */}
+								Industry Experience
 							</legend>
 							<select
-								name="yearsOfExperience"
+								name="experience"
 								id="userExperience"
 								onChange={handleTextChange}
-								value={getExperienceValue()}
+								// value={getExperienceValue()}
+								value={professionalData.experience}
 								className="professional_form_input"
 							>
 								<option value="" hidden>

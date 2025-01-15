@@ -1,14 +1,16 @@
 .iconCard__container {
-  color: var(--d-l-grey);
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  //width: 100%;
+	color: var(--d-l-grey);
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	//width: 100%;
 }
 
 .pill {
-  border-radius: 10rem;
-  padding: 0.5em 1.5em;
-  background: rgba(238, 238, 238, 0.57);
+	border-radius: 10rem;
+	padding: 0.5em 1.5em;
+	// background: rgba(238, 238, 238, 0.57);
+	background: var(--ex-key-focus-bg);
 }
+

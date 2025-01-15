@@ -10,8 +10,13 @@ import { useDispatch } from "react-redux";
 import Modal from "react-modal";
 import axios from "axios";
 import { environment } from "../../../../../environments/environment";
-import { toast } from 'react-toastify';
-import { sendOTP, verifyOTP, postUserLogin, updateUserAPI } from "../../../../../Service/user";
+import { toast } from "react-toastify";
+import {
+	sendOTP,
+	verifyOTP,
+	postUserLogin,
+	updateUserAPI,
+} from "../../../../../Service/user";
 import { loginSuccess } from "../../../../../Store/features/user/userSlice";
 import { load } from "@cashfreepayments/cashfree-js";
 import { usePaymentFlow } from "../../../../../hooks/usePaymentFlow";
@@ -27,7 +32,7 @@ const Founder = () => {
 		lastName: "",
 		email: "",
 		mobileNumber: "",
-		userType: ""
+		userType: "",
 	});
 	const [otp, setOtp] = useState(["", "", "", "", "", ""]);
 	const [orderId, setOrderId] = useState("");
@@ -35,14 +40,30 @@ const Founder = () => {
 	const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
 	const paymentFlow = usePaymentFlow();
 
-	const handleInputChange = (e) => { /* ... */ };
-	const initializeCashfree = async () => { /* ... */ };
-	const handleOtpChange = (index, value) => { /* ... */ };
-	const handleKeyDown = (index, e) => { /* ... */ };
-	const handleSubmit = async (e) => { /* ... */ };
-	const handleOtpVerify = async () => { /* ... */ };
-	const processPayment = async () => { /* ... */ };
-	const verifyPayment = async (orderId) => { /* ... */ };
+	const handleInputChange = (e) => {
+		/* ... */
+	};
+	const initializeCashfree = async () => {
+		/* ... */
+	};
+	const handleOtpChange = (index, value) => {
+		/* ... */
+	};
+	const handleKeyDown = (index, e) => {
+		/* ... */
+	};
+	const handleSubmit = async (e) => {
+		/* ... */
+	};
+	const handleOtpVerify = async () => {
+		/* ... */
+	};
+	const processPayment = async () => {
+		/* ... */
+	};
+	const verifyPayment = async (orderId) => {
+		/* ... */
+	};
 
 	const handleBuyNowClick = () => {
 		paymentFlow.setIsModalOpen(true);
@@ -51,7 +72,7 @@ const Founder = () => {
 	return (
 		<div className="founder-container">
 			<div className="heading">
-				<h1>Meet the Visionary Behind It All</h1>
+				<h1>Meet the Visionary Behind Capital HUB</h1>
 			</div>
 
 			<div className="founder_info">
@@ -65,19 +86,21 @@ const Founder = () => {
 						<span>The Force Behind Capital Hub</span>
 					</h4>
 					<p>
-						With a decade of experience in guiding startups, Pramod Badiger,
-						Founder & CEO of Capital HUB, has a clear mission: to build India’s
-						largest platform for startup founders and investors. Pramod is known
-						for combining structured processes with innovative strategies that
-						empower founders to take control of their growth journey.
+						Pramod Badiger, Founder and CEO of Capital HUB, is a seasoned
+						startup mentor with over a decade of experience empowering founders
+						to scale and succeed. Driven by a clear mission to build India’s
+						largest platform for startups and investors, Pramod combines
+						strategic thinking with innovation to help entrepreneurs navigate
+						their growth journey.
 					</p>
 				</div>
 				<p id="read-more-desc">
-					With a decade of experience in guiding startups, Pramod Badiger,
-					Founder & CEO of Capital HUB, has a clear mission: to build India’s
-					largest platform for startup founders and investors. Pramod is known
-					for combining structured processes with innovative strategies that
-					empower founders to take control of their growth journey.
+					Pramod Badiger, Founder and CEO of Capital HUB, is a seasoned startup
+					mentor with over a decade of experience empowering founders to scale
+					and succeed. Driven by a clear mission to build India’s largest
+					platform for startups and investors, Pramod combines strategic
+					thinking with innovation to help entrepreneurs navigate their growth
+					journey.
 				</p>
 			</div>
 
@@ -90,24 +113,22 @@ const Founder = () => {
 			<img src={bg} alt="background" className="background-img bg" />
 
 			<div className="founder_about">
-				<h2>A Mentor and An Innovator</h2>
+				<h2>An Experienced Mentor, a Strategic Innovator</h2>
 				<p>
-					Pramod is passionate about creating spaces where founders can not only
-					raise funds but also learn, grow, and succeed on their own terms. He’s
-					guided numerous startups through their early stages, providing
-					personalised advice and a steady hand during critical growth phases
+					Passionate about empowering founders, Pramod has mentored countless
+					startups, offering valuable insights and personalized guidance during
+					critical growth stages. He helps entrepreneurs succeed on their own
+					terms while providing strategic support.
 				</p>
-				<h2>Your Silent Partner In Success</h2>
+				<h2>Your Trusted Partner in Growth</h2>
 				<p>
-					Known as the “silent cheerleader” at Capital HUB, Pramod is dedicated
-					to helping founders realise their vision, offering support without
-					overwhelming them with opinions. His unique ability to connect
-					startups with investors has built Hustlers Club into a community that
-					fosters innovation and growth.
+					Known as the “silent cheerleader,” Pramod connects startups with
+					investors and fosters a thriving ecosystem that drives innovation,
+					growth, and long-term success.
 				</p>
 			</div>
 
-			<div className="sales_pitch">
+			{/* <div className="sales_pitch">
 				<h1>
 					How <span>Hustlers Club & Capital HUB</span> Help You Become a Great
 					Founder
@@ -132,15 +153,21 @@ const Founder = () => {
 					Limited-Time Offer. Unlock the full Power of Hustlers Club and Capital
 					HUB for INR 1,999
 				</h3>
-			</div>
+			</div> */}
 
 			<div className="pricing">
 				<div className="pricing-details">
-					<h3>Unlock Premium Resources</h3>
-					<h4>
-						INR <span>1,999</span>
-					</h4>
-					<button onClick={handleBuyNowClick}>Get Premium</button>
+					<p>Scale Your Startup with Capital HUB & Hustlers Club</p>
+					<h4>All for Just INR 1,999!</h4>
+					<h3>
+						Unlock unlimited access to resources, investors, mentorship, and
+						tools today. Limited-time offer!
+					</h3>
+					<h3>
+						Seize the opportunity to unlock everything you need to elevate your
+						startup, all at an unbeatable price
+					</h3>
+					<button onClick={handleBuyNowClick}>Claim Your Access Now</button>
 				</div>
 			</div>
 

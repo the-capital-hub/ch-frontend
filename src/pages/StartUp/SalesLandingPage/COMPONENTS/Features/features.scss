@@ -24,7 +24,7 @@ $text-color: #fff;
 
 	.center-content {
 		width: 90%;
-		max-width: 900px;
+		// max-width: 900px;
 		margin: 0 auto;
 		text-align: center;
 		@media (max-width: 460px) {
@@ -32,7 +32,7 @@ $text-color: #fff;
 		}
 
 		h1 {
-			font-size: 2rem;
+			font-size: 30px;
 			font-weight: 500;
 			@media (max-width: 460px) {
 				width: 100%;
@@ -41,7 +41,7 @@ $text-color: #fff;
 		}
 
 		p {
-			font-size: 1rem;
+			font-size: 1.25rem;
 			font-weight: 400;
 			@media (max-width: 460px) {
 				font-size: 0.85rem !important;
@@ -196,9 +196,9 @@ $text-color: #fff;
 					}
 
 					h1 {
-						width: 60%;
+						width: 65%;
 						font-family: Nunito;
-						font-size: 36.71px;
+						font-size: 36px;
 						font-weight: 700;
 						line-height: 53.23px;
 						letter-spacing: -0.015em;

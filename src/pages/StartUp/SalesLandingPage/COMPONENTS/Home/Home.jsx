@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import smallline from "../images/Line 152.png";
 import img2 from "../images/Home.png";
 import play from "../images/playbutton.png";
-import arrow1 from "../images/arrow1.png"; 
+import arrow1 from "../images/arrow1.png";
 import axios from "axios";
 import Modal from "react-modal";
 import "./home.scss";
 import { environment } from "../../../../../environments/environment";
 import { load } from "@cashfreepayments/cashfree-js";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { sendOTP, verifyOTP } from "../../../../../Service/user";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../../../Store/features/user/userSlice";
@@ -34,13 +34,13 @@ const Home = () => {
 					{/* Background Image */}
 					<div className="banner-bg">
 						<div className="best-startup">
-							{/* <img src={smallline} alt="" className="smallline" /> */}
+							<img src={smallline} alt="" className="smallline" />
 							<h1>
 								<b>
 									# No 1 Company For <span id="headBanner">Startup</span>
 								</b>
 							</h1>
-							{/* <img src={smallline} alt="" className="smallline" /> */}
+							<img src={smallline} alt="" className="smallline" />
 						</div>
 
 						{/* Green Arrow */}
@@ -49,12 +49,25 @@ const Home = () => {
 						</div>
 
 						<h1 className="main-heading">
-							Build Your Startup's <br /> Future, Today
+							India’s Leading Startup <br />
+							Ecosystem
 						</h1>
 
 						<center>
+							<p className="description-1">
+								Unleash Your Startup’s Full Potential Today – Unlock Growth,
+								Build Connections, and Reach New Milestones!
+							</p>
+						</center>
+						<center>
 							<p className="description">
-								Access India’s Most Comprehensive Investor Database and Start Connecting with 500+ VCs and 1000+ Angel Investors
+								Explore Exclusive database of 2000+ Angel Investors and  500+
+								VCs
+							</p>
+						</center>
+						<center>
+							<p className="description">
+							Build Valuable Connections, Accelerate Your Funding, and Drive Unstoppable Growth for Your Startup.
 							</p>
 						</center>
 
@@ -66,9 +79,7 @@ const Home = () => {
 								>
 									Buy Now
 								</button>
-								<button className="download-button">
-									Download Now
-								</button>
+								<button className="download-button">Download Now</button>
 							</div>
 						</center>
 					</div>

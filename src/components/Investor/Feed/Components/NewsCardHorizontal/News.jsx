@@ -1,12 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../../../Store/features/design/designSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getInshortsNews } from "../../../../../Service/user";
 import "./News.scss";
 
 const NewsCard = () => {
 	const theme = useSelector(selectTheme);
+	const navigate = useNavigate();
 	const [news, setNews] = useState([]);
 	const [newsOffset, setNewsOffset] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
@@ -83,6 +84,11 @@ const NewsCard = () => {
 		}
 	};
 
+	const handleNavigate = (url) => {
+		// Open in new window or tab
+		window.open(url, "_blank", "noopener,noreferrer");
+	};
+
 	// Skeleton Loader Component
 	const NewsItemSkeleton = () => (
 		<div className="news-item skeleton">
@@ -118,7 +124,11 @@ const NewsCard = () => {
 
 			<div className="news-item-container" ref={newsItemContainerRef}>
 				{news.map((newsItem, index) => (
-					<div key={index} className="news-item">
+					<div
+						key={index}
+						className="news-item"
+						onClick={() => handleNavigate(newsItem?.sourceURL)}
+					>
 						<div className="news-header">
 							<div className="news-profile">
 								<span>{newsItem?.author}</span>
@@ -127,9 +137,9 @@ const NewsCard = () => {
 						<div className="news-content">
 							<h3>{newsItem?.title}</h3>
 							<p>{newsItem?.content}</p>
-							<Link to={newsItem?.sourceURL}>
-								<img src={newsItem?.image} alt="Join 5,000 Others" />
-							</Link>
+							{/* <Link to={newsItem?.sourceURL}> */}
+							<img src={newsItem?.image} alt="Join 5,000 Others" />
+							{/* </Link> */}
 						</div>
 					</div>
 				))}

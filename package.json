@@ -59,6 +59,7 @@
     "react-joyride": "^2.6.2",
     "react-linkedin-login-oauth2": "^2.0.1",
     "react-linkify": "^1.0.0-alpha",
+    "react-loading-skeleton": "^3.5.0",
     "react-modal": "^3.16.1",
     "react-multiple-image-input": "^1.0.0",
     "react-pdf": "^7.5.1",

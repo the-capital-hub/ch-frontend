@@ -23,7 +23,7 @@ const Pricing = () => {
 
       <div className="networking">
         <div className="image">
-          <img src={Networking} alt="networking image" />
+          <img src={Networking} alt="networking-pic" />
         </div>
         <div className="net-platform">
           <h1>Networking Platform</h1>

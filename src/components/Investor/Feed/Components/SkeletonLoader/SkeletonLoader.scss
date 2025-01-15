@@ -77,19 +77,19 @@
 	}
 
 	.skeleton-item {
-		background-color: #2b2b2b;
+		background-color: var(--skeleton-item-bg);
 		animation: shimmer 0.8s infinite;
 	}
 
 	@keyframes shimmer {
 		0% {
-			background-color: #2b2b2b;
+			background-color: var(--skeleton-item-bg);
 		}
 		50% {
 			background-color: #3b3b3b;
 		}
 		100% {
-			background-color: #2b2b2b;
+			background-color: var(--skeleton-item-bg);
 		}
 	}
 }
