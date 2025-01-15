@@ -39,6 +39,7 @@ import NewsHorizontal from "./Components/NewsCardHorizontal/News";
 import SkeletonLoader from "./Components/SkeletonLoader/SkeletonLoader";
 import JoinHustlersClub from "./Components/JoinHustlersClub/JoinHustlersClub";
 import TopVoiceTracker from "./Components/TopVoiceTracker/TopVoiceTracker";
+import CompletionBanner from "./Components/CompletionBanner/CompletionBanner";
 
 const baseUrl = environment.baseUrl;
 
@@ -291,6 +292,9 @@ const Feed = () => {
 
 							{/* <LookingForFund /> */}
 							{/* <LatestResources /> */}
+
+							{/* Completion Banner */}
+							<CompletionBanner />
 
 							{/* Hustlers club banner */}
 							<JoinHustlersClub />

@@ -31,7 +31,7 @@ const Footer = ({ className }) => {
 							<p className="m-1 ">
 								Choose how your Capital hub experience looks for this device.
 							</p>
-							<div className="onboarding_switch_wrapper ">
+							{/* <div className="onboarding_switch_wrapper ">
 								<div className="form-check form-switch ">
 									<input
 										className={`form-check-input ${isInvestor && "investor"}`}
@@ -44,7 +44,7 @@ const Footer = ({ className }) => {
 										// ref={switchRef}
 									/>
 								</div>
-							</div>
+							</div> */}
 						</div>
 						{/* <div className="col-md-3 col-sm-12 d-flex justify-content-center align-items-center ">
             <p>
