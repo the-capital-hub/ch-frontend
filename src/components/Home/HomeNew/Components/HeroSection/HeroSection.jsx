@@ -9,7 +9,6 @@ import "./heroSection.scss";
 const HeroSection = () => {
 	return (
 		<div className="heroSection-container">
-
 			<div className="heroSection-personal-assistant">
 				<img
 					className="heroSection-personal-assistant-img"
@@ -125,6 +124,8 @@ const HeroSection = () => {
 				src={videocard}
 				alt="Video Thumbnail"
 			/>
+
+			<div className="heroSection-container-why-choose-us">Why Choose Us</div>
 		</div>
 	);
 };

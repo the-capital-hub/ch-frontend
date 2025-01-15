@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	useParams,
+} from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useSelector } from "react-redux";
 import { selectLoggedInUserId } from "./Store/features/user/userSlice";
@@ -7,6 +12,7 @@ import { environment } from "./environments/environment";
 import { useState } from "react";
 import { Suspense } from "react";
 import SuspenseLoader from "./components/SuspenseLoader/SuspenseLoader";
+import { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 
@@ -91,13 +97,17 @@ function App() {
 	return (
 		<Router>
 			<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+				{/* <Toaster position="top-right" /> */}
 				<AppUrlListener />
 				<Routes>
 					{/* Public Routes */}
 					{PublicRoutes()}
 
 					{/* Community Routes */}
-					<Route path="/community/:communityId" element={<CommunityAccessControl />} />
+					<Route
+						path="/community/:communityId"
+						element={<CommunityAccessControl />}
+					/>
 					{/* Chat */}
 					<Route path="/chats" element={<Chats />} />
 
@@ -165,11 +175,11 @@ function CommunityAccessControl() {
 					headers: { Authorization: `Bearer ${token}` },
 				}
 			);
-			
+
 			const community = response.data.data;
 			const isAdmin = community.adminId._id === loggedInUserId;
 			const isMember = community.members.includes(loggedInUserId);
-			
+
 			setHasAccess(isAdmin || isMember);
 			setLoading(false);
 		} catch (error) {
@@ -180,16 +190,18 @@ function CommunityAccessControl() {
 	};
 
 	if (loading) {
-		return <SuspenseLoader/>; 
+		return <SuspenseLoader />;
 	}
 
-	return hasAccess ? <Community /> : (
-											<Suspense fallback={<SuspenseLoader />}>
-											<Navbar />
-											<PublicCommunityView />
-											<Footer />
-											</Suspense>
-										)
+	return hasAccess ? (
+		<Community />
+	) : (
+		<Suspense fallback={<SuspenseLoader />}>
+			<Navbar />
+			<PublicCommunityView />
+			<Footer />
+		</Suspense>
+	);
 }
 
 export default App;
