@@ -1410,6 +1410,18 @@ export const googleRegisterApi = async (credential) => {
 	}
 };
 
+export const RegisterApi = async (credential) => {
+	try {
+		const response = await axiosInstance.post(`${API.Register}`, {
+			credential,
+		});
+		return response.data;
+	} catch (error) {
+		console.error("Error Registering the user:", error);
+		throw error;
+	}
+};
+
 export const getQuestionsAPI = async (query) => {
 	try {
 		const response = await axiosInstance.get(`${API.getQuestions}/${query}`);
@@ -1932,6 +1944,55 @@ export const updatePriorityDM = async (id, answer) => {
 			`${API.updatePriorityDM}/${id}`,
 			{ answer }
 		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const sendOneLinkRequest = async (startUpId, userId) => {
+	try {
+		const response = await axiosInstance.post(`${API.sendOneLinkRequest}`, {
+			startUpId,
+			userId,
+		});
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const getOneLinkRequest = async (startUpId) => {
+	try {
+		const response = await axiosInstance.get(`${API.getOneLinkRequest}/${startUpId}`);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const approveOneLinkRequest = async (startUpId, userId) => {
+	try {
+		const response = await axiosInstance.post(`${API.approveOneLinkRequest}`, {
+			startUpId,
+			userId,
+		});
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const rejectOneLinkRequest = async (startUpId, userId) => {
+	try {
+		const response = await axiosInstance.post(`${API.rejectOneLinkRequest}`, {
+			startUpId,
+			userId,
+		});
 		return response.data;
 	} catch (error) {
 		console.error(error);
