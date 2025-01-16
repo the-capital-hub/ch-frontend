@@ -467,7 +467,7 @@ const Community = () => {
               },
             }}
           />
-          <InvestorNavbar isCommunity={true} />
+          {/* <InvestorNavbar isCommunity={true} /> */}
           <div className="community-header">
             <div className="community-info">
               <div className="info-wrapper">
@@ -501,7 +501,7 @@ const Community = () => {
                   </div>
                 </div>
               </div>
-              <nav className="horizontal-menu">
+           {!isMobileView && <nav className="horizontal-menu">
                 <button 
                   className={activeTab === "home" ? "active" : ""} 
                   onClick={() => handleTabChange("home")}
@@ -540,8 +540,17 @@ const Community = () => {
                     Settings
                   </button>
                 )}
-              </nav>
-              <OnboardingSwitch/>
+              </nav>}
+              <div className="right-elements">
+              <OnboardingSwitch />
+              {!isMobileView && <Link to="/manage-account" className="profile-link">
+                <img 
+                  src={loggedInUser?.profilePicture} 
+                  alt="Profile" 
+                  className="profile-pic"
+                />
+              </Link>}
+              </div>
             </div>
           </div>
     
@@ -563,6 +572,81 @@ const Community = () => {
               onClose={() => setShowWhatsAppPopup(false)} 
               onJoin={handleJoinWhatsAppGroup} 
             />
+          )}
+          {isMobileView && isSidebarOpen && (
+            <div className="mobile-sidebar">
+              <div className="sidebar-header">
+                <Link to="/manage-account" className="profile-section">
+                  <img 
+                    src={loggedInUser?.profilePicture} 
+                    alt="Profile" 
+                    className="profile-pic"
+                  />
+                  <div className="profile-info">
+                    <h3>{loggedInUser?.firstName} {loggedInUser?.lastName}</h3>
+                    <p>{loggedInUser?.designation}</p>
+                  </div>
+                </Link>
+              </div>
+              <nav className="sidebar-menu">
+                <button 
+                  className={activeTab === "home" ? "active" : ""} 
+                  onClick={() => {
+                    handleTabChange("home");
+                    setIsSidebarOpen(false);
+                  }}
+                >
+                  Home
+                </button>
+                <button 
+                  className={activeTab === "products" ? "active" : ""} 
+                  onClick={() => {
+                    handleTabChange("products");
+                    setIsSidebarOpen(false);
+                  }}
+                >
+                  Products
+                </button>
+                <button 
+                  className={activeTab === "events" ? "active" : ""} 
+                  onClick={() => {
+                    handleTabChange("events");
+                    setIsSidebarOpen(false);
+                  }}
+                >
+                  Events
+                </button>
+                <button 
+                  className={activeTab === "people" ? "active" : ""} 
+                  onClick={() => {
+                    handleTabChange("people");
+                    setIsSidebarOpen(false);
+                  }}
+                >
+                  People
+                </button>
+                <button 
+                  className={activeTab === "about" ? "active" : ""} 
+                  onClick={() => {
+                    handleTabChange("about");
+                    setIsSidebarOpen(false);
+                  }}
+                >
+                  About
+                </button>
+                {isAdmin && (
+                  <button 
+                    className={activeTab === "settings" ? "active" : ""} 
+                    onClick={() => {
+                      handleTabChange("settings");
+                      setIsSidebarOpen(false);
+                    }}
+                  >
+                    Settings
+                  </button>
+                )}
+              </nav>
+            </div>
           )}
         </div>
       );

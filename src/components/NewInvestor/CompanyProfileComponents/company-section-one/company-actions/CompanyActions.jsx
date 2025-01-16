@@ -37,6 +37,8 @@ export default function CompanyActions({
   const [open, setOpen] = useState(false);
   const [startupData, setStartupData] = useState(null);
   const [popPayOpen, setPopPayOpen] = useState(false);
+  const [redirectTo, setRedirectTo] = useState(null);
+  const [showSecretKey, setShowSecretKey] = useState(true);
   const isInvestor = useSelector(selectIsInvestor);
   const myInterests = useSelector(selectMyInterests);
   const loggedInUserId = useSelector(selectLoggedInUserId);
@@ -57,15 +59,19 @@ export default function CompanyActions({
   let myInterestsIds = myInterests?.map((interest) => interest.companyId);
 
   useEffect(() => {
-    console.log(founderId);
     getStartupByFounderId(founderId._id)
       .then(({ data }) => {
         setStartupData(data);
-        console.log(data);
+        // Fetch OneLink request status here
+        const oneLinkRequest = data.oneLinkRequest.find(
+          (request) => request.userId.toString() === loggedInUserId
+        );
+        setOneLinkRequestStatus(oneLinkRequest ? oneLinkRequest.status : null);
+        setRedirectTo(`/onelink/${data.oneLink}/${data.founderId?.oneLinkId}`);
       })
       .catch((err) => console.log(err));
     
-  }, []);
+  }, [founderId, loggedInUserId]);
 
   const linkTo = isInvestor
     ? `/investor/user/${
@@ -144,9 +150,9 @@ export default function CompanyActions({
     }
   };
 
-  const oneLinkRequest = startupData?.oneLinkRequest.find(
-    (request) => request.userId.toString() === loggedInUserId
-  );
+  const handleSecretKey = () => {
+    setShowSecretKey(false);
+  };
 
   return (
     <div className="company__actions d-flex flex-column justify-content-end">
@@ -218,11 +224,28 @@ export default function CompanyActions({
                 One Link Request Rejected!
               </button>
             ) : oneLinkRequestStatus === "approved" ? (
-              <Link to={`/onelink/${companyId}`}>
-                <button className="btn btn-capital-outline actions-btn" style={{ fontSize: "14px" }}>
-                  Access OneLink
+              <>
+                <Link to={redirectTo}>
+                  <button className="btn btn-capital-outline actions-btn" style={{ fontSize: "14px" }}>
+                    Access OneLink
+                  </button>
+                </Link>
+               { showSecretKey ? (<button
+                  className="btn btn-capital-outline actions-btn"
+                  style={{ fontSize: "14px" }}
+                  onClick={() => handleSecretKey()}
+                >
+                  View OneLink Secret Key
                 </button>
-              </Link>
+                ) : (<button
+                  className="btn btn-capital-outline actions-btn"
+                  style={{ fontSize: "25px" }}
+                  disabled
+                >
+                  {startupData.founderId.secretKey}
+                </button>
+                )}
+              </>
             ) : (
               <button
                 className="btn btn-capital-outline actions-btn"
