@@ -1938,3 +1938,13 @@ export const updatePriorityDM = async (id, answer) => {
 		throw error;
 	}
 };
+
+export const getThoughts = async () => {
+	try {
+		const response = await axiosInstance.get(`${API.getThoughts}`);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};

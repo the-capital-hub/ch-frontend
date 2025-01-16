@@ -163,6 +163,7 @@ const API = Object.freeze({
 	getPriorityDMForFounder: `${baseUrl}/priorityDM/getPriority-DMForFounder`,
 	updatePriorityDM: `${baseUrl}/priorityDM/updatePriority-DM`,
 	getPriorityDMById: `${baseUrl}/priorityDM/getPriorityDMById`,
+	getThoughts: `${baseUrl}/thoughts/get-questions`,
 });
 
 export default API;

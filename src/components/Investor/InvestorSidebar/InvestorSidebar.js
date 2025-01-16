@@ -23,6 +23,7 @@ import ArrowRight from "../../../Images/investorsidebar/ArrowRight.svg";
 import PlusIcon from "../../../Images/investorIcon/Plus.svg";
 import CommunitiesIcon from "../ChatComponents/CommunitiesIcon";
 import BatchImag from "../../../Images/tick-mark.png";
+import { MdOutlineQuestionAnswer } from "react-icons/md";
 import {
 	IoSettingsOutline,
 	IoNewspaper,
@@ -358,6 +359,15 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 									{!sidebarCollapsed && <span>Resources</span>}
 								</Link>
 							</MenuItem>
+							<MenuItem
+								active={location.pathname.includes("/thoughts")}
+								className="active-item"
+							>
+								<Link to="/thoughts" onClick={handleLinkClick}>
+									<MdOutlineQuestionAnswer size={25} />
+									{!sidebarCollapsed && <span>Thoughts</span>}
+								</Link>
+							</MenuItem>
 							{/* community */}
 							<MenuItem
 								active={location.pathname.includes("/chats")}
@@ -393,7 +403,12 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 												)}
 											</summary>
 											<div className="d-flex flex-column gap-2">
-													<button className="sidebar__community__btn shadow-none" onClick={handleNewCommunityClick}>Create a Community</button>
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={handleNewCommunityClick}
+												>
+													Create a Community
+												</button>
 												<button
 													className="sidebar__community__btn shadow-none"
 													onClick={handleMyCommunityClick}
@@ -542,7 +557,6 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 												>
 													Priority DMS
 												</button>
-
 											</div>
 										</details>
 									)}

@@ -6,16 +6,11 @@
 	gap: 2.5rem;
 	padding: 2rem 0;
 	width: 100%;
-	overflow-x: hidden;
-	overflow-y: scroll;
-	// hide scrollbar
-	&::-webkit-scrollbar {
-		display: none;
-	}
+	height: auto;
 
-	background-image: url("../../Images/hero-bg.png");
-	background-size: cover;
-	background-position: center;
+	background-image: url("../../Images/hero-bg1.png");
+	background-size: contain;
+	background-repeat: no-repeat;
 
 	.heroSection-personal-assistant {
 		display: flex;
