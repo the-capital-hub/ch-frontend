@@ -4,7 +4,8 @@ import CarouselImage from "./COMPONENTS/ImageCarousel/ImageCarousel";
 import ProcessNew from "./COMPONENTS/ProcessNew/ProcessNew";
 import HustlersCapitalHub from "./COMPONENTS/WhyJoinHustlers&WhyUseCapitalHub/HustlersCapitalHub";
 import EmpowerYourStartup from "./COMPONENTS/EmpowerYourStartup/EmpowerYourStartup";
-import Founder from "./COMPONENTS/Founder/founder";
+// import Founder from "./COMPONENTS/Founder/founder";
+import FounderNew from "./COMPONENTS/FounderNew/FounderNew";
 import About from "./COMPONENTS/About/AboutUs";
 import "./salesLandingPage.scss";
 
@@ -16,7 +17,7 @@ const StartUpLendingPage = () => {
 			<ProcessNew />
 			<EmpowerYourStartup />
 			<HustlersCapitalHub />
-			<Founder />
+			<FounderNew />
 			<About />
 		</div>
 	);
