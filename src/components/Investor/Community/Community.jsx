@@ -105,6 +105,7 @@ const Community = () => {
 	const dispatch = useDispatch();
   const [showSettings, setShowSettings] = useState(false);
   const [showWhatsAppPopup, setShowWhatsAppPopup] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
 	// New Fetch call
 	useEffect(() => {
@@ -131,6 +132,7 @@ const Community = () => {
 
     
       const fetchCommunityDetails = async () => {
+        setIsLoading(true);
         try {
           const token = localStorage.getItem("accessToken");
           const response = await axios.get(
@@ -139,6 +141,8 @@ const Community = () => {
           setCommunity(response.data.data);
         } catch (error) {
           console.error("Error fetching community:", error);
+        } finally {
+          setIsLoading(false);
         }
       };
   
@@ -281,7 +285,7 @@ const Community = () => {
                   />
                 )}
                 <div className="create-post">
-                  <img src={community?.image} alt="Community" />
+                  <img src={loggedInUser?.profilePicture} alt="Community" />
                   <input 
                     type="text" 
                     placeholder="Share your thoughts with the community..."
@@ -467,92 +471,93 @@ const Community = () => {
               },
             }}
           />
-          {/* <InvestorNavbar isCommunity={true} /> */}
-          <div className="community-header">
-            <div className="community-info">
-              <div className="info-wrapper">
-                {isMobileView && (
-                  !isSidebarOpen ? (
-                    <MdMenu
-                      size={25}
-                      style={{
-                        color: "var(--d-l-grey)",
-                      }}
-                      onClick={() => setIsSidebarOpen(prevState => !prevState)}
-                    />
-                  ) : (
-                    <MdMenuOpen
-                      size={25}
-                      style={{
-                        color: "var(--d-l-grey)",
-                      }}
-                      onClick={() => setIsSidebarOpen(prevState => !prevState)}
-                    />
-                  )
-                )}
+          {!isLoading && community && (
+            <div className="community-header">
+              <div className="community-info">
+                <div className="info-wrapper">
+                  {isMobileView && (
+                    !isSidebarOpen ? (
+                      <MdMenu
+                        size={25}
+                        style={{
+                          color: "var(--d-l-grey)",
+                        }}
+                        onClick={() => setIsSidebarOpen(prevState => !prevState)}
+                      />
+                    ) : (
+                      <MdMenuOpen
+                        size={25}
+                        style={{
+                          color: "var(--d-l-grey)",
+                        }}
+                        onClick={() => setIsSidebarOpen(prevState => !prevState)}
+                      />
+                    )
+                  )}
 
-                <img src={community?.image} alt={community?.name} />
-                <div className="info-text">
-                  <h1>{community?.name}</h1>
-                  <p>{community?.description}</p>
-                  <div className="stats">
-                    <span>{community?.members?.length + 1} members</span>
-                    <span>{allPosts.length} posts</span>
+                  <img src={community?.image} alt={community?.name} />
+                  <div className="info-text">
+                    <h1>{community?.name}</h1>
+                    <p>{community?.description}</p>
+                    <div className="stats">
+                      <span>{community?.members?.length + 1} members</span>
+                      <span>{allPosts.length} posts</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-           {!isMobileView && <nav className="horizontal-menu">
-                <button 
-                  className={activeTab === "home" ? "active" : ""} 
-                  onClick={() => handleTabChange("home")}
-                >
-                  Home
-                </button>
-                <button 
-                  className={activeTab === "products" ? "active" : ""} 
-                  onClick={() => handleTabChange("products")}
-                >
-                  Products
-                </button>
-                <button 
-                  className={activeTab === "events" ? "active" : ""} 
-                  onClick={() => handleTabChange("events")}
-                >
-                  Events
-                </button>
-                <button 
-                  className={activeTab === "people" ? "active" : ""} 
-                  onClick={() => handleTabChange("people")}
-                >
-                  People
-                </button>
-                <button 
-                  className={activeTab === "about" ? "active" : ""} 
-                  onClick={() => handleTabChange("about")}
-                >
-                  About
-                </button>
-                {isAdmin && (
+             {!isMobileView && <nav className="horizontal-menu">
                   <button 
-                    className={activeTab === "settings" ? "active" : ""} 
-                    onClick={() => handleTabChange("settings")}
+                    className={activeTab === "home" ? "active" : ""} 
+                    onClick={() => handleTabChange("home")}
                   >
-                    Settings
+                    Home
                   </button>
-                )}
-              </nav>}
-              <div className="right-elements">
-              <OnboardingSwitch />
-              {!isMobileView && <Link to="/manage-account" className="profile-link">
-                <img 
-                  src={loggedInUser?.profilePicture} 
-                  alt="Profile" 
-                  className="profile-pic"
-                />
-              </Link>}
+                  <button 
+                    className={activeTab === "products" ? "active" : ""} 
+                    onClick={() => handleTabChange("products")}
+                  >
+                    Products
+                  </button>
+                  <button 
+                    className={activeTab === "events" ? "active" : ""} 
+                    onClick={() => handleTabChange("events")}
+                  >
+                    Events
+                  </button>
+                  <button 
+                    className={activeTab === "people" ? "active" : ""} 
+                    onClick={() => handleTabChange("people")}
+                  >
+                    People
+                  </button>
+                  <button 
+                    className={activeTab === "about" ? "active" : ""} 
+                    onClick={() => handleTabChange("about")}
+                  >
+                    About
+                  </button>
+                  {isAdmin && (
+                    <button 
+                      className={activeTab === "settings" ? "active" : ""} 
+                      onClick={() => handleTabChange("settings")}
+                    >
+                      Settings
+                    </button>
+                  )}
+                </nav>}
+                <div className="right-elements">
+                <OnboardingSwitch />
+                {!isMobileView && <Link to="/manage-account" className="profile-link">
+                  <img 
+                    src={loggedInUser?.profilePicture} 
+                    alt="Profile" 
+                    className="profile-pic"
+                  />
+                </Link>}
+                </div>
               </div>
             </div>
-          </div>
+          )}
     
           <div className="community-content">
             <div className="main-content">

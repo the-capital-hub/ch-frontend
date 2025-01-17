@@ -85,6 +85,7 @@ const Feed = () => {
 	const [hasMore, setHasMore] = useState(true);
 	const [page, setPage] = useState(1);
 	const [pollOptions, setPollOptions] = useState("");
+	const [isProfileComplete, setIsProfileComplete] = useState(null);
 
 	// console.log("allPosts", allPosts);
 
@@ -238,6 +239,24 @@ const Feed = () => {
 			.finally(() => setRepostLoading({ ...repostLoading, instant: false }));
 	};
 
+	useEffect(() => {
+		const checkProfileCompletion = () => {
+			if (!loggedInUser) return;
+			
+			const isComplete = Boolean(
+				loggedInUser.firstName &&
+				loggedInUser.lastName &&
+				loggedInUser.email &&
+				loggedInUser.profilePicture &&
+				loggedInUser.phoneNumber
+			);
+			
+			setIsProfileComplete(isComplete);
+		};
+
+		checkProfileCompletion();
+	}, [loggedInUser]);
+
 	return (
 		<MaxWidthWrapper>
 			<div className="mx-0 feed_container">
@@ -294,7 +313,7 @@ const Feed = () => {
 							{/* <LatestResources /> */}
 
 							{/* Completion Banner */}
-							<CompletionBanner />
+							{isProfileComplete !== null && !isProfileComplete && <CompletionBanner />}
 
 							{/* Hustlers club banner */}
 							<JoinHustlersClub />
