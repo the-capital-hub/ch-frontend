@@ -44,9 +44,9 @@ const Home = () => {
 						</div>
 
 						{/* Green Arrow */}
-						<div className="arrow-container">
+						{/* <div className="arrow-container">
 							<img className="green-arrow" src={arrow1} alt="green arrow" />
-						</div>
+						</div> */}
 
 						<h1 className="main-heading">
 							India’s Leading Startup <br />
@@ -79,7 +79,7 @@ const Home = () => {
 								>
 									Buy Now
 								</button>
-								<button className="download-button">Download Now</button>
+								{/* <button className="download-button">Download Now</button> */}
 							</div>
 						</center>
 					</div>

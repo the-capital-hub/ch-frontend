@@ -144,7 +144,7 @@ export default function CompanyActions({
     }
   };
 
-  const oneLinkRequest = startupData?.oneLinkRequest.find(
+  const oneLinkRequest = startupData?.oneLinkRequest?.find(
     (request) => request.userId.toString() === loggedInUserId
   );
 

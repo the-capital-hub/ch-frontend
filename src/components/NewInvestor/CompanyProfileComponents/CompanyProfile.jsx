@@ -145,7 +145,7 @@ export default function CompanyProfile({
 
 	const deleteCompany = async () => {
 		try {
-			const response = await deleteStartUp(companyData._id);
+			const response = await deleteStartUp(companyData?._id);
 			if (response.delete_status) {
 				setCompanyData({});
 			}
