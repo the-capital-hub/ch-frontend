@@ -12,22 +12,30 @@ const RightProfileCard = ({ noProfile }) => {
 	const companyName = useSelector((state) => state.user.company?.company);
 	const [investor, setInvestor] = useState(null);
 	const [isPassword, setIsPassword] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		if (loggedInUser?.investor) {
-			getInvestorById(loggedInUser?.investor).then(({ data }) => {
-				setInvestor(data);
-			});
-		}
-		const getUser = async () => {
-			await getUserByIdBody(loggedInUser).then((res) => {
-				if (res.data.password) {
-					setIsPassword(true);
+		const loadData = async () => {
+			setIsLoading(true);
+			try {
+				if (loggedInUser?.investor) {
+					const { data } = await getInvestorById(loggedInUser?.investor);
+					setInvestor(data);
 				}
-			});
+				const res = await getUserByIdBody(loggedInUser);
+				setIsPassword(!!res.data.password);
+			} catch (error) {
+				console.error("Error loading profile data:", error);
+			}
+			setIsLoading(false);
 		};
-		getUser();
+
+		if (loggedInUser) {
+			loadData();
+		}
 	}, [loggedInUser]);
+
+	if (isLoading) return null;
 
 	return (
 		<div className="card view_profile_container">
