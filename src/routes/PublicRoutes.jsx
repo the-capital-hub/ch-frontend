@@ -108,6 +108,8 @@ const CreateQuestion = lazy(() =>
 	import("../components/Thoughts/CreateQuestion/CreateQuestion")
 );
 
+const RawUserPage = lazy(() => import("../pages/RawUser/RawUserPage"));
+
 function PublicRoutes() {
 	const user = useSelector((state) => state.user.loggedInUser);
 	return (
@@ -350,6 +352,17 @@ function PublicRoutes() {
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
 						<SubscriptionSuccess />
+					</Suspense>
+				}
+			/>
+
+			<Route
+				path="/raw-user/:userId"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<Navbar2 />
+						<RawUserPage />
+						<Footer />
 					</Suspense>
 				}
 			/>

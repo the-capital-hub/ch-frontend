@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import bg from "../images/Polygon 7.png";
 import dot from "../images/Polygon 12.png";
 import blurdot from "../images/Polygon 2 (2).png";
@@ -8,42 +8,10 @@ import { useNavigate } from "react-router-dom";
 import profile from "../images/profile.png";
 import { useDispatch } from "react-redux";
 import Modal from "react-modal";
-import axios from "axios";
-import { environment } from "../../../../../environments/environment";
-import { toast } from 'react-toastify';
-import { sendOTP, verifyOTP, postUserLogin, updateUserAPI } from "../../../../../Service/user";
-import { loginSuccess } from "../../../../../Store/features/user/userSlice";
-import { load } from "@cashfreepayments/cashfree-js";
 import { usePaymentFlow } from "../../../../../hooks/usePaymentFlow";
 
 const Founder = () => {
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [showOtpModal, setShowOtpModal] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
-	const [formData, setFormData] = useState({
-		firstName: "",
-		lastName: "",
-		email: "",
-		mobileNumber: "",
-		userType: ""
-	});
-	const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-	const [orderId, setOrderId] = useState("");
-	const inputRefs = useRef([]);
-	const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
 	const paymentFlow = usePaymentFlow();
-
-	const handleInputChange = (e) => { /* ... */ };
-	const initializeCashfree = async () => { /* ... */ };
-	const handleOtpChange = (index, value) => { /* ... */ };
-	const handleKeyDown = (index, e) => { /* ... */ };
-	const handleSubmit = async (e) => { /* ... */ };
-	const handleOtpVerify = async () => { /* ... */ };
-	const processPayment = async () => { /* ... */ };
-	const verifyPayment = async (orderId) => { /* ... */ };
-
 	const handleBuyNowClick = () => {
 		paymentFlow.setIsModalOpen(true);
 	};

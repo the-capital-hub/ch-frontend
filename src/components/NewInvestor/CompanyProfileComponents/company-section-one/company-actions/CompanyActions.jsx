@@ -59,18 +59,20 @@ export default function CompanyActions({
   let myInterestsIds = myInterests?.map((interest) => interest.companyId);
 
   useEffect(() => {
-    getStartupByFounderId(founderId._id)
-      .then(({ data }) => {
-        setStartupData(data);
-        // Fetch OneLink request status here
-        const oneLinkRequest = data.oneLinkRequest.find(
-          (request) => request.userId.toString() === loggedInUserId
-        );
-        setOneLinkRequestStatus(oneLinkRequest ? oneLinkRequest.status : null);
-        setRedirectTo(`/onelink/${data.oneLink}/${data.founderId?.oneLinkId}`);
-      })
-      .catch((err) => console.log(err));
-    
+    // Check if founderId._id is valid before making the API call
+    if (founderId?._id) {
+      getStartupByFounderId(founderId._id)
+        .then(({ data }) => {
+          setStartupData(data);
+          // Fetch OneLink request status here
+          const oneLinkRequest = data.oneLinkRequest.find(
+            (request) => request.userId.toString() === loggedInUserId
+          );
+          setOneLinkRequestStatus(oneLinkRequest ? oneLinkRequest.status : null);
+          setRedirectTo(`/onelink/${data.oneLink}/${data.founderId?.oneLinkId}`);
+        })
+        .catch((err) => console.log(err));
+    }
   }, [founderId, loggedInUserId]);
 
   const linkTo = isInvestor
@@ -136,7 +138,6 @@ export default function CompanyActions({
       if (loggedInUser.isSubscribed) {
         setPopPayOpen(false);
         const response = await sendOneLinkRequest(companyId, loggedInUserId);
-        console.log(response);
         toast.success("OneLink request sent successfully!");
         setOneLinkRequestStatus("pending");
       } else {
