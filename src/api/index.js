@@ -164,9 +164,10 @@ const API = Object.freeze({
 	updatePriorityDM: `${baseUrl}/priorityDM/updatePriority-DM`,
 	getPriorityDMById: `${baseUrl}/priorityDM/getPriorityDMById`,
 	sendOneLinkRequest: `${baseUrl}/startup/sendOneLinkRequest`,
-	getOneLinkRequest: `${baseUrl}/startup/getOneLinkRequest/:startUpId`,
+	getOneLinkRequest: `${baseUrl}/startup/getOneLinkRequest`,
 	approveOneLinkRequest: `${baseUrl}/startup/approveOneLinkRequest`,
 	rejectOneLinkRequest: `${baseUrl}/startup/rejectOneLinkRequest`,
+	getThoughts: `${baseUrl}/thoughts/get-questions`,
 });
 
 export default API;

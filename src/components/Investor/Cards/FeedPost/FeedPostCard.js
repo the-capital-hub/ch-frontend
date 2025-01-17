@@ -831,32 +831,31 @@ const FeedPostCard = ({
 
 								<div className="info-container">
 									<span className="d-flex align-items-center designation-location">
-										<span
-											className="d-flex align-items-center"
-											style={{
-												fontSize: "12px",
-												fontWeight: 450,
+										{designation && (
+											<span
+												className="d-flex align-items-center"
+												style={{
+													fontSize: "12px",
 												color: "var(--d-l-grey)",
 											}}
 										>
-											<MdBusinessCenter size={15} />
+											<MdBusinessCenter size={18} />
 											&nbsp;{designation} at{" "}
 											{investorCompanyName?.companyName
 												? investorCompanyName?.companyName
 												: startUpCompanyName?.company}
 										</span>
+										)}
 										<span
 											className="d-flex align-items-center location"
 											style={{
 												fontSize: "12px",
-												fontWeight: 450,
 												color: "var(--d-l-grey)",
-												marginLeft: "10px", // Adjusts spacing between items
 											}}
 										>
-											<IoLocationOutline size={13} />
+											<IoLocationOutline size={18} />
 											&nbsp;
-											{location ? location : "Bangalore"}
+											{location ? location : "India"}
 										</span>
 									</span>
 								</div>

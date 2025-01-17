@@ -10,7 +10,7 @@ import {
   addStartUpToUser,
   updateUserAPI,
   addNotificationAPI,
-  getUserById,
+  getUserById
 } from "../../../Service/user";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -32,6 +32,7 @@ import toast, { Toaster } from "react-hot-toast";
 // import achievement from "../../../Images/Investor/Achievements/img_1.png";
 import { achievementTypes } from "../../../components/Toasts/AchievementToast/types";
 import AchievementToast from "../../../components/Toasts/AchievementToast/AchievementToast";
+import OneLinkRequestsBanner from "../../../components/StartUp/OneLinkRequestsBanner/OneLinkRequestsBanner";
 
 export default function CompanyProfilePage() {
   const navigate = useNavigate();
@@ -140,6 +141,9 @@ export default function CompanyProfilePage() {
         {/* Main content */}
         <div className="main__content">
           <SmallProfileCard text={"Company Profile"} />
+          {companyData?.founderId._id === loggedInUser._id && (
+            <OneLinkRequestsBanner startUpId={companyData._id} />
+          )}
           <div className="edit-container">
             <div className="add_company_data rounded-4 p-4 mb-2">
               <div className="text-center">
@@ -198,7 +202,7 @@ export default function CompanyProfilePage() {
             {!loading && (
               <>
                 {companyData && companyData?.length !== 0 && (
-                  companyData?.founderId === loggedInUser._id && (
+                  companyData?.founderId._id === loggedInUser._id && (
                     <>
                       <div className="edit_company_text rounded-4 p-4 shadow-sm">
                         <Link

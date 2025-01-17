@@ -23,6 +23,7 @@ import {
 // import PlusIcon from "../../../Images/investorIcon/Plus.svg";
 import "react-pro-sidebar/dist/css/styles.css";
 import { IoNewspaper } from "react-icons/io5";
+import { MdOutlineQuestionAnswer } from "react-icons/md";
 import "./SideBar.scss";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LogOutPopUp from "../../PopUp/LogOutPopUp/LogOutPopUp";
@@ -64,6 +65,7 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 	const [isMeetingDetailOpen, setIsMeetingDetailOpen] = useState(false);
 
 	const location = useLocation();
+	console.log("location", location.pathname);
 	const navigate = useNavigate();
 	// const menuIconClick = () => {
 	//   setSidebarCollapsed(true);
@@ -329,6 +331,20 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 								>
 									<BsLink45Deg size={"25px"} />
 									{!sidebarCollapsed && <span className="">OneLink</span>}
+								</Link>
+							</MenuItem>
+							{/* Thoughts */}
+							<MenuItem
+								active={location.pathname.includes("/thoughts")}
+								className="active-item"
+							>
+								<Link
+									// onClick={() => setSidebarCollapsed(true)}
+									to="/thoughts"
+									id="sidebar_thoughts"
+								>
+									<MdOutlineQuestionAnswer size={"25px"} />
+									{!sidebarCollapsed && <span className="">Thoughts</span>}
 								</Link>
 							</MenuItem>
 							{/* community */}

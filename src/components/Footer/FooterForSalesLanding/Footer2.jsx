@@ -1,10 +1,10 @@
 import React from "react";
-import "./footer2.scss";
 import { FaFacebookF } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import "./footer2.scss";
 
 const Footer = ({ className }) => {
 	return (

@@ -1,6 +1,5 @@
 .community-page {
   min-height: 100vh;
-  padding-top: 5rem;
   background: var(--background-color);
   color: var(--text-color);
 
@@ -8,7 +7,7 @@
     position: fixed;
     width: 100%;
     background: var(--white-to-grey);
-    padding: 1rem 0;
+    padding: 0.4rem 0;
     border-bottom: 1px solid var(--border-color);
     z-index: 1000;
     
@@ -23,6 +22,12 @@
       justify-content: space-between;
 
       .info-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .right-elements {
         display: flex;
         align-items: center;
         gap: 1rem;
@@ -60,6 +65,7 @@
     max-width: 80rem;
     margin: 0 auto;
     padding: 2rem;
+    padding-top: 1rem;
     grid-template-columns: 15rem 1fr;
     gap: 2rem;
 
@@ -436,6 +442,99 @@
           }
         }
       }
+    }
+  }
+}
+
+.mobile-sidebar {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  width: 280px;
+  height: calc(100vh - 80px);
+  background: var(--white-to-grey);
+  z-index: 999;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+
+  .sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+
+      .profile-pic {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .profile-info {
+        h3 {
+          margin: 0;
+          font-size: 1rem;
+          color: var(--text-color);
+        }
+
+        p {
+          margin: 0;
+          font-size: 0.8rem;
+          color: var(--d-l-grey);
+        }
+      }
+    }
+  }
+
+  .sidebar-menu {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    button {
+      width: 100%;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border: none;
+      background: transparent;
+      color: var(--text-color);
+      border-radius: 0.5rem;
+      transition: all 0.2s;
+
+      &:hover {
+        background: var(--bs-light);
+      }
+
+      &.active {
+        background: linear-gradient(90deg, #FD5901 0%, #9306FF 100%);
+        color: white;
+      }
+    }
+  }
+}
+
+.profile-link {
+  margin-left: auto; // Push to right end
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+
+  .profile-pic {
+    width: 35px;
+    height: 35px;
+    border-radius: 50% !important;
+    object-fit: cover;
+    border: 2px solid transparent;
+    transition: border-color 0.2s ease;
+
+    &:hover {
+      border-color: var(--currentTheme);
     }
   }
 }

@@ -170,7 +170,9 @@
 					}
 
 					.info-container {
+						margin-top: 0.3rem;
 						.designation-location {
+							font-weight: 400;
 							white-space: nowrap; // Prevent text from wrapping to a new line
 							overflow: hidden; // Hide any overflow
 							text-overflow: ellipsis; // Show ellipsis if text overflows
