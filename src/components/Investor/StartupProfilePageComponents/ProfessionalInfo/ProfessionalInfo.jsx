@@ -127,6 +127,8 @@ export default function ProfessionalInfo({ theme }) {
 				designation: data?.designation,
 				education: data?.education,
 				experience: data?.experience,
+				yearsOfExperience: data?.yearsOfExperience,
+				industry: data?.industry,
 				profilePicture: data?.profilePicture,
 				fullName: data?.firstName + " " + data?.lastName,
 				location: data?.location,
@@ -153,6 +155,7 @@ export default function ProfessionalInfo({ theme }) {
 		} catch (error) {
 			console.log();
 		} finally {
+			alert("Profile Updated Successfully");
 			setIsEditing(false);
 			setLoading(false);
 			setSelectedFile(null);

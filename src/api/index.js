@@ -169,6 +169,7 @@ const API = Object.freeze({
 	getOneLinkRequest: `${baseUrl}/startup/getOneLinkRequest`,
 	approveOneLinkRequest: `${baseUrl}/startup/approveOneLinkRequest`,
 	rejectOneLinkRequest: `${baseUrl}/startup/rejectOneLinkRequest`,
+	getThoughts: `${baseUrl}/thoughts/get-questions`,
 });
 
 export default API;

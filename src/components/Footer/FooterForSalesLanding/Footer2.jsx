@@ -1,10 +1,10 @@
 import React from "react";
-import "./footer2.scss";
 import { FaFacebookF } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import "./footer2.scss";
 
 const Footer = ({ className }) => {
 	return (
@@ -19,7 +19,7 @@ const Footer = ({ className }) => {
 
 				<div>
 					<h4 className="font-bold text-lg mb-2">General</h4>
-					<ul className="flex flex-col md:flex-row justify-center md:justify-start items-center md:items-start md:gap-3">
+					<ul className="flex flex-col lg:flex-row justify-center md:justify-start items-center md:items-start md:gap-3">
 						<li>
 							<a href="/about" className="hover:text-gray-300">
 								About Us
@@ -45,7 +45,7 @@ const Footer = ({ className }) => {
 
 				<div>
 					<h4 className="font-bold text-lg mb-2">Policies</h4>
-					<ul className="flex flex-col md:flex-row justify-center md:justify-start items-center md:items-start md:gap-3">
+					<ul className="flex flex-col lg:flex-row justify-center md:justify-start items-center md:items-start md:gap-3">
 						<li>
 							<a href="/security" className="hover:text-gray-300">
 								Security safeguards

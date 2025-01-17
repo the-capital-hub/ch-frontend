@@ -66,8 +66,7 @@ export default function PersonProfile({ theme, short, personData }) {
 		colorCard = personData?.startUp.colorCard;
 		startUp = personData?.startUp;
 		companyName = personData?.startup.company || "Data Not Available";
-		experience =
-			personData?.yearsOfExperience || "Data Not Available";
+		experience = personData?.yearsOfExperience || "Data Not Available";
 		education =
 			personData?.recentEducation?.map((edu) => edu.course).join(", ") ||
 			"Data Not Available";
@@ -95,11 +94,13 @@ export default function PersonProfile({ theme, short, personData }) {
 		industry = personData?.industry || "Nun";
 	}
 
+	console.log("socialLinks", socialLinks, personData);
+
 	return (
 		<div className={`person_profile_wrapper  shadow-sm ${theme}`}>
-			<div className="person__section__one d-flex flex-column gap-2 md:gap-4 py-3 md:py-5 px-3 px-lg-5 ">
+			<div className="person__section__one d-flex flex-column gap-2 md:gap-4 py-3 md:py-5 px-3 px-lg-2 ">
 				{/* Profile header */}
-				<div className="person__info d-flex flex-column flex-xl-row gap-2 md:gap-4 justify-content-between position-relative">
+				<div className="person__info d-flex flex-column flex-xl-row gap-2 md:gap-4 justify-content-between position-relative pb-xl-3 border-bottom">
 					<PersonInfo
 						fullName={`${firstName} ${lastName}`}
 						designation={designation}

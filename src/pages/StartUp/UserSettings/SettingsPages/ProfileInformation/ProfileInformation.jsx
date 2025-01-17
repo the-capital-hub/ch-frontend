@@ -192,7 +192,7 @@ function ProfileInformation() {
         {/* Experience */}
 
         <fieldset>
-          <legend className="px-2">Experience</legend>
+          <legend className="px-2">Industry Experience</legend>
 
           <select
             name="experience"

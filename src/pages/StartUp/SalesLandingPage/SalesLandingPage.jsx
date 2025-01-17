@@ -1,26 +1,28 @@
-import React from 'react'
-import Home from './COMPONENTS/Home/Home'
-import Process from './COMPONENTS/Process/Process'
-import Deals from './COMPONENTS/Deals/Deals'
-import Pricing from './COMPONENTS/Pricing/Pricing'
-import MainVideo from './COMPONENTS/MainVideo/MainVideo'
-import Founder from './COMPONENTS/Founder/founder'
-import About from './COMPONENTS/About/AboutUs'
-import "./salesLandingPage.css"
+import React from "react";
+import Home from "./COMPONENTS/Home/Home";
+import CarouselImage from "./COMPONENTS/ImageCarousel/ImageCarousel";
+import ProcessNew from "./COMPONENTS/ProcessNew/ProcessNew";
+import HustlersCapitalHub from "./COMPONENTS/WhyJoinHustlers&WhyUseCapitalHub/HustlersCapitalHub";
+import EmpowerYourStartup from "./COMPONENTS/EmpowerYourStartup/EmpowerYourStartup";
+import FounderNew from "./COMPONENTS/FounderNew/FounderNew";
+import About from "./COMPONENTS/About/AboutUs";
+
+import Footer from "../../../components/Footer/FooterForSalesLanding/Footer2";
+import "./salesLandingPage.scss";
 
 const StartUpLendingPage = () => {
-  return (
-    <div className='hom-container'>
-      <Home/>
-      <MainVideo/>
-      <Process/>
-      <Deals/>
-      <Pricing/>
-      <Founder />
-      <About />
+	return (
+		<div className="sales-lending-page-container">
+			<Home />
+			<CarouselImage />
+			<ProcessNew />
+			<EmpowerYourStartup />
+			<HustlersCapitalHub />
+			<FounderNew />
+			<About />
+			<Footer />
+		</div>
+	);
+};
 
-    </div>
-  )
-}
-
-export default StartUpLendingPage
+export default StartUpLendingPage;

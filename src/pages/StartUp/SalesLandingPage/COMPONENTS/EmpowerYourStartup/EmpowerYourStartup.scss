@@ -1,0 +1,219 @@
+.EmpowerYourStartup-container {
+	background-color: rgb(5, 5, 5);
+	// position: relative;
+	background-image: url("../imagesNew/EmpowerYourStartup-BG.png");
+	@media (max-width: 460px) {
+		background-image: url("../imagesNew/EYS-BG-Mobile.png");
+	}
+	background-size: cover;
+	background-position: center;
+
+	.EmpowerYourStartup-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+		@media (max-width: 460px) {
+			padding-bottom: 2rem;
+		}
+		h1 {
+			font-family: "Outfit", serif;
+			font-size: 48px;
+			font-weight: 600;
+			line-height: 62px;
+			letter-spacing: -0.96px;
+			text-align: center;
+			text-underline-position: from-font;
+			text-decoration-skip-ink: none;
+			background: linear-gradient(
+				180deg,
+				#fcfcfd 0%,
+				rgba(252, 252, 253, 0.8) 99.48%
+			);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+
+			@media (max-width: 460px) {
+				font-size: 2rem;
+				margin: 0 1rem;
+				line-height: 2.5rem;
+			}
+		}
+
+		.EmpowerYourStartup-cards {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			gap: 2rem;
+			margin: 2rem;
+			padding: 0 2rem;
+
+			@media (max-width: 820px) {
+				flex-direction: column;
+				padding: 0;
+			}
+
+			@media (max-width: 460px) {
+				flex-direction: column;
+				padding: 0;
+			}
+
+			.EmpowerYourStartup-card {
+				background: radial-gradient(
+					254.42% 124.05% at -10.2% 8.57%,
+					#1f1f22 0%,
+					#19191b 100%
+				);
+				padding: 1rem;
+				border-radius: 0.75rem;
+				text-align: left;
+				width: 45%;
+				height: 225px;
+				overflow: hidden;
+
+				@media (max-width: 820px) {
+					width: 80%;
+					height: auto;
+				}
+				@media (max-width: 460px) {
+					width: 100%;
+					height: auto;
+				}
+				position: relative;
+				img {
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					z-index: 1;
+				}
+
+				h5 {
+					// font-family: "";
+					color: #ffffff;
+					font-size: 32px;
+					font-weight: 700;
+					line-height: 30px;
+					text-align: left;
+					text-underline-position: from-font;
+					text-decoration-skip-ink: none;
+				}
+				p {
+					// font-family: "";
+					font-size: 24px;
+					font-weight: 400;
+					line-height: 40px;
+					text-align: left;
+					text-underline-position: from-font;
+					text-decoration-skip-ink: none;
+					color: #98a2b3;
+				}
+			}
+		}
+
+		.EmpowerYourStartup-price-card {
+			width: 410px;
+			height: 238px;
+			background-color: transparent;
+			color: #fff;
+			padding: 15px 30px;
+			border: 2px solid #3d3d3d;
+			// margin-right: 40px;
+			display: flex;
+			align-items: flex-start;
+			flex-direction: column;
+			border-radius: 32px;
+			background: linear-gradient(
+				80.42deg,
+				rgba(0, 0, 0, 0.16) 25.25%,
+				rgba(83, 84, 108, 0.16) 98.05%
+			);
+			@media (max-width: 460px) {
+				margin-right: 0px;
+				width: 350px;
+				height: 200px;
+			}
+
+			.EmpowerYourStartup-price-card-details {
+				text-align: left;
+				margin: auto 0px;
+				width: 100%;
+				@media (max-width: 460px) {
+					margin: 0px;
+				}
+
+				.EmpowerYourStartup-price-card-title {
+					font-size: 20px;
+					font-weight: 600;
+					line-height: 48px;
+					@media (max-width: 460px) {
+						font-size: 1rem;
+					}
+				}
+
+				.EmpowerYourStartup-price-card-price {
+					font-size: 32px;
+					font-weight: 600;
+					margin-top: 20px;
+					@media (max-width: 460px) {
+						font-size: 1.5rem;
+						margin-top: 0;
+					}
+
+					span {
+						font-size: 12px;
+						font-weight: 400;
+						line-height: 48px;
+					}
+				}
+
+				.EmpowerYourStartup-price-card-button {
+					display: block;
+					position: relative;
+					padding: 0.7rem 2rem;
+					background: transparent; /* Solid background for the button */
+					color: #fff;
+					border-radius: 5px;
+					border: 1px solid transparent; /* Transparent border */
+					cursor: pointer;
+					transition: background 0.3s ease;
+					z-index: 1;
+					text-align: center;
+
+					@media (max-width: 460px) {
+						min-width: 180px !important;
+						margin-top: 0.85rem;
+					}
+
+					/* Apply the gradient to the border using a pseudo-element */
+					&:before {
+						content: "";
+						position: absolute;
+						top: -1px;
+						left: -1px;
+						right: -1px;
+						bottom: -1px;
+						border-radius: 12px;
+						padding: 1.5px; /* Adjust the thickness here */
+						background: linear-gradient(
+							87.49deg,
+							#090edb 32.4%,
+							#fd5901 90.21%
+						);
+						-webkit-mask: linear-gradient(#fff 0 0) content-box,
+							linear-gradient(#fff 0 0);
+						mask: linear-gradient(#fff 0 0) content-box,
+							linear-gradient(#fff 0 0);
+						-webkit-mask-composite: destination-out;
+						mask-composite: exclude;
+						z-index: -1;
+					}
+				}
+			}
+		}
+	}
+}

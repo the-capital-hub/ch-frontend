@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./aboutus.scss";
 import ComaImg from "../images/Picture1.png";
 import ComaImg2 from "../images/Picture2.png";
 import Pic1 from "../images/Picture3.png";
@@ -10,6 +9,7 @@ import Pic5 from "../images/Picture7.png";
 import Pic6 from "../images/Picture8.png";
 import Pic7 from "../images/Picture9.png";
 import Pic8 from "../images/Picture10.png";
+import "./aboutus.scss";
 
 const AboutUs = () => {
 	const [email, setEmail] = useState("");

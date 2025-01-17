@@ -1,35 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getThoughts } from "../../../../../Service/user";
 import "./ShareYourThoughts.scss";
-import { WiStars } from "react-icons/wi";
 
-const ShareThoughts = (
-	{ isInvestor = false }
-) => {
+const ShareThoughts = ({ isInvestor = false }) => {
+	const [maxAnswerQuestion, setMaxAnswerQuestion] = useState(null);
+
+	// Function to fetch questions and set the one with the maximum answers
+	const fetchAndSetMaxAnswerQuestion = async () => {
+		try {
+			const response = await getThoughts();
+			if (response && response.data) {
+				const questions = response.data;
+
+				// Find the question with the maximum number of answers
+				const questionWithMaxAnswers = questions.reduce((prev, current) => {
+					return prev.answer.length > current.answer.length ? prev : current;
+				});
+
+				setMaxAnswerQuestion(questionWithMaxAnswers);
+			}
+		} catch (error) {
+			console.error("Error fetching questions:", error);
+		}
+	};
+
+	useEffect(() => {
+		fetchAndSetMaxAnswerQuestion();
+	}, []);
+
 	return (
 		<div className="share_your_thoughts_container">
 			<div className="d-flex flex-column flex-md-row align-items-center justify-content-around justify-content-md-between px-md-2 gap-2">
-				<p className="m-0">
-					How are rapidly evolving regulatory environments, particularly around
-					...
-				</p>
-				{/* <p className="m-0" style={{ lineHeight: "1.5" }}>
-					You're faced with conflicting data interpretations. How do you ensure
-					timely and accurate results?
-				</p> */}
-
-				<Link
-					to={"/thoughts"}
-					className={`btn d-flex align-items-center justify-content-center ${
-						isInvestor ? 'green_button' : 'orange_button'
-					  }`}				>
-					<span>View Question</span>
-					{/* <span>Share your thoughts now</span> */}
-				</Link>
-
-				{/* <WiStars /> */}
+				{maxAnswerQuestion ? (
+					<>
+						<p className="m-0">{maxAnswerQuestion.question}</p>
+						<Link
+							to={`/thoughts/question/${maxAnswerQuestion._id}`}
+							className={`btn d-flex align-items-center justify-content-center ${
+								isInvestor ? "green_button" : "orange_button"
+							}`}
+						>
+							<span>View Question</span>
+						</Link>
+					</>
+				) : (
+					<p className="m-0">Loading questions...</p>
+				)}
 			</div>
 		</div>
 	);
 };
+
 export default ShareThoughts;

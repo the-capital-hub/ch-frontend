@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./navbar2.scss";
 import Logo from "../../../Images/Logo.png";
 import { RxCross2 } from "react-icons/rx";
 import HambergerIcon from "../../../Images/Hamberger.svg";
 import { useSelector } from "react-redux";
 import { setThemeColor } from "../../../utils/setThemeColor";
+import "./navbar2.scss";
 
 function Navbar() {
 	const [clicked, setClicked] = useState(false);
