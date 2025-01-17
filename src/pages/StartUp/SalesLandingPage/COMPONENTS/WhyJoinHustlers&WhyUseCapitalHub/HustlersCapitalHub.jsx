@@ -1,17 +1,15 @@
 import React from "react";
-import Hustler from "../images/hustler.png";
 import Exclusive from "../images/exclusive.png";
-import Networking from "../images/networking.png";
 import dot from "../images/Ellipse 9.png";
 import blurdot from "../images/Ellipse 12.png";
 import small from "../images/Ellipse 20.png";
 import bg from "../images/Polygon 12.png";
-import "./HustlersCapitalHub.scss";
 import fox from "../imagesNew/fox.png";
 import onelink from "../imagesNew/onelink.png";
 import connectStartup from "../imagesNew/connectStartup.png";
 import amplifyStartup from "../imagesNew/amplifyStartup.png";
 import noise from "../imagesNew/noise-bg.png";
+import "./HustlersCapitalHub.scss";
 
 const HustlersCapitalHub = () => {
 	return (
