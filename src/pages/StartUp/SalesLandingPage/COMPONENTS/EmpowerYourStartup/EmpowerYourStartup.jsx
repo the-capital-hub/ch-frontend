@@ -1,15 +1,10 @@
 import React from "react";
-import BG from "../imagesNew/EmpowerYourStartup-BG.png";
-import EYS from "../imagesNew/EYS-BG-Mobile.png";
 import noise from "../imagesNew/noise-bg.png";
 import "./EmpowerYourStartup.scss";
 
 const EmpowerYourStartup = () => {
 	return (
 		<div className="EmpowerYourStartup-container">
-			{/* <img src={BG} className="EmpowerYourStartup-img" alt="" />
-			<img src={EYS} className="EmpowerYourStartup-img-mobile" alt="" /> */}
-
 			<div className="EmpowerYourStartup-content">
 				<h1>Empower Your Starting with Game - Changing Resources</h1>
 				<div className="EmpowerYourStartup-cards">

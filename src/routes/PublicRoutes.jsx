@@ -333,7 +333,7 @@ function PublicRoutes() {
 					<Suspense fallback={<SuspenseLoader />}>
 						<Navbar2 />
 						<SalesLandingPage />
-						<Footer2 />
+						{/* <Footer2 /> */}
 					</Suspense>
 				}
 			/>

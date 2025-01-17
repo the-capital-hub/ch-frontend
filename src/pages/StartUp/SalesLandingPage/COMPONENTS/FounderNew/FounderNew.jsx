@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "react-modal";
 import { usePaymentFlow } from "../../../../../hooks/usePaymentFlow";
 import profile from "../images/profile.png";
+import profile1 from "../imagesNew/pramod-sir-pic.png";
 import glow from "../imagesNew/founder-glow.png";
 import "./FounderNew.scss";
 
@@ -15,14 +16,15 @@ const FounderNew = () => {
 			<div className="founder-container">
 				<h1>Meet the Visionary Behind Capital HUB</h1>
 				<div className="founder-container-details">
-					<img src={profile} alt="profile" />
+					<img className="pic-desktop" src={profile} alt="profile" />
+					<img className="pic-mobile" src={profile1} alt="profile" />
 
 					<div className="founder-container-details-info">
-						<h1 className="founder-container-details-info-name">
+						<div className="founder-container-details-info-name">
 							Pramod Badiger
-						</h1>
+						</div>
 						<div className="founder-container-details-info-description">
-							Pramod Badiger – <span> The Force Behind Capital HUB</span>
+							<span> The Force Behind Capital HUB</span>
 						</div>
 						<p className="founder-container-details-info-bio">
 							Pramod Badiger, Founder and CEO of Capital HUB, is a seasoned
