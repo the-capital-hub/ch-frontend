@@ -129,9 +129,8 @@ function PublicRoutes() {
 				path="/home-new"
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
-						{/* <Navbar /> */}
+						<Navbar2 />
 						<HomeNew />
-						{/* <Footer /> */}
 					</Suspense>
 				}
 			/>

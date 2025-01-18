@@ -10,16 +10,16 @@ const Footer = ({ className }) => {
 	return (
 		<footer className="footer_container">
 			<div className="footer_container_top">
-				<div>
+				{/* <div>
 					<p className="text-sm ">
 						Lorem ipsum dolor sit amet consectetur. Magna integer enim vitae
 						vulputate eu vitae tristique.
 					</p>
-				</div>
+				</div> */}
 
 				<div>
 					<h4 className="font-bold text-lg mb-2">General</h4>
-					<ul className="flex flex-col lg:flex-row justify-center md:justify-start items-center md:items-start md:gap-3">
+					<ul className="flex flex-col md:flex-row lg:flex-col xl:flex-col justify-center md:justify-start lg:justify-start items-center md:items-start md:gap-4">
 						<li>
 							<a href="/about" className="hover:text-gray-300">
 								About Us
@@ -45,7 +45,7 @@ const Footer = ({ className }) => {
 
 				<div>
 					<h4 className="font-bold text-lg mb-2">Policies</h4>
-					<ul className="flex flex-col lg:flex-row justify-center md:justify-start items-center md:items-start md:gap-3">
+					<ul className="flex flex-col md:flex-row lg:flex-col xl:flex-col justify-center lg:justify-start items-center md:items-start md:gap-4">
 						<li>
 							<a href="/security" className="hover:text-gray-300">
 								Security safeguards
@@ -70,12 +70,12 @@ const Footer = ({ className }) => {
 				</div>
 
 				<div>
-					<h4 className="font-bold text-lg mb-4">Get in touch</h4>
+					<h4 className="font-bold text-lg mb-2 lg:mb-4">Get in touch</h4>
 					<p className="text-sm md:mb-4">
 						Follow us on social media and stay updated with the latest
 						information about our services
 					</p>
-					<div className="flex justify-center md:justify-start space-x-4">
+					<div className="flex justify-center md:justify-start lg:justify-start space-x-6">
 						<Link to="#" className="footer2-social-icon hover:text-gray-300">
 							<FaFacebookF size={24} />
 						</Link>
@@ -95,22 +95,34 @@ const Footer = ({ className }) => {
 				</div>
 
 				<div>
-					<h4 className="font-bold text-lg mb-4">Subscribe to our Lorem</h4>
+					<h4 className="font-bold text-lg mb-2 lg:mb-4">
+						Subscribe to our Lorem
+					</h4>
 					<p className="text-sm mb-4">
 						Lorem ipsum dolor sit amet consectetur. Velit enim est urna est
 						massa cras.
 					</p>
-					<form className="flex flex-col sm:flex-row gap-1">
+					<form
+						// onSubmit={handleSubscribe}
+						className="flex flex-col sm:flex-row max-w-md mx-auto"
+					>
 						<input
 							type="email"
-							placeholder="Enter your email"
-							className="flex-grow px-2 py-2 rounded-md sm:rounded-l-md  text-gray-900 mb-2 sm:mb-0 w-full sm:w-full"
+							placeholder="Enter Your Email"
+							// value={email}
+							// onChange={(e) => setEmail(e.target.value)}
+							className="px-4 py-2 text-white flex-grow"
+							id="email-input"
+							required
+							// style={{ borderRadius: "20px 0 0 20px" }}
 						/>
 						<button
 							type="submit"
-							className="bg-orange-500 text-white px-2 py-2 mb-2 rounded-md sm:rounded-r-md  hover:bg-orange-600 transition-colors w-full sm:w-40"
+							className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white transition duration-300"
+							id="subscribe-btn"
+							// style={{ borderRadius: "0 20px 20px 0" }}
 						>
-							Join Now
+							Subscribe
 						</button>
 					</form>
 				</div>
