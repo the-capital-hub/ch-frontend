@@ -324,7 +324,7 @@ const QAComponent = () => {
 											? navigate(
 													`/user/${
 														question?.user?.firstName?.toLowerCase() +
-														"-" +
+														"." +
 														question?.user?.lastName?.toLowerCase()
 													}/${question?.user?.oneLinkId}`
 											  )

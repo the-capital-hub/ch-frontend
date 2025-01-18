@@ -38,29 +38,6 @@ body {
 	}
 }
 
-// .profile-nav {
-// 	display: flex;
-// 	justify-content: flex-end;
-// 	padding: 1rem;
-// 	background-color: var(--background-primary);
-// 	border-bottom: 1px solid var(--border-color);
-// 	position: sticky;
-// 	top: 0;
-// 	z-index: 100;
-
-// 	.theme-toggle {
-// 		background: none;
-// 		border: none;
-// 		color: var(--text-primary);
-// 		cursor: pointer;
-// 		padding: 0.5rem;
-// 		font-size: 1.2rem;
-
-// 		&:hover {
-// 			color: var(--primary-color);
-// 		}
-// 	}
-// }
 .profile-nav {
 	display: flex;
 	justify-content: space-between;
@@ -120,6 +97,56 @@ body {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+
+	.profile-links-connect-btn {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		align-items: center;
+		// justify-content: center;
+
+		.profile-links {
+			display: flex;
+			// flex-wrap: wrap;
+			gap: 1rem;
+
+			.link-item {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				color: var(--primary-color);
+				text-decoration: none;
+				padding: 0.5rem;
+				border: 1px solid var(--border-color);
+				border-radius: 24px;
+
+				&:hover {
+					background-color: var(--background-secondary);
+				}
+			}
+		}
+		.connect-btn {
+			width: 80px;
+			height: 30px;
+			border-radius: 50px;
+			background-color: var(--accent-color);
+			color: #ffffff;
+			padding: 5px 10px;
+			font-family: Outfit;
+			font-size: 12px;
+			font-weight: 500;
+			line-height: 20px;
+			text-align: center;
+			text-underline-position: from-font;
+			text-decoration-skip-ink: none;
+			cursor: pointer;
+			transition: all 0.2s ease-in-out;
+
+			&:hover {
+				transform: translateY(-3px);
+			}
+		}
+	}
 }
 
 .profile-header {
@@ -171,7 +198,7 @@ body {
 			display: flex;
 			align-items: center;
 			gap: 0.5rem;
-			color: var(--text-secondary);
+			color: var(--accent-color);
 			margin-top: 0.5rem;
 		}
 	}
@@ -863,34 +890,6 @@ a:focus {
 		}
 	}
 
-	// .interests-content {
-	// 	display: grid;
-	// 	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-	// 	gap: 1rem;
-
-	// 	.interest-card {
-	// 		background: var(--background-primary);
-	// 		border: 1px solid var(--border-color);
-	// 		border-radius: 8px;
-	// 		padding: 1rem;
-	// 		transition: transform 0.2s;
-
-	// 		&:hover {
-	// 			transform: translateY(-2px);
-	// 		}
-
-	// 		h3 {
-	// 			margin: 0 0 0.5rem 0;
-	// 			color: var(--text-primary);
-	// 		}
-
-	// 		p {
-	// 			margin: 0;
-	// 			color: var(--text-secondary);
-	// 			font-size: 0.9rem;
-	// 		}
-	// 	}
-	// }
 	.interests-content {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
