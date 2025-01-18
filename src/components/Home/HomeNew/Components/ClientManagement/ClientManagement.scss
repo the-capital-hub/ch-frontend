@@ -1,0 +1,197 @@
+.ClientManagement {
+	width: 100%;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1.5rem;
+
+	&-container {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding-left: 1rem;
+		gap: 2rem;
+
+		background-image: linear-gradient(
+				to bottom,
+				rgba(255, 200, 100, 1) 20%,
+				transparent 20%
+			),
+			linear-gradient(
+				to bottom,
+				transparent 0%,
+				transparent 20%,
+				rgba(255, 200, 100, 0.7) 20%,
+				rgba(255, 200, 100, 0.7) 65%,
+				transparent 65%
+			);
+		background-position: left top, left top;
+		background-size: 2.5px 100%, 2px 25px;
+		background-repeat: no-repeat, repeat-y;
+
+		&-actions {
+			width: 60%;
+			display: flex;
+			flex-direction: column;
+			gap: 0.75rem;
+			justify-content: center;
+
+			&-card1 {
+				background: #ff973e45;
+				padding: 1rem;
+				border-radius: 0.75rem;
+				&-title {
+					color: #ffffff;
+					font-family: Outfit;
+					font-size: 24px;
+					font-weight: 600;
+					line-height: 30.24px;
+					text-align: left;
+					text-underline-position: from-font;
+					text-decoration-skip-ink: none;
+				}
+				&-description {
+					color: #ffffff;
+					font-family: Outfit;
+					font-size: 18px;
+					font-weight: 400;
+					line-height: 35px;
+					text-align: left;
+					text-underline-position: from-font;
+					text-decoration-skip-ink: none;
+				}
+			}
+			&-card {
+				background: #ffffff1a;
+				padding: 1rem;
+				border-radius: 0.75rem;
+				&-title {
+					color: #ffffff;
+					font-family: Outfit;
+					font-size: 24px;
+					font-weight: 600;
+					line-height: 30.24px;
+					text-align: left;
+					text-underline-position: from-font;
+					text-decoration-skip-ink: none;
+				}
+				&-description {
+					color: #ffffff;
+					font-family: Outfit;
+					font-size: 18px;
+					font-weight: 400;
+					line-height: 35px;
+					text-align: left;
+					text-underline-position: from-font;
+					text-decoration-skip-ink: none;
+				}
+			}
+		}
+
+		&-management-card {
+			width: 40%;
+			max-width: 460px;
+			border-radius: 0.75rem;
+			padding: 1.25rem;
+			display: flex;
+			flex-direction: column;
+			gap: 0.75rem;
+			justify-content: center;
+			align-items: center;
+
+			// card shadow
+			box-shadow: 0 0 30px rgba(255, 255, 255, 0.03),
+				0 0 60px rgba(255, 255, 255, 0.02), 0 0 90px rgba(255, 255, 255, 0.01);
+			transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+			&:hover {
+				box-shadow: 0 0 40px rgba(255, 255, 255, 0.05),
+					0 0 80px rgba(255, 255, 255, 0.03),
+					0 0 120px rgba(255, 255, 255, 0.02);
+			}
+			img {
+				width: 200px;
+				height: 200px;
+				object-fit: cover;
+				border-radius: 0.5rem;
+			}
+
+			&-title {
+				color: #ffffff;
+				font-family: Outfit;
+				font-size: 36px;
+				font-weight: 600;
+				line-height: 45.36px;
+				text-align: center;
+				text-underline-position: from-font;
+				text-decoration-skip-ink: none;
+			}
+
+			&-description {
+				color: #ffffff99;
+				font-family: Outfit;
+				font-size: 18px;
+				font-weight: 400;
+				line-height: 35px;
+				text-align: center;
+				text-underline-position: from-font;
+				text-decoration-skip-ink: none;
+			}
+		}
+	}
+
+	&-view-all-btn {
+		width: 150px;
+		margin: 0 auto;
+		// background color
+		background: linear-gradient(
+			90deg,
+			rgba(136, 36, 5, 0.4) 0%,
+			#000000 49%,
+			rgba(0, 116, 221, 0.4) 100%
+		);
+		padding: 0.75rem 1.5rem;
+		border-radius: 50%;
+		color: #ffffff;
+		font-family: Outfit;
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 22.4px;
+		text-align: center;
+		text-underline-position: from-font;
+		text-decoration-skip-ink: none;
+
+		position: relative;
+		z-index: 1;
+		backdrop-filter: blur(2px);
+		border-radius: 30px;
+
+		&:before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			border-radius: 30px;
+			padding: 1.5px; /* Adjust the thickness here */
+			background: linear-gradient(90deg, #6f1d04 0%, #9d9d9d 50%, #015aab 100%);
+			-webkit-mask: linear-gradient(#fff 0 0) content-box,
+				linear-gradient(#fff 0 0);
+			mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+			-webkit-mask-composite: destination-out;
+			mask-composite: exclude;
+			z-index: -1;
+		}
+
+		cursor: pointer;
+		transition: all 0.2s ease-in-out;
+
+		&:hover {
+			transform: translateY(-5px);
+		}
+	}
+}
