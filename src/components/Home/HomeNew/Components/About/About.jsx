@@ -59,7 +59,7 @@ const AboutUs = () => {
 				<img className="pic" src={Pic8} alt="Pic8" />
 			</div>
 
-			<div className="subscribe-container text-center">
+			{/* <div className="subscribe-container text-center">
 				<h2 className="text-3xl font-bold mb-4">Subscribe Now</h2>
 				<p className="mb-6 max-w-2xl mx-auto">
 					Lorem ipsum dolor sit amet consectetur. At consequat purus hendrerit
@@ -88,7 +88,7 @@ const AboutUs = () => {
 						Subscribe
 					</button>
 				</form>
-			</div>
+			</div> */}
 		</div>
 	);
 };
