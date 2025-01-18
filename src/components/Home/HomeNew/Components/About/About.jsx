@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import ComaImg from "../images/Picture1.png";
-import ComaImg2 from "../images/Picture2.png";
-import Pic1 from "../images/Picture3.png";
-import Pic2 from "../images/Picture4.png";
-import Pic3 from "../images/Picture5.png";
-import Pic4 from "../images/Picture6.png";
-import Pic5 from "../images/Picture7.png";
-import Pic6 from "../images/Picture8.png";
-import Pic7 from "../images/Picture9.png";
-import Pic8 from "../images/Picture10.png";
-import "./aboutus.scss";
+import ComaImg from "../../Images/Picture1.png";
+import ComaImg2 from "../../Images/Picture2.png";
+import Pic1 from "../../Images/Picture3.png";
+import Pic2 from "../../Images/Picture4.png";
+import Pic3 from "../../Images/Picture5.png";
+import Pic4 from "../../Images/Picture6.png";
+import Pic5 from "../../Images/Picture7.png";
+import Pic6 from "../../Images/Picture8.png";
+import Pic7 from "../../Images/Picture9.png";
+import Pic8 from "../../Images/Picture10.png";
+import "./About.scss";
 
 const AboutUs = () => {
 	const [email, setEmail] = useState("");
@@ -81,7 +81,7 @@ const AboutUs = () => {
 					/>
 					<button
 						type="submit"
-						className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white transition duration-300" 
+						className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white transition duration-300"
 						id="subscribe-btn"
 						// style={{ borderRadius: "0 20px 20px 0" }}
 					>
