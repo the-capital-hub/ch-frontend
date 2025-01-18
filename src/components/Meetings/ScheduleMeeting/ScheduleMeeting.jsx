@@ -12,6 +12,7 @@ import "./ScheduleMeeting.scss";
 import { useParams } from "react-router-dom";
 import { load } from "@cashfreepayments/cashfree-js";
 import { environment } from "../../../environments/environment";
+import avatar4 from "../../../Images/avatars/image.png";
 const baseUrl = environment.baseUrl;
 // const token = localStorage.getItem("accessToken");
 
@@ -280,7 +281,7 @@ const MeetingScheduler = () => {
 				<div className="meeting-scheduler__left">
 					<div className="profile">
 						<img
-							src={user.profilePicture}
+							src={user.profilePicture || avatar4}
 							className="profile__image"
 							alt="Profile Pic"
 						/>

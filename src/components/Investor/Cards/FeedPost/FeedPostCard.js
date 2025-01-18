@@ -69,6 +69,11 @@ import { checkTopVoiceExpiry } from "../../../../utils/utilityFunctions";
 import { RiShieldStarFill } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import avatar from "../../../../Images/avatars/image.png";
+import avatar1 from "../../../../Images/avatars/image-1.png";
+import avatar2 from "../../../../Images/avatars/image-2.png";
+import avatar3 from "../../../../Images/avatars/image-3.png";
+import avatar4 from "../../../../Images/avatars/image-4.png";
 
 const FeedPostCard = ({
 	postId,
@@ -244,7 +249,7 @@ const FeedPostCard = ({
 				postId: postId,
 				user: {
 					_id: loggedInUser._id,
-					profilePicture: loggedInUser.profilePicture,
+					profilePicture: loggedInUser.profilePicture || avatar3,
 					firstName: loggedInUser.firstName,
 					lastName: loggedInUser.lastName,
 					designation: loggedInUser.designation,
@@ -756,7 +761,7 @@ const FeedPostCard = ({
 								<img
 									src={
 										profilePicture ||
-										"https://res.cloudinary.com/drjt9guif/image/upload/v1692264454/TheCapitalHub/users/default-user-avatar_fe2ky5.webp"
+										avatar4
 									}
 									width={50}
 									height={50}
@@ -1083,7 +1088,7 @@ const FeedPostCard = ({
 								userId={resharedPostId?.user?._id}
 								postId={resharedPostId?._id}
 								designation={resharedPostId?.user?.designation}
-								profilePicture={resharedPostId?.user?.profilePicture}
+								profilePicture={resharedPostId?.user?.profilePicture || avatar3}
 								description={resharedPostId?.description}
 								firstName={resharedPostId?.user?.firstName}
 								lastName={resharedPostId?.user?.lastName}
@@ -1251,7 +1256,7 @@ const FeedPostCard = ({
 									<div className="mt-1">
 										<div className="comment_container mb-1  border-top border-bottom">
 											{/* <div className="logo"> */}
-											<img src={loggedInUser?.profilePicture} alt="Logo" />
+											<img src={loggedInUser?.profilePicture || avatar3} alt="Logo" />
 											{/* </div> */}
 											<section className="input_and_logo_section">
 												<div className="input_box">
@@ -1342,7 +1347,7 @@ const FeedPostCard = ({
 																}}
 															>
 																<img
-																	src={val.user.profilePicture || ""}
+																	src={val.user.profilePicture || avatar3}
 																	alt="Connection"
 																	className="w-12 h-12 rounded-circle"
 																/>
@@ -1538,7 +1543,7 @@ const FeedPostCard = ({
 							key={user._id}
 							className="user-list d-flex align-items-center gap-2 p-2 border-bottom border-1"
 						>
-							<img src={user.profilePicture} alt="user" />
+							<img src={user.profilePicture || avatar3} alt="user" />
 							<div>
 								<h6 className="m-0">
 									{user.firstName} {user.lastName}

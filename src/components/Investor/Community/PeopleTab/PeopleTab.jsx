@@ -8,6 +8,7 @@ import { selectLoggedInUserId } from "../../../../Store/features/user/userSlice"
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { environment } from '../../../../environments/environment';
+import avatar4 from "../../../../Images/avatars/image-1.png";
 
 const PeopleTab = ({ community }) => {
   const navigate = useNavigate();
@@ -113,7 +114,7 @@ const PeopleTab = ({ community }) => {
           >
             <div className="member-info">
               <img 
-                src={member.profilePicture} 
+                src={member.profilePicture || avatar4} 
                 alt={`${member.firstName} ${member.lastName}`}
                 className="profile-picture"
               />

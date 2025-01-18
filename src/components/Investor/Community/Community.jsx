@@ -34,7 +34,7 @@ import { Toaster, toast } from "react-hot-toast";
 import { MdMenu, MdMenuOpen } from "react-icons/md";
 import { IoFilter } from "react-icons/io5";
 import JoinWhatsAppGroupPopup from "./JoinWhatsAppGroupPopup";
-import { Helmet } from "react-helmet";
+import avatar4 from "../../../Images/avatars/image-4.png";
 
 const WhatsAppBanner = ({ onClick, onClose }) => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -279,11 +279,6 @@ const Community = () => {
           case "home":
             return (
               <>
-                <Helmet>
-                  <title>{community?.name} | The Capital Hub</title>
-                  <meta name="description" content={community?.description} />
-                  <link rel="icon" href={community?.logo} />
-                </Helmet>
                 {community?.whatsapp_group_link && showWhatsAppBanner && (
                   <WhatsAppBanner 
                     onClick={() => setShowWhatsAppPopup(true)} 
@@ -291,7 +286,7 @@ const Community = () => {
                   />
                 )}
                 <div className="create-post">
-                  <img src={loggedInUser?.profilePicture} alt="Community" />
+                  <img src={loggedInUser?.profilePicture || avatar4} alt="Community" />
                   <input 
                     type="text" 
                     placeholder="Share your thoughts with the community..."
@@ -365,7 +360,7 @@ const Community = () => {
                             designation={designation}
                             startUpCompanyName={startUp}
                             investorCompanyName={investor}
-                            profilePicture={profilePicture}
+                            profilePicture={profilePicture || avatar4}
                             description={description}
                             firstName={firstName}
                             lastName={lastName}
@@ -466,207 +461,200 @@ const Community = () => {
       };
 
       return (
-        <>
-          <Helmet>
-            <title>{community?.name} | The Capital Hub</title>
-            <meta name="description" content={community?.description} />
-            <link rel="icon" href={community?.logo} />
-          </Helmet>
-          <div className="community-page" data-bs-theme={theme}>
-            <Toaster 
-              position="top-right"
-              toastOptions={{
-                duration: 5000,
-                style: {
-                  background: '#363636',
-                  color: '#fff',
-                },
-              }}
-            />
-            {!isLoading && community && (
-              <div className="community-header">
-                <div className="community-info">
-                  <div className="info-wrapper">
-                    {isMobileView && (
-                      !isSidebarOpen ? (
-                        <MdMenu
-                          size={25}
-                          style={{
-                            color: "var(--d-l-grey)",
-                          }}
-                          onClick={() => setIsSidebarOpen(prevState => !prevState)}
-                        />
-                      ) : (
-                        <MdMenuOpen
-                          size={25}
-                          style={{
-                            color: "var(--d-l-grey)",
-                          }}
-                          onClick={() => setIsSidebarOpen(prevState => !prevState)}
-                        />
-                      )
-                    )}
+        <div className="community-page" data-bs-theme={theme}>
+          <Toaster 
+            position="top-right"
+            toastOptions={{
+              duration: 5000,
+              style: {
+                background: '#363636',
+                color: '#fff',
+              },
+            }}
+          />
+          {!isLoading && community && (
+            <div className="community-header">
+              <div className="community-info">
+                <div className="info-wrapper">
+                  {isMobileView && (
+                    !isSidebarOpen ? (
+                      <MdMenu
+                        size={25}
+                        style={{
+                          color: "var(--d-l-grey)",
+                        }}
+                        onClick={() => setIsSidebarOpen(prevState => !prevState)}
+                      />
+                    ) : (
+                      <MdMenuOpen
+                        size={25}
+                        style={{
+                          color: "var(--d-l-grey)",
+                        }}
+                        onClick={() => setIsSidebarOpen(prevState => !prevState)}
+                      />
+                    )
+                  )}
 
-                    <img src={community?.image} alt={community?.name} />
-                    <div className="info-text">
-                      <h1>{community?.name}</h1>
-                      <p>{community?.description}</p>
-                      <div className="stats">
-                        <span>{community?.members?.length + 1} members</span>
-                        <span>{allPosts.length} posts</span>
-                      </div>
+                  <img src={community?.image} alt={community?.name} />
+                  <div className="info-text">
+                    <h1>{community?.name}</h1>
+                    <p>{community?.description}</p>
+                    <div className="stats">
+                      <span>{community?.members?.length + 1} members</span>
+                      <span>{allPosts.length} posts</span>
                     </div>
                   </div>
-               {!isMobileView && <nav className="horizontal-menu">
-                    <button 
-                      className={activeTab === "home" ? "active" : ""} 
-                      onClick={() => handleTabChange("home")}
-                    >
-                      Home
-                    </button>
-                    <button 
-                      className={activeTab === "products" ? "active" : ""} 
-                      onClick={() => handleTabChange("products")}
-                    >
-                      Products
-                    </button>
-                    <button 
-                      className={activeTab === "events" ? "active" : ""} 
-                      onClick={() => handleTabChange("events")}
-                    >
-                      Events
-                    </button>
-                    <button 
-                      className={activeTab === "people" ? "active" : ""} 
-                      onClick={() => handleTabChange("people")}
-                    >
-                      People
-                    </button>
-                    <button 
-                      className={activeTab === "about" ? "active" : ""} 
-                      onClick={() => handleTabChange("about")}
-                    >
-                      About
-                    </button>
-                    {isAdmin && (
-                      <button 
-                        className={activeTab === "settings" ? "active" : ""} 
-                        onClick={() => handleTabChange("settings")}
-                      >
-                        Settings
-                      </button>
-                    )}
-                  </nav>}
-                  <div className="right-elements">
-                  <OnboardingSwitch />
-                  {!isMobileView && <Link to="/manage-account" className="profile-link">
-                    <img 
-                      src={loggedInUser?.profilePicture} 
-                      alt="Profile" 
-                      className="profile-pic"
-                    />
-                  </Link>}
-                  </div>
                 </div>
-              </div>
-            )}
-    
-            <div className="community-content">
-              <div className="main-content">
-                {renderTabContent()}
-                {popupOpen && (
-                  <CreatePostPopUp
-                    setPopupOpen={setPopupOpen}
-                    popupOpen={popupOpen}
-                    communityId={community?._id}
-                    appendDataToAllPosts={handlePostCreated}
-                  />
-                )}
-              </div>
-            </div>
-            {showWhatsAppPopup && (
-              <JoinWhatsAppGroupPopup 
-                onClose={() => setShowWhatsAppPopup(false)} 
-                onJoin={handleJoinWhatsAppGroup} 
-              />
-            )}
-            {isMobileView && isSidebarOpen && (
-              <div className="mobile-sidebar">
-                <div className="sidebar-header">
-                  <Link to="/manage-account" className="profile-section">
-                    <img 
-                      src={loggedInUser?.profilePicture} 
-                      alt="Profile" 
-                      className="profile-pic"
-                    />
-                    <div className="profile-info">
-                      <h3>{loggedInUser?.firstName} {loggedInUser?.lastName}</h3>
-                      <p>{loggedInUser?.designation}</p>
-                    </div>
-                  </Link>
-                </div>
-                <nav className="sidebar-menu">
+             {!isMobileView && <nav className="horizontal-menu">
                   <button 
                     className={activeTab === "home" ? "active" : ""} 
-                    onClick={() => {
-                      handleTabChange("home");
-                      setIsSidebarOpen(false);
-                    }}
+                    onClick={() => handleTabChange("home")}
                   >
                     Home
                   </button>
                   <button 
                     className={activeTab === "products" ? "active" : ""} 
-                    onClick={() => {
-                      handleTabChange("products");
-                      setIsSidebarOpen(false);
-                    }}
+                    onClick={() => handleTabChange("products")}
                   >
                     Products
                   </button>
                   <button 
                     className={activeTab === "events" ? "active" : ""} 
-                    onClick={() => {
-                      handleTabChange("events");
-                      setIsSidebarOpen(false);
-                    }}
+                    onClick={() => handleTabChange("events")}
                   >
                     Events
                   </button>
                   <button 
                     className={activeTab === "people" ? "active" : ""} 
-                    onClick={() => {
-                      handleTabChange("people");
-                      setIsSidebarOpen(false);
-                    }}
+                    onClick={() => handleTabChange("people")}
                   >
                     People
                   </button>
                   <button 
                     className={activeTab === "about" ? "active" : ""} 
-                    onClick={() => {
-                      handleTabChange("about");
-                      setIsSidebarOpen(false);
-                    }}
+                    onClick={() => handleTabChange("about")}
                   >
                     About
                   </button>
                   {isAdmin && (
                     <button 
                       className={activeTab === "settings" ? "active" : ""} 
-                      onClick={() => {
-                        handleTabChange("settings");
-                        setIsSidebarOpen(false);
-                      }}
+                      onClick={() => handleTabChange("settings")}
                     >
                       Settings
                     </button>
                   )}
-                </nav>
+                </nav>}
+                <div className="right-elements">
+                <OnboardingSwitch />
+                {!isMobileView && <Link to="/manage-account" className="profile-link">
+                  <img 
+                    src={loggedInUser?.profilePicture || avatar4} 
+                    alt="Profile" 
+                    className="profile-pic"
+                  />
+                </Link>}
+                </div>
               </div>
-            )}
+            </div>
+          )}
+    
+          <div className="community-content">
+            <div className="main-content">
+              {renderTabContent()}
+              {popupOpen && (
+                <CreatePostPopUp
+                  setPopupOpen={setPopupOpen}
+                  popupOpen={popupOpen}
+                  communityId={community?._id}
+                  appendDataToAllPosts={handlePostCreated}
+                />
+              )}
+            </div>
           </div>
-        </>
+          {showWhatsAppPopup && (
+            <JoinWhatsAppGroupPopup 
+              onClose={() => setShowWhatsAppPopup(false)} 
+              onJoin={handleJoinWhatsAppGroup} 
+            />
+          )}
+          {isMobileView && isSidebarOpen && (
+            <div className="mobile-sidebar">
+              <div className="sidebar-header">
+                <Link to="/manage-account" className="profile-section">
+                  <img 
+                    src={loggedInUser?.profilePicture || avatar4} 
+                    alt="Profile" 
+                    className="profile-pic"
+                  />
+                  <div className="profile-info">
+                    <h3>{loggedInUser?.firstName} {loggedInUser?.lastName}</h3>
+                    <p>{loggedInUser?.designation}</p>
+                  </div>
+                </Link>
+              </div>
+              <nav className="sidebar-menu">
+                <button 
+                  className={activeTab === "home" ? "active" : ""} 
+                  onClick={() => {
+                    handleTabChange("home");
+                    setIsSidebarOpen(false);
+                  }}
+                >
+                  Home
+                </button>
+                <button 
+                  className={activeTab === "products" ? "active" : ""} 
+                  onClick={() => {
+                    handleTabChange("products");
+                    setIsSidebarOpen(false);
+                  }}
+                >
+                  Products
+                </button>
+                <button 
+                  className={activeTab === "events" ? "active" : ""} 
+                  onClick={() => {
+                    handleTabChange("events");
+                    setIsSidebarOpen(false);
+                  }}
+                >
+                  Events
+                </button>
+                <button 
+                  className={activeTab === "people" ? "active" : ""} 
+                  onClick={() => {
+                    handleTabChange("people");
+                    setIsSidebarOpen(false);
+                  }}
+                >
+                  People
+                </button>
+                <button 
+                  className={activeTab === "about" ? "active" : ""} 
+                  onClick={() => {
+                    handleTabChange("about");
+                    setIsSidebarOpen(false);
+                  }}
+                >
+                  About
+                </button>
+                {isAdmin && (
+                  <button 
+                    className={activeTab === "settings" ? "active" : ""} 
+                    onClick={() => {
+                      handleTabChange("settings");
+                      setIsSidebarOpen(false);
+                    }}
+                  >
+                    Settings
+                  </button>
+                )}
+              </nav>
+            </div>
+          )}
+        </div>
       );
 }
 

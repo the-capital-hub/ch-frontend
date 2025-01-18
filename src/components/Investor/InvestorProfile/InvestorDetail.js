@@ -1,5 +1,5 @@
 import React from "react";
-import DefaultAvatar from "../../../Images/Chat/default-user-avatar.webp";
+import DefaultAvatar from "../../../Images/avatars/image.png";
 
 const InvestorDetail = ({
   professionalData,

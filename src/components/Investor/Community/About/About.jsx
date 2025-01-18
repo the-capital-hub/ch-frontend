@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { FaLinkedin } from 'react-icons/fa';
 import './About.scss';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
+import avatar4 from "../../../../Images/avatars/image-1.png";
 
 
 const About = ({ community }) => {
@@ -40,7 +41,7 @@ const About = ({ community }) => {
           <h2 className='community-heading'>Community Admin</h2>
           {admin && (
             <div className="admin-card" onClick={() => handleAdminClick(admin.userName, admin._id)}>
-              <img src={admin.profilePicture} alt={`${admin.firstName} ${admin.lastName}`} />
+              <img src={admin.profilePicture || avatar4} alt={`${admin.firstName} ${admin.lastName}`} />
               <div className="admin-info">
                 <h3 style={{ display: 'flex', alignItems: 'center' }}>
                   {admin.firstName} {admin.lastName}
