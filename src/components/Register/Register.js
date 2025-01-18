@@ -5,6 +5,7 @@ import { getBase64 } from "../../utils/getBase64";
 import otpBanner from "../../Images/otpBanner.png";
 import { RiCloseLine as X } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
+import { IoCloseCircleOutline } from "react-icons/io5";
 import {
 	sendOTP,
 	verifyOTP,
@@ -171,19 +172,19 @@ function OtpVerificationModal({
 	);
 }
 
-const Register = () => {
+const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 	const dispatch = useDispatch();
 	const [isMobileVerified, setIsMobileVerified] = useState(false);
 	const [inputValues, setInputValues] = useState({
-		firstName: "",
-		lastName: "",
-		email: "",
+		firstName: rawUser?.firstName || "",
+		lastName: rawUser?.lastName || "",
+		email: rawUser?.email || "",
 		password: "",
-		phoneNumber: "",
-		designation: "",
-		gender: "",
-		linkedin: "",
-		profilePicture: "",
+		phoneNumber: rawUser?.phoneNumber || "",
+		designation: rawUser?.designation || "",
+		gender: rawUser?.gender || "",
+		linkedin: rawUser?.linkedin || "",
+		profilePicture: rawUser?.profilePicture || "",
 	});
 	const [companyDetail, setCompanyDetail] = useState({
 		company: "",
@@ -612,10 +613,16 @@ const Register = () => {
 	return (
 		<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
 			<div className="register_container">
-				<button className="back-button" onClick={handleBack}>
-					<IoArrowBack />
-					<span>Back</span>
-				</button>
+				{isRawUser ? (
+					<button className="back-button" onClick={() => setShowSignupModal(false)}>
+						<IoCloseCircleOutline />
+					</button>
+				) : (
+					<button className="back-button" onClick={handleBack}>
+						<IoArrowBack />
+						<span>Back</span>
+					</button>
+				)}
 				<Toaster 
 					position="top-right"
 					toastOptions={{
@@ -735,10 +742,12 @@ const Register = () => {
 						</button>
 					</form>
 
-					<div className="login-redirect">
-						<span>Already have an account?</span>
-						<Link to="/login">Login here</Link>
-					</div>
+					{!isRawUser && (
+						<div className="login-redirect">
+							<span>Already have an account?</span>
+							<Link to="/login">Login here</Link>
+						</div>
+					)}
 				</div>
 			</div>
 

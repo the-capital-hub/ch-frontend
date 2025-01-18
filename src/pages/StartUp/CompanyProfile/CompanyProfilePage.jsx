@@ -56,7 +56,7 @@ export default function CompanyProfilePage() {
 
   useEffect(() => {
     setLoading(true);
-    getStartupByFounderId(loggedInUser._id)
+    getStartupByFounderId(loggedInUser?._id)
       .then(({ data }) => {
         setCompanyData(data);
         dispatch(setUserCompany(data));
@@ -66,7 +66,7 @@ export default function CompanyProfilePage() {
         setLoading(false);
         console.error("Error fetching startup data:", error.message);
       });
-    getUserById("", loggedInUser._id).then(({ data }) => {
+    getUserById("", loggedInUser?._id).then(({ data }) => {
       setUserData(data);
     });
     document.title = "Company Profile | The Capital Hub";
@@ -95,13 +95,13 @@ export default function CompanyProfilePage() {
   const handleAddStartup = async () => {
     try {
       const response = await addStartUpToUser(
-        loggedInUser._id,
+        loggedInUser?._id,
         selectedCompanyId
       );
       if (response.isFirst) {
         notify();
         const notificationBody = {
-          recipient: loggedInUser._id,
+          recipient: loggedInUser?._id,
           type: "achievementCompleted",
           achievementId: "6564687349186bca517cd0cd",
         };
@@ -115,7 +115,7 @@ export default function CompanyProfilePage() {
           .then(({ data }) => {
             setCompanyData(data);
             dispatch(setUserCompany(data));
-            setUserData({...userData, startUp: data._id});
+            setUserData({...userData, startUp: data?._id});
             setSelectedCompanyId(null);
             setCompanies([]);
           })
@@ -177,11 +177,11 @@ export default function CompanyProfilePage() {
                     {companies.map((company, index) => (
                       <div
                         className={`suggestion-item ${
-                          selectedCompanyId === company._id ? "active" : ""
+                          selectedCompanyId === company?._id ? "active" : ""
                         }`}
                         key={index}
                         onClick={() =>
-                          handleCompanySelection(company._id, company.company)
+                          handleCompanySelection(company?._id, company?.company)
                         }
                       >
                         <img

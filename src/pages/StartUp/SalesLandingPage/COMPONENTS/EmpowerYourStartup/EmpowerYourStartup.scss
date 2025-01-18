@@ -1,12 +1,36 @@
 .EmpowerYourStartup-container {
 	background-color: rgb(5, 5, 5);
 	// position: relative;
-	background-image: url("../imagesNew/EmpowerYourStartup-BG.png");
-	@media (max-width: 460px) {
-		background-image: url("../imagesNew/EYS-BG-Mobile.png");
+	// background-image: url("../imagesNew/EmpowerYourStartup-BG.png");
+	// @media (max-width: 460px) {
+	// 	background-image: url("../imagesNew/EYS-BG-Mobile.png");
+	// }
+	// background-size: cover;
+	// background-position: center;
+
+	background: linear-gradient(to top, transparent, rgba(92, 91, 91, 0.8));
+	// background: linear-gradient(to top right, transparent, rgba(49, 49, 49, 0.8)),
+	// 	linear-gradient(to top left, transparent, rgba(49, 49, 49, 0.8));
+	// background-blend-mode: overlay;
+
+	position: relative;
+
+	/* Grid Background */
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-size: 50px 50px;
+		background-image: linear-gradient(
+				to right,
+				rgba(255, 255, 255, 0.1) 1px,
+				transparent 1px
+			),
+			linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
 	}
-	background-size: cover;
-	background-position: center;
 
 	.EmpowerYourStartup-content {
 		display: flex;
@@ -62,11 +86,26 @@
 			}
 
 			.EmpowerYourStartup-card {
+				// background: radial-gradient(
+				// 	254.42% 124.05% at -10.2% 8.57%,
+				// 	#1f1f22 0%,
+				// 	#19191b 100%
+				// );
+				// padding: 1rem;
+				// border-radius: 0.75rem;
+				// text-align: left;
+				// width: 45%;
+				// height: 225px;
+				// overflow: hidden;
+
 				background: radial-gradient(
-					254.42% 124.05% at -10.2% 8.57%,
-					#1f1f22 0%,
-					#19191b 100%
-				);
+						254.42% 124.05% at -10.2% 8.57%,
+						#1f1f22 0%,
+						#19191b 100%
+					),
+					radial-gradient(circle, rgba(255, 255, 255, 0.05) 1%, transparent 1%);
+				background-size: 1px 1px; /* Small circles for noise */
+				background-blend-mode: overlay; /* Blend noise with the base gradient */
 				padding: 1rem;
 				border-radius: 0.75rem;
 				text-align: left;
@@ -172,6 +211,7 @@
 				}
 
 				.EmpowerYourStartup-price-card-button {
+					width: 100%;
 					display: block;
 					position: relative;
 					padding: 0.7rem 2rem;

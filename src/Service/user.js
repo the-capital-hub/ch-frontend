@@ -37,6 +37,26 @@ async function getUser() {
 	}
 }
 
+async function getRawUsers() {
+	try {
+		const response = await axiosInstance.get(API.getRawUsers);
+		return response.data;
+	} catch (error) {
+		console.error("Error:", error);
+		throw error;
+	}
+}
+
+async function getRawUserById(userId) {
+	try {
+		const response = await axiosInstance.get(`${API.getRawUserById}/${userId}`);
+		return response.data;
+	} catch (error) {
+		console.error("Error:", error);
+		throw error;
+	}
+}
+
 async function getPdfData(oneLinkId, folderName) {
 	try {
 		const requestBody = {
@@ -521,6 +541,8 @@ export {
 	unblockUser,
 	getUserByIdBody,
 	sharePostLinkedin,
+	getRawUsers,
+	getRawUserById,
 };
 export const deletePostAPI = async (postId) => {
 	try {
