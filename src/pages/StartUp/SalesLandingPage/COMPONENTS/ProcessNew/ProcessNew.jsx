@@ -7,6 +7,12 @@ import step4Img from "../images/step4ProfileCreated.png";
 import step5Img from "../images/founterCard.png";
 import step6Img from "../images/startupCard.png";
 
+import finallyImg from "../imagesNew/finally-img.png";
+import eventsImg from "../imagesNew/events.png";
+import webinar from "../imagesNew/webinar.png";
+import pitchDays from "../imagesNew/pitch-days.png";
+import networkingEvents from "../imagesNew/networking-events.png";
+
 const ProcessNew = () => {
 	return (
 		<div className="process-new-container">
@@ -129,6 +135,69 @@ const ProcessNew = () => {
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+
+			<div className="process-new-content-2">
+				<div className="process-new-finally">
+					<div className="finally-img-container">
+						<img className="finally-img" src={finallyImg} alt="" />
+					</div>
+					<div className="process-new-finally-content">
+						<h3>Finally</h3>
+						<p>
+							Join Hustler’s club to connect with like minded startups, angel
+							investors and VC’s in an invite only community powered by Capital
+							HUB.
+						</p>
+					</div>
+				</div>
+
+				<div className="process-new-finally-cards">
+					<div className="process-new-finally-card">
+						<div className="process-new-finally-card-top">
+							<img src={eventsImg} alt="" />
+							<h3>Events</h3>
+						</div>
+						<p>
+							Learn from top investors and founders. These invite-only sessions
+							will help you sharpen your growth strategies.
+						</p>
+					</div>
+					<div className="process-new-finally-card">
+						<div className="process-new-finally-card-top">
+							<img src={webinar} alt="" />
+							<h3>Webinar</h3>
+						</div>
+						<p>
+							Learn from top investors and founders. These invite-only sessions
+							will help you sharpen your growth strategies.
+						</p>
+					</div>
+					<div className="process-new-finally-card">
+						<div className="process-new-finally-card-top">
+							<img src={pitchDays} alt="" />
+							<h3>Pitch Days</h3>
+						</div>
+						<p>
+							Learn from top investors and founders. These invite-only sessions
+							will help you sharpen your growth strategies.
+						</p>
+					</div>
+					<div className="process-new-finally-card">
+						<div className="process-new-finally-card-top">
+							<img src={networkingEvents} alt="" />
+							<h3>Networking Events</h3>
+						</div>
+						<p>
+							Learn from top investors and founders. These invite-only sessions
+							will help you sharpen your growth strategies.
+						</p>
+					</div>
+				</div>
+
+				<div className="process-new-finally-button">
+					<button>Get Started Now</button>
 				</div>
 			</div>
 		</div>
