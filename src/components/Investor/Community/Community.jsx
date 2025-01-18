@@ -35,6 +35,8 @@ import { MdMenu, MdMenuOpen } from "react-icons/md";
 import { IoFilter } from "react-icons/io5";
 import JoinWhatsAppGroupPopup from "./JoinWhatsAppGroupPopup";
 import avatar4 from "../../../Images/avatars/image-4.png";
+import WhiteLogo from "../../../Images/investorIcon/logo-white.png";
+import DarkLogo from "../../../Images/investorIcon/new-logo.png";
 
 const WhatsAppBanner = ({ onClick, onClose }) => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -547,7 +549,7 @@ const Community = () => {
                   )}
                 </nav>}
                 <div className="right-elements">
-                <OnboardingSwitch />
+                {!isMobileView && <OnboardingSwitch />}
                 {!isMobileView && <Link to="/manage-account" className="profile-link">
                   <img 
                     src={loggedInUser?.profilePicture || avatar4} 
@@ -570,6 +572,14 @@ const Community = () => {
                   communityId={community?._id}
                   appendDataToAllPosts={handlePostCreated}
                 />
+              )}
+              {!isMobileView && (
+                <Link to="/home" className="desktop-logo-link">
+                  <img 
+                    src={theme === "dark" ? WhiteLogo : DarkLogo} 
+                    alt="The Capital Hub" 
+                  />
+                </Link>
               )}
             </div>
           </div>
@@ -594,6 +604,11 @@ const Community = () => {
                   </div>
                 </Link>
               </div>
+
+              <div className="sidebar-onboarding">
+                <OnboardingSwitch />
+              </div>
+
               <nav className="sidebar-menu">
                 <button 
                   className={activeTab === "home" ? "active" : ""} 
@@ -651,6 +666,9 @@ const Community = () => {
                     Settings
                   </button>
                 )}
+                  <Link to="/home" className="logo-link">
+                  <img src={theme === "dark" ? WhiteLogo : DarkLogo} alt="The Capital Hub" />
+                </Link>
               </nav>
             </div>
           )}
