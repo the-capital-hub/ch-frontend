@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import bg from "../images/Polygon 7.png";
 import dot from "../images/Polygon 12.png";
 import blurdot from "../images/Polygon 2 (2).png";

@@ -56,7 +56,7 @@ export default function CompanyProfilePage() {
 
   useEffect(() => {
     setLoading(true);
-    getStartupByFounderId(loggedInUser._id)
+    getStartupByFounderId(loggedInUser?._id)
       .then(({ data }) => {
         setCompanyData(data);
         dispatch(setUserCompany(data));
@@ -66,7 +66,7 @@ export default function CompanyProfilePage() {
         setLoading(false);
         console.error("Error fetching startup data:", error.message);
       });
-    getUserById("", loggedInUser._id).then(({ data }) => {
+    getUserById("", loggedInUser?._id).then(({ data }) => {
       setUserData(data);
     });
     document.title = "Company Profile | The Capital Hub";
@@ -95,13 +95,13 @@ export default function CompanyProfilePage() {
   const handleAddStartup = async () => {
     try {
       const response = await addStartUpToUser(
-        loggedInUser._id,
+        loggedInUser?._id,
         selectedCompanyId
       );
       if (response.isFirst) {
         notify();
         const notificationBody = {
-          recipient: loggedInUser._id,
+          recipient: loggedInUser?._id,
           type: "achievementCompleted",
           achievementId: "6564687349186bca517cd0cd",
         };
@@ -111,11 +111,11 @@ export default function CompanyProfilePage() {
       }
       if (response.status === 200) {
         setShowSuccess(true);
-        getStartupByFounderId(loggedInUser._id)
+        getStartupByFounderId(loggedInUser?._id)
           .then(({ data }) => {
             setCompanyData(data);
             dispatch(setUserCompany(data));
-            setUserData({...userData, startUp: data._id});
+            setUserData({...userData, startUp: data?._id});
             setSelectedCompanyId(null);
             setCompanies([]);
           })
@@ -141,8 +141,8 @@ export default function CompanyProfilePage() {
         {/* Main content */}
         <div className="main__content">
           <SmallProfileCard text={"Company Profile"} />
-          {companyData?.founderId._id === loggedInUser._id && (
-            <OneLinkRequestsBanner startUpId={companyData._id} />
+          {companyData?.founderId?._id === loggedInUser?._id && (
+            <OneLinkRequestsBanner startUpId={companyData?._id} />
           )}
           <div className="edit-container">
             <div className="add_company_data rounded-4 p-4 mb-2">
@@ -177,11 +177,11 @@ export default function CompanyProfilePage() {
                     {companies.map((company, index) => (
                       <div
                         className={`suggestion-item ${
-                          selectedCompanyId === company._id ? "active" : ""
+                          selectedCompanyId === company?._id ? "active" : ""
                         }`}
                         key={index}
                         onClick={() =>
-                          handleCompanySelection(company._id, company.company)
+                          handleCompanySelection(company?._id, company?.company)
                         }
                       >
                         <img
@@ -202,7 +202,7 @@ export default function CompanyProfilePage() {
             {!loading && (
               <>
                 {companyData && companyData?.length !== 0 && (
-                  companyData?.founderId._id === loggedInUser._id && (
+                  companyData?.founderId?._id === loggedInUser?._id && (
                     <>
                       <div className="edit_company_text rounded-4 p-4 shadow-sm">
                         <Link
