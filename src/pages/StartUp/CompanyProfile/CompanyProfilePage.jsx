@@ -111,7 +111,7 @@ export default function CompanyProfilePage() {
       }
       if (response.status === 200) {
         setShowSuccess(true);
-        getStartupByFounderId(loggedInUser._id)
+        getStartupByFounderId(loggedInUser?._id)
           .then(({ data }) => {
             setCompanyData(data);
             dispatch(setUserCompany(data));
@@ -141,8 +141,8 @@ export default function CompanyProfilePage() {
         {/* Main content */}
         <div className="main__content">
           <SmallProfileCard text={"Company Profile"} />
-          {companyData?.founderId._id === loggedInUser._id && (
-            <OneLinkRequestsBanner startUpId={companyData._id} />
+          {companyData?.founderId?._id === loggedInUser?._id && (
+            <OneLinkRequestsBanner startUpId={companyData?._id} />
           )}
           <div className="edit-container">
             <div className="add_company_data rounded-4 p-4 mb-2">
@@ -202,7 +202,7 @@ export default function CompanyProfilePage() {
             {!loading && (
               <>
                 {companyData && companyData?.length !== 0 && (
-                  companyData?.founderId._id === loggedInUser._id && (
+                  companyData?.founderId?._id === loggedInUser?._id && (
                     <>
                       <div className="edit_company_text rounded-4 p-4 shadow-sm">
                         <Link
