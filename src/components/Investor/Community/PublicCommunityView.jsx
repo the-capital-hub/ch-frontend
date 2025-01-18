@@ -12,6 +12,7 @@ import { getAllPostsAPI } from "../../../Service/user";
 import Modal from 'react-modal';
 import { sendOTP, verifyOTP, postUserLogin } from "../../../Service/user";
 import { loginSuccess } from '../../../Store/features/user/userSlice';
+import { Helmet } from "react-helmet";
 
 Modal.setAppElement('#root');
 
@@ -320,6 +321,11 @@ const PublicCommunityView = () => {
 
   return (
     <div className="public-community-view">
+      <Helmet>
+        <title>{community?.name} | The Capital Hub</title>
+        <meta name="description" content={community?.description} />
+        <link rel="icon" href={community?.logo} />
+      </Helmet>
       <About community={community} />
       
       {/* Replace admin posts section */}
