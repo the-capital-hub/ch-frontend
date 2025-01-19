@@ -156,7 +156,6 @@ const InvestorNavbar = (props) => {
 								onFocus={() => setInputOnFocus(true)}
 								onBlurCapture={searchInputBlurHandler}
 							/>
-							
 						</form>
 						{inputOnFocus && searchSuggestions && !mobileSearch && (
 							<div className="search_results rounded-4 border shadow-sm p-4 position-absolute">
@@ -175,7 +174,7 @@ const InvestorNavbar = (props) => {
 													<Link
 														key={_id}
 														className="single_result"
-														to={`/user/${firstName.toLowerCase()}-${lastName.toLowerCase()}/${oneLinkId}`}
+														to={`/user/${firstName.toLowerCase()}.${lastName.toLowerCase()}/${oneLinkId}`}
 													>
 														{firstName} {lastName}
 													</Link>
@@ -235,42 +234,49 @@ const InvestorNavbar = (props) => {
 					</div>
 
 					{/* Mobile hamberger and page title */}
-					{!props.isCommunity && (<div
-						className={`mobile-home-hamberger`}
-						onClick={props.handleSidebarToggle}
-					>
-						<span className={`${props.pageTitle === "Chats" ? "d-none" : ""}`}>
-							{props.sidebarCollapsed ? (
-								<MdMenu
-									size={25}
-									style={{
-										color: "var(--d-l-grey)",
-									}}
-								/>
-							) : (
-								<MdMenuOpen
-									size={25}
-									style={{
-										color: "var(--currentTheme)",
-									}}
-								/>
-							)}
-						</span>
-						<h1 className="ms-2 text-break">{props.pageTitle || pageTitle}</h1>
-					</div>)}
-					{props.isCommunity && (<div
-						className={`mobile-home-hamberger`}
-						onClick={props.handleSidebarToggle}
-					>
-						<h1 className="ms-2 text-break">{"Community"}</h1>
-					</div>)}
-
+					{!props.isCommunity && (
+						<div
+							className={`mobile-home-hamberger`}
+							onClick={props.handleSidebarToggle}
+						>
+							<span
+								className={`${props.pageTitle === "Chats" ? "d-none" : ""}`}
+							>
+								{props.sidebarCollapsed ? (
+									<MdMenu
+										size={25}
+										style={{
+											color: "var(--d-l-grey)",
+										}}
+									/>
+								) : (
+									<MdMenuOpen
+										size={25}
+										style={{
+											color: "var(--currentTheme)",
+										}}
+									/>
+								)}
+							</span>
+							<h1 className="ms-2 text-break">
+								{props.pageTitle || pageTitle}
+							</h1>
+						</div>
+					)}
+					{props.isCommunity && (
+						<div
+							className={`mobile-home-hamberger`}
+							onClick={props.handleSidebarToggle}
+						>
+							<h1 className="ms-2 text-break">{"Community"}</h1>
+						</div>
+					)}
 				</div>
 
 				{/* Navbar right */}
 				<div className="startup_navbar_right_container">
 					{/* Search for mobile view start*/}
-					{(mobileSearch && !props.isCommunity) && (
+					{mobileSearch && !props.isCommunity && (
 						<div className="search_container_mobile rounded-4 shadow-sm border p-3 position-absolute d-flex flex-column">
 							<form
 								onSubmit={searchSubmitHandler}
@@ -381,19 +387,21 @@ const InvestorNavbar = (props) => {
 					)}
 					<div className="icons-container">
 						{/* Search for mobile view start*/}
-						{!props.isCommunity && (<div className="mobile-icon-wrapper-search position-relative ">
-							<span
-								className="notification-icon"
-								onClick={() => setMobileSearch((prev) => !prev)}
-							>
-								<FiSearch
-									size={25}
-									style={{
-										color: "var(--d-l-grey)",
-									}}
-								/>
-							</span>
-						</div>)}
+						{!props.isCommunity && (
+							<div className="mobile-icon-wrapper-search position-relative ">
+								<span
+									className="notification-icon"
+									onClick={() => setMobileSearch((prev) => !prev)}
+								>
+									<FiSearch
+										size={25}
+										style={{
+											color: "var(--d-l-grey)",
+										}}
+									/>
+								</span>
+							</div>
+						)}
 
 						{/* Notification */}
 						<div
@@ -430,7 +438,6 @@ const InvestorNavbar = (props) => {
 											{unreadNotifications}
 										</div>
 									)}
-									
 								</>
 							)}
 						</div>

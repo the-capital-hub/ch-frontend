@@ -104,7 +104,7 @@ const FeedPostCard = ({
 	setPostData,
 	isSubscribed,
 	isTopVoice,
-	communityId
+	communityId,
 }) => {
 	const [showComment, setShowComment] = useState(isSinglePost);
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -574,7 +574,7 @@ const FeedPostCard = ({
 				setLikedBy(data?.data.likedBy);
 				// Remove duplicates based on user ID
 				const uniqueUsers = data?.data.users.reduce((acc, current) => {
-					const x = acc.find(item => item._id === current._id);
+					const x = acc.find((item) => item._id === current._id);
 					if (!x) {
 						return acc.concat([current]);
 					} else {
@@ -772,7 +772,7 @@ const FeedPostCard = ({
 							<div className="feedpostcart_text_header my-1">
 								<Link
 									to={`/user/${
-										firstName?.toLowerCase() + "-" + lastName?.toLowerCase()
+										firstName?.toLowerCase() + "." + lastName?.toLowerCase()
 									}/${oneLinkId}`}
 									className="text-decoration-none header-container"
 									style={{
@@ -805,7 +805,7 @@ const FeedPostCard = ({
 												<span className="top-voice-text">Top Voice</span>
 											</span>
 										)}
-									{(!communityId && loggedInUser._id !== userId) ? (
+									{!communityId && loggedInUser._id !== userId ? (
 										connectionSent ? (
 											<span className="request_sent_feed d-inline">
 												Request Sent
@@ -836,15 +836,15 @@ const FeedPostCard = ({
 												className="d-flex align-items-center"
 												style={{
 													fontSize: "12px",
-												color: "var(--d-l-grey)",
-											}}
-										>
-											<MdBusinessCenter size={18} />
-											&nbsp;{designation} at{" "}
-											{investorCompanyName?.companyName
-												? investorCompanyName?.companyName
-												: startUpCompanyName?.company}
-										</span>
+													color: "var(--d-l-grey)",
+												}}
+											>
+												<MdBusinessCenter size={18} />
+												&nbsp;{designation} at{" "}
+												{investorCompanyName?.companyName
+													? investorCompanyName?.companyName
+													: startUpCompanyName?.company}
+											</span>
 										)}
 										<span
 											className="d-flex align-items-center location"
@@ -898,7 +898,7 @@ const FeedPostCard = ({
 
 										{kebabMenuVisible && (
 											<ul className="kebab_menu border rounded shadow-sm p-3">
-												{userId === loggedInUser?._id && ( !communityId && (
+												{userId === loggedInUser?._id && !communityId && (
 													<li
 														onClick={() => handleAddToFeatured(postId)}
 														className="d-flex align-items-center gap-1"
@@ -912,7 +912,7 @@ const FeedPostCard = ({
 																<span>Featured</span>
 															)}
 														</span>
-													</li>)
+													</li>
 												)}
 												{userId === loggedInUser?._id && (
 													<li
@@ -933,8 +933,8 @@ const FeedPostCard = ({
 													<IconReportPost />
 													<span>Report</span>
 												</li>
-												{userId === loggedInUser?._id && (
-													!communityId && (<li
+												{userId === loggedInUser?._id && !communityId && (
+													<li
 														onClick={() => handleAddToCompanyPost(postId)}
 														className="d-flex align-items-center gap-1"
 														style={{ color: "var(--d-l-grey)" }}
@@ -947,7 +947,7 @@ const FeedPostCard = ({
 																<span>Company</span>
 															)}
 														</span>
-													</li>)
+													</li>
 												)}
 											</ul>
 										)}
@@ -1049,11 +1049,11 @@ const FeedPostCard = ({
 														left: 0,
 														top: 0,
 														height: "100%",
-														background: communityId 
-														? "linear-gradient(90deg, rgba(253, 89, 1, 0.6) 0%, rgba(147, 6, 255, 0.6) 100%)" 
-														: "rgba(253, 89, 1, 0.1)",
+														background: communityId
+															? "linear-gradient(90deg, rgba(253, 89, 1, 0.6) 0%, rgba(147, 6, 255, 0.6) 100%)"
+															: "rgba(253, 89, 1, 0.1)",
 														transition: "width 0.3s ease",
-													  }}
+													}}
 												/>
 												<span className="option-text">{option.option}</span>
 												<span className="vote-count">
@@ -1129,33 +1129,61 @@ const FeedPostCard = ({
 								className="mt-1 mb-2 hr"
 								style={{ height: "3px", borderColor: "var(--d-l-grey)" }}
 							/> */}
-							<div className="row feedpostcard_footer" style={{ width: "98%" , marginLeft: "1%"}}>
+							<div
+								className="row feedpostcard_footer"
+								style={{ width: "98%", marginLeft: "1%" }}
+							>
 								{/* for desktop and tab view */}
 								<div className="d-flex align-items-center gap-1 justify-content-between pt-2 pb-2">
 									{/* Save */}
 									<div className="d-flex align-items-center">
 										{savedPostId.includes(postId) ? (
-											<IoMdBookmark size={23} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} onClick={handleUnsavePost} />
+											<IoMdBookmark
+												size={23}
+												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												onClick={handleUnsavePost}
+											/>
 										) : (
-											<CiBookmark size={23} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} onClick={handleSavePopUp} />
+											<CiBookmark
+												size={23}
+												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												onClick={handleSavePopUp}
+											/>
 										)}
 									</div>
 
 									{/* Share */}
 									<div className="d-flex align-items-center">
-										<FaShare size={23} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} onClick={handleOpenSocialShare} />
+										<FaShare
+											size={23}
+											style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+											onClick={handleOpenSocialShare}
+										/>
 									</div>
 
 									{/* Repost */}
 									<span className="repost_container">
-										<div className="d-flex align-items-center" style={{ cursor: "pointer",
+										<div
+											className="d-flex align-items-center"
+											style={{
+												cursor: "pointer",
 												padding: "0.5rem",
 												borderRadius: "50%",
-												backgroundColor: communityId ? "transparent" : "#fd5901", 
-												background: communityId ? "linear-gradient(90deg, #FD5901 0%, #9306FF 100%)" : "#fd5901", 
-												color: communityId ? "white" : "initial" }}>
-											<BiRepost 
-												style={{ cursor: "pointer", transform: "rotate(90deg)", fill: "var(--d-l-grey)"  }}
+												backgroundColor: communityId
+													? "transparent"
+													: "#fd5901",
+												background: communityId
+													? "linear-gradient(90deg, #FD5901 0%, #9306FF 100%)"
+													: "#fd5901",
+												color: communityId ? "white" : "initial",
+											}}
+										>
+											<BiRepost
+												style={{
+													cursor: "pointer",
+													transform: "rotate(90deg)",
+													fill: "var(--d-l-grey)",
+												}}
 												size={23}
 												onClick={() => setShowRepostOptions(!showRepostOptions)}
 											/>
@@ -1221,13 +1249,25 @@ const FeedPostCard = ({
 									<div className="d-flex align-items-center">
 										{!showComment ? (
 											<div className="d-flex align-items-center gap-1">
-												<FaRegCommentDots size={23} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} onClick={() => setShowComment(prev => !prev)} />
-												<span className="feedpostcard_comment_count_badge">{comments?.length}</span>
+												<FaRegCommentDots
+													size={23}
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+													onClick={() => setShowComment((prev) => !prev)}
+												/>
+												<span className="feedpostcard_comment_count_badge">
+													{comments?.length}
+												</span>
 											</div>
 										) : (
 											<div className="d-flex align-items-center gap-1">
-												<FaCommentDots size={23} style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} onClick={() => setShowComment(prev => !prev)} />
-												<span className="feedpostcard_comment_count_badge">{comments?.length}</span>
+												<FaCommentDots
+													size={23}
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+													onClick={() => setShowComment((prev) => !prev)}
+												/>
+												<span className="feedpostcard_comment_count_badge">
+													{comments?.length}
+												</span>
 											</div>
 										)}
 									</div>
@@ -1235,9 +1275,18 @@ const FeedPostCard = ({
 									{/* Like */}
 									<div className="d-flex align-items-center">
 										{liked ? (
-											<img src={fireIcon} width={20} alt="like post" style={{ cursor: "pointer" }} onClick={likeUnlikeHandler} />
+											<img
+												src={fireIcon}
+												width={20}
+												alt="like post"
+												style={{ cursor: "pointer" }}
+												onClick={likeUnlikeHandler}
+											/>
 										) : (
-											<ImFire style={{ cursor: "pointer", fill: "var(--d-l-grey)" }} onClick={likeUnlikeHandler} />
+											<ImFire
+												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												onClick={likeUnlikeHandler}
+											/>
 										)}
 									</div>
 								</div>
@@ -1374,7 +1423,10 @@ const FeedPostCard = ({
 																		checkTopVoiceExpiry(
 																			val.user?.isTopVoice?.expiry
 																		) && (
-																			<span className="top-voice-badge" style={{ marginTop: "-0.2rem" }}>
+																			<span
+																				className="top-voice-badge"
+																				style={{ marginTop: "-0.2rem" }}
+																			>
 																				<RiShieldStarFill className="top-voice-icon" />
 																				{/* <span className="top-voice-text">
 																					Top Voice
@@ -1401,14 +1453,18 @@ const FeedPostCard = ({
 														<div>
 															{val?.likes?.includes(loggedInUser?._id) ? (
 																<span
-																	onClick={() => commentlikeUnlikeHandler(postId, val._id)}
+																	onClick={() =>
+																		commentlikeUnlikeHandler(postId, val._id)
+																	}
 																	className="like-text liked"
 																>
 																	Unlike
 																</span>
 															) : (
 																<span
-																	onClick={() => commentlikeUnlikeHandler(postId, val._id)}
+																	onClick={() =>
+																		commentlikeUnlikeHandler(postId, val._id)
+																	}
 																	className="like-text"
 																>
 																	Like
@@ -1442,7 +1498,7 @@ const FeedPostCard = ({
 
 				{showSavePopUp && (
 					<SavePostPopUP
-						communityId = {communityId}
+						communityId={communityId}
 						postId={postId}
 						savedPostStatus={receiveSavedPostStatus}
 						onClose={handleCloseSavePopup}

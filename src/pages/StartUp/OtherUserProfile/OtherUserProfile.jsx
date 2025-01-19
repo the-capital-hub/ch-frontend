@@ -43,8 +43,8 @@ function OtherUserProfile() {
 	const [connectionSent, setConnectionSent] = useState(false);
 	const [showEmail, setShowEmail] = useState(false);
 	const [email, setEmail] = useState("");
-	const theme = useSelector(selectTheme);
 	const [subscriptionAlert, setSubscriptionAlert] = useState(false);
+	const theme = useSelector(selectTheme);
 	const { userId } = useParams();
 	const navigate = useNavigate(); // Import and use useNavigate
 	// console.log("environment", environment.baseUrl);
@@ -240,7 +240,7 @@ function OtherUserProfile() {
 		<>
 			<MaxWidthWrapper>
 				<section className="other_user_profile mx-lg-4 mx-xl-0">
-					<SmallProfileCard className="mt-lg-2 mt-xl-0" text="User Details" />
+					{/* <SmallProfileCard className="mt-lg-2 mt-xl-0" text="User Details" /> */}
 					{userData ? (
 						<>
 							<div className="row profile rounded-4 border shadow-sm">
@@ -280,8 +280,7 @@ function OtherUserProfile() {
 											</h3>
 
 											<span className="small_typo">
-												{userData?.designation ||
-													""}
+												{userData?.designation || ""}
 											</span>
 											{/* <br /> */}
 											<span className="small_typo">
