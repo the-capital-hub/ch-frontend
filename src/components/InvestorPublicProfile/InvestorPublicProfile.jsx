@@ -25,6 +25,7 @@ import UserPic from "../../Images/UserPic.jpg";
 import AIPoster from "../../Images/AIPoster.jpg";
 import ImageCarousel from "../Investor/Cards/FeedPost/ImageCarousel/ImageCarousel";
 import "./InvestorPublicProfile.scss";
+import avatar4 from "../../Images/avatars/image.png";
 
 const Spinner = () => (
 	<div className="loader-container">
@@ -276,7 +277,7 @@ const FounderProfile = () => {
 				email: founder.email || dummyData.email,
 				joined: founder?.startUp?.startedAtDate || dummyData.joined,
 				about: founder.bio || dummyData.about,
-				profilePic: founder.profilePicture || "", // Assuming a default empty string if not provided
+				profilePic: founder.profilePicture || avatar4, // Assuming a default empty string if not provided
 				publicLinks: {
 					website:
 						founder?.startUp?.socialLinks?.website ||

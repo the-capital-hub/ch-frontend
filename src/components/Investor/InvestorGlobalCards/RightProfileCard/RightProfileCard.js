@@ -6,6 +6,7 @@ import { getInvestorById, getUserByIdBody } from "../../../../Service/user";
 import BatchImag from "../../../../Images/tick-mark.png";
 import { checkTopVoiceExpiry } from "../../../../utils/utilityFunctions";
 import { RiShieldStarFill } from "react-icons/ri";
+import avatar4 from "../../../../Images/avatars/image.png";
 
 const RightProfileCard = ({ noProfile }) => {
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -42,7 +43,7 @@ const RightProfileCard = ({ noProfile }) => {
 			<div className="view_profile_name_section mt-2">
 				{loggedInUser.isSubscribed ? (
 					<img
-						src={loggedInUser.profilePicture}
+						src={loggedInUser.profilePicture || avatar4}
 						style={{
 							width: "100px",
 							height: "100px",
@@ -59,7 +60,7 @@ const RightProfileCard = ({ noProfile }) => {
 					/>
 				) : (
 					<img
-						src={loggedInUser.profilePicture}
+						src={loggedInUser.profilePicture || avatar4}
 						style={{
 							width: "100px",
 							height: "100px",

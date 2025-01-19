@@ -20,6 +20,11 @@ import deleteIcon from "../../../Images/post/delete.png";
 import achievement from "../../../Images/Investor/Achievements/img_1.png";
 // import AchievementToast from "../../Toasts/AchievementToast/AchievementToast";
 // import { achievementTypes } from "../../Toasts/AchievementToast/types";
+import avatar from "../../../Images/avatars/image.png";
+import avatar1 from "../../../Images/avatars/image-1.png";
+import avatar2 from "../../../Images/avatars/image-2.png";
+import avatar3 from "../../../Images/avatars/image-3.png";
+import avatar4 from "../../../Images/avatars/image-4.png";
 
 const Connection = () => {
 	const [selectedTab, setSelectedTab] = useState("received"); // Default to "received"
@@ -187,7 +192,7 @@ const Connection = () => {
 													<div className="connection_left">
 														<Link to={`/user/${sender?._id}`}>
 															<img
-																src={sender.profilePicture}
+																src={sender.profilePicture || avatar4}
 																alt={`${sender.firstName} ${sender.lastName}`}
 																style={{ objectFit: "cover" }}
 															/>
@@ -268,7 +273,7 @@ const Connection = () => {
 														<div className="connection_left">
 															<Link to={`/user/${receiver?._id}`}>
 																<img
-																	src={receiver?.profilePicture}
+																	src={receiver?.profilePicture || avatar3}
 																	alt={`${receiver?.firstName} ${receiver?.lastName}`}
 																	style={{ objectFit: "cover" }}
 																/>
@@ -337,7 +342,7 @@ const Connection = () => {
 												<div className="connection_left">
 													<Link to={`/user/${data._id}`}>
 														<img
-															src={data.profilePicture}
+															src={data.profilePicture || avatar2}
 															alt={`${data.firstName} ${data.lastname}`}
 															style={{ objectFit: "cover" }}
 														/>

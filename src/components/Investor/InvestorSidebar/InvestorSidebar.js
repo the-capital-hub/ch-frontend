@@ -43,6 +43,7 @@ import { RiShieldStarFill } from "react-icons/ri";
 import { HiOutlineUserPlus } from "react-icons/hi2";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
+import avatar4 from "../../../Images/avatars/image.png";
 
 import "react-pro-sidebar/dist/css/styles.css";
 import "./investorsidebar.scss";
@@ -168,7 +169,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 											height: "50px",
 											objectFit: "cover",
 										}}
-										src={loggedInUser.profilePicture}
+										src={loggedInUser.profilePicture || avatar4}
 										alt="User profile"
 									/>
 								</Link>
@@ -210,7 +211,7 @@ const InvestorSidebar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 													objectFit: "cover",
 													border: "2px solid transparent",
 												}}
-												src={loggedInUser.profilePicture}
+												src={loggedInUser.profilePicture || avatar4}
 												alt="Profile"
 											/>
 										</Link>

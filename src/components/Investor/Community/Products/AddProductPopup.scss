@@ -10,7 +10,7 @@
     justify-content: center;
     z-index: 1000;
   
-    .popup-content {
+    .add-product-popup-content {
       background: var(--white-to-grey);
       padding: 2rem;
       border-radius: 0.5rem;
@@ -31,7 +31,7 @@
         text-align: center;
       }
   
-      .form-group {
+      .add-product-form-group {
         margin-bottom: 1.5rem;
   
         label {
@@ -59,7 +59,7 @@
           }
         }
   
-        &.checkbox {
+        &.add-product-checkbox {
           label {
             display: flex;
             align-items: center;
@@ -67,12 +67,12 @@
           }
         }
   
-        .url-input {
+        .add-product-url-input {
           display: flex;
           gap: 0.5rem;
           margin-bottom: 0.5rem;
   
-          .remove-url {
+          .add-product-remove-url {
             background: #ff4444;
             color: white;
             border: none;
@@ -82,7 +82,7 @@
           }
         }
   
-        .add-url {
+        .add-product-add-url {
           background: none;
           border: 1px dashed var(--border-color);
           color: var(--text-color);
@@ -98,7 +98,7 @@
         }
       }
   
-      .button-group {
+      .add-product-button-group {
         display: flex;
         gap: 1rem;
         margin-top: 2rem;
@@ -111,13 +111,13 @@
           cursor: pointer;
           font-weight: 500;
   
-          &.cancel-btn {
+          &.add-product-cancel-btn {
             background: var(--background-color);
             color: var(--text-color);
             border: 1px solid var(--border-color);
           }
   
-          &.submit-btn {
+          &.add-product-submit-btn {
             background: linear-gradient(90deg, #FD5901 0%, #9306FF 100%);
             color: white;
   
@@ -129,7 +129,7 @@
         }
       }
   
-      .close-btn {
+      .add-product-close-btn {
         position: sticky;
         left: 100%;
         background: none;

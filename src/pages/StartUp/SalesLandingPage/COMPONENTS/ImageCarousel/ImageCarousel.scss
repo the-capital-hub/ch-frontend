@@ -1,4 +1,5 @@
 .connection-container {
+	margin-top: -30rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -6,7 +7,7 @@
 	position: relative;
 	padding: 20px;
 	overflow: hidden;
-	background: linear-gradient(to bottom, rgba(47, 0, 0, 0.8), transparent);
+	
 
 	/* Grid Background */
 	&::before {
@@ -39,6 +40,10 @@
 		cursor: pointer;
 		transform: translateY(50px);
 		animation: fade-in 1s ease-out forwards;
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+		transform-style: preserve-3d;
+		perspective: 2000px;
+		transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 
 		@media (max-width: 480px) {
 			width: 90%;
@@ -47,6 +52,26 @@
 		&:hover {
 			background: linear-gradient(#000430, #121212);
 			animation: fade-in 1s ease-out forwards;
+			transform: translateY(-20px) rotateX(10deg) rotateY(15deg);
+			box-shadow: 
+				30px 30px 80px rgba(0, 0, 0, 0.7),
+				2px 2px 0px 1px rgba(255, 255, 255, 0.15);
+
+			.header {
+				transform: translateZ(50px);
+			}
+
+			.description {
+				transform: translateZ(30px);
+			}
+
+			.tags {
+				transform: translateZ(40px);
+			}
+
+			.status {
+				transform: translateZ(35px);
+			}
 		}
 
 		&:nth-child(1) {
@@ -74,6 +99,7 @@
 
 				img {
 					width: 50px;
+					transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 				}
 			}
 
@@ -93,6 +119,8 @@
 			font-size: 0.9rem;
 			color: #aaa;
 			margin-bottom: 15px;
+			transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+			transform-style: preserve-3d;
 		}
 
 		.tags {
@@ -100,6 +128,8 @@
 			flex-wrap: wrap;
 			gap: 8px;
 			margin-bottom: 15px;
+			transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+			transform-style: preserve-3d;
 
 			span {
 				background: #333;
@@ -117,6 +147,21 @@
 			width: 50%;
 			font-size: 0.85rem;
 			color: lightgreen;
+			transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+			transform-style: preserve-3d;
+		}
+
+		.header, .description, .tags, .status {
+			transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+			transform-style: preserve-3d;
+		}
+
+		&:hover {
+			.header {
+				.icon img {
+					transform: scale(1.1) translateZ(60px);
+				}
+			}
 		}
 	}
 

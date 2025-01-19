@@ -53,6 +53,11 @@ import BatchImag from "../../../../Images/tick-mark.png";
 import ImageCarousel from "./ImageCarousel/ImageCarousel";
 import { environment } from "../../../../environments/environment";
 import { FaShare } from "react-icons/fa";
+import avatar from "../../../../Images/avatars/image.png";
+import avatar1 from "../../../../Images/avatars/image-1.png";
+import avatar2 from "../../../../Images/avatars/image-2.png";
+import avatar3 from "../../../../Images/avatars/image-3.png";
+import avatar4 from "../../../../Images/avatars/image-4.png";
 
 const PostDetail = ({
   postId,
@@ -166,7 +171,7 @@ const PostDetail = ({
         postId: postId,
         user: {
           _id: loggedInUser._id,
-          profilePicture: loggedInUser.profilePicture,
+          profilePicture: loggedInUser.profilePicture || avatar4,
           firstName: loggedInUser.firstName,
           lastName: loggedInUser.lastName,
           designation: loggedInUser.designation,
@@ -492,7 +497,7 @@ const PostDetail = ({
                 <img
                   src={
                     profilePicture ||
-                    "https://res.cloudinary.com/drjt9guif/image/upload/v1692264454/TheCapitalHub/users/default-user-avatar_fe2ky5.webp"
+                    avatar4
                   }
                   width={50}
                   height={50}
@@ -929,7 +934,7 @@ const PostDetail = ({
         <Modal.Body>
           {likedByUsers?.map((user) => (
             <div className="user-list d-flex align-items-center gap-2 p-2 border-bottom border-1">
-              <img src={user.profilePicture} alt="user" />
+              <img src={user.profilePicture || avatar4} alt="user" />
               <div>
                 <h6 className="m-0">
                   {user.firstName} {user.lastName}

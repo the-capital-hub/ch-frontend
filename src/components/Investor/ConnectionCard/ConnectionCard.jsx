@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { selectLoggedInUserId } from "../../../Store/features/user/userSlice";
 import messageIcon from "../../../Images/StartUp/icons/message.svg";
 import { selectTheme } from "../../../Store/features/design/designSlice";
+import avatar4 from "../../../Images/avatars/image-1.png";
 
 function ConnectionCard({ userIdData, theme }) {
   // Fetch from store
@@ -50,7 +51,7 @@ function ConnectionCard({ userIdData, theme }) {
                 style={{ color: "inherit" }}
               >
                 <img
-                  src={item?.profilePicture}
+                  src={item?.profilePicture || avatar4}
                   alt=""
                   className="rounded-pill"
                   style={{borderColor:theme==="investor"? "#DDFF71"
