@@ -46,7 +46,7 @@ import {
   selectVideoAutoplay,
   selectIsMobileView
 } from "../../../Store/features/design/designSlice";
-
+import avatar4 from "../../../Images/avatars/image.png";
 import {selectIsInvestor} from "../../../Store/features/user/userSlice";
 
 const FeedPostCard = ({
@@ -145,7 +145,7 @@ const FeedPostCard = ({
         postId: postId,
         user: {
           _id: loggedInUser._id,
-          profilePicture: loggedInUser.profilePicture,
+          profilePicture: loggedInUser.profilePicture || avatar4,
           firstName: loggedInUser.firstName,
           lastName: loggedInUser.lastName,
           designation: loggedInUser.designation,
@@ -505,8 +505,7 @@ const FeedPostCard = ({
               >
                 <img
                   src={
-                    profilePicture ||
-                    "https://res.cloudinary.com/drjt9guif/image/upload/v1692264454/TheCapitalHub/users/default-user-avatar_fe2ky5.webp"
+                    profilePicture || avatar4
                   }
                   width={50}
                   height={50}
@@ -1033,7 +1032,7 @@ const FeedPostCard = ({
                             }}
                           >
                             <img
-                              src={val.user.profilePicture || ""}
+                              src={val.user.profilePicture || avatar4}
                               alt="Connection"
                               className="w-100 rounded-circle border border-light"
                             />

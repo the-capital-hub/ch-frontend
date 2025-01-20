@@ -1,20 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import Features from "../Features/Features";
 import { useNavigate } from "react-router-dom";
 import smallline from "../images/Line 152.png";
-import img2 from "../images/Home.png";
-import play from "../images/playbutton.png";
-import arrow1 from "../images/arrow1.png";
-import axios from "axios";
 import Modal from "react-modal";
 import "./home.scss";
 import { environment } from "../../../../../environments/environment";
-import { load } from "@cashfreepayments/cashfree-js";
-import { toast } from "react-toastify";
-import { sendOTP, verifyOTP } from "../../../../../Service/user";
-import { useDispatch } from "react-redux";
-import { loginSuccess } from "../../../../../Store/features/user/userSlice";
-import { postUserLogin, updateUserAPI } from "../../../../../Service/user";
 import { usePaymentFlow } from "../../../../../hooks/usePaymentFlow";
 
 const Home = () => {

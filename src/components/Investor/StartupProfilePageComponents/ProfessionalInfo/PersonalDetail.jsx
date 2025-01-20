@@ -13,6 +13,7 @@ import {
 	updateUserCompany,
 } from "../../../../Store/features/user/userSlice";
 import ProfessionalInfoDisplay from "./ProfessionalInfoDisplay";
+import avatar4 from "../../../../Images/avatars/image.png";
 
 // this component used as Professional Info Card
 const PersonalDetail = ({ theme }) => {
@@ -32,7 +33,7 @@ const PersonalDetail = ({ theme }) => {
 		designation: loggedInUser?.designation || "",
 		education: loggedInUser?.education || "",
 		experience: loggedInUser?.experience || "",
-		profilePicture: loggedInUser.profilePicture || "",
+		profilePicture: loggedInUser.profilePicture || avatar4,
 		fullName: loggedInUser?.firstName + " " + loggedInUser?.lastName || "",
 		company: companyName,
 		location: loggedInUser?.location || "Bangalore, India",

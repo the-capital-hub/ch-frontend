@@ -32,7 +32,7 @@ import BatchImag from "../../../Images/tick-mark.png";
 import { MdDelete } from "react-icons/md";
 import { checkTopVoiceExpiry } from "../../../utils/utilityFunctions";
 import { RiShieldStarFill } from "react-icons/ri";
-
+import avatar4 from "../../../Images/avatars/image.png";
 const InvestorManageAccount = () => {
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 	const [otherAccounts, setOtherAccounts] = useState(
@@ -313,7 +313,7 @@ const InvestorManageAccount = () => {
 									{/* Body */}
 									<div className="d-flex align-items-center">
 										<div className="profile_image">
-											<img src={loggedInUser?.profilePicture} alt="img" />
+											<img src={loggedInUser?.profilePicture || avatar4} alt="img" />
 										</div>
 										<div className="name_email">
 											<h4 className="text-break">
@@ -414,7 +414,7 @@ const InvestorManageAccount = () => {
 															</label>
 															<div className="profile_image">
 																<img
-																	src={account.user?.profilePicture || ""}
+																	src={account.user?.profilePicture || avatar4}
 																	alt="img"
 																/>
 															</div>

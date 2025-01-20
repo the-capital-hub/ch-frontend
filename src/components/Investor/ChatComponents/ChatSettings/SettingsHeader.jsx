@@ -1,5 +1,5 @@
 import IconClose from "../../SvgIcons/IconClose";
-import Default from "../../../../Images/Chat/default-user-avatar.webp";
+import Default from "../../../../Images/avatars/image-3.png";
 // import IconVideo from "../../SvgIcons/IconVideo";
 // import IconCall from "../../SvgIcons/IconCall";
 // import IconEdit from "../../SvgIcons/IconEdit";

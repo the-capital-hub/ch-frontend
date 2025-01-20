@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import DefaultAvatar from "../../../../Images/Chat/default-user-avatar.webp";
+import DefaultAvatar from "../../../../Images/avatars/image.png";
 import { CiEdit, CiSaveUp2 } from "react-icons/ci";
 import IconCloudUpload from "../../SvgIcons/IconCloudUpload";
 import { useSelector } from "react-redux";

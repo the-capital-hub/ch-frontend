@@ -12,6 +12,7 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import { setRecommendations } from "../../../../Store/features/user/userSlice";
 import { FaUserPlus , FaUserCircle } from "react-icons/fa";
+import avatar4 from "../../../../Images/avatars/image-1.png";
 
 
 const RecommendationCard = ({ maxCount = 5 }) => {
@@ -99,7 +100,7 @@ const RecommendationCard = ({ maxCount = 5 }) => {
                             src={
                               user.profilePicture && user.profilePicture.trim() !== ""
                                 ? user.profilePicture
-                                : <FaUserCircle /> // External fallback image URL
+                                : avatar4 // External fallback image URL
                             }
                             alt="img"
                             className="rounded-circle"

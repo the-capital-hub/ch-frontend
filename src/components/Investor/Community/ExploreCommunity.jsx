@@ -13,6 +13,8 @@ import NewCommunityModal from "../ChatComponents/NewCommunityModal";
 import { selectTheme } from "../../../Store/features/design/designSlice";
 import PurchasePopup from '../../../components/Shared/PurchasePopup/PurchasePopup';
 import { load } from "@cashfreepayments/cashfree-js";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ExploreCommunities() {
   const [communities, setCommunities] = useState([]);
@@ -23,6 +25,8 @@ export default function ExploreCommunities() {
   const theme = useSelector(selectTheme);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedCommunity, setSelectedCommunity] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [joiningCommunityId, setJoiningCommunityId] = useState(null);
 
   useEffect(() => {
     fetchCommunities();
@@ -50,34 +54,37 @@ export default function ExploreCommunities() {
     return moment(date).fromNow();
   };
 
-  const handleCommunityClick = async (community) => {
-    // Check if user is admin
-    if (community.adminId === loggedInUserId) {
-      navigate(`/community/${community._id}`);
-      return;
-    }
+  const CustomToast = ({ message }) => (
+    <div className="custom-toast">
+      <div className="toast-icon">✓</div>
+      <div className="toast-message">{message}</div>
+    </div>
+  );
 
-    // Check if user is already a member
-    if (community.members.includes(loggedInUserId)) {
-      navigate(`/community/${community._id}`);
-      return;
-    }
-
-    // If community is closed, show message and return
+  const handleJoinCommunity = async (e, community) => {
+    e.stopPropagation();
+    
     if (!community.isOpen) {
-      toast.info('This community is closed for new members');
+      toast(<CustomToast message="This community is closed for new members" />, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        className: 'custom-toast-container',
+      });
       return;
     }
 
-    // If community is paid, show payment modal
     if (community.subscription === 'paid') {
       setSelectedCommunity(community);
       setShowPaymentModal(true);
       return;
     }
 
-    // If free, join directly
     try {
+      setJoiningCommunityId(community._id);
       const token = localStorage.getItem('accessToken');
       await axios.post(
         `${environment.baseUrl}/communities/addMembersToCommunity/${community._id}`,
@@ -90,12 +97,36 @@ export default function ExploreCommunities() {
           },
         }
       );
-      toast.success('Successfully joined the community!');
-      navigate(`/community/${community._id}`);
+      
+      toast(<CustomToast message="Successfully joined the community!" />, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        className: 'custom-toast-container',
+      });
+      
+      await fetchCommunities();
     } catch (error) {
       console.error('Error joining community:', error);
-      toast.error('Failed to join the community');
+      toast(<CustomToast message="Failed to join the community" />, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        className: 'custom-toast-container error',
+      });
+    } finally {
+      setJoiningCommunityId(null);
     }
+  };
+
+  const handleCommunityClick = (community) => {
+    navigate(`/community/${community._id}`);
   };
 
   // Initialize Cashfree SDK
@@ -217,10 +248,8 @@ export default function ExploreCommunities() {
 
   return (
     <div className="my-community-page" style={getThemeStyles()} data-theme={theme}>
+      <ToastContainer />
       <InvestorNavbar />
-      <button className="back-button" style={backButtonStyles} onClick={() => navigate(-1)}>
-        <BsArrowLeft /> Back
-      </button>
 
       <div className="content-container">
         <h1>Communities</h1>
@@ -275,12 +304,10 @@ export default function ExploreCommunities() {
                 {(!community.members.some(member => member?.member?.toString() === loggedInUserId) && community.isOpen) && community.adminId!==loggedInUserId && (
                   <button 
                     className="join-button" 
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent triggering the card click
-                      handleCommunityClick(community);
-                    }}
+                    disabled={joiningCommunityId === community._id}
+                    onClick={(e) => handleJoinCommunity(e, community)}
                   >
-                    Join
+                    {joiningCommunityId === community._id ? 'Joining...' : 'Join'}
                   </button>
                 )}
               </div>

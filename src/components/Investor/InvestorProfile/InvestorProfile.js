@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import InvestorDetail from "./InvestorDetail";
 import { selectIsInvestor,selectCompanyName, loginSuccess, updateUserCompany } from "../../../Store/features/user/userSlice";
 import { postInvestorData, postStartUpData, updateUserAPI } from "../../../Service/user";
+import avatar4 from "../../../Images/avatars/image.png";
 
 const InvestorProfile = ({ theme }) => {
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -24,7 +25,7 @@ const InvestorProfile = ({ theme }) => {
     designation: loggedInUser?.designation || "",
     education: loggedInUser?.education || "",
     experience: loggedInUser?.experience || "",
-    profilePicture: loggedInUser.profilePicture || "",
+    profilePicture: loggedInUser.profilePicture || avatar4,
     fullName: loggedInUser?.firstName + " " + loggedInUser?.lastName || "",
     company: companyName,
     location: loggedInUser?.location || "Bangalore, India",

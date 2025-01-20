@@ -1,10 +1,8 @@
 import React from "react";
-import Exclusive from "../images/exclusive.png";
 import dot from "../images/Ellipse 9.png";
 import blurdot from "../images/Ellipse 12.png";
 import small from "../images/Ellipse 20.png";
 import bg from "../images/Polygon 12.png";
-import fox from "../imagesNew/fox.png";
 import onelink from "../imagesNew/onelink.png";
 import connectStartup from "../imagesNew/connectStartup.png";
 import amplifyStartup from "../imagesNew/amplifyStartup.png";
@@ -14,83 +12,6 @@ import "./HustlersCapitalHub.scss";
 const HustlersCapitalHub = () => {
 	return (
 		<>
-			<div className="deals-container">
-				<div className="inner-container">
-					<h2 className="head-two">
-						Why Join <span>Hustlers Club?</span>
-					</h2>
-
-					<div className="hustler-img-text">
-						{/* Add the logo image here */}
-						<img src={fox} alt="Hustlers Club Logo" className="logo-image" />
-						<p className="sub-text">
-							Hustlers Club gives you all the tools and support you need to take
-							your startup to the next level.
-						</p>
-					</div>
-
-					<div className="exc-outer">
-						<div className="exclusive-content">
-							<div className="content-left">
-								<h3>Exclusive webinars and Events</h3>
-								<p>
-									Learn from top investors and founders. These invite-only
-									sessions will help you sharpen your growth strategies.
-								</p>
-								<button
-									className="buy-now-btn"
-									// onClick={() => paymentFlow.setIsModalOpen(true)}
-								>
-									Buy Now
-								</button>
-							</div>
-							<div className="content-right">
-								<img src={Exclusive} alt="exclusive" />
-							</div>
-						</div>
-
-						<div className="exclusive-content2">
-							<div className="content-left">
-								<h3>1 : 1 Discussions with Experts</h3>
-								<p>
-									Book private sessions with industry leaders who can offer
-									insights on fundraising, business strategy, and growth.
-								</p>
-							</div>
-						</div>
-					</div>
-
-					<center>
-						<button className="head">Join Hustlers Club Now</button>
-					</center>
-				</div>
-
-				{/* <Modal
-					isOpen={paymentFlow.isModalOpen}
-					onRequestClose={() => paymentFlow.setIsModalOpen(false)}
-					className="subscription-modal"
-					overlayClassName="subscription-modal-overlay"
-				>
-					{paymentFlow.renderSubscriptionModal()}
-				</Modal>
-
-				<Modal
-					isOpen={paymentFlow.showOtpModal}
-					onRequestClose={() => paymentFlow.setShowOtpModal(false)}
-					className="otp-modal"
-					overlayClassName="otp-modal-overlay"
-				>
-					{paymentFlow.renderOtpModal()}
-				</Modal>
-
-				{paymentFlow.isLoading && (
-					<div className="loader-overlay">
-						<div className="loader"></div>
-						<p className="loader-text">Processing payment...</p>
-					</div>
-				)} */}
-			</div>
-
 			<div className="pricing-container">
 				<div className="heading">
 					<h1>
@@ -107,8 +28,8 @@ const HustlersCapitalHub = () => {
 							<span>One</span> Link
 						</h1>
 						<p>
-							"Streamline your startup's communication by sharing key documents,
-							pitch decks, and updates through a single, easy-to-share link."
+							Streamline your startup's communication by sharing key documents,
+							pitch decks, and updates through a single, easy-to-share link.
 						</p>
 					</div>
 				</div>
@@ -118,9 +39,9 @@ const HustlersCapitalHub = () => {
 							Connect with the <span>Right Investors</span>
 						</h1>
 						<p>
-							"Tap into a curated network of 500+ VCs and 1000+ angel investors,
+							Tap into a curated network of 500+ VCs and 1000+ angel investors,
 							streamlining the process of connecting with the right backers for
-							your growth."
+							your growth.
 						</p>
 					</div>
 					<div className="image">
@@ -136,9 +57,9 @@ const HustlersCapitalHub = () => {
 							Amplify Your <span>Startup’s Presence</span>
 						</h1>
 						<p>
-							"Gain exposure in a dynamic ecosystem, boosting your brand
+							Gain exposure in a dynamic ecosystem, boosting your brand
 							credibility and attracting investors and partners who can
-							accelerate your growth."
+							accelerate your growth.
 						</p>
 					</div>
 				</div>

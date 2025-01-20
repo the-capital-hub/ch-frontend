@@ -24,6 +24,11 @@ import { generateId } from "../../../../utils/ChatsHelpers";
 import toast from "react-hot-toast";
 import { loginSuccess } from "../../../../Store/features/user/userSlice";
 import { blockUserSuccess, unblockUserSuccess, selectBlockedUsers } from "../../../../Store/features/chat/chatSlice";
+import avatar from "../../../../Images/avatars/image.png";
+import avatar1 from "../../../../Images/avatars/image-1.png";
+import avatar2 from "../../../../Images/avatars/image-2.png";
+import avatar3 from "../../../../Images/avatars/image-3.png";
+import avatar4 from "../../../../Images/avatars/image-4.png";
 
 export default function ChatInputContainer({
   setSendMessage,
@@ -131,7 +136,7 @@ export default function ChatInputContainer({
       _id: loggedInUserId,
       firstName: userFirstName,
       lastName: userLastName,
-      profilePicture: userProfilePicture,
+      profilePicture: userProfilePicture || avatar4,
     };
 
     let recieverId;

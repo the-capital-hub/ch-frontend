@@ -9,6 +9,11 @@ import DOMPurify from "dompurify";  // Import DOMPurify
 import IconDeleteFill from "../../SvgIcons/IconDeleteFill";
 import { deletePostAPI, userPosts } from "../../../../Service/user";
 import SpinnerBS from "../../../Shared/Spinner/SpinnerBS";
+import avatar from "../../../../Images/avatars/image.png";
+import avatar1 from "../../../../Images/avatars/image-1.png";
+import avatar2 from "../../../../Images/avatars/image-2.png";
+import avatar3 from "../../../../Images/avatars/image-3.png";
+import avatar4 from "../../../../Images/avatars/image-4.png";
 
 const MyPostCard = ({
   postId,
@@ -58,7 +63,7 @@ const MyPostCard = ({
                 <img
                   src={
                     profilePicture ||
-                    "https://res.cloudinary.com/drjt9guif/image/upload/v1692264454/TheCapitalHub/users/default-user-avatar_fe2ky5.webp"
+                    avatar2
                   }
                   style={{ width: "50px", height: "50px", objectFit:"cover" }}
                   className="rounded-circle"

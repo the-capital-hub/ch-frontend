@@ -1,6 +1,6 @@
 import React from "react";
 import "./SettingsCommunityBody.scss";
-import Default from "../../../../Images/Chat/default-user-avatar.webp";
+import Default from "../../../../Images/avatars/image-4.png";
 import { useSelector } from "react-redux";
 
 export default function SettingsCommunityBody() {
