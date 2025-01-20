@@ -11,7 +11,8 @@ import { environment } from "../../../../environments/environment";
 import SpinnerBS from "../../../../components/Shared/Spinner/SpinnerBS";
 import { IoMdAdd, IoMdTrash } from "react-icons/io";
 import { selectTheme } from "../../../../Store//features/design/designSlice";
-
+import { usePaymentFlow } from "../../../../hooks/usePaymentFlow";
+import Modal from 'react-modal';
 const logoMap = {
 	gtm: Picture1,
 	sales: Picture3,
@@ -35,6 +36,8 @@ const ResourcesNew = () => {
 	const isAdmin = loggedInUser?.isAdmin;
 
 	const theme = useSelector(selectTheme);
+	const paymentFlow = usePaymentFlow();
+
 
 	useEffect(() => {
 		fetchResources();
@@ -165,13 +168,13 @@ const ResourcesNew = () => {
 								<h4>
 									INR <span>1,999</span>
 								</h4>
-								<button>Get Premium</button>
+								<button onClick={paymentFlow.handleBuyNowClick}>Get Premium</button>
 							</div>
 						</div>
 					)}
-					{!loggedInUser.isSubscribed && (
+					{/* {!loggedInUser.isSubscribed && (
 						<button className="buy-now-btn">Join Beta Group Now</button>
-					)}
+					)} */}
 				</div>
 				<div className="resource-cards-container">
 					<div className="resource-access-text">
@@ -386,6 +389,30 @@ const ResourcesNew = () => {
 					</div>
 				</div>
 			)}
+			<Modal
+	isOpen={paymentFlow.isModalOpen}
+	onRequestClose={() => paymentFlow.setIsModalOpen(false)}
+	className="subscription-modal"
+	overlayClassName="subscription-modal-overlay"
+>
+	{paymentFlow.renderSubscriptionModal()}
+</Modal>
+
+<Modal
+	isOpen={paymentFlow.showOtpModal}
+	onRequestClose={() => paymentFlow.setShowOtpModal(false)}
+	className="otp-modal"
+	overlayClassName="otp-modal-overlay"
+>
+	{paymentFlow.renderOtpModal()}
+</Modal>
+
+{paymentFlow.isLoading && (
+	<div className="loader-overlay">
+		<div className="loader"></div>
+		<p className="loader-text">Processing payment...</p>
+	</div>
+)}
 		</div>
 	);
 };
