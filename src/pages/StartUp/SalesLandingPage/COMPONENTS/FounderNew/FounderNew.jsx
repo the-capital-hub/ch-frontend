@@ -21,11 +21,11 @@ const FounderNew = () => {
 
 					<div className="founder-container-details-info">
 						<div className="founder-container-details-info-name">
-							Pramod Badiger
+							Pramod Badiger <span> The Force Behind Capital HUB</span>
 						</div>
-						<div className="founder-container-details-info-description">
-							<span> The Force Behind Capital HUB</span>
-						</div>
+						{/* <div className="founder-container-details-info-description">
+							
+						</div> */}
 						<p className="founder-container-details-info-bio">
 							Pramod Badiger, Founder and CEO of Capital HUB, is a seasoned
 							startup mentor with over a decade of experience empowering
@@ -34,11 +34,20 @@ const FounderNew = () => {
 							combines strategic thinking with innovation to help entrepreneurs
 							navigate their growth journey.
 						</p>
+						<h2 className="founder-container-more-details-info1">
+						An Experienced Mentor, a Strategic Innovator
+					</h2>
+					<p className="founder-container-details-info-bio">
+						Passionate about empowering founders, Pramod has mentored countless
+						startups, offering valuable insights and personalized guidance
+						during critical growth stages. He helps entrepreneurs succeed on
+						their own terms while providing strategic support.	
+					</p>
 					</div>
 				</div>
 
 				<div className="founder-container-more-details">
-					<h2 className="founder-container-more-details-info1">
+					{/* <h2 className="founder-container-more-details-info1">
 						An Experienced Mentor, a Strategic Innovator
 					</h2>
 					<p className="founder-container-more-details-info2">
@@ -46,7 +55,7 @@ const FounderNew = () => {
 						startups, offering valuable insights and personalized guidance
 						during critical growth stages. He helps entrepreneurs succeed on
 						their own terms while providing strategic support.
-					</p>
+					</p> */}
 					<h2 className="founder-container-more-details-info1">
 						Your Trusted Partner in Growth
 					</h2>
@@ -69,7 +78,7 @@ const FounderNew = () => {
 							Seize the opportunity to unlock everything you need to elevate
 							your startup, all at an unbeatable price
 						</h3>
-						<button onClick={handleBuyNowClick}>Claim Your Access Now</button>
+						<button onClick={paymentFlow.handleBuyNowClick}>Claim Your Access Now</button>
 					</div>
 				</div>
 
