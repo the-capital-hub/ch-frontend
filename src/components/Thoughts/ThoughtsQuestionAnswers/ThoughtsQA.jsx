@@ -3,11 +3,17 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../Store/features/design/designSlice";
 import { useUpvoteHandler } from "../UtilityFunction/upvoteDownvote";
-import { sentConnectionRequest } from "../../../Service/user";
+import {
+	sentConnectionRequest,
+	updateAnswerOfQuestion,
+	deleteAnswerOfQuestion,
+	updateQuestion,
+} from "../../../Service/user";
 import { environment } from "../../../environments/environment";
 import DOMPurify from "dompurify";
 
-import { FaPaperPlane, FaUserCircle } from "react-icons/fa";
+import { FaPaperPlane, FaUserCircle, FaEdit } from "react-icons/fa";
+import { FaRegTrashCan } from "react-icons/fa6";
 import { BiLike, BiCommentDetail } from "react-icons/bi";
 import { CgSpinner } from "react-icons/cg";
 import Spinner from "../../Spinner/Spinner";
@@ -16,6 +22,7 @@ import "./ThoughtsQA.scss";
 const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 const MAX_ANSWER_LENGTH = 1000;
+const MAX_QUESTION_LENGTH = 500;
 
 const QAComponent = () => {
 	const theme = useSelector(selectTheme);
@@ -40,6 +47,13 @@ const QAComponent = () => {
 	const [loading, setLoading] = useState(true);
 	const [answerError, setAnswerError] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
+
+	const [editingQuestion, setEditingQuestion] = useState(false);
+	const [editText, setEditText] = useState("");
+
+	const [isEditing, setIsEditing] = useState(false);
+	const [selectedAnswers, setSelectedAnswers] = useState([]);
+	const [editError, setEditError] = useState("");
 
 	// const [showCreatorDetails, setShowCreatorDetails] = useState(false);
 	// console.log("question", question);
@@ -291,6 +305,174 @@ const QAComponent = () => {
 		);
 	};
 
+	// Handle update question
+	const handleUpdateQuestion = async () => {
+		if (!token) {
+			setEditError("Please login to update question");
+			return;
+		}
+
+		const sanitizedInput = DOMPurify.sanitize(editText.trim());
+		if (!sanitizedInput) {
+			setEditError("Question cannot be empty");
+			return;
+		}
+
+		if (sanitizedInput.length > MAX_QUESTION_LENGTH) {
+			setEditError(
+				`Question must not exceed ${MAX_QUESTION_LENGTH} characters`
+			);
+			return;
+		}
+
+		try {
+			console.log("edited question", sanitizedInput);
+			const response = await updateQuestion(id, { question: sanitizedInput });
+
+			if (response.status !== 200) {
+				throw new Error("Failed to update question");
+			}
+
+			// const data = await response.json();
+			if (response.status === 200) {
+				alert(response.message);
+				fetchQuestion();
+			}
+		} catch (error) {
+			setEditError("Failed to update question. Please try again.");
+		} finally {
+			setEditingQuestion(false);
+		}
+	};
+
+	// Handle answer toggle
+	const handleAnswerToggle = (answerId) => {
+		setSelectedAnswers((prevSelected) => {
+			// Check if the answerId is already in the selectedAnswers
+			if (prevSelected.includes(answerId)) {
+				// If it is, remove it
+				return prevSelected.filter((id) => id !== answerId);
+			} else {
+				// If it isn't, add it
+				return [...prevSelected, answerId];
+			}
+		});
+	};
+
+	// Handle update answer
+	const handleUpdateAnswer = async (answerId) => {
+		if (!token) {
+			setEditError("Please login to update answer");
+			return;
+		}
+
+		const sanitizedInput = DOMPurify.sanitize(editText.trim());
+		if (!sanitizedInput) {
+			setEditError("Answer cannot be empty");
+			return;
+		}
+
+		if (sanitizedInput.length > MAX_ANSWER_LENGTH) {
+			setEditError(`Answer must not exceed ${MAX_ANSWER_LENGTH} characters`);
+			return;
+		}
+
+		setIsEditing(true);
+		try {
+			const response = await updateAnswerOfQuestion(id, answerId, {
+				answer: sanitizedInput,
+			});
+
+			if (response.status !== 200) {
+				throw new Error("Failed to update answer");
+			}
+
+			// const data = await response.json();
+			if (response.status === 200) {
+				handleAnswerToggle(answerId);
+				alert(response.message);
+				setEditText("");
+				fetchQuestion();
+			}
+		} catch (error) {
+			setEditError("Failed to update answer. Please try again.");
+		} finally {
+			setIsEditing(false);
+		}
+	};
+
+	// Handle delete answer
+	const handleDeleteAnswer = async (answerId) => {
+		if (!window.confirm("Are you sure you want to delete this answer?")) {
+			return;
+		}
+
+		try {
+			const response = await deleteAnswerOfQuestion(id, answerId);
+
+			if (response.status !== 200) {
+				throw new Error(response.message);
+			}
+
+			// const data = await response.json();
+			console.log("Updated Question", response);
+			alert(response.message);
+			if (response.status === 200) {
+				fetchQuestion();
+			}
+		} catch (error) {
+			console.error("Error deleting answer:", error);
+			alert("Failed to delete answer. Please try again.");
+		}
+	};
+
+	// const renderAnswerContent = (answer) => {
+	// 	const isSelected = selectedAnswers.includes(answer._id);
+
+	// 	return (
+	// 		<div
+	// 			className={`answer-container ${isSelected ? "selected" : ""}`}
+	// 			onClick={() => handleAnswerToggle(answer._id)} // Toggle selection on click
+	// 		>
+	// 			{isSelected ? (
+	// 				<div className="edit-container">
+	// 					<textarea
+	// 						value={editText}
+	// 						onChange={(e) => {
+	// 							if (e.target.value.length <= MAX_ANSWER_LENGTH) {
+	// 								setEditText(e.target.value);
+	// 								setEditError("");
+	// 							}
+	// 						}}
+	// 						className="edit-textarea"
+	// 						placeholder="Edit your answer..."
+	// 					/>
+	// 					<div className="edit-actions">
+	// 						{editText && (
+	// 							<span className="character-count">
+	// 								{editText.length}/{MAX_ANSWER_LENGTH}
+	// 							</span>
+	// 						)}
+	// 						{isEditing ? (
+	// 							<CgSpinner className="send-icon animate-spin" />
+	// 						) : (
+	// 							<>
+	// 								<FaPaperPlane
+	// 									className="send-icon"
+	// 									onClick={() => handleUpdateAnswer(answer._id)}
+	// 								/>
+	// 							</>
+	// 						)}
+	// 					</div>
+	// 					{editError && <div className="error-message">{editError}</div>}
+	// 				</div>
+	// 			) : (
+	// 				<p className="answer-text">{answer?.answer}</p>
+	// 			)}
+	// 		</div>
+	// 	);
+	// };
+
 	if (loading) {
 		return <Spinner className="thoughts-qa-spinner" />;
 	}
@@ -304,7 +486,22 @@ const QAComponent = () => {
 			<div className="questions-left">
 				{/* Questions Preview Section */}
 				<div className="question-preview">
-					<h2 className="question-preview-title">Questions</h2>
+					<div className="question-preview-header">
+						<h2 className="question-preview-header-title">Questions</h2>
+						{/* When loggedInUser is Admin */}
+						{user?.isAdmin && (
+							// update question
+							<div className="question-update-btn">
+								<FaEdit
+									className="edit-icon"
+									onClick={() => {
+										setEditingQuestion(!editingQuestion);
+										setEditText(question.question);
+									}}
+								/>
+							</div>
+						)}
+					</div>
 					<hr className="question-preview-hr" />
 					<div className="question-preview-creator-details">
 						<img
@@ -346,7 +543,42 @@ const QAComponent = () => {
 						</div>
 					</div>
 					<hr />
-					<p className="question-preview-question">{question?.question}</p>
+					{/* <p className="question-preview-question">{question?.question}</p> */}
+					{editingQuestion ? (
+						<div className="edit-container">
+							<textarea
+								value={editText}
+								onChange={(e) => {
+									if (e.target.value.length <= MAX_QUESTION_LENGTH) {
+										setEditText(e.target.value);
+										setEditError("");
+									}
+								}}
+								className="edit-textarea"
+								placeholder="Edit your question..."
+							/>
+							<div className="edit-actions">
+								{editText && (
+									<span className="character-count">
+										{editText.length}/{MAX_QUESTION_LENGTH}
+									</span>
+								)}
+								{isEditing ? (
+									<CgSpinner className="send-icon animate-spin" />
+								) : (
+									<>
+										<FaPaperPlane
+											className="send-icon"
+											onClick={() => handleUpdateQuestion()}
+										/>
+									</>
+								)}
+							</div>
+							{editError && <div className="error-message">{editError}</div>}
+						</div>
+					) : (
+						<p className="question-preview-question">{question?.question}</p>
+					)}
 				</div>
 
 				{/* Creator Details Section */}
@@ -536,9 +768,78 @@ const QAComponent = () => {
 												</span>
 												{/* <span className="follow-text">· Follow</span> */}
 											</div>
+
+											{user?.isAdmin && (
+												<>
+													<div className="answer-update-btn">
+														<FaEdit
+															className="edit-icon"
+															onClick={() => {
+																handleAnswerToggle(answer._id);
+																setEditText(answer.answer);
+															}}
+														/>
+													</div>
+													<div className="answer-delete-btn">
+														<FaRegTrashCan
+															className="delete-icon"
+															onClick={() => handleDeleteAnswer(answer._id)}
+														/>
+													</div>
+												</>
+											)}
+											{answer?.user?._id === user?._id && !user?.isAdmin && (
+												<>
+													<div className="answer-delete-btn">
+														<FaRegTrashCan
+															className="delete-icon"
+															onClick={() => handleDeleteAnswer(answer._id)}
+														/>
+													</div>
+												</>
+											)}
 										</div>
 
-										<p className="answer-text">{answer?.answer}</p>
+										{/* <p className="answer-text">{answer?.answer}</p> */}
+										{/* {renderAnswerContent(answer)} */}
+
+										{selectedAnswers.includes(answer?._id) ? (
+											<div className="edit-container">
+												<textarea
+													value={editText}
+													onChange={(e) => {
+														if (e.target.value.length <= MAX_ANSWER_LENGTH) {
+															setEditText(e.target.value);
+															setEditError("");
+														}
+													}}
+													className="edit-textarea"
+													placeholder="Edit your answer..."
+												/>
+												<div className="edit-actions">
+													{editText && (
+														<span className="character-count">
+															{editText.length}/{MAX_ANSWER_LENGTH}
+														</span>
+													)}
+													{isEditing ? (
+														<CgSpinner className="send-icon animate-spin" />
+													) : (
+														<>
+															<FaPaperPlane
+																className="send-icon"
+																onClick={() => handleUpdateAnswer(answer._id)}
+															/>
+														</>
+													)}
+												</div>
+												{editError && (
+													<div className="error-message">{editError}</div>
+												)}
+											</div>
+										) : (
+											<p className="answer-text">{answer?.answer}</p>
+										)}
 
 										<div className="interaction-bar">
 											<div className="action-buttons">

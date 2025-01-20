@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { BiChevronLeft, BiPlus, BiLike, BiShareAlt } from "react-icons/bi";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { FaRegTrashCan } from "react-icons/fa6";
 import { MdOutlineFilterAlt, MdOutlineFilterAltOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -147,6 +148,7 @@ const ArticleCard = ({
 	isUpvoted,
 	onUpvote,
 	onShare,
+	loggedInUser,
 }) => (
 	<div className="article-card" onClick={onClick}>
 		<h2 className="article-card-title">{title}</h2>
@@ -197,6 +199,15 @@ const ArticleCard = ({
 				<BiShareAlt className="article-card-icon" />
 				<span>Share</span>
 			</button>
+			{loggedInUser?.isAdmin && (
+				<button
+					className="article-card-button delete-btn"
+					// onClick={() => handleDeleteQuestion(id)}
+				>
+					<FaRegTrashCan className="article-card-icon" />
+					<span>Delete</span>
+				</button>
+			)}
 		</div>
 	</div>
 );
@@ -378,6 +389,8 @@ const Thoughts = () => {
 		}
 	};
 
+	// const handleDeleteQuestion 
+
 	// Filter questions based on selected filter
 	let filteredQuestions;
 
@@ -513,6 +526,7 @@ const Thoughts = () => {
 								isUpvoted={isUpvoted(question._id)}
 								onUpvote={handleUpvoteClick}
 								onShare={() => handleOpenSocialShare(question._id)}
+								loggedInUser={user}
 							/>
 						))
 					) : (
