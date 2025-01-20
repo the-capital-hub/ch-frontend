@@ -178,8 +178,8 @@ function CommunityAccessControl() {
 
 			const community = response.data.data;
 			const isAdmin = community.adminId._id === loggedInUserId;
-			const isMember = community.members.includes(loggedInUserId);
-
+			const isMember = community.members.some(data => data.member._id === loggedInUserId);
+			console.log("community members", community.members);
 			setHasAccess(isAdmin || isMember);
 			setLoading(false);
 		} catch (error) {

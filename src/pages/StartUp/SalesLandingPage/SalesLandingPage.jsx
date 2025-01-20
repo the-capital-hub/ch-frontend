@@ -15,8 +15,8 @@ const StartUpLendingPage = () => {
 		<div className="sales-lending-page-container">
 			<Home />
 			<CarouselImage />
-			<ProcessNew />
 			<EmpowerYourStartup />
+			<ProcessNew />
 			<HustlersCapitalHub />
 			<FounderNew />
 			<About />

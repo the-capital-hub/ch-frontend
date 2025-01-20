@@ -40,6 +40,8 @@ import SkeletonLoader from "./Components/SkeletonLoader/SkeletonLoader";
 import JoinHustlersClub from "./Components/JoinHustlersClub/JoinHustlersClub";
 import TopVoiceTracker from "./Components/TopVoiceTracker/TopVoiceTracker";
 import CompletionBanner from "./Components/CompletionBanner/CompletionBanner";
+import CommunitiesHorizontal from "./Components/CommunitiesHorizontal/Communities";
+import avatar4 from "../../../Images/avatars/image-1.png";
 
 const baseUrl = environment.baseUrl;
 
@@ -325,7 +327,7 @@ const Feed = () => {
 							>
 								<div className="start_post_container" style={{ width: "100%" }}>
 									<img
-										src={loggedInUser.profilePicture}
+										src={loggedInUser.profilePicture || avatar4}
 										alt="Profile"
 										className="rounded-circle object-fit-cover"
 										style={{ width: "50px", height: "50px" }}
@@ -436,6 +438,9 @@ const Feed = () => {
 														isSubscribed={isSubscribed}
 														isTopVoice={isTopVoice}
 													/>
+													{index === 2 && (
+														<CommunitiesHorizontal />
+													)}
 													{(index + 1) % 3 === 0 && (
 														<NewsCard
 															title={newsData[Math.floor(index)]?.title}

@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { unsavePost } from "../../../../Service/user";
 import SpinnerBS from "../../../Shared/Spinner/SpinnerBS";
 import { selectLoggedInUserId } from "../../../../Store/features/user/userSlice";
+import avatar4 from "../../../../Images/avatars/image.png";
 
 const SavedPostSmallCard = ({
   activeHeader,
@@ -95,7 +96,7 @@ const SavedPostSmallCard = ({
               }}
             >
               <img
-                src={profilePicture}
+                src={profilePicture || avatar4}
                 alt="Profile"
                 className="img-fluid mr-2"
                 style={{
@@ -186,7 +187,7 @@ const SavedPostSmallCard = ({
                   }}
                 >
                   <img
-                    src={profilePicture}
+                    src={profilePicture || avatar4}
                     alt="Profile"
                     className="img-fluid mr-2"
                     style={{
@@ -249,7 +250,7 @@ const SavedPostSmallCard = ({
                 }}
               >
                 <img
-                  src={profilePicture}
+                  src={profilePicture || avatar4}
                   alt="Profile"
                   className="img-fluid mr-2"
                   style={{

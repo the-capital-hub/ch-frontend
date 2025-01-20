@@ -14,6 +14,7 @@ import {
 	updateUserCompany,
 } from "../../../../Store/features/user/userSlice";
 import ProfessionalInfoDisplay from "./ProfessionalInfoDisplay";
+import avatar4 from "../../../../Images/avatars/image-1.png";
 
 export default function ProfessionalInfo({ theme }) {
 	// Fetch Global State
@@ -33,7 +34,7 @@ export default function ProfessionalInfo({ theme }) {
 		designation: loggedInUser?.designation || "",
 		education: loggedInUser?.education || "",
 		experience: loggedInUser?.experience || "",
-		profilePicture: loggedInUser.profilePicture || "",
+		profilePicture: loggedInUser.profilePicture || avatar4,
 		fullName: loggedInUser?.firstName + " " + loggedInUser?.lastName || "",
 		company: loggedInUser?.companyName || companyName,
 		location: loggedInUser?.location || " ",

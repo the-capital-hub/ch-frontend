@@ -100,9 +100,7 @@ export default function MyCommunity() {
   return (
     <div className="my-community-page" style={getThemeStyles()} data-theme={theme}>
       <InvestorNavbar />
-      <button className="back-button" style={backButtonStyles} onClick={() => navigate(-1)}>
-        <BsArrowLeft /> Back
-      </button>
+    
 
       <div className="content-container">
         <h1>My Communities</h1>

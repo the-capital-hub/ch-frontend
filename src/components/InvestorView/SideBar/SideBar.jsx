@@ -14,7 +14,7 @@ import "./SideBar.scss";
 import MobileNavbar from "../../Shared/MobileNavbar/MobileNavbar";
 import MobileOneLinkNavbar from "../../Shared/MobileOnelinkNavbar/MobileOneLinkNavbar";
 import { FaMicrophoneAlt } from "react-icons/fa";
-
+import avatar4 from "../../../Images/avatars/image.png";
 
 const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
   const isMobileView = useSelector((state) => state.design.isMobileView);
@@ -83,7 +83,7 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
           <ProSidebar collapsed={sidebarCollapsed}>
             <SidebarHeader>
               <div className="logotext">
-                <img src={user.profilePicture} alt="user profile" />
+                <img src={user.profilePicture || avatar4} alt="user profile" />
                 {sidebarCollapsed ? null : (
                   <>
                     <h3 className="fs-6 mt-2">

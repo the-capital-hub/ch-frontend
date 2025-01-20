@@ -10,7 +10,7 @@ import { Link, useParams } from "react-router-dom";
 import { ImProfile } from "react-icons/im";
 import { FaWandMagicSparkles } from "react-icons/fa6";
 import { AiOutlineSchedule } from "react-icons/ai";
-import DefaultAvatar from "../../../Images/Chat/default-user-avatar.webp";
+import DefaultAvatar from "../../../Images/avatars/image.png";
 import { getInvestorFromOneLinkAPI } from "../../../Service/user";
 import { RxRocket } from "react-icons/rx";
 

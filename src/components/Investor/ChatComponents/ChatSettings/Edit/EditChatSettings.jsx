@@ -8,6 +8,7 @@ import {
   getCommunitySettings,
 } from "../../../../../Service/user";
 import { setCommunityProfile } from "../../../../../Store/features/chat/chatSlice";
+import avatar4 from "../../../../../Images/avatars/image-4.png";
 
 export default function EditChatSettings({ theme = "startup" }) {
   const [addedMembers, setAddedMembers] = useState([]);
@@ -139,7 +140,7 @@ export default function EditChatSettings({ theme = "startup" }) {
               key={member?._id}
             >
               <img
-                src={member?.profilePicture}
+                src={member?.profilePicture || avatar4}
                 alt="contact"
                 className="img-fluid"
               />

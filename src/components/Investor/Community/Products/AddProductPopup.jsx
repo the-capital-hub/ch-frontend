@@ -75,11 +75,11 @@ const AddProductPopup = ({ communityId, onClose, onProductAdded }) => {
 
   return (
     <div className="add-product-popup">
-      <div className="popup-content">
-        <button className="close-btn" onClick={onClose}>×</button>
+      <div className="add-product-popup-content">
+        <button className="add-product-close-btn" onClick={onClose}>×</button>
         <h2>Add New Product</h2>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className="add-product-form-group">
             <label>Product Name</label>
             <input
               type="text"
@@ -90,7 +90,7 @@ const AddProductPopup = ({ communityId, onClose, onProductAdded }) => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="add-product-form-group">
             <label>Description</label>
             <textarea
               name="description"
@@ -100,7 +100,7 @@ const AddProductPopup = ({ communityId, onClose, onProductAdded }) => {
             />
           </div>
 
-          <div className="form-group checkbox">
+          <div className="add-product-form-group add-product-checkbox">
             <label>
               <input
                 type="checkbox"
@@ -113,7 +113,7 @@ const AddProductPopup = ({ communityId, onClose, onProductAdded }) => {
           </div>
 
           {!formData.is_free && (
-            <div className="form-group">
+            <div className="add-product-form-group">
               <label>Amount</label>
               <input
                 type="number"
@@ -126,7 +126,7 @@ const AddProductPopup = ({ communityId, onClose, onProductAdded }) => {
             </div>
           )}
 
-          <div className="form-group">
+          <div className="add-product-form-group">
             <label>Product Image</label>
             <input
               type="file"
@@ -136,10 +136,10 @@ const AddProductPopup = ({ communityId, onClose, onProductAdded }) => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="add-product-form-group">
             <label>Resource URLs</label>
             {formData.URLS.map((url, index) => (
-              <div key={index} className="url-input">
+              <div key={index} className="add-product-url-input">
                 <input
                   type="url"
                   value={url}
@@ -149,22 +149,22 @@ const AddProductPopup = ({ communityId, onClose, onProductAdded }) => {
                 <button 
                   type="button" 
                   onClick={() => removeUrlField(index)}
-                  className="remove-url"
+                  className="add-product-remove-url"
                 >
                   ×
                 </button>
               </div>
             ))}
-            <button type="button" onClick={addUrlField} className="add-url">
+            <button type="button" onClick={addUrlField} className="add-product-add-url">
               + Add Another URL
             </button>
           </div>
 
-          <div className="button-group">
-            <button type="button" onClick={onClose} className="cancel-btn">
+          <div className="add-product-button-group">
+            <button type="button" onClick={onClose} className="add-product-cancel-btn">
               Cancel
             </button>
-            <button type="submit" className="submit-btn" disabled={isLoading}>
+            <button type="submit" className="add-product-submit-btn" disabled={isLoading}>
               {isLoading ? 'Adding...' : 'Add Product'}
             </button>
           </div>
