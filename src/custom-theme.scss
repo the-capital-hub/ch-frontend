@@ -167,6 +167,9 @@
 	}
 
 	--skeleton-item-bg: #e2e2e233;
+
+	// --background-secondary: #1a1a1a;
+	--background-secondary: #f0f0f0;
 }
 
 // Dark Mode colors
@@ -367,4 +370,6 @@ $color-mode-type: data;
 	.modal {
 		background-color: rgba($color: shade-color($body-bg, 50%), $alpha: 0.25);
 	}
+
+	--background-secondary: #1a1a1a;
 }
