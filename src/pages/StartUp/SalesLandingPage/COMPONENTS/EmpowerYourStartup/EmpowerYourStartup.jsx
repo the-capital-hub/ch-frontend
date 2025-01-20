@@ -1,8 +1,11 @@
 import React from "react";
 import noise from "../imagesNew/noise-bg.png";
 import "./EmpowerYourStartup.scss";
-
+import { usePaymentFlow } from "../../../../../hooks/usePaymentFlow";
+import Modal from "react-modal";
 const EmpowerYourStartup = () => {
+	const paymentFlow = usePaymentFlow();
+
 	return (
 		<div className="EmpowerYourStartup-container">
 			<div className="EmpowerYourStartup-content">
@@ -38,7 +41,7 @@ const EmpowerYourStartup = () => {
 						{/* <img src={noise} alt="" /> */}
 						<h5>Investor-Ready pitch Deck Template</h5>
 						<p>
-							Create a compelling pitch that highlights your startup’s
+							Create a compelling pitch that highlights your startup's
 							strengths, opportunities, and financials to captivate investors.
 						</p>
 					</div>
@@ -60,12 +63,39 @@ const EmpowerYourStartup = () => {
 						<div className="EmpowerYourStartup-price-card-price">
 							<span>INR</span> 1,999
 						</div>
-						<button className="EmpowerYourStartup-price-card-button">
+						<button 
+							className="EmpowerYourStartup-price-card-button"
+							onClick={paymentFlow.handleBuyNowClick}
+						>
 							Unlock Your Growth Now
 						</button>
 					</div>
 				</div>
 			</div>
+			<Modal
+	isOpen={paymentFlow.isModalOpen}
+	onRequestClose={() => paymentFlow.setIsModalOpen(false)}
+	className="subscription-modal"
+	overlayClassName="subscription-modal-overlay"
+>
+	{paymentFlow.renderSubscriptionModal()}
+</Modal>
+
+<Modal
+	isOpen={paymentFlow.showOtpModal}
+	onRequestClose={() => paymentFlow.setShowOtpModal(false)}
+	className="otp-modal"
+	overlayClassName="otp-modal-overlay"
+>
+	{paymentFlow.renderOtpModal()}
+</Modal>
+
+{paymentFlow.isLoading && (
+	<div className="loader-overlay">
+		<div className="loader"></div>
+		<p className="loader-text">Processing payment...</p>
+	</div>
+)}
 		</div>
 	);
 };

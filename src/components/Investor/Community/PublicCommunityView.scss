@@ -285,6 +285,7 @@
 }
 
 .ReactModal__Content--after-open {
+  z-index: 10;
   transform: translate(-50%, -50%) !important;
   opacity: 1;
 }

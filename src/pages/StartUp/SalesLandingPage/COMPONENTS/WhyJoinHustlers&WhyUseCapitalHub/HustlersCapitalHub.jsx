@@ -8,8 +8,12 @@ import connectStartup from "../imagesNew/connectStartup.png";
 import amplifyStartup from "../imagesNew/amplifyStartup.png";
 import noise from "../imagesNew/noise-bg.png";
 import "./HustlersCapitalHub.scss";
+import Modal from "react-modal";
+import { usePaymentFlow } from "../../../../../hooks/usePaymentFlow";
 
 const HustlersCapitalHub = () => {
+	const paymentFlow = usePaymentFlow();
+	
 	return (
 		<>
 			<div className="pricing-container">
@@ -54,7 +58,7 @@ const HustlersCapitalHub = () => {
 					</div>
 					<div className="net-platform">
 						<h1>
-							Amplify Your <span>Startup’s Presence</span>
+							Amplify Your <span>Startup's Presence</span>
 						</h1>
 						<p>
 							Gain exposure in a dynamic ecosystem, boosting your brand
@@ -84,7 +88,7 @@ const HustlersCapitalHub = () => {
 				</div>
 
 				<center>
-					<button className="capital-hub-today-btn">
+					<button className="capital-hub-today-btn" onClick={paymentFlow.handleBuyNowClick}>
 						Scale with Capital HUB Today
 					</button>
 				</center>
@@ -109,6 +113,31 @@ const HustlersCapitalHub = () => {
 				/>
 				<img src={bg} alt="background" className="background-img bg" />
 			</div>
+
+			<Modal
+				isOpen={paymentFlow.isModalOpen}
+				onRequestClose={() => paymentFlow.setIsModalOpen(false)}
+				className="subscription-modal"
+				overlayClassName="subscription-modal-overlay"
+			>
+				{paymentFlow.renderSubscriptionModal()}
+			</Modal>
+
+			<Modal
+				isOpen={paymentFlow.showOtpModal}
+				onRequestClose={() => paymentFlow.setShowOtpModal(false)}
+				className="otp-modal"
+				overlayClassName="otp-modal-overlay"
+			>
+				{paymentFlow.renderOtpModal()}
+			</Modal>
+
+			{paymentFlow.isLoading && (
+				<div className="loader-overlay">
+					<div className="loader"></div>
+					<p className="loader-text">Processing payment...</p>
+				</div>
+			)}
 		</>
 	);
 };

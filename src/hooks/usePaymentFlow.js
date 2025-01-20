@@ -216,6 +216,8 @@ export const usePaymentFlow = () => {
 	const renderSubscriptionModal = () => (
 		<div className="modal-content">
 			<button onClick={() => setIsModalOpen(false)} style={{position: "relative", marginLeft: "28rem", marginTop: "-2rem", background: "none", border: "none", fontSize: "1.5rem", color: "var(--text-color)", cursor: "pointer"}}>X</button>
+			<button onClick={() => setIsModalOpen(false)} style={{position: "relative", marginLeft: "auto", marginTop: "-2rem", background: "none", border: "none", fontSize: "1rem", color: "var(--text-color)", cursor: "pointer"}}>X</button>
+
 			<h2>Subscribe to Premium</h2>
 			<form onSubmit={handleSubmit}>
 				<input
