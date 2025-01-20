@@ -23,7 +23,7 @@ const AboutUs = () => {
 		<div className="aboutus-container">
 			<div className="aboutus-title">
 				<h1>
-					<span>What </span>our customer
+					<span>What</span>our customer
 				</h1>
 				<h1>say about us</h1>
 			</div>

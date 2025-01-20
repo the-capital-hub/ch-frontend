@@ -65,9 +65,6 @@ const Founder = () => {
 		/* ... */
 	};
 
-	const handleBuyNowClick = () => {
-		paymentFlow.setIsModalOpen(true);
-	};
 
 	return (
 		<div className="founder-container">
@@ -167,7 +164,7 @@ const Founder = () => {
 						Seize the opportunity to unlock everything you need to elevate your
 						startup, all at an unbeatable price
 					</h3>
-					<button onClick={handleBuyNowClick}>Claim Your Access Now</button>
+					<button onClick={paymentFlow.handleBuyNowClick}>Claim Your Access Now</button>
 				</div>
 			</div>
 

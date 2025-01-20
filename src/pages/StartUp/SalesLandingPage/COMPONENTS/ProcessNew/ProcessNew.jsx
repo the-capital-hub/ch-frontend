@@ -1,4 +1,6 @@
 import React from "react";
+import Modal from "react-modal";
+import { usePaymentFlow } from "../../../../../hooks/usePaymentFlow";
 import "./ProcessNew.scss";
 import step1Img from "../images/step1profileCreated.png";
 import step2Img from "../images/step2Resources.png";
@@ -17,8 +19,11 @@ import fox from "../imagesNew/fox.png";
 import Exclusive from "../images/exclusive.png";
 
 const ProcessNew = () => {
+	const paymentFlow = usePaymentFlow();
+	
 	return (
-		<div className="process-new-container">
+		<>
+			<div className="process-new-container">
 						<div className="process-new-content-2">
 				<div className="process-new-finally">
 					<div className="finally-img-container">
@@ -34,9 +39,9 @@ const ProcessNew = () => {
 					</div>
 				</div>
 
-				<div className="process-new-finally-button">
-					<button>Get Started Now</button>
-				</div>
+				{/* <div className="process-new-finally-button">
+					<button onClick={paymentFlow.handleBuyNowClick}>Get Started Now</button>
+				</div> */}
 			</div>
 			<div className="deals-container">
 				<div className="inner-container">
@@ -85,7 +90,7 @@ const ProcessNew = () => {
 					</div>
 
 					<center>
-						<button className="head">Join Hustlers Club Now</button>
+						<button className="head" onClick={paymentFlow.handleBuyNowClick}>Join Hustlers Club Now</button>
 					</center>
 				</div>
 			</div>
@@ -204,13 +209,39 @@ const ProcessNew = () => {
 								business.
 							</p>
 							<div className="step-buttons">
-								<button className="primary-button">Get Started Now</button>
+								<button className="primary-button" onClick={paymentFlow.handleBuyNowClick}>Get Started Now</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
+		<Modal
+			isOpen={paymentFlow.isModalOpen}
+			onRequestClose={() => paymentFlow.setIsModalOpen(false)}
+			className="subscription-modal"
+			overlayClassName="subscription-modal-overlay"
+		>
+			{paymentFlow.renderSubscriptionModal()}
+		</Modal>
+
+		<Modal
+			isOpen={paymentFlow.showOtpModal}
+			onRequestClose={() => paymentFlow.setShowOtpModal(false)}
+			className="otp-modal"
+			overlayClassName="otp-modal-overlay"
+		>
+			{paymentFlow.renderOtpModal()}
+		</Modal>
+
+		{paymentFlow.isLoading && (
+			<div className="loader-overlay">
+				<div className="loader"></div>
+				<p className="loader-text">Processing payment...</p>
+			</div>
+		)}
+		</>
 	);
 };
 
