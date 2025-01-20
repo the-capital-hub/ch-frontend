@@ -10,6 +10,7 @@ import {
 	postUserPost,
 	updateUserById,
 	addNotificationAPI,
+	getSearchResultsAPI,
 	// getStartupByFounderId,
 } from "../../../Service/user";
 import { getBase64 } from "../../../utils/getBase64";
@@ -162,23 +163,20 @@ const CreatePostPopUp = ({
 	const fetchUsers = async (searchTerm) => {
 		try {
 		  // Fetch all users from the API endpoint
-		  const response = getUser;
-	  
-		  if (!response.ok) {
-			throw new Error(`Failed to fetch users: ${response.statusText}`);
+		  const { data } = await getSearchResultsAPI(searchTerm);
+		  
+		  if (!data) {
+			throw new Error(`Failed to fetch users: ${data.statusText}`);
 		  }
-	  
-		//   const users = await response.json(); // Parse the JSON response
-		  console.log(users);
 	  
 		  // Simulate a delay for user fetching (optional, e.g., 500ms)
 		  await new Promise((resolve) => setTimeout(resolve, 500));
 	  
 		  // Filter users based on the search term
-		  const filteredUsers = users.filter((user) =>
-			user.username.toLowerCase().includes(searchTerm.toLowerCase())
+		  const filteredUsers = data?.users?.filter((user) =>
+			user.firstName.toLowerCase().includes(searchTerm.toLowerCase())
 		  );
-	  
+
 		  // Update suggestions state with filtered users
 		  setSuggestions(filteredUsers);
 		} catch (error) {
