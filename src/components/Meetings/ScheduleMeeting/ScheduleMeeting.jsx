@@ -7,6 +7,8 @@ import {
 	FaChevronRight,
 } from "react-icons/fa";
 import { ImPriceTags } from "react-icons/im";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../../Store/features/design/designSlice";
 import Calendar from "react-calendar";
 import "./ScheduleMeeting.scss";
 import { useParams } from "react-router-dom";
@@ -14,7 +16,7 @@ import { load } from "@cashfreepayments/cashfree-js";
 import { environment } from "../../../environments/environment";
 import avatar4 from "../../../Images/avatars/image.png";
 const baseUrl = environment.baseUrl;
-// const token = localStorage.getItem("accessToken");
+
 
 const Spinner = () => (
 	<div className="loader-container">
@@ -38,9 +40,9 @@ const MeetingScheduler = () => {
 	const [error, setError] = useState("");
 	const [orderId, setOrderId] = useState("");
 	const [paymentStatus, setPaymentStatus] = useState(null);
-	// console.log("events", events);
-	// console.log("availability", availability);
-	// console.log("orderId", orderId);
+	const [showDetailsForm, setShowDetailsForm] = useState(false);
+	const theme = useSelector(selectTheme);
+
 
 	useEffect(() => {
 		const fetchSchedulePageData = async () => {
@@ -276,138 +278,174 @@ const MeetingScheduler = () => {
 	// }
 
 	return (
-		<div className="meeting-scheduler">
+		<div className="meeting-scheduler" data-bs-theme={theme}>
 			<div className="meeting-scheduler__container">
+				{/* Left Container */}
 				<div className="meeting-scheduler__left">
-					<div className="profile">
-						<img
-							src={user.profilePicture || avatar4}
-							className="profile__image"
-							alt="Profile Pic"
-						/>
-						<div className="profile__info">
-							<h2>{events.map((event) => event.title || "")}</h2>
-							<p>{user.email}</p>
+					{/* Header Section */}
+					<div className="header-section">
+						<button className="back-button" onClick={() => window.history.back()}>
+							<FaChevronLeft /> Back
+						</button>
+						<div className="profile">
+							<img
+								src={user.profilePicture || avatar4}
+								className="profile__image"
+								alt="Profile"
+							/>
+							<div className="profile__info">
+								<h2>{events.map((event) => event.title || "")}</h2>
+								<p>{user.email}</p>
+							</div>
 						</div>
 					</div>
 
-					<div className="meeting-info">
-						<FaCalendarAlt />
-						<span>{events.map((event) => event.duration || 30)} minutes</span>
-					</div>
+					{/* Details Section */}
+					<div className="details-section">
+						<div className="meeting-info">
+							<FaCalendarAlt />
+							<span>{events.map((event) => event.duration || 30)} minutes</span>
+						</div>
 
-					<div className="meeting-info">
-						<FaVideo />
-						<span>Google Meet</span>
-					</div>
-					<div className="meeting-info">
-						<ImPriceTags />
-						<span>Event Price</span>
-						<div className="price">
-							{events[0]?.price > 0 && (
-								<div className="price-tag">
-									{events[0]?.discount > 0 && (
-										<>
+						<div className="meeting-info">
+							<FaVideo />
+							<span>Google Meet</span>
+						</div>
+
+						<div className="meeting-info price-info">
+							<ImPriceTags />
+							<div className="price">
+								{events[0]?.price > 0 ? (
+									<div className="price-tag">
+										{events[0]?.discount > 0 && (
 											<span className="original-price">
 												{formatPrice(events[0]?.price)}
 											</span>
-										</>
-									)}
-									<span className="new-price">
-										{formatPrice(
-											calculateDiscountedPrice(
-												events[0]?.price,
-												events[0]?.discount
-											)
 										)}
-									</span>
-								</div>
-							)}
-							{events[0]?.price === 0 && (
-								<div className="price-tag">
-									<span className="new-price">Free</span>
-								</div>
-							)}
+										<span className="new-price">
+											{formatPrice(
+												calculateDiscountedPrice(events[0]?.price, events[0]?.discount)
+											)}
+										</span>
+									</div>
+								) : (
+									<span className="free-tag">Free</span>
+								)}
+							</div>
+						</div>
+
+						<div className="description-section">
+							<h4>About this meeting</h4>
+							<p>{events.map((event) => event.description || "")}</p>
 						</div>
 					</div>
-
-					<p className="meeting-description">
-						{events.map((event) => event.description || "")}
-					</p>
 				</div>
 
-				{loading && <Spinner />}
-				{!isBooked ? (
-					<div className="meeting-scheduler__right">
-						<div className="calendar-container">
-							<Calendar
-								onChange={handleDateChange}
-								value={currentDate}
-								minDate={new Date()}
-								tileDisabled={({ date }) => !isDateAvailable(date)}
-								prevLabel={<FaChevronLeft />}
-								nextLabel={<FaChevronRight />}
-								className="custom-calendar"
-							/>
-						</div>
-
-						<div className="time-slots">
-							<h4>Available Time Slots</h4>
-							<div className="time-slots__grid">
-								{timeSlots.map((time) => (
-									<button
-										key={time}
-										className={selectedTime === time ? "selected" : ""}
-										onClick={() => setSelectedTime(time)}
-									>
-										{time}
-									</button>
-								))}
+				{/* Right Container */}
+				<div className="meeting-scheduler__right">
+					{!isBooked ? (
+						<>
+							<div className="calendar-section">
+								<Calendar
+									onChange={handleDateChange}
+									value={currentDate}
+									minDate={new Date()}
+									tileDisabled={({ date }) => !isDateAvailable(date)}
+									prevLabel={<FaChevronLeft />}
+									nextLabel={<FaChevronRight />}
+									className="custom-calendar"
+								/>
 							</div>
-						</div>
 
-						<form onSubmit={handleSchedule} className="booking-form">
-							<input type="text" name="name" placeholder="Your Name" required />
-							<input
-								type="email"
-								name="email"
-								placeholder="Your Email"
-								required
-							/>
-							<textarea
-								name="additionalInfo"
-								placeholder="Additional Information"
-								rows={4}
-							/>
-							<button type="submit" disabled={loading}>
-								{events[0]?.price > 0 ? "Schedule and Pay" : "Schedule Event"}
+							<div className="time-slots">
+								<h4>Available Time Slots</h4>
+								<div className="time-slots__grid">
+									{timeSlots.map((time) => (
+										<button
+											key={time}
+											className={selectedTime === time ? "selected" : ""}
+											onClick={() => setSelectedTime(time)}
+										>
+											{time}
+										</button>
+									))}
+								</div>
+							</div>
+
+							<button 
+								className="confirm-details-btn"
+								onClick={() => setShowDetailsForm(true)}
+								disabled={!selectedDate || !selectedTime}
+							>
+								Confirm Details
 							</button>
-						</form>
-						{/* Display error message if exists */}
-						{error && (
-							<div className="error-message">
-								<p>{error}</p>
+
+							{/* Details Form Modal */}
+							{showDetailsForm && (
+								<div className="details-form-modal">
+									<div className="modal-content">
+										<button className="back-button" onClick={() => setShowDetailsForm(false)}>
+											<FaChevronLeft /> Back
+										</button>
+										
+										<div className="form-section">
+											<h3>Additional Details</h3>
+											<form onSubmit={handleSchedule}>
+												<input type="text" name="name" placeholder="Your Name" required />
+												<input type="email" name="email" placeholder="Your Email" required />
+												<textarea
+													name="additionalInfo"
+													placeholder="Additional Information"
+													rows={4}
+												/>
+												
+												{events[0]?.price > 0 && (
+													<div className="order-summary">
+														<h4>Order Summary</h4>
+														<div className="summary-item">
+															<span>Meeting Duration</span>
+															<span>{events[0]?.duration} minutes</span>
+														</div>
+														<div className="summary-item">
+															<span>Price</span>
+															<span>{formatPrice(events[0]?.price)}</span>
+														</div>
+														{events[0]?.discount > 0 && (
+															<div className="summary-item discount">
+																<span>Discount ({events[0]?.discount}%)</span>
+																<span>-{formatPrice(events[0]?.price * events[0]?.discount / 100)}</span>
+															</div>
+														)}
+														<div className="summary-item total">
+															<span>Total</span>
+															<span>{formatPrice(
+																calculateDiscountedPrice(events[0]?.price, events[0]?.discount)
+															)}</span>
+														</div>
+													</div>
+												)}
+												
+												<button type="submit" disabled={loading}>
+													{events[0]?.price > 0 ? "Schedule and Pay" : "Schedule Event"}
+												</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							)}
+						</>
+					) : (
+						<div className="success-message">
+							<h3>Booking successful!</h3>
+							<div className="meeting-link-container">
+								<h4>Join the meeting:</h4>
+								<a href={meetingLink} className="meeting-link">
+									{meetingLink || "https://meet.google.com/hur-sdhb-mnu"}
+								</a>
 							</div>
-						)}
-						{paymentStatus === "failed" && (
-							<div className="error-message">
-								<p>Payment failed. Please try again.</p>
-							</div>
-						)}
-					</div>
-				) : (
-					<div className="meeting-scheduler__success">
-						<h3>Booking successful!</h3>
-						<div className="meeting-link-container">
-							<h4>Join the meeting:</h4>
-							<a href={meetingLink} className="meeting-link">
-								{meetingLink
-									? meetingLink
-									: "https://meet.google.com/hur-sdhb-mnu"}
-							</a>
 						</div>
-					</div>
-				)}
+					)}
+				</div>
 			</div>
 		</div>
 	);
