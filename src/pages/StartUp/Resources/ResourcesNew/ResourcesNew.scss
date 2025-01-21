@@ -297,6 +297,7 @@
 				}
 
 				.card {
+					cursor: pointer;
 					width: calc((100% - 3rem) / 4);
 					min-width: 250px;
 					height: 150px;
@@ -540,6 +541,7 @@
 		}
 
 		.close-btn {
+			width: 2rem !important;
 			background: none;
 			border: none;
 			color: #ffffffcc;
