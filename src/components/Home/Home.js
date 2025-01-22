@@ -1,6 +1,5 @@
 import "./home.scss";
 import WhyChooseUsCard from "../Card/Home/WhyChooseUs/WhyChooseUsCard";
-import NewYearPopper from "../Newyear/NewYearPopper";
 import { featuresData } from "../../constants/LandingPageFeatures";
 import Features from "../WebsiteComponents/LandingPage/Features/Features";
 import LandingHero from "../WebsiteComponents/LandingPage/LandingHero/LandingHero";

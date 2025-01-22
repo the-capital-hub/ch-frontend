@@ -1988,7 +1988,9 @@ export const sendOneLinkRequest = async (startUpId, userId) => {
 
 export const getOneLinkRequest = async (startUpId) => {
 	try {
-		const response = await axiosInstance.get(`${API.getOneLinkRequest}/${startUpId}`);
+		const response = await axiosInstance.get(
+			`${API.getOneLinkRequest}/${startUpId}`
+		);
 		return response.data;
 	} catch (error) {
 		console.error(error);
@@ -2025,6 +2027,66 @@ export const rejectOneLinkRequest = async (startUpId, userId) => {
 export const getThoughts = async () => {
 	try {
 		const response = await axiosInstance.get(`${API.getThoughts}`);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+// "/updateAnswerOfQuestion/:questionId/:answerId"
+// 	"/deleteAnswerOfQuestion/:questionId/:answerId",
+// "/update-question/:questionId"
+// "/delete-question/:questionId"
+
+// updateAnswerOfQuestion
+// deleteAnswerOfQuestion
+// updateQuestion
+// deleteQuestion
+
+export const updateAnswerOfQuestion = async (questionId, answerId, data) => {
+	try {
+		const response = await axiosInstance.patch(
+			`${API.updateAnswerOfQuestion}/${questionId}/${answerId}`,
+			data
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const deleteAnswerOfQuestion = async (questionId, answerId) => {
+	try {
+		const response = await axiosInstance.delete(
+			`${API.deleteAnswerOfQuestion}/${questionId}/${answerId}`
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const updateQuestion = async (questionId, data) => {
+	try {
+		const response = await axiosInstance.patch(
+			`${API.updateQuestion}/${questionId}`,
+			data
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const deleteQuestion = async (questionId) => {
+	try {
+		const response = await axiosInstance.delete(
+			`${API.deleteQuestion}/${questionId}`
+		);
 		return response.data;
 	} catch (error) {
 		console.error(error);

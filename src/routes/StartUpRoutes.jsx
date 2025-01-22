@@ -17,6 +17,9 @@ const VcProfilePage = lazy(() => import("../pages/VCprofile/VcProfile"));
 const OtherUserProfile = lazy(() =>
 	import("../pages/StartUp/OtherUserProfile/OtherUserProfile")
 );
+const PrivateUserProfile = lazy(() =>
+	import("../pages/StartUp/PrivateUserProfile/PrivateUserProfile")
+);
 const Feed = lazy(() => import("../components/Investor/Feed/Feed"));
 const CreatePost = lazy(() =>
 	import("../components/Investor/CreatePost/CreatePost")
@@ -199,7 +202,7 @@ function StartUpRoutes() {
 				path="/user/:username/:userId"
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
-						<OtherUserProfile />
+						<PrivateUserProfile />
 					</Suspense>
 				}
 			/>
@@ -211,14 +214,14 @@ function StartUpRoutes() {
 					</Suspense>
 				}
 			/>
-			 <Route
-      path="ExploreCommunities"
-      element={
-        <Suspense fallback={<SuspenseLoader />}>
-          <ExploreCommunities />
-        </Suspense>
-        }
-      />
+			<Route
+				path="ExploreCommunities"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<ExploreCommunities />
+					</Suspense>
+				}
+			/>
 			<Route
 				path="/news"
 				element={
@@ -235,23 +238,23 @@ function StartUpRoutes() {
 					</Suspense>
 				}
 			/>
-			 <Route
-      path="/myCommunity"
-      element={
-        <Suspense fallback={<SuspenseLoader />}>
-          <MyCommunity />
-        </Suspense>
-        }
-      />
-	  <Route
-      path="/CreateCommunity"
-      element={
-        <Suspense fallback={<SuspenseLoader />}>
-          <NewCommunityModal />
-        </Suspense>
-        }
-      />
-	
+			<Route
+				path="/myCommunity"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<MyCommunity />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="/CreateCommunity"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<NewCommunityModal />
+					</Suspense>
+				}
+			/>
+
 			<Route
 				path="/createpost"
 				element={
