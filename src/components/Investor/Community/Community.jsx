@@ -37,6 +37,8 @@ import JoinWhatsAppGroupPopup from "./JoinWhatsAppGroupPopup";
 import avatar4 from "../../../Images/avatars/image-4.png";
 import WhiteLogo from "../../../Images/investorIcon/logo-white.png";
 import DarkLogo from "../../../Images/investorIcon/new-logo.png";
+import { FaShareAlt } from "react-icons/fa";
+import SharePopup from "../../PopUp/SocialSharePopup/SharePopup";
 
 const WhatsAppBanner = ({ onClick, onClose }) => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -109,6 +111,8 @@ const Community = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [showWhatsAppPopup, setShowWhatsAppPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [sharePopupOpen, setSharePopupOpen] = useState(false);
+  const [communityUrl, setCommunityUrl] = useState('');
 
 	// New Fetch call
 	useEffect(() => {
@@ -462,6 +466,13 @@ const Community = () => {
         }
       };
 
+      const handleOpenSocialShare = (communityId) => {
+        const baseUrl = window.location.origin;
+        const communityUrl = `${baseUrl}/community/${encodeURIComponent(communityId)}`;
+        setCommunityUrl(communityUrl);
+        setSharePopupOpen(true);
+      };
+
       return (
         <div className="community-page" data-bs-theme={theme}>
           <Toaster 
@@ -500,7 +511,13 @@ const Community = () => {
 
                   <img src={community?.image} alt={community?.name} />
                   <div className="info-text">
-                    <h1>{community?.name}</h1>
+                    <div className="title-with-share">
+                      <h1>{community?.name}</h1>
+                      <FaShareAlt 
+                        className="share-icon"
+                        onClick={() => handleOpenSocialShare(community?._id)}
+                      />
+                    </div>
                     <p>{community?.description}</p>
                     <div className="stats">
                       <span>{community?.members?.length + 1} members</span>
@@ -672,6 +689,11 @@ const Community = () => {
               </nav>
             </div>
           )}
+          <SharePopup 
+            url={communityUrl} 
+            isOpen={sharePopupOpen} 
+            setIsOpen={setSharePopupOpen} 
+          />
         </div>
       );
 }

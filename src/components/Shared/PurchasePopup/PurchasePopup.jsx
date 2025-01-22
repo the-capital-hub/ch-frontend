@@ -43,15 +43,22 @@ const PurchasePopup = ({
   return (
     <div className="purchase-modal-overlay">
       <div className="purchase-modal-content">
+        <button className="close-button" onClick={onClose}>
+          ×
+        </button>
+        
         <div className="modal-header">
           <h2>{itemDetails.type === 'community' ? 'Join Community' : 'Purchase Product'}</h2>
-          <p>
+          <p className="subtitle">
             Please fill these details for purchase confirmation and further
             communication.
           </p>
         </div>
 
         <div className="item-details-card">
+          <div className="card-header">
+            <h3>Details</h3>
+          </div>
           <div className="details-grid">
             <div className="detail-item">
               <span className="label">Name:</span>
@@ -104,9 +111,11 @@ const PurchasePopup = ({
           </div>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="purchase-form">
           <div className="form-group">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">
+              <span className="label-text">Name</span>
+            </label>
             <input
               type="text"
               id="name"

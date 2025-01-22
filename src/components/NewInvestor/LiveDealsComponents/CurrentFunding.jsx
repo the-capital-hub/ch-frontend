@@ -14,7 +14,7 @@ const CurrentFunding = ({ startup, colorCard }) => {
             backgroundColor: "#333333",
           }}
         >
-          <div className="d-flex flex-column gap-2 justify-content-center ps-2">
+          <div className="d-flex flex-column gap-2 justify-content-center ps-2 pe-2">
             <p className="small">
               {startup === "true" ? "Fund Ask" : "Minimum Tickets Size"}
             </p>
@@ -40,7 +40,7 @@ const CurrentFunding = ({ startup, colorCard }) => {
             backgroundColor: "#333333",
           }}
         >
-          <div className="d-flex flex-column gap-2 justify-content-center ps-2">
+          <div className="d-flex flex-column gap-2 justify-content-center ps-2 pe-2">
             <p className="small">
               {startup === "true" ? "Valuation" : "Maximum Tickets Size"}
             </p>
@@ -66,7 +66,7 @@ const CurrentFunding = ({ startup, colorCard }) => {
             backgroundColor: "#333333",
           }}
         >
-          <div className="d-flex flex-column gap-2 justify-content-center ps-2">
+          <div className="d-flex flex-column gap-2 justify-content-center ps-2 pe-2">
             <p className="small">
               {startup === "true" ? "Funds raised" : "Seed Round"}
             </p>

@@ -44,7 +44,7 @@ export default function DealsHeader({
             Mark as not Interested
           </button>
         ) : (
-          <button className="btn-capital" onClick={handelDeals}>
+          <button className="d-flex align-items-center gap-2 btn btn-investor fw-bold fs-6" onClick={handelDeals}>
             Show Interest
           </button>
         )}
