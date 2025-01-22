@@ -1,14 +1,19 @@
 .meeting-scheduler {
 	min-height: 100vh;
 	padding: 2rem;
-	//background-color: var(--background-color);
 	background-color: var(--startup-bg);
 	background-image: radial-gradient(circle, rgba(105, 2, 116, 0.2), transparent 60%);
+	overflow-y: scroll;
+	&::-webkit-scrollbar {
+		width: 0px;
+	}
+
 
 	&__container {
 		display: grid;
 		grid-template-columns: 1fr 1.5fr;
 		gap: 2rem;
+
 		max-width: 1400px;
 		margin: 0 auto;
 
@@ -19,6 +24,7 @@
 
 	&__left, &__right {
 		background: var(--white-to-grey);
+
 		border-radius: 12px;
 		padding: 2rem;
 		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -32,6 +38,7 @@
 		border-bottom: 1px solid var(--bs-border-color);
 		padding-bottom: 1.5rem;
 		position: relative;
+
 
 		.back-button {
 			position: relative;
@@ -73,6 +80,7 @@
 				font-size: 1.5rem;
 			}
 
+
 			p {
 				margin: 0.25rem 0 0;
 				color: var(--bs-grey-white);
@@ -82,6 +90,7 @@
 
 	.details-section {
 		.meeting-info {
+
 			display: flex;
 			align-items: center;
 			gap: 1rem;
@@ -99,6 +108,7 @@
 						color: var(--bs-grey-white);
 					}
 
+
 					.new-price {
 						color: var(--bs-primary);
 						font-weight: 600;
@@ -109,6 +119,7 @@
 					color: var(--bs-success);
 					font-weight: 600;
 				}
+
 			}
 		}
 
@@ -165,6 +176,7 @@
 					font-size: 1.1rem;
 					color: var(--bs-body-color);
 				}
+
 			}
 
 			.react-calendar__month-view__weekdays {
@@ -193,6 +205,7 @@
 				&:hover {
 					background-color: var(--bs-secondary-color);
 					border-radius: 4px;
+
 				}
 
 				&--active {
@@ -217,6 +230,7 @@
 			}
 		}
 	}
+
 
 	.time-slots {
 		h4 {

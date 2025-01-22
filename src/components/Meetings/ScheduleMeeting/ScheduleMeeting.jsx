@@ -194,28 +194,28 @@ const MeetingScheduler = () => {
 	const handleSchedule = async (e) => {
 		e.preventDefault();
 		setError("");
-	
+
 		if (!selectedDate) {
 			setError("Please select a date before scheduling.");
 			return;
 		}
-	
+
 		setLoading(true);
-	
+
 		try {
 			const startTime = selectedTime;
 			const [startHour, startMinute] = startTime.split(":").map(Number);
-	
+
 			const duration = events[0]?.duration || 30;
 			const endDate = new Date();
 			endDate.setHours(startHour);
 			endDate.setMinutes(startMinute + duration);
-	
+
 			const endTime = `${endDate
 				.getHours()
 				.toString()
 				.padStart(2, "0")}:${endDate.getMinutes().toString().padStart(2, "0")}`;
-	
+
 			const meetingData = {
 				startTime,
 				endTime,
@@ -233,7 +233,7 @@ const MeetingScheduler = () => {
 				paymentStatus: "Not Required",
 				paymentId: null,
 			};
-	
+
 			// Payment handling logic and scheduling logic here
 			await scheduleMeeting(meetingData);
 			setLoading(false);

@@ -10,6 +10,7 @@ import {
 	postUserPost,
 	updateUserById,
 	addNotificationAPI,
+	getSearchResultsAPI,
 	// getStartupByFounderId,
 } from "../../../Service/user";
 import { getBase64 } from "../../../utils/getBase64";
@@ -23,7 +24,7 @@ import {
 import toast from "react-hot-toast";
 import { loginSuccess } from "../../../Store/features/user/userSlice";
 import IconFile from "../../Investor/SvgIcons/IconFile";
-import { sharePostLinkedin } from "../../../Service/user";
+import { sharePostLinkedin, getUser } from "../../../Service/user";
 import { BiPoll } from "react-icons/bi";
 import LinkedInLogin from "../../Login/LinkedinLogin/LinkedInLogin";
 import { environment } from "../../../environments/environment";
@@ -38,6 +39,14 @@ const stripHtmlTags = (html) => {
 	return `${textContent}
   
           ---posted through TheCapitalHub(TheCapitalHub.in)`;
+};
+
+const debounce = (func, delay) => {
+	let timer;
+	return (...args) => {
+	  clearTimeout(timer);
+	  timer = setTimeout(() => func(...args), delay);
+	};
 };
 
 const PollPopup = ({ onSave, initialOptions = ["", ""], onClose }) => {
@@ -131,6 +140,7 @@ const CreatePostPopUp = ({
 }) => {
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 	const [postText, setPostText] = useState("");
+	const [users, setUsers] = useState([]);
 	const [category, setCategory] = useState("");
 	const [shareOnLinkedIn, setShareOnLinkedIn] = useState(false);
 	const [selectedImage, setSelectedImage] = useState(null);
@@ -141,7 +151,41 @@ const CreatePostPopUp = ({
 	const [crop, setCrop] = useState({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState(1);
 	const [allowMultipleAnswers, setAllowMultipleAnswers] = useState();
+	const [showSuggestions, setShowSuggestions] = useState(false);
+	const [suggestions, setSuggestions] = useState([]);
+	const [mentionCharIndex, setMentionCharIndex] = useState(null);
+	const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
 	const baseUrl = environment.baseUrl;
+
+	const editorRef = useRef(null);
+
+
+	const fetchUsers = async (searchTerm) => {
+		try {
+		  // Fetch all users from the API endpoint
+		  const { data } = await getSearchResultsAPI(searchTerm);
+		  
+		  if (!data) {
+			throw new Error(`Failed to fetch users: ${data.statusText}`);
+		  }
+	  
+		  // Simulate a delay for user fetching (optional, e.g., 500ms)
+		  await new Promise((resolve) => setTimeout(resolve, 500));
+	  
+		  // Filter users based on the search term
+		  const filteredUsers = data?.users?.filter((user) =>
+			user.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+		  );
+
+		  // Update suggestions state with filtered users
+		  setSuggestions(filteredUsers);
+		} catch (error) {
+		  console.error("Error fetching users:", error);
+		}
+	  };
+	  
+
+	const debouncedFetchUsers = useRef(debounce(fetchUsers, 2000)).current;
 
 	// const [croppedImage, setCroppedImage] = useState(null);
 	const [pdfThumbnail, setPdfThumbnail] = useState(null);
@@ -250,9 +294,64 @@ const CreatePostPopUp = ({
 		}
 	};
 
-	const handleQuillChange = (value) => {
+	const handleQuillChange = (value, delta, source, editor) => {
 		setPostText(value);
+
+		if (source === "user") {
+			const cursorPosition = editor.getSelection().index;
+			const content = editor.getText(0, cursorPosition);
+
+			// Detect `@` to trigger mention logic
+			const lastAtIndex = content.lastIndexOf("@");
+			if (lastAtIndex >= 0 && (mentionCharIndex === null || lastAtIndex > mentionCharIndex)) {
+			  setMentionCharIndex(lastAtIndex);
+			  const searchTerm = content.slice(lastAtIndex + 1).trim();
+	  
+			  if (searchTerm) {
+				debouncedFetchUsers(searchTerm);
+				setShowSuggestions(true);
+				positionDropdown(editor, lastAtIndex);
+			  } else {
+				setShowSuggestions(false);
+			  }
+			} else if (mentionCharIndex !== null) {
+			  setMentionCharIndex(null);
+			  setShowSuggestions(false);
+			}
+		  }
 	};
+
+	
+
+	const filterSuggestions = (searchTerm) => {
+		const filteredUsers = users.filter((user) =>
+		  user.username.toLowerCase().includes(searchTerm.toLowerCase())
+		);
+		setSuggestions(filteredUsers);
+	  };
+	
+	  const positionDropdown = (editor, index) => {
+		const quill = editorRef.current.getEditor();
+		const bounds = quill.getBounds(index);
+		setDropdownPosition({ top: bounds.top + 40, left: bounds.left });
+	  };
+	
+	  const handleSuggestionClick = (user) => {
+		const quill = editorRef.current.getEditor();
+		const cursorPosition = quill.getSelection().index;
+	
+		// Replace `@` and search term with selected username
+		const textBeforeAt = postText.slice(0, mentionCharIndex);
+		const textAfterAt = postText.slice(cursorPosition);
+		const newValue = `${textBeforeAt}@${user.username} ${textAfterAt}`;
+	
+		setPostText(newValue);
+		setShowSuggestions(false);
+		setMentionCharIndex(null);
+	
+		// Move cursor to end of inserted mention
+		quill.setSelection(textBeforeAt.length + user.username.length + 2);
+	  };
 
 	const getCroppedImg = async (imageSrc, crop) => {
 		const image = new Image();
@@ -572,6 +671,7 @@ const CreatePostPopUp = ({
 						<div className="createpost__body">
 							<ReactQuill
 								value={postText}
+								ref={editorRef}
 								onChange={handleQuillChange}
 								placeholder="What would you like to converse about? Write a post..."
 								modules={{ toolbar: false }} 
@@ -589,6 +689,26 @@ const CreatePostPopUp = ({
 								]}
 								className="custom-quill"
 							/>
+
+							{showSuggestions && (
+										<div
+										className="suggestions-dropdown"
+										style={{
+											top: dropdownPosition.top,
+											left: dropdownPosition.left,
+										}}
+										>
+										{suggestions.map((user) => (
+											<div
+											key={user.id}
+											className="suggestion-item"
+											onClick={() => handleSuggestionClick(user)}
+											>
+											{user.username}
+											</div>
+										))}
+										</div>
+									)}
 
 							{respostingPostId &&
 								(loadingRepostData ? (
