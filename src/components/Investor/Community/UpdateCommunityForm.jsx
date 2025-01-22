@@ -46,10 +46,23 @@ const UpdateCommunityForm = ({ community }) => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({ 
-      ...formData, 
-      [name]: type === 'checkbox' ? checked : value 
-    });
+    if (name === 'subscription') {
+      setFormData({
+        ...formData,
+        subscription: value,
+        amount: value === 'free' ? null : formData.amount // Keep existing amount if paid, null if free
+      });
+    } else if (name === 'amount') {
+      setFormData({
+        ...formData,
+        amount: value === '' ? null : Number(value) // Convert empty string to null, otherwise to number
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: type === 'checkbox' ? checked : value
+      });
+    }
   };
 
   const handleFileChange = (event) => {
@@ -58,7 +71,7 @@ const UpdateCommunityForm = ({ community }) => {
   };
 
   const handleSubmit = async (e) => {
-    
+    console.log(formData);
     e.preventDefault();
     setIsLoading(true);
     // Convert image to base64 if it's a file
