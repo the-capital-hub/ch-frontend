@@ -170,6 +170,15 @@ const API = Object.freeze({
 	approveOneLinkRequest: `${baseUrl}/startup/approveOneLinkRequest`,
 	rejectOneLinkRequest: `${baseUrl}/startup/rejectOneLinkRequest`,
 	getThoughts: `${baseUrl}/thoughts/get-questions`,
+	// "/updateAnswerOfQuestion/:questionId/:answerId"
+	// 	"/deleteAnswerOfQuestion/:questionId/:answerId",
+	// "/update-question/:questionId"
+	// "/delete-question/:questionId"
+
+	updateAnswerOfQuestion: `${baseUrl}/thoughts/updateAnswerOfQuestion`,
+	deleteAnswerOfQuestion: `${baseUrl}/thoughts/deleteAnswerOfQuestion`,
+	updateQuestion: `${baseUrl}/thoughts/update-question`,
+	deleteQuestion: `${baseUrl}/thoughts/delete-question`,
 });
 
 export default API;
