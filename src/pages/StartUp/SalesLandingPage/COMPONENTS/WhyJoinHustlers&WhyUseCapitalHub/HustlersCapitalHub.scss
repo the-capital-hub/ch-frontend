@@ -85,6 +85,9 @@
 			mask-composite: exclude;
 			z-index: -1;
 		}
+		@media (max-width: 410px) {
+			background: none;
+		}
 	}
 }
 

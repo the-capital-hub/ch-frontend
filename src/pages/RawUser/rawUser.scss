@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .raw-user-page {
   margin-top: 2rem;
   background-color: #050505;
@@ -83,6 +87,29 @@
       }
     }
   }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 2rem 1rem;
+
+      .user-info {
+        h1 {
+          font-size: 2rem;
+        }
+      }
+    }
+
+    .signup-modal {
+      width: 95%;
+      padding: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .signup-modal {
+      padding: 1rem;
+    }
+  }
 }
 
 .signup-modal {
@@ -97,6 +124,11 @@
   max-width: 800px;
   max-height: 90vh;
   overflow-y: auto;
+
+  @media (max-width: 768px) {
+    width: 95%;
+    max-width: none;
+  }
 }
 
 .signup-modal-overlay {
@@ -107,20 +139,6 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.75);
   z-index: 1000;
-}
-
-@media (max-width: 768px) {
-  .raw-user-page {
-    .hero-section {
-      padding: 2rem 1rem;
-
-      .user-info {
-        h1 {
-          font-size: 2rem;
-        }
-      }
-    }
-  }
 }
 
 .founder-section {
@@ -333,6 +351,31 @@
         mask-composite: exclude;
         z-index: -1;
       }
+    }
+  }
+}
+
+.subscription-modal,
+.otp-modal {
+  @media (max-width: 768px) {
+    width: 95%;
+    max-width: none;
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
+}
+
+.loader-overlay {
+  @media (max-width: 768px) {
+    .loader {
+      transform: scale(0.8);
+    }
+
+    .loader-text {
+      font-size: 0.9rem;
     }
   }
 } 

@@ -14,7 +14,7 @@ const RevenueStatistics = ({ startup, colorCard }) => {
             backgroundColor: "#333333",
           }}
         >
-          <div className="d-flex flex-column gap-2 justify-content-center ps-2">
+          <div className="d-flex flex-column gap-2 justify-content-center ps-2 pe-2">
             <p className="small">
               {startup === "true" ? "Last year revenue(FY 23)" : "Maximum Tickets Size"}
             </p>
@@ -38,7 +38,7 @@ const RevenueStatistics = ({ startup, colorCard }) => {
             backgroundColor: "#333333",
           }}
         >
-          <div className="d-flex flex-column gap-2 justify-content-center ps-2">
+          <div className="d-flex flex-column gap-2 justify-content-center ps-2 pe-2">
             <p className="small">
               {startup === "true" ? "Target (FY 24)" : "Seed Round"}
             </p>

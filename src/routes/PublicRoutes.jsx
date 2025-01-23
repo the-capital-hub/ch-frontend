@@ -372,7 +372,6 @@ function PublicRoutes() {
 					<Suspense fallback={<SuspenseLoader />}>
 						<Navbar2 />
 						<RawUserPage />
-						<Footer />
 					</Suspense>
 				}
 			/>

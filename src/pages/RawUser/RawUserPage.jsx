@@ -7,6 +7,9 @@ import "./rawUser.scss";
 import { usePaymentFlow } from "../../hooks/usePaymentFlow";
 import profile from "../StartUp/SalesLandingPage/COMPONENTS/images/profile.png";
 import NotFound404 from "../Error/NotFound404/NotFound404";
+import Home from "./components/Home/Home";
+import Footer from "../../components/Footer/FooterForSalesLanding/Footer2";
+import InvestorCards from "./components/InvestorCards/InvestorCards";
 
 const RawUserPage = () => {
   const { userId } = useParams();
@@ -31,47 +34,16 @@ const RawUserPage = () => {
     <div className="raw-user-page">
       {rawUser && (
         <>
-          <div className="hero-section">
-            <div className="user-info">
-              <div className="profile-image">
-                <img 
-                  src={rawUser.profilePicture} 
-                  alt={`${rawUser.firstName} ${rawUser.lastName}`} 
-                />
-              </div>
-              <h1>{`${rawUser.firstName} ${rawUser.lastName}`}</h1>
-              <button 
-                className="claim-profile-btn"
-                onClick={() => setShowSignupModal(true)}
-              >
-                Claim Profile
-              </button>
-            </div>
-          </div>
-
-          <div className="platform-info">
-            <h2>Join The Capital Hub Community</h2>
-            <div className="features">
-              <div className="feature">
-                <h3>Connect with Investors</h3>
-                <p>Access our network of verified investors and raise funds for your startup.</p>
-              </div>
-              <div className="feature">
-                <h3>Grow Your Network</h3>
-                <p>Connect with other founders and expand your professional network.</p>
-              </div>
-              <div className="feature">
-                <h3>Access Resources</h3>
-                <p>Get exclusive access to startup resources and mentorship.</p>
-              </div>
-            </div>
-          </div>
-
+          <Home 
+            rawUser={rawUser} 
+            onClaimProfile={() => setShowSignupModal(true)} 
+          />
+          <InvestorCards />
           <div className="founder-section">
             <div className="heading">
               <h1>Meet the Visionary Behind It All</h1>
             </div>
-
+            
             <div className="founder-content">
               <div className="founder-info">
                 <div className="founder-img">
@@ -91,20 +63,12 @@ const RawUserPage = () => {
                   </p>
                 </div>
               </div>
-
-              <div className="pricing">
-                <div className="pricing-details">
-                  <h3>Unlock Premium Resources</h3>
-                  <h4>
-                    INR <span>1,999</span>
-                  </h4>
-                  <button onClick={() => paymentFlow.setIsModalOpen(true)}>Get Premium</button>
-                </div>
-              </div>
             </div>
           </div>
         </>
       )}
+
+      <Footer />
 
       <Modal
         isOpen={showSignupModal}

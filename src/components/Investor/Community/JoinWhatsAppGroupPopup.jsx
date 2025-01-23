@@ -30,7 +30,7 @@ const JoinWhatsAppGroupPopup = ({ onClose, onJoin }) => {
     return (
         <div className="whatsapp-popup-overlay">
             <div className="whatsapp-popup">
-                <button className="close-btn" onClick={onClose} disabled={isLoading}>&times;</button>
+                <button className="close-btn-wa" onClick={onClose} disabled={isLoading}>&times;</button>
                 <h2>Join WhatsApp Group</h2>
                 <p>Please enter your phone number to join the community WhatsApp group</p>
                 <form onSubmit={handleSubmit}>
