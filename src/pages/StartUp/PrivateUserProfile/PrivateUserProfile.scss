@@ -19,13 +19,13 @@
 	--card-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-body {
-	margin: 0;
-	padding: 0;
-	background-color: var(--background-secondary);
-	color: var(--text-primary);
-	transition: background-color 0.3s, color 0.3s;
-}
+// body {
+// 	margin: 0;
+// 	padding: 0;
+// 	background-color: var(--background-secondary);
+// 	color: var(--text-primary);
+// 	transition: background-color 0.3s, color 0.3s;
+// }
 
 .founder-profile-container {
 	width: 100%;
@@ -129,7 +129,7 @@ body {
 			width: 80px;
 			height: 30px;
 			border-radius: 50px;
-			background-color: var(--accent-color);
+			// background-color: var(--accent-color);
 			color: #ffffff;
 			padding: 5px 10px;
 			font-family: Outfit;
@@ -145,6 +145,14 @@ body {
 			&:hover {
 				transform: translateY(-3px);
 			}
+		}
+		.bg-green {
+			background-color: rgb(211, 243, 107);
+			color: black;
+		}
+
+		.bg-orange {
+			background-color: var(--accent-color);
 		}
 	}
 }
@@ -198,8 +206,15 @@ body {
 			display: flex;
 			align-items: center;
 			gap: 0.5rem;
-			color: var(--accent-color);
 			margin-top: 0.5rem;
+		}
+
+		.bg-green {
+			color: rgb(211, 243, 107);
+		}
+
+		.bg-orange {
+			color: var(--accent-color);
 		}
 	}
 

@@ -20,7 +20,10 @@ import { environment } from "../../../environments/environment";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../Store/features/design/designSlice";
-import { sentConnectionRequest } from "../../../Service/user";
+import {
+	sentConnectionRequest,
+	getUserByUserNameOrOneLinkId,
+} from "../../../Service/user";
 import ImageCarousel from "../../../components/Investor/Cards/FeedPost/ImageCarousel/ImageCarousel";
 import SubscriptionPopup from "../../../components/PopUp/SubscriptionPopUp/SubcriptionPop";
 import Skeleton from "react-loading-skeleton";
@@ -29,7 +32,7 @@ import EmailDisplay from "./components/EmailDisplay/EmailDisplay";
 import AfterSuccessPopup from "../../../components/PopUp/AfterSuccessPopUp/AfterSuccessPopUp";
 import "./PrivateUserProfile.scss";
 
-const PrivateUserProfile = () => {
+const PrivateUserProfile = ({ isInvestor = false }) => {
 	const theme = useSelector(selectTheme);
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 	const [activeTab, setActiveTab] = useState("posts");
@@ -43,28 +46,29 @@ const PrivateUserProfile = () => {
 	const [connectionSent, setConnectionSent] = useState(false);
 	const [loading, setLoading] = useState(true);
 
-	console.log("User", founder);
+	// console.log("User", founder);
 
 	const { username } = useParams();
+	const { oneLinkId } = useParams();
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchFounderData = async () => {
 			try {
-				const response = await fetch(
-					`${environment.baseUrl}/users/getUserByUserName`,
-					{
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify({ username }),
-					}
+				const response = await getUserByUserNameOrOneLinkId(
+					username,
+					oneLinkId
 				);
-				if (response.ok) {
-					const data = await response.json();
-					setFounder(data.user);
-					setPost(data.post);
+				console.log("response", response.data);
+				if (response.status === 200) {
+					setFounder(response.data.user);
+					setPost(response.data.posts);
+
+					// Filter out "Pitch Day" events
+					const filteredEvents = response.data.events.filter(
+						(event) => event.eventType !== "Pitch Day"
+					);
+					setEvents(filteredEvents);
 				} else {
 					console.error("Failed to fetch founder data");
 				}
@@ -73,35 +77,33 @@ const PrivateUserProfile = () => {
 			}
 		};
 
-		const fetchEvents = async () => {
-			try {
-				const response = await fetch(
-					`${environment.baseUrl}/meetings/getEvents/${username}`,
-					{
-						method: "GET",
-						headers: {
-							"Content-Type": "application/json",
-						},
-					}
-				);
-				if (response.ok) {
-					const data = await response.json();
-					const publicEvents = data.data.filter(
-						(event) => event.isPrivate === false
-					);
-					setEvents(publicEvents);
-				} else {
-					console.error("Failed to fetch events");
-				}
-			} catch (error) {
-				console.error("Error fetching events:", error);
-			}
-		};
+		// const fetchEvents = async () => {
+		// 	try {
+		// 		const response = await fetch(
+		// 			`${environment.baseUrl}/meetings/getEvents/${username}`,
+		// 			{
+		// 				method: "GET",
+		// 				headers: {
+		// 					"Content-Type": "application/json",
+		// 				},
+		// 			}
+		// 		);
+		// 		if (response.ok) {
+		// 			const data = await response.json();
+		// 			const publicEvents = data.data.filter(
+		// 				(event) => event.isPrivate === false
+		// 			);
+		// 			setEvents(publicEvents);
+		// 		} else {
+		// 			console.error("Failed to fetch events");
+		// 		}
+		// 	} catch (error) {
+		// 		console.error("Error fetching events:", error);
+		// 	}
+		// };
 
-		Promise.all([fetchFounderData(), fetchEvents()]).then(() =>
-			setLoading(false)
-		);
-	}, [username]);
+		Promise.all([fetchFounderData()]).then(() => setLoading(false));
+	}, [username, oneLinkId]);
 
 	const formatedDate = (date) => {
 		const options = { year: "numeric", month: "long", day: "numeric" };
@@ -248,7 +250,7 @@ const PrivateUserProfile = () => {
 								)}
 							</h1>
 							{/* Designation, company, location */}
-							<p className="title">
+							{/* <p className="title">
 								{loading ? (
 									<Skeleton width={250} />
 								) : (
@@ -258,6 +260,33 @@ const PrivateUserProfile = () => {
 										", " +
 										founder?.startUp?.location +
 										", India" || "No Data Available"
+								)}
+							</p> */}
+
+							<p className="title">
+								{loading ? (
+									<Skeleton width={250} />
+								) : (
+									(() => {
+										const designation = founder?.designation;
+										const company = founder?.startUp?.company;
+										const location = founder?.startUp?.location;
+
+										// Count how many of the three properties are defined
+										const definedCount = [
+											designation,
+											company,
+											location,
+										].filter(Boolean).length;
+
+										// If two or more are undefined, show "No Data Available"
+										if (definedCount < 2) {
+											return "Designation, Company & Location not Available";
+										}
+
+										// Otherwise, return the formatted string
+										return `${designation} of ${company}, ${location}, India`;
+									})()
 								)}
 							</p>
 							{/* User's Email display here in place of designation */}
@@ -274,7 +303,9 @@ const PrivateUserProfile = () => {
 								)}
 							</div>
 							{/* User Connections */}
-							<div className="location">
+							<div
+								className={`location ${isInvestor ? "bg-green" : "bg-orange"}`}
+							>
 								<span>
 									{loading ? (
 										<Skeleton width={100} />
@@ -321,7 +352,9 @@ const PrivateUserProfile = () => {
 							) : (
 								founder?.userName !== loggedInUser.userName && (
 									<div
-										className="connect-btn"
+										className={`connect-btn ${
+											isInvestor ? "bg-green" : "bg-orange"
+										}`}
 										onClick={() => handleConnect(founder._id)}
 									>
 										Connect
@@ -476,7 +509,7 @@ const PrivateUserProfile = () => {
 					{/* Public Events Section */}
 					<section className="profile-section meeting-section">
 						<h2>
-							<FaCalendarAlt /> Public Events
+							<FaCalendarAlt /> Events
 						</h2>
 						<div className="meeting-cards-container">
 							<div className="meeting-cards">

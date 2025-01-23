@@ -199,7 +199,7 @@ function StartUpRoutes() {
 				}
 			/>
 			<Route
-				path="/user/:username/:userId"
+				path="/user/:username/:oneLinkId"
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
 						<PrivateUserProfile />
