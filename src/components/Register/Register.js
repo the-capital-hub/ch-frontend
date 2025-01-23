@@ -12,6 +12,8 @@ import {
 	googleRegisterApi,
 	postStartUpData,
 	postInvestorData,
+	getUserByPhoneNumber,
+	getUserByEmail
 } from "../../Service/user";
 
 // imports for implementing login with google
@@ -261,6 +263,11 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 		try {
 			if (signupMethod === 'phone') {
 				const phoneWithPrefix = `+91${inputValues.phoneNumber}`;
+				const user = await getUserByPhoneNumber(phoneWithPrefix);
+				if(user){
+					toast.error("Phone number already registered");
+					return;
+				}
 				const res = await sendOTP(phoneWithPrefix);
 				if (res?.orderId) {
 					setOrderId(res.orderId);
@@ -269,6 +276,11 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 					toast.success("OTP sent successfully");
 				}
 			} else if (signupMethod === 'email') {
+				const user = await getUserByEmail(inputValues.email);
+				if(user){
+					toast.error("Email already registered");
+					return;
+				}
 				await handleSendEmailOTP(inputValues.email);
 			}
 		} catch (error) {

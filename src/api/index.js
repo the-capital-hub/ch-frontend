@@ -3,6 +3,8 @@ import { environment } from "../environments/environment";
 const baseUrl = environment.baseUrl;
 const API = Object.freeze({
 	getUser: `${baseUrl}/users/getUser`,
+	getUserByPhoneNumber: `${baseUrl}/users/getUserByPhoneNumber`,
+	getUserByEmail: `${baseUrl}/users/getUserByEmail`,
 	getRawUsers: `${baseUrl}/users/getRawUsers`,
 	getRawUserById: `${baseUrl}/users/getRawUserById`,
 	getUserAvailability: `${baseUrl}/users/getUserAvailability`,
