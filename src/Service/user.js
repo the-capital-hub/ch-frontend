@@ -2093,3 +2093,15 @@ export const deleteQuestion = async (questionId) => {
 		throw error;
 	}
 };
+
+export const getUserByUserNameOrOneLinkId = async (username, oneLinkId) => {
+	try {
+		const response = await axiosInstance.get(
+			`${API.getUserByUserNameOrOneLinkId}/${username}/${oneLinkId}`
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
