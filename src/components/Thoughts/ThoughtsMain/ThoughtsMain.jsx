@@ -6,6 +6,7 @@ import { MdOutlineFilterAlt, MdOutlineFilterAltOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../Store/features/design/designSlice";
+import { deleteQuestion } from "../../../Service/user";
 import { environment } from "../../../environments/environment";
 import "./ThoughtsMain.scss";
 import industriesAndSkills from "../data/industriesAndSkills";
@@ -149,6 +150,7 @@ const ArticleCard = ({
 	onUpvote,
 	onShare,
 	loggedInUser,
+	handleDeleteQuestion,
 }) => (
 	<div className="article-card" onClick={onClick}>
 		<h2 className="article-card-title">{title}</h2>
@@ -202,7 +204,10 @@ const ArticleCard = ({
 			{loggedInUser?.isAdmin && (
 				<button
 					className="article-card-button delete-btn"
-					// onClick={() => handleDeleteQuestion(id)}
+					onClick={(e) => {
+						e.stopPropagation();
+						handleDeleteQuestion(id);
+					}}
 				>
 					<FaRegTrashCan className="article-card-icon" />
 					<span>Delete</span>
@@ -234,25 +239,24 @@ const Thoughts = () => {
 	// console.log("questions", questions);
 
 	// Fetch questions
-	useEffect(() => {
-		const fetchQuestions = async () => {
-			try {
-				setLoading(true);
-				const response = await fetch(`${baseUrl}/thoughts/get-questions`);
+	const fetchQuestions = async () => {
+		try {
+			setLoading(true);
+			const response = await fetch(`${baseUrl}/thoughts/get-questions`);
 
-				if (!response.ok) {
-					throw new Error("Network response was not ok");
-				}
-
-				const data = await response.json();
-				setQuestions(data.data);
-			} catch (err) {
-				setError(err.message);
-			} finally {
-				setLoading(false);
+			if (!response.ok) {
+				throw new Error("Network response was not ok");
 			}
-		};
 
+			const data = await response.json();
+			setQuestions(data.data);
+		} catch (err) {
+			setError(err.message);
+		} finally {
+			setLoading(false);
+		}
+	};
+	useEffect(() => {
 		fetchQuestions();
 	}, []);
 
@@ -389,7 +393,25 @@ const Thoughts = () => {
 		}
 	};
 
-	// const handleDeleteQuestion 
+	const handleDeleteQuestion = async (questionId) => {
+		if (!window.confirm("Are you sure you want to delete this answer?")) {
+			return;
+		}
+		try {
+			const response = await deleteQuestion(questionId);
+
+			if (response.status !== 200) {
+				throw new Error(response.message);
+			}
+			alert(response.message);
+			if (response.status === 200) {
+				fetchQuestions();
+			}
+		} catch (error) {
+			console.error("Error deleting answer:", error);
+			alert(error.message);
+		}
+	};
 
 	// Filter questions based on selected filter
 	let filteredQuestions;
@@ -527,6 +549,7 @@ const Thoughts = () => {
 								onUpvote={handleUpvoteClick}
 								onShare={() => handleOpenSocialShare(question._id)}
 								loggedInUser={user}
+								handleDeleteQuestion={handleDeleteQuestion}
 							/>
 						))
 					) : (

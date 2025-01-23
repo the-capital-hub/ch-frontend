@@ -22,7 +22,7 @@ import { useSelector } from "react-redux";
 import { selectTheme } from "../../../Store/features/design/designSlice";
 import { sentConnectionRequest } from "../../../Service/user";
 import ImageCarousel from "../../../components/Investor/Cards/FeedPost/ImageCarousel/ImageCarousel";
-import SubcriptionPop from "../../../components/PopUp/SubscriptionPopUp/SubcriptionPop";
+import SubscriptionPopup from "../../../components/PopUp/SubscriptionPopUp/SubcriptionPop";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import EmailDisplay from "./components/EmailDisplay/EmailDisplay";
@@ -617,13 +617,16 @@ const PrivateUserProfile = () => {
 			</div>
 
 			{subscriptionAlert && (
-				<SubcriptionPop
-					popPayOpen={subscriptionAlert}
-					setPopPayOpen={setSubscriptionAlert}
+				<SubscriptionPopup
+					isOpen={subscriptionAlert}
+					onClose={() => setSubscriptionAlert(!subscriptionAlert)}
 				/>
 			)}
 			{popPayOpen && (
-				<SubcriptionPop popPayOpen={popPayOpen} setPopPayOpen={setPopPayOpen} />
+				<SubscriptionPopup
+					isOpen={popPayOpen}
+					onClose={() => setPopPayOpen(false)}
+				/>
 			)}
 			{connectionSent && (
 				<AfterSuccessPopup
