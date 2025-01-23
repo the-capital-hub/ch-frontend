@@ -227,7 +227,7 @@ const PrivateUserProfile = ({ isInvestor = false }) => {
 			</Helmet>
 
 			<div
-				className={`founder-profile-container ${
+				className={`private-profile-container ${
 					theme === "dark" ? "dark-theme" : ""
 				}`}
 			>
@@ -365,7 +365,7 @@ const PrivateUserProfile = ({ isInvestor = false }) => {
 					</section>
 
 					{/* About Section */}
-					<section className="profile-section">
+					<section className="private-profile-section">
 						<h2>About</h2>
 						{loading ? (
 							<Skeleton count={3} />
@@ -375,7 +375,7 @@ const PrivateUserProfile = ({ isInvestor = false }) => {
 					</section>
 
 					{/* Education Section */}
-					<section className="profile-section">
+					<section className="private-profile-section">
 						<h2>
 							<FaGraduationCap /> Education
 						</h2>
@@ -417,7 +417,7 @@ const PrivateUserProfile = ({ isInvestor = false }) => {
 					</section>
 
 					{/* Experience Section */}
-					<section className="profile-section">
+					<section className="private-profile-section">
 						<h2>
 							<FaBriefcase /> Experience
 						</h2>
@@ -465,7 +465,7 @@ const PrivateUserProfile = ({ isInvestor = false }) => {
 					</section>
 
 					{/* Priority DM Section */}
-					<section className="profile-section">
+					<section className="private-profile-section">
 						<h2>
 							<BiMailSend /> Priority DM
 						</h2>
@@ -507,7 +507,7 @@ const PrivateUserProfile = ({ isInvestor = false }) => {
 					</section>
 
 					{/* Public Events Section */}
-					<section className="profile-section meeting-section">
+					<section className="private-profile-section meeting-section">
 						<h2>
 							<FaCalendarAlt /> Events
 						</h2>
@@ -553,7 +553,7 @@ const PrivateUserProfile = ({ isInvestor = false }) => {
 					</section>
 
 					{/* Activity Section */}
-					<section className="profile-section activity-section">
+					<section className="private-profile-section activity-section">
 						<h2>Activity</h2>
 						<div className="tabs">
 							<button
@@ -567,7 +567,7 @@ const PrivateUserProfile = ({ isInvestor = false }) => {
 					</section>
 
 					{/* Interests Section */}
-					<section className="profile-section interests-section">
+					<section className="private-profile-section interests-section">
 						<h2>Interests</h2>
 						{loading ? (
 							<Skeleton count={3} height={50} />
