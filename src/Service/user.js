@@ -132,6 +132,26 @@ async function postUser(userData, isInvestor, companyDetail) {
 	}
 }
 
+export async function getUserByPhoneNumber(phoneNumber) {
+	try {
+		const response = await axiosInstance.post(API.getUserByPhoneNumber, { phoneNumber });
+		return response.data;
+	} catch (error) {
+		console.error("Error:", error);
+		throw error;
+	}
+}
+
+export async function getUserByEmail(email) {
+	try {
+		const response = await axiosInstance.post(API.getUserByEmail, { email });
+		return response.data;
+	} catch (error) {
+		console.error("Error:", error);
+		throw error;
+	}
+}
+
 async function postStartUpData(startUpData) {
 	try {
 		const response = await axiosInstance.post(API.postStartUpData, startUpData);

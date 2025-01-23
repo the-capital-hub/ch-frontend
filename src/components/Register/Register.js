@@ -12,6 +12,8 @@ import {
 	googleRegisterApi,
 	postStartUpData,
 	postInvestorData,
+	getUserByPhoneNumber,
+	getUserByEmail
 } from "../../Service/user";
 
 // imports for implementing login with google
@@ -29,6 +31,7 @@ import Avatar5 from '../../Images/avatars/image-1.png';
 import { environment } from "../../environments/environment";
 import { Toaster } from "react-hot-toast";
 import { IoArrowBack } from "react-icons/io5";
+import { FaEdit } from "react-icons/fa";
 
 // OTP Verification Modal
 function OtpVerificationModal({
@@ -261,6 +264,11 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 		try {
 			if (signupMethod === 'phone') {
 				const phoneWithPrefix = `+91${inputValues.phoneNumber}`;
+				const user = await getUserByPhoneNumber(phoneWithPrefix);
+				if(user){
+					toast.error("Phone number already registered");
+					return;
+				}
 				const res = await sendOTP(phoneWithPrefix);
 				if (res?.orderId) {
 					setOrderId(res.orderId);
@@ -269,6 +277,11 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 					toast.success("OTP sent successfully");
 				}
 			} else if (signupMethod === 'email') {
+				const user = await getUserByEmail(inputValues.email);
+				if(user){
+					toast.error("Email already registered");
+					return;
+				}
 				await handleSendEmailOTP(inputValues.email);
 			}
 		} catch (error) {
@@ -300,6 +313,7 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 				if (res.isOTPVerified) {
 					const response = await googleRegisterApi({
 						...inputValues,
+						phoneNumber: `+91${inputValues.phoneNumber}`,
 						...formDetails,
 						isInvestor: isInvestorSelected,
 					});
@@ -610,6 +624,23 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 		navigate(-1);
 	};
 
+	const handleAvatarClick = (avatarSrc) => {
+		setPreviewImageUrl(avatarSrc);
+		// Convert the image to base64
+		fetch(avatarSrc)
+			.then(res => res.blob())
+			.then(blob => {
+				const reader = new FileReader();
+				reader.onloadend = () => {
+					setInputValues(prev => ({
+						...prev,
+						profilePicture: reader.result
+					}));
+				};
+				reader.readAsDataURL(blob);
+			});
+	};
+
 	return (
 		<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
 			<div className="register_container">
@@ -643,20 +674,55 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 								onChange={handleFileChange}
 								accept="image/*"
 							/>
-							<label htmlFor="profilePicture">
+							<label htmlFor="profilePicture" className="image-label">
 								<img 
 									src={previewImageUrl || CreateCommunityChat} 
 									alt="Profile" 
 								/>
+								{previewImageUrl && (
+									<div className="edit-overlay">
+										<FaEdit size={24} />
+									</div>
+								)}
 							</label>
 						</div>
 						
 						<div className="avatar-display">
-							<img src={Avatar1} alt="Avatar 1" className="avatar-image" />
-							<img src={Avatar2} alt="Avatar 2" className="avatar-image" />
-							<img src={Avatar3} alt="Avatar 3" className="avatar-image" />
-							<img src={Avatar4} alt="Avatar 4" className="avatar-image" />
-							<img src={Avatar5} alt="Avatar 5" className="avatar-image" />
+							<img 
+								src={Avatar1} 
+								alt="Avatar 1" 
+								className="avatar-image" 
+								onClick={() => handleAvatarClick(Avatar1)}
+								style={{ cursor: 'pointer' }}
+							/>
+							<img 
+								src={Avatar2} 
+								alt="Avatar 2" 
+								className="avatar-image" 
+								onClick={() => handleAvatarClick(Avatar2)}
+								style={{ cursor: 'pointer' }}
+							/>
+							<img 
+								src={Avatar3} 
+								alt="Avatar 3" 
+								className="avatar-image" 
+								onClick={() => handleAvatarClick(Avatar3)}
+								style={{ cursor: 'pointer' }}
+							/>
+							<img 
+								src={Avatar4} 
+								alt="Avatar 4" 
+								className="avatar-image" 
+								onClick={() => handleAvatarClick(Avatar4)}
+								style={{ cursor: 'pointer' }}
+							/>
+							<img 
+								src={Avatar5} 
+								alt="Avatar 5" 
+								className="avatar-image" 
+								onClick={() => handleAvatarClick(Avatar5)}
+								style={{ cursor: 'pointer' }}
+							/>
 						</div>
 						
 						<p className="community-message">
