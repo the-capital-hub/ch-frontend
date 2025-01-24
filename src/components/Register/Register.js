@@ -13,7 +13,7 @@ import {
 	postStartUpData,
 	postInvestorData,
 	getUserByPhoneNumber,
-	getUserByEmail
+	getUserByEmail,
 } from "../../Service/user";
 
 // imports for implementing login with google
@@ -23,11 +23,11 @@ import { useDispatch } from "react-redux";
 import CreateCommunityChat from "../../Images/Chat/CreateCommunityChat.png";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import Avatar1 from '../../Images/avatars/image.png';
-import Avatar2 from '../../Images/avatars/image-2.png';
-import Avatar3 from '../../Images/avatars/image-3.png';
-import Avatar4 from '../../Images/avatars/image-4.png';
-import Avatar5 from '../../Images/avatars/image-1.png';
+import Avatar1 from "../../Images/avatars/image.png";
+import Avatar2 from "../../Images/avatars/image-2.png";
+import Avatar3 from "../../Images/avatars/image-3.png";
+import Avatar4 from "../../Images/avatars/image-4.png";
+import Avatar5 from "../../Images/avatars/image-1.png";
 import { environment } from "../../environments/environment";
 import { Toaster } from "react-hot-toast";
 import { IoArrowBack } from "react-icons/io5";
@@ -43,7 +43,7 @@ function OtpVerificationModal({
 	inputValues,
 	setOrderId,
 	signupMethod,
-	handleSendEmailOTP
+	handleSendEmailOTP,
 }) {
 	const [otp, setOtp] = useState(["", "", "", "", "", ""]);
 	const inputRefs = useRef([]);
@@ -90,15 +90,14 @@ function OtpVerificationModal({
 	if (!isOpen) return null;
 	const handleOtpChange = async () => {
 		try {
-			if(signupMethod === 'phone'){
-			const response = await sendOTP(inputValues.phoneNumber);
-			setOrderId(response?.orderId);
-			setOpen(true);
-			setShow(true);
-		}
-		else if(signupMethod === 'email'){
-			await handleSendEmailOTP(inputValues.email);
-		}
+			if (signupMethod === "phone") {
+				const response = await sendOTP(inputValues.phoneNumber);
+				setOrderId(response?.orderId);
+				setOpen(true);
+				setShow(true);
+			} else if (signupMethod === "email") {
+				await handleSendEmailOTP(inputValues.email);
+			}
 		} catch (error) {}
 	};
 
@@ -114,7 +113,8 @@ function OtpVerificationModal({
 					</button>
 					<h2 className="enter_verification_code">Enter verification code</h2>
 					<p className="Otp_Sent_Msg">
-						We have just sent a verification code to your {signupMethod === 'phone' ? 'mobile number' : 'email'}.
+						We have just sent a verification code to your{" "}
+						{signupMethod === "phone" ? "mobile number" : "email"}.
 					</p>
 					<div
 						// className="flex justify-between mb-6"
@@ -149,13 +149,22 @@ function OtpVerificationModal({
 						<button onClick={handleOtpChange} className="Send_OTP_btn">
 							Send the code again
 						</button>
-						{signupMethod === 'phone' && <button onClick={onClose} className="Change_Number_btn">
-							Change phone number
-						</button>}
+						{signupMethod === "phone" && (
+							<button onClick={onClose} className="Change_Number_btn">
+								Change phone number
+							</button>
+						)}
 					</div>
-					<button onClick={handleVerify} className="Modal_Verify_btn active" disabled={isVerifying}>
+					<button
+						onClick={handleVerify}
+						className="Modal_Verify_btn active"
+						disabled={isVerifying}
+					>
 						{isVerifying ? (
-							<div className="spinner-border spinner-border-sm text-light" role="status">
+							<div
+								className="spinner-border spinner-border-sm text-light"
+								role="status"
+							>
 								<span className="visually-hidden">Loading...</span>
 							</div>
 						) : (
@@ -175,7 +184,7 @@ function OtpVerificationModal({
 	);
 }
 
-const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
+const Register = ({ isRawUser = false, setShowSignupModal, rawUser }) => {
 	const dispatch = useDispatch();
 	const [isMobileVerified, setIsMobileVerified] = useState(false);
 	const [inputValues, setInputValues] = useState({
@@ -202,32 +211,32 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 	const [showCompanyPopup, setShowCompanyPopup] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [previewLogoUrl, setPreviewLogoUrl] = useState("");
-	const [signupMethod, setSignupMethod] = useState('email'); // 'email' or 'phone'
+	const [signupMethod, setSignupMethod] = useState("email"); // 'email' or 'phone'
 	const [companyDetailsAdded, setCompanyDetailsAdded] = useState(false);
 	const [formDetails, setFormDetails] = useState({
-		companyName: "",  // For investors
-		company: "",      // For startups
+		companyName: "", // For investors
+		company: "", // For startups
 		description: "",
 		location: "",
 		website: "",
-		minimumInvest: "",  // Investor-specific
-		maximumInvest: "",  // Investor-specific
-		sector: "",      // Startup-specific
+		minimumInvest: "", // Investor-specific
+		maximumInvest: "", // Investor-specific
+		sector: "", // Startup-specific
 		fundingStage: "", // Startup-specific
-		logo: null,  // Added logo to formDetails
+		logo: null, // Added logo to formDetails
 	});
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	useEffect(() => {
-		setInputValues(prev => ({
+		setInputValues((prev) => ({
 			...prev,
-			firstName: 'Your',
-			lastName: 'Name'
+			firstName: "Your",
+			lastName: "Name",
 		}));
 	}, []);
 
 	const handleUserTypeToggle = (type) => {
-		setIsInvestorSelected(type === 'investor');
+		setIsInvestorSelected(type === "investor");
 	};
 
 	const handleSignupMethodToggle = (method) => {
@@ -238,7 +247,7 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 		const { name, value } = event.target;
 		if (name === "phoneNumber") {
 			// Remove any non-digit characters
-			const cleanedValue = value.replace(/\D/g, '');
+			const cleanedValue = value.replace(/\D/g, "");
 			setInputValues({ ...inputValues, [name]: cleanedValue });
 		} else {
 			setInputValues({ ...inputValues, [name]: value });
@@ -247,13 +256,13 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
-		
-		if (signupMethod === 'phone') {
+
+		if (signupMethod === "phone") {
 			if (!isValidMobileNumber(inputValues.phoneNumber)) {
 				toast.error("Please enter a valid 10-digit mobile number");
 				return;
 			}
-		} else if (signupMethod === 'email') {
+		} else if (signupMethod === "email") {
 			if (!inputValues.email) {
 				toast.error("Please enter a valid email");
 				return;
@@ -262,10 +271,10 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 
 		setIsSubmitting(true);
 		try {
-			if (signupMethod === 'phone') {
+			if (signupMethod === "phone") {
 				const phoneWithPrefix = `+91${inputValues.phoneNumber}`;
 				const user = await getUserByPhoneNumber(phoneWithPrefix);
-				if(user){
+				if (user) {
 					toast.error("Phone number already registered");
 					return;
 				}
@@ -276,9 +285,9 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 					setshow(true);
 					toast.success("OTP sent successfully");
 				}
-			} else if (signupMethod === 'email') {
+			} else if (signupMethod === "email") {
 				const user = await getUserByEmail(inputValues.email);
-				if(user){
+				if (user) {
 					toast.error("Email already registered");
 					return;
 				}
@@ -294,8 +303,8 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 	const navigate = useNavigate();
 	const isValidMobileNumber = (phoneNumber) => {
 		// Remove any non-digit characters and +91 prefix
-		const cleanedNumber = phoneNumber.replace(/\D/g, '');
-		
+		const cleanedNumber = phoneNumber.replace(/\D/g, "");
+
 		// Check if the number is exactly 10 digits
 		return cleanedNumber.length === 10;
 	};
@@ -303,7 +312,7 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 	const ValidateOtp = async (otp) => {
 		try {
 			const verificationCode = otp.join("");
-			if (signupMethod === 'phone') {
+			if (signupMethod === "phone") {
 				const res = await verifyOTP({
 					otp: verificationCode,
 					orderId,
@@ -340,9 +349,9 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 				} else {
 					throw new Error("Invalid OTP");
 				}
-			} else if (signupMethod === 'email') {
+			} else if (signupMethod === "email") {
 				const emailOtpResponse = await handleEmailOtpVerify(otp, orderId);
-				if(emailOtpResponse.success === true){
+				if (emailOtpResponse.success === true) {
 					// Create account first
 					const response = await googleRegisterApi({
 						...inputValues,
@@ -350,13 +359,13 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 					});
 
 					if (response.status === 200) {
-						const userId = response.user._id; 
-						
-						if(formDetails.companyName || formDetails.company){
+						const userId = response.user._id;
+
+						if (formDetails.companyName || formDetails.company) {
 							if (isInvestorSelected) {
-								await postInvestorData({...formDetails, founderId: userId});
+								await postInvestorData({ ...formDetails, founderId: userId });
 							} else {
-								await postStartUpData({...formDetails, founderId: userId});
+								await postStartUpData({ ...formDetails, founderId: userId });
 							}
 						}
 
@@ -365,12 +374,10 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 						navigate(isInvestorSelected ? "/investor/home" : "/home");
 						setIsMobileVerified(true);
 						setshow(false);
-					}
-					else{		
+					} else {
 						throw new Error("Something went wrong. Please try again.");
 					}
-				}	
-				else{
+				} else {
 					throw new Error("Invalid OTP");
 				}
 			}
@@ -384,13 +391,12 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 		document.title = "Register | The Capital Hub";
 	}, []);
 
-
 	const handleFileChange = async (event) => {
 		const file = event.target.files[0];
 		const image = await getBase64(file);
-		setInputValues(prev => ({
+		setInputValues((prev) => ({
 			...prev,
-			profilePicture: image
+			profilePicture: image,
 		}));
 		const imageUrl = URL.createObjectURL(file);
 		setPreviewImageUrl(imageUrl);
@@ -399,9 +405,9 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 	const handleLogoChange = async (event) => {
 		const file = event.target.files[0];
 		const image = await getBase64(file);
-		setFormDetails(prev => ({
+		setFormDetails((prev) => ({
 			...prev,
-			logo: image
+			logo: image,
 		}));
 		const logoUrl = URL.createObjectURL(file);
 		setPreviewLogoUrl(logoUrl);
@@ -410,19 +416,27 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 	const handleCompanyDetailsSubmit = async () => {
 		try {
 			setLoading(true);
-			if(formDetails.companyName || formDetails.company ){
-			setCompanyDetailsAdded(true); 
+			if (formDetails.companyName || formDetails.company) {
+				setCompanyDetailsAdded(true);
 			}
 			setShowCompanyPopup(false);
 		} catch (error) {
-			console.error('Error saving company details:', error);
+			console.error("Error saving company details:", error);
 		} finally {
 			setLoading(false);
 		}
 	};
 
 	// Update company details form
-	const CompanyDetailsForm = ({ isInvestor, setShowCompanyPopup, formDetails, setFormDetails, handleLogoChange, previewLogoUrl, setPreviewLogoUrl }) => {
+	const CompanyDetailsForm = ({
+		isInvestor,
+		setShowCompanyPopup,
+		formDetails,
+		setFormDetails,
+		handleLogoChange,
+		previewLogoUrl,
+		setPreviewLogoUrl,
+	}) => {
 		// Add sector and funding stage options
 		const sectorOptions = [
 			"Fintech",
@@ -434,7 +448,7 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 			"CleanTech",
 			"IoT",
 			"Blockchain",
-			"Other"
+			"Other",
 		];
 
 		const fundingStageOptions = [
@@ -445,42 +459,49 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 			"Series C",
 			"Series D+",
 			"Growth",
-			"IPO Ready"
+			"IPO Ready",
 		];
 
 		const handleInputChange = (e, field) => {
-			setFormDetails(prev => ({
+			setFormDetails((prev) => ({
 				...prev,
-				[field]: e.target.value
+				[field]: e.target.value,
 			}));
-		}
+		};
 
 		return (
 			<div className="company-details-popup">
 				<div className="popup-content">
-					<button className="close-popup-btn" onClick={() => setShowCompanyPopup(false)}>
+					<button
+						className="close-popup-btn"
+						onClick={() => setShowCompanyPopup(false)}
+					>
 						<IoCloseSharp size={24} />
 					</button>
-					<h3 style={{ color: isInvestor ? '#d3f36b' : '#fd5901' }}>
-						{isInvestor ? 'Add Investor Details' : 'Add Startup Details'}
+					<h3 style={{ color: isInvestor ? "#d3f36b" : "#fd5901" }}>
+						{isInvestor ? "Add Investor Details" : "Add Startup Details"}
 					</h3>
 
 					{/* Logo Upload Section */}
-					<div className={previewLogoUrl ? 'logo-preview' : 'image-upload-container'}>
+					<div
+						className={
+							previewLogoUrl ? "logo-preview" : "image-upload-container"
+						}
+					>
 						{previewLogoUrl ? (
 							<>
-								<img 
+								<img
 									src={previewLogoUrl}
-									alt="Company Logo" 
+									alt="Company Logo"
 									className="logo-image"
 								/>
-								<button 
+								<button
 									className="remove-logo"
 									onClick={() => {
-										setPreviewLogoUrl('');
-										setFormDetails(prev => ({
+										setPreviewLogoUrl("");
+										setFormDetails((prev) => ({
 											...prev,
-											logo: null
+											logo: null,
 										}));
 									}}
 								>
@@ -488,8 +509,25 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 								</button>
 							</>
 						) : (
-							<label htmlFor="companyLogo" style={{ cursor: 'pointer', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-								<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={!isInvestor? "#fd5901" : "#d3f36b"} strokeWidth="2">
+							<label
+								htmlFor="companyLogo"
+								style={{
+									cursor: "pointer",
+									width: "100%",
+									height: "100%",
+									display: "flex",
+									alignItems: "center",
+									justifyContent: "center",
+								}}
+							>
+								<svg
+									width="32"
+									height="32"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke={!isInvestor ? "#fd5901" : "#d3f36b"}
+									strokeWidth="2"
+								>
 									<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
 									<polyline points="17 8 12 3 7 8" />
 									<line x1="12" y1="3" x2="12" y2="15" />
@@ -510,7 +548,9 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 						type="text"
 						placeholder="Company Name"
 						value={isInvestor ? formDetails.companyName : formDetails.company}
-						onChange={(e) => handleInputChange(e, isInvestor ? "companyName" : "company")}
+						onChange={(e) =>
+							handleInputChange(e, isInvestor ? "companyName" : "company")
+						}
 					/>
 
 					<input
@@ -550,7 +590,9 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 							>
 								<option value="">Select Sector</option>
 								{sectorOptions.map((sector) => (
-									<option key={sector} value={sector}>{sector}</option>
+									<option key={sector} value={sector}>
+										{sector}
+									</option>
 								))}
 							</select>
 
@@ -560,7 +602,9 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 							>
 								<option value="">Select Funding Stage</option>
 								{fundingStageOptions.map((stage) => (
-									<option key={stage} value={stage}>{stage}</option>
+									<option key={stage} value={stage}>
+										{stage}
+									</option>
 								))}
 							</select>
 						</>
@@ -572,10 +616,7 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 						onChange={(e) => handleInputChange(e, "description")}
 					/>
 
-					<button 
-						className="save-btn" 
-						onClick={handleCompanyDetailsSubmit}
-					>
+					<button className="save-btn" onClick={handleCompanyDetailsSubmit}>
 						Save Details
 					</button>
 				</div>
@@ -585,39 +626,47 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 
 	const handleSendEmailOTP = async () => {
 		try {
-			const response = await axios.post(`${environment.baseUrl}/users/send-mail-otp`, {
-				email: inputValues.email
-			});
+			const response = await axios.post(
+				`${environment.baseUrl}/users/send-mail-otp`,
+				{
+					email: inputValues.email,
+				}
+			);
 			if (response.data.orderId) {
 				setOrderId(response.data.orderId);
 				setIsModalOpen(true);
 				setshow(true);
-				toast.success('OTP sent to your email');
+				toast.success("OTP sent to your email");
 			}
 		} catch (error) {
-			toast.error('Failed to send OTP');
-			console.error('Error sending email OTP:', error);
+			toast.error("Failed to send OTP");
+			console.error("Error sending email OTP:", error);
 		}
 	};
 
 	const handleEmailOtpVerify = async (otp, orderId) => {
 		try {
-			const response = await axios.post(`${environment.baseUrl}/users/verify-mail-otp`, {
-				otp: otp.join(""),
-				orderId: orderId
-			});
-			if(response.data.success){
-				toast.success('Email OTP verified successfully');
+			const response = await axios.post(
+				`${environment.baseUrl}/users/verify-mail-otp`,
+				{
+					otp: otp.join(""),
+					orderId: orderId,
+				}
+			);
+			if (response.data.success) {
+				toast.success("Email OTP verified successfully");
 				return response.data;
 			}
 		} catch (error) {
-			console.error('Error verifying email OTP:', error);
-			return { success: false, message: 'Error verifying email OTP' };
+			console.error("Error verifying email OTP:", error);
+			return { success: false, message: "Error verifying email OTP" };
 		}
 	};
 
 	useEffect(() => {
-		document.documentElement.className = isInvestorSelected ? 'investor-theme' : '';
+		document.documentElement.className = isInvestorSelected
+			? "investor-theme"
+			: "";
 	}, [isInvestorSelected]);
 
 	const handleBack = () => {
@@ -628,13 +677,13 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 		setPreviewImageUrl(avatarSrc);
 		// Convert the image to base64
 		fetch(avatarSrc)
-			.then(res => res.blob())
-			.then(blob => {
+			.then((res) => res.blob())
+			.then((blob) => {
 				const reader = new FileReader();
 				reader.onloadend = () => {
-					setInputValues(prev => ({
+					setInputValues((prev) => ({
 						...prev,
-						profilePicture: reader.result
+						profilePicture: reader.result,
 					}));
 				};
 				reader.readAsDataURL(blob);
@@ -645,7 +694,10 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 		<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
 			<div className="register_container">
 				{isRawUser ? (
-					<button className="back-button" onClick={() => setShowSignupModal(false)}>
+					<button
+						className="back-button"
+						onClick={() => setShowSignupModal(false)}
+					>
 						<IoCloseCircleOutline />
 					</button>
 				) : (
@@ -654,13 +706,13 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 						<span>Back</span>
 					</button>
 				)}
-				<Toaster 
+				<Toaster
 					position="top-right"
 					toastOptions={{
 						duration: 5000,
 						style: {
-							background: '#363636',
-							color: '#fff',
+							background: "#363636",
+							color: "#fff",
 						},
 					}}
 				/>
@@ -675,9 +727,9 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 								accept="image/*"
 							/>
 							<label htmlFor="profilePicture" className="image-label">
-								<img 
-									src={previewImageUrl || CreateCommunityChat} 
-									alt="Profile" 
+								<img
+									src={previewImageUrl || CreateCommunityChat}
+									alt="Profile"
 								/>
 								{previewImageUrl && (
 									<div className="edit-overlay">
@@ -686,45 +738,45 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 								)}
 							</label>
 						</div>
-						
+
 						<div className="avatar-display">
-							<img 
-								src={Avatar1} 
-								alt="Avatar 1" 
-								className="avatar-image" 
+							<img
+								src={Avatar1}
+								alt="Avatar 1"
+								className="avatar-image"
 								onClick={() => handleAvatarClick(Avatar1)}
-								style={{ cursor: 'pointer' }}
+								style={{ cursor: "pointer" }}
 							/>
-							<img 
-								src={Avatar2} 
-								alt="Avatar 2" 
-								className="avatar-image" 
+							<img
+								src={Avatar2}
+								alt="Avatar 2"
+								className="avatar-image"
 								onClick={() => handleAvatarClick(Avatar2)}
-								style={{ cursor: 'pointer' }}
+								style={{ cursor: "pointer" }}
 							/>
-							<img 
-								src={Avatar3} 
-								alt="Avatar 3" 
-								className="avatar-image" 
+							<img
+								src={Avatar3}
+								alt="Avatar 3"
+								className="avatar-image"
 								onClick={() => handleAvatarClick(Avatar3)}
-								style={{ cursor: 'pointer' }}
+								style={{ cursor: "pointer" }}
 							/>
-							<img 
-								src={Avatar4} 
-								alt="Avatar 4" 
-								className="avatar-image" 
+							<img
+								src={Avatar4}
+								alt="Avatar 4"
+								className="avatar-image"
 								onClick={() => handleAvatarClick(Avatar4)}
-								style={{ cursor: 'pointer' }}
+								style={{ cursor: "pointer" }}
 							/>
-							<img 
-								src={Avatar5} 
-								alt="Avatar 5" 
-								className="avatar-image" 
+							<img
+								src={Avatar5}
+								alt="Avatar 5"
+								className="avatar-image"
 								onClick={() => handleAvatarClick(Avatar5)}
-								style={{ cursor: 'pointer' }}
+								style={{ cursor: "pointer" }}
 							/>
 						</div>
-						
+
 						<p className="community-message">
 							Join India's biggest community of startups and investors
 						</p>
@@ -733,30 +785,38 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 
 				<div className="register_container_right">
 					<div className="user-type-toggle">
-						<button 
-							className={`toggle-btn startup ${!isInvestorSelected ? 'active' : ''}`}
-							onClick={() => handleUserTypeToggle('startup')}
+						<button
+							className={`toggle-btn startup ${
+								!isInvestorSelected ? "active" : ""
+							}`}
+							onClick={() => handleUserTypeToggle("startup")}
 						>
 							Startup
 						</button>
-						<button 
-							className={`toggle-btn investor ${isInvestorSelected ? 'active' : ''}`}
-							onClick={() => handleUserTypeToggle('investor')}
+						<button
+							className={`toggle-btn investor ${
+								isInvestorSelected ? "active" : ""
+							}`}
+							onClick={() => handleUserTypeToggle("investor")}
 						>
 							Investor
 						</button>
 					</div>
 
 					<div className="signup-method-toggle">
-						<button 
-							className={`method-btn ${signupMethod === 'email' ? 'active' : ''}`}
-							onClick={() => handleSignupMethodToggle('email')}
+						<button
+							className={`method-btn ${
+								signupMethod === "email" ? "active" : ""
+							}`}
+							onClick={() => handleSignupMethodToggle("email")}
 						>
 							Sign up with Email
 						</button>
-						<button 
-							className={`method-btn ${signupMethod === 'phone' ? 'active' : ''}`}
-							onClick={() => handleSignupMethodToggle('phone')}
+						<button
+							className={`method-btn ${
+								signupMethod === "phone" ? "active" : ""
+							}`}
+							onClick={() => handleSignupMethodToggle("phone")}
 						>
 							Sign up with Phone
 						</button>
@@ -764,7 +824,7 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 
 					<form onSubmit={handleFormSubmit}>
 						<div className="form-group">
-							{signupMethod === 'email' ? (
+							{signupMethod === "email" ? (
 								<input
 									type="email"
 									name="email"
@@ -784,22 +844,35 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 						</div>
 
 						{companyDetailsAdded && (
-				<div className="company-details-added">
-					{isInvestorSelected ? "Investor details added!" : "Startup details added!"}
-				</div>
-			)}
+							<div className="company-details-added">
+								{isInvestorSelected
+									? "Investor details added!"
+									: "Startup details added!"}
+							</div>
+						)}
 
-						<button 
+						<button
 							type="button"
-							className={`add-company-details-btn ${isInvestorSelected ? 'investor' : 'startup'}`}
+							className={`add-company-details-btn ${
+								isInvestorSelected ? "investor" : "startup"
+							}`}
 							onClick={() => setShowCompanyPopup(true)}
 						>
-							{isInvestorSelected ? 'Add Investor Details' : 'Add Startup Details'}
+							{isInvestorSelected
+								? "Add Investor Details"
+								: "Add Startup Details"}
 						</button>
 
-						<button type="submit" className="submit-btn" disabled={isSubmitting}>
+						<button
+							type="submit"
+							className="submit-btn"
+							disabled={isSubmitting}
+						>
 							{isSubmitting ? (
-								<div className="spinner-border spinner-border-sm text-light" role="status">
+								<div
+									className="spinner-border spinner-border-sm text-light"
+									role="status"
+								>
 									<span className="visually-hidden">Loading...</span>
 								</div>
 							) : (
