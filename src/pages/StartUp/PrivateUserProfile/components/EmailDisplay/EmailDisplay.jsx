@@ -3,6 +3,7 @@ import { Loader2 } from "lucide-react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { environment } from "../../../../../environments/environment";
+import { toast } from "react-hot-toast";
 import "./EmailDisplay.scss";
 
 const token = localStorage.getItem("accessToken");
@@ -82,6 +83,7 @@ const EmailDisplay = ({
 
 	useEffect(() => {
 		const initializeEmail = async () => {
+			setEmail("");
 			if (loggedInUser.isSubscribed) {
 				const emailData = await fetchEmailfromServer(founder?._id);
 				setEmail(emailData?.email);
@@ -93,6 +95,10 @@ const EmailDisplay = ({
 
 		initializeEmail();
 	}, [loggedInUser, founder]);
+
+	useEffect(() => {
+		setShowEmail(false);
+	}, [founder]);
 
 	const handleShowEmail = async () => {
 		const data = await fetchEmailfromServer(loggedInUser?._id);
@@ -109,8 +115,19 @@ const EmailDisplay = ({
 			const emailData = await fetchEmailfromServer(founder?._id);
 			setEmail(emailData.email);
 			setShowEmail(true);
+
+			// Display notification for remaining attempts
+			const remainingAttempts = 5 - (data.investorIdCount.length + 1);
+			toast.success(
+				`Email revealed! You have ${remainingAttempts} ${
+					remainingAttempts === 1 ? "attempt" : "attempts"
+				} left.`
+			);
 		} else {
 			setSubscriptionAlert(true);
+			toast.error(
+				"You've reached the maximum number of email views. Please subscribe for unlimited access."
+			);
 		}
 	};
 
@@ -138,7 +155,7 @@ const EmailDisplay = ({
 							{showEmail ? email : maskEmail(email)}
 						</h6>
 						{!showEmail && (
-							<FaEye className=" icon-button" onClick={handleShowEmail} />
+							<FaEye className="icon-button" onClick={handleShowEmail} />
 						)}
 					</div>
 				)}

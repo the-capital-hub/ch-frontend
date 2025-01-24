@@ -37,7 +37,7 @@ const EventModal = ({ isOpen, onClose, onSubmit }) => {
 
 	return (
 		<div className="modal-overlay">
-			<div className="modal-content">
+			<div className="create-event-modal-content">
 				<h2>Create New Event</h2>
 
 				<form onSubmit={handleSubmit}>

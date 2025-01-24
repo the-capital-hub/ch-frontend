@@ -78,12 +78,12 @@ export default function CompanyActions({
   const linkTo = isInvestor
     ? `/investor/user/${
         founderId.firstName?.toLowerCase() +
-        "-" +
+        "." +
         founderId.lastName?.toLowerCase()
       }/${founderId?.oneLinkId}`
     : `/user/${
         founderId.firstName?.toLowerCase() +
-        "-" +
+        "." +
         founderId.lastName?.toLowerCase()
       }/${founderId?.oneLinkId}`;
 

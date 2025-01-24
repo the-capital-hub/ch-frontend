@@ -214,7 +214,7 @@ const PublicCommunityView = () => {
     <Modal
       isOpen={showSignupModal}
       onRequestClose={() => setShowSignupModal(false)}
-      className="modal-content"
+      className="public-community-public-community-modal-content"
       overlayClassName="modal-overlay"
     >
       <div className="modal-header">
@@ -279,7 +279,7 @@ const PublicCommunityView = () => {
         setShowOtpModal(false);
         setOtp(["", "", "", "", "", ""]);
       }}
-      className="modal-content"
+      className="public-community-modal-content"
       overlayClassName="modal-overlay"
       shouldCloseOnOverlayClick={!isVerifyingOtp}
     >

@@ -120,7 +120,7 @@ export default function PersonProfile({ theme, short, personData }) {
 						userId={personData?._id}
 						name={
 							personData.firstName?.toLowerCase() +
-							"-" +
+							"." +
 							personData.lastName?.toLowerCase()
 						}
 						oneLinkId={personData?.oneLinkId}

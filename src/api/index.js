@@ -181,6 +181,8 @@ const API = Object.freeze({
 	deleteAnswerOfQuestion: `${baseUrl}/thoughts/deleteAnswerOfQuestion`,
 	updateQuestion: `${baseUrl}/thoughts/update-question`,
 	deleteQuestion: `${baseUrl}/thoughts/delete-question`,
+	// /getUserByUserNameOrOneLinkId/:username/:onelinkId
+	getUserByUserNameOrOneLinkId: `${baseUrl}/users/getUserByUserNameOrOneLinkId`,
 });
 
 export default API;
