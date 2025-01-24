@@ -21,10 +21,6 @@
 	}
 	.active {
 		color: var(--d-l-grey);
-	}
-
-	.active {
-		color: var(--d-l-grey);
 
 		svg {
 			color: var(--d-l-grey);
@@ -38,10 +34,9 @@
 
 .mobile-onelink-pitch-section-wrapper {
 	position: fixed;
-	bottom: 60px; // Adjust based on your bottom toolbar height
-	right: -300px; // Hide off-screen by default
+	bottom: 60px;
+	right: -300px;
 	width: 250px;
-	// background-color: white;
 	background-color: var(--white-to-dgrey);
 	border-radius: 10px 0 0 10px;
 	box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.1);

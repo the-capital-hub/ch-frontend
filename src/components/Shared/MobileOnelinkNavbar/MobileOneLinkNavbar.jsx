@@ -99,19 +99,13 @@ export default function MobileOneLinkNavbar() {
 			>
 				<div className="mobile-onelink-pitch-section">
 					<button
-						onClick={() =>
-							handlePitchButtonClick("/onelink/capitalhub11/654231/pitchdays")
-						}
+						onClick={() => handlePitchButtonClick("pitchdays")}
 						className="pitch-button"
 					>
 						Pitch Days
 					</button>
 					<button
-						onClick={() =>
-							handlePitchButtonClick(
-								"/onelink/capitalhub11/654231/documentation/onelinkpitch"
-							)
-						}
+						onClick={() => handlePitchButtonClick("documentation/onelinkpitch")}
 						className="pitch-button"
 					>
 						Pitch Recordings
