@@ -21,7 +21,7 @@ function OneLinkRoutes() {
   return (
     <>
       <Route
-        path=""
+        path="company"
         element={
           <Suspense fallback={<SuspenseLoader />}>
             <Company />
