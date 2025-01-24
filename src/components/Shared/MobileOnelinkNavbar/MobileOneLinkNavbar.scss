@@ -1,25 +1,70 @@
 .mobile-bottom-toolbar {
-  position: fixed;
-  bottom: 0;
-  right: 50%;
-  transform: translateX(50%);
-  box-sizing: border-box;
-  background: var(--white-to-dgrey);
-  z-index: 99;
+	position: fixed;
+	bottom: 0;
+	right: 50%;
+	transform: translateX(50%);
+	box-sizing: border-box;
+	background: var(--white-to-dgrey);
+	z-index: 99;
 
-  .nav-link-text {
-    font-size: 9px;
-    font-weight: 600;
-  }
+	.nav-link-text {
+		font-size: 9px;
+		font-weight: 600;
+	}
 
-  svg {
-    flex-grow: 1;
-  }
+	svg {
+		flex-grow: 1;
+	}
 
-  a {
-    color: rgb(113, 113, 113);
-  }
-  .active {
-    color: var(--d-l-grey);
-  }
+	a {
+		color: rgb(113, 113, 113);
+	}
+	.active {
+		color: var(--d-l-grey);
+
+		svg {
+			color: var(--d-l-grey);
+		}
+
+		.nav-link-text {
+			color: var(--d-l-grey);
+		}
+	}
+}
+
+.mobile-onelink-pitch-section-wrapper {
+	position: fixed;
+	bottom: 60px;
+	right: -300px;
+	width: 250px;
+	background-color: var(--white-to-dgrey);
+	border-radius: 10px 0 0 10px;
+	box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.1);
+	transition: right 0.3s ease-in-out;
+	z-index: 100;
+
+	&.open {
+		right: 0;
+	}
+
+	.mobile-onelink-pitch-section {
+		display: flex;
+		flex-direction: column;
+		padding: 15px;
+		gap: 10px;
+
+		.pitch-button {
+			padding: 10px;
+			background-color: darken(#272727, 5%);
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.2s;
+
+			&:hover {
+				background-color: lighten(#272727, 5%);
+			}
+		}
+	}
 }
