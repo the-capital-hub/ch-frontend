@@ -2,9 +2,20 @@ import React, { useState, useEffect, useRef } from "react";
 import CompanyProfile from "./CompanyProfile";
 import { motion } from "framer-motion"; // Import Framer Motion for animations
 
-export default function CompanyProfileList({ isStartup, data, pageName, show, companyDelete }) {
+export default function CompanyProfileList({ isStartup, data, pageName, show, companyDelete, isAdmin, setAllCompanyData }) {
   const [visibleProfiles, setVisibleProfiles] = useState([]); // Track visible profiles
   const containerRef = useRef(null); // Ref to container
+
+  // Add function to update company data
+  const handleCompanyUpdate = (updatedCompany) => {
+    if (setAllCompanyData) {
+      // Update the entire list by mapping through and replacing the updated company
+      const updatedData = data.map(company => 
+        company._id === updatedCompany._id ? updatedCompany : company
+      );
+      setAllCompanyData(updatedData);
+    }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -49,7 +60,9 @@ export default function CompanyProfileList({ isStartup, data, pageName, show, co
               companyData={company}
               pageName={pageName}
               show={show}
+              isAdmin={isAdmin}
               companyDelete={companyDelete}
+              onCompanyUpdate={handleCompanyUpdate} // Pass the update handler
             />
           </motion.div>
         );

@@ -61,6 +61,7 @@ $color-startup-shadow: rgba(234, 238, 242, 1);
 
 // component classes
 .company__profile {
+  position: relative;
   // CSS for empty action buttons
   background-color: var(--white-to-grey);
   color: #000;
@@ -170,4 +171,299 @@ $color-startup-shadow: rgba(234, 238, 242, 1);
   // .container__padding {
   //   padding-block: 2rem;
   // }
+
+  // Add styles for the edit button
+  .btn-primary {
+    &.position-absolute {
+      z-index: 10;
+      background-color: var(--color-btn);
+      border-color: var(--color-btn);
+      color: var(--color-text);
+
+      &:hover {
+        background-color: var(--color-btn-08);
+        border-color: var(--color-btn);
+      }
+    }
+  }
+
+  // Add styles for the modal
+  #company-profile-modal {
+    &.modal-dialog {
+      max-width: 800px;
+      margin: 1.75rem auto;
+      
+      .modal-content {
+        background-color: var(--white-to-grey);
+        border-radius: var(--border-radius);
+        max-height: 90vh; // Set maximum height
+        
+        .modal-header {
+          background-color: var(--white-to-grey);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          padding: 1rem 1.5rem;
+          position: sticky;
+          top: 0;
+          z-index: 1;
+
+          .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--darkMode-text);
+          }
+
+          .btn-close {
+            padding: 0.75rem;
+            margin: -0.75rem -0.75rem -0.75rem auto;
+          }
+        }
+
+        .modal-body {
+          padding: 1.5rem;
+          overflow-y: auto; // Make body scrollable
+          max-height: calc(90vh - 130px); // Account for header and footer
+
+          .form-group {
+            margin-bottom: 1.5rem;
+
+            label {
+              font-weight: 500;
+              margin-bottom: 0.5rem;
+              color: var(--darkMode-text);
+            }
+
+            .form-control {
+              background-color: var(--white-to-grey);
+              border: 1px solid rgba(0, 0, 0, 0.1);
+              border-radius: 8px;
+              padding: 0.75rem;
+              color: var(--darkMode-text);
+
+              &:focus {
+                border-color: var(--color-btn);
+                box-shadow: 0 0 0 0.2rem var(--color-btn-01);
+              }
+            }
+
+            textarea.form-control {
+              min-height: 100px;
+            }
+          }
+        }
+
+        .modal-footer {
+          background-color: var(--white-to-grey);
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+          padding: 1rem 1.5rem;
+          position: sticky;
+          bottom: 0;
+          z-index: 1;
+
+          .btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+          }
+
+          .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--color-btn);
+            color: var(--color-btn);
+
+            &:hover {
+              background-color: var(--color-btn-01);
+            }
+          }
+
+          .btn-primary {
+            background-color: var(--color-btn);
+            border-color: var(--color-btn);
+            color: var(--color-text);
+
+            &:hover {
+              background-color: var(--color-btn-08);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .edit-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-btn);
+    border-color: var(--color-btn);
+    z-index: 10;
+    
+    svg {
+      font-size: 1.2rem;
+      color: var(--color-text);
+    }
+
+    &:hover {
+      background-color: var(--color-btn-08);
+      border-color: var(--color-btn);
+      transform: scale(0.95);
+    }
+  }
+}
+
+// Make modal styles more specific to override ReactModal defaults
+.ReactModal__Content#company-profile-modal {
+  position: fixed !important;
+  //inset: auto !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: auto;
+  max-width: 600px; // Reduced width for better look
+  width: 90%;
+  
+  .modal-content {
+    background-color: var(--white-to-grey);
+    border-radius: 16px;
+    max-height: 85vh;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    
+    .modal-header {
+      background-color: var(--white-to-grey);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 1.25rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      border-radius: 16px 16px 0 0;
+
+      .modal-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--darkMode-text);
+      }
+
+      .btn-close {
+        padding: 0.75rem;
+        margin: -0.75rem -0.75rem -0.75rem auto;
+        opacity: 0.6;
+        transition: opacity 0.2s;
+        
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      max-height: calc(85vh - 130px);
+
+      // Custom scrollbar
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 20px;
+        border: 2px solid var(--white-to-grey);
+      }
+
+      .form-group {
+        margin-bottom: 1.25rem;
+
+        label {
+          font-weight: 500;
+          margin-bottom: 0.5rem;
+          color: var(--darkMode-text);
+          font-size: 0.9rem;
+        }
+
+        .form-control {
+          background-color: var(--white-to-grey);
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+          padding: 0.75rem;
+          color: var(--darkMode-text);
+          font-size: 0.95rem;
+          transition: all 0.2s ease;
+
+          &:focus {
+            border-color: var(--color-btn);
+            box-shadow: 0 0 0 3px var(--color-btn-01);
+          }
+
+          &::placeholder {
+            color: rgba(0, 0, 0, 0.4);
+          }
+        }
+
+        textarea.form-control {
+          min-height: 100px;
+          resize: vertical;
+        }
+      }
+    }
+
+    .modal-footer {
+      background-color: var(--white-to-grey);
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 1rem 1.5rem;
+      position: sticky;
+      bottom: -1.7rem;
+      z-index: 1;
+      border-radius: 0 0 16px 16px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+
+      .btn {
+        padding: 0.6rem 1.25rem;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+      }
+
+      .btn-secondary {
+        background-color: transparent;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        color: var(--darkMode-text);
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+      }
+
+      .btn-primary {
+        background-color: var(--color-btn);
+        border-color: var(--color-btn);
+        color: var(--color-text);
+
+        &:hover {
+          background-color: var(--color-btn-08);
+          transform: translateY(-1px);
+        }
+      }
+    }
+  }
+}
+
+.ReactModal__Overlay {
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

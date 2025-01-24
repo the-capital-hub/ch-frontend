@@ -177,6 +177,7 @@ const CompanyUpdateCard = ({
                 fontSize: "13px",
                 wordWrap: "break-word",
                 overflowWrap: "break-word",
+                color: "var(--text-color)",
               }}
             >
               {renderDescription()}
