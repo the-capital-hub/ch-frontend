@@ -136,7 +136,7 @@ const CompanyDetailsCard = ({
 							</h3>
 
 							<div
-								className="icon__details d-flex flex-wrap align-items-start justify-content-start justify-content-sm-center gap-3"
+								className="icon__details d-flex flex-wrap align-items-start justify-content-start gap-3"
 								style={{ flexWrap: "wrap", width: "100%" }}
 								// className="d-flex gap-3"
 							>
