@@ -1,24 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { IoDocumentsOutline } from "react-icons/io5";
 import { FaMicrophone } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import {
-	toggleCreatePostModal,
-	toggleinvestorCreatePostModal,
-} from "../../../Store/features/design/designSlice";
-import IconFile from "../../Investor/SvgIcons/IconFile";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
-import IconUser from "../../Investor/SvgIcons/IconUser";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
+import IconFile from "../../Investor/SvgIcons/IconFile";
+import IconUser from "../../Investor/SvgIcons/IconUser";
+import Dollar from "../../../Images/investorOneLink/3d-dollar.png";
+// import { useDispatch } from "react-redux";
+// import {
+// 	toggleCreatePostModal,
+// 	toggleinvestorCreatePostModal,
+// } from "../../../Store/features/design/designSlice";
+// import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import "./MobileOneLinkNavbar.scss";
 
-// Define the menu items array that can be shared between Sidebar and MobileOneLinkNavbar
 const menuItems = [
 	{
 		label: "Company",
 		icon: <HiOutlineOfficeBuilding size={25} />,
-		path: "",
+		path: "company",
 		tab: "company",
 	},
 	{
@@ -27,13 +28,13 @@ const menuItems = [
 		path: "profile",
 		tab: "profile",
 	},
-	{
-		label: "Invest",
-		icon: <RiMoneyDollarCircleLine size={25} />,
-		path: "investnow",
-		tab: "investnow",
-		className: "invest-now",
-	},
+	// {
+	// 	label: "Invest",
+	// 	icon: <RiMoneyDollarCircleLine size={25} />,
+	// 	path: "investnow",
+	// 	tab: "investnow",
+	// 	className: "invest-now-btn",
+	// },
 	{
 		label: "Updates",
 		icon: <IconFile width={25} height={25} />,
@@ -50,29 +51,73 @@ const menuItems = [
 
 export default function MobileOneLinkNavbar() {
 	const [isPitchSidebarOpen, setIsPitchSidebarOpen] = useState(false);
-	const dispatch = useDispatch();
+	const [investBtnAnimationClass, setInvestBtnAnimationClass] = useState("");
+	// const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
+
+	useEffect(() => {
+		const animationSequence = [
+			{ class: "invest-btn-rotate", duration: 1000 },
+			{ class: "invest-btn-jump", duration: 500 },
+			{ class: "invest-btn-pulse", duration: 500 },
+		];
+
+		let currentIndex = 0;
+
+		const runAnimation = () => {
+			setInvestBtnAnimationClass(animationSequence[currentIndex].class);
+
+			setTimeout(() => {
+				setInvestBtnAnimationClass("");
+				currentIndex = (currentIndex + 1) % animationSequence.length;
+			}, animationSequence[currentIndex].duration);
+		};
+
+		const animationInterval = setInterval(runAnimation, 10000);
+
+		return () => clearInterval(animationInterval);
+	}, []);
+
+	const handleInvestBtnHover = useCallback(() => {
+		setInvestBtnAnimationClass("invest-btn-pulse");
+		setTimeout(() => setInvestBtnAnimationClass(""), 500);
+	}, []);
 
 	const togglePitchSidebar = () => {
 		setIsPitchSidebarOpen(!isPitchSidebarOpen);
 	};
 
 	const handlePitchButtonClick = (path) => {
-		// Close sidebar and navigate to the specified path
 		setIsPitchSidebarOpen(false);
 		navigate(path);
 	};
 
+	const handleInvestNowClick = () => {
+		navigate("investnow");
+	};
+
 	return (
 		<>
-			<div className="mobile-bottom-toolbar container p-2 shadow d-flex gap-1 justify-content-center border-top align-items-center px-3 d-md-none text-secondary">
+			<div className="mobile-bottom-toolbar container p-2 shadow d-flex gap-1 justify-content-between border-top align-items-center px-3 d-md-none text-secondary">
 				{menuItems.map((item) => (
 					<div
 						key={item.tab}
 						className="d-flex flex-column align-items-center mx-3"
 					>
-						<NavLink to={item.path} className={item.className}>
+						<NavLink
+							to={item.path}
+							className={({ isActive }) => {
+								// Force Company tab to always be active if on root or no specific path
+								const isCompanyActive =
+									item.tab === "company" &&
+									(location.pathname === "/" || location.pathname === "");
+
+								return `${item.className || ""} ${
+									isActive || isCompanyActive ? "active" : ""
+								}`;
+							}}
+						>
 							{item.icon}
 						</NavLink>
 						<span className="nav-link-text">{item.label}</span>
@@ -90,6 +135,15 @@ export default function MobileOneLinkNavbar() {
 					<span className="nav-link-text">Pitch</span>
 				</div>
 			</div>
+
+			{/* Invest Now Button */}
+			<button
+				className={`invest-now-floating-btn ${investBtnAnimationClass}`}
+				onClick={handleInvestNowClick}
+				onMouseEnter={handleInvestBtnHover}
+			>
+				<img src={Dollar || "/placeholder.svg"} alt="Dollar" />
+			</button>
 
 			{/* Pitch Sidebar */}
 			<div
