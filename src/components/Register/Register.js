@@ -649,7 +649,7 @@ const Register = ({isRawUser = false, setShowSignupModal, rawUser}) => {
 						<IoCloseCircleOutline />
 					</button>
 				) : (
-					<button className="back-button" onClick={handleBack}>
+					<button className="register-back-button" onClick={handleBack}>
 						<IoArrowBack />
 						<span>Back</span>
 					</button>

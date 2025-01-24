@@ -59,7 +59,7 @@
     outline: none !important;
     border: none !important;
 
-    .modal-content {
+    .public-community-modal-content {
       h2 {
         color: #333;
         text-align: center;
@@ -148,7 +148,7 @@
     z-index: 1001;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     
-    .modal-content {
+    .public-community-modal-content {
       text-align: center;
   
       h2 {
@@ -309,7 +309,7 @@
   backdrop-filter: blur(5px);
 }
 
-.modal-content {
+.public-community-modal-content {
   background: white;
   padding: 2.5rem;
   border-radius: 20px;
