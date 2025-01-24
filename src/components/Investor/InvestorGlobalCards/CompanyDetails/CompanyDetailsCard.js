@@ -122,16 +122,138 @@ const CompanyDetailsCard = ({
 							}
 							alt="profileimage"
 						/>
-						<h3
-							className="typography-company-name ms-0 text-center text-sm-start w-100 fs-4"
-							style={{ fontFamily: "Outfit" }}
-						>
-							{onePager?.companyName ||
-								onePager?.company ||
-								userDetails?.startUp?.company ||
-								userDetails?.investor?.companyName ||
-								"No company found"}
-						</h3>
+
+						<div>
+							<h3
+								className="typography-company-name ms-0 text-start w-100 fs-4"
+								style={{ fontFamily: "Outfit" }}
+							>
+								{onePager?.companyName ||
+									onePager?.company ||
+									userDetails?.startUp?.company ||
+									userDetails?.investor?.companyName ||
+									"No company found"}
+							</h3>
+
+							<div
+								className="icon__details d-flex flex-wrap align-items-start justify-content-start justify-content-sm-center gap-3"
+								style={{ flexWrap: "wrap", width: "100%" }}
+								// className="d-flex gap-3"
+							>
+								{onePager?.location && (
+									<div
+										className="company_details_location"
+										style={{
+											display: "flex",
+											justifyContent: "center",
+											alignItems: "center",
+											// width: "100%",
+										}}
+									>
+										<img
+											src={Location}
+											style={{ width: "14px", height: "14px" }}
+											alt="Location"
+										/>
+										<p
+											className="typography"
+											style={{
+												fontSize: "12px",
+												margin: "0 0 0 0.5rem",
+												color: colorTheme === "dark" ? "#fff" : "#000",
+											}}
+										>
+											{onePager?.location}
+										</p>
+									</div>
+								)}
+								{onePager?.startedAtDate && (
+									<div
+										style={{
+											display: "flex",
+											alignItems: "center",
+											// width: "100%",
+										}}
+									>
+										<img
+											src={Calendar}
+											style={{ width: "14px", height: "14px" }}
+											alt="Calendar"
+										/>
+										<p
+											className="onelink-typography"
+											style={{
+												fontSize: "12px",
+												margin: "0 0 0 0.5rem",
+												color: colorTheme === "dark" ? "#fff" : "#000",
+											}}
+										>
+											{`Founded in, ${onePager.startedAtDate.split("-")[0]}`}
+										</p>
+									</div>
+								)}
+								{onePager.lastFunding && (
+									<div
+										style={{
+											display: "flex",
+											// alignItems: "center",
+											// width: "100%",
+										}}
+									>
+										<img
+											src={CircleArrow}
+											style={{ width: "14px", height: "14px" }}
+											alt="Circle Arrow"
+										/>
+										<p
+											className="onelink-typography"
+											style={{
+												fontSize: "12px",
+												margin: "0 0 0 0.5rem",
+												color: colorTheme === "dark" ? "#fff" : "#000",
+											}}
+										>
+											{`Last funding in ${new Date(
+												onePager.lastFunding
+											).toLocaleString("en-US", {
+												month: "short",
+												year: "numeric",
+											})}`}
+										</p>
+									</div>
+								)}
+								{onePager.stage && (
+									<div className="iconCard__container d-flex align-items-center gap-1">
+										<GiProgression color="#898989" />
+										<p
+											className="icon__text onelink-typography"
+											style={{
+												fontSize: "12px",
+												margin: "0 0 0 0.5rem",
+												color: colorTheme === "dark" ? "#fff" : "#000",
+											}}
+										>
+											{`Stage of funding: ${onePager.stage}`}
+										</p>
+									</div>
+								)}
+								{onePager.sector && (
+									<div className="iconCard__container w-100 d-flex justify-content-sm-start align-items-center gap-1">
+										<HiOutlineBuildingOffice2 color="#898989" />
+										<p
+											className="icon__text onelink-typography"
+											style={{
+												fontSize: "12px",
+												margin: "0 0 0 0.5rem",
+												color: colorTheme === "dark" ? "#fff" : "#000",
+											}}
+										>
+											{`Sector: ${onePager.sector}`}
+										</p>
+									</div>
+								)}
+							</div>
+						</div>
 					</div>
 					{/* <div className="d-flex justify-content-sm-between w-100 d-md-none">
 						<span className="company_details_logo_container d-md-none d-flex">
@@ -171,7 +293,7 @@ const CompanyDetailsCard = ({
 					</div> */}
 					<div className="left_profile_text flex_content w-100 text-center text-sm-start">
 						{/* <h3
-							className="typography-company-name ms-0 text-center text-sm-start w-100"
+							className="onelink-typography-company-name ms-0 text-center text-sm-start w-100"
 							style={{ fontSize: "30px", fontFamily: "Outfit" }}
 						>
 							{onePager?.companyName ||
@@ -180,7 +302,7 @@ const CompanyDetailsCard = ({
 								userDetails?.investor?.companyName ||
 								"No company found"}
 						</h3> */}
-						<div className="company__header d-flex flex-column flex-lg-row gap-2 w-100">
+						{/* <div className="company__header d-flex flex-column flex-lg-row gap-2 w-100">
 							<div
 								className="icon__details d-flex flex-column flex-md-row align-items-start justify-content-center justify-content-sm-start"
 								style={{ flexWrap: "wrap" }}
@@ -201,7 +323,7 @@ const CompanyDetailsCard = ({
 											alt="Location"
 										/>
 										<p
-											className="typography"
+											className="onelink-typography"
 											style={{
 												fontSize: "12px",
 												margin: "0 0 0 0.5rem",
@@ -226,7 +348,7 @@ const CompanyDetailsCard = ({
 											alt="Calendar"
 										/>
 										<p
-											className="typography"
+											className="onelink-typography"
 											style={{
 												fontSize: "12px",
 												margin: "0 0 0 0.5rem",
@@ -251,7 +373,7 @@ const CompanyDetailsCard = ({
 											alt="Circle Arrow"
 										/>
 										<p
-											className="typography"
+											className="onelink-typography"
 											style={{
 												fontSize: "12px",
 												margin: "0 0 0 0.5rem",
@@ -298,8 +420,8 @@ const CompanyDetailsCard = ({
 									</div>
 								)}
 							</div>
-						</div>
-						<div className="small_typo social_icon mt-3">
+						</div> */}
+						<div className="small_typo social_icon mt-3 d-flex gap-3">
 							{userDetails.startUp?.socialLinks?.website && (
 								<a
 									href={userDetails.startUp?.socialLinks?.website}
