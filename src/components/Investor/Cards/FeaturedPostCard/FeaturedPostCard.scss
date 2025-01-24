@@ -21,13 +21,7 @@
         white-space: pre-line;
         p {
           margin: 0;
-          // height: 258px;
           flex-shrink: 0;
-          // border-radius: var(--border-radius);
-          // border-top: 1px solid var(--bs-border-color);
-          // background: #eaeef2;
-          // background: var(--bs-light);
-          // color: #373737;
           color: var(--d-l-grey);
           font-size: 12px;
           font-family: "Poppins";
@@ -39,7 +33,10 @@
           // height: auto;
           // border: 1px solid red;
           // overflow: scroll;
-
+          ul {
+            color: var(--text-color) !important;
+          }
+          
           @media (max-width: 768px) {
             height: auto;
             font-size: 15px; /* Reduce font size for smaller screens */

@@ -51,7 +51,7 @@ import AdminRoutes from "./routes/AdminRoutes";
 import CommunityRoutes from "./routes/CommunityRoutes";
 import Community from "./components/Investor/Community/Community";
 import PublicCommunityView from "./components/Investor/Community/PublicCommunityView.jsx";
-
+import { ToastContainer } from "react-toastify";
 function App() {
 	const dispatch = useDispatch();
 
@@ -97,7 +97,7 @@ function App() {
 	return (
 		<Router>
 			<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-				{/* <Toaster position="top-right" /> */}
+				<ToastContainer position="top-right" autoClose={3000} />
 				<AppUrlListener />
 				<Routes>
 					{/* Public Routes */}
