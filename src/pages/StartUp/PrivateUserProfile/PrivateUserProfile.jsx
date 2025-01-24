@@ -46,7 +46,7 @@ const PrivateUserProfile = ({ isInvestor = false }) => {
 	const [connectionSent, setConnectionSent] = useState(false);
 	const [loading, setLoading] = useState(true);
 
-	// console.log("User", founder);
+	console.log("User", founder);
 
 	const { username } = useParams();
 	const { oneLinkId } = useParams();
@@ -269,8 +269,11 @@ const PrivateUserProfile = ({ isInvestor = false }) => {
 								) : (
 									(() => {
 										const designation = founder?.designation;
-										const company = founder?.startUp?.company;
-										const location = founder?.startUp?.location;
+										const company =
+											founder?.startUp?.company ||
+											founder?.investor?.companyName;
+										const location =
+											founder?.startUp?.location || founder?.investor?.location;
 
 										// Count how many of the three properties are defined
 										const definedCount = [
