@@ -161,7 +161,11 @@ const IntroductoryMessage = ({
 									/>
 								) : (
 									// <img src={Send} alt="Send" />
-									<VscSend size={25} style={{ fill: "#f59e0b" }} />
+									// <VscSend size={25} style={{ fill: "#f59e0b" }} />
+									<VscSend
+										size={25}
+										style={{ fill: investor ? "#d3f36b" : "#f59e0b" }}
+									/>
 								)}
 							</div>
 						</div>
