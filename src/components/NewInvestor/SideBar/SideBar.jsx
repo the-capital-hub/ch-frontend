@@ -89,11 +89,15 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 	};
 
 	function handleMyCommunityClick() {
-		navigate("/MyCommunity");
+		navigate("MyCommunity");
 	}
 
 	function handleExploreCommunityClick() {
-		navigate("/ExploreCommunities");
+		navigate("ExploreCommunities");
+		if (isMobileView) setSidebarCollapsed(true);
+	}
+	function handleNewCommunityClick() {
+		navigate("CreateCommunity");
 		if (isMobileView) setSidebarCollapsed(true);
 	}
 
@@ -340,7 +344,7 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 							>
 								<Link
 									// onClick={() => setSidebarCollapsed(true)}
-									to="/thoughts"
+									to="/investor/thoughts"
 									id="sidebar_thoughts"
 								>
 									<MdOutlineQuestionAnswer size={"25px"} />
@@ -389,12 +393,12 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 											</summary>
 											<div className="d-flex flex-column gap-2">
 												{/* Add new */}
-												<ModalBsLauncher
-													id="AddNewCommunity"
-													className="sidebar__community__btn m-0 "
+												<button
+													className="sidebar__community__btn shadow-none"
+													onClick={handleNewCommunityClick}
 												>
-													<p className="m-0">Create a Community</p>
-												</ModalBsLauncher>
+													Create a Community
+												</button>
 												<button
 													className="sidebar__community__btn shadow-none"
 													onClick={handleMyCommunityClick}
