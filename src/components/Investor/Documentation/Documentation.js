@@ -21,7 +21,7 @@ import {
 } from "../../../Images/StartUp/Documentaion";
 import { setPageTitle, setShowOnboarding } from "../../../Store/features/design/designSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { getFoldersApi } from "../../../Service/user";
+import { getFoldersApi, getPdfData } from "../../../Service/user";
 import SpinnerBS from "../../Shared/Spinner/SpinnerBS";
 import TutorialTrigger from "../../Shared/TutorialTrigger/TutorialTrigger";
 import { startupOnboardingSteps } from "../../OnBoardUser/steps/startup";
@@ -34,6 +34,7 @@ const Documentation = () => {
   const [folderName, setFolderName] = useState([]);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("predefined");
+  const [folderCounts, setFolderCounts] = useState({});
 
   useEffect(()=>{
     if(Number(userVisitCount)<=1){
@@ -45,20 +46,36 @@ const Documentation = () => {
 
   const getFolders = () => {
     setLoading(true);
-    getFoldersApi(loggedInUser.oneLinkId)
-      .then((data) => {
-        setFolderName(data.data);
+    // Get predefined folders
+    const predefinedFolders = ["pitchdeck", "business", "kycdetails", "legal and compliance", "onelinkpitch"];
+    setFolderName(predefinedFolders);
+    
+    // Fetch counts for each folder
+    Promise.all(
+      predefinedFolders.map(async (folder) => {
+        try {
+          const response = await getPdfData(loggedInUser?.oneLinkId, folder);
+          return { [folder]: response.data.length };
+        } catch (error) {
+          console.error(`Error fetching count for ${folder}:`, error);
+          return { [folder]: 0 };
+        }
+      })
+    )
+      .then((results) => {
+        const counts = results.reduce((acc, curr) => ({ ...acc, ...curr }), {});
+        setFolderCounts(counts);
         setLoading(false);
       })
       .catch((error) => {
+        console.error("Error fetching folder counts:", error);
         setLoading(false);
-
-        console.log();
       });
   };
+
   useEffect(() => {
-    getFolders(); // Call the getFolders function to fetch data
-  }, []);
+    getFolders();
+  }, [loggedInUser?.oneLinkId]);
 
   useEffect(() => {
     document.title = "Documentation | The Capital Hub";
@@ -176,6 +193,7 @@ const Documentation = () => {
                       onClicked={() => navigate(`/documentation/${folder}`)}
                       text={folderName}
                       image={imageToShow}
+                      count={folderCounts[folder] || 0}
                     />
                   );
                 })}

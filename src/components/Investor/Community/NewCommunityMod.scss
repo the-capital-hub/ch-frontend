@@ -201,9 +201,9 @@
       .create-community-button {
         width: 100%;
         max-width: 300px;
-        background: #FF620E;
+        background: var(--current-theme-color);
         border-radius: 60px;
-        color: #FFFFFF;
+        color: var(--current-theme-text-color);
         padding: 1rem 0;
         margin-top: 10px;
         align-self: center;
@@ -211,6 +211,10 @@
         font-weight: 500;
         font-size: 1rem;
         cursor: pointer;
+
+        &:hover {
+          background: var(--current-theme-hover-color);
+        }
       }
 
       .checkbox-wrapper {
@@ -223,7 +227,7 @@
           height: 20px;
           margin-right: 10px;
           cursor: pointer;
-          accent-color: #FF620E;
+          accent-color: var(--current-theme-color);
         }
 
         label {
@@ -395,6 +399,8 @@
   --placeholder-color: rgba(0, 0, 0, 0.6);
   --option-bg: rgba(0, 0, 0, 0.05);
   --section-bg: rgba(0, 0, 0, 0.03);
+  --current-theme-color: var(--theme-color);
+  --current-theme-hover-color: var(--theme-hover-color);
 }
 
 [data-theme="dark"] {
@@ -405,4 +411,6 @@
   --placeholder-color: rgba(255, 255, 255, 0.6);
   --option-bg: rgba(217, 217, 217, 0.1);
   --section-bg: rgba(255, 255, 255, 0.06);
+  --current-theme-color: var(--theme-color);
+  --current-theme-hover-color: var(--theme-hover-color);
 }

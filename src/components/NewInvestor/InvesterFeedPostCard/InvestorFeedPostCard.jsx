@@ -496,8 +496,8 @@ const FeedPostCard = ({
           )}
           <div className="feed_header_container pb-2 ">
             <div className="feedpostcard_content">
-              <Link
-                to={`/user/${firstName?.toLowerCase() + "-" + lastName?.toLowerCase()}/${oneLinkId}`}
+              <Link 
+                to={isInvestor ? `/investor/user/${firstName?.toLowerCase() + "-" + lastName?.toLowerCase()}/${oneLinkId}` : `/user/${firstName?.toLowerCase() + "-" + lastName?.toLowerCase()}/${oneLinkId}`}
                 className="rounded-circle"
                 style={{
                   pointerEvents: `${loggedInUser._id === userId ? "none" : "all"}`,

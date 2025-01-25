@@ -139,6 +139,17 @@ const MeetingPlans = lazy(() =>
 const MeetingAvailability = lazy(() =>
 	import("../components/Meetings/Availability/MeetingAvailability")
 );
+const ThoughtsMain = lazy(() =>
+	import("../components/Thoughts/ThoughtsMain/ThoughtsMain")
+);
+
+const ThoughtsQA = lazy(() =>
+	import("../components/Thoughts/ThoughtsQuestionAnswers/ThoughtsQA")
+);
+
+const CreateQuestion = lazy(() =>
+	import("../components/Thoughts/CreateQuestion/CreateQuestion")
+);
 
 function InvestorRoutes() {
 	return (
@@ -184,6 +195,30 @@ function InvestorRoutes() {
 					</Suspense>
 				}
 			/>
+				<Route
+					path="thoughts"
+					element={
+						<Suspense fallback={<SuspenseLoader />}>
+							<ThoughtsMain />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="thoughts/question/:id"
+					element={
+						<Suspense fallback={<SuspenseLoader />}>
+							<ThoughtsQA />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="thoughts/create-question"
+					element={
+						<Suspense fallback={<SuspenseLoader />}>
+							<CreateQuestion />
+						</Suspense>
+					}
+				/>
 			<Route
 				path="profile"
 				element={
