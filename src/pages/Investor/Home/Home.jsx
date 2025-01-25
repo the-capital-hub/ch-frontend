@@ -42,6 +42,7 @@ import Milestone from "../../../components/Milestone/Milestone";
 import UserJourney from "../../../components/Milestone/UserJourney";
 import JoinHustlersClub from "../../../components/Investor/Feed/Components/JoinHustlersClub/JoinHustlersClub";
 import ShareThoughts from "../../../components/Investor/Feed/Components/ShareYourThoughts/ShareThoughts";
+import SkeletonLoader from "../../../components/Investor/Feed/Components/SkeletonLoader/SkeletonLoader";
 
 const baseUrl = environment.baseUrl;
 
@@ -118,47 +119,47 @@ function Home() {
 		dispatch(setPageTitle("Home"));
 		document.title = "Home | Investors - The Capital Hub";
 
-    // Fetch company data
-    if (isInvestor && !companyDataId) {
-      getInvestorById(userInvestor)
-        .then(({ data }) => {
-          dispatch(setUserCompany(data));
-        })
-        .catch((error) => {
-          console.log();
-        });
-    }
-  }, [dispatch, isInvestor, userInvestor, companyDataId]);
+		// Fetch company data
+		if (isInvestor && !companyDataId) {
+			getInvestorById(userInvestor)
+				.then(({ data }) => {
+					dispatch(setUserCompany(data));
+				})
+				.catch((error) => {
+					console.log();
+				});
+		}
+	}, [dispatch, isInvestor, userInvestor, companyDataId]);
 
-  const fetchMorePosts = () => {
-    getAllPostsAPI(page)
-      .then(({ data }) => {
-        if (data?.length === 0) {
-          setHasMore(false);
-        } else {
-          const totalPost = data.filter((item) => item?.postType !== "company");
-          const post = allPosts.filter((item) => item?.postType !== "company");
-          setAllPosts([...post, ...totalPost]);
-          setPage(page + 1);
-        }
-      })
-      .catch((err) => {
-        setHasMore(false);
-        console.log();
-      })
-      .finally(() => setLoadingFeed(false));
-  };
+	const fetchMorePosts = () => {
+		getAllPostsAPI(page)
+			.then(({ data }) => {
+				if (data?.length === 0) {
+					setHasMore(false);
+				} else {
+					const totalPost = data.filter((item) => item?.postType !== "company");
+					const post = allPosts.filter((item) => item?.postType !== "company");
+					setAllPosts([...post, ...totalPost]);
+					setPage(page + 1);
+				}
+			})
+			.catch((err) => {
+				setHasMore(false);
+				console.log();
+			})
+			.finally(() => setLoadingFeed(false));
+	};
 
-  useEffect(() => {
-    getSavedPostCollections(loggedInUserId)
-      .then((data) => {
-        setgetSavedPostData(data);
-      })
-      .catch((error) => {
-        console.log();
-      });
-    fetchMorePosts();
-  }, [newPost, loggedInUserId]);
+	useEffect(() => {
+		getSavedPostCollections(loggedInUserId)
+			.then((data) => {
+				setgetSavedPostData(data);
+			})
+			.catch((error) => {
+				console.log();
+			});
+		fetchMorePosts();
+	}, [newPost, loggedInUserId]);
 
 	// Repost
 	const [repostLoading, setRepostLoading] = useState({
@@ -167,13 +168,13 @@ function Home() {
 	});
 	const [respostingPostId, setRepostingPostId] = useState("");
 
-  const repostInstantly = (resharedPostId) => {
-    setRepostLoading({ ...repostLoading, instant: true });
-    postUserPost({ resharedPostId })
-      .then(() => fetchMorePosts())
-      .catch((err) => console.log())
-      .finally(() => setRepostLoading({ ...repostLoading, instant: false }));
-  };
+	const repostInstantly = (resharedPostId) => {
+		setRepostLoading({ ...repostLoading, instant: true });
+		postUserPost({ resharedPostId })
+			.then(() => fetchMorePosts())
+			.catch((err) => console.log())
+			.finally(() => setRepostLoading({ ...repostLoading, instant: false }));
+	};
 
 	const location = useLocation();
 	const queryParams = new URLSearchParams(location.search);
@@ -301,56 +302,63 @@ function Home() {
 							{/* <TutorialTrigger steps={investorOnboardingSteps.homePage} /> */}
 							<JoinHustlersClub />
 
+							{/* Write a post */}
+							<div className="box start_post_container border">
+								<img
+									src={userProfilePicture}
+									alt="Profile"
+									className="rounded-circle"
+									style={{ objectFit: "cover" }}
+								/>
 
-              {/* Write a post */}
-              <div className="box start_post_container border">
-                <img
-                  src={userProfilePicture}
-                  alt="Profile"
-                  className="rounded-circle"
-                  style={{ objectFit: "cover" }}
-                />
-                 
-                <div className="w-100 me-4" onClick={openPopup}>
-                  <input
-                    className="px-3"
-                    type="text"
-                    placeholder="Write a post..."
-                    style={{ pointerEvents: "none" }}
-                  />
-                </div>
-              </div>
-			  <ShareThoughts isInvestor={true} />
+								<div className="w-100 me-4" onClick={openPopup}>
+									<input
+										className="px-3"
+										type="text"
+										placeholder="Write a post..."
+										style={{ pointerEvents: "none" }}
+									/>
+								</div>
+							</div>
+							<ShareThoughts isInvestor={true} />
 
-              <InfiniteScroll
-                  dataLength={allPosts.length}
-                  next={fetchMorePosts}
-                  hasMore={hasMore}
-                  loader={
-                    <div className="spinner_loader container p-5 text-center my-5 rounded-4 shadow">
-                      <div className="d-flex justify-content-center">
-                        <div className="spinner-border text-secondary" role="status">
-                          <span className="visually-hidden">Loading...</span>
-                        </div>
-                      </div>
-                    </div>
-                  }
-                >
-                  {allPosts?.map(({
-                    description,
-                    user,
-                    video,
-                    image,
-                    images,
-                    documentUrl,
-                    documentName,
-                    createdAt,
-                    likes,
-                    _id,
-                    resharedPostId,
-                    pollOptions,
-                  }, index) => {
-                    if (!user) return null;
+							<InfiniteScroll
+								dataLength={allPosts.length}
+								next={fetchMorePosts}
+								hasMore={hasMore}
+								loader={
+									// <div className="spinner_loader container p-5 text-center my-5 rounded-4 shadow">
+									// 	<div className="d-flex justify-content-center">
+									// 		<div
+									// 			className="spinner-border text-secondary"
+									// 			role="status"
+									// 		>
+									// 			<span className="visually-hidden">Loading...</span>
+									// 		</div>
+									// 	</div>
+									// </div>
+									<SkeletonLoader />
+								}
+							>
+								{allPosts?.map(
+									(
+										{
+											description,
+											user,
+											video,
+											image,
+											images,
+											documentUrl,
+											documentName,
+											createdAt,
+											likes,
+											_id,
+											resharedPostId,
+											pollOptions,
+										},
+										index
+									) => {
+										if (!user) return null;
 
 										const {
 											firstName,
@@ -424,14 +432,14 @@ function Home() {
 					</div>
 				)}
 				<div className="right_content d-none d-xl-block">
-				<div className="right_content_wrapper">
-					<InvestorRightProfileCard />
-					<TopVoiceTracker isInvestor={true} />
-					<Milestone isInvestor={true}/>
-					<UserJourney isInvestor={true}/>
-					<RecommendationCard isInvestor={true} />
-					<NewsCorner />
-				</div>
+					<div className="right_content_wrapper">
+						<InvestorRightProfileCard />
+						<TopVoiceTracker isInvestor={true} />
+						<Milestone isInvestor={true} />
+						<UserJourney isInvestor={true} />
+						<RecommendationCard isInvestor={true} />
+						<NewsCorner />
+					</div>
 				</div>
 			</div>
 			{popupOpen && (

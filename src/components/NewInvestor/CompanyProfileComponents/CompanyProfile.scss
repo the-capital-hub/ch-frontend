@@ -5,169 +5,176 @@ $color-startup: rgba(253, 89, 1);
 $color-startup-shadow: rgba(234, 238, 242, 1);
 
 .company__profile[startup="true"] {
-  --color-btn: rgba(253, 89, 1, 1);
-  --color-btn-01: rgba(253, 89, 1, 0.1);
-  --color-btn-08: rgba(253, 89, 1, 0.8);
-  --color-card-shadow: rgba(234, 238, 242, 0.4);
-  --color-text: white;
-  --color-outline-btn: rgba(253, 89, 1, 1);
+	--color-btn: rgba(253, 89, 1, 1);
+	--color-btn-01: rgba(253, 89, 1, 0.1);
+	--color-btn-08: rgba(253, 89, 1, 0.8);
+	--color-card-shadow: rgba(234, 238, 242, 0.4);
+	--color-text: white;
+	--color-outline-btn: rgba(253, 89, 1, 1);
 
-  border-radius: var(--border-radius);
+	border-radius: var(--border-radius);
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p {
-    margin: 0;
-  }
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p {
+		margin: 0;
+	}
 
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
 }
 
 .company__profile[startup="false"] {
-  --color-btn: rgba(211, 243, 107, 1);
-  --color-btn-01: rgba(211, 243, 107, 0.1);
-  --color-btn-08: rgba(211, 243, 107, 0.8);
-  --color-card-shadow: rgba(211, 243, 107, 0.1);
-  --color-text: black;
-  --color-outline-btn: var(--darkMode-currentTheme);
-  --border-radius: 20px;
+	--color-btn: rgba(211, 243, 107, 1);
+	--color-btn-01: rgba(211, 243, 107, 0.1);
+	--color-btn-08: rgba(211, 243, 107, 0.8);
+	--color-card-shadow: rgba(211, 243, 107, 0.1);
+	--color-text: black;
+	--color-outline-btn: var(--darkMode-currentTheme);
+	--border-radius: 20px;
 
-  border-radius: var(--border-radius);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: var(--border-radius);
+	border: 1px solid rgba(0, 0, 0, 0.1);
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p {
-    margin: 0;
-  }
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p {
+		margin: 0;
+	}
 
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
 }
 
 // component classes
 .company__profile {
-  // CSS for empty action buttons
-  background-color: var(--white-to-grey);
-  color: #000;
-  .company__actions {
-    .action__buttons {
-      &:empty {
-        display: none !important;
-      }
-    }
-  }
+	// CSS for empty action buttons
+	background-color: var(--white-to-grey);
+	color: #000;
+	.company__actions {
+		.action__buttons {
+			&:empty {
+				display: none !important;
+			}
+		}
+	}
 
-  .btn-capital {
-    width: fit-content;
-    background-color: var(--color-btn);
-    border: 1px solid var(--color-btn);
-    border-radius: 5px;
-    outline: none;
+	.btn-capital {
+		width: fit-content;
+		background-color: var(--color-btn);
+		border: 1px solid var(--color-btn);
+		border-radius: 20px;
+		outline: none;
 
-    color: var(--color-text);
-    font-family: "Poppins", sans-serif;
-    font-size: 1rem;
-    line-height: 1rem;
+		color: var(--color-text);
+		font-family: "Poppins", sans-serif;
+		font-size: 1rem;
+		line-height: 1rem;
 
-    font-weight: 400;
-    padding: 0.75em 1em;
+		font-weight: 400;
+		padding: 0.75em 1em;
 
-    cursor: pointer;
-    transition: all 200ms ease-in-out;
+		cursor: pointer;
+		transition: all 200ms ease-in-out;
 
-    &:hover {
-      transform: scale(0.95);
-    }
-  }
+		&:hover {
+			transform: scale(0.95);
+		}
+	}
 
-  .btn-capital-small {
-    width: fit-content;
+	.btn-danger {
+		width: fit-content;
+		background-color: #dc3545;
+		border: 1px solid #dc3545;
+		border-radius: 20px;
+		outline: none;
+	}
 
-    background-color: var(--color-btn);
-    border: 1px solid var(--color-btn);
-    border-radius: 5px;
-    outline: none;
+	.btn-capital-small {
+		width: fit-content;
 
-    color: var(--color-text);
-    font-family: "Poppins", sans-serif;
-    font-size: 0.75rem;
-    line-height: 0.5rem;
+		background-color: var(--color-btn);
+		border: 1px solid var(--color-btn);
+		border-radius: 5px;
+		outline: none;
 
-    font-weight: 500;
-    padding: 0.5em 1.5em;
+		color: var(--color-text);
+		font-family: "Poppins", sans-serif;
+		font-size: 0.75rem;
+		line-height: 0.5rem;
 
-    cursor: pointer;
-    transition: all 200ms ease-in-out;
+		font-weight: 500;
+		padding: 0.5em 1.5em;
 
-    &:hover {
-      transform: scale(0.95);
-    }
-  }
+		cursor: pointer;
+		transition: all 200ms ease-in-out;
 
-  .btn-capital-outline {
-    width: fit-content;
+		&:hover {
+			transform: scale(0.95);
+		}
+	}
 
-    // background-color: white;
-    border: 1px solid var(--color-btn);
-    border-radius: 20px;
-    outline: none;
+	.btn-capital-outline {
+		width: fit-content;
 
-    color: var(--color-outline-btn);
-    font-family: "Poppins", sans-serif;
-    font-size: 1rem;
-    line-height: 1rem;
-    font-weight: 400;
-    padding: 0.75em 1.5em;
+		// background-color: white;
+		border: 1px solid var(--color-btn);
+		border-radius: 20px;
+		outline: none;
 
-    cursor: pointer;
-    transition: all 200ms ease-in-out;
+		color: var(--color-outline-btn);
+		font-family: "Poppins", sans-serif;
+		font-size: 1rem;
+		line-height: 1rem;
+		font-weight: 400;
+		padding: 0.75em 1.5em;
 
-    &:hover {
-      transform: scale(0.95);
-    }
+		cursor: pointer;
+		transition: all 200ms ease-in-out;
 
-    &:active {
-      border: 1px solid var(--color-btn);
-      color: var(--color-outline-btn);
-    }
-  }
+		&:hover {
+			transform: scale(0.95);
+		}
 
-  .div__heading {
-    // text-decoration: underline;
-    text-decoration-color: var(--color-btn);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.25em;
-  }
+		&:active {
+			border: 1px solid var(--color-btn);
+			color: var(--color-outline-btn);
+		}
+	}
 
-  .main__heading {
-    font-size: 1.5rem;
-    font-weight: 500;
-  }
+	.div__heading {
+		// text-decoration: underline;
+		text-decoration-color: var(--color-btn);
+		text-decoration-thickness: 2px;
+		text-underline-offset: 0.25em;
+	}
 
-  .heading-6 {
-    color: #000;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-  }
+	.main__heading {
+		font-size: 1.5rem;
+		font-weight: 500;
+	}
 
-  // .container__padding {
-  //   padding-block: 2rem;
-  // }
+	.heading-6 {
+		color: #000;
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: normal;
+	}
+
+	// .container__padding {
+	//   padding-block: 2rem;
+	// }
 }
