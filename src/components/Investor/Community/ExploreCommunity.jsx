@@ -15,6 +15,7 @@ import PurchasePopup from '../../../components/Shared/PurchasePopup/PurchasePopu
 import { load } from "@cashfreepayments/cashfree-js";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import communityPlaceholder from "../../../Images/communityPlaceholder.svg";
 
 export default function ExploreCommunities() {
   const [communities, setCommunities] = useState([]);
@@ -287,7 +288,7 @@ export default function ExploreCommunities() {
             >
               <div className="community-image">
                 <img 
-                  src={community.image || "default-community-image.png"} 
+                  src={community.image || communityPlaceholder} 
                   alt={community.name} 
                 />
               </div>
