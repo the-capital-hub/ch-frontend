@@ -1,7 +1,7 @@
 :root {
 	--bg-color: #ffffff;
 	--text-color: #333333;
-	--accent-color: #fd5901;
+	--accent-color: var(--current-theme-color);
 	--background-color: #f5f5f5;
 	--background-color-secondary: #fff;
 	--background-btn: rgba(52, 55, 68, 0.2);
@@ -11,7 +11,7 @@
 .dark-theme {
 	--bg-color: var(--white-to-grey);
 	--text-color: #ffffff;
-	--accent-color: #fd5901;
+	--accent-color: var(--current-theme-color);
 	--background-color: #19191c;
 	--background-color-secondary: #0a0a0a;
 	--background-btn: rgb(30, 30, 30);
@@ -86,11 +86,11 @@
 					.edit-icon {
 						font-size: 20px;
 						cursor: pointer;
-						color: #fd5901;
+						color: var(--current-theme-color);
 						transition: all 0.3s ease;
 
 						&:hover {
-							color: darken(#fd5901, 10%);
+							filter: brightness(0.9);
 							transform: scale3d(1.1, 1.1, 1.1);
 						}
 					}
@@ -137,7 +137,7 @@
 						}
 
 						&-view-profile {
-							color: var(--accent-color);
+							color: var(--current-theme-color);
 							font-family: Outfit;
 							font-size: 14px;
 							font-weight: 500;
@@ -273,8 +273,8 @@
 						.follow-button {
 							width: auto;
 							height: 30px;
-							background-color: #fd5901;
-							color: #fff;
+							background-color: var(--current-theme-color);
+							color: var(--current-theme-text-color);
 							border: none;
 							border-radius: 20px;
 							padding: 4px 8px;
@@ -290,7 +290,7 @@
 							transition: background-color 0.3s ease;
 
 							&:hover {
-								background-color: darken(#fd5901, 10%);
+								filter: brightness(0.9);
 							}
 						}
 						.connection-message success {
@@ -318,7 +318,7 @@
 
 						&.active {
 							opacity: 1;
-							color: #fd5901;
+							color: var(--current-theme-color);
 
 							&::after {
 								content: "";
@@ -327,7 +327,7 @@
 								left: 0;
 								width: 100%;
 								height: 2px;
-								background-color: #fd5901;
+								background-color: var(--current-theme-color);
 							}
 						}
 					}
@@ -565,7 +565,7 @@
 						}
 
 						.send-icon:hover {
-							color: #f97316;
+							color: var(--current-theme-color);
 						}
 					}
 				}
@@ -577,7 +577,7 @@
 					text-align: left;
 					text-underline-position: from-font;
 					text-decoration-skip-ink: none;
-					color: var(--accent-color);
+					color: var(--current-theme-color);
 				}
 			}
 
@@ -628,7 +628,7 @@
 							align-items: center;
 							width: 100%;
 							.view-full-profile {
-								color: var(--accent-color);
+								color: var(--current-theme-color);
 								font-size: 10px;
 								cursor: pointer;
 							}
@@ -648,11 +648,11 @@
 						.edit-icon {
 							font-size: 20px;
 							cursor: pointer;
-							color: #fd5901;
+							color: var(--current-theme-color);
 							transition: all 0.3s ease;
 
 							&:hover {
-								color: darken(#fd5901, 10%);
+								filter: brightness(0.9);
 								transform: scale3d(1.1, 1.1, 1.1);
 							}
 						}
@@ -706,7 +706,7 @@
 						transition: color 0.2s ease;
 
 						&:hover {
-							color: var(--accent-color);
+							color: var(--current-theme-color);
 						}
 
 						svg {
@@ -795,7 +795,7 @@
 								padding: 0;
 
 								&:hover {
-									color: var(--accent-color);
+									color: var(--current-theme-color);
 								}
 							}
 						}
@@ -843,7 +843,7 @@
 							transition: color 0.3s ease;
 
 							&:hover {
-								color: var(--accent-color);
+								color: var(--current-theme-color);
 							}
 						}
 					}
@@ -940,7 +940,7 @@
 	transition: color 0.3s ease;
 
 	&:hover {
-		color: var(--accent-color);
+		color: var(--current-theme-color);
 	}
 
 	&.disabled {
@@ -970,7 +970,7 @@
 
 		&:focus {
 			outline: none;
-			border-color: var(--accent-color);
+			border-color: var(--current-theme-color);
 		}
 	}
 
@@ -993,7 +993,7 @@
 			transition: color 0.3s ease;
 
 			&:hover {
-				color: var(--accent-color);
+				color: var(--current-theme-color);
 			}
 		}
 

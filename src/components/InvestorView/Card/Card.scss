@@ -21,6 +21,57 @@
     align-items: start;
     flex-direction: column;
     justify-content: end;
+    position: relative;
+    
+    .document-count {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      background: #4CAF50;
+      color: white;
+      border-radius: 8px;
+      padding: 8px 15px;
+      z-index: 1;
+      transform: scale(1);
+      transition: all 0.3s ease;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: inherit;
+        border-radius: inherit;
+        z-index: -1;
+        transition: all 0.3s ease;
+        opacity: 0.3;
+        transform: scale(1.1);
+      }
+
+      .count-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+      }
+      
+      .count-number {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1;
+        color: #ffffff;
+      }
+      
+      .count-label {
+        font-size: 9px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        color: rgba(255, 255, 255, 0.9);
+        margin-top: -2px;
+      }
+    }
     .folder_footer {
       // color: white;
       // background-color: black;
@@ -33,8 +84,41 @@
         color: var(--d-l-grey);
       }
     }
+
+    &:hover {
+      .document-count {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+
+        &::before {
+          transform: scale(1.2);
+          opacity: 0.2;
+        }
+      }
+    }
   }
   &:hover {
     cursor: pointer;
+  }
+}
+
+// Add media query for smaller screens
+@media (max-width: 768px) {
+  .investorsCard {
+    .folder_container {
+      .document-count {
+        top: -12px;
+        right: -12px;
+        padding: 6px 12px;
+        
+        .count-number {
+          font-size: 16px;
+        }
+        
+        .count-label {
+          font-size: 8px;
+        }
+      }
+    }
   }
 }

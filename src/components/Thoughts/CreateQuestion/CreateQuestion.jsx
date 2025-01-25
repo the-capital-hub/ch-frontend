@@ -41,6 +41,22 @@ const QuestionCreator = () => {
 		};
 	}, [showOptions]);
 
+	useEffect(() => {
+		const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+		const root = document.documentElement;
+		if (loggedInUser?.isInvestor) {
+		  root.style.setProperty('--theme-color', '#d3f36b');
+		  root.style.setProperty('--theme-hover-color', '#bcd95f');
+		  root.style.setProperty('--current-theme-color', '#d3f36b');
+		  root.style.setProperty('--current-theme-text-color', '#000000');
+		} else {
+		  root.style.setProperty('--theme-color', '#FF620E');
+		  root.style.setProperty('--theme-hover-color', '#e55a0d');
+		  root.style.setProperty('--current-theme-color', '#FF620E');
+		  root.style.setProperty('--current-theme-text-color', '#FFFFFF');
+		}
+	  }, []);
+
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormData((prevData) => ({

@@ -1,36 +1,27 @@
 import React, { useState } from "react";
 import CompanyInfo from "./company-section-one/company-info/CompanyInfo";
-// import HCLImage from "../../../Images/Investor/CompanyProfile/HCL.png";
 import DefaultAvatar from "../../../Images/Chat/default-user-avatar.webp";
 import CompanyActions from "./company-section-one/company-actions/CompanyActions";
 import CompanyStats from "./company-section-one/company-stats/CompanyStats";
 import PublicLinks from "./company-section-two/public-links/PublicLinks";
-// import Feedback from "./company-section-two/feedback/Feedback";
 import FoundingTeam from "./company-section-two/founding-team/FoundingTeam";
 import KeyFocus from "./company-section-two/key-focus/KeyFocus";
-import CoinIcon from "../../../Images/investorView/Rectangle.png";
 import CompanyAbout from "./company-section-one/company-about/CompanyAbout";
 import "./CompanyProfile.scss";
 import SelectCommitmentModal from "../MyStartupsComponents/SelectCommitmentModal/SelectCommitmentModal";
 import {
 	useLocation,
-	//  useNavigate
 } from "react-router-dom";
-import CardComponent from "../../../pages/InvestorView/Company/CardComponent/CardComponent";
-import {
-	About1,
-	About2,
-	About3,
-	Revenue1,
-	Revenue2,
-} from "../../../Images/Investor/CompanyProfile";
-import { deleteStartUp } from "../../../Service/user";
-// import { selectIsInvestor } from "../../../Store/features/user/userSlice";
+import { deleteStartUp, updateStartUpData } from "../../../Service/user";
 import { useSelector } from "react-redux";
 import Modal from "react-modal";
 import PasswordModal from "../MyStartupsComponents/DeleteModal";
 import { postUserLogin } from "../../../Service/user";
 import API from "../../../api";
+import { Button, Form } from "react-bootstrap";
+import { FaEdit } from 'react-icons/fa';
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 export default function CompanyProfile({
 	isOnelink,
@@ -44,12 +35,18 @@ export default function CompanyProfile({
 	theme,
 	setCompanyData,
 	companyDelete,
+	isAdmin,
+	onCompanyUpdate,
 }) {
 	const { pathname } = useLocation();
 	const [open, setOpen] = useState("");
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [password, setPassword] = useState("");
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
+	const [showEditModal, setShowEditModal] = useState(false);
+	const [editFormData, setEditFormData] = useState({});
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
 	// Fetch Company Data here
 	let name = "NA";
 	let logo = DefaultAvatar;
@@ -183,9 +180,45 @@ export default function CompanyProfile({
 		}
 	};
 
+	const handleEditSubmit = async (e) => {
+		e.preventDefault();
+		setIsSubmitting(true);
+		try {
+			const response = await updateStartUpData(editFormData);
+			if (response.status) {
+				const updatedCompany = { ...companyData, ...editFormData };
+				
+				if (onCompanyUpdate) {
+					onCompanyUpdate(updatedCompany);
+				}
+				
+				setShowEditModal(false);
+				toast.success("Startup updated successfully!");
+			} else {
+				toast.error("Failed to update startup");
+			}
+		} catch (err) {
+			console.error(err);
+			toast.error("An error occurred while updating startup");
+		} finally {
+			setIsSubmitting(false);
+		}
+	};
+
 	return (
 		<>
 			<div className="company__profile  shadow-sm" startup={startup}>
+				{isAdmin && (
+					<Button 
+						className="edit-button"
+						onClick={() => {
+							setEditFormData(companyData);
+							setShowEditModal(true);
+						}}
+					>
+						<FaEdit />
+					</Button>
+				)}
 				<div className="company__section__one border-bottom d-flex flex-column gap-4 p-3 p-md-5">
 					{/* <h5 className="ms-auto m-0 p-0 " onClick={() => navigate(isInvestor === "true" ? "/investor/home" : "/home")
           }
@@ -258,151 +291,8 @@ export default function CompanyProfile({
 							alignItems: "center",
 						}}
 					>
-						{/* {open !== companyData._id && (
-              <button
-                className={`btn-capital-small p-2 p-md-3`}
-                onClick={() => {
-                  if (open === companyData._id) {
-                    setOpen("");
-                  } else setOpen(companyData._id);
-                }}
-              >
-                <span className="d-none d-md-block">Know more</span>
-              </button>
-            )} */}
 					</div>
 				)}
-				{/* {theme !== "investor" && pageName && open === companyData._id && (
-          <div className="company__section__two d-flex flex-column gap-4 pt-3 pb-5 px-3 px-md-5">
-            <FoundingTeam isOnelink={isOnelink} team={team} />
-            <h6 className="div__heading">{`Previous funding`}</h6>
-            <div className="stat__row d-flex flex-wrap gap-4 gap-lg-5">
-              <div
-                className="p-2 rounded-3 text-white d-flex flex-row justify-content-between stat__badge"
-                style={{ backgroundColor: "rgba(187, 152, 255, 1)" }}
-              >
-                <div className="d-flex flex-column gap-2 justify-content-center ps-2">
-                  <p className="small">
-                    {startup === "true" ? "Valuation" : "Average Investment"}
-                  </p>
-                  <p className="fw-semibold">
-                    {" "}
-                    {startup === "true"
-                      ? colorCard?.last_round_investment
-                      : colorCard?.averageInvestment || ""}
-                  </p>
-                </div>
-                <img src={About1} alt="statistics" style={{ width: "80px" }} />
-              </div>
-
-              <div
-                className="p-2 rounded-3 text-white d-flex justify-content-between  stat__badge"
-                style={{ backgroundColor: "rgba(218, 193, 145, 1)" }}
-              >
-                <div className="d-flex flex-column gap-2 justify-content-center ps-2">
-                  <p className="small">Total Investment</p>
-                  <p className="fw-semibold">
-                    {" "}
-                    {colorCard?.total_investment || ""}
-                  </p>
-                </div>
-                <img src={About2} alt="statistics" style={{ width: "80px" }} />
-              </div>
-
-              <div
-                className="p-2 rounded-3 text-white d-flex  justify-content-between stat__badge"
-                style={{ backgroundColor: "rgba(170, 173, 185, 1)" }}
-              >
-                <div className="d-flex flex-column gap-2 justify-content-center ps-2">
-                  <p className="small">
-                    {startup === "true"
-                      ? "No. of Investors"
-                      : "No. of Investments"}
-                  </p>
-                  <p className="fw-semibold">
-                    {startup === "true"
-                      ? colorCard?.no_of_investers
-                      : ` ${colorCard?.no_of_investments}` || ""}
-                  </p>
-                </div>
-                <img src={About3} alt="statistics" style={{ width: "80px" }} />
-              </div>
-            </div>
-            <div className="row revenue_section">
-              <h6 className="div__heading">{`Revenue Statistics`}</h6>
-              <div
-                className="stat__row d-flex flex-wrap gap-4 gap-lg-5"
-                style={{ paddingTop: "1rem" }}
-              >
-                <div
-                  className="p-2 rounded-3 text-white d-flex  justify-content-between stat__badge"
-                  style={{ backgroundColor: "rgba(43, 43, 43, 1)" }}
-                >
-                  <div className="d-flex flex-column gap-2 justify-content-center ps-2">
-                    
-                    <p className="small">
-                      {startup === "true"
-                        ? "Last year revenue(FY 23)"
-                        : "Maximum Tickets Size"}
-                    </p>
-                    <p className="fw-semibold">
-                      {startup === "true"
-                        ? colorCard?.valuation
-                        : colorCard?.maximumTicketsSize || ""}
-                    </p>
-                  </div>
-                  <img
-                    src={Revenue1}
-                    alt="statistics"
-                    style={{ width: "80px" }}
-                  />
-                </div>
-
-               
-
-                <div
-                  className="p-2 rounded-3 text-white d-flex  justify-content-between stat__badge"
-                  style={{ backgroundColor: "rgba(255, 115, 115, 1)" }}
-                >
-                  <div className="d-flex flex-column gap-2 justify-content-center ps-2">
-                    <p className="small">
-                      {startup === "true" ? "Target (FY 24)" : "Seed Round"}
-                    </p>
-                    <p className="fw-semibold">
-                      {" "}
-                      {startup === "true"
-                        ? colorCard?.raised_funds
-                        : colorCard?.seedRound || ""}
-                    </p>
-                  </div>
-                  <img
-                    src={Revenue2}
-                    alt="statistics"
-                    style={{ width: "80px" }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <button
-                className={`btn-capital-small p-2 p-md-3`}
-                onClick={() => {
-                  if (open === companyData._id) {
-                    setOpen("");
-                  } else setOpen(companyData._id);
-                }}
-              >
-                <span className="d-none d-md-block">See less</span>
-              </button>
-            </div>
-          </div>
-        )} */}
 			</div>
 
 			{/* Select Commitment Modal */}
@@ -418,6 +308,267 @@ export default function CompanyProfile({
 				onClose={() => setIsModalOpen(false)} // Handler to close the modal
 				onConfirm={handleConfirmPassword} // Handler to confirm password
 			/>
+
+			{/* Add Edit Modal */}
+			<Modal
+				isOpen={showEditModal}
+				onRequestClose={() => setShowEditModal(false)}
+				className="modal-dialog"
+				overlayClassName="modal-overlay"
+				id="company-profile-modal"
+			>
+				<div className="modal-content">
+					<div className="modal-header">
+						<h5 className="modal-title">Edit Startup Details</h5>
+						<button
+							type="button"
+							className="btn-close"
+							onClick={() => setShowEditModal(false)}
+						></button>
+					</div>
+					<div className="modal-body">
+						<Form onSubmit={handleEditSubmit}>
+							<Form.Group className="mb-3">
+								<Form.Label>Company Name</Form.Label>
+								<Form.Control
+									type="text"
+									value={editFormData.company || ""}
+									onChange={(e) =>
+										setEditFormData({ ...editFormData, company: e.target.value })
+									}
+								/>
+							</Form.Group>
+
+							<Form.Group className="mb-3">
+								<Form.Label>Tagline</Form.Label>
+								<Form.Control
+									type="text"
+									value={editFormData.tagline || ""}
+									onChange={(e) =>
+										setEditFormData({ ...editFormData, tagline: e.target.value })
+									}
+								/>
+							</Form.Group>
+
+							<Form.Group className="mb-3">
+								<Form.Label>Description</Form.Label>
+								<Form.Control
+									as="textarea"
+									rows={3}
+									value={editFormData.description || ""}
+									onChange={(e) =>
+										setEditFormData({ ...editFormData, description: e.target.value })
+									}
+								/>
+							</Form.Group>
+
+							<Form.Group className="mb-3">
+								<Form.Label>Location</Form.Label>
+								<Form.Control
+									type="text"
+									value={editFormData.location || ""}
+									onChange={(e) =>
+										setEditFormData({ ...editFormData, location: e.target.value })
+									}
+								/>
+							</Form.Group>
+
+							<Form.Group className="mb-3">
+								<Form.Label>Industry Type</Form.Label>
+								<Form.Control
+									type="text"
+									value={editFormData.industryType || ""}
+									onChange={(e) =>
+										setEditFormData({ ...editFormData, industryType: e.target.value })
+									}
+								/>
+							</Form.Group>
+
+							<Form.Group className="mb-3">
+								<Form.Label>Vision</Form.Label>
+								<Form.Control
+									as="textarea"
+									rows={2}
+									value={editFormData.vision || ""}
+									onChange={(e) =>
+										setEditFormData({ ...editFormData, vision: e.target.value })
+									}
+								/>
+							</Form.Group>
+
+							<Form.Group className="mb-3">
+								<Form.Label>Mission</Form.Label>
+								<Form.Control
+									as="textarea"
+									rows={2}
+									value={editFormData.mission || ""}
+									onChange={(e) =>
+										setEditFormData({ ...editFormData, mission: e.target.value })
+									}
+								/>
+							</Form.Group>
+
+							<Form.Group className="mb-3">
+								<Form.Label>Number of Employees</Form.Label>
+								<Form.Control
+									type="number"
+									value={editFormData.noOfEmployees || ""}
+									onChange={(e) =>
+										setEditFormData({ ...editFormData, noOfEmployees: e.target.value })
+									}
+								/>
+							</Form.Group>
+
+							<Form.Group className="mb-3">
+								<Form.Label>Key Focus Areas</Form.Label>
+								<Form.Control
+									type="text"
+									value={editFormData.keyFocus || ""}
+									onChange={(e) =>
+										setEditFormData({ ...editFormData, keyFocus: e.target.value })
+									}
+									placeholder="Separate with commas"
+								/>
+							</Form.Group>
+
+							<Form.Group className="mb-3">
+								<Form.Label>Stage</Form.Label>
+								<Form.Control
+									type="text"
+									value={editFormData.stage || ""}
+									onChange={(e) =>
+										setEditFormData({ ...editFormData, stage: e.target.value })
+									}
+								/>
+							</Form.Group>
+
+							<Form.Group className="mb-3">
+								<Form.Label>Sector</Form.Label>
+								<Form.Control
+									type="text"
+									value={editFormData.sector || ""}
+									onChange={(e) =>
+										setEditFormData({ ...editFormData, sector: e.target.value })
+									}
+								/>
+							</Form.Group>
+
+							<Form.Group className="mb-3">
+								<Form.Label>TAM (Total Addressable Market)</Form.Label>
+								<Form.Control
+									type="text"
+									value={editFormData.TAM || ""}
+									onChange={(e) =>
+										setEditFormData({ ...editFormData, TAM: e.target.value })
+									}
+								/>
+							</Form.Group>
+
+							<Form.Group className="mb-3">
+								<Form.Label>SAM (Serviceable Addressable Market)</Form.Label>
+								<Form.Control
+									type="text"
+									value={editFormData.SAM || ""}
+									onChange={(e) =>
+										setEditFormData({ ...editFormData, SAM: e.target.value })
+									}
+								/>
+							</Form.Group>
+
+							<Form.Group className="mb-3">
+								<Form.Label>SOM (Serviceable Obtainable Market)</Form.Label>
+								<Form.Control
+									type="text"
+									value={editFormData.SOM || ""}
+									onChange={(e) =>
+										setEditFormData({ ...editFormData, SOM: e.target.value })
+									}
+								/>
+							</Form.Group>
+
+							<Form.Group className="mb-3">
+								<Form.Label>Social Links</Form.Label>
+								<Form.Control
+									type="text"
+									placeholder="Website"
+									value={editFormData.socialLinks?.website || ""}
+									onChange={(e) =>
+										setEditFormData({
+											...editFormData,
+											socialLinks: {
+												...editFormData.socialLinks,
+												website: e.target.value,
+											},
+										})
+									}
+								/>
+								<Form.Control
+									type="text"
+									placeholder="LinkedIn"
+									className="mt-2"
+									value={editFormData.socialLinks?.linkedin || ""}
+									onChange={(e) =>
+										setEditFormData({
+											...editFormData,
+											socialLinks: {
+												...editFormData.socialLinks,
+												linkedin: e.target.value,
+											},
+										})
+									}
+								/>
+								<Form.Control
+									type="text"
+									placeholder="Twitter"
+									className="mt-2"
+									value={editFormData.socialLinks?.twitter || ""}
+									onChange={(e) =>
+										setEditFormData({
+											...editFormData,
+											socialLinks: {
+												...editFormData.socialLinks,
+												twitter: e.target.value,
+											},
+										})
+									}
+								/>
+								<Form.Control
+									type="text"
+									placeholder="Facebook"
+									className="mt-2"
+									value={editFormData.socialLinks?.facebook || ""}
+									onChange={(e) =>
+										setEditFormData({
+											...editFormData,
+											socialLinks: {
+												...editFormData.socialLinks,
+												facebook: e.target.value,
+											},
+										})
+									}
+								/>
+							</Form.Group>
+
+							<div className="modal-footer">
+								<Button variant="secondary" onClick={() => setShowEditModal(false)}>
+									Cancel
+								</Button>
+								<Button 
+									variant="primary" 
+									type="submit"
+									disabled={isSubmitting}
+								>
+									{isSubmitting ? (
+										'Saving...'
+									) : (
+										'Save Changes'
+									)}
+								</Button>
+							</div>
+						</Form>
+					</div>
+				</div>
+			</Modal>
 		</>
 	);
 }

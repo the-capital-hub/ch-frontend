@@ -142,17 +142,17 @@
       max-width: 300px;
       margin: 0 auto;
       padding: 0.75rem 1.5rem;
-      background: #FF5C00;
+      background: var(--current-theme-color) !important;
       border: none;
       border-radius: 60px;
-      color: white;
+      color: var(--current-theme-text-color) !important;
       font-size: 0.9rem;
       cursor: pointer;
       transition: background-color 0.2s;
       font-family: 'Inter', sans-serif;
 
       &:hover {
-        background: darken(#FF5C00, 5%);
+        background: var(--current-theme-hover-color);
       }
     }
   }
@@ -205,6 +205,8 @@
   --section-bg: rgba(0, 0, 0, 0.03);
   --card-bg: rgba(0, 0, 0, 0.02);
   --border-color: rgba(0, 0, 0, 0.1);
+  --current-theme-color: var(--theme-color);
+  --current-theme-hover-color: var(--theme-hover-color);
 }
 
 [data-theme="dark"] {
@@ -214,6 +216,8 @@
   --section-bg: rgba(6, 8, 16, 0.95);
   --card-bg: rgba(255, 255, 255, 0.02);
   --border-color: rgba(255, 255, 255, 0.1);
+  --current-theme-color: var(--theme-color);
+  --current-theme-hover-color: var(--theme-hover-color);
 }
 
 

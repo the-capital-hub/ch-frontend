@@ -223,6 +223,7 @@ const Thoughts = () => {
 	const [selectedFilter, setSelectedFilter] = useState("All");
 	const [selectedTopics, setSelectedTopics] = useState([]);
 	const [questions, setQuestions] = useState([]);
+	const [isInvestor, setIsInvestor] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const topicsRef = useRef(null);
 	const animationFrameRef = useRef(null);
@@ -259,7 +260,22 @@ const Thoughts = () => {
 	useEffect(() => {
 		fetchQuestions();
 	}, []);
-
+	useEffect(() => {
+		const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+		const root = document.documentElement;
+		setIsInvestor(loggedInUser?.isInvestor);
+		if (loggedInUser?.isInvestor) {
+		  root.style.setProperty('--theme-color', '#d3f36b');
+		  root.style.setProperty('--theme-hover-color', '#bcd95f');
+		  root.style.setProperty('--current-theme-color', '#d3f36b');
+		  root.style.setProperty('--current-theme-text-color', '#000000');
+		} else {
+		  root.style.setProperty('--theme-color', '#FF620E');
+		  root.style.setProperty('--theme-hover-color', '#e55a0d');
+		  root.style.setProperty('--current-theme-color', '#FF620E');
+		  root.style.setProperty('--current-theme-text-color', '#FFFFFF');
+		}
+	  }, []);
 	// Add resize observer effect
 	useEffect(() => {
 		const checkMobileView = () => {
@@ -382,7 +398,11 @@ const Thoughts = () => {
 	};
 
 	const handleArticleClick = (id) => {
-		navigate(`/thoughts/question/${id}`);
+		if(isInvestor){
+			navigate(`/investor/thoughts/question/${id}`);
+		}else{
+			navigate(`/thoughts/question/${id}`);
+		}
 	};
 
 	const handleUpvoteClick = async (questionId) => {
@@ -503,7 +523,7 @@ const Thoughts = () => {
 
 				<button
 					className="thoughts-navbar-create-button"
-					onClick={() => navigate("/thoughts/create-question")}
+					onClick={() => navigate(isInvestor ? "/investor/thoughts/create-question" : "/thoughts/create-question")}
 				>
 					<BiPlus />
 					Create Question

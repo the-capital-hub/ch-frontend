@@ -175,6 +175,8 @@ export default function StartupExplore() {
 						pageName="Startup"
 						show={true}
 						companyDelete={false}
+						isAdmin={loggedInUser.isAdmin}
+						setAllCompanyData={setFilteredData}
 					/>
 				);
 			case "Founder":
@@ -183,6 +185,7 @@ export default function StartupExplore() {
 						theme={"startup"}
 						short={true}
 						data={filteredData}
+						isAdmin={loggedInUser.isAdmin}
 					/>
 				);
 			case "Investor":
@@ -191,10 +194,16 @@ export default function StartupExplore() {
 						theme={"startup"}
 						short={true}
 						data={filteredData}
+						isAdmin={loggedInUser.isAdmin}
 					/>
 				);
 			case "VC":
-				return <VcProfileList data={filteredData} />;
+				return (
+					<VcProfileList
+						data={filteredData}
+						isAdmin={loggedInUser.isAdmin}
+					/>
+				);
 			default:
 				return null;
 		}

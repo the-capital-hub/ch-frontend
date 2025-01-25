@@ -162,6 +162,36 @@ async function postStartUpData(startUpData) {
 	}
 }
 
+export const updateStartUpData = async (startUpData) => {
+	try {
+		const response = await axiosInstance.put(API.updateStartUpData, startUpData);
+		return response.data;
+	} catch (error) {
+		console.error("Error:", error);
+		throw error;
+	}
+};
+
+export const updateInvestorData = async (investorData) => {
+	try {
+		const response = await axiosInstance.put(API.updateInvestorData, investorData);
+		return response.data;
+	} catch (error) {
+		console.error("Error:", error);
+		throw error;
+	}
+};
+
+export const updateVcData = async (vcData) => {
+	try {
+		const response = await axiosInstance.put(API.updateVcData, vcData);
+		return response.data;
+	} catch (error) {
+		console.error("Error:", error);
+		throw error;
+	}
+};
+
 export const deleteStartUp = async (startUpId) => {
 	try {
 		const response = await axiosInstance.put(API.deleteStartUp, { startUpId });
