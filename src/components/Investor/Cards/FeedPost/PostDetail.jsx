@@ -88,7 +88,8 @@ const PostDetail = ({
   isSinglePost = false,
   setPostData,
   pollOptions,
-  postData
+  postData,
+  location
 }) => {
   const [showComment, setShowComment] = useState(isSinglePost);
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -554,7 +555,7 @@ const PostDetail = ({
                     }}
                   >
                     <IoLocationOutline size={15} />
-                    Bangalore, India
+                   {location ? location : "India"}
                   </span>
                 </span>
                 <span

@@ -27,7 +27,9 @@ const InvestmentSection = ({ investedStartups, setInvestedStartups }) => {
       </div>
       <div className="card_container py-3 d-flex gap-3 align-items-center overflow-x-auto" id="myInvestmentsCards">
         {investedStartups?.length > 0
-          ? investedStartups.map((company) => <MyInvestmentCard key={company.name} company={company} />)
+          ? investedStartups?.map((company) => (
+              <MyInvestmentCard key={company?.name} company={company} />
+            ))
           : "No Data Found."}
       </div>
       <ModalBSContainer id={"myInvestmentsAddModal"} isStatic={false}>

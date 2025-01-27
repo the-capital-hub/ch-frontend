@@ -37,9 +37,9 @@ const MyStartUp = () => {
     if (!userMyInterests || !userStartupsInvested || !pastInvestment) {
       getInvestorById(userInvestor)
         .then(({ data }) => {
-          setInvestedStartups(data.startupsInvested);
-          setMyInterests(data.myInterests);
-          setPastInvestment(data.pastInvestments);
+          setInvestedStartups(data?.startupsInvested);
+          setMyInterests(data?.myInterests);
+          setPastInvestment(data?.pastInvestments);
         })
         .catch((error) => {
           console.error(error);

@@ -12,7 +12,7 @@ import {
   Pitch,
   GreenPitch
 } from "../../../Images/StartUp/Documentaion";
-import { getFoldersApi } from "../../../Service/user";
+import { getFoldersApi, getPdfData } from "../../../Service/user";
 import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
 import MobileOneLinkNavbar from "../../../components/Shared/MobileOnelinkNavbar/MobileOneLinkNavbar";
 
@@ -26,16 +26,37 @@ const Documentation = () => {
   const [loading, setLoading] = useState(false);
 
   const [folderName, setFolderName] = useState([]);
+  const [folderCounts, setFolderCounts] = useState({});
 
   const getFolders = () => {
     setLoading(true);
     getFoldersApi(userId)
       .then((data) => {
         setFolderName(data.data);
-        setLoading(false);
+        // Fetch counts for each folder
+        Promise.all(
+          data.data.map(async (folder) => {
+            try {
+              const response = await getPdfData(userId, folder);
+              return { [folder]: response.data.length };
+            } catch (error) {
+              console.error(`Error fetching count for ${folder}:`, error);
+              return { [folder]: 0 };
+            }
+          })
+        )
+          .then((results) => {
+            const counts = results.reduce((acc, curr) => ({ ...acc, ...curr }), {});
+            setFolderCounts(counts);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error("Error fetching folder counts:", error);
+            setLoading(false);
+          });
       })
       .catch((error) => {
-        console.log();
+        console.log(error);
         setLoading(false);
       });
   };
@@ -139,6 +160,7 @@ const Documentation = () => {
                     }
                     text={folder}
                     image={imageToShow}
+                    count={folderCounts[folder] || 0}
                   />
                 );
               })}

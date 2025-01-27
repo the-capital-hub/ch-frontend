@@ -54,6 +54,7 @@ const FeedPostCard = ({
   description,
   firstName,
   lastName,
+  location,
   oneLinkId,
   video,
   image,
@@ -564,7 +565,7 @@ const FeedPostCard = ({
                     }}
                   >
                     <IoLocationOutline size={13} />
-                    Bangalore, India
+                    {location ? location : "India"}
                   </span>
                 </span>
                 <span

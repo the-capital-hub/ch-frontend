@@ -138,8 +138,8 @@ function Home() {
         if (data?.length === 0) {
           setHasMore(false);
         } else {
-          const totalPost = data.filter((item) => item?.postType !== "company");
-          const post = allPosts.filter((item) => item?.postType !== "company");
+          const totalPost = data.filter((item) => item?.postType === "public");
+          const post = allPosts.filter((item) => item?.postType === "public");
           setAllPosts([...post, ...totalPost]);
           setPage(page + 1);
         }
