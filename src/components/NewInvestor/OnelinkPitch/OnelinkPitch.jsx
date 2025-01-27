@@ -4,46 +4,48 @@ import BatchImag from "../../../Images/tick-mark.png";
 import { Link, useLocation } from "react-router-dom";
 import "./OnelinkPitch.scss";
 
-const OnelinkPitch = ({ user, isProfilePage = false }) => {
+const OnelinkPitch = ({ user }) => {
 	const location = useLocation();
 	const basePath = location.pathname.split("/").slice(0, -1).join("/");
+
+	console.log("user", user);
 	return (
 		<div className="pitch-container">
 			<div className="pitch-cards">
 				<div className="profile-card-container">
-					{isProfilePage ? (
-						<div className="image_name_section card-content">
-							<img
-								className="rounded-cirlce"
-								src={user?.profilePicture}
-								alt="profileimage"
-							/>
-							<div className="left_profile_text flex_content ms-3">
-								<h2 className="typography" style={{ textDecoration: "none" }}>
-									{user?.firstName} {user?.lastName}{" "}
-									{user?.isSubscribed && (
-										<img
-											src={BatchImag}
-											style={{
-												width: "1.4rem",
-												height: "1.4rem",
-												objectFit: "contain",
-												marginLeft: "4px",
-												marginBottom: "4px",
-											}}
-											alt="Batch Icon"
-										/>
-									)}
-								</h2>
-								<span className="small_typo">
-									{user?.designation || ` `}, {user.company}
-								</span>
-								<span className="small_typo" style={{ display: "block" }}>
-									{" "}
-									{user?.location} | {user?.experience} of Experience
-								</span>
-							</div>
+					<div className="image_name_section card-content">
+						<img
+							className="rounded-cirlce"
+							src={user?.profilePicture}
+							alt="profileimage"
+						/>
+						<div className="left_profile_text flex_content ms-3">
+							<h2 className="typography" style={{ textDecoration: "none" }}>
+								{user?.firstName} {user?.lastName}{" "}
+								{user?.isSubscribed && (
+									<img
+										src={BatchImag}
+										style={{
+											width: "1.4rem",
+											height: "1.4rem",
+											objectFit: "contain",
+											marginLeft: "4px",
+											marginBottom: "4px",
+										}}
+										alt="Batch Icon"
+									/>
+								)}
+							</h2>
+							<span className="small_typo">
+								{user?.designation || ` `}, {user.company}
+							</span>
+							<span className="small_typo" style={{ display: "block" }}>
+								{" "}
+								{user?.location} | {user?.experience} of Experience
+							</span>
 						</div>
+					</div>
+					{/* {isProfilePage ? (
 					) : (
 						<div className="profile-card card-content">
 							<div className="avatar">
@@ -62,7 +64,7 @@ const OnelinkPitch = ({ user, isProfilePage = false }) => {
 								"
 							</p>
 						</div>
-					)}
+					)} */}
 
 					<div className="action-buttons">
 						<Link to={`${basePath}/pitchdays`}>
@@ -112,7 +114,7 @@ const OnelinkPitch = ({ user, isProfilePage = false }) => {
 					</div>
 
 					<div className="action-buttons">
-						<Link to={`${basePath}/register`}>
+						<Link to={`${basePath}/pitchdays`}>
 							<button className="register">Register Your Spot</button>
 						</Link>
 					</div>

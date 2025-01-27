@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getUserById } from "../../../Service/user";
 // import SmallProfileCard from "../../../components/Investor/InvestorGlobalCards/TwoSmallMyProfile/SmallProfileCard";
 import { Card } from "../../../components/InvestorView";
 import "./Documentation.scss";
@@ -21,6 +22,7 @@ const Documentation = () => {
 	const navigate = useNavigate();
 	const { username } = useParams();
 	const { userId } = useParams();
+	const [user, setUser] = useState({});
 	useEffect(() => {
 		document.title = "Documentation - OneLink | The Capital Hub";
 	}, []);
@@ -45,12 +47,20 @@ const Documentation = () => {
 		getFolders();
 	}, []);
 
+	useEffect(() => {
+		getUserById(username, userId)
+			.then(({ data }) => {
+				setUser(data);
+			})
+			.catch(() => setUser([]));
+	}, [userId, username]);
+
 	return (
 		<MaxWidthWrapper>
 			<MobileOneLinkNavbar />
 
 			<div className="">
-				<OnelinkPitch />
+				<OnelinkPitch user={user} />
 
 				<div className="documentation shadow-sm border">
 					<h1 className="px-md-5">Documentation</h1>

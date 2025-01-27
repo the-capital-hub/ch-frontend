@@ -81,6 +81,44 @@
 	// 		}
 	// 	}
 	// }
+	.typography {
+		color: var(--d-l-grey);
+		margin: 0;
+
+		font-family: Outfit;
+		font-size: 30px;
+		font-weight: 500;
+		line-height: 50.4px;
+		text-align: left;
+
+		// text-decoration: underline;
+		// text-decoration-color: var(--bs-orange);
+		text-decoration-thickness: 2px;
+		text-underline-offset: 0.25em;
+	}
+
+	.small_typo {
+		color: var(--w-t-n);
+		font-size: 17px;
+		font-family: Outfit;
+		font-weight: 400;
+		line-height: 27.28px;
+		text-align: left;
+	}
+
+	.image_name_section {
+		display: flex;
+		align-items: center;
+		flex-direction: row;
+		justify-content: flex-start;
+	}
+
+	.image_name_section img {
+		width: 130px;
+		height: 130px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
 
 	.profile-card,
 	.video-card,

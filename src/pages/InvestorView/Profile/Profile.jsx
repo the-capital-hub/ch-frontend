@@ -164,7 +164,7 @@ function Profile() {
                   </table>
                 </div> */}
 								{/* </div> */}
-								<OnelinkPitch user={user} isProfilePage={true} />
+								<OnelinkPitch user={user} />
 
 								{/* <div className="row">
                 <div className="col-12 mt-2">

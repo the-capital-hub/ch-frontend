@@ -19,6 +19,7 @@ import "./Company.scss";
 import { useParams } from "react-router-dom";
 import { getOnePager } from "../../../Service/user";
 import { useState, useEffect } from "react";
+import { getUserById } from "../../../Service/user";
 // import RaghuImage from "../../../Images/aboutUs/Raghu.jpeg";
 // import UpmaImage from "../../../Images/aboutUs/Upma.jpg";
 // import PreetiImage from "../../../Images/aboutUs/Preeti.jpg";
@@ -39,8 +40,11 @@ import MobileOneLinkNavbar from "../../../components/Shared/MobileOnelinkNavbar/
 import OnelinkPitch from "../../../components/NewInvestor/OnelinkPitch/OnelinkPitch";
 
 function Company() {
+	// const loggedInUserId = useSelector((state) => state?.user?.loggedInUser?._id);
 	const { username } = useParams();
+	const { userId } = useParams();
 	const [onePager, setOnePager] = useState([]);
+	const [user, setUser] = useState({});
 	useEffect(() => {
 		document.title = "Company - OneLink | The Capital Hub";
 		getOnePager(username)
@@ -49,6 +53,14 @@ function Company() {
 			})
 			.catch(() => setOnePager([]));
 	}, [username]);
+
+	useEffect(() => {
+		getUserById(username, userId)
+			.then(({ data }) => {
+				setUser(data);
+			})
+			.catch(() => setUser([]));
+	}, [userId, username]);
 
 	// console.log("company", one Pager);
 
@@ -342,7 +354,7 @@ function Company() {
 				<MobileOneLinkNavbar />
 				{onePager.length !== 0 ? (
 					<>
-						<OnelinkPitch />
+						<OnelinkPitch user={user} />
 
 						<CompanyProfile
 							isOnelink={true}

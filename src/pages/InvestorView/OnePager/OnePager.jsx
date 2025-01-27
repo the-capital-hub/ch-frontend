@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { getUserById } from "../../../Service/user";
 import "./OnePager.scss";
 import // Card,
 // CompanyDetails,
@@ -31,9 +32,11 @@ const OnePager = () => {
 	const [rupeeHighlight, setRupeeHighlight] = useState(true);
 	const [dollarHighlight, setDollarHighlight] = useState(false);
 	const { username } = useParams();
+	const { userId } = useParams();
 	const [onePager, setOnePager] = useState([]);
 	const [imageData, setImageData] = useState(null);
 	const dispatch = useDispatch();
+	const [user, setUser] = useState({});
 
 	useEffect(() => {
 		document.title = "OnePager - OneLink | The Capital Hub";
@@ -47,6 +50,14 @@ const OnePager = () => {
 			})
 			.catch(() => setOnePager([]));
 	}, [username]);
+
+	useEffect(() => {
+		getUserById(username, userId)
+			.then(({ data }) => {
+				setUser(data);
+			})
+			.catch(() => setUser([]));
+	}, [userId, username]);
 
 	// Change Highlight
 	// const changeHighlight = (currency) => {
@@ -167,7 +178,7 @@ const OnePager = () => {
 						className="onePager_wrapper d-flex flex-column gap-4"
 						theme="startup"
 					>
-						<OnelinkPitch />
+						<OnelinkPitch user={user} />
 						{/* onePager Company Logo */}
 						<OnePagerCompanyLogo image={onePager.logo} />
 
