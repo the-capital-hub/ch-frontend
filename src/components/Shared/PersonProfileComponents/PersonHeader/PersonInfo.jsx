@@ -25,7 +25,7 @@ export default function PersonInfo({
 	return (
 		<div className="person_info">
 			<div
-				className="person__profile__header d-flex flex-lg-row gap-3 "
+				className="person__profile__header d-flex flex-column flex-sm-row flex-lg-row gap-3 "
 				style={{ color: "var(--d-l-grey)" }}
 			>
 				<div className="person__profile__image">

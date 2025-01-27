@@ -164,7 +164,7 @@ export default function CompanyActions({
           <img src={Bookmark} alt="bookmark icon" />
         </button>
       )} */}
-      <div className="action__buttons d-flex flex-column flex-md-row align-items-start gap-3 mt-3 mb-3 mt-lg-0">
+      <div className="action__buttons d-flex flex-column flex-md-row gap-3 mt-3 mb-3 mt-lg-0">
         {isOnelink ? (
           ""
         ) : (
@@ -186,7 +186,7 @@ export default function CompanyActions({
                 ) : (
                   <button
                     type="button"
-                    className="d-flex align-items-center gap-2 btn btn-danger fw-bold fs-6"
+                    className="d-flex align-items-center gap-2 btn fw-bold fs-6 btn-capital text-center btn-danger"
                     onClick={(e) => handleUninterest(e, companyId)}
                   >
                     {loading ? (

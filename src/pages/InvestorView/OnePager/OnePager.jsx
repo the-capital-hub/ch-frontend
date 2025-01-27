@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { getUserById } from "../../../Service/user";
 import "./OnePager.scss";
 import // Card,
 // CompanyDetails,
@@ -20,156 +21,169 @@ import { setPageTitle } from "../../../Store/features/design/designSlice";
 // import jsPDF from "jspdf";
 import MaxWidthWrapper from "../../../components/Shared/MaxWidthWrapper/MaxWidthWrapper";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  OnePagerCompanyLogo,
-} from "../../../components/Shared/OnePager";
+import { OnePagerCompanyLogo } from "../../../components/Shared/OnePager";
 import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
 import CompanyPost from "../../../components/Investor/InvestorGlobalCards/MilestoneCard/CompanyPost";
 import MobileOneLinkNavbar from "../../../components/Shared/MobileOnelinkNavbar/MobileOneLinkNavbar";
+import OnelinkPitch from "../../../components/NewInvestor/OnelinkPitch/OnelinkPitch";
 
 const OnePager = () => {
-  const loggedInUserId = useSelector((state) => state?.user?.loggedInUser?._id);
-  const [rupeeHighlight, setRupeeHighlight] = useState(true);
-  const [dollarHighlight, setDollarHighlight] = useState(false);
-  const { username } = useParams();
-  const [onePager, setOnePager] = useState([]);
-  const [imageData, setImageData] = useState(null);
-  const dispatch = useDispatch();
+	const loggedInUserId = useSelector((state) => state?.user?.loggedInUser?._id);
+	const [rupeeHighlight, setRupeeHighlight] = useState(true);
+	const [dollarHighlight, setDollarHighlight] = useState(false);
+	const { username } = useParams();
+	const { userId } = useParams();
+	const [onePager, setOnePager] = useState([]);
+	const [imageData, setImageData] = useState(null);
+	const dispatch = useDispatch();
+	const [user, setUser] = useState({});
 
-  useEffect(() => {
-    document.title = "OnePager - OneLink | The Capital Hub";
-    dispatch(setPageTitle("OnePager"));
-  }, []);
+	useEffect(() => {
+		document.title = "OnePager - OneLink | The Capital Hub";
+		dispatch(setPageTitle("OnePager"));
+	}, []);
 
-  useEffect(() => {
-    getOnePager(username)
-      .then(({ data }) => {
-        setOnePager(data);
-      })
-      .catch(() => setOnePager([]));
-  }, [username]);
+	useEffect(() => {
+		getOnePager(username)
+			.then(({ data }) => {
+				setOnePager(data);
+			})
+			.catch(() => setOnePager([]));
+	}, [username]);
 
-  // Change Highlight
-  // const changeHighlight = (currency) => {
-  //   if (currency === "rupee") {
-  //     setDollarHighlight(false);
-  //     setRupeeHighlight(true);
-  //   }
-  //   if (currency === "dollar") {
-  //     setDollarHighlight(true);
-  //     setRupeeHighlight(false);
-  //   }
-  // };
+	useEffect(() => {
+		getUserById(username, userId)
+			.then(({ data }) => {
+				setUser(data);
+			})
+			.catch(() => setUser([]));
+	}, [userId, username]);
 
-  // Handle download PDF
-  // const handleDownloadPDF = () => {
-  //   const element = document.querySelector(".onePager_wrapper");
-  //   const buttons = document.querySelectorAll("button");
-  //   buttons.forEach((button) => {
-  //     button.style.display = "none";
-  //   });
-  //   html2canvas(element, {
-  //     allowTaint: false,
-  //     removeContainer: true,
-  //     backgroundColor: "#ffffff",
-  //     scale: window.devicePixelRatio,
-  //     useCORS: true,
-  //     windowWidth: "1400px",
-  //   }).then((canvas) => {
-  //     const contentDataURL = canvas.toDataURL("image/png", 0.7);
-  //     const imgWidth = 210;
-  //     const pageHeight = 295;
-  //     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-  //     let heightLeft = imgHeight;
-  //     let pdf = new jsPDF("p", "mm", "a4");
-  //     let position = 5;
+	// Change Highlight
+	// const changeHighlight = (currency) => {
+	//   if (currency === "rupee") {
+	//     setDollarHighlight(false);
+	//     setRupeeHighlight(true);
+	//   }
+	//   if (currency === "dollar") {
+	//     setDollarHighlight(true);
+	//     setRupeeHighlight(false);
+	//   }
+	// };
 
-  //     pdf.addImage(contentDataURL, "JPEG", 0, position, imgWidth, imgHeight);
-  //     heightLeft -= pageHeight;
+	// Handle download PDF
+	// const handleDownloadPDF = () => {
+	//   const element = document.querySelector(".onePager_wrapper");
+	//   const buttons = document.querySelectorAll("button");
+	//   buttons.forEach((button) => {
+	//     button.style.display = "none";
+	//   });
+	//   html2canvas(element, {
+	//     allowTaint: false,
+	//     removeContainer: true,
+	//     backgroundColor: "#ffffff",
+	//     scale: window.devicePixelRatio,
+	//     useCORS: true,
+	//     windowWidth: "1400px",
+	//   }).then((canvas) => {
+	//     const contentDataURL = canvas.toDataURL("image/png", 0.7);
+	//     const imgWidth = 210;
+	//     const pageHeight = 295;
+	//     const imgHeight = (canvas.height * imgWidth) / canvas.width;
+	//     let heightLeft = imgHeight;
+	//     let pdf = new jsPDF("p", "mm", "a4");
+	//     let position = 5;
 
-  //     while (heightLeft >= 0) {
-  //       position = heightLeft - imgHeight;
-  //       pdf.addPage();
-  //       pdf.addImage(contentDataURL, "JPEG", 0, position, imgWidth, imgHeight);
-  //       heightLeft -= pageHeight;
-  //     }
-  //     pdf.save(`${username}.pdf`);
-  //     buttons.forEach((button) => {
-  //       button.style.display = "block";
-  //     });
-  //   });
-  // };
+	//     pdf.addImage(contentDataURL, "JPEG", 0, position, imgWidth, imgHeight);
+	//     heightLeft -= pageHeight;
 
-  // Handle preview PDF
-  // const handlePreviewPDF = () => {
-  //   const element = document.querySelector(".onePager_wrapper");
-  //   const buttons = document.querySelectorAll(".button");
-  //   buttons.forEach((button) => {
-  //     button.style.display = "none";
-  //   });
-  //   html2canvas(element, {
-  //     allowTaint: false,
-  //     removeContainer: true,
-  //     backgroundColor: "#ffffff",
-  //     scale: window.devicePixelRatio,
-  //     useCORS: true,
-  //     windowWidth: "1400px",
-  //   }).then((canvas) => {
-  //     const contentDataURL = canvas.toDataURL("image/png", 0.7);
-  //     console.log(contentDataURL);
-  //     const imgWidth = 210;
-  //     const pageHeight = 295;
-  //     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-  //     let heightLeft = imgHeight;
-  //     let pdf = new jsPDF("p", "mm", "a4");
-  //     let position = 5;
+	//     while (heightLeft >= 0) {
+	//       position = heightLeft - imgHeight;
+	//       pdf.addPage();
+	//       pdf.addImage(contentDataURL, "JPEG", 0, position, imgWidth, imgHeight);
+	//       heightLeft -= pageHeight;
+	//     }
+	//     pdf.save(`${username}.pdf`);
+	//     buttons.forEach((button) => {
+	//       button.style.display = "block";
+	//     });
+	//   });
+	// };
 
-  //     pdf.addImage(contentDataURL, "JPEG", 0, position, imgWidth, imgHeight);
-  //     heightLeft -= pageHeight;
+	// Handle preview PDF
+	// const handlePreviewPDF = () => {
+	//   const element = document.querySelector(".onePager_wrapper");
+	//   const buttons = document.querySelectorAll(".button");
+	//   buttons.forEach((button) => {
+	//     button.style.display = "none";
+	//   });
+	//   html2canvas(element, {
+	//     allowTaint: false,
+	//     removeContainer: true,
+	//     backgroundColor: "#ffffff",
+	//     scale: window.devicePixelRatio,
+	//     useCORS: true,
+	//     windowWidth: "1400px",
+	//   }).then((canvas) => {
+	//     const contentDataURL = canvas.toDataURL("image/png", 0.7);
+	//     console.log(contentDataURL);
+	//     const imgWidth = 210;
+	//     const pageHeight = 295;
+	//     const imgHeight = (canvas.height * imgWidth) / canvas.width;
+	//     let heightLeft = imgHeight;
+	//     let pdf = new jsPDF("p", "mm", "a4");
+	//     let position = 5;
 
-  //     while (heightLeft >= 0) {
-  //       position = heightLeft - imgHeight;
-  //       pdf.addPage();
-  //       pdf.addImage(contentDataURL, "JPEG", 0, position, imgWidth, imgHeight);
-  //       heightLeft -= pageHeight;
-  //     }
-  //     const blob = pdf.output("blob");
-  //     const blobUrl = URL.createObjectURL(blob);
-  //     window.open(blobUrl, "_blank");
-  //     buttons.forEach((button) => {
-  //       button.style.display = "block";
-  //     });
-  //   });
-  // };
+	//     pdf.addImage(contentDataURL, "JPEG", 0, position, imgWidth, imgHeight);
+	//     heightLeft -= pageHeight;
 
-  useEffect(() => {
-    // Fetch the image data from the URL
-    fetch(onePager.logo)
-      .then((response) => response.blob())
-      .then((blob) => {
-        // Create a URL for the blob data
-        const blobUrl = URL.createObjectURL(blob);
-        setImageData(blobUrl);
-      })
-      .catch((error) => {
-        console.error("Error fetching image:", error);
-      });
-  }, [onePager.logo]);
+	//     while (heightLeft >= 0) {
+	//       position = heightLeft - imgHeight;
+	//       pdf.addPage();
+	//       pdf.addImage(contentDataURL, "JPEG", 0, position, imgWidth, imgHeight);
+	//       heightLeft -= pageHeight;
+	//     }
+	//     const blob = pdf.output("blob");
+	//     const blobUrl = URL.createObjectURL(blob);
+	//     window.open(blobUrl, "_blank");
+	//     buttons.forEach((button) => {
+	//       button.style.display = "block";
+	//     });
+	//   });
+	// };
 
-  return (
-    <MaxWidthWrapper>
-              <MobileOneLinkNavbar/>
-      <div className="onePager_pdf_outer ps-xl-3 mb-5" style={{minHeight:"80vh"}}>
-        {onePager.length !== 0 ? (
-          <div
-            className="onePager_wrapper d-flex flex-column gap-4"
-            theme="startup"
-          >
-            {/* onePager Company Logo */}
-            <OnePagerCompanyLogo image={onePager.logo} />
+	useEffect(() => {
+		// Fetch the image data from the URL
+		fetch(onePager.logo)
+			.then((response) => response.blob())
+			.then((blob) => {
+				// Create a URL for the blob data
+				const blobUrl = URL.createObjectURL(blob);
+				setImageData(blobUrl);
+			})
+			.catch((error) => {
+				console.error("Error fetching image:", error);
+			});
+	}, [onePager.logo]);
 
-            {/* onePager company info */}
-            {/*<OnePagerCompanyInfo
+	return (
+		<MaxWidthWrapper>
+			<MobileOneLinkNavbar />
+			<div
+				className="onePager_pdf_outer ps-xl-3 mb-5"
+				style={{ minHeight: "80vh" }}
+			>
+				{onePager.length !== 0 ? (
+					<div
+						className="onePager_wrapper d-flex flex-column gap-4"
+						theme="startup"
+					>
+						<OnelinkPitch user={user} />
+						{/* onePager Company Logo */}
+						<OnePagerCompanyLogo image={onePager.logo} />
+
+						{/* onePager company info */}
+						{/*<OnePagerCompanyInfo
               company={onePager.company}
               location={onePager.location}
               startedAtDate={onePager.startedAtDate}
@@ -177,27 +191,30 @@ const OnePager = () => {
               socialLinks={onePager.socialLinks}
         />*/}
 
-            {/* onePager company about */}
-            {/*<OnePagerCompanyAbout
+						{/* onePager company about */}
+						{/*<OnePagerCompanyAbout
               description={onePager.description}
               problem={onePager.problem}
               solution={onePager.solution}
       />*/}
-            <div
-              className="rounded-4 border shadow-sm"
-              style={{ backgroundColor: "var(--white-to-grey)" }}
-            >
-              <div className="personal_information_header" style={{padding:"1rem 0 0 1rem"}}>
-                <h2 className="typography" style={{color:"#fff"}}>
-                  Company update
-                </h2>
-              </div>
-              <div className="mt-2 milestones">
-                <CompanyPost userId={loggedInUserId} />
-              </div>
-            </div>
-            {/* onePager Market info */}
-            {/*<div
+						<div
+							className="rounded-4 border shadow-sm"
+							style={{ backgroundColor: "var(--white-to-grey)" }}
+						>
+							<div
+								className="personal_information_header"
+								style={{ padding: "1rem 0 0 1rem" }}
+							>
+								<h2 className="typography" style={{ color: "#fff" }}>
+									Company update
+								</h2>
+							</div>
+							<div className="mt-2 milestones">
+								<CompanyPost userId={loggedInUserId} />
+							</div>
+						</div>
+						{/* onePager Market info */}
+						{/*<div
               className="rounded-4 border shadow-sm"
               style={{ backgroundColor: "var(--white-to-grey)" }}
             >
@@ -234,17 +251,17 @@ const OnePager = () => {
               </div>
       </div>*/}
 
-            {/* OnePager End */}
-          </div>
-        ) : (
-          <SpinnerBS
-            className={"d-flex justify-content-center w-100 vh-100 py-5"}
-            colorClass={"d-l-grey"}
-          />
-        )}
-      </div>
-    </MaxWidthWrapper>
-  );
+						{/* OnePager End */}
+					</div>
+				) : (
+					<SpinnerBS
+						className={"d-flex justify-content-center w-100 vh-100 py-5"}
+						colorClass={"d-l-grey"}
+					/>
+				)}
+			</div>
+		</MaxWidthWrapper>
+	);
 };
 
 export default OnePager;

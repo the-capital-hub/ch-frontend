@@ -787,13 +787,13 @@ const FounderProfile = () => {
 		const fetchFounderData = async () => {
 			try {
 				const response = await fetch(
-					`${environment.baseUrl}/users/getUserByUserName`,
+					`${environment.baseUrl}/users/getUserByUserName/${username}`,
 					{
-						method: "POST",
+						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
 						},
-						body: JSON.stringify({ username }),
+						// body: JSON.stringify({ username }),
 					}
 				);
 				if (response.ok) {

@@ -36,7 +36,9 @@ const ShareThoughts = ({ isInvestor = false }) => {
 					<>
 						<p className="m-0">{maxAnswerQuestion.question}</p>
 						<Link
-							to={`/thoughts/question/${maxAnswerQuestion._id}`}
+							to={`${isInvestor ? "/investor" : ""}/thoughts/question/${
+								maxAnswerQuestion._id
+							}`}
 							className={`btn d-flex align-items-center justify-content-center ${
 								isInvestor ? "green_button" : "orange_button"
 							}`}
