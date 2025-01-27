@@ -11,8 +11,17 @@
     align-items: center;
     cursor: pointer;
     transition: background-color 0.3s;
-    background: linear-gradient(135deg, #fd5901 0%, #ff8142 100%);
     color: white;
+
+    &.investor {
+      background: linear-gradient(135deg, #d3f36b 0%, #bcd95f 100%);
+      color: black;
+    }
+
+    &.startup {
+      background: linear-gradient(135deg, #fd5901 0%, #ff8142 100%);
+      color: white;
+    }
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.05);
@@ -42,6 +51,33 @@
       &:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(253, 89, 1, 0.1);
+      }
+
+      &.investor {
+        background: rgba(211, 243, 107, 0.05);
+        border: 1px solid rgba(211, 243, 107, 0.1);
+        box-shadow: 0 2px 8px rgba(211, 243, 107, 0.05);
+
+        &:hover {
+          box-shadow: 0 4px 12px rgba(211, 243, 107, 0.1);
+        }
+
+        .step-header h6 {
+          color: #d3f36b !important;
+        }
+
+        span {
+          color: #d3f36b !important;
+          background: rgba(211, 243, 107, 0.1);
+        }
+
+        .progress-bar {
+          background: #d3f36b !important;
+        }
+
+        small {
+          color: #ffffff !important;
+        }
       }
 
       .step-header {

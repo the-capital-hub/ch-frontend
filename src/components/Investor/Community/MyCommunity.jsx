@@ -14,6 +14,7 @@ import { selectTheme } from "../../../Store/features/design/designSlice";
 import {  FaShareAlt, FaSignOutAlt } from "react-icons/fa";
 import SharePopup from "../../PopUp/SocialSharePopup/SharePopup";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@mui/material';
+import communityPlaceholder from "../../../Images/communityPlaceholder.svg";
 
 export default function MyCommunity() {
   const [communities, setCommunities] = useState([]);
@@ -133,7 +134,7 @@ export default function MyCommunity() {
             <div key={community._id} className="community-card" onClick={() => navigate(`/community/${community._id}`)}>
               <div className="community-image">
                 <img 
-                  src={community.image || "default-community-image.png"} 
+                  src={community.image || communityPlaceholder} 
                   alt={community.name} 
                 />
               </div>

@@ -42,6 +42,7 @@ import Milestone from "../../../components/Milestone/Milestone";
 import UserJourney from "../../../components/Milestone/UserJourney";
 import JoinHustlersClub from "../../../components/Investor/Feed/Components/JoinHustlersClub/JoinHustlersClub";
 import ShareThoughts from "../../../components/Investor/Feed/Components/ShareYourThoughts/ShareThoughts";
+import CompletionBanner from "../../../components/Investor/Feed/Components/CompletionBanner/CompletionBanner";
 import SkeletonLoader from "../../../components/Investor/Feed/Components/SkeletonLoader/SkeletonLoader";
 
 const baseUrl = environment.baseUrl;
@@ -92,6 +93,7 @@ function Home() {
 	const isInvestorCreatePostModalOpen = useSelector(
 		selectInvestorCreatePostModal
 	);
+	const [isProfileComplete, setIsProfileComplete] = useState(null);
 
 	useEffect(() => {
 		if (Number(userVisitCount) <= 1) {
@@ -255,6 +257,24 @@ function Home() {
 		}
 	};
 
+	useEffect(() => {
+		const checkProfileCompletion = () => {
+			if (!loggedInUser) return;
+			
+			const isComplete = Boolean(
+				loggedInUser.firstName &&
+				loggedInUser.lastName &&
+				loggedInUser.email &&
+				loggedInUser.profilePicture &&
+				loggedInUser.phoneNumber
+			);
+			
+			setIsProfileComplete(isComplete);
+		};
+
+		checkProfileCompletion();
+	}, [loggedInUser]);
+
 	return (
 		<MaxWidthWrapper>
 			<div className="investor_feed_container">
@@ -301,6 +321,7 @@ function Home() {
 
 							{/* <TutorialTrigger steps={investorOnboardingSteps.homePage} /> */}
 							<JoinHustlersClub />
+							{isProfileComplete !== null && !isProfileComplete && <CompletionBanner />}
 
 							{/* Write a post */}
 							<div className="box start_post_container border">
@@ -360,73 +381,72 @@ function Home() {
 									) => {
 										if (!user) return null;
 
-										const {
-											firstName,
-											lastName,
-											location,
-											designation,
-											profilePicture,
-											_id: userId,
-											startUp,
-											investor,
-											oneLinkId,
-											isSubscribed,
-										} = user;
+									const {
+										firstName,
+										lastName,
+										location,
+										designation,
+										profilePicture,
+										_id: userId,
+										startUp,
+										investor,
+										oneLinkId,
+										isSubscribed,
+									} = user;
 
-										return (
-											<React.Fragment key={_id}>
-												<InvestorFeedPostCard
-													key={_id}
-													userId={userId}
-													postId={_id}
-													designation={designation}
-													startUpCompanyName={startUp}
-													investorCompanyName={investor}
-													profilePicture={profilePicture}
-													description={description}
-													firstName={firstName}
-													lastName={lastName}
-													oneLinkId={oneLinkId}
-													pollOptions={pollOptions}
-													handlePollVote={handlePollVote}
-													video={video}
-													image={image}
-													images={images}
-													location={location}
-													documentName={documentName}
-													documentUrl={documentUrl}
-													createdAt={createdAt}
-													likes={likes}
-													resharedPostId={resharedPostId}
-													fetchAllPosts={fetchMorePosts}
-													response={getSavedPostData}
-													repostWithToughts={(resharedPostId) => {
-														setRepostingPostId(resharedPostId);
-														setPopupOpen(true);
-													}}
-													repostInstantly={repostInstantly}
-													repostLoading={repostLoading}
-													deletePostFilterData={deletePostFilterData}
-													setPostData={setPostData}
-													isSubscribed={isSubscribed}
+									return (
+										<React.Fragment key={_id}>
+											<InvestorFeedPostCard
+												key={_id}
+												userId={userId}
+												postId={_id}
+												designation={designation}
+												startUpCompanyName={startUp}
+												investorCompanyName={investor}
+												profilePicture={profilePicture}
+												description={description}
+												firstName={firstName}
+												lastName={lastName}
+												oneLinkId={oneLinkId}
+												pollOptions={pollOptions}
+												handlePollVote={handlePollVote}
+												video={video}
+												image={image}
+												images={images}
+												location={location}
+												documentName={documentName}
+												documentUrl={documentUrl}
+												createdAt={createdAt}
+												likes={likes}
+												resharedPostId={resharedPostId}
+												fetchAllPosts={fetchMorePosts}
+												response={getSavedPostData}
+												repostWithToughts={(resharedPostId) => {
+													setRepostingPostId(resharedPostId);
+													setPopupOpen(true);
+												}}
+												repostInstantly={repostInstantly}
+												repostLoading={repostLoading}
+												deletePostFilterData={deletePostFilterData}
+												setPostData={setPostData}
+												isSubscribed={isSubscribed}
+											/>
+											{(index + 1) % 3 === 0 && (
+												<NewsCard
+													title={newsData[Math.floor(index)]?.title}
+													description={
+														newsData[Math.floor(index)]?.description
+													}
+													url={newsData[Math.floor(index)]?.url}
+													urlToImage={newsData[Math.floor(index)]?.urlToImage}
+													publishedAt={
+														newsData[Math.floor(index)]?.publishedAt
+													}
 												/>
-												{(index + 1) % 3 === 0 && (
-													<NewsCard
-														title={newsData[Math.floor(index)]?.title}
-														description={
-															newsData[Math.floor(index)]?.description
-														}
-														url={newsData[Math.floor(index)]?.url}
-														urlToImage={newsData[Math.floor(index)]?.urlToImage}
-														publishedAt={
-															newsData[Math.floor(index)]?.publishedAt
-														}
-													/>
-												)}
-											</React.Fragment>
-										);
-									}
-								)}
+											)}
+										</React.Fragment>
+									);
+								})}
 							</InfiniteScroll>
 						</div>
 					</div>
