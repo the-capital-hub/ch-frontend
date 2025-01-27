@@ -14,6 +14,7 @@ import { selectTheme } from "../../../Store/features/design/designSlice";
 import {  FaShareAlt, FaSignOutAlt } from "react-icons/fa";
 import SharePopup from "../../PopUp/SocialSharePopup/SharePopup";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@mui/material';
+import communityPlaceholder from "../../../Images/communityPlaceholder.svg";
 
 export default function MyCommunity() {
   const [communities, setCommunities] = useState([]);
@@ -28,8 +29,31 @@ export default function MyCommunity() {
   const [isLeaving, setIsLeaving] = useState(false);
 
   useEffect(() => {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    const root = document.documentElement;
+    if (loggedInUser?.isInvestor) {
+      root.style.setProperty('--theme-color', '#d3f36b');
+      root.style.setProperty('--theme-hover-color', '#bcd95f');
+      root.style.setProperty('--current-theme-color', '#d3f36b');
+      root.style.setProperty('--current-theme-text-color', '#000000');
+    } else {
+      root.style.setProperty('--theme-color', '#FF620E');
+      root.style.setProperty('--theme-hover-color', '#e55a0d');
+      root.style.setProperty('--current-theme-color', '#FF620E');
+      root.style.setProperty('--current-theme-text-color', '#FFFFFF');
+    }
+
     fetchCommunities();
   }, []);
+
+  const handleNewCommunityClick = () => {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if(loggedInUser?.isInvestor){
+      navigate("/investor/CreateCommunity");
+    }else{
+      navigate("/CreateCommunity");
+    }
+  };
 
   const handleOpenSocialShare = (communityId) => {
     const baseUrl = window.location.origin;
@@ -110,7 +134,7 @@ export default function MyCommunity() {
             <div key={community._id} className="community-card" onClick={() => navigate(`/community/${community._id}`)}>
               <div className="community-image">
                 <img 
-                  src={community.image || "default-community-image.png"} 
+                  src={community.image || communityPlaceholder} 
                   alt={community.name} 
                 />
               </div>
@@ -160,7 +184,7 @@ export default function MyCommunity() {
 
         <button 
           className="create-community-button"
-          onClick={() => navigate("/CreateCommunity")}
+          onClick={handleNewCommunityClick}
         >
           Create New Community
         </button>

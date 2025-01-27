@@ -14,6 +14,7 @@ const CompletionBanner = () => {
   const navigate = useNavigate();
   const loggedInUser = useSelector((state) => state.user.loggedInUser);
   const loggedInUserCompany = useSelector((state) => state.user.company);
+  const isInvestor = loggedInUser?.isInvestor === "true";
 
   const userRequiredFields = [
 	"bio",
@@ -58,7 +59,7 @@ const CompletionBanner = () => {
   // Calculate completions
   const profileCompletion = calculateProfileCompletion(loggedInUser, userRequiredFields);
   const companyCompletion = calculateProfileCompletion(loggedInUserCompany, companyRequiredFields);
-
+  console.log(loggedInUserCompany)
   // If everything is complete, don't show banner
   if (profileCompletion === 100 && companyCompletion === 100 && isPassword) {
     return null;
@@ -67,7 +68,7 @@ const CompletionBanner = () => {
   return (
     <div className="completion-banner">
       <div 
-        className="banner-header" 
+        className={`banner-header ${isInvestor ? 'investor' : 'startup'}`}
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <h5>🚀 Boost Your Presence!</h5>
@@ -78,7 +79,7 @@ const CompletionBanner = () => {
         <div className="banner-content">
           {/* Profile Step */}
           {profileCompletion < 100 && (
-            <div className="step" onClick={() => navigate("/profile")}>
+            <div className={`step ${isInvestor ? 'investor' : ''}`} onClick={() => navigate("/profile")}>
               <div className="step-header">
                 <h6>Stand Out with Your Profile</h6>
                 <span>{Math.round(profileCompletion)}% Complete</span>
@@ -95,7 +96,7 @@ const CompletionBanner = () => {
 
           {/* Company Step */}
           {companyCompletion < 100 && (
-            <div className="step" onClick={() => navigate("/company-profile")}>
+            <div className={`step ${isInvestor ? 'investor' : ''}`} onClick={() => navigate("/company-profile")}>
               <div className="step-header">
                 <h6>
                   {!isCompany 
@@ -120,7 +121,7 @@ const CompletionBanner = () => {
 
           {/* Password Step */}
           {!isPassword && (
-            <div className="step" onClick={() => navigate("/manage-account")}>
+            <div className={`step ${isInvestor ? 'investor' : ''}`} onClick={() => navigate("/manage-account")}>
               <div className="step-header">
                 <h6>Secure Your Journey</h6>
                 <span>Essential</span>

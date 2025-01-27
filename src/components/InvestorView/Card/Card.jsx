@@ -1,7 +1,7 @@
 import "./Card.scss";
 // import { threeblackdots } from "../../../Images/InvestorsView";
 
-const Card = ({ text, onClicked, image }) => {
+const Card = ({ text, onClicked, image, count }) => {
   let folderName;
 
   switch (text) {
@@ -23,6 +23,7 @@ const Card = ({ text, onClicked, image }) => {
     default:
       folderName = text;
   }
+
   return (
     <div
       onClick={onClicked}
@@ -30,6 +31,12 @@ const Card = ({ text, onClicked, image }) => {
       id={text.split(" ").join("_")}
     >
       <div className="folder_container">
+        <div className="document-count">
+          <div className="count-content">
+            <span className="count-number">{count}</span>
+            <span className="count-label">DOCUMENTS</span>
+          </div>
+        </div>
         <img
           src={image}
           alt={text}
