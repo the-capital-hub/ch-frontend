@@ -62,8 +62,6 @@ export default function ProfessionalInfoDisplay({
 	const [crop, setCrop] = useState({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState(1);
 
-
-
 	const getCroppedImg = async (imageSrc, crop) => {
 		const image = new Image();
 		image.src = imageSrc;
@@ -144,6 +142,7 @@ export default function ProfessionalInfoDisplay({
 											value={professionalData.firstName}
 											onChange={handleTextChange}
 											className="form-control"
+											placeholder="First Name"
 										/>
 										<input
 											type="text"
@@ -151,6 +150,7 @@ export default function ProfessionalInfoDisplay({
 											value={professionalData.lastName}
 											onChange={handleTextChange}
 											className="form-control"
+											placeholder="Last Name"
 										/>
 									</>
 								) : (
@@ -158,9 +158,7 @@ export default function ProfessionalInfoDisplay({
 								)}
 								{canEdit && (
 									<span className="edit_btn d-flex align-self-end align-md-self-start ">
-										<button
-											onClick={() => setIsEditing(!isEditing)}
-										>
+										<button onClick={() => setIsEditing(!isEditing)}>
 											<CiEdit
 												style={{
 													color:
@@ -192,6 +190,7 @@ export default function ProfessionalInfoDisplay({
 									value={professionalData.userName}
 									onChange={handleTextChange}
 									className="form-control"
+									placeholder="Username"
 								/>
 							)}
 							<p className="m-0">
@@ -238,11 +237,8 @@ export default function ProfessionalInfoDisplay({
 						<h4 className="typography">Professional Information</h4>
 						{canEdit && (
 							<span className="edit_btn d-flex align-self-end align-md-self-start ">
-								<span
-								>
-									<button
-										onClick={() => setIsEditing(!isEditing)}
-									>
+								<span>
+									<button onClick={() => setIsEditing(!isEditing)}>
 										<CiEdit
 											style={{
 												color:

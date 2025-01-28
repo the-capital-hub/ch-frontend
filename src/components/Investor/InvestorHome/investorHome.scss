@@ -32,6 +32,10 @@
 			font-family: "Poppins";
 			font-weight: 600;
 			margin: 0;
+
+			@media (max-width: 460px) {
+				text-align: left;
+			}
 		}
 
 		.smallest_typo {
@@ -45,6 +49,10 @@
 			font-size: 14px;
 			font-weight: 500;
 			font-family: Poppins;
+
+			@media (max-width: 460px) {
+				text-align: left;
+			}
 		}
 
 		.main_container {
