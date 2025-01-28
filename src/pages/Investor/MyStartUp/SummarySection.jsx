@@ -39,12 +39,12 @@ const theme = useSelector(selectTheme);
         </div>
         <div className="two_by_two_card_container flex-column flex-md-row">
           {pastInvestment?.length > 0
-            ? pastInvestment.map((company, index) => (
+            ? pastInvestment?.map((company, index) => (
                 <PostInvestmentCard
                   key={index}
-                  logo={company.logo}
-                  text={company.name}
-                  para={company.description}
+                  logo={company?.logo}
+                  text={company?.name}
+                  para={company?.description}
                 />
               ))
             : "No Data Found."}

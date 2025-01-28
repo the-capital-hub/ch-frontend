@@ -60,35 +60,36 @@ import avatar3 from "../../../../Images/avatars/image-3.png";
 import avatar4 from "../../../../Images/avatars/image-4.png";
 
 const PostDetail = ({
-	postId,
-	description,
-	firstName,
-	lastName,
-	oneLinkId,
-	video,
-	image,
-	images,
-	documentUrl,
-	documentName,
-	createdAt,
-	profilePicture,
-	designation,
-	startUpCompanyName,
-	investorCompanyName,
-	likes,
-	userId,
-	fetchAllPosts,
-	response,
-	repostWithToughts,
-	repostInstantly,
-	repostLoading,
-	repostPreview,
-	resharedPostId,
-	deletePostFilterData,
-	isSinglePost = false,
-	setPostData,
-	pollOptions,
-	postData,
+  postId,
+  description,
+  firstName,
+  lastName,
+  oneLinkId,
+  video,
+  image,
+  images,
+  documentUrl,
+  documentName,
+  createdAt,
+  profilePicture,
+  designation,
+  startUpCompanyName,
+  investorCompanyName,
+  likes,
+  userId,
+  fetchAllPosts,
+  response,
+  repostWithToughts,
+  repostInstantly,
+  repostLoading,
+  repostPreview,
+  resharedPostId,
+  deletePostFilterData,
+  isSinglePost = false,
+  setPostData,
+  pollOptions,
+  postData,
+  location
 }) => {
 	const [showComment, setShowComment] = useState(isSinglePost);
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
@@ -535,47 +536,48 @@ const PostDetail = ({
 									)}
 								</Link>
 
-								<span className="d-flex flex-column flex-md-row">
-									<span
-										style={{
-											fontSize: "12px",
-											fontWeight: 500,
-											color: "var( --d-l-grey)",
-										}}
-									>
-										<GoHome size={15} />
-										{designation},{" "}
-										{investorCompanyName?.companyName
-											? investorCompanyName?.companyName
-											: startUpCompanyName?.company}
-									</span>
-									<span
-										style={{
-											fontSize: "12px",
-											fontWeight: 500,
-											color: "var( --d-l-grey)",
-										}}
-									>
-										<IoLocationOutline size={15} />
-										Bangalore, India
-									</span>
-								</span>
-								<span
-									style={{
-										fontSize: "12px",
-										fontWeight: 500,
-										color: "var( --d-l-grey)",
-									}}
-								>
-									{" "}
-									<TimeAgo
-										className="text-secondary fs-xs"
-										datetime={createdAt}
-										locale=""
-									/>
-								</span>
-							</div>
-						</div>
+                <span className="d-flex flex-column flex-md-row">
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: 500,
+                      color: "var( --d-l-grey)",
+                    }}
+                  >
+                    <GoHome size={15} />
+                    {designation},{" "}
+                    {investorCompanyName?.companyName
+                      ? investorCompanyName?.companyName
+                      : startUpCompanyName?.company}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: 500,
+                      color: "var( --d-l-grey)",
+                    }}
+                  >
+                    <IoLocationOutline size={15} />
+                   {location ? location : "India"}
+                  </span>
+                </span>
+                <span
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: 500,
+                    color: "var( --d-l-grey)",
+                  }}
+                >
+                  {" "}
+                  <TimeAgo
+                    className="text-secondary fs-xs"
+                    datetime={createdAt}
+                    locale=""
+                  />
+                </span>
+              </div>
+            </div>
+
 
 						{!repostPreview && (
 							<div className="three_dot pe-2 px-md-4">

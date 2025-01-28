@@ -50,759 +50,739 @@ import avatar4 from "../../../Images/avatars/image.png";
 import { selectIsInvestor } from "../../../Store/features/user/userSlice";
 
 const FeedPostCard = ({
-	postId,
-	description,
-	firstName,
-	lastName,
-	oneLinkId,
-	video,
-	image,
-	images,
-	documentUrl,
-	documentName,
-	createdAt,
-	profilePicture,
-	designation,
-	startUpCompanyName,
-	investorCompanyName,
-	likes,
-	userId,
-	fetchAllPosts,
-	response,
-	repostWithToughts,
-	repostInstantly,
-	repostLoading,
-	repostPreview,
-	resharedPostId,
-	deletePostFilterData,
-	isSinglePost = false,
-	setPostData,
-	isSubscribed,
-	pollOptions,
-	handlePollVote,
+  postId,
+  description,
+  firstName,
+  lastName,
+  location,
+  oneLinkId,
+  video,
+  image,
+  images,
+  documentUrl,
+  documentName,
+  createdAt,
+  profilePicture,
+  designation,
+  startUpCompanyName,
+  investorCompanyName,
+  likes,
+  userId,
+  fetchAllPosts,
+  response,
+  repostWithToughts,
+  repostInstantly,
+  repostLoading,
+  repostPreview,
+  resharedPostId,
+  deletePostFilterData,
+  isSinglePost = false,
+  setPostData,
+  isSubscribed,
+  pollOptions,
+  handlePollVote,
 }) => {
-	const [showComment, setShowComment] = useState(isSinglePost);
-	const loggedInUser = useSelector((state) => state.user.loggedInUser);
-	const [commentText, setCommentText] = useState("");
-	const [comments, setComments] = useState([]);
-	const [savedPostId, setSavedPostId] = useState([]);
-	const [showSuccess, setShowSuccess] = useState(false);
-	const [showSavePopUp, setshowSavePopUp] = useState(false);
-	const [likedBy, setLikedBy] = useState(null);
-	const [likedByUsers, setLikedByUser] = useState(null);
-	const [loading, setLoading] = useState(false);
-	const [expanded, setExpanded] = useState(false);
-	const navigate = useNavigate();
-	const isMobileView = useSelector(selectIsMobileView);
-	const isInvestor = useSelector(selectIsInvestor);
-	const [likeModal, setLikeModal] = useState(false);
-	const [activeHeader, setActiveHeader] = useState(true);
+  const [showComment, setShowComment] = useState(isSinglePost);
+  const loggedInUser = useSelector((state) => state.user.loggedInUser);
+  const [commentText, setCommentText] = useState("");
+  const [comments, setComments] = useState([]);
+  const [savedPostId, setSavedPostId] = useState([]);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showSavePopUp, setshowSavePopUp] = useState(false);
+  const [likedBy, setLikedBy] = useState(null);
+  const [likedByUsers, setLikedByUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
+  const isMobileView = useSelector(selectIsMobileView);
+  const isInvestor = useSelector(selectIsInvestor);
+  const [likeModal, setLikeModal] = useState(false);
+  const [activeHeader, setActiveHeader] = useState(true);
 
-	const theme = useSelector(selectTheme);
+  const theme = useSelector(selectTheme);
 
-	const handleShow = () => setLikeModal(true);
-	const handleClose = () => setLikeModal(false);
+  const handleShow = () => setLikeModal(true);
+  const handleClose = () => setLikeModal(false);
 
-	const toggleDescription = () => {
-		setExpanded(!expanded);
-	};
+  const toggleDescription = () => {
+    setExpanded(!expanded);
+  };
 
-	const handleCloseSavePopup = () => {
-		setshowSavePopUp(false);
-	};
-	const handleSavePopUp = () => {
-		setshowSavePopUp(true);
-	};
+  const handleCloseSavePopup = () => {
+    setshowSavePopUp(false);
+  };
+  const handleSavePopUp = () => {
+    setshowSavePopUp(true);
+  };
 
-	const handleUnsavePost = async (e) => {
-		receiveUnSavedPostStatus();
-		e.preventDefault();
-		const requestBody = {
-			userId: loggedInUser._id,
-			postId: postId,
-		};
-		try {
-			await unsavePost(requestBody);
-		} catch (error) {}
-	};
+  const handleUnsavePost = async (e) => {
+    receiveUnSavedPostStatus();
+    e.preventDefault();
+    const requestBody = {
+      userId: loggedInUser._id,
+      postId: postId,
+    };
+    try {
+      await unsavePost(requestBody);
+    } catch (error) {
+    }
+  };
 
-	const [showUnsaveSuccess, setShowUnsaveSuccess] = useState(false);
-	const receiveUnSavedPostStatus = () => {
-		const updatedSavedPostId = savedPostId.filter((id) => id !== postId);
-		setSavedPostId(updatedSavedPostId);
-	};
+  const [showUnsaveSuccess, setShowUnsaveSuccess] = useState(false);
+  const receiveUnSavedPostStatus = () => {
+    const updatedSavedPostId = savedPostId.filter((id) => id !== postId);
+    setSavedPostId(updatedSavedPostId);
+  };
 
-	const receiveSavedPostStatus = () => {
-		setSavedPostId([...savedPostId, postId]);
-	};
+  const receiveSavedPostStatus = () => {
+    setSavedPostId([...savedPostId, postId]);
+  };
 
-	const sendComment = async () => {
-		try {
-			const commentTextTemp = commentText;
-			setCommentText("");
-			const commentBody = {
-				postId: postId,
-				user: {
-					_id: loggedInUser._id,
-					profilePicture: loggedInUser.profilePicture || avatar4,
-					firstName: loggedInUser.firstName,
-					lastName: loggedInUser.lastName,
-					designation: loggedInUser.designation,
-				},
-				text: commentTextTemp,
-			};
-			setComments((prev) => [...prev, commentBody]);
+  const sendComment = async () => {
+    try {
+      const commentTextTemp = commentText;
+      setCommentText("");
+      const commentBody = {
+        postId: postId,
+        user: {
+          _id: loggedInUser._id,
+          profilePicture: loggedInUser.profilePicture || avatar4,
+          firstName: loggedInUser.firstName,
+          lastName: loggedInUser.lastName,
+          designation: loggedInUser.designation,
+        },
+        text: commentTextTemp,
+      };
+      setComments((prev) => [...prev, commentBody]);
 
-			const requestBody = {
-				postId: postId,
-				userId: loggedInUser._id,
-				text: commentTextTemp,
-			};
-			const response = await sendPostComment(requestBody);
+      const requestBody = {
+        postId: postId,
+        userId: loggedInUser._id,
+        text: commentTextTemp,
+      };
+      const response = await sendPostComment(requestBody);
 
-			if (response) {
-				await getPostComment({ postId }).then((res) => {
-					setComments(res.data.data);
-				});
-			}
-		} catch (error) {
-			console.error("Error submitting comment:", error);
-		}
-	};
+      if (response) {
+        await getPostComment({ postId }).then((res) => {
+          setComments(res.data.data);
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting comment:", error);
+    }
+  };
 
-	const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(false);
 
-	const commentlikeUnlikeHandler = async (postId, commentId) => {
-		try {
-			const result = await toggleLikeComment(postId, commentId);
-			const response = await getPostComment({ postId });
-			setComments(response.data.data);
-		} catch (error) {
-			console.error("Error likeDislike comment : ", error);
-		}
-	};
+  const commentlikeUnlikeHandler = async (postId, commentId) => {
+    try {
+      const result = await toggleLikeComment(postId, commentId);
+      const response = await getPostComment({ postId });
+      setComments(response.data.data);
+    } catch (error) {
+      console.error("Error likeDislike comment : ", error);
+    }
+  };
 
-	useEffect(() => {
-		if (!repostPreview) {
-			getPostComment({ postId }).then((res) => {
-				setComments(res.data.data);
-			});
+  useEffect(() => {
+    if (!repostPreview) {
+      getPostComment({ postId }).then((res) => {
+        setComments(res.data.data);
+      });
 
-			const fetchSavedPostData = async () => {
-				try {
-					if (response.data && response.data.length > 0) {
-						const allSavedPostDataIds = response.data.reduce(
-							(acc, collection) => {
-								if (collection.posts && Array.isArray(collection.posts)) {
-									acc = acc.concat(collection.posts);
-								}
-								return acc;
-							},
-							[]
-						);
-						setSavedPostId(allSavedPostDataIds);
-					}
-				} catch (error) {
-					console.error("Error fetching saved post collections:", error);
-				}
-			};
+      const fetchSavedPostData = async () => {
+        try {
+          if (response.data && response.data.length > 0) {
+            const allSavedPostDataIds = response.data.reduce(
+              (acc, collection) => {
+                if (collection.posts && Array.isArray(collection.posts)) {
+                  acc = acc.concat(collection.posts);
+                }
+                return acc;
+              },
+              []
+            );
+            setSavedPostId(allSavedPostDataIds);
+          }
+        } catch (error) {
+          console.error("Error fetching saved post collections:", error);
+        }
+      };
 
-			fetchSavedPostData();
-			setLiked(likes?.includes(loggedInUser._id) || null);
+      fetchSavedPostData();
+      setLiked(likes?.includes(loggedInUser._id) || null);
 
-			getPostComment({ postId }).then((res) => {
-				setComments(res.data.data);
-			});
-		}
-		const outsideClickHandler = (event) => {
-			if (
-				kebabMenuContainerRef.current &&
-				!kebabMenuContainerRef.current.contains(event.target)
-			) {
-				setKebabMenuVisible(false);
-			}
+      getPostComment({ postId }).then((res) => {
+        setComments(res.data.data);
+      });
+    }
+    const outsideClickHandler = (event) => {
+      if (
+        kebabMenuContainerRef.current &&
+        !kebabMenuContainerRef.current.contains(event.target)
+      ) {
+        setKebabMenuVisible(false);
+      }
 
-			if (
-				repostContainerRef.current &&
-				!repostContainerRef.current.contains(event.target)
-			) {
-				setShowRepostOptions(false);
-			}
-		};
+      if (
+        repostContainerRef.current &&
+        !repostContainerRef.current.contains(event.target)
+      ) {
+        setShowRepostOptions(false);
+      }
+    };
 
-		document.addEventListener("click", outsideClickHandler);
+    document.addEventListener("click", outsideClickHandler);
 
-		return () => {
-			document.removeEventListener("click", outsideClickHandler);
-		};
-	}, []);
+    return () => {
+      document.removeEventListener("click", outsideClickHandler);
+    };
+  }, []);
 
-	const videoRef = useRef(null);
-	const isVideoAutoplay = useSelector(selectVideoAutoplay);
+  const videoRef = useRef(null);
+  const isVideoAutoplay = useSelector(selectVideoAutoplay);
 
-	useEffect(() => {
-		const video = videoRef.current;
-		let playState = null;
+  useEffect(() => {
+    const video = videoRef.current;
+    let playState = null;
 
-		if (video) {
-			const observer = new IntersectionObserver((entries) => {
-				entries.forEach((entry) => {
-					if (!entry.isIntersecting) {
-						video.pause();
-						playState = false;
-					} else {
-						video.muted = true;
+    if (video) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            video.pause();
+            playState = false;
+          } else {
+            video.muted = true;
 
-						if (isVideoAutoplay) {
-							video
-								.play()
-								.then(() => {
-									playState = true;
-								})
-								.catch((error) => {
-									console.error("Auto-play failed:", error);
-								});
-						}
-					}
-				});
-			}, {});
+            if (isVideoAutoplay) {
+              video
+                .play()
+                .then(() => {
+                  playState = true;
+                })
+                .catch((error) => {
+                  console.error("Auto-play failed:", error);
+                });
+            }
+          }
+        });
+      }, {});
 
-			observer.observe(video);
+      observer.observe(video);
 
-			const onVisibilityChange = () => {
-				if (document.hidden || !playState) {
-					video.pause();
-				} else {
-					if (isVideoAutoplay) {
-						video
-							.play()
-							.then(() => {
-								playState = true;
-							})
-							.catch((error) => {
-								console.error("Auto-play failed:", error);
-							});
-					}
-				}
-			};
+      const onVisibilityChange = () => {
+        if (document.hidden || !playState) {
+          video.pause();
+        } else {
+          if (isVideoAutoplay) {
+            video
+              .play()
+              .then(() => {
+                playState = true;
+              })
+              .catch((error) => {
+                console.error("Auto-play failed:", error);
+              });
+          }
+        }
+      };
 
-			document.addEventListener("visibilitychange", onVisibilityChange);
+      document.addEventListener("visibilitychange", onVisibilityChange);
 
-			return () => {
-				observer.unobserve(video);
-				document.removeEventListener("visibilitychange", onVisibilityChange);
-			};
-		}
-	}, [video, isVideoAutoplay]);
+      return () => {
+        observer.unobserve(video);
+        document.removeEventListener("visibilitychange", onVisibilityChange);
+      };
+    }
+  }, [video, isVideoAutoplay]);
 
-	const likeUnlikeHandler = async () => {
-		try {
-			liked ? likes.length-- : likes.length++;
-			setLiked(!liked);
-			await likeUnlikeAPI(postId);
-		} catch (error) {
-			!liked ? likes.length-- : likes.length++;
-			setLiked(!liked);
-		}
-	};
+  const likeUnlikeHandler = async () => {
+    try {
+      liked ? likes.length-- : likes.length++;
+      setLiked(!liked);
+      await likeUnlikeAPI(postId);
+    } catch (error) {
+      !liked ? likes.length-- : likes.length++;
+      setLiked(!liked);
+    }
+  };
 
-	const deleteComments = async (postId, commentId) => {
-		try {
-			const updatedComments = comments.filter(
-				(comment) => comment._id !== commentId
-			);
-			setComments(updatedComments);
-			await deleteComment(postId, commentId);
-		} catch (error) {}
-	};
+  const deleteComments = async (postId, commentId) => {
+    try {
+      const updatedComments = comments.filter(
+        (comment) => comment._id !== commentId
+      );
+      setComments(updatedComments);
+      await deleteComment(postId, commentId);
+    } catch (error) {
+    }
+  };
 
-	const [kebabMenuVisible, setKebabMenuVisible] = useState(false);
-	const kebabMenuContainerRef = useRef(null);
+  const [kebabMenuVisible, setKebabMenuVisible] = useState(false);
+  const kebabMenuContainerRef = useRef(null);
 
-	const deletePost = async (postId) => {
-		try {
-			setLoading(true);
-			await deletePostAPI(postId);
-			if (isSinglePost) {
-				loggedInUser.isInvestor === "true"
-					? navigate("/investor/home")
-					: navigate("/home");
-			} else {
-				deletePostFilterData(postId);
-			}
-			setLoading(false);
-		} catch (error) {}
-	};
+  const deletePost = async (postId) => {
+    try {
+      setLoading(true);
+      await deletePostAPI(postId);
+      if (isSinglePost) {
+        loggedInUser.isInvestor === "true"
+          ? navigate("/investor/home")
+          : navigate("/home");
+      } else {
+        deletePostFilterData(postId);
+      }
+      setLoading(false);
+    } catch (error) {
+    }
+  };
 
-	const [reportReason, setReportReason] = useState("");
-	const [showReportModal, setShowReportModal] = useState(false);
-	const [filingReport, setFilingReport] = useState(false);
-	const [showRepostOptions, setShowRepostOptions] = useState(false);
+  const [reportReason, setReportReason] = useState("");
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [filingReport, setFilingReport] = useState(false);
+  const [showRepostOptions, setShowRepostOptions] = useState(false);
 
-	const repostContainerRef = useRef(null);
+  const repostContainerRef = useRef(null);
 
-	const reportSubmitHandler = () => {
-		setFilingReport(true);
-		setTimeout(() => {
-			setFilingReport(false);
-			setShowReportModal(false);
-		}, 2000);
-	};
+  const reportSubmitHandler = () => {
+    setFilingReport(true);
+    setTimeout(() => {
+      setFilingReport(false);
+      setShowReportModal(false);
+    }, 2000);
+  };
 
-	const [showFeaturedPostSuccess, setShowFeaturedPostSuccess] = useState(false);
-	const [showCompanyUpdateSuccess, setShowCompanyUpdateSuccess] =
-		useState(false);
-	const handleAddToFeatured = async (postId) => {
-		try {
-			const response = await addToFeaturedPost(postId);
-			if (response.status === 200) {
-				setShowFeaturedPostSuccess(true);
-			}
-		} catch (error) {}
-	};
-	const handleAddToCompanyPost = async (postId) => {
-		try {
-			const response = await addToCompanyUpdate(postId);
-			if (response.status === 200) {
-				setShowCompanyUpdateSuccess(true);
-			}
-		} catch (error) {}
-	};
-	useEffect(() => {
-		getLikeCount(postId)
-			.then((data) => {
-				setLikedBy(data?.data.likedBy);
-				setLikedByUser(data?.data.users);
-			})
-			.catch((error) => console.log());
-	}, [postId]);
+  const [showFeaturedPostSuccess, setShowFeaturedPostSuccess] = useState(false);
+  const [showCompanyUpdateSuccess, setShowCompanyUpdateSuccess] =
+    useState(false);
+  const handleAddToFeatured = async (postId) => {
+    try {
+      const response = await addToFeaturedPost(postId);
+      if (response.status === 200) {
+        setShowFeaturedPostSuccess(true);
+      }
+    } catch (error) {
+    }
+  };
+  const handleAddToCompanyPost = async (postId) => {
+    try {
+      const response = await addToCompanyUpdate(postId);
+      if (response.status === 200) {
+        setShowCompanyUpdateSuccess(true);
+      }
+    } catch (error) {
+    }
+  };
+  useEffect(() => {
+    getLikeCount(postId)
+      .then((data) => {
+        setLikedBy(data?.data.likedBy);
+        setLikedByUser(data?.data.users);
+      })
+      .catch((error) => console.log());
+  }, [postId]);
 
-	const singleClickTimer = useRef(null);
-	const [showImgagePopup, setShowImgagePopup] = useState(false);
+  const singleClickTimer = useRef(null);
+  const [showImgagePopup, setShowImgagePopup] = useState(false);
 
-	const handleImageOnClick = () => {
-		if (!singleClickTimer.current) {
-			singleClickTimer.current = setTimeout(() => {
-				setShowImgagePopup(true);
-				setPostData(JSON.parse(localStorage.getItem("postDetail")));
-				const PostData = {
-					userId,
-					designation,
-					startUpCompanyName,
-					investorCompanyName,
-					profilePicture,
-					description,
-					firstName,
-					lastName,
-					oneLinkId,
-					video,
-					image,
-					images,
-					documentName,
-					documentUrl,
-					createdAt,
-					likes,
-					resharedPostId,
-					pollOptions,
-				};
+  const handleImageOnClick = () => {
+    if (!singleClickTimer.current) {
+      singleClickTimer.current = setTimeout(() => {
+        setShowImgagePopup(true);
+        setPostData(JSON.parse(localStorage.getItem("postDetail")));
+        const PostData = {
+            userId,
+            designation,
+            startUpCompanyName,
+            investorCompanyName,
+            profilePicture,
+            description,
+            firstName,
+            lastName,
+            oneLinkId,
+            video,
+            image,
+            images,
+            documentName,
+            documentUrl,
+            createdAt,
+            likes,
+            resharedPostId,
+            pollOptions,
+        }
 
-				localStorage.setItem("postDetail", JSON.stringify(PostData));
-				setPostData(JSON.parse(localStorage.getItem("postDetail")));
-				navigate("/investor/post_detail/" + postId);
-				singleClickTimer.current = null;
-			}, 300);
-		} else {
-			likeUnlikeHandler();
-			clearTimeout(singleClickTimer.current);
-			singleClickTimer.current = null;
-		}
-	};
+        localStorage.setItem("postDetail", JSON.stringify(PostData));
+        setPostData(JSON.parse(localStorage.getItem("postDetail")));
+        navigate("/investor/post_detail/"+postId);
+        singleClickTimer.current = null;
+      }, 300);
+    } else {
+      likeUnlikeHandler();
+      clearTimeout(singleClickTimer.current);
+      singleClickTimer.current = null;
+    }
+  };
 
-	const handleSingleImage = () => {
-		navigate(isInvestor ? `/investor/post/${postId}` : `/posts/${postId}`);
-	};
+  const handleSingleImage = () => {
+    navigate(isInvestor ? `/investor/post/${postId}` : `/posts/${postId}`);
+  };
 
-	// Determine border color based on user type
-	const borderColor = startUpCompanyName
-		? "orange"
-		: investorCompanyName
-		? "#D3F36B"
-		: "transparent";
+  // Determine border color based on user type
+  const borderColor = startUpCompanyName ? "orange" : investorCompanyName ? "#D3F36B" : "transparent";
 
-	const [localPollOptions, setLocalPollOptions] = useState(pollOptions || []);
-	const [isVoting, setIsVoting] = useState(false);
 
-	useEffect(() => {
-		if (
-			pollOptions &&
-			JSON.stringify(pollOptions) !== JSON.stringify(localPollOptions)
-		) {
-			setLocalPollOptions(pollOptions);
-		}
-	}, [pollOptions]);
+  const [localPollOptions, setLocalPollOptions] = useState(pollOptions || []);
+  const [isVoting, setIsVoting] = useState(false);
 
-	const handleVoteClick = async (optionId) => {
-		if (isVoting) return;
 
-		try {
-			setIsVoting(true);
-			const hasVoted = localPollOptions.find(
-				(opt) => opt._id === optionId && opt.votes?.includes(loggedInUser._id)
-			);
+  useEffect(() => {
+    if (pollOptions && JSON.stringify(pollOptions) !== JSON.stringify(localPollOptions)) {
+      setLocalPollOptions(pollOptions);
+    }
+  }, [pollOptions]);
 
-			// Optimistic update
-			setLocalPollOptions((current) =>
-				current.map((opt) => {
-					if (opt._id === optionId) {
-						const newVotes = hasVoted
-							? opt.votes.filter((id) => id !== loggedInUser._id)
-							: [...(opt.votes || []), loggedInUser._id];
-						return { ...opt, votes: newVotes };
-					}
-					return opt;
-				})
-			);
+  const handleVoteClick = async (optionId) => {
+    if (isVoting) return;
+    
+    try {
+      setIsVoting(true);
+      const hasVoted = localPollOptions.find(opt => 
+        opt._id === optionId && opt.votes?.includes(loggedInUser._id)
+      );
 
-			// Call API
-			if (handlePollVote) {
-				const updatedPollOptions = await handlePollVote(postId, optionId);
-				if (updatedPollOptions) {
-					setLocalPollOptions(updatedPollOptions);
-				}
-			}
-		} catch (error) {
-			console.error("Error handling vote:", error);
-			// Revert to original state on error
-			setLocalPollOptions(pollOptions);
-		} finally {
-			setIsVoting(false);
-		}
-	};
+      // Optimistic update
+      setLocalPollOptions(current =>
+        current.map(opt => {
+          if (opt._id === optionId) {
+            const newVotes = hasVoted
+              ? opt.votes.filter(id => id !== loggedInUser._id)
+              : [...(opt.votes || []), loggedInUser._id];
+            return { ...opt, votes: newVotes };
+          }
+          return opt;
+        })
+      );
 
-	return (
-		<>
-			<div className="feedpostcard_main_container mb-2">
-				<div
-					className={`box feedpostcard_container mt-2 ${
-						repostPreview && "rounded-4 shadow-sm border"
-					}`}
-				>
-					{loading && (
-						<div className="d-flex justify-content-center my-4">
-							<div className="spinner-border" role="status">
-								<span className="visually-hidden">Loading...</span>
-							</div>
-						</div>
-					)}
-					<div className="feed_header_container pb-2 ">
-						<div className="feedpostcard_content">
-							<Link
-								to={
-									isInvestor
-										? `/investor/user/${
-												firstName?.toLowerCase() + "." + lastName?.toLowerCase()
-										  }/${oneLinkId}`
-										: `/user/${
-												firstName?.toLowerCase() + "." + lastName?.toLowerCase()
-										  }/${oneLinkId}`
-								}
-								className="rounded-circle"
-								style={{
-									pointerEvents: `${
-										loggedInUser._id === userId ? "none" : "all"
-									}`,
-								}}
-							>
-								<img
-									src={profilePicture || avatar4}
-									width={50}
-									height={50}
-									className="rounded-circle"
-									alt="logo"
-									style={{
-										objectFit: "cover",
-										border: `3px solid ${borderColor}`,
-									}}
-								/>
-							</Link>
+      // Call API
+      if (handlePollVote) {
+        const updatedPollOptions = await handlePollVote(postId, optionId);
+        if (updatedPollOptions) {
+          setLocalPollOptions(updatedPollOptions);
+        }
+      }
+    } catch (error) {
+      console.error('Error handling vote:', error);
+      // Revert to original state on error
+      setLocalPollOptions(pollOptions);
+    } finally {
+      setIsVoting(false);
+    }
+  };
 
-							<div className="feedpostcart_text_header my-1">
-								<Link
-									to={`/investor/user/${
-										firstName?.toLowerCase() + "." + lastName?.toLowerCase()
-									}/${oneLinkId}`}
-									className="text-decoration-none"
-									style={{
-										fontSize: "18px",
-										fontWeight: 600,
-										color: "var( --d-l-grey)",
-										pointerEvents: `${
-											loggedInUser._id === userId ? "none" : "all"
-										}`,
-									}}
-								>
-									{firstName + " " + lastName}
-									{isSubscribed && (
-										<img
-											src={BatchImag}
-											style={{
-												width: "1.2rem",
-												height: "1.2rem",
-												objectFit: "contain",
-												marginLeft: "4px",
-												marginBottom: "4px",
-											}}
-											alt="Batch Icon"
-										/>
-									)}
-								</Link>
+  return (
+    <>
+      <div className="feedpostcard_main_container mb-2">
+        <div
+          className={`box feedpostcard_container mt-2 ${
+            repostPreview && "rounded-4 shadow-sm border"
+          }`}
+        >
+          {loading && (
+            <div className="d-flex justify-content-center my-4">
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          )}
+          <div className="feed_header_container pb-2 ">
+            <div className="feedpostcard_content">
+              <Link 
+                to={isInvestor ? `/investor/user/${firstName?.toLowerCase() + "-" + lastName?.toLowerCase()}/${oneLinkId}` : `/user/${firstName?.toLowerCase() + "-" + lastName?.toLowerCase()}/${oneLinkId}`}
+                className="rounded-circle"
+                style={{
+                  pointerEvents: `${loggedInUser._id === userId ? "none" : "all"}`,
+                }}
+              >
+                <img
+                  src={
+                    profilePicture || avatar4
+                  }
+                  width={50}
+                  height={50}
+                  className="rounded-circle"
+                  alt="logo"
+                  style={{ objectFit: "cover", border: `3px solid ${borderColor}` }}
+                />
+              </Link>
 
-								<span className=" d-flex flex-column flex-md-row justify-content-between">
-									<span
-										className="d-flex align-items-center"
-										style={{
-											fontSize: "12px",
-											fontWeight: 450,
-											color: "var( --d-l-grey)",
-										}}
-									>
-										<GoHome size={13} /> {designation} at{" "}
-										{investorCompanyName?.companyName
-											? investorCompanyName?.companyName
-											: startUpCompanyName?.company}
-									</span>
-									<span
-										className="d-flex align-items-center"
-										style={{
-											fontSize: "12px",
-											fontWeight: 450,
-											color: "var( --d-l-grey)",
-										}}
-									>
-										<IoLocationOutline size={13} />
-										Bangalore, India
-									</span>
-								</span>
-								<span
-									style={{
-										fontSize: "12px",
-										fontWeight: 500,
-										color: "var( --d-l-grey)",
-									}}
-								>
-									{" "}
-									<TimeAgo
-										className="text-secondary fs-xs"
-										datetime={createdAt}
-										locale=""
-									/>
-								</span>
-							</div>
-						</div>
+              <div className="feedpostcart_text_header my-1">
+              <Link
+                to={`/user/${firstName?.toLowerCase() + "-" + lastName?.toLowerCase()}/${oneLinkId}`}
+                className="text-decoration-none"
+                style={{
+                  fontSize: "18px",
+                  fontWeight: 600,
+                  color: "var( --d-l-grey)",
+                  pointerEvents: `${loggedInUser._id === userId ? "none" : "all"}`,
+                }}
+              >
+                 {firstName + " " + lastName}{isSubscribed && <img
+                      src={BatchImag}
+                      style={{
+                        width: "1.2rem",
+                        height: "1.2rem",
+                        objectFit: "contain",
+                        marginLeft: "4px",
+                        marginBottom: "4px"
+                      }}
+                      alt="Batch Icon"
+                    />}
 
-						{!repostPreview && (
-							<div className="three_dot pe-2 px-md-4">
-								<div
-									className="kebab_menu_container"
-									ref={kebabMenuContainerRef}
-								>
-									<PiDotsThreeBold
-										size={35}
-										style={{ fill: "var(--d-l-grey)" }}
-										onClick={() => {
-											setKebabMenuVisible(!kebabMenuVisible);
-										}}
-										onBlurCapture={() => {
-											setTimeout(() => {
-												setKebabMenuVisible(false);
-											}, 100);
-										}}
-									/>
+              </Link>
 
-									{kebabMenuVisible && (
-										<ul className="kebab_menu border rounded shadow-sm p-3">
-											{userId === loggedInUser?._id && (
-												<li
-													onClick={() => handleAddToFeatured(postId)}
-													className="d-flex align-items-center gap-1"
-													style={{ color: "var(--d-l-grey)" }}
-												>
-													<IconComponentAdd />
-													<span>Featured</span>
-												</li>
-											)}
-											{userId === loggedInUser?._id && (
-												<li
-													onClick={() => deletePost(postId)}
-													className="d-flex align-items-center gap-1"
-													style={{ color: "var(--d-l-grey)" }}
-												>
-													<IconDelete />
-													<span>Delete</span>
-												</li>
-											)}
-											<li
-												data-bs-toggle="modal"
-												data-bs-target="#reportPostModal"
-												className="d-flex align-items-center gap-1"
-												style={{ color: "var(--d-l-grey)" }}
-											>
-												<IconReportPost />
-												<span>Report</span>
-											</li>
-											{userId === loggedInUser?._id && (
-												<li
-													onClick={() => handleAddToCompanyPost(postId)}
-													className="d-flex align-items-center gap-1"
-													style={{ color: "var(--d-l-grey)" }}
-												>
-													<CiCirclePlus />
-													<span>Company</span>
-												</li>
-											)}
-										</ul>
-									)}
-								</div>
-							</div>
-						)}
-					</div>
+                <span className=" d-flex flex-column flex-md-row justify-content-between">
+                  <span
+                    className="d-flex align-items-center"
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: 450,
+                      color: "var( --d-l-grey)",
+                    }}
+                  >
+                    <GoHome size={13} />{" "}
+                    {designation} at {" "}
+                    {investorCompanyName?.companyName
+                      ? investorCompanyName?.companyName
+                      : startUpCompanyName?.company}
+                  </span>
+                  <span
+                   className="d-flex align-items-center"
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: 450,
+                      color: "var( --d-l-grey)",
+                    }}
+                  >
+                    <IoLocationOutline size={13} />
+                    {location ? location : "India"}
+                  </span>
+                </span>
+                <span
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: 500,
+                    color: "var( --d-l-grey)",
+                  }}
+                >
+                  {" "}
+                  <TimeAgo
+                    className="text-secondary fs-xs"
+                    datetime={createdAt}
+                    locale=""
+                  />
+                </span>
+              </div>
+            </div>
 
-					<div className="para_container w-100" onClick={handleImageOnClick}>
-						<div
-							className="para_container_text w-100"
-							dangerouslySetInnerHTML={{
-								__html: DOMPurify.sanitize(description),
-							}}
-						></div>
-						{image && (
-							<span key={"image"} className="d-flex">
-								<img
-									className="mx-auto"
-									style={{ objectFit: "cover", maxHeight: "30rem" }}
-									width={!repostPreview ? "100%" : "50%"}
-									src={image}
-									alt="Post media"
-								/>
-							</span>
-						)}
-						{video && (
-							<span key={"video"} className="d-flex">
-								<video
-									className="mx-auto"
-									width={!repostPreview ? "100%" : "100%"}
-									style={{ maxWidth: "500px" }}
-									controls
-									ref={videoRef}
-								>
-									<source alt="post-video" src={video} type="video/mp4" />
-									Your browser does not support the video tag.
-								</video>
-							</span>
-						)}
-						{resharedPostId && resharedPostId._id && (
-							<FeedPostCard
-								key={resharedPostId._id}
-								repostPreview
-								userId={resharedPostId?.user?._id}
-								postId={resharedPostId?._id}
-								designation={resharedPostId?.user?.designation}
-								profilePicture={resharedPostId?.user?.profilePicture}
-								description={resharedPostId?.description}
-								firstName={resharedPostId?.user?.firstName}
-								lastName={resharedPostId?.user?.lastName}
-								oneLinkId={resharedPostId?.user?.oneLinkId}
-								video={resharedPostId?.video}
-								image={resharedPostId?.image}
-								createdAt={resharedPostId?.createdAt}
-								likes={resharedPostId?.likes}
-								startUpCompanyName={resharedPostId.user?.startUp}
-								investorCompanyName={resharedPostId.user?.investor}
-							/>
-						)}
-					</div>
+            {!repostPreview && (
+              <div className="three_dot pe-2 px-md-4">
+                <div
+                  className="kebab_menu_container"
+                  ref={kebabMenuContainerRef}
+                >
+                  <PiDotsThreeBold
+                    size={35}
+                    style={{ fill: "var(--d-l-grey)" }}
+                    onClick={() => {
+                      setKebabMenuVisible(!kebabMenuVisible);
+                    }}
+                    onBlurCapture={() => {
+                      setTimeout(() => {
+                        setKebabMenuVisible(false);
+                      }, 100);
+                    }}
+                  />
 
-					{localPollOptions && localPollOptions.length > 0 && (
-						<div className="poll-section">
-							{localPollOptions.map((option) => {
-								const totalVotes = localPollOptions.reduce(
-									(sum, opt) => sum + (opt.votes?.length || 0),
-									0
-								);
-								const votePercentage =
-									totalVotes === 0
-										? 0
-										: Math.round(
-												((option.votes?.length || 0) * 100) / totalVotes
-										  );
-								const hasVoted = option.votes?.includes(loggedInUser._id);
+                  {kebabMenuVisible && (
+                    <ul className="kebab_menu border rounded shadow-sm p-3">
+                      {userId === loggedInUser?._id && (
+                        <li
+                          onClick={() => handleAddToFeatured(postId)}
+                          className="d-flex align-items-center gap-1"
+                          style={{ color: "var(--d-l-grey)" }}
+                        >
+                          <IconComponentAdd />
+                          <span>Featured</span>
+                        </li>
+                      )}
+                      {userId === loggedInUser?._id && (
+                        <li
+                          onClick={() => deletePost(postId)}
+                          className="d-flex align-items-center gap-1"
+                          style={{ color: "var(--d-l-grey)" }}
+                        >
+                          <IconDelete />
+                          <span>Delete</span>
+                        </li>
+                      )}
+                      <li
+                        data-bs-toggle="modal"
+                        data-bs-target="#reportPostModal"
+                        className="d-flex align-items-center gap-1"
+                        style={{ color: "var(--d-l-grey)" }}
+                      >
+                        <IconReportPost />
+                        <span>Report</span>
+                      </li>
+                      {userId === loggedInUser?._id && (
+                        <li
+                          onClick={() => handleAddToCompanyPost(postId)}
+                          className="d-flex align-items-center gap-1"
+                          style={{ color: "var(--d-l-grey)" }}
+                        >
+                          <CiCirclePlus />
+                          <span>Company</span>
+                        </li>
+                      )}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
 
-								return (
-									<div className="poll-option" key={option._id}>
-										<div className="poll-option-content">
-											<div
-												className="progress-bar"
-												style={{ width: `${votePercentage}%` }}
-											/>
-											<span className="option-text">{option.option}</span>
-											<span className="vote-count">
-												{option.votes?.length || 0} votes ({votePercentage}%)
-											</span>
-										</div>
-										<button
-											className={`vote-button ${
-												hasVoted ? "votedInvestorThemeColor" : ""
-											}`}
-											onClick={(e) => {
-												e.stopPropagation();
-												handleVoteClick(option._id);
-											}}
-											disabled={isVoting}
-										>
-											{hasVoted ? "Voted" : "Vote"}
-										</button>
-									</div>
-								);
-							})}
-						</div>
-					)}
+          <div className="para_container w-100" onClick={handleImageOnClick}>
+            <div
+              className="para_container_text w-100"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(description),
+              }}
+            ></div>
+            {image && (
+              <span key={"image"} 
+              className="d-flex">
+                <img
+                  className="mx-auto"
+                  style={{ objectFit: "cover", maxHeight: "30rem" }}
+                  width={!repostPreview ? "100%" : "50%"}
+                  src={image}
+                  alt="Post media"
+                />
+              </span>
+            )}
+            {video && (
+              <span key={"video"} className="d-flex">
+                <video
+                  className="mx-auto"
+                  width={!repostPreview ? "100%" : "100%"}
+                  style={{ maxWidth: "500px" }}
+                  controls
+                  ref={videoRef}
+                >
+                  <source alt="post-video" src={video} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </span>
+            )}
+            {resharedPostId && resharedPostId._id  && (
+              <FeedPostCard
+                key={resharedPostId._id}
+                repostPreview
+                userId={resharedPostId?.user?._id}
+                postId={resharedPostId?._id}
+                designation={resharedPostId?.user?.designation}
+                profilePicture={resharedPostId?.user?.profilePicture}
+                description={resharedPostId?.description}
+                firstName={resharedPostId?.user?.firstName}
+                lastName={resharedPostId?.user?.lastName}
+                oneLinkId={resharedPostId?.user?.oneLinkId}
+                video={resharedPostId?.video}
+                image={resharedPostId?.image}
+                createdAt={resharedPostId?.createdAt}
+                likes={resharedPostId?.likes}
+                startUpCompanyName={resharedPostId.user?.startUp}
+                investorCompanyName={resharedPostId.user?.investor}
+              />
+            )}
+          </div>
 
-					{likes && (
-						<span
-							className="mx-3 pb-2 pt-2 pe-auto d-flex align-items-center gap-1"
-							style={{
-								fontSize: "10px",
-								cursor: "pointer",
-								color: theme === "dark" ? "white" : "black",
-								fontWeight: "bold",
-							}}
-							onClick={() => (likedBy ? handleShow() : "")}
-						>
-							{likedBy ? (
-								<>
-									<BsFire style={{ color: "#fd5901", fontSize: "15px" }} />{" "}
-									<span>{likedBy}</span>
-								</>
-							) : (
-								<>
-									{likes?.length === 1
-										? `${likes.length} like`
-										: `${likes.length} likes`}
-								</>
-							)}
-						</span>
-					)}
-					{!repostPreview && (
-						<>
-							<hr
-								className="mt-1 mb-2 hr"
-								style={{ background: "var(--bs-light)", height: "3px" }}
-							/>
-							<div className="row feedpostcard_footer">
-								<div className="col-6">
-									<div className="feedpostcard_footer_like_comment d-flex justify-content-around gap-2">
-										{liked ? (
-											<div
-												className="d-flex flex-column align-items-center justify-content-end
+          {localPollOptions && localPollOptions.length > 0 && (
+            <div className="poll-section">
+              {localPollOptions.map((option) => {
+                const totalVotes = localPollOptions.reduce((sum, opt) => 
+                  sum + (opt.votes?.length || 0), 0
+                );
+                const votePercentage = totalVotes === 0 
+                  ? 0 
+                  : Math.round((option.votes?.length || 0) * 100 / totalVotes);
+                const hasVoted = option.votes?.includes(loggedInUser._id);
+
+                return (
+                  <div className="poll-option" key={option._id}>
+                    <div className="poll-option-content">
+                      <div 
+                        className="progress-bar" 
+                        style={{ width: `${votePercentage}%` }} 
+                      />
+                      <span className="option-text">{option.option}</span>
+                      <span className="vote-count">
+                        {option.votes?.length || 0} votes ({votePercentage}%)
+                      </span>
+                    </div>
+                    <button
+                      className={`vote-button ${hasVoted ? 'votedInvestorThemeColor' : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleVoteClick(option._id);
+                      }}
+                      disabled={isVoting}
+                    >
+                      {hasVoted ? 'Voted' : 'Vote'}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {likes && (
+            <span
+              className="mx-3 pb-2 pt-2 pe-auto d-flex align-items-center gap-1"
+              style={{
+                fontSize: "10px",
+                cursor: "pointer",
+                color: theme === "dark" ? "white" : "black",
+                fontWeight: "bold",
+              }}
+              onClick={() => (likedBy ? handleShow() : "")}
+            >
+              {likedBy ? (
+                <>
+                  <BsFire style={{ color: "#fd5901", fontSize: "15px" }} /> <span>{likedBy}</span>
+                </>
+              ) : (
+                <>
+                  {likes?.length === 1
+                    ? `${likes.length} like`
+                    : `${likes.length} likes`}
+                </>
+              )}
+            </span>
+          )}
+          {!repostPreview && (
+            <>
+              <hr
+                className="mt-1 mb-2 hr"
+                style={{ background: "var(--bs-light)", height: "3px" }}
+              />
+              <div className="row feedpostcard_footer">
+                <div className="col-6">
+                  <div className="feedpostcard_footer_like_comment d-flex justify-content-around gap-2">
+                    {liked ? (
+                      <div
+                        className="d-flex flex-column align-items-center justify-content-end
+
                        gap-1"
 											>
 												<img
