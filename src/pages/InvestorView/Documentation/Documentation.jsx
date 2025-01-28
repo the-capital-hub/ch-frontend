@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getUserById } from "../../../Service/user";
 // import SmallProfileCard from "../../../components/Investor/InvestorGlobalCards/TwoSmallMyProfile/SmallProfileCard";
 import { Card } from "../../../components/InvestorView";
 import "./Documentation.scss";
@@ -6,24 +7,26 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import MaxWidthWrapper from "../../../components/Shared/MaxWidthWrapper/MaxWidthWrapper";
 import {
-  Business,
-  KYC,
-  Legal,
-  Pitch,
-  GreenPitch
+	Business,
+	KYC,
+	Legal,
+	Pitch,
+	GreenPitch,
 } from "../../../Images/StartUp/Documentaion";
 import { getFoldersApi, getPdfData } from "../../../Service/user";
 import SpinnerBS from "../../../components/Shared/Spinner/SpinnerBS";
 import MobileOneLinkNavbar from "../../../components/Shared/MobileOnelinkNavbar/MobileOneLinkNavbar";
+import OnelinkPitch from "../../../components/NewInvestor/OnelinkPitch/OnelinkPitch";
 
 const Documentation = () => {
-  const navigate = useNavigate();
-  const { username } = useParams();
-  const { userId } = useParams();
-  useEffect(() => {
-    document.title = "Documentation - OneLink | The Capital Hub";
-  }, []);
-  const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
+	const { username } = useParams();
+	const { userId } = useParams();
+	const [user, setUser] = useState({});
+	useEffect(() => {
+		document.title = "Documentation - OneLink | The Capital Hub";
+	}, []);
+	const [loading, setLoading] = useState(false);
 
   const [folderName, setFolderName] = useState([]);
   const [folderCounts, setFolderCounts] = useState({});
@@ -61,25 +64,36 @@ const Documentation = () => {
       });
   };
 
-  useEffect(() => {
-    getFolders();
-  }, []);
 
-  return (
-    <MaxWidthWrapper>
-              <MobileOneLinkNavbar/>
+	useEffect(() => {
+		getFolders();
+	}, []);
 
-      <div className="">
-        <div className="documentation shadow-sm border">
-          <h1 className="px-md-5">Documentation</h1>
-          <div className="docscontainer col-12 col-xl-10 justify-content-around mx-auto">
-            {/* <Card
+	useEffect(() => {
+		getUserById(username, userId)
+			.then(({ data }) => {
+				setUser(data);
+			})
+			.catch(() => setUser([]));
+	}, [userId, username]);
+
+	return (
+		<MaxWidthWrapper>
+			<MobileOneLinkNavbar />
+
+			<div className="">
+				<OnelinkPitch user={user} />
+
+				<div className="documentation shadow-sm border">
+					<h1 className="px-md-5">Documentation</h1>
+					<div className="docscontainer col-12 col-xl-10 justify-content-around mx-auto">
+						{/* <Card
               text={"Financials"}
               onClicked={() =>
                 navigate(`/onelink/${username}/${userId}/documentation/financials`)
               }
             /> */}
-            {/* <Card
+						{/* <Card
               text={"Pitch Deck"}
               onClicked={() =>
                 navigate(
@@ -95,13 +109,13 @@ const Documentation = () => {
               }
               image={Legal}
             /> */}
-            {/* <Card
+						{/* <Card
               text={"Update"}
               onClicked={() =>
                 navigate(`/onelink/${username}/${userId}/documentation/update`)
               }
             /> */}
-            {/* <Card
+						{/* <Card
               text={"KYC Details"}
               onClicked={() =>
                 navigate(
@@ -120,16 +134,16 @@ const Documentation = () => {
               image={Business}
             /> */}
 
-            {loading && (
-              <SpinnerBS
-                className={
-                  "d-flex py-5 justify-content-center align-items-center w-100 vh-100"
-                }
-              />
-            )}
-            {!loading &&
-              folderName.map((folder, index) => {
-                let imageToShow;
+						{loading && (
+							<SpinnerBS
+								className={
+									"d-flex py-5 justify-content-center align-items-center w-100 vh-100"
+								}
+							/>
+						)}
+						{!loading &&
+							folderName.map((folder, index) => {
+								let imageToShow;
 
                 switch (folder) {
                   case "pitchdeck":

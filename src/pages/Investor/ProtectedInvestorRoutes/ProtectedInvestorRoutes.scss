@@ -1,5 +1,5 @@
 .new-investor-private-routes {
-  background-color: var(--investor-bg);
+  // background-color: var(--investor-bg);
   min-height: 100dvh;
   .newInvestor_container {
     display: flex;
@@ -41,7 +41,7 @@
 
     .content {
       flex: 1;
-      margin-left: 240px;
+      margin-left: 200px;
       transition: margin-left 0.3s ease;
       margin-top: 6%;
       overflow: hidden;
@@ -54,7 +54,7 @@
       }
 
       .content {
-        margin-left: 75px;
+        margin-left: 65px;
       }
     }
   }
@@ -81,12 +81,12 @@
         left: 0;
         bottom: 0;
         // Add class for sidebar in fixed position
-        &.fixed {
-        }
+        // &.fixed {
+        // }
       }
 
-      .sidebar::-webkit-scrollbar {
-      }
+      // .sidebar::-webkit-scrollbar {
+      // }
 
       /* Hide scrollbar for IE, Edge and Firefox */
 

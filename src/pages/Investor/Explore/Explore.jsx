@@ -362,8 +362,8 @@ function Explore() {
 			<div
 				className={
 					sidebarCollapsed
-						? "explore_container px-md-3 mb-4"
-						: "explore_container collapsed px-md-3 mb-4"
+						? "explore_container mb-4"
+						: "explore_container collapsed mb-4"
 				}
 			>
 				<SmallProfileCard text="Explore" />
@@ -566,8 +566,7 @@ function Explore() {
 											onChange={handleOnChange}
 											options={filterOptions?.age || ageOptions}
 											label="Age"
-											name="age
-                  "
+											name="age"
 										/>
 									</>
 								)}
@@ -729,7 +728,9 @@ function Explore() {
 						// 	colorClass="text-secondary"
 						// 	spinnerSizeClass="xl"
 						// />
-						<SkeletonLoader />
+						<div className="loading-container">
+							<SkeletonLoader />
+						</div>
 					) : (
 						<>
 							{!filteredData?.length ? (
