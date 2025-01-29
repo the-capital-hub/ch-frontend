@@ -47,7 +47,7 @@ function ProfileInformation() {
     profilePicture: loggedInUser.profilePicture || "",
     fullName: loggedInUser?.firstName + " " + loggedInUser?.lastName || "",
     company: companyName,
-    location: loggedInUser?.location || "Bangalore, India",
+    location: loggedInUser?.location || "India",
   });
   const [bioContent, setBioContent] = useState(userBio || "");
 

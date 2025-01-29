@@ -133,24 +133,24 @@ function Home() {
 		}
 	}, [dispatch, isInvestor, userInvestor, companyDataId]);
 
-	const fetchMorePosts = () => {
-		getAllPostsAPI(page)
-			.then(({ data }) => {
-				if (data?.length === 0) {
-					setHasMore(false);
-				} else {
-					const totalPost = data.filter((item) => item?.postType !== "company");
-					const post = allPosts.filter((item) => item?.postType !== "company");
-					setAllPosts([...post, ...totalPost]);
-					setPage(page + 1);
-				}
-			})
-			.catch((err) => {
-				setHasMore(false);
-				console.log();
-			})
-			.finally(() => setLoadingFeed(false));
-	};
+  const fetchMorePosts = () => {
+    getAllPostsAPI(page)
+      .then(({ data }) => {
+        if (data?.length === 0) {
+          setHasMore(false);
+        } else {
+          const totalPost = data.filter((item) => item?.postType === "public");
+          const post = allPosts.filter((item) => item?.postType === "public");
+          setAllPosts([...post, ...totalPost]);
+          setPage(page + 1);
+        }
+      })
+      .catch((err) => {
+        setHasMore(false);
+        console.log();
+      })
+      .finally(() => setLoadingFeed(false));
+  };
 
 	useEffect(() => {
 		getSavedPostCollections(loggedInUserId)

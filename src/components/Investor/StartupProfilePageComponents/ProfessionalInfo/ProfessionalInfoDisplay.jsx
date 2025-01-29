@@ -136,22 +136,30 @@ export default function ProfessionalInfoDisplay({
 							>
 								{isEditing ? (
 									<>
-										<input
-											type="text"
-											name="firstName"
-											value={professionalData.firstName}
-											onChange={handleTextChange}
-											className="form-control"
-											placeholder="First Name"
+										<div className="form-group">
+											<label htmlFor="firstName" className="px-2" style={{color: "var(--text-color)"}}>First Name</label>
+											<input
+												type="text"
+												id="firstName"
+												name="firstName"
+												value={professionalData.firstName}
+												onChange={handleTextChange}
+												className="form-control"
+												placeholder="First Name"
 										/>
-										<input
-											type="text"
-											name="lastName"
-											value={professionalData.lastName}
-											onChange={handleTextChange}
-											className="form-control"
-											placeholder="Last Name"
+										</div>
+										<div className="form-group">
+											<label htmlFor="lastName" className="px-2" style={{color: "var(--text-color)"}}>Last Name</label>
+											<input
+												type="text"
+												id="lastName"
+												name="lastName"
+												value={professionalData.lastName}
+												onChange={handleTextChange}
+												className="form-control"
+												placeholder="Last Name"
 										/>
+										</div>
 									</>
 								) : (
 									<h5 className="m-0 fw-semibold">{getFullName()}</h5>
@@ -184,14 +192,18 @@ export default function ProfessionalInfoDisplay({
 								</h6>
 							)}
 							{isEditing && (
-								<input
-									type="text"
-									name="userName"
-									value={professionalData.userName}
-									onChange={handleTextChange}
-									className="form-control"
-									placeholder="Username"
+								<div className="form-group">
+									<label htmlFor="userName" className="px-2" style={{color: "var(--text-color)"}}>Username</label>
+									<input
+										type="text"
+										id="userName"
+										name="userName"
+										value={professionalData.userName}
+										onChange={handleTextChange}
+										className="form-control"
+										placeholder="Username"
 								/>
+								</div>
 							)}
 							<p className="m-0">
 								{professionalData.designation && (

@@ -15,9 +15,9 @@ const InterestSection = ({ myInterests, setMyInterests }) => {
     const fetchInterestsData = async () => {
       try {
         const data = await Promise.all(
-          myInterests.map(async (interest) => {
-            const response = await getStartUpById(interest.companyId);
-            return response.data;
+          myInterests?.map(async (interest) => {
+            const response = await getStartUpById(interest?.companyId);
+            return response?.data;
           })
         );
         setInterestsData(data);
@@ -26,7 +26,7 @@ const InterestSection = ({ myInterests, setMyInterests }) => {
       }
     };
 
-    if (myInterests.length > 0) {
+    if (myInterests?.length > 0) {
       fetchInterestsData();
     }
   }, [myInterests]);
@@ -45,8 +45,8 @@ const InterestSection = ({ myInterests, setMyInterests }) => {
         </div>
       </div>
       <div className="card_container d-flex gap-3 overflow-x-auto" id="myInterestsCards">
-        {interestsData.length > 0
-          ? interestsData.map((data, index) => (
+        {interestsData?.length > 0
+          ? interestsData?.map((data, index) => (
               <MyInvestmentCard key={index} company={data} isInterests={true} />
             ))
           : "No Data Found."}
