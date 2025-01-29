@@ -185,7 +185,11 @@ export const updateInvestorData = async (investorData) => {
 export const updateVcData = async (vcData) => {
 	try {
 		const response = await axiosInstance.put(API.updateVcData, vcData);
-		return response.data;
+		if (response.data.status) {
+			return response.data;
+		} else {
+			throw new Error(response.data.message || "Failed to update VC data");
+		}
 	} catch (error) {
 		console.error("Error:", error);
 		throw error;

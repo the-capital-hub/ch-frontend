@@ -52,6 +52,43 @@
       color: inherit;
     }
   }
+
+  .edit-button {
+    position: absolute;
+    top: 1.7rem;
+    left: 0.5rem;
+    z-index: 10;
+    background-color: var(--color-btn);
+    border-color: var(--color-btn);
+    color: var(--color-text);
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    @media (max-width: 450px) {
+      top: 0.5rem;
+      right: 0.5rem;
+      width: 30px;
+      height: 30px;
+      font-size: 0.9rem;
+    }
+    
+    &:hover {
+      background-color: var(--color-btn-08);
+      border-color: var(--color-btn);
+      transform: scale(0.95);
+    }
+  
+    svg {
+      width: 1em;
+      height: 1em;
+    }
+  }
 }
 
 .person_profile_wrapper {
@@ -158,4 +195,28 @@
     //     }
     //   }
   }
+}
+
+.ReactModal__Overlay {
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0 !important;
+  padding: 1rem;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
 }

@@ -3,10 +3,21 @@ import { useNavigate } from "react-router-dom";
 import VcCard from "../../../components/Shared/VcCard/VcCard";
 import { motion } from "framer-motion"; // Import Framer Motion for animations
 
-export default function VcProfileList({ data, theme }) {
+export default function VcProfileList({ data: initialData, theme }) {
     const navigate = useNavigate();
+    const [vcData, setVcData] = useState(initialData);
     const [visibleProfiles, setVisibleProfiles] = useState([]); // Track visible profiles
     const containerRef = useRef(null); // Ref to container
+
+    useEffect(() => {
+        setVcData(initialData);
+    }, [initialData]);
+
+    const handleVcUpdate = (updatedVc) => {
+        setVcData(prevData => 
+            prevData.map(vc => vc._id === updatedVc._id ? updatedVc : vc)
+        );
+    };
 
     const handleVcClick = (vcId) => {
         if (theme === "investor") {
@@ -39,16 +50,16 @@ export default function VcProfileList({ data, theme }) {
         return () => {
             observer.disconnect(); // Cleanup observer on unmount
         };
-    }, [data]);
+    }, [vcData]);
 
     return (
         <div className="d-flex flex-column gap-3" ref={containerRef}>
-            {data.length === 0 ? (
+            {vcData.length === 0 ? (
                 <div className="container bg-white d-flex justify-content-center align-items-center p-5 rounded-4 shadow-sm">
                     No VCs found
                 </div>
             ) : (
-                data.map((vc, index) => {
+                vcData.map((vc, index) => {
                     const isVisible = visibleProfiles.includes(index); // Check if the profile is visible
                     return (
                         <motion.div
@@ -60,7 +71,11 @@ export default function VcProfileList({ data, theme }) {
                             onClick={() => handleVcClick(vc._id)}
                             style={{ cursor: 'pointer' }}
                         >
-                            <VcCard vc={vc} />
+                            <VcCard 
+                                vc={vc} 
+                                onVcUpdate={handleVcUpdate}
+                                isAdmin={true}
+                            />
                         </motion.div>
                     );
                 })
