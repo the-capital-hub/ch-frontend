@@ -851,7 +851,7 @@ const Register = ({ isRawUser = false, setShowSignupModal, rawUser }) => {
 							</div>
 						)}
 
-						<button
+						{/* <button
 							type="button"
 							className={`add-company-details-btn ${
 								isInvestorSelected ? "investor" : "startup"
@@ -861,7 +861,7 @@ const Register = ({ isRawUser = false, setShowSignupModal, rawUser }) => {
 							{isInvestorSelected
 								? "Add Investor Details"
 								: "Add Startup Details"}
-						</button>
+						</button> */}
 
 						<button
 							type="submit"

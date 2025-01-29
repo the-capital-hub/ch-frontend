@@ -143,7 +143,9 @@ const Milestone = ({ isInvestor = false }) => {
 								/>
 								<div className="progress-bar">
 									<div
-										className={`${isInvestor? "investor-progress-fill" : "progress-fill"}`}
+										className={`${
+											isInvestor ? "investor-progress-fill" : "progress-fill"
+										}`}
 										style={{ width: `${milestone.progress}%` }}
 									/>
 								</div>
@@ -155,7 +157,14 @@ const Milestone = ({ isInvestor = false }) => {
 					))}
 				</div>
 
-				<button className={` ${isInvestor? "investor-show-all-button" : "show-all-btn"}`} onClick={() => navigate("/profile")}>
+				<button
+					className={` ${
+						isInvestor ? "investor-show-all-button" : "show-all-btn"
+					}`}
+					onClick={() =>
+						navigate(`${isInvestor ? "/investor/profile" : "/profile"}`)
+					}
+				>
 					Show all Milestone
 				</button>
 			</div>

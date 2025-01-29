@@ -43,7 +43,7 @@ const EventsList = () => {
 	// const user = localStorage.getItem("loggedInUser");
 	// const username = user ? JSON.parse(user).userName : null;
 	const navigate = useNavigate();
-	// console.log("Events", events);
+	console.log("webinars", events);
 	// console.log("User Availability", userAvailability);
 	const [isInvestor, setIsInvestor] = useState(false);
 

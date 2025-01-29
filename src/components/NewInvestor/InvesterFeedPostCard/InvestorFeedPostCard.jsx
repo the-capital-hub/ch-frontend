@@ -4,16 +4,16 @@ import fireIcon from "../../../Images/post/like-fire.png";
 import TimeAgo from "timeago-react";
 import { useSelector } from "react-redux";
 import {
-  deletePostAPI,
-  getPostComment,
-  likeUnlikeAPI,
-  sendPostComment,
-  addToFeaturedPost,
-  deleteComment,
-  toggleLikeComment,
-  unsavePost,
-  getLikeCount,
-  addToCompanyUpdate,
+	deletePostAPI,
+	getPostComment,
+	likeUnlikeAPI,
+	sendPostComment,
+	addToFeaturedPost,
+	deleteComment,
+	toggleLikeComment,
+	unsavePost,
+	getLikeCount,
+	addToCompanyUpdate,
 } from "../../../Service/user";
 import { Link, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
@@ -29,7 +29,7 @@ import { FaRegCommentDots, FaCommentDots } from "react-icons/fa6";
 import { FaRegEdit } from "react-icons/fa";
 import { Modal } from "react-bootstrap";
 import { GoHome } from "react-icons/go";
-import BatchImag from "../../../Images/tick-mark.png"
+import BatchImag from "../../../Images/tick-mark.png";
 import { PiDotsThreeBold } from "react-icons/pi";
 import { CiBookmark } from "react-icons/ci";
 import { IoMdBookmark } from "react-icons/io";
@@ -42,12 +42,12 @@ import { MdDelete } from "react-icons/md";
 import IconReportPost from "../../Investor/SvgIcons/IconReportPost";
 import { CiCirclePlus } from "react-icons/ci";
 import {
-  selectTheme,
-  selectVideoAutoplay,
-  selectIsMobileView
+	selectTheme,
+	selectVideoAutoplay,
+	selectIsMobileView,
 } from "../../../Store/features/design/designSlice";
 import avatar4 from "../../../Images/avatars/image.png";
-import {selectIsInvestor} from "../../../Store/features/user/userSlice";
+import { selectIsInvestor } from "../../../Store/features/user/userSlice";
 
 const FeedPostCard = ({
   postId,
@@ -782,538 +782,550 @@ const FeedPostCard = ({
                     {liked ? (
                       <div
                         className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-                      >
-                        <img
-                          src={fireIcon}
-                          width={20}
-                          alt="like post"
-                          onClick={likeUnlikeHandler}
-                          style={{ cursor: "pointer" }}
-                        />
-                        <p
-                          style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-                          className="m-0"
-                        >
-                          Like
-                        </p>
-                      </div>
-                    ) : (
-                      <div
-                        className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-                      >
-                        <ImFire
-                          onClick={likeUnlikeHandler}
-                          style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-                        />
-                        <p
-                          style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-                          className="m-0"
-                        >
-                          Like
-                        </p>
-                      </div>
-                    )}
-                    {!showComment ? (
-                      <div
-                        className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-                      >
-                        <FaRegCommentDots
-                          size={20}
-                          onClick={() => setShowComment((prev) => !prev)}
-                          style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-                        />
-                        <p
-                          style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-                          className="m-0"
-                        >
-                          Comment
-                        </p>
-                      </div>
-                    ) : (
-                      <div
-                        className="d-flex flex-column align-items-center justify-content-end
-                       gap-1"
-                      >
-                        <FaCommentDots
-                          size={20}
-                          onClick={() => setShowComment((prev) => !prev)}
-                          style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-                        />
-                        <p
-                          style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-                          className="m-0"
-                        >
-                          Comment
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
 
-                <div className=" col-6 d-flex align-items-center gap-1 justify-content-around">
-                  <span
-                    className={`repost_container rounded-4 ${
-                      showRepostOptions ? "bg-light" : ""
-                    }`}
-                    ref={repostContainerRef}
-                  >
-                    <div
-                      className="d-flex flex-column align-items-center justify-content-end
                        gap-1"
-                    >
-                      <BiRepost
-                        onClick={() => setShowRepostOptions(!showRepostOptions)}
-                        style={{
-                          cursor: "pointer",
-                          transform: "rotate(90deg)",
-                          fill: "var(--d-l-grey)",
-                        }}
-                        size={20}
-                      />
-                      <p
-                        style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-                        className="m-0"
-                      >
-                        Repost
-                      </p>
-                    </div>
-                    {showRepostOptions && (
-                      <span className="repost_options border rounded shadow-sm">
-                        <button
-                          className="single_option btn text-start py-1 px-1 rounded border-bottom"
-                          onClick={() => repostWithToughts(postId)}
-                        >
-                          {!repostLoading?.withThoughts ? (
-                            <FaRegEdit size={20} />
-                          ) : (
-                            <div
-                              className="spinner-border text-secondary"
-                              role="status"
-                            >
-                              <span className="visually-hidden">
-                                Loading...
-                              </span>
-                            </div>
-                          )}
-                          <div className="d-flex flex-column g-1 ">
-                            <span className="title">
-                              Repost with your thoughts
-                            </span>
-                            <span className="description">
-                              Create a new post
-                            </span>
-                          </div>
-                        </button>
-                        <button
-                          className="single_option btn text-start py-1 ps-0 rounded border-bottom"
-                          onClick={() => repostInstantly(postId)}
-                        >
-                          {!repostLoading?.instant ? (
-                            <BiRepost
-                              size={30}
-                              style={{ transform: "rotate(90deg)" }}
-                            />
-                          ) : (
-                            <div
-                              className="spinner-border text-secondary"
-                              role="status"
-                            >
-                              <span className="visually-hidden">
-                                Loading...
-                              </span>
-                            </div>
-                          )}
-                          <div className="d-flex flex-column g-1 ">
-                            <span className="title">Repost Instantly</span>
-                            <span className="description">
-                              Instantly bring to other's feed
-                            </span>
-                          </div>
-                        </button>
-                      </span>
-                    )}
-                  </span>
-                  {savedPostId.includes(postId) ? (
-                    <div
-                      className="d-flex flex-column align-items-center justify-content-end
+											>
+												<img
+													src={fireIcon}
+													width={20}
+													alt="like post"
+													onClick={likeUnlikeHandler}
+													style={{ cursor: "pointer" }}
+												/>
+												<p
+													style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+													className="m-0"
+												>
+													Like
+												</p>
+											</div>
+										) : (
+											<div
+												className="d-flex flex-column align-items-center justify-content-end
                        gap-1"
-                    >
-                      <IoMdBookmark
-                        size={20}
-                        onClick={handleUnsavePost}
-                        style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-                      />
-                      <p
-                        style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-                        className="m-0"
-                      >
-                        Save
-                      </p>
-                    </div>
-                  ) : (
-                    <div
-                      className="d-flex flex-column align-items-center justify-content-end
+											>
+												<ImFire
+													onClick={likeUnlikeHandler}
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												/>
+												<p
+													style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+													className="m-0"
+												>
+													Like
+												</p>
+											</div>
+										)}
+										{!showComment ? (
+											<div
+												className="d-flex flex-column align-items-center justify-content-end
+                       gap-1"
+											>
+												<FaRegCommentDots
+													size={20}
+													onClick={() => setShowComment((prev) => !prev)}
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												/>
+												<p
+													style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+													className="m-0"
+												>
+													Comment
+												</p>
+											</div>
+										) : (
+											<div
+												className="d-flex flex-column align-items-center justify-content-end
+                       gap-1"
+											>
+												<FaCommentDots
+													size={20}
+													onClick={() => setShowComment((prev) => !prev)}
+													style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+												/>
+												<p
+													style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+													className="m-0"
+												>
+													Comment
+												</p>
+											</div>
+										)}
+									</div>
+								</div>
+
+								<div className=" col-6 d-flex align-items-center gap-1 justify-content-around">
+									<span
+										className={`repost_container rounded-4 ${
+											showRepostOptions ? "bg-light" : ""
+										}`}
+										ref={repostContainerRef}
+									>
+										<div
+											className="d-flex flex-column align-items-center justify-content-end
+                       gap-1"
+										>
+											<BiRepost
+												onClick={() => setShowRepostOptions(!showRepostOptions)}
+												style={{
+													cursor: "pointer",
+													transform: "rotate(90deg)",
+													fill: "var(--d-l-grey)",
+												}}
+												size={20}
+											/>
+											<p
+												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+												className="m-0"
+											>
+												Repost
+											</p>
+										</div>
+										{showRepostOptions && (
+											<span className="repost_options border rounded shadow-sm">
+												<button
+													className="single_option btn text-start py-1 px-1 rounded border-bottom"
+													onClick={() => repostWithToughts(postId)}
+												>
+													{!repostLoading?.withThoughts ? (
+														<FaRegEdit size={20} />
+													) : (
+														<div
+															className="spinner-border text-secondary"
+															role="status"
+														>
+															<span className="visually-hidden">
+																Loading...
+															</span>
+														</div>
+													)}
+													<div className="d-flex flex-column g-1 ">
+														<span className="title">
+															Repost with your thoughts
+														</span>
+														<span className="description">
+															Create a new post
+														</span>
+													</div>
+												</button>
+												<button
+													className="single_option btn text-start py-1 ps-0 rounded border-bottom"
+													onClick={() => repostInstantly(postId)}
+												>
+													{!repostLoading?.instant ? (
+														<BiRepost
+															size={30}
+															style={{ transform: "rotate(90deg)" }}
+														/>
+													) : (
+														<div
+															className="spinner-border text-secondary"
+															role="status"
+														>
+															<span className="visually-hidden">
+																Loading...
+															</span>
+														</div>
+													)}
+													<div className="d-flex flex-column g-1 ">
+														<span className="title">Repost Instantly</span>
+														<span className="description">
+															Instantly bring to other's feed
+														</span>
+													</div>
+												</button>
+											</span>
+										)}
+									</span>
+									{savedPostId.includes(postId) ? (
+										<div
+											className="d-flex flex-column align-items-center justify-content-end
+                       gap-1"
+										>
+											<IoMdBookmark
+												size={20}
+												onClick={handleUnsavePost}
+												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+											/>
+											<p
+												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+												className="m-0"
+											>
+												Save
+											</p>
+										</div>
+									) : (
+										<div
+											className="d-flex flex-column align-items-center justify-content-end
                     gap-1"
-                    >
-                      <CiBookmark
-                        size={20}
-                        onClick={handleSavePopUp}
-                        style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
-                      />
-                      <p
-                        style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
-                        className="m-0"
-                      >
-                        Save
-                      </p>
-                    </div>
-                  )}
-                </div>
+										>
+											<CiBookmark
+												size={20}
+												onClick={handleSavePopUp}
+												style={{ cursor: "pointer", fill: "var(--d-l-grey)" }}
+											/>
+											<p
+												style={{ color: "var(--d-l-grey)", fontSize: "10px" }}
+												className="m-0"
+											>
+												Save
+											</p>
+										</div>
+									)}
+								</div>
 
-                {showComment && (
-                  <div className="border-top mt-1">
-                    <div className="comment_container mb-1 border-bottom">
-                      <div className="logo">
-                        <img
-                          src={loggedInUser.profilePicture}
-                          alt="Logo"
-                          className="border border-light"
-                        />
-                      </div>
-                      <section className="input_and_logo_section">
-                        <div className="input_box px-1">
-                          <input
-                            type="text"
-                            placeholder="Add a comment"
-                            className="fs-14"
-                            value={commentText}
-                            onChange={(e) => setCommentText(e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                sendComment();
-                              }
-                            }}
-                          />
-                        </div>
-                        <button
-                          type="button"
-                          className="btn btn-startup"
-                          onClick={() => sendComment()}
-                        >
-                          Post
-                        </button>
-                      </section>
-                    </div>
-                    {comments?.length ? (
-                      <span
-                        className="fs-6 ps-2 mb-2"
-                        style={{ color: "var(--d-l-grey)" }}
-                      >
-                        Comments
-                      </span>
-                    ) : (
-                      <span className="fs-6 ps-2 mb-2 w-100 d-flex justify-content-center text-center">
-                        No comments
-                      </span>
-                    )}
-                    {comments.map((val) => (
-                      <section
-                        className="single-comment row m-0 mt-2"
-                        key={val._id}
-                      >
-                        <div className="img_container col-2 px-2">
-                          <Link
-                            to={`/user/${val.user?.firstName?.toLowerCase() + "-" + val.user?.lastName?.toLowerCase()}/${val.user.oneLinkId}`}
-                            style={{
-                              pointerEvents: `${loggedInUser._id === val.user._id ? "none" : "all"}`,
-                            }}
-                          >
-                            <img
-                              src={val.user.profilePicture || avatar4}
-                              alt="Connection"
-                              className="w-100 rounded-circle border border-light"
-                            />
-                          </Link>
-                        </div>
-                        <div className="col-10 p-0 flex-grow-1">
-                          <div className="comment-details  rounded-3 p-2 p-lg-3 d-flex flex-column">
-                            <header className="d-flex justify-content-between align-items-center p-0">
-                              <Link
-                                to={`/user/${
-                                  val.user?.firstName.toLowerCase() +
-                                  "-" +
-                                  val.user?.lastName.toLowerCase()
-                                }/${val.user.oneLinkId}`}
-                                className="text-decoration-none  fs-sm"
-                                style={{
-                                  pointerEvents: `${
-                                    loggedInUser._id === val.user._id
-                                      ? "none"
-                                      : "all"
-                                  }`,
-                                }}
-                              >
-                                <h6 className="fs-sm m-0">
-                                  {val.user.firstName + " " + val.user.lastName}
-                                </h6>
-                              </Link>
-                              <span className="days_time fs-xs">
-                                <TimeAgo datetime={val.createdAt} locale="" />
-                              </span>
-                            </header>
-                            <span className=" fs-xs m-0">
-                              {val.user?.designation}
-                              {" , "}{" "}
-                              {val.user?.startUp?.company ||
-                                val.user?.investor?.companyName}
-                            </span>
-                            <p className="comment m-0 fs-sm mt-1">{val.text}</p>
-                          </div>
-                          <div className="actions d-flex gap-2 px-1 align-items-center justify-content-between">
-                            <div>
-                              {val?.likes?.includes(loggedInUser._id) ? (
-                                <img
-                                  src={fireIcon}
-                                  width={15}
-                                  alt="like post"
-                                  onClick={() =>
-                                    commentlikeUnlikeHandler(postId, val._id)
-                                  }
-                                />
-                              ) : (
-                                <ImFire
-                                  onClick={() =>
-                                    commentlikeUnlikeHandler(postId, val._id)
-                                  }
-                                  style={{
-                                    cursor: "pointer",
-                                    fill: "var(--d-l-grey)",
-                                  }}
-                                />
-                              )}
-                              <span className="mx-2 text-secondary fs-sm">
-                                {val?.likes?.length} likes
-                              </span>
-                            </div>
-                            {val.user._id === loggedInUser?._id && (
-                              <span
-                                onClick={() => deleteComments(postId, val._id)}
-                                style={{ cursor: "pointer" }}
-                              >
-                                <MdDelete style={{ fill: "var(--d-l-grey)" }} />
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </section>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </>
-          )}
-        </div>
+								{showComment && (
+									<div className="border-top mt-1">
+										<div className="comment_container mb-1 border-bottom">
+											<div className="logo">
+												<img
+													src={loggedInUser.profilePicture}
+													alt="Logo"
+													className="border border-light"
+												/>
+											</div>
+											<section className="input_and_logo_section">
+												<div className="input_box px-1">
+													<input
+														type="text"
+														placeholder="Add a comment"
+														className="fs-14"
+														value={commentText}
+														onChange={(e) => setCommentText(e.target.value)}
+														onKeyDown={(e) => {
+															if (e.key === "Enter") {
+																e.preventDefault();
+																sendComment();
+															}
+														}}
+													/>
+												</div>
+												<button
+													type="button"
+													className="btn btn-startup"
+													onClick={() => sendComment()}
+												>
+													Post
+												</button>
+											</section>
+										</div>
+										{comments?.length ? (
+											<span
+												className="fs-6 ps-2 mb-2"
+												style={{ color: "var(--d-l-grey)" }}
+											>
+												Comments
+											</span>
+										) : (
+											<span className="fs-6 ps-2 mb-2 w-100 d-flex justify-content-center text-center">
+												No comments
+											</span>
+										)}
+										{comments.map((val) => (
+											<section
+												className="single-comment row m-0 mt-2"
+												key={val._id}
+											>
+												<div className="img_container col-2 px-2">
+													<Link
+														to={`/investor/user/${
+															val.user?.firstName?.toLowerCase() +
+															"." +
+															val.user?.lastName?.toLowerCase()
+														}/${val.user.oneLinkId}`}
+														style={{
+															pointerEvents: `${
+																loggedInUser._id === val.user._id
+																	? "none"
+																	: "all"
+															}`,
+														}}
+													>
+														<img
+															src={val.user.profilePicture || avatar4}
+															alt="Connection"
+															className="w-100 rounded-circle border border-light"
+														/>
+													</Link>
+												</div>
+												<div className="col-10 p-0 flex-grow-1">
+													<div className="comment-details  rounded-3 p-2 p-lg-3 d-flex flex-column">
+														<header className="d-flex justify-content-between align-items-center p-0">
+															<Link
+																to={`/investor/user/${
+																	val.user?.firstName.toLowerCase() +
+																	"." +
+																	val.user?.lastName.toLowerCase()
+																}/${val.user.oneLinkId}`}
+																className="text-decoration-none  fs-sm"
+																style={{
+																	pointerEvents: `${
+																		loggedInUser._id === val.user._id
+																			? "none"
+																			: "all"
+																	}`,
+																}}
+															>
+																<h6 className="fs-sm m-0">
+																	{val.user.firstName + " " + val.user.lastName}
+																</h6>
+															</Link>
+															<span className="days_time fs-xs">
+																<TimeAgo datetime={val.createdAt} locale="" />
+															</span>
+														</header>
+														<span className=" fs-xs m-0">
+															{val.user?.designation}
+															{" , "}{" "}
+															{val.user?.startUp?.company ||
+																val.user?.investor?.companyName}
+														</span>
+														<p className="comment m-0 fs-sm mt-1">{val.text}</p>
+													</div>
+													<div className="actions d-flex gap-2 px-1 align-items-center justify-content-between">
+														<div>
+															{val?.likes?.includes(loggedInUser._id) ? (
+																<img
+																	src={fireIcon}
+																	width={15}
+																	alt="like post"
+																	onClick={() =>
+																		commentlikeUnlikeHandler(postId, val._id)
+																	}
+																/>
+															) : (
+																<ImFire
+																	onClick={() =>
+																		commentlikeUnlikeHandler(postId, val._id)
+																	}
+																	style={{
+																		cursor: "pointer",
+																		fill: "var(--d-l-grey)",
+																	}}
+																/>
+															)}
+															<span className="mx-2 text-secondary fs-sm">
+																{val?.likes?.length} likes
+															</span>
+														</div>
+														{val.user._id === loggedInUser?._id && (
+															<span
+																onClick={() => deleteComments(postId, val._id)}
+																style={{ cursor: "pointer" }}
+															>
+																<MdDelete style={{ fill: "var(--d-l-grey)" }} />
+															</span>
+														)}
+													</div>
+												</div>
+											</section>
+										))}
+									</div>
+								)}
+							</div>
+						</>
+					)}
+				</div>
 
-        {showSavePopUp && (
-          <SavePostPopUP
-            postId={postId}
-            savedPostStatus={receiveSavedPostStatus}
-            onClose={handleCloseSavePopup}
-          />
-        )}
-        {showSuccess && (
-          <InvestorAfterSuccessPopUp
-            withoutOkButton
-            onClose={() => setShowSuccess(!showSuccess)}
-            successText="Post saved Successfully"
-          />
-        )}
-        {showUnsaveSuccess && (
-          <InvestorAfterSuccessPopUp
-            withoutOkButton
-            onClose={() => setShowUnsaveSuccess(!showUnsaveSuccess)}
-            successText="Post unsaved Successfully"
-          />
-        )}
-        {showFeaturedPostSuccess && (
-          <InvestorAfterSuccessPopUp
-            withoutOkButton
-            onClose={() => setShowFeaturedPostSuccess(!showFeaturedPostSuccess)}
-            successText="The post has been added as a featured post."
-          />
-        )}
-        {showCompanyUpdateSuccess && (
-          <InvestorAfterSuccessPopUp
-            withoutOkButton
-            onClose={() =>
-              setShowCompanyUpdateSuccess(!showCompanyUpdateSuccess)
-            }
-            successText="The post has been added as a company updates."
-          />
-        )}
-      </div>
+				{showSavePopUp && (
+					<SavePostPopUP
+						postId={postId}
+						savedPostStatus={receiveSavedPostStatus}
+						onClose={handleCloseSavePopup}
+					/>
+				)}
+				{showSuccess && (
+					<InvestorAfterSuccessPopUp
+						withoutOkButton
+						onClose={() => setShowSuccess(!showSuccess)}
+						successText="Post saved Successfully"
+					/>
+				)}
+				{showUnsaveSuccess && (
+					<InvestorAfterSuccessPopUp
+						withoutOkButton
+						onClose={() => setShowUnsaveSuccess(!showUnsaveSuccess)}
+						successText="Post unsaved Successfully"
+					/>
+				)}
+				{showFeaturedPostSuccess && (
+					<InvestorAfterSuccessPopUp
+						withoutOkButton
+						onClose={() => setShowFeaturedPostSuccess(!showFeaturedPostSuccess)}
+						successText="The post has been added as a featured post."
+					/>
+				)}
+				{showCompanyUpdateSuccess && (
+					<InvestorAfterSuccessPopUp
+						withoutOkButton
+						onClose={() =>
+							setShowCompanyUpdateSuccess(!showCompanyUpdateSuccess)
+						}
+						successText="The post has been added as a company updates."
+					/>
+				)}
+			</div>
 
-      <Modal
-        show={likeModal}
-        onHide={handleClose}
-        centered
-        data-bs-theme={theme}
-        id="reactionsModalStartup"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Reactions</Modal.Title>
-        </Modal.Header>
-        <div className=" reactions_investor d-flex gap-4 border-bottom border-1 py-2 px-3">
-          <h6
-            className={`nav-item m-0 ${
-              activeHeader === true ? "active" : "text-secondary"
-            }`}
-            onClick={() => setActiveHeader(true)}
-          >
-            All
-          </h6>
-          <h6
-            className={`nav-item m-0 ${
-              activeHeader === false ? "active" : "text-secondary"
-            }`}
-            onClick={() => setActiveHeader(false)}
-          >
-            Likes
-          </h6>
-        </div>
-        <Modal.Body>
-          {likedByUsers?.map((user) => (
-            <div className="user-list d-flex align-items-center gap-2 p-2 border-bottom border-1" key={user._id}>
-              <img src={user.profilePicture} alt="user" />
-              <div>
-                <h6 className="m-0">
-                  {user.firstName} {user.lastName}
-                </h6>
-                <p className="m-0 text-secondary fs-xs">{user.designation}</p>
-              </div>
-            </div>
-          ))}
-        </Modal.Body>
-      </Modal>
+			<Modal
+				show={likeModal}
+				onHide={handleClose}
+				centered
+				data-bs-theme={theme}
+				id="reactionsModalStartup"
+			>
+				<Modal.Header closeButton>
+					<Modal.Title>Reactions</Modal.Title>
+				</Modal.Header>
+				<div className=" reactions_investor d-flex gap-4 border-bottom border-1 py-2 px-3">
+					<h6
+						className={`nav-item m-0 ${
+							activeHeader === true ? "active" : "text-secondary"
+						}`}
+						onClick={() => setActiveHeader(true)}
+					>
+						All
+					</h6>
+					<h6
+						className={`nav-item m-0 ${
+							activeHeader === false ? "active" : "text-secondary"
+						}`}
+						onClick={() => setActiveHeader(false)}
+					>
+						Likes
+					</h6>
+				</div>
+				<Modal.Body>
+					{likedByUsers?.map((user) => (
+						<div
+							className="user-list d-flex align-items-center gap-2 p-2 border-bottom border-1"
+							key={user._id}
+						>
+							<img src={user.profilePicture} alt="user" />
+							<div>
+								<h6 className="m-0">
+									{user.firstName} {user.lastName}
+								</h6>
+								<p className="m-0 text-secondary fs-xs">{user.designation}</p>
+							</div>
+						</div>
+					))}
+				</Modal.Body>
+			</Modal>
 
-      <ModalBSContainer id="reportPostModal">
-        <ModalBSHeader title="Report Post" className={"d-l-grey"} />
-        <ModalBSBody className={"d-l-grey"}>
-          <h6 className="h6">Select a reason that applies</h6>
-          <div className="reasons_container">
-            <div className="form-check form-check-inline m-0">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="reportReason"
-                onChange={({ target }) => setReportReason(target.value)}
-                id="inlineRadio1"
-                value="Harassment"
-                hidden
-              />
-              <label
-                className={`form-check-label ${
-                  reportReason === "Harassment" && "bg-secondary text-white"
-                }`}
-                htmlFor="inlineRadio1"
-              >
-                Harassment
-              </label>
-            </div>
-            <div className="form-check form-check-inline m-0">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="reportReason"
-                onChange={({ target }) => setReportReason(target.value)}
-                id="inlineRadio2"
-                value="Spam"
-                hidden
-              />
-              <label
-                className={`form-check-label ${
-                  reportReason === "Spam" && "bg-secondary text-white"
-                }`}
-                htmlFor="inlineRadio2"
-              >
-                Spam
-              </label>
-            </div>
-            <div className="form-check form-check-inline m-0">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="reportReason"
-                onChange={({ target }) => setReportReason(target.value)}
-                id="inlineRadio3"
-                value="Fraud or scam"
-                hidden
-              />
-              <label
-                className={`form-check-label ${
-                  reportReason === "Fraud or scam" && "bg-secondary text-white"
-                }`}
-                htmlFor="inlineRadio3"
-              >
-                Fraud or scam
-              </label>
-            </div>
-            <div className="form-check form-check-inline m-0">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="reportReason"
-                onChange={({ target }) => setReportReason(target.value)}
-                id="inlineRadio4"
-                value="Hateful Speech"
-                hidden
-              />
-              <label
-                className={`form-check-label ${
-                  reportReason === "Hateful Speech" && "bg-secondary text-white"
-                }`}
-                htmlFor="inlineRadio4"
-              >
-                Hateful Speech
-              </label>
-            </div>
-          </div>
-          <h6 className="h6 mt-3 text-decoration-underline">
-            Looking for something else?
-          </h6>
-          <span>
-            Sometimes our members prefer not to see certain kinds of content,
-            rather than reporting.
-          </span>
-        </ModalBSBody>
-        <ModalBSFooter cancel cancelClass="cancel_button btn">
-          {!filingReport ? (
-            <button
-              type="submit"
-              className="submit_button btn"
-              onClick={reportSubmitHandler}
-            >
-              Submit report
-            </button>
-          ) : (
-            <button className="submit_button btn" type="button" disabled>
-              <span role="status" className="me-1">
-                Submit report
-              </span>
-              <span
-                className="spinner-border spinner-border-sm"
-                aria-hidden="true"
-              ></span>
-            </button>
-          )}
-        </ModalBSFooter>
-      </ModalBSContainer>
-    </>
-  );
+			<ModalBSContainer id="reportPostModal">
+				<ModalBSHeader title="Report Post" className={"d-l-grey"} />
+				<ModalBSBody className={"d-l-grey"}>
+					<h6 className="h6">Select a reason that applies</h6>
+					<div className="reasons_container">
+						<div className="form-check form-check-inline m-0">
+							<input
+								className="form-check-input"
+								type="radio"
+								name="reportReason"
+								onChange={({ target }) => setReportReason(target.value)}
+								id="inlineRadio1"
+								value="Harassment"
+								hidden
+							/>
+							<label
+								className={`form-check-label ${
+									reportReason === "Harassment" && "bg-secondary text-white"
+								}`}
+								htmlFor="inlineRadio1"
+							>
+								Harassment
+							</label>
+						</div>
+						<div className="form-check form-check-inline m-0">
+							<input
+								className="form-check-input"
+								type="radio"
+								name="reportReason"
+								onChange={({ target }) => setReportReason(target.value)}
+								id="inlineRadio2"
+								value="Spam"
+								hidden
+							/>
+							<label
+								className={`form-check-label ${
+									reportReason === "Spam" && "bg-secondary text-white"
+								}`}
+								htmlFor="inlineRadio2"
+							>
+								Spam
+							</label>
+						</div>
+						<div className="form-check form-check-inline m-0">
+							<input
+								className="form-check-input"
+								type="radio"
+								name="reportReason"
+								onChange={({ target }) => setReportReason(target.value)}
+								id="inlineRadio3"
+								value="Fraud or scam"
+								hidden
+							/>
+							<label
+								className={`form-check-label ${
+									reportReason === "Fraud or scam" && "bg-secondary text-white"
+								}`}
+								htmlFor="inlineRadio3"
+							>
+								Fraud or scam
+							</label>
+						</div>
+						<div className="form-check form-check-inline m-0">
+							<input
+								className="form-check-input"
+								type="radio"
+								name="reportReason"
+								onChange={({ target }) => setReportReason(target.value)}
+								id="inlineRadio4"
+								value="Hateful Speech"
+								hidden
+							/>
+							<label
+								className={`form-check-label ${
+									reportReason === "Hateful Speech" && "bg-secondary text-white"
+								}`}
+								htmlFor="inlineRadio4"
+							>
+								Hateful Speech
+							</label>
+						</div>
+					</div>
+					<h6 className="h6 mt-3 text-decoration-underline">
+						Looking for something else?
+					</h6>
+					<span>
+						Sometimes our members prefer not to see certain kinds of content,
+						rather than reporting.
+					</span>
+				</ModalBSBody>
+				<ModalBSFooter cancel cancelClass="cancel_button btn">
+					{!filingReport ? (
+						<button
+							type="submit"
+							className="submit_button btn"
+							onClick={reportSubmitHandler}
+						>
+							Submit report
+						</button>
+					) : (
+						<button className="submit_button btn" type="button" disabled>
+							<span role="status" className="me-1">
+								Submit report
+							</span>
+							<span
+								className="spinner-border spinner-border-sm"
+								aria-hidden="true"
+							></span>
+						</button>
+					)}
+				</ModalBSFooter>
+			</ModalBSContainer>
+		</>
+	);
 };
 
 export default FeedPostCard;

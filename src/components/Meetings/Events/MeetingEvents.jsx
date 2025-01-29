@@ -28,7 +28,7 @@ const Spinner = ({ isInvestor }) => (
 	</div>
 );
 
-const EventsList = ({communityId}) => {
+const EventsList = ({ communityId }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [events, setEvents] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -37,7 +37,7 @@ const EventsList = ({communityId}) => {
 	const user = localStorage.getItem("loggedInUser");
 	const username = user ? JSON.parse(user).userName : null;
 	const navigate = useNavigate();
-	console.log("Events", events);
+	// console.log("Events", events);
 	// console.log("User Availability", userAvailability);
 	const [isInvestor, setIsInvestor] = useState(false);
 
@@ -46,38 +46,38 @@ const EventsList = ({communityId}) => {
 	const fetchEvents = () => {
 		setLoading(true);
 		fetch(`${baseUrl}/meetings/getEvents`, {
-		  method: "GET",
-		  headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${token}`,
-		  },
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
 		})
-		  .then((res) => res.json())
-		  .then((data) => {
-			setLoading(false);
-			if (data && data.data) {
-			  let eventsToSet = data.data;
-	  
-			  // If communityId is present, filter events by matching communityId
-			  if (communityId) {
-				eventsToSet = eventsToSet.filter(event => event.communityId === communityId);
-			  }
-			  else{
-				eventsToSet = eventsToSet.filter(event => !event.communityId);
-			  }
-	  
-			  // Set the filtered or all events to state
-			  setEvents(eventsToSet);
-			} else {
-			  console.error("Unexpected data format:", data);
-			}
-		  })
-		  .catch((error) => {
-			setLoading(false);
-			console.error("Error fetching events:", error);
-		  });
-	  };
-	  
+			.then((res) => res.json())
+			.then((data) => {
+				setLoading(false);
+				if (data && data.data) {
+					let eventsToSet = data.data;
+
+					// If communityId is present, filter events by matching communityId
+					if (communityId) {
+						eventsToSet = eventsToSet.filter(
+							(event) => event.communityId === communityId
+						);
+					} else {
+						eventsToSet = eventsToSet.filter((event) => !event.communityId);
+					}
+
+					// Set the filtered or all events to state
+					setEvents(eventsToSet);
+				} else {
+					console.error("Unexpected data format:", data);
+				}
+			})
+			.catch((error) => {
+				setLoading(false);
+				console.error("Error fetching events:", error);
+			});
+	};
 
 	useEffect(() => {
 		setIsInvestor(loggedInUser.isInvestor);
@@ -161,26 +161,28 @@ const EventsList = ({communityId}) => {
 
 	return (
 		<div className="events-container">
-			{(!communityId && (<div className="events-header">
-				<h1>Events</h1>
-				{userAvailability ? (
-					<button
-						className="create-event-btn"
-						onClick={() => setIsModalOpen(true)}
-					>
-						<FiPlus />
-						<span>Create Event</span>
-					</button>
-				) : (
-					<button
-						className="create-event-btn"
-						onClick={() => navigate("/meeting/availability")}
-					>
-						<RxUpdate />
-						<span>Set Availability</span>
-					</button>
-				)}
-			</div>))}
+			{!communityId && (
+				<div className="events-header">
+					<h1>Events</h1>
+					{userAvailability ? (
+						<button
+							className="create-event-btn"
+							onClick={() => setIsModalOpen(true)}
+						>
+							<FiPlus />
+							<span>Create Event</span>
+						</button>
+					) : (
+						<button
+							className="create-event-btn"
+							onClick={() => navigate("/meeting/availability")}
+						>
+							<RxUpdate />
+							<span>Set Availability</span>
+						</button>
+					)}
+				</div>
+			)}
 
 			{events.length === 0 ? (
 				<div className="no-events">No events found.</div>
