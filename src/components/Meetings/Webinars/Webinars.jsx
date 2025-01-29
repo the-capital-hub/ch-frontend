@@ -197,16 +197,16 @@ const EventsList = () => {
 										<span>{event.eventType}</span>
 									</div>
 									<div className="leftRight">
-										{event.price > 0 ? (
+										{event?.price > 0 ? (
 											<div className="price-tag">
-												{event.discount > 0 && (
+												{event?.discount > 0 && (
 													<span className="original-price">
-														₹{event.price.toFixed(0)}
+														₹{event?.price}
 													</span>
 												)}
 												<span className="new-price">
 													₹
-													{(event.price * (1 - event.discount / 100)).toFixed(
+													{(event?.price * (1 - event?.discount / 100)).toFixed(
 														0
 													)}
 												</span>
