@@ -261,21 +261,21 @@ const Thoughts = () => {
 		fetchQuestions();
 	}, []);
 	useEffect(() => {
-		const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+		const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 		const root = document.documentElement;
-		setIsInvestor(loggedInUser?.isInvestor);
+		setIsInvestor(loggedInUser?.isInvestor === "true" ? true : false);
 		if (loggedInUser?.isInvestor) {
-		  root.style.setProperty('--theme-color', '#d3f36b');
-		  root.style.setProperty('--theme-hover-color', '#bcd95f');
-		  root.style.setProperty('--current-theme-color', '#d3f36b');
-		  root.style.setProperty('--current-theme-text-color', '#000000');
+			root.style.setProperty("--theme-color", "#d3f36b");
+			root.style.setProperty("--theme-hover-color", "#bcd95f");
+			root.style.setProperty("--current-theme-color", "#d3f36b");
+			root.style.setProperty("--current-theme-text-color", "#000000");
 		} else {
-		  root.style.setProperty('--theme-color', '#FF620E');
-		  root.style.setProperty('--theme-hover-color', '#e55a0d');
-		  root.style.setProperty('--current-theme-color', '#FF620E');
-		  root.style.setProperty('--current-theme-text-color', '#FFFFFF');
+			root.style.setProperty("--theme-color", "#FF620E");
+			root.style.setProperty("--theme-hover-color", "#e55a0d");
+			root.style.setProperty("--current-theme-color", "#FF620E");
+			root.style.setProperty("--current-theme-text-color", "#FFFFFF");
 		}
-	  }, []);
+	}, []);
 	// Add resize observer effect
 	useEffect(() => {
 		const checkMobileView = () => {
@@ -398,9 +398,9 @@ const Thoughts = () => {
 	};
 
 	const handleArticleClick = (id) => {
-		if(isInvestor){
+		if (isInvestor) {
 			navigate(`/investor/thoughts/question/${id}`);
-		}else{
+		} else {
 			navigate(`/thoughts/question/${id}`);
 		}
 	};
@@ -523,7 +523,13 @@ const Thoughts = () => {
 
 				<button
 					className="thoughts-navbar-create-button"
-					onClick={() => navigate(isInvestor ? "/investor/thoughts/create-question" : "/thoughts/create-question")}
+					onClick={() =>
+						navigate(
+							isInvestor
+								? "/investor/thoughts/create-question"
+								: "/thoughts/create-question"
+						)
+					}
 				>
 					<BiPlus />
 					Create Question

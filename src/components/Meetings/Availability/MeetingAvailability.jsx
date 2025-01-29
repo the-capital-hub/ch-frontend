@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./Availability.scss";
 import { environment } from "../../../environments/environment";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { selectTheme } from "../../../Store/features/design/designSlice";
 const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 
 const AvailabilitySettings = () => {
 	const theme = useSelector(selectTheme);
+	const navigate = useNavigate();
 	const [availability, setAvailability] = useState({
 		dayAvailability: [
 			{ day: "Monday", start: "09:00", end: "17:00", enabled: true },
@@ -24,9 +26,9 @@ const AvailabilitySettings = () => {
 	const [isInvestor, setIsInvestor] = useState(false);
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 
-	useEffect(()=>{
+	useEffect(() => {
 		setIsInvestor(loggedInUser.isInvestor);
-	},[])
+	}, []);
 	// Updated handleDayToggle function
 	const handleDayToggle = (day) => {
 		setAvailability((prev) => {
@@ -66,6 +68,7 @@ const AvailabilitySettings = () => {
 			}).then((res) => {
 				if (res.status === 200) {
 					alert("Availability updated successfully");
+					navigate("/meeting/events");
 				} else {
 					alert("Error updating availability");
 				}
@@ -80,7 +83,9 @@ const AvailabilitySettings = () => {
 
 	return (
 		<div
-			className={`availability-container ${theme === "dark" ? "dark-theme" : ""} ${isInvestor ? "investor-theme" : ""}`}
+			className={`availability-container ${
+				theme === "dark" ? "dark-theme" : ""
+			} ${isInvestor ? "investor-theme" : ""}`}
 		>
 			<div className="availability-wrapper">
 				<h1>Availability</h1>
