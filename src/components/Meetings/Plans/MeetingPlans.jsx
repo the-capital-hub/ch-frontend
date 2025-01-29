@@ -27,6 +27,8 @@ const Meetings = () => {
 	const [cancelLoading, setCancelLoading] = useState(null);
 	const [isInvestor, setIsInvestor] = useState(false);
 
+	console.log('meetings', meetings);
+
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
 
 	const fetchMeetings = () => {

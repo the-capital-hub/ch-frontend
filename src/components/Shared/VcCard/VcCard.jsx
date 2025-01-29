@@ -9,7 +9,8 @@ const VcCard = ({ vc }) => {
 					<img src={vc.logo} alt={`${vc.name} logo`} className="vc-logo" />
 				) : (
 					<img
-						src="https://thecapitalhub.s3.ap-south-1.amazonaws.com/company-dummy.png"
+						// src="https://thecapitalhub.s3.ap-south-1.amazonaws.com/company-dummy.png"
+						src={`https://dummyimage.com/112x112/00000000/ffffff&text=${vc.name}`}
 						alt={`${vc.name} logo`}
 						className="vc-logo"
 					/>
