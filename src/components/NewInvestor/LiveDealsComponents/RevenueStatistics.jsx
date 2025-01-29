@@ -11,7 +11,12 @@ const RevenueStatistics = ({ startup, colorCard }) => {
         <div
           className="p-2 rounded-3 text-white d-flex justify-content-between stat__badge"
           style={{
-            backgroundColor: "#333333",
+            background: "linear-gradient(145deg, #2d2d2d, #333333)",
+            borderRadius: "16px",
+            padding: "1.25rem",
+            flex: "1",
+            minWidth: "280px",
+            border: "1px solid rgba(255,255,255,0.1)"
           }}
         >
           <div className="d-flex flex-column gap-2 justify-content-center ps-2 pe-2">
@@ -35,7 +40,12 @@ const RevenueStatistics = ({ startup, colorCard }) => {
         <div
           className="p-2 rounded-3 text-white d-flex justify-content-between stat__badge"
           style={{
-            backgroundColor: "#333333",
+            background: "linear-gradient(145deg, #2d2d2d, #333333)",
+            borderRadius: "16px",
+            padding: "1.25rem",
+            flex: "1",
+            minWidth: "280px",
+            border: "1px solid rgba(255,255,255,0.1)"
           }}
         >
           <div className="d-flex flex-column gap-2 justify-content-center ps-2 pe-2">

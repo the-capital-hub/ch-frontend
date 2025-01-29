@@ -5,8 +5,8 @@ import DealsFunds from "../../../components/NewInvestor/LiveDealsComponents/Deal
 import "./DealsCard.scss";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../Store/features/design/designSlice";
-import { selectLoggedInUserId } from "../../../Store/features/user/userSlice";
-import { addInvestorToLiveDeal } from "../../../Service/user";
+import { selectLoggedInUserId, selectIsInvestor } from "../../../Store/features/user/userSlice";
+import { addInvestorToLiveDeal, getStartUpById, getUserByIdBody } from "../../../Service/user";
 import { useEffect, useState } from "react";
 import RevenueStatistics from "../../../components/NewInvestor/LiveDealsComponents/RevenueStatistics";
 import CurrentFunding from "./CurrentFunding";
@@ -14,7 +14,32 @@ import CurrentFunding from "./CurrentFunding";
 export default function DealsCompany({ company, setData }) {
   const theme = useSelector(selectTheme);
   const loggedInUserId = useSelector(selectLoggedInUserId);
+  const isInvestor = useSelector(selectIsInvestor);
   const [userInterested, setUserInterested] = useState([]);
+  const [founderId, setFounderId] = useState({});
+
+  // Extract founderId safely
+
+  const companyId = company?.startupId?._id;
+
+  useEffect(() => {
+    const fetchFounderDetails = async () => {
+      try {
+        const startupResponse = await getStartUpById(companyId);
+        const startupData = startupResponse.data.data;
+        const founder_id = startupData.founderId.toString();
+        const founderResponse = await getUserByIdBody(founder_id);
+        setFounderId(founderResponse.data);
+      } catch (error) {
+        console.error('Error fetching founder details:', error);
+      }
+    };
+
+    if (companyId) {
+      fetchFounderDetails();
+    }
+  }, [companyId]);
+  
   useEffect(() => {
     const isExist = company.intrustedInvestor.filter(
       (item) => item?._id === loggedInUserId
@@ -23,25 +48,21 @@ export default function DealsCompany({ company, setData }) {
       setUserInterested(isExist[0]?._id);
     }
   }, [userInterested, company, loggedInUserId]);
+
   const handelDeals = async () => {
     try {
       if (!company.intrustedInvestor.includes(loggedInUserId)) {
-        addInvestorToLiveDeal(company._id)
-          .then((res) => {
-            console.log();
-            setData(res);
-            // const companyData= res.filter()
-            // setUserInterested(true)
-          })
-          .catch((error) => {
-            console.error("Error-->", error);
-          });
+        const res = await addInvestorToLiveDeal(company._id);
+        setData(res);
       }
-    } catch (err) {}
+    } catch (err) {
+      console.error("Error in handelDeals:", err);
+    }
   };
+
   return (
     <div
-      className="company__deals  shadow-sm border rounded-4"
+      className="company__deals shadow-sm border rounded-4"
       style={{
         background: theme === "dark" ? "#212224" : "#f5f5f5",
         padding: "2rem",
@@ -55,6 +76,9 @@ export default function DealsCompany({ company, setData }) {
         handelDeals={handelDeals}
         loggedInUserId={loggedInUserId}
         userInterested={userInterested}
+        companyId={companyId}
+        founderId={founderId}
+        isInvestor={isInvestor}
       />
       <DealsOverview
         name={company.name}

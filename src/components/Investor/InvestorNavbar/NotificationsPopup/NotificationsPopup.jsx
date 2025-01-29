@@ -41,6 +41,7 @@ function NotificationsPopup({ toggleVisibility }) {
 
   useEffect(() => {
     fetchNotifications();
+    console.log("notifications", notifications); 
   }, []);
 
   const displayPost = (post) => {
@@ -164,6 +165,15 @@ function NotificationsPopup({ toggleVisibility }) {
             request
           </span>
         );
+      }
+      case "onlinkRequest": {
+        return "requested access to your OneLink";
+      }
+      case "onlinkRequestAccepted": {
+        return "accepted your OneLink access request";
+      }
+      case "onlinkRequestRejected": {
+        return "rejected your OneLink access request";
       }
       default: {
         return "";

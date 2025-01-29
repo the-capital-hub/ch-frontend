@@ -7,9 +7,14 @@ import CompanyOverviewCard from "../../../components/NewInvestor/SyndicateCompon
 
 export default function DealsOverview({ name, about,theme }) {
   return (
-    <div className="deals__overview gap-4">
-      <h6 className="div__heading my-2" style={{color:theme === "dark"?"#fff":"black",}}>Over View</h6>
-      <div className="d-flex flex-column gap-4 flex-md-row gap-md-5" style={{paddingTop:"10px"}}>
+    <div className="deals__overview gap-4 my-4">
+      <h6 className="div__heading mb-4" 
+          style={{
+            color: theme === "dark" ? "#fff" : "black",
+          }}>
+        Overview
+      </h6>
+      <div className="d-flex flex-column gap-4 flex-md-row gap-md-5 mb-4">
         <CompanyOverviewCard
           heading={"Website"}
           text={name}
@@ -38,7 +43,15 @@ export default function DealsOverview({ name, about,theme }) {
           theme={theme}
         />
       </div>
-      <p className="overview__about" style={{color:theme === "dark"?"#fff":"black",padding:"0px"}}>{about}</p>
+      <p className="overview__about" 
+         style={{
+           color: theme === "dark" ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.8)",
+           padding: "1rem 0",
+           fontSize: "1rem",
+           lineHeight: "1.8"
+         }}>
+        {about}
+      </p>
     </div>
   );
 }

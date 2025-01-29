@@ -88,6 +88,7 @@ const Feed = () => {
 	const [page, setPage] = useState(1);
 	const [pollOptions, setPollOptions] = useState("");
 	const [isProfileComplete, setIsProfileComplete] = useState(null);
+	const [loading, setLoading] = useState(false);
 
 	// console.log("allPosts", allPosts);
 
@@ -140,24 +141,39 @@ const Feed = () => {
 	};
 
 	const fetchMorePosts = () => {
+		if (loading) return;
+		
+		setLoading(true);
 		getAllPostsAPI(page)
 			.then(({ data }) => {
-				if (data?.length === 0) {
+				if (!data || data.length === 0) {
 					setHasMore(false);
-				} else {
-					const totalPost = data.filter((item) => item.postType === "public");
-					if (totalPost.length === 0) {
-						setHasMore(false);
-					}
-					setAllPosts((prevPosts) => [...prevPosts, ...totalPost]);
-					setPage((prevPage) => prevPage + 1);
+					return;
 				}
+				
+				const totalPost = data.filter((item) => item.postType === "public");
+				if (totalPost.length === 0) {
+					setHasMore(false);
+					return;
+				}
+				
+				setAllPosts((prevPosts) => [...prevPosts, ...totalPost]);
+				setPage((prevPage) => prevPage + 1);
 			})
 			.catch((err) => {
+				console.error("Error fetching posts:", err);
 				setHasMore(false);
-				console.log();
+			})
+			.finally(() => {
+				setLoading(false);
 			});
 	};
+
+	// Add initial posts loading
+	useEffect(() => {
+		fetchMorePosts();
+	}, []); 
+
 	const handlePollVote = async (postId, optionId) => {
 		try {
 			const token = localStorage.getItem("accessToken");
@@ -217,7 +233,6 @@ const Feed = () => {
 		getSavedPostCollections(loggedInUser._id).then((data) => {
 			setgetSavedPostData(data);
 		});
-		fetchMorePosts();
 	}, []);
 	// newPost
 
@@ -357,12 +372,8 @@ const Feed = () => {
 									dataLength={allPosts.length}
 									next={fetchMorePosts}
 									hasMore={hasMore}
-									loader={
-										<SkeletonLoader />
-										// <div className="loader_spinner container p-5 text-center my-5  rounded-5 shadow-sm ">
-										// 	<SpinnerBS colorClass={"d-l-grey"} />
-										// </div>
-									}
+									loader={<SkeletonLoader />}
+									scrollThreshold={0.6}
 								>
 									{allPosts?.map(
 										(
