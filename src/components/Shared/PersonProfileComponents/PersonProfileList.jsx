@@ -2,9 +2,24 @@ import React, { useEffect, useState, useRef } from "react";
 import PersonProfile from "./PersonProfile";
 import { motion } from "framer-motion";
 
-export default function PersonProfileList({ theme, short, data }) {
+export default function PersonProfileList({ theme, short, data: initialData }) {
   const [visibleProfiles, setVisibleProfiles] = useState([]); // Track visible profiles
+  const [data, setData] = useState(initialData); // Add local state for data
   const containerRef = useRef(null);
+
+  // Update local state when prop changes
+  useEffect(() => {
+    setData(initialData);
+  }, [initialData]);
+
+  const handleFounderUpdate = (updatedFounder) => {
+    if (data) {
+      const updatedData = data.map(founder => 
+        founder._id === updatedFounder._id ? updatedFounder : founder
+      );
+      setData(updatedData); // Update the local state with new data
+    }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -44,7 +59,13 @@ export default function PersonProfileList({ theme, short, data }) {
             animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }} // Animate when visible
             transition={{ duration: 0.5, ease: "easeOut" }} // Smooth transition
           >
-            <PersonProfile theme={theme} short={short} personData={person} />
+            <PersonProfile 
+              theme={theme} 
+              short={short} 
+              personData={person} 
+              onFounderUpdate={handleFounderUpdate}
+              isAdmin={true}
+            />
           </motion.div>
         );
       })}

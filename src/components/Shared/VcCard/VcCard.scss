@@ -29,6 +29,7 @@
     border-radius: 10%;
     object-fit: contain;
     background-color: #ececec;
+    border-radius: 50%;
   }
   
   .vc-card .header .vc-info {
@@ -46,7 +47,6 @@
     margin-top: 5%;
     color:var(--d-l-grey);
   }
-
   
   .vc-card .header .vc-info h5 {
     margin: 0 !important;
@@ -95,7 +95,6 @@
       margin-right: 0; /* Remove margin-right for mobile */
     }
   }
-
   
   .vc-card .know-more {
     background-color: #632AA9;
@@ -222,3 +221,180 @@
     }
   }
   
+  .vc-card .edit-button {
+    position: absolute;
+    top: 1.7rem;
+    left: 0.5rem;
+    z-index: 10;
+    background-color:  rgba(253, 89, 1, 1);;
+    border-color:  rgba(253, 89, 1, 1);;
+    color: var(--color-text);
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background-color: rgba(253, 89, 1, 0.8);
+      border-color:  rgba(253, 89, 1, 1);;
+      transform: scale(0.95);
+    }
+
+    svg {
+      width: 1em;
+      height: 1em;
+    }
+  }
+
+  #vc-profile-modal {
+    &.modal-dialog {
+      max-width: 800px;
+      margin: 1.75rem auto;
+      
+      .modal-content {
+        background-color: var(--white-to-grey);
+        border-radius: var(--border-radius);
+        max-height: 90vh;
+        
+        .modal-header {
+          background-color: var(--white-to-grey);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          padding: 1rem 1.5rem;
+          position: sticky;
+          top: 0;
+          z-index: 1;
+
+          .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--darkMode-text);
+          }
+
+          .btn-close {
+            padding: 0.75rem;
+            margin: -0.75rem -0.75rem -0.75rem auto;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+            
+            &:hover {
+              opacity: 1;
+            }
+          }
+        }
+
+        .modal-body {
+          padding: 1.5rem;
+          overflow-y: auto;
+          max-height: calc(90vh - 130px);
+
+          // Custom scrollbar
+          &::-webkit-scrollbar {
+            width: 8px;
+          }
+
+          &::-webkit-scrollbar-track {
+            background: transparent;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            border: 2px solid var(--white-to-grey);
+          }
+
+          .form-group {
+            margin-bottom: 1.25rem;
+
+            label {
+              font-weight: 500;
+              margin-bottom: 0.5rem;
+              color: var(--darkMode-text);
+              font-size: 0.9rem;
+            }
+
+            .form-control {
+              background-color: var(--white-to-grey);
+              border: 1px solid rgba(0, 0, 0, 0.1);
+              border-radius: 8px;
+              padding: 0.75rem;
+              color: var(--darkMode-text);
+              
+              &:focus {
+                border-color:  rgba(253, 89, 1, 1);;
+                box-shadow: 0 0 0 0.2rem rgba(253, 89, 1, 0.1);
+              }
+            }
+          }
+        }
+
+        .modal-footer {
+          background-color: var(--white-to-grey);
+          border-top: 1px solid rgba(0, 0, 0, 0.08);
+          padding: 1rem 1.5rem;
+          position: sticky;
+          bottom: 0;
+          z-index: 1;
+          display: flex;
+          justify-content: flex-end;
+          gap: 12px;
+
+          .btn {
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+          }
+
+          .btn-secondary {
+            background-color: transparent;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            color: var(--darkMode-text);
+
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.05);
+            }
+          }
+
+          .btn-primary {
+            background-color:  rgba(253, 89, 1, 1);;
+            border-color:  rgba(253, 89, 1, 1);;
+            color: var(--color-text);
+
+            &:hover {
+              background-color: rgba(253, 89, 1, 0.8);
+              transform: translateY(-1px);
+            }
+          }
+        }
+      }
+    }
+  }
+
+.ReactModal__Overlay {
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0 !important;
+  padding: 1rem;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
