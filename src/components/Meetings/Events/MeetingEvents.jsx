@@ -37,7 +37,7 @@ const EventsList = ({ communityId }) => {
 	const user = localStorage.getItem("loggedInUser");
 	const username = user ? JSON.parse(user).userName : null;
 	const navigate = useNavigate();
-	// console.log("Events", events);
+	console.log("Events", events);
 	// console.log("User Availability", userAvailability);
 	const [isInvestor, setIsInvestor] = useState(false);
 
@@ -123,8 +123,8 @@ const EventsList = ({ communityId }) => {
 	};
 
 	const handleDeleteEvent = (eventId) => {
-		fetch(`${baseUrl}/meetings/deleteEvent/${eventId}`, {
-			method: "DELETE",
+		fetch(`${baseUrl}/meetings/disableEvent/${eventId}`, {
+			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
@@ -132,13 +132,13 @@ const EventsList = ({ communityId }) => {
 		})
 			.then((res) => {
 				if (res.status === 200) {
-					alert("Event deleted successfully");
+					alert("Event disabled successfully");
 					fetchEvents();
 				} else {
-					alert("Error deleting event");
+					alert("Error disabling event");
 				}
 			})
-			.catch(() => alert("Error deleting event"));
+			.catch(() => alert("Error disabling event"));
 	};
 
 	const handleCopy = async (eventId) => {
@@ -233,17 +233,20 @@ const EventsList = ({ communityId }) => {
 							<div className="event-actions">
 								<div className="action-buttons">
 									<button
-										className="copy-btn"
+										className={`copy-btn ${!event.isActive ? "disabled" : ""}`}
 										onClick={() => handleCopy(event._id)}
 									>
 										<FiCopy />
 										{copiedLinks[event._id] ? "Link Copied!" : "Copy Link"}
 									</button>
 									<button
-										className="delete-btn"
+										className={`delete-btn ${
+											!event.isActive ? "disabled" : ""
+										}`}
 										onClick={() => handleDeleteEvent(event._id)}
+										disabled={!event.isActive}
 									>
-										<FiTrash2 /> Delete
+										<FiTrash2 /> Disable
 									</button>
 								</div>
 								<div className="bookings-count">
