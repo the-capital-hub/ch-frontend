@@ -8,3 +8,92 @@
     --border-radius: 20px;
     
 }
+
+.company__deals {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  .deals__header {
+    .btn {
+      padding: 8px 20px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      border-radius: 12px;
+      
+      &:hover {
+        transform: translateY(-1px);
+      }
+      
+      &.btn-investor {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+        color: white;
+        border: none;
+        
+        &:hover {
+          background: linear-gradient(135deg, #27ae60, #219a52);
+        }
+      }
+    }
+  }
+
+  .div__heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    position: relative;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: linear-gradient(90deg, #2ecc71, transparent);
+      border-radius: 2px;
+    }
+  }
+
+  .stat__badge {
+    flex: 1;
+    min-width: 280px;
+    background: linear-gradient(145deg, #2d2d2d, #333333) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.deals__header {
+  .btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    
+    &:disabled {
+      opacity: 0.7;
+    }
+  }
+
+  .btn-outline-warning {
+    &:hover {
+      color: #000;
+    }
+  }
+
+  .btn-outline-info {
+    &:disabled {
+      color: #0dcaf0;
+      background-color: transparent;
+    }
+  }
+}

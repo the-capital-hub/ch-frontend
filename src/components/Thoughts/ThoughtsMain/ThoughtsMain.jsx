@@ -263,12 +263,13 @@ const Thoughts = () => {
 	useEffect(() => {
 		const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 		const root = document.documentElement;
-		setIsInvestor(loggedInUser?.isInvestor === "true" ? true : false);
-		if (loggedInUser?.isInvestor) {
-			root.style.setProperty("--theme-color", "#d3f36b");
-			root.style.setProperty("--theme-hover-color", "#bcd95f");
-			root.style.setProperty("--current-theme-color", "#d3f36b");
-			root.style.setProperty("--current-theme-text-color", "#000000");
+
+		setIsInvestor(loggedInUser?.isInvestor);
+		if (loggedInUser?.isInvestor === "true") {
+		  root.style.setProperty('--theme-color', '#d3f36b');
+		  root.style.setProperty('--theme-hover-color', '#bcd95f');
+		  root.style.setProperty('--current-theme-color', '#d3f36b');
+		  root.style.setProperty('--current-theme-text-color', '#000000');
 		} else {
 			root.style.setProperty("--theme-color", "#FF620E");
 			root.style.setProperty("--theme-hover-color", "#e55a0d");
@@ -398,7 +399,8 @@ const Thoughts = () => {
 	};
 
 	const handleArticleClick = (id) => {
-		if (isInvestor) {
+		if(isInvestor === "true"){
+
 			navigate(`/investor/thoughts/question/${id}`);
 		} else {
 			navigate(`/thoughts/question/${id}`);
@@ -523,13 +525,8 @@ const Thoughts = () => {
 
 				<button
 					className="thoughts-navbar-create-button"
-					onClick={() =>
-						navigate(
-							isInvestor
-								? "/investor/thoughts/create-question"
-								: "/thoughts/create-question"
-						)
-					}
+
+					onClick={() => navigate(isInvestor === "true" ? "/investor/thoughts/create-question" : "/thoughts/create-question")}
 				>
 					<BiPlus />
 					Create Question

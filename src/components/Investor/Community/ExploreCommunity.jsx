@@ -36,7 +36,7 @@ export default function ExploreCommunities() {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     const root = document.documentElement;
     
-    if (loggedInUser?.isInvestor) {
+    if (loggedInUser?.isInvestor === "true") {
       root.style.setProperty('--theme-color', '#d3f36b');
       root.style.setProperty('--theme-hover-color', '#bcd95f');
       root.style.setProperty('--current-theme-color', '#d3f36b');
