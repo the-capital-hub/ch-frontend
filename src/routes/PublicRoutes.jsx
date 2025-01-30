@@ -387,7 +387,7 @@ function PublicRoutes() {
 					}
 				/>
 				<Route
-					path="/priority-dm/:username"
+					path="/priority-dm/:id"
 					element={
 						<Suspense fallback={<SuspenseLoader />}>
 							<PriorityDM />

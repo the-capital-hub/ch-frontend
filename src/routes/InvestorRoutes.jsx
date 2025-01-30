@@ -151,6 +151,10 @@ const CreateQuestion = lazy(() =>
 	import("../components/Thoughts/CreateQuestion/CreateQuestion")
 );
 
+const PriorityDMDetailed = lazy(() =>
+	import("../components/Shared/FoundersProfile/PriorityDMPage/PriorityDMPage")
+);
+
 function InvestorRoutes() {
 	return (
 		<>
@@ -195,30 +199,30 @@ function InvestorRoutes() {
 					</Suspense>
 				}
 			/>
-				<Route
-					path="thoughts"
-					element={
-						<Suspense fallback={<SuspenseLoader />}>
-							<ThoughtsMain />
-						</Suspense>
-					}
-				/>
-				<Route
-					path="thoughts/question/:id"
-					element={
-						<Suspense fallback={<SuspenseLoader />}>
-							<ThoughtsQA />
-						</Suspense>
-					}
-				/>
-				<Route
-					path="thoughts/create-question"
-					element={
-						<Suspense fallback={<SuspenseLoader />}>
-							<CreateQuestion />
-						</Suspense>
-					}
-				/>
+			<Route
+				path="thoughts"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<ThoughtsMain />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="thoughts/question/:id"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<ThoughtsQA />
+					</Suspense>
+				}
+			/>
+			<Route
+				path="thoughts/create-question"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<CreateQuestion />
+					</Suspense>
+				}
+			/>
 			<Route
 				path="profile"
 				element={
@@ -421,6 +425,15 @@ function InvestorRoutes() {
 				element={
 					<Suspense fallback={<SuspenseLoader />}>
 						<Notifications />
+					</Suspense>
+				}
+			/>
+
+			<Route
+				path="priority-dm/:id"
+				element={
+					<Suspense fallback={<SuspenseLoader />}>
+						<PriorityDMDetailed />
 					</Suspense>
 				}
 			/>
