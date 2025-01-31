@@ -951,8 +951,9 @@ const FounderProfile = () => {
 	};
 
 	const handlePriorityDMClick = () => {
-		navigate(`/priority-dm/${username}`);
+		navigate(`/priority-dm/${founder?.oneLinkId}`);
 	};
+	// console.log("founderData", founder);
 
 	return (
 		<>
