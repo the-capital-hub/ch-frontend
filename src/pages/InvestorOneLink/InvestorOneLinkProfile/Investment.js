@@ -96,10 +96,10 @@ const Investment = ({ canEdit, loading }) => {
     try {
       const updatedData = {
         ...companyData,
-        revenue: companyData.revenue.map((r, index) =>
-          index === companyData.revenue.length - 1
+        revenue: companyData?.revenue.map((r, index) =>
+          index === companyData?.revenue.length - 1
             ? {
-                amount: parseInt(companyData.revenue[index].amount),
+                amount: parseInt(companyData?.revenue[index].amount),
                 date: new Date(),
               }
             : r
@@ -115,8 +115,8 @@ const Investment = ({ canEdit, loading }) => {
   }
 
   const recentInvestmentAmount =
-    companyData.revenue.length > 0
-      ? companyData.revenue[companyData.revenue.length - 1].amount
+    companyData?.revenue.length > 0
+      ? companyData?.revenue[companyData?.revenue.length - 1].amount
       : "NA";
 
   return (
@@ -180,8 +180,8 @@ const Investment = ({ canEdit, loading }) => {
             <input
               name="revenue"
               value={
-                companyData.revenue.length > 0
-                  ? companyData.revenue[companyData.revenue.length - 1].amount
+                companyData?.revenue.length > 0
+                  ? companyData?.revenue[companyData?.revenue.length - 1].amount
                   : ""
               }
               onChange={handleRecentInvestmentChange}
@@ -246,7 +246,7 @@ const Investment = ({ canEdit, loading }) => {
           {canEdit && edit === "average" ? (
             <select
               name="averageInvestment"
-              value={companyData.investmentRange}
+              value={companyData?.investmentRange}
               onChange={handleAverageInvestmentChange}
             >
               <option value="2.5 - 5 Lakhs">2.5 - 5 Lakhs</option>
@@ -261,7 +261,7 @@ const Investment = ({ canEdit, loading }) => {
                 marginBottom: "0",
               }}
             >
-              {companyData.investmentRange || "NA"}
+              {companyData?.investmentRange || "NA"}
             </p>
           )}
         </div>
@@ -317,7 +317,7 @@ const Investment = ({ canEdit, loading }) => {
           {canEdit && edit === "age" ? (
             <input
               name="age"
-              value={companyData.age}
+              value={companyData?.age}
               onChange={handleTextChange}
             />
           ) : (
@@ -327,7 +327,7 @@ const Investment = ({ canEdit, loading }) => {
                 marginBottom: "0",
               }}
             >
-              {companyData.age ? `Age ${companyData.age}` : "NA"}
+              {companyData?.age ? `Age ${companyData?.age}` : "NA"}
             </p>
           )}
         </div>

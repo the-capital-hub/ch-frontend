@@ -988,7 +988,7 @@ const Login = () => {
 							)}
 						</div>
 
-						<div className="submit_btn mt-3">
+						<div className="submit_btn mt-2">
 							<button
 								type="submit"
 								className={` ${isInvestorSelected ? "investor" : "startup"}`}
