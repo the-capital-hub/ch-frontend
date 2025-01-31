@@ -22,7 +22,7 @@ import "./App.scss";
 import ValidateOneLink from "./pages/InvestorView/ValidateOneLink/ValidateOneLink";
 import ProtectedInvestorRoutes from "./pages/Investor/ProtectedInvestorRoutes/ProtectedInvestorRoutes";
 import BlogWrapper from "./components/Blog/BlogWrapper/BlogWrapper";
-// import EcommerceLayout from "./components//Layout/Layout/Layout";
+import EcommerceLayout from "./components/ECommerace/Layout/Layout/Layout";
 import InvestorOneLinkLayout from "./pages/InvestorOneLink/InvestorOneLinkLayout/InvestorOneLinkLayout";
 
 // Pages
@@ -141,9 +141,9 @@ function App() {
 					</Route>
 
 					{/* E-Commerce */}
-					{/* <Route path="/landing-page" element={<EcommerceLayout />}>
+					<Route path="/landing-page" element={<EcommerceLayout />}>
 						{EcommerceRoutes()}
-					</Route> */}
+					</Route>
 
 					{/* Admin Routes */}
 					<Route path="/admin/*" element={<AdminRoutes />} />
