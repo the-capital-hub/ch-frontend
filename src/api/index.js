@@ -1,4 +1,5 @@
 import { environment } from "../environments/environment";
+import { getUserAvailability } from "../Service/user";
 
 const baseUrl = environment.baseUrl;
 const API = Object.freeze({
@@ -8,6 +9,8 @@ const API = Object.freeze({
 	getRawUsers: `${baseUrl}/users/getRawUsers`,
 	getRawUserById: `${baseUrl}/users/getRawUserById`,
 	getUserAvailability: `${baseUrl}/users/getUserAvailability`,
+	getMeetingsAvailability: `${baseUrl}/meetings/getAvailability`,
+	updateMeetingsAvailability: `${baseUrl}/meetings/updateAvailability`,
 	postUser: `${baseUrl}/users/createUser`,
 	getPostById: `${baseUrl}/api/posts/get_post_by_id`,
 	postStartUpData: `${baseUrl}/startup/createStartup`,

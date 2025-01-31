@@ -2179,3 +2179,26 @@ export const getUserByOneLinkId = async (oneLinkId) => {
 		throw error;
 	}
 };
+
+export const getMeetingsAvailability = async () => {
+	try {
+		const response = await axiosInstance.get(`${API.getMeetingsAvailability}`);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const updateMeetingsAvailability = async (data) => {
+	try {
+		const response = await axiosInstance.patch(
+			`${API.updateMeetingsAvailability}`,
+			data
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};

@@ -1,85 +1,145 @@
-import React, { useEffect, useState } from "react";
-import "./Availability.scss";
-import { environment } from "../../../environments/environment";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectTheme } from "../../../Store/features/design/designSlice";
-const baseUrl = environment.baseUrl;
-const token = localStorage.getItem("accessToken");
+import DatePicker from "react-datepicker";
+import {
+	getMeetingsAvailability,
+	updateMeetingsAvailability,
+} from "../../../Service/user";
+import "react-datepicker/dist/react-datepicker.css";
+import "./Availability.scss";
 
 const AvailabilitySettings = () => {
-	const theme = useSelector(selectTheme);
 	const navigate = useNavigate();
-	const [availability, setAvailability] = useState({
-		dayAvailability: [
-			{ day: "Monday", start: "09:00", end: "17:00", enabled: true },
-			{ day: "Tuesday", start: "09:00", end: "17:00", enabled: false },
-			{ day: "Wednesday", start: "09:00", end: "17:00", enabled: false },
-			{ day: "Thursday", start: "09:00", end: "17:00", enabled: false },
-			{ day: "Friday", start: "09:00", end: "17:00", enabled: false },
-			{ day: "Saturday", start: "09:00", end: "17:00", enabled: false },
-			{ day: "Sunday", start: "09:00", end: "17:00", enabled: false },
-		],
-		minGap: 15,
-	});
-
-	const [isInvestor, setIsInvestor] = useState(false);
+	const theme = useSelector((state) => state.design.theme);
 	const loggedInUser = useSelector((state) => state.user.loggedInUser);
+	const isInvestor = useSelector((state) => state.user.isInvestor);
+
+	// Helper function to format time in 12-hour format
+	const formatTime = (date) => {
+		return date.toLocaleTimeString("en-US", {
+			hour: "numeric",
+			minute: "2-digit",
+			hour12: true,
+		});
+	};
+
+	// Helper function to parse 12-hour time string to Date object
+	const parseTime = (timeStr) => {
+		const [time, period] = timeStr.split(" ");
+		let [hours, minutes] = time.split(":");
+		hours = parseInt(hours);
+
+		if (period === "PM" && hours !== 12) hours += 12;
+		if (period === "AM" && hours === 12) hours = 0;
+
+		const date = new Date();
+		date.setHours(hours, parseInt(minutes), 0);
+		return date;
+	};
+
+	const [availability, setAvailability] = useState([
+		{ day: "Monday", enabled: false, start: "10:00 AM", end: "6:00 PM" },
+		{ day: "Tuesday", enabled: false, start: "10:00 AM", end: "6:00 PM" },
+		{ day: "Wednesday", enabled: false, start: "10:00 AM", end: "6:00 PM" },
+		{ day: "Thursday", enabled: false, start: "10:00 AM", end: "6:00 PM" },
+		{ day: "Friday", enabled: false, start: "10:00 AM", end: "6:00 PM" },
+		{ day: "Saturday", enabled: false, start: "10:00 AM", end: "6:00 PM" },
+		{ day: "Sunday", enabled: false, start: "10:00 AM", end: "6:00 PM" },
+	]);
+
+	const [minGap, setMinGap] = useState(15);
+	const [showSuccess, setShowSuccess] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		setIsInvestor(loggedInUser.isInvestor);
+		fetchAvailability();
 	}, []);
-	// Updated handleDayToggle function
-	const handleDayToggle = (day) => {
-		setAvailability((prev) => {
-			const updatedDayAvailability = prev.dayAvailability.map((item) => {
-				if (item.day === day) {
-					return { ...item, enabled: !item.enabled }; // Toggle enabled state
-				}
-				return item; // Return unchanged item
-			});
-			return { ...prev, dayAvailability: updatedDayAvailability }; // Update state
-		});
-	};
 
-	// Updated handleTimeChange function
-	const handleTimeChange = (day, type, value) => {
-		setAvailability((prev) => {
-			const updatedDayAvailability = prev.dayAvailability.map((item) => {
-				if (item.day === day) {
-					return { ...item, [type]: value }; // Update start or end time
-				}
-				return item; // Return unchanged item
-			});
-			return { ...prev, dayAvailability: updatedDayAvailability }; // Update state
-		});
-	};
-
-	const updateAvailability = () => {
-		// Make API call to update availability
+	const fetchAvailability = async () => {
 		try {
-			fetch(`${baseUrl}/meetings/updateAvailability`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify(availability),
-			}).then((res) => {
-				if (res.status === 200) {
-					alert("Availability updated successfully");
-					navigate("/meeting/events");
-				} else {
-					alert("Error updating availability");
-				}
-			});
-		} catch (error) {
-			console.error("Error updating availability:", error);
-			alert("Error updating availability");
+			setIsLoading(true);
+			setError(null);
+			const data = await getMeetingsAvailability();
+			console.log("Availability data:", data.data);
+
+			// Update state with fetched data
+			setAvailability((prev) =>
+				prev.map((slot) => {
+					const fetchedSlot = data.data.dayAvailability.find(
+						(d) => d.day.toLowerCase() === slot.day.toLowerCase()
+					);
+					if (fetchedSlot) {
+						return {
+							...slot,
+							start: fetchedSlot.startTime,
+							end: fetchedSlot.endTime,
+							enabled: true,
+						};
+					}
+					return { ...slot, enabled: false };
+				})
+			);
+			setMinGap(data.data.minimumGap);
+		} catch (err) {
+			setError("Failed to load availability settings. Please try again.");
+			console.error("Error fetching availability:", err);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
-	// console.log("theme", theme);
+	const handleDayToggle = (day) => {
+		setAvailability((prev) =>
+			prev.map((slot) =>
+				slot.day === day ? { ...slot, enabled: !slot.enabled } : slot
+			)
+		);
+	};
+
+	const handleTimeChange = (day, type, date) => {
+		const timeStr = formatTime(date);
+		setAvailability((prev) =>
+			prev.map((slot) =>
+				slot.day === day ? { ...slot, [type]: timeStr } : slot
+			)
+		);
+	};
+
+	const updateAvailability = async () => {
+		try {
+			setError(null);
+			const formattedData = {
+				dayAvailability: availability
+					.filter((slot) => slot.enabled)
+					.map((slot) => ({
+						day: slot.day,
+						startTime: slot.start,
+						endTime: slot.end,
+					})),
+				minimumGap: minGap,
+			};
+
+			await updateMeetingsAvailability(formattedData);
+			setShowSuccess(true);
+			setTimeout(() => {
+				setShowSuccess(false);
+				navigate("/meeting/events");
+			}, 2000);
+		} catch (err) {
+			setError("Failed to update availability. Please try again.");
+			console.error("Error updating availability:", err);
+		}
+	};
+
+	if (isLoading) {
+		return (
+			<div className="availability-container">
+				Loading availability settings...
+			</div>
+		);
+	}
 
 	return (
 		<div
@@ -87,66 +147,76 @@ const AvailabilitySettings = () => {
 				theme === "dark" ? "dark-theme" : ""
 			} ${isInvestor ? "investor-theme" : ""}`}
 		>
-			<div className="availability-wrapper">
-				<h1>Availability</h1>
+			<h1>Availability Settings</h1>
 
-				<div className="time-slots">
-					{availability.dayAvailability.map((item) => (
-						<div key={item.day} className="time-slot-row">
-							<label className="checkbox-label">
-								<input
-									type="checkbox"
-									checked={item.enabled} // Access enabled directly from item
-									onChange={() => handleDayToggle(item.day)} // Pass the day to toggle
-								/>
-								<span>{item.day}</span>
-							</label>
+			{error && <div className="error-message">{error}</div>}
 
-							{item.enabled && ( // Check if the day is enabled
-								<div className="time-inputs">
-									<input
-										type="time"
-										value={item.start} // Access start time directly from item
-										onChange={
-											(e) => handleTimeChange(item.day, "start", e.target.value) // Pass day, type, and value
-										}
-									/>
-									<span className="time-separator">to</span>
-									<input
-										type="time"
-										value={item.end} // Access end time directly from item
-										onChange={
-											(e) => handleTimeChange(item.day, "end", e.target.value) // Pass day, type, and value
-										}
-									/>
-								</div>
-							)}
+			<div className="time-slots">
+				{availability.map((slot) => (
+					<div key={slot.day} className="time-slot-row">
+						<div className="day-toggle">
+							<input
+								type="checkbox"
+								checked={slot.enabled}
+								onChange={() => handleDayToggle(slot.day)}
+							/>
+							<span>{slot.day}</span>
 						</div>
-					))}
-				</div>
 
-				<div className="min-gap-setting">
-					<label>
-						Minimum gap before booking (minutes):
-						<input
-							type="number"
-							value={availability.minGap}
-							onChange={(e) => {
-								const newMinGap = e.target.value;
-								setAvailability((prev) => ({
-									...prev,
-									minGap: newMinGap,
-								}));
-							}}
-							min="0"
-						/>
-					</label>
-				</div>
-
-				<button className="update-btn" onClick={updateAvailability}>
-					Update Availability
-				</button>
+						{slot.enabled && (
+							<div className="time-inputs">
+								<DatePicker
+									selected={parseTime(slot.start)}
+									onChange={(date) => handleTimeChange(slot.day, "start", date)}
+									showTimeSelect
+									showTimeSelectOnly
+									timeIntervals={15}
+									timeCaption="Start"
+									dateFormat="h:mm aa"
+									timeFormat="h:mm aa"
+								/>
+								<span className="time-separator">to</span>
+								<DatePicker
+									selected={parseTime(slot.end)}
+									onChange={(date) => handleTimeChange(slot.day, "end", date)}
+									showTimeSelect
+									showTimeSelectOnly
+									timeIntervals={15}
+									timeCaption="End"
+									dateFormat="h:mm aa"
+									timeFormat="h:mm aa"
+								/>
+								<span className="time-display">
+									{slot.start} to {slot.end}
+								</span>
+							</div>
+						)}
+					</div>
+				))}
 			</div>
+
+			<div className="min-gap-setting">
+				<label>
+					Minimum gap between meetings (minutes)
+					<input
+						type="number"
+						value={minGap}
+						onChange={(e) => setMinGap(Number(e.target.value))}
+						min="0"
+						step="5"
+					/>
+				</label>
+			</div>
+
+			{showSuccess && (
+				<div className="success-message">
+					Availability updated successfully!
+				</div>
+			)}
+
+			<button className="update-btn" onClick={updateAvailability}>
+				Update Availability
+			</button>
 		</div>
 	);
 };
