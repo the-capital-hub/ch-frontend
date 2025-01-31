@@ -8,7 +8,8 @@ import {
 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-	getUserByUsername,
+	getUserByOneLinkId,
+	// getUserByUsername,
 	createPaymentSessionForPriorityDM,
 	varifyPaymentForPriorityDM,
 } from "../../../../Service/user";
@@ -19,7 +20,8 @@ import "./PriorityDMPage.scss";
 
 export default function PriorityDMPage() {
 	const navigate = useNavigate();
-	const { username } = useParams();
+	const { id } = useParams();
+	// const { username } = useParams();
 	const [isOrderSummaryVisible, setIsOrderSummaryVisible] = useState(true);
 	const [founderData, setFounderData] = useState({});
 	const [loading, setLoading] = useState(false);
@@ -35,8 +37,9 @@ export default function PriorityDMPage() {
 
 	useEffect(() => {
 		setLoading(true);
-		getUserByUsername(username)
+		getUserByOneLinkId(id)
 			.then((response) => {
+				// console.log("response", response);
 				setFounderData(response.user);
 				setLoading(false);
 			})
@@ -44,7 +47,7 @@ export default function PriorityDMPage() {
 				setLoading(false);
 				console.error("Error fetching founder data:", error);
 			});
-	}, [username]);
+	}, [id]);
 
 	const validateForm = () => {
 		const newErrors = {};
@@ -119,7 +122,7 @@ export default function PriorityDMPage() {
 					mobile: formData.mobile,
 					orderId,
 					question: formData.question,
-					founderUserName: username,
+					founderUserName: founderData?.userName,
 				};
 
 				// Initialize payment flow

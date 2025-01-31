@@ -134,7 +134,9 @@ async function postUser(userData, isInvestor, companyDetail) {
 
 export async function getUserByPhoneNumber(phoneNumber) {
 	try {
-		const response = await axiosInstance.post(API.getUserByPhoneNumber, { phoneNumber });
+		const response = await axiosInstance.post(API.getUserByPhoneNumber, {
+			phoneNumber,
+		});
 		return response.data;
 	} catch (error) {
 		console.error("Error:", error);
@@ -164,7 +166,10 @@ async function postStartUpData(startUpData) {
 
 export const updateStartUpData = async (startUpData) => {
 	try {
-		const response = await axiosInstance.put(API.updateStartUpData, startUpData);
+		const response = await axiosInstance.put(
+			API.updateStartUpData,
+			startUpData
+		);
 		return response.data;
 	} catch (error) {
 		console.error("Error:", error);
@@ -174,7 +179,10 @@ export const updateStartUpData = async (startUpData) => {
 
 export const updateInvestorData = async (investorData) => {
 	try {
-		const response = await axiosInstance.put(API.updateInvestorData, investorData);
+		const response = await axiosInstance.put(
+			API.updateInvestorData,
+			investorData
+		);
 		return response.data;
 	} catch (error) {
 		console.error("Error:", error);
@@ -2152,6 +2160,18 @@ export const getUserByUserNameOrOneLinkId = async (username, oneLinkId) => {
 	try {
 		const response = await axiosInstance.get(
 			`${API.getUserByUserNameOrOneLinkId}/${username}/${oneLinkId}`
+		);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const getUserByOneLinkId = async (oneLinkId) => {
+	try {
+		const response = await axiosInstance.get(
+			`${API.getUserByOneLinkId}/${oneLinkId}`
 		);
 		return response.data;
 	} catch (error) {

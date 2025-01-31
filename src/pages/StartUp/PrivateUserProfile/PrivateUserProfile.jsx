@@ -46,7 +46,7 @@ const PrivateUserProfile = ({ isInvestor = false }) => {
 	const [connectionSent, setConnectionSent] = useState(false);
 	const [loading, setLoading] = useState(true);
 
-	console.log("User", founder);
+	// console.log("User", founder);
 
 	const { username } = useParams();
 	const { oneLinkId } = useParams();
@@ -59,7 +59,7 @@ const PrivateUserProfile = ({ isInvestor = false }) => {
 					username,
 					oneLinkId
 				);
-				console.log("response", response.data);
+				// console.log("response", response.data);
 				if (response.status === 200) {
 					setFounder(response.data.user);
 					setPost(response.data.posts);
@@ -170,7 +170,12 @@ const PrivateUserProfile = ({ isInvestor = false }) => {
 	};
 
 	const handlePriorityDMClick = () => {
-		navigate(`/priority-dm/${username}`);
+		const path =
+			loggedInUser.isInvestor === "true"
+				? `/investor/priority-dm/${oneLinkId}`
+				: `/priority-dm/${oneLinkId}`;
+
+		navigate(path);
 	};
 
 	const canSendRequest = () => {
