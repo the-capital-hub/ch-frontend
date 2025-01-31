@@ -146,6 +146,7 @@ const Feed = () => {
 		setLoading(true);
 		getAllPostsAPI(page)
 			.then(({ data }) => {
+		
 				if (!data || data.length === 0) {
 					setHasMore(false);
 					return;
@@ -159,6 +160,7 @@ const Feed = () => {
 				
 				setAllPosts((prevPosts) => [...prevPosts, ...totalPost]);
 				setPage((prevPage) => prevPage + 1);
+
 			})
 			.catch((err) => {
 				console.error("Error fetching posts:", err);

@@ -123,12 +123,50 @@ export default function ProfessionalInfoDisplay({
 				<header className="professional_info_display p-0 d-flex flex-column gap-3 flex-md-row align-items-center justify-content-between">
 					{/* profile picture and name */}
 					<div className="d-flex gap-4" style={{ width: "100%" }}>
-						<img
-							src={professionalData.profilePicture || DefaultAvatar}
-							alt={getFullName()}
-							style={{ width: "120px", height: "120px", objectFit: "cover" }}
-							className="rounded-circle"
-						/>
+						<div style={{ position: 'relative' }}>
+							<img
+								src={professionalData.profilePicture || DefaultAvatar}
+								alt={getFullName()}
+								style={{ width: "120px", height: "120px", objectFit: "cover" }}
+								className="rounded-circle"
+							/>
+							{isEditing && (
+								<label 
+									htmlFor="profilePicture" 
+									style={{
+										position: 'absolute',
+										top: 0,
+										left: 0,
+										width: "120px", height: "120px", objectFit: "cover",
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center',
+										background: 'rgba(0, 0, 0, 0.5)',
+										borderRadius: '50%',
+										cursor: 'pointer',
+										opacity: 0.9,
+										transition: 'opacity 0.2s',
+										':hover': {
+											opacity: 1
+										}
+									}}
+								>
+									<CiEdit style={{ 
+										color: 'white', 
+										fontSize: '2rem',
+										opacity: 0.9
+									}}/>
+									<input
+										type="file"
+										accept="image/*"
+										className="visually-hidden"
+										name="profilePicture"
+										id="profilePicture"
+										onChange={handleFileChange}
+									/>
+								</label>
+							)}
+						</div>
 						<div className="d-flex flex-column justify-content-center gap-1 ">
 							<div
 								className="d-flex gap-2 align-items-center justify-content-between"
@@ -348,30 +386,6 @@ export default function ProfessionalInfoDisplay({
 			{isEditing && (
 				<form className="">
 					{/* profilePicture*/}
-					{!detail && (
-						<fieldset className={` ${theme} `}>
-							<legend className="px-2">Profile Picture</legend>
-							<input
-								type="file"
-								accept="image/*"
-								className="visually-hidden"
-								name="profilePicture"
-								id="profilePicture"
-								//   value={professionalData.company}
-								onChange={handleFileChange}
-							/>
-							<div className="professional_form_input d-flex align-items-center gap-4">
-								<label htmlFor="profilePicture" style={{ cursor: "pointer" }}>
-									<IconCloudUpload
-										color={theme === "startup" ? "#fd5901" : "#b2cc5d"}
-										height="1.75rem"
-										width="1.75rem"
-									/>
-								</label>
-								<p className="m-0 fs-6 fw-light">{selectedFile?.name}</p>
-							</div>
-						</fieldset>
-					)}
 
 					{previewImage && !cropComplete && (
 						<div className="d-flex flex-column justify-content-center gap-2">
