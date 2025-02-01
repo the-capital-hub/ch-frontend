@@ -320,7 +320,6 @@ function Home() {
 							{/* Onboarding popup */}
 
 							{/* <TutorialTrigger steps={investorOnboardingSteps.homePage} /> */}
-							<JoinHustlersClub />
 							{isProfileComplete !== null && !isProfileComplete && <CompletionBanner />}
 
 							{/* Write a post */}

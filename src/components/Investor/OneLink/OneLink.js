@@ -133,13 +133,14 @@ const OneLink = () => {
                 >
                   <button
                     className="create_post_newInvestor"
+                    style={{backgroundColor: loggedInUser.isInvestor === "true" ? "#d3f36b" : "#fd5901"}}
                     onClick={() => setPopupOpen(true)}
                   >
                     {/* <span>Create a Post</span>
                 <img src={PlusIcon} alt="image" /> */}
-                    <span className="text-black ms-0">Create Post</span>
+                    <span className="ms-0" style={{color: loggedInUser.isInvestor === "true" ? "#000" : "#fff"}}>Create Post</span>
                     {/* <img src={PlusIcon} alt="image" /> */}
-                    <PlusIcon color="black" width="24" height="24" />
+                    <PlusIcon color={loggedInUser.isInvestor === "true" ? "#000" : "#fff"} width="24" height="24" />
                   </button>
                 </div>
               </div>

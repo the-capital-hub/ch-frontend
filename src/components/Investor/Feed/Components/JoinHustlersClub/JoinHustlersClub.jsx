@@ -4,7 +4,7 @@ import HustlersClubFox from "../../../../../Images/HustlersClubFox.png";
 import ResourcesPopupNew from "../../../../PopUp/ResourcesPopup/ResourcesPopupNew";
 import "./JoinHustlersClub.scss";
 
-const JoinHustlersClub = () => {
+const JoinHustlersClub = ({isInvestor}) => {
 	const [showPopup, setShowPopup] = useState(false);
 	const handleView = () => {
 		setShowPopup(true);
@@ -24,7 +24,7 @@ const JoinHustlersClub = () => {
 					<span>Join Hustlers Club Now</span>
 				</div>
 			</div>
-			{showPopup && <ResourcesPopupNew onClose={() => setShowPopup(false)} />}
+			{showPopup && <ResourcesPopupNew onClose={() => setShowPopup(false)} isInvestor={isInvestor} />}
 		</>
 	);
 };

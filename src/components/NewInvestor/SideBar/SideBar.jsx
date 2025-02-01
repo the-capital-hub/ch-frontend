@@ -54,6 +54,7 @@ import Batch from "../../Batch";
 import OnboardingSwitch from "../../Investor/InvestorNavbar/OnboardingSwitch/OnboardingSwitch";
 import { IoCalendarOutline } from "react-icons/io5";
 
+
 // Investor Sidebar
 const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 	const dispatch = useDispatch();
@@ -247,6 +248,14 @@ const SideBar = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 					</SidebarHeader>
 					<SidebarContent>
 						<Menu iconShape="round">
+							<MenuItem>
+								{!sidebarCollapsed && (
+									<div className="d-flex justify-content-center align-items-center gap-2">
+										{/* mobile-onboarding */}
+										Dark <OnboardingSwitch /> Light
+									</div>
+								)}
+							</MenuItem>
 							<MenuItem
 								// active={location.pathname.includes("/")}
 								className=""

@@ -16,7 +16,7 @@ import { load } from "@cashfreepayments/cashfree-js";
 const baseUrl = environment.baseUrl;
 const token = localStorage.getItem("accessToken");
 
-const ResourcesPopup = ({ onClose }) => {
+const ResourcesPopup = ({ onClose, isInvestor }) => {
 	const [resources, setResources] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [selectedResource, setSelectedResource] = useState(null);
@@ -219,7 +219,7 @@ const ResourcesPopup = ({ onClose }) => {
 				</div>
 				<button
 					className="view-all-button"
-					onClick={() => (window.location.href = "/resources")}
+					onClick={() => isInvestor ? (window.location.href = "/investor/resources") : (window.location.href = "/resources")}
 				>
 					View All
 				</button>
